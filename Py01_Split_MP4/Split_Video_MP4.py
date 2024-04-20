@@ -10,7 +10,7 @@ required_video_file = "filename.mp4"
 with open("times.txt") as f:
   times = f.readlines()
 
-times = [x.strip() for x in times] 
+times = [x.strip() for x in times]
 
 for time in times:
   starttime = int(time.split("-")[0])
