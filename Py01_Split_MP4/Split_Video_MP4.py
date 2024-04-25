@@ -5,7 +5,7 @@
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
 
 # Replace the filename below.
-required_video_file = "filename.mp4"
+required_video_file = "200921 B03.mp4"
 
 with open("times.txt") as f:
   times = f.readlines()
