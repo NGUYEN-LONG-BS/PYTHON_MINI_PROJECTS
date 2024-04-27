@@ -1,6 +1,10 @@
 # Note
+# Cut .mp4 in pieces Python
 # Source: https://stackoverflow.com/questions/67334379/cut-mp4-in-pieces-python
+# How to get the duration of a video in Python?
 # Source: https://stackoverflow.com/questions/3844430/how-to-get-the-duration-of-a-video-in-python
+# Creating thumbnails from video files with Python
+# Source: https://stackoverflow.com/questions/1772599/creating-thumbnails-from-video-files-with-python
 # install library moviepy: pip3 install moviepy
 
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
