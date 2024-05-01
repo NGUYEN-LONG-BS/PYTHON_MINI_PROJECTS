@@ -10,7 +10,12 @@
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
 
 # Replace the filename below.
-required_video_file = "01 - QUANT - Buổi 1 - 18.08.mp4"
+Video_Name_input = "63 - REVISION - ETHICS"
+Video_Name_output = "CFA REVISION 10 ETHICS P"
+required_video_file = Video_Name_input+".mp4"
+print(required_video_file)
+print(Video_Name_input)
+print(Video_Name_output)
 
 with open("times.txt") as f:
   times = f.readlines()
@@ -20,7 +25,7 @@ times = [x.strip() for x in times]
 for time in times:
   starttime = int(time.split("-")[0])
   endtime = int(time.split("-")[1])
-  ffmpeg_extract_subclip(required_video_file, starttime, endtime, targetname=str(times.index(time)+1)+".mp4")
+  ffmpeg_extract_subclip(required_video_file, starttime, endtime, targetname=Video_Name_output+str(times.index(time)+1)+".mp4")
 
 # Đo thời lượng của video
 # filename = required_video_file
