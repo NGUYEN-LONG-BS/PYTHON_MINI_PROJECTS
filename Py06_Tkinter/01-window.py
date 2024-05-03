@@ -21,7 +21,7 @@ def setup_window():
     # root['background']='yellow'
     root['background']=COLOR_BACKGROUND
 
-# Gọi hàm thiết lập format
+# Gọi hàm thiết lập định dạng cho giao diện
 setup_window()
 
 # Duy trì cửa sổ mở
