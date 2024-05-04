@@ -33,7 +33,7 @@ id=StringVar()
 name=StringVar()
 year=StringVar()
 
-
+# Window Format
 root.title('Quản Lý Nhân Sự ')
 root.minsize(height=580, width=500)
 Label(root, text='QUẢN LÝ NHÂN SỰ',fg=COLOR_BLACK, font=('cambria',16),width=25).grid(row=0) 
@@ -41,12 +41,15 @@ Label(root, text='QUẢN LÝ NHÂN SỰ',fg=COLOR_BLACK, font=('cambria',16),wid
 # Icon
 root.iconbitmap(os.path.join(PATH_IMAGES, 'icon.ico'))
 
+# Phần nhập liệu
 Label(root, text='Mã NV:').grid(row=1, column=0)
 Entry(root, width=30, textvariable=id).grid(row=1, column=1)
 Label(root, text='Tên Nhân viên:').grid(row=2, column=0)
 Entry(root, width=30, textvariable=name).grid(row=2, column=1) 
 Label(root, text='Năm sinh: ').grid(row=3, column=0)
 Entry(root, width=30, textvariable=year).grid(row=3, column=1)
+
+# Phần nút bấm
 button=Frame(root)
 Button(button, text='Thêm', command=add).pack(side=LEFT) 
 Button(button, text='Xem', command=show).pack(side=LEFT)
