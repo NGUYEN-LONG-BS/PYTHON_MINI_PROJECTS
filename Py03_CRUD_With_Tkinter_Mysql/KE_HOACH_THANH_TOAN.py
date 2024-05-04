@@ -86,21 +86,23 @@ def delete():
        mysqldb.rollback()
        mysqldb.close()
 def show():
-        mysqldb = mysql.connector.connect(host="localhost", user="root", password="", database="payroll")
-        mycursor = mysqldb.cursor()
-        mycursor.execute("SELECT id,empname,mobile,salary FROM registation")
-        records = mycursor.fetchall()
-        print(records)
-        for i, (id,stname, course,fee) in enumerate(records, start=1):
-            listBox.insert("", "end", values=(id, stname, course, fee))
-            mysqldb.close()
+      #   mysqldb = mysql.connector.connect(host="localhost", user="root", password="", database="payroll")
+      #   mycursor = mysqldb.cursor()
+      #   mycursor.execute("SELECT id,empname,mobile,salary FROM registation")
+      #   records = mycursor.fetchall()
+      #   print(records)
+      #   for i, (id,stname, course,fee) in enumerate(records, start=1):
+      #       listBox.insert("", "end", values=(id, stname, course, fee))
+      #       mysqldb.close()
+      print('Hello')
+      
 root = Tk()
-root.geometry("800x500")
+root.geometry("900x500")
 global e1
 global e2
 global e3
 global e4
-tk.Label(root, text="Employee Registation", fg="red", font=(None, 30)).place(x=300, y=5)
+tk.Label(root, text="Kế hoạch thanh toán", fg="red", font=(None, 30)).place(x=300, y=5)
 tk.Label(root, text="Employee ID").place(x=10, y=10)
 Label(root, text="Employee Name").place(x=10, y=40)
 Label(root, text="Mobile").place(x=10, y=70)
