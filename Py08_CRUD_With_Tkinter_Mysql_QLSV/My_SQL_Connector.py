@@ -1,10 +1,6 @@
 # hai cú pháp cái đặt hiệu quả
 # pip install mysql
 # python -m pip install mysql-connector-python
-
-# py -3.12 -m pip install mysql-connector-python
-# pip install mysql-connector-python
-# pip3 install mysql-connector-python-rf
 # https://dev.mysql.com/downloads/installer/
 
 
@@ -19,7 +15,7 @@ host_my_sql = 'localhost'   # 3306
 db = mysql.connector.connect(user='root',password='Ta#9999',host='localhost')
 
 #query
-code='CREATE DATABASE `test` ;' # 'CREATE SCHEMA `test` ;'
+code='CREATE DATABASE `DB_USER_ID` ;' # 'CREATE SCHEMA `test` ;'
 
 #RUN
 mycursor=db.cursor()
