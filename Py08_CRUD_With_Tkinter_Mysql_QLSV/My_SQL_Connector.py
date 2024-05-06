@@ -3,10 +3,8 @@
 # python -m pip install mysql-connector-python
 # https://dev.mysql.com/downloads/installer/
 
-
 import mysql.connector
 
-print('hehehehehehehhehehehehe')
 
 user_name_my_sql = 'root'
 pass_my_sql = 'Ta#9999'
