@@ -4,15 +4,14 @@
 # https://dev.mysql.com/downloads/installer/
 
 import mysql.connector
-
+from Define_MySQL import * 
 
 
 
 db = mysql.connector.connect(user='root',password='Ta#9999',host='localhost')
 
-#query
-code='CREATE DATABASE `DB_USER_ID` ;' # 'CREATE SCHEMA `test` ;'
 
+print('====================================================================hehehe===========')
 #RUN
-mycursor=db.cursor()
-mycursor.execute(code)
+# mycursor=db.cursor()
+# mycursor.execute(code)
