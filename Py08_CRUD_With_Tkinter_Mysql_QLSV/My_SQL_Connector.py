@@ -1,7 +1,9 @@
+# hai cú pháp cái đặt hiệu quả
 # pip install mysql
-# pip install mysql-connector-python
 # python -m pip install mysql-connector-python
+
 # py -3.12 -m pip install mysql-connector-python
+# pip install mysql-connector-python
 # pip3 install mysql-connector-python-rf
 # https://dev.mysql.com/downloads/installer/
 
