@@ -1,17 +1,24 @@
 import pyodbc
+from define import *
 
-
-VAR_SQL_DRIVER = "{SQL Server Native Client 11.0}"
-VAR_SERVER_NAME = "KSNB3\SQLEXPRESS"
-VAR_DATABASE_NAME = "DATABASE_USER_ID"
-VAR_SQL_QUERY = "select * from TB_DS_DATABASE"
+# VAR_SQL_DRIVER = "{SQL Server Native Client 11.0}"
+# VAR_SERVER_NAME = "KSNB3\SQLEXPRESS"
+# VAR_DATABASE_NAME = "DATABASE_USER_ID"
+# VAR_SQL_QUERY = "select * from TB_DS_DATABASE"
 
 #Define Connection String'
 sqlDbConn = pyodbc.connect(
-    "Driver= {SQL Server Native Client 11.0};"      # SQL Server version 2012-2014
-    "Server="& VAR_SERVER_NAME &";"
-    "Database="& VAR_DATABASE_NAME &";"
+    "Driver= " + VAR_SQL_DRIVER + ";"      # SQL Server version 2012-2014
+    "Server=" + VAR_SERVER_NAME +";"
+    "Database=" + VAR_DATABASE_NAME +";"
     "Trusted_Connection=yes; ")
+
+# sqlDbConn = pyodbc.connect(
+#     "Driver= {SQL Server Native Client 11.0};"      # SQL Server version 2012-2014
+#     "Server=KSNB3\SQLEXPRESS;"
+#     "Database=DATABASE_USER_ID;"
+#     "Trusted_Connection=yes; ")
+
 
 def getData(sqlDbConn):
     print("Read")
@@ -22,3 +29,6 @@ def getData(sqlDbConn):
 
 getData(sqlDbConn);                 # Bước 1: Read: kết nối đến SQL Server và lấy dữ liệu về
 
+# print(VAR_SQL_DRIVER)
+# print(VAR_SERVER_NAME)
+# print(sqlDbConn)
