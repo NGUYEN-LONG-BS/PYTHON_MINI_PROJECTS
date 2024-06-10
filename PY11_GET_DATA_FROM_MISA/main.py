@@ -1,5 +1,6 @@
 import pyodbc
 from define import *
+from query_sale_report import *
 
 #Define Connection String'
 # sqlDbConn = pyodbc.connect(VAR_CONNECTION_STRING_TO_SQL_SERVER_WITH_WINDOWS_AUTHENTICATION)

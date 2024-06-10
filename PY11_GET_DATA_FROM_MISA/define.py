@@ -24,28 +24,3 @@ VAR_CONNECTION_STRING_TO_SQL_SERVER_WITH_SQL_SERVER_AUTHENTICATION = ("Driver= "
                                                                     "UID=" + VAR_UID_SQL_SERVER +";"
                                                                     "PWD=" + VAR_PWD_SQL_SERVER +";"
                                                                     "Trusted_Connection=no; ")
-
-
-# Câu lệnh query
-VAR_SQL_QUERY_01 = "select * from TB_DS_DATABASE"
-VAR_SQL_QUERY_02 = "select * from BADepositDetail"
-VAR_SQL_QUERY_03 =  ("SELECT" + ";"
-                    "[RefDate]" + ";" 
-                    ",[RefNo]" + ";" 
-                    ",[PostedDate]" + ";" 
-                    ",[InvNo]" + ";" 
-                    ",[InvDate]" + ";" 
-                    ",[InvSeries]" + ";" 
-                    ",[AccountObjectCode]" + ";" 
-                    ",[AccountObjectName]" + ";" 
-                    ",[AccountObjectTaxCode]" + ";" 
-                    ",[AccountObjectAddress]" + ";" 
-                    ",[InventoryItemCode]" + ";" 
-                    ",[InventoryItemName]" + ";" 
-                    ",[UnitPrice]" + ";" 
-                    ",[Quantity]" + ";" 
-                    ",[AccountNumber]" + ";" 
-                    ",[CorrespondingAccountNumber]" + ";" 
-                    ",[BranchID]" + ";" 
-                    "FROM [TBD_2024_240409].[dbo].[AccountObjectLedger]" + ";" 
-                    "order by [RefDate] DESC, [RefNo] DESC, [InvNo] DESC")
