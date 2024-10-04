@@ -1,5 +1,7 @@
 # Cài đặt môi trường
-1. Python 3.11.4 ->
+1. Python 3.11.4 
+    - không nên cài phiên bản cũ hơn 3.11.4
+    - nhớ check vào ô checkbox (add python.exe to path) khi cài python
 2. Visual studio code: https://zendvn.com/bai-viet/huong-dan-su-dung-visual-studio-code-a-z-toan-tap-10
 3. Extension Vscode: Python (Microsoft)
 4. Trình duyệt chrome (bắt buộc)
