@@ -2,7 +2,8 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 import time
-
+from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
 
 from selenium.webdriver.chrome.options import Options
 
@@ -25,8 +26,14 @@ def launchBrower():
     browser.get("https://www.facebook.com/")
     return browser
 
-brower = launchBrower()
-# brower.maximize_window()
+browser = launchBrower()
+# browser.maximize_window()
+
+screen_width = browser.execute_script("return screen.width;")
+screen_height = browser.execute_script("return screen.height;")
+# Set browser window size to 1/4 of the screen
+browser.set_window_size(screen_width // 2, screen_height // 2)
+
 
 time.sleep(5)
 
@@ -43,6 +50,7 @@ login_user = brower.find_element(By.NAME, "login").click()
 
 time.sleep(60)
 
-login_user = brower.find_element(By.NAME, "Tin cậy thiết bị này").click()
+# Open the new link
+browser.get("https://www.facebook.com/friends/requests")
 
-time.sleep(60)
+time.sleep(15)
