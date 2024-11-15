@@ -1,5 +1,6 @@
 # pip install pyautogui
 # https://www.vniteach.com/2022/07/25/tai-lieu-lap-trinh-tu-dong-voi-pyautogui-trong-python/
+# https://pyautogui.readthedocs.io/en/latest/index.html
 
 import pyautogui as pag
 
