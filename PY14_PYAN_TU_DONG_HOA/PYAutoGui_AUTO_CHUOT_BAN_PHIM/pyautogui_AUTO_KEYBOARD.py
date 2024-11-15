@@ -25,6 +25,8 @@ pag.hotkey('ctrl', 'c')  # For the copy command
 #========= Chức năng chụp màn hình ()
 scree_shot = pag.screenshot()   # to store a PIL object containing the image in a variable
 pag.screenshot('ss.png')        # Save image with name ss.png
+pag.screenshot(r'C:\Users\QuanN\OneDrive\Desktop\MAIL\ss.png')        # Save image with name ss.png
+
 
 #========= Các hàm xác nhận (), alert () và prompt ()
 pag.confirm("Are you ready?")
