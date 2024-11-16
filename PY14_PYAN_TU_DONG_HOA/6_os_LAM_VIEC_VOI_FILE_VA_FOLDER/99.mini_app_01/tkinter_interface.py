@@ -11,7 +11,7 @@ root = tk.Tk()
 root.title("Folder Selector")
 
 # Set the size of the window to 500x600 and make it non-resizable
-root.geometry("500x600")
+root.geometry("900x600")
 root.resizable(False, False)
 
 # Create StringVars to hold the folder path and its length
