@@ -34,4 +34,5 @@ CHECKBOX.place(relx=0.5, rely=0.4, anchor="center")
 SWITCH = CTkSwitch(master=app, text="Option")
 SWITCH.place(relx=0.5, rely=0.5, anchor="center")
 
+# ========================================= SLIDER
 app.mainloop()
