@@ -1,0 +1,10 @@
+https://code.tutsplus.com/vi/creating-a-web-app-from-scratch-using-python-flask-and-mysql--cms-22972t
+
+Bước 1: Thiết lập Flask
+
+Bước 2: Tạo một Trang chủ
+
+Bước 3: Tạo một Trang đăng ký
+3.1 Thiết lập Cơ sở Dữ liệu MySQL
+3.2 Tạo một Giao diện Đăng ký
+3.3 Cài đặt một Phương thức Đăng ký
