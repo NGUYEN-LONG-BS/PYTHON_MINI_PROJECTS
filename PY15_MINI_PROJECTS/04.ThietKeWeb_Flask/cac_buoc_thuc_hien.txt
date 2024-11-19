@@ -1,0 +1,22 @@
+# https://www.mcivietnam.com/blog-detail/cach-thiet-ke-web-voi-python-don-gian/
+
+Bước 1: chúng ta cần thiết lập môi trường flask để làm việc với python. Chúng ta sẽ thiết lập python và pid như link dưới đây: https://docs.python-guide.org/starting/install3/osx/ 
+
+Bước 2: tiến hành cài Flask:
+pip install flask
+
+Bước 3: Tạo thêm thư mục cho dự án:
+mkdir hoctiengnhatonline
+
+Bước 4: Tạo một tệp khởi tạo app.py trong thư mục “hoctiengnhatonline”, sau đó cấu hình để sử dụng module Flask tại tệp app.py
+from flask import Flask
+
+app = Flask(__name__)@app.route("/")defmain():return"Welcome"if __name__ == "__main__":
+
+  app.run()
+Sau đó thực thi app.py
+
+python app.py
+
+
+Bước 5: Vào trình duyệt và truy xuất đường link dưới đây http://localhost:5000/
