@@ -11,8 +11,8 @@ os.chdir(script_dir)
 app = CTk()
 app.geometry("900x800")
 
-set_appearance_mode("dark")
-# set_appearance_mode("light")
+# set_appearance_mode("dark")
+set_appearance_mode("light")
 
 # ========================================= BUTTON
 def click_handler():
