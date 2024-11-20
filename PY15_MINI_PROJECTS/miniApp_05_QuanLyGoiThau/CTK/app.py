@@ -16,9 +16,8 @@ from datetime import datetime
 script_dir = os.path.dirname(os.path.abspath(__file__)) # Get the directory of the current script
 os.chdir(script_dir)
 
-
 # ======================================================================================
-# Tạo tên thư mục
+# CREATE NEW FOLDER
 # ======================================================================================
 def Create_New_Folder():
     # Khai báo đường dẫn đến các gói thầu
@@ -34,6 +33,10 @@ def Create_New_Folder():
     folder_name_04 = ENTRY_01_SoThongBaoMoiThau.get().zfill(4)
     folder_name_completed = folder_name_01_year + "_" + folder_name_02 + "_" + folder_name_03_number + "_" + folder_name_04
     new_folder_path = os.path.join(PathQuanLyThau, folder_name_completed)
+    sub_folder_01_path = os.path.join(PathQuanLyThau, folder_name_completed, "1.THONG_BAO_MOI_THAU")
+    sub_folder_02_path = os.path.join(PathQuanLyThau, folder_name_completed, "2.DUYET_GIA")
+    sub_folder_03_path = os.path.join(PathQuanLyThau, folder_name_completed, "3.MO_THAU")
+    sub_folder_04_path = os.path.join(PathQuanLyThau, folder_name_completed, "4.TRUNG_THAU")
     
     # Kiểm tra nếu folder chưa tồn tại, thì tạo mới
     def check_variable_in_array(array, variable):
@@ -48,11 +51,15 @@ def Create_New_Folder():
     else:
         print(f"The string '{folder_name_completed}' does not exist in the array.")
         os.makedirs(new_folder_path)
+        os.makedirs(sub_folder_01_path)
+        os.makedirs(sub_folder_02_path)
+        os.makedirs(sub_folder_03_path)
+        os.makedirs(sub_folder_04_path)
         print(f"Đã tạo folder: {new_folder_path}")
 
 
 # ======================================================================================
-# Tạo giao diện
+# CREATE USER FORM
 # ======================================================================================
 app = CTk()
 app.geometry("900x800")
@@ -60,18 +67,19 @@ app.geometry("900x800")
 app.title("QUẢN LÝ GÓI THẦU")
 
 # Mode Dark or Light
-set_appearance_mode("dark")
-# set_appearance_mode("light")
+# set_appearance_mode("dark")
+set_appearance_mode("light")
 
 # Change the color style
-set_default_color_theme(r"json\MoonlitSky.json")
-# set_default_color_theme(r"json\NeonBanana.json") 
+# set_default_color_theme(r"json\MoonlitSky.json")
+# set_default_color_theme(r"json\NeonBanana.json")
+set_default_color_theme(r"json\DaynNight.json")
 
 
 # ======================================================================================
-# BUTTON
+# BTN_TaoThuMucMoi
 # ======================================================================================
-def click_handler():
+def click_handler_BTN_TaoThuMucMoi():
     # print("Button Clicked")
     Create_New_Folder()
     reset_scrollable_frame()
@@ -79,16 +87,27 @@ def click_handler():
 
 img = Image.open(r"img\icons8-chat-message-50.png")
 
-btn_01_TaoThuMuc = CTkButton(master=app, 
+BTN_TaoThuMucMoi = CTkButton(master=app, 
                 text="Tạo thư mục mới", 
-                corner_radius=32, 
-                # fg_color="#4158D0",
-                # hover_color="#C850C0", 
-                # border_color="#FFCC70",
-                border_width=2, 
                 image=CTkImage(dark_image=img, light_image=img),
-                command=click_handler)
-btn_01_TaoThuMuc.place(x=50, y=700)
+                command=click_handler_BTN_TaoThuMucMoi)
+BTN_TaoThuMucMoi.place(x=50, y=700)
+
+# ======================================================================================
+# BTN_DenThuMucDaChon
+# ======================================================================================
+def click_handler_BTN_DenThuMucDaChon():
+    print("Thư mục đã chọn là: ")
+
+img = Image.open(r"img\icons8-chat-message-50.png")
+
+BTN_DenThuMucDaChon = CTkButton(master=app, 
+                text="Mở thư mục", 
+                # corner_radius=32, 
+                # border_width=2, 
+                image=CTkImage(dark_image=img, light_image=img),
+                command=click_handler_BTN_DenThuMucDaChon)
+BTN_DenThuMucDaChon.place(x=250, y=700)
 
 # ======================================================================================
 # COMBOBOX_NamGoiThau
@@ -128,11 +147,10 @@ LABEL_SoThongBaoMoiThau.place(x=50, y=170)
 # LABEL_TenThuMucSeKhoiTao
 # ======================================================================================
 LABEL_TenThuMucSeKhoiTao = CTkLabel(master=app, 
-                                    text="24_GOI_THAU_0001_15234685"
+                                    text="24_GOI_THAU_0000_0000"
                                     ,font=("",18)
-                                    # ,text_color="#FFCC70"
                                     )
-LABEL_TenThuMucSeKhoiTao.place(x=50, y=660)
+LABEL_TenThuMucSeKhoiTao.place(x=390, y=200)
 
 # ======================================================================================
 # LABEL_NamGoiThau
@@ -208,7 +226,21 @@ LABEL_TenCongTy.place(x=750, y=10)
 # ENTRY_01_SoThongBaoMoiThau
 # ======================================================================================
 def update_label(*args):
-    LABEL_TenThuMucSeKhoiTao.configure(text=ENTRY_01_SoThongBaoMoiThau.get())
+    # Khai báo đường dẫn đến các gói thầu
+    PathQuanLyThau = r"\\172.16.0.191\2.0 ksnb\TUAN_AN_GROUP\BAN_KINH_DOANH\QUAN_LY_THAU"
+    arr_DanhSachGoiThau = os.listdir(PathQuanLyThau)
+    # print(arr_DanhSachGoiThau)
+    
+    # Tạo tên folder mới
+    folder_name_01_year = COMBOBOX_NamGoiThau.get()[-2:]
+    folder_name_02 = "GOI_THAU"
+    folder_name_03_number = str(len(arr_DanhSachGoiThau) + 1).zfill(4)      # hiển thị 4 ký tự
+    # folder_name_04 = "SoThongBaoMoiThau"
+    folder_name_04 = ENTRY_01_SoThongBaoMoiThau.get().zfill(4)
+    folder_name_completed = folder_name_01_year + "_" + folder_name_02 + "_" + folder_name_03_number + "_" + folder_name_04
+    # new_folder_path = os.path.join(PathQuanLyThau, folder_name_completed)
+    
+    LABEL_TenThuMucSeKhoiTao.configure(text=folder_name_completed)
     
 ENTRY_01_SoThongBaoMoiThau = CTkEntry(master=app
                                         ,placeholder_text="Start typing..."
@@ -252,8 +284,7 @@ def populate_frame(frame, contents):
     for item in contents:
         label = CTkLabel(master=frame
                          ,text=item
-                        #  ,font=("Arial", 12)
-                        #  ,text_color="#FFFFFF"
+                         ,font=("", 14)
                          )
         label.pack(anchor="w")
         label.bind("<Button-1>", on_label_click)
@@ -285,7 +316,6 @@ def set_scrollable_frame():
 scrollable_frame = CTkScrollableFrame(master=app
                                         ,width=800
                                         ,height=200
-                                        # ,fg_color="#333333"
                                         )
 scrollable_frame.place(x=50, y=300)
 
