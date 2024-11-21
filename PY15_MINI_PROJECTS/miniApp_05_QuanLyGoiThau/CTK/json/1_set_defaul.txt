@@ -1,0 +1,2 @@
+Mode: dark
+Theme: theme_01

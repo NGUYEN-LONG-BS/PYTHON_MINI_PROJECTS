@@ -3,6 +3,24 @@ import sys
 from customtkinter import *
 from PIL import Image
 from datetime import datetime
+# from myPackageAllFunctions.module1 import function1, function2
+# from myPackageAllFunctions.module2 import function3, function4
+from myPackageAllFunctions.module1 import *
+from myPackageAllFunctions.module2 import *
+
+def main():
+    function1()
+    function2()
+    function3()
+    function4()
+
+
+if __name__ == "__main__":
+    # kiểm tra xem tệp hiện tại có đang được chạy trực tiếp hay không. 
+    # Nếu đúng, nó sẽ gọi hàm main(). 
+    # Điều này thường được sử dụng để đảm bảo rằng một số đoạn mã chỉ được thực thi khi tệp đó được chạy trực tiếp, 
+    # chứ không phải khi nó được nhập như một mô-đun trong một tệp khác.
+    main()
 
 # ======================================================================================
 # Mục đích
@@ -81,6 +99,11 @@ set_default_color_theme(r"json\Blue.json")
 # Cobalt
 # DaynNight
 
+def SAVE_DEFAUL_SETTING(variable_01, variable_02):
+    with open(r"json\1_set_defaul.txt",'w',encoding = 'utf-8') as f:
+        f.write(f"Mode: {variable_01}\n")
+        f.write(f"Theme: {variable_02}")
+
 # ======================================================================================
 # SWITCH FOR DARK/LIGHT MODE
 # ======================================================================================
@@ -88,8 +111,10 @@ def switch_mode():
     current_mode = get_appearance_mode()
     if current_mode == "Light":
         set_appearance_mode("dark")
+        SAVE_DEFAUL_SETTING("dark","theme_01")
     else:
         set_appearance_mode("light")
+        SAVE_DEFAUL_SETTING("light","theme_01")
 app.update()  # Update the form
 
 switch = CTkSwitch(master=app, text="Dark Mode", command=switch_mode)
