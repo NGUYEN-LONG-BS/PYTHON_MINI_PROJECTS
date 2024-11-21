@@ -1,2 +1,2 @@
-Mode: light
+Mode: dark
 Theme: theme_01
