@@ -99,10 +99,6 @@ set_default_color_theme(r"json\Blue.json")
 # Cobalt
 # DaynNight
 
-def SAVE_DEFAUL_SETTING(variable_01, variable_02):
-    with open(r"json\1_set_defaul.txt",'w',encoding = 'utf-8') as f:
-        f.write(f"Mode: {variable_01}\n")
-        f.write(f"Theme: {variable_02}")
 
 # ======================================================================================
 # SWITCH FOR DARK/LIGHT MODE
