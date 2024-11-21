@@ -31,8 +31,10 @@ if __name__ == "__main__":
 # ======================================================================================
 # Change the current working directory to the script's directory
 # ======================================================================================
-script_dir = os.path.dirname(os.path.abspath(__file__)) # Get the directory of the current script
-os.chdir(script_dir)
+def change_directory_to_file_path():
+    script_dir = os.path.dirname(os.path.abspath(__file__)) # Get the directory of the current script
+    os.chdir(script_dir)
+change_directory_to_file_path()
 
 # ======================================================================================
 # CREATE NEW FOLDER
