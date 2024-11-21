@@ -68,13 +68,44 @@ app.title("QUẢN LÝ GÓI THẦU")
 
 # Mode Dark or Light
 # set_appearance_mode("dark")
-set_appearance_mode("light")
+# set_appearance_mode("light")
 
 # Change the color style
 # set_default_color_theme(r"json\MoonlitSky.json")
 # set_default_color_theme(r"json\NeonBanana.json")
-set_default_color_theme(r"json\DaynNight.json")
+# set_default_color_theme(r"json\DaynNight.json")
 
+
+# ======================================================================================
+# SWITCH FOR DARK/LIGHT MODE
+# ======================================================================================
+def switch_mode():
+    current_mode = get_appearance_mode()
+    if current_mode == "Light":
+        set_appearance_mode("dark")
+    else:
+        set_appearance_mode("light")
+app.update()  # Update the form
+
+switch = CTkSwitch(master=app, text="Dark Mode", command=switch_mode)
+switch.place(x=500, y=700)
+
+# ======================================================================================
+# COMBOBOX FOR COLOR THEME
+# ======================================================================================
+def change_theme(choice):
+    theme_path = f"json/{choice}.json"
+    if os.path.exists(theme_path):
+        set_default_color_theme(theme_path)
+
+        print(f"Theme file {theme_path} is found.")
+    else:
+        print(f"Theme file {theme_path} not found.")
+
+app.update()  # Update the form
+themes = ["MoonlitSky", "NeonBanana", "DaynNight"]
+combobox = CTkComboBox(master=app, values=themes, command=change_theme)
+combobox.place(x=650, y=700)
 
 # ======================================================================================
 # BTN_TaoThuMucMoi
