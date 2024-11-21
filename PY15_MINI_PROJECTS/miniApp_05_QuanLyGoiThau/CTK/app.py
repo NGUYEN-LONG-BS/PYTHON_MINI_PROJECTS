@@ -74,7 +74,12 @@ app.title("QUẢN LÝ GÓI THẦU")
 # set_default_color_theme(r"json\MoonlitSky.json")
 # set_default_color_theme(r"json\NeonBanana.json")
 # set_default_color_theme(r"json\DaynNight.json")
+# set_default_color_theme(r"json\Anthracite.json")
+set_default_color_theme(r"json\Blue.json")
 
+# Blue
+# Cobalt
+# DaynNight
 
 # ======================================================================================
 # SWITCH FOR DARK/LIGHT MODE
@@ -92,6 +97,7 @@ switch.place(x=500, y=700)
 
 # ======================================================================================
 # COMBOBOX FOR COLOR THEME
+# https://github.com/avalon60/ctk_theme_builder/tree/develop/user_themes
 # ======================================================================================
 def change_theme(choice):
     theme_path = f"json/{choice}.json"
