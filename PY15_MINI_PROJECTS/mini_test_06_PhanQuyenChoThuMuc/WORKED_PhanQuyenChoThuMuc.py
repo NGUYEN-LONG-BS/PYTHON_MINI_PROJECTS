@@ -1,3 +1,7 @@
+"""
+    Phân quyền folder trên ổ đĩa remote
+"""
+
 import win32net
 import win32netcon
 
