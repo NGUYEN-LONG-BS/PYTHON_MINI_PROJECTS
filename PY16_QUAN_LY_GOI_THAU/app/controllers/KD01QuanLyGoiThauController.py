@@ -2,7 +2,7 @@ from app.models.folder_manager import create_new_folder, list_directory_contents
 from app.utils.theme_utils import load_theme
 from datetime import datetime
 
-class MainController:
+class KD01QuanLyGoiThauController:
     def __init__(self):
         self.base_path = r"\\172.16.0.191\2.0 ksnb\TUAN_AN_GROUP\BAN_KINH_DOANH\QUAN_LY_THAU"
 
