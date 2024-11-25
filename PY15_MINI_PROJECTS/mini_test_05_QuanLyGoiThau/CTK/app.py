@@ -50,7 +50,7 @@ def Create_New_Folder():
     folder_name_02 = "GOI_THAU"
     folder_name_03_number = str(len(arr_DanhSachGoiThau) + 1).zfill(4)      # hiển thị 4 ký tự
     # folder_name_04 = "SoThongBaoMoiThau"
-    folder_name_04 = ENTRY_01_SoThongBaoMoiThau.get().zfill(4)
+    folder_name_04 = ENTRY_SoThongBaoMoiThau.get().zfill(4)
     folder_name_completed = folder_name_01_year + "_" + folder_name_02 + "_" + folder_name_03_number + "_" + folder_name_04
     new_folder_path = os.path.join(PathQuanLyThau, folder_name_completed)
     sub_folder_01_path = os.path.join(PathQuanLyThau, folder_name_completed, "1.THONG_BAO_MOI_THAU")
@@ -283,7 +283,7 @@ LABEL_TenCongTy = CTkLabel(master=app
 LABEL_TenCongTy.place(x=750, y=10)
 
 # ======================================================================================
-# ENTRY_01_SoThongBaoMoiThau
+# ENTRY_SoThongBaoMoiThau
 # ======================================================================================
 def update_label(*args):
     # Khai báo đường dẫn đến các gói thầu
@@ -296,19 +296,19 @@ def update_label(*args):
     folder_name_02 = "GOI_THAU"
     folder_name_03_number = str(len(arr_DanhSachGoiThau) + 1).zfill(4)      # hiển thị 4 ký tự
     # folder_name_04 = "SoThongBaoMoiThau"
-    folder_name_04 = ENTRY_01_SoThongBaoMoiThau.get().zfill(4)
+    folder_name_04 = ENTRY_SoThongBaoMoiThau.get().zfill(4)
     folder_name_completed = folder_name_01_year + "_" + folder_name_02 + "_" + folder_name_03_number + "_" + folder_name_04
     # new_folder_path = os.path.join(PathQuanLyThau, folder_name_completed)
     
     LABEL_TenThuMucSeKhoiTao.configure(text=folder_name_completed)
     
-ENTRY_01_SoThongBaoMoiThau = CTkEntry(master=app
+ENTRY_SoThongBaoMoiThau = CTkEntry(master=app
                                         ,placeholder_text="Start typing..."
                                         ,width=300
                                         # ,text_color="#FFCC70"
                                         )
-ENTRY_01_SoThongBaoMoiThau.place(x=50, y=200)
-ENTRY_01_SoThongBaoMoiThau.bind("<KeyRelease>", update_label)
+ENTRY_SoThongBaoMoiThau.place(x=50, y=200)
+ENTRY_SoThongBaoMoiThau.bind("<KeyRelease>", update_label)
 
 # ======================================================================================
 # LISTBOX
