@@ -1,7 +1,7 @@
 from customtkinter import *
 from PIL import Image
 from datetime import datetime
-from app.controllers.main_controller import MainController
+from app.controllers.KD01QuanLyGoiThauController import MainController
 
 
 def create_app():
