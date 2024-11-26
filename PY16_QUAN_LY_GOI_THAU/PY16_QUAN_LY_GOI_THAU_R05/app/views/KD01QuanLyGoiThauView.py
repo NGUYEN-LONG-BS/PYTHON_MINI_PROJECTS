@@ -3,11 +3,12 @@ from customtkinter import *
 from PIL import Image
 from datetime import datetime
 from app.controllers.KD01QuanLyGoiThauController import KD01QuanLyGoiThauController
+from app.views.BaseView import BaseView  # Import the base view
 
 
-class KD01QuanLyGoiThauView(CTk):
+class KD01QuanLyGoiThauView(BaseView):
     def __init__(self):
-        super().__init__()
+        super().__init__()  # Call the parent (BaseView) constructor
         # Initialize controller
         self.controller = KD01QuanLyGoiThauController()  # Assign the controller to an instance variable
         

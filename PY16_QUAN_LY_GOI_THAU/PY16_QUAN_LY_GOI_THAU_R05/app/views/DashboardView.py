@@ -3,27 +3,20 @@ import tkinter as tk
 from customtkinter import *  # Ensure all necessary components are imported
 from app.controllers.DashboardController import DashboardController
 from app.views.KD01QuanLyGoiThauView import KD01QuanLyGoiThauView
+from app.views.BaseView import BaseView  # Import the base view
 
-class Dashboard(CTk):
+class Dashboard(BaseView):
     def __init__(self):
-        print("Dashboard initialized")
-        super().__init__()
+        super().__init__()  # Call the parent (BaseView) constructor
+        
         # Initialize controller
         self.controller = DashboardController()  # Assign the controller to an instance variable
         
-        # Setup the main window
-        self.geometry("900x800")
-        self.title("TUẤN ÂN GROUP - DASHBOARD")
-        
-        # Center the window on the screen
-        self.center_window()
         
         # Setup the components
         # self.setup_logo()
         self.setup_BTN_KD01QuanLyGoiThauView()
         
-        # Create the menu
-        self.create_menu()
         
     # ==================================================================================================
     # center_window
