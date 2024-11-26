@@ -35,17 +35,20 @@ class KD01QuanLyGoiThauView(CTk):
         project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
         
         # Load the logo image
-        # logo_path = os.path.join(os.path.dirname(__file__), "../assets/img/logo.png")
-        logo_path = os.path.join(project_root, "assets/img/logo.png")
-        print(f"Resolved logo path: {os.path.abspath(logo_path)}")
+        # logo_path = os.path.join(project_root, "assets/img/logo.png")
+        logo_path_light = os.path.join(project_root, "assets/img/logo-Light.jpg")
+        logo_path_dark = os.path.join(project_root, "assets/img/logo-Dark.jpg")
         posX = 5
         posY = 5
         try:
-            logo_image = CTkImage(light_image=Image.open(logo_path), dark_image=Image.open(logo_path), size=(100, 100))
+            logo_image = CTkImage(light_image=Image.open(logo_path_light), dark_image=Image.open(logo_path_dark), size=(100, 100))
             logo_label = CTkLabel(self, image=logo_image, text="")  # Set text="" to show only the image
             logo_label.place(x=posX, y=posY)  # Position the logo
         except FileNotFoundError:
-            print(f"Logo file not found at {logo_path}")
+            print(f"Logo file not found at {logo_path_light}")
+            # print(f"Resolved logo path: {os.path.abspath(logo_path_light)}")
+            print(f"Logo file not found at {logo_path_dark}")
+            # print(f"Resolved logo path: {os.path.abspath(logo_path_dark)}")
             error_label = CTkLabel(self, text="Logo not found", font=("", 16))
             error_label.place(x=posX, y=posY)
 
