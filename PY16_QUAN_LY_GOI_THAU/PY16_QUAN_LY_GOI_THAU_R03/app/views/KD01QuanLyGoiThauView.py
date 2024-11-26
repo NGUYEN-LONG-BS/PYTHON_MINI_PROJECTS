@@ -15,8 +15,11 @@ class KD01QuanLyGoiThauView(CTk):
         self.geometry("900x800")
         self.title("QUẢN LÝ GÓI THẦU")
         
+        # Center the window on the screen
+        self.center_window()
+        
         # Setup the components
-        self.setup_logo()
+        # self.setup_logo()
         self.setup_Employee_Info_Labels()
         self.setup_Title_H1()
         self.setup_labels()
@@ -27,41 +30,67 @@ class KD01QuanLyGoiThauView(CTk):
         self.setup_BTN_TaoThuMucMoi()
         self.setup_switches()
         self.setup_scrollable_frame()
+        self.setup_BTN_ShowDashboard()
 
+        # Store the reference to the Dashboard instance (so we can use it later)
+        self.dashboard = None  # This will hold the Dashboard window instance
+        
+        # Bind the window close event to the method that closes both windows
+        self.protocol("WM_DELETE_WINDOW", self.on_close)
+    
+    # ==================================================================================================
+    # center_window
+    # ==================================================================================================
+    def center_window(self):
+        # Get the screen width and height
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+
+        # Get the window's width and height
+        window_width = 900  # Window width you set
+        window_height = 800  # Window height you set
+
+        # Calculate the position to center the window
+        x_position = (screen_width - window_width) // 2
+        y_position = (screen_height - window_height) // 2
+
+        # Set the window's geometry with the calculated position
+        self.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
+    
     # ==================================================================================================
     # SETUP HEADER FRAME
     # ==================================================================================================
-    def setup_logo(self):
-        # Get the project root directory
-        # project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))   # Going two levels up
-        project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))  # Going two levels up
+    # def setup_logo(self):
+    #     # Get the project root directory
+    #     # project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))   # Going two levels up
+    #     project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))  # Going two levels up
         
-        # Load the logo images
-        logo_path_light = os.path.join(project_root, "assets/img/logo-Light.jpg")
-        logo_path_dark = os.path.join(project_root, "assets/img/logo-Dark.jpg")
-        posX = 5
-        posY = 5
+    #     # Load the logo images
+    #     logo_path_light = os.path.join(project_root, "assets/img/logo-Light.jpg")
+    #     logo_path_dark = os.path.join(project_root, "assets/img/logo-Dark.jpg")
+    #     posX = 5
+    #     posY = 5
         
-        # Debugging print to check image paths
-        print("Logo path (light mode):", logo_path_light)
-        print("Logo path (dark mode):", logo_path_dark)
+    #     # Debugging print to check image paths
+    #     print("Logo path (light mode):", logo_path_light)
+    #     print("Logo path (dark mode):", logo_path_dark)
         
-        try:
-            # Try loading the light mode image first
-            logo_image_light = Image.open(logo_path_light)
-            logo_image_dark = Image.open(logo_path_dark)
+    #     try:
+    #         # Try loading the light mode image first
+    #         logo_image_light = Image.open(logo_path_light)
+    #         logo_image_dark = Image.open(logo_path_dark)
             
-            # Create the CTkImage for both light and dark modes
-            self.logo_image = CTkImage(light_image=logo_image_light, dark_image=logo_image_dark, size=(100, 100))
+    #         # Create the CTkImage for both light and dark modes
+    #         self.logo_image = CTkImage(light_image=logo_image_light, dark_image=logo_image_dark, size=(100, 100))
             
-            # Create the CTkLabel and display the image
-            logo_label = CTkLabel(self, image=self.logo_image, text="")
-            logo_label.place(x=posX, y=posY)
+    #         # Create the CTkLabel and display the image
+    #         logo_label = CTkLabel(self, image=self.logo_image, text="")
+    #         logo_label.place(x=posX, y=posY)
             
-        except FileNotFoundError:
-            print(f"Logo file not found at {logo_path_light} or {logo_path_dark}")
-            error_label = CTkLabel(self, text="Logo not found", font=("", 16))
-            error_label.place(x=posX, y=posY)
+    #     except FileNotFoundError:
+    #         print(f"Logo file not found at {logo_path_light} or {logo_path_dark}")
+    #         error_label = CTkLabel(self, text="Logo not found", font=("", 16))
+    #         error_label.place(x=posX, y=posY)
 
 
     def setup_Employee_Info_Labels(self):
@@ -159,6 +188,21 @@ class KD01QuanLyGoiThauView(CTk):
         BTN_TaoThuMucMoi.place(x=50, y=700)
 
     # ==================================================================================================
+    # setup_BTN_ShowDashboard
+    # ==================================================================================================
+    def setup_BTN_ShowDashboard(self):
+        # Button to show the Dashboard window and hide KD01 view
+        def BTN_ShowDashboard_Click():
+            if self.dashboard:
+                self.dashboard.deiconify()  # Show the Dashboard
+                self.destroy()  # Close the current KD01 view
+            else:
+                print("Dashboard window not initialized yet.")
+        
+        BTN_ShowDashboard = CTkButton(self, text="Show Dashboard", command=BTN_ShowDashboard_Click)
+        BTN_ShowDashboard.place(x=250, y=700)
+
+    # ==================================================================================================
     # setup_switches
     # ==================================================================================================
     def setup_switches(self):
@@ -216,3 +260,19 @@ class KD01QuanLyGoiThauView(CTk):
         
         # Update the LABEL_TenThuMucSeKhoiTao with the new folder name
         self.LABEL_TenThuMucSeKhoiTao.configure(text=folder_name)
+        
+    # ==================================================================================================
+    # Run the main event loop
+    # ==================================================================================================
+    def main(self):
+        # Start the Tkinter main loop
+        self.mainloop()
+    
+    # ==================================================================================================
+    # on_close
+    # ==================================================================================================
+    def on_close(self):
+        # When the KD01 view is closed, show the Dashboard and close the KD01 view
+        if self.dashboard:
+            self.dashboard.deiconify()  # Make Dashboard visible again
+        self.destroy()  # Close the KD01 view window
