@@ -27,6 +27,9 @@ class KD01QuanLyGoiThauView(CTk):
         self.setup_switches()
         self.setup_scrollable_frame()
 
+    # ==================================================================================================
+    # SETUP HEADER FRAME
+    # ==================================================================================================
     def setup_logo(self):
         # Get the project root directory
         project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
@@ -62,7 +65,10 @@ class KD01QuanLyGoiThauView(CTk):
 
         LABEL_TenCongTy = CTkLabel(master=self, text="Cty: Thiết bị điện", font=("", 13))
         LABEL_TenCongTy.place(x=750, y=10)
-    
+
+    # ==================================================================================================
+    # SETUP HEADER H1
+    # ==================================================================================================
     def setup_Title_H1(self):
         # Static Labels
         LABEL_TieuDe_H1 = CTkLabel(master=self, text="TẠO FOLDER QUẢN LÝ GÓI THẦU MỚI", font=("", 25))
@@ -130,11 +136,11 @@ class KD01QuanLyGoiThauView(CTk):
     # ==================================================================================================
     def setup_BTN_TaoThuMucMoi(self):
         # Button to create folder
-        def on_create_folder():
+        def BTN_TaoThuMucMoi_Click():
             folder_name = self.LABEL_TenThuMucSeKhoiTao.cget("text")  # Get the current folder name
             self.controller.create_folder(folder_name)  # Pass folder name to controller
 
-        BTN_TaoThuMucMoi = CTkButton(self, text="Tạo thư mục mới", command=on_create_folder)
+        BTN_TaoThuMucMoi = CTkButton(self, text="Tạo thư mục mới", command=BTN_TaoThuMucMoi_Click)
         BTN_TaoThuMucMoi.place(x=50, y=700)
 
     # ==================================================================================================
@@ -142,13 +148,13 @@ class KD01QuanLyGoiThauView(CTk):
     # ==================================================================================================
     def setup_switches(self):
         # Switch for light/dark mode
-        def switch_mode():
+        def SWITCH_DarkLightMode_Change():
             current_mode = get_appearance_mode()
             new_mode = "dark" if current_mode == "Light" else "light"
             set_appearance_mode(new_mode)
             print(f"Mode switched to {new_mode}")
 
-        SWITCH_DarkLightMode = CTkSwitch(self, text="Dark Mode", command=switch_mode)
+        SWITCH_DarkLightMode = CTkSwitch(self, text="Dark Mode", command=SWITCH_DarkLightMode_Change)
         SWITCH_DarkLightMode.place(x=500, y=700)
 
     # ==================================================================================================

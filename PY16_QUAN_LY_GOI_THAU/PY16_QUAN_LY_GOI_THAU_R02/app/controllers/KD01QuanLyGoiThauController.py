@@ -1,5 +1,5 @@
 import os
-from app.models.KD01QuanLyGoiThauModel import create_new_folder, list_directory_contents
+from app.models.KD01QuanLyGoiThauModel import *
 from app.utils.theme_utils import load_theme
 
 class KD01QuanLyGoiThauController:
@@ -11,6 +11,9 @@ class KD01QuanLyGoiThauController:
         """
         Creates a folder based on the folder_name passed from the view.
         """
+        if check_folder_exists(self.base_path, folder_name):
+            print(f"Folder '{folder_name}' already exists.")
+            return None  # Or you could handle it differently, e.g., notify the user
         folder_path = create_new_folder(self.base_path, folder_name)
         print(f"Created folder: {folder_path}")
         return folder_path  # Return the folder path, can be used for further processing in the view

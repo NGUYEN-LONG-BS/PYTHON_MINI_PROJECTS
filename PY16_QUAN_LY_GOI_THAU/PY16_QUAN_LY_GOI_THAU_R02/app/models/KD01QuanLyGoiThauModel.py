@@ -34,3 +34,10 @@ def list_directory_contents(directory):
     except Exception as e:
         print(f"Error listing directory contents: {e}")
         return []
+
+def check_folder_exists(base_path, folder_name):
+    """
+    Checks if a folder already exists in the specified base path.
+    """
+    folder_path = os.path.join(base_path, folder_name)
+    return os.path.exists(folder_path)
