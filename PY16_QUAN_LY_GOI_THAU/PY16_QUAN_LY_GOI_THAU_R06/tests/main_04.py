@@ -22,9 +22,9 @@ def main():
     """
     setup_sys_path()  # Thiết lập đường dẫn
     # Import hàm render_dashboard từ DashboardView_Iherit_Component trong views
-    from app.views.DashboardView_Iherit_Component import render_dashboard
+    from app.views.DashboardView_04 import create_layout
     # Gọi hàm render_dashboard để hiển thị dashboard
-    render_dashboard()
+    create_layout()
 
 if __name__ == "__main__":
     main()

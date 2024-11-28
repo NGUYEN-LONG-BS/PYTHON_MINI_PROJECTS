@@ -22,7 +22,7 @@ def render_dashboard():
     # create_main_content(root, content_type="statistics")  # You can change content type dynamically
     
      # Create the main content area
-    main_content_frame = create_main_content(root, left_menu_frame, right_banner_frame, content_type="statistics")
+    # main_content_frame = create_main_content(root, left_menu_frame, right_banner_frame, content_type="statistics")
     
     create_footer(root)
     
