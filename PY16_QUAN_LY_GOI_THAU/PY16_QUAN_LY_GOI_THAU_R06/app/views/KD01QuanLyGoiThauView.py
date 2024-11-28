@@ -20,18 +20,31 @@ class KD01QuanLyGoiThauView(tk.Tk):
         self.title("QUẢN LÝ GÓI THẦU")
 
         # Create a container frame to hold both the logo frame and user info frame
-        frame_container = tk.Frame(self)
-        frame_container.pack(side='top', padx=10, pady=10)
+        frame_header_container = tk.Frame(self)
+        frame_header_container.pack(side='top', fill='x', padx=10, pady=0)
 
         # Setup the logo in the Frame_logo using the imported function
-        Frame_logo = tk.Frame(frame_container, width=100, height=100)
+        Frame_logo = tk.Frame(frame_header_container, width=100, height=100)
         Frame_logo.pack(side='left', padx=10)  # Pack the logo frame on the left side with some padding
         setup_logo(Frame_logo)  # Pass the frame as the parent for the logo
+        
+        # Wait for the window to render and then calculate the width of Frame_user_info
+        def update_user_info_frame_width():
+            window_width = self.winfo_width()  # Get the current window width
+            logo_width = Frame_logo.winfo_width()  # Get the width of the Frame_logo
+            user_info_width = window_width - logo_width - 20  # Subtract logo width and padding (10 + 10)
+            
+            # Update the width of Frame_user_info dynamically
+            Frame_user_info.config(width=user_info_width)
 
         # Setup the logo in the Frame_logo using the imported function
-        Frame_user_info = tk.Frame(frame_container, width=900, height=100)
+        Frame_user_info = tk.Frame(frame_header_container, height=100)
         Frame_user_info.pack(side='left', padx=10)  # Pack the user info frame to the left with padding
         setup_employee_info_labels(Frame_user_info)  # Call the function to add employee info labels
+        
+        # Call the update function to adjust the width of Frame_user_info after the window has been rendered
+        # 100 mili giây
+        self.after(100, update_user_info_frame_width)
         
         self.setup_title_h1()
         self.setup_labels()

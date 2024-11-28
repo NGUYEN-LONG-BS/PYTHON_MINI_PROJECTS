@@ -15,6 +15,10 @@ def setup_sys_path():
     views_path = os.path.join(app_path, 'views')
     if views_path not in sys.path:
         sys.path.append(views_path)
+    # Thêm đường dẫn tới thư mục app vào sys.path
+    app_path = os.path.join(base_dir, 'assets')
+    if app_path not in sys.path:
+        sys.path.append(app_path)
 
 def main():
     """
