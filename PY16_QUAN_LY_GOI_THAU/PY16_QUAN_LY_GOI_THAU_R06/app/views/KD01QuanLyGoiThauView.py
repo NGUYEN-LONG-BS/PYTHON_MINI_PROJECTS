@@ -1,279 +1,170 @@
-# KD01QuanLyGoiThauView.py
-from customtkinter import *
+# Project/Views/KD01QuanLyGoiThauView.py
+import tkinter as tk
+from tkinter import ttk
 from PIL import Image
 from datetime import datetime
 from app.controllers.KD01QuanLyGoiThauController import KD01QuanLyGoiThauController
-from app.views.BaseView import BaseView  # Import the base view
+from utils import *
+from components.user_Info import setup_employee_info_labels  # Import the function
+from components.logo import setup_logo  # Import the setup_logo function
 
-
-class KD01QuanLyGoiThauView(BaseView):
+class KD01QuanLyGoiThauView(tk.Tk):
     def __init__(self):
-        super().__init__()  # Call the parent (BaseView) constructor
+        super().__init__()
+
         # Initialize controller
-        self.controller = KD01QuanLyGoiThauController()  # Assign the controller to an instance variable
-        
-        # Setup the main window
-        self.geometry("900x800")
+        self.controller = KD01QuanLyGoiThauController()
+
+        # Setup window
+        set_window_size(self)
         self.title("QUẢN LÝ GÓI THẦU")
+
+        # Create a container frame to hold both the logo frame and user info frame
+        frame_container = tk.Frame(self)
+        frame_container.pack(side='top', padx=10, pady=10)
+
+        # Setup the logo in the Frame_logo using the imported function
+        Frame_logo = tk.Frame(frame_container, width=100, height=100)
+        Frame_logo.pack(side='left', padx=10)  # Pack the logo frame on the left side with some padding
+        setup_logo(Frame_logo)  # Pass the frame as the parent for the logo
+
+        # Setup the logo in the Frame_logo using the imported function
+        Frame_user_info = tk.Frame(frame_container, width=900, height=100)
+        Frame_user_info.pack(side='left', padx=10)  # Pack the user info frame to the left with padding
+        setup_employee_info_labels(Frame_user_info)  # Call the function to add employee info labels
         
-        # Center the window on the screen
-        self.center_window()
-        
-        # Setup the components
-        # self.setup_logo()
-        self.setup_Employee_Info_Labels()
-        self.setup_Title_H1()
+        self.setup_title_h1()
         self.setup_labels()
-        self.setup_LABEL_TenThuMucSeKhoiTao()
-        self.setup_COMBOBOX_NamGoiThau()
-        self.setup_COMBOBOX_ChangeTheme()
+        self.setup_combobox_nam_goi_thau()
         self.setup_entries()
-        self.setup_BTN_TaoThuMucMoi()
-        self.setup_switches()
+        self.setup_btn_tao_thu_muc_moi()
         self.setup_scrollable_frame()
-        self.setup_BTN_ShowDashboard()
+        self.setup_btn_show_dashboard()
 
-        # Store the reference to the Dashboard instance (so we can use it later)
-        self.dashboard = None  # This will hold the Dashboard window instance
-        
-        # Bind the window close event to the method that closes both windows
+        self.dashboard = None  # Placeholder for Dashboard window
+
+        # Bind close event
         self.protocol("WM_DELETE_WINDOW", self.on_close)
-    
-    # ==================================================================================================
-    # center_window
-    # ==================================================================================================
-    def center_window(self):
-        # Get the screen width and height
-        screen_width = self.winfo_screenwidth()
-        screen_height = self.winfo_screenheight()
 
-        # Get the window's width and height
-        window_width = 900  # Window width you set
-        window_height = 800  # Window height you set
+    # Employee Info Labels
+    def setup_employee_info_labels(self):
+        tk.Label(self, text="ID: TBD001", font=("Arial", 13)).place(x=115, y=10)
+        tk.Label(self, text="Họ tên: Nguyễn Văn B", font=("Arial", 13)).place(x=200, y=10)
+        tk.Label(self, text="Bộ phận: Kinh doanh", font=("Arial", 13)).place(x=370, y=10)
+        tk.Label(self, text="Cấp bậc: Nhân viên", font=("Arial", 13)).place(x=550, y=10)
+        tk.Label(self, text="Cty: Thiết bị điện", font=("Arial", 13)).place(x=750, y=10)
 
-        # Calculate the position to center the window
-        x_position = (screen_width - window_width) // 2
-        y_position = (screen_height - window_height) // 2
+    # Header Title
+    def setup_title_h1(self):
+        title_label = tk.Label(self, text="TẠO FOLDER QUẢN LÝ GÓI THẦU MỚI", font=("Arial", 25))
+        title_label.place(relx=0.2, rely=0.1)
 
-        # Set the window's geometry with the calculated position
-        self.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
-    
-    # ==================================================================================================
-    # SETUP HEADER FRAME
-    # ==================================================================================================
-    # def setup_logo(self):
-    #     # Get the project root directory
-    #     # project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))   # Going two levels up
-    #     project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))  # Going two levels up
-        
-    #     # Load the logo images
-    #     logo_path_light = os.path.join(project_root, "assets/img/logo-Light.jpg")
-    #     logo_path_dark = os.path.join(project_root, "assets/img/logo-Dark.jpg")
-    #     posX = 5
-    #     posY = 5
-        
-    #     # Debugging print to check image paths
-    #     print("Logo path (light mode):", logo_path_light)
-    #     print("Logo path (dark mode):", logo_path_dark)
-        
-    #     try:
-    #         # Try loading the light mode image first
-    #         logo_image_light = Image.open(logo_path_light)
-    #         logo_image_dark = Image.open(logo_path_dark)
-            
-    #         # Create the CTkImage for both light and dark modes
-    #         self.logo_image = CTkImage(light_image=logo_image_light, dark_image=logo_image_dark, size=(100, 100))
-            
-    #         # Create the CTkLabel and display the image
-    #         logo_label = CTkLabel(self, image=self.logo_image, text="")
-    #         logo_label.place(x=posX, y=posY)
-            
-    #     except FileNotFoundError:
-    #         print(f"Logo file not found at {logo_path_light} or {logo_path_dark}")
-    #         error_label = CTkLabel(self, text="Logo not found", font=("", 16))
-    #         error_label.place(x=posX, y=posY)
-
-
-    def setup_Employee_Info_Labels(self):
-        # Employee Info Labels
-        LABEL_IDNhanVien = CTkLabel(master=self, text="ID: TBD001", font=("", 13))
-        LABEL_IDNhanVien.place(x=115, y=10)
-
-        LABEL_TenNhanVien = CTkLabel(master=self, text="Họ tên: Nguyễn Văn B", font=("", 13))
-        LABEL_TenNhanVien.place(x=200, y=10)
-
-        LABEL_TenBoPhan = CTkLabel(master=self, text="Bộ phận: Kinh doanh", font=("", 13))
-        LABEL_TenBoPhan.place(x=370, y=10)
-
-        LABEL_CapBac = CTkLabel(master=self, text="Cấp bậc: Nhân viên", font=("", 13))
-        LABEL_CapBac.place(x=550, y=10)
-
-        LABEL_TenCongTy = CTkLabel(master=self, text="Cty: Thiết bị điện", font=("", 13))
-        LABEL_TenCongTy.place(x=750, y=10)
-
-    # ==================================================================================================
-    # SETUP HEADER H1
-    # ==================================================================================================
-    def setup_Title_H1(self):
-        # Static Labels
-        LABEL_TieuDe_H1 = CTkLabel(master=self, text="TẠO FOLDER QUẢN LÝ GÓI THẦU MỚI", font=("", 25))
-        LABEL_TieuDe_H1.place(relx=0.2, rely=0.1)
-
-    # ==================================================================================================
-    # SETUP ALL LABELS
-    # ==================================================================================================
-    def setup_LABEL_TenThuMucSeKhoiTao(self):
-        # Store the label in an instance variable to update it later
-        self.LABEL_TenThuMucSeKhoiTao = CTkLabel(master=self, text="24_GOI_THAU_0000_0000", font=("", 18))
-        self.LABEL_TenThuMucSeKhoiTao.place(x=390, y=230)
-
+    # Static Labels
     def setup_labels(self):
-        # Static Labels
-        LABEL_SoThongBaoMoiThau = CTkLabel(master=self, text="Số thông báo mời thầu", font=("", 18))
-        LABEL_SoThongBaoMoiThau.place(x=50, y=200)
+        tk.Label(self, text="Số thông báo mời thầu", font=("Arial", 18)).place(x=50, y=200)
+        tk.Label(self, text="Năm gói thầu", font=("Arial", 18)).place(x=50, y=130)
+        tk.Label(self, text="Danh sách gói thầu", font=("Arial", 18)).place(x=50, y=300)
 
-        LABEL_NamGoiThau = CTkLabel(master=self, text="Năm gói thầu", font=("", 18))
-        LABEL_NamGoiThau.place(x=50, y=130)
+        self.folder_name_label = tk.Label(self, text="24_GOI_THAU_0000_0000", font=("Arial", 18))
+        self.folder_name_label.place(x=390, y=230)
 
-        LABEL_DanhSachGoiThau = CTkLabel(master=self, text="Danh sách gói thầu", font=("", 18))
-        LABEL_DanhSachGoiThau.place(x=50, y=300)
-
-    # ==================================================================================================
-    # SETUP ALL COMBOBOXS
-    # ==================================================================================================
-    def setup_COMBOBOX_NamGoiThau(self):
-        # Combobox for selecting year
+    # Combobox for Year
+    def setup_combobox_nam_goi_thau(self):
         current_year = datetime.now().year
         year_array = [str(current_year - 2), str(current_year - 1), str(current_year), str(current_year + 1)]
 
-        def change_handler(value):
-            print(f"Selected Value: {value}")
-            self.update_folder_name()  # Call the method to update the folder name
+        self.year_combobox = ttk.Combobox(self, values=year_array)
+        self.year_combobox.set(str(current_year))  # Default to current year
+        self.year_combobox.place(x=50, y=160)
+        self.year_combobox.bind("<<ComboboxSelected>>", self.on_combobox_nam_goi_thau_change)
 
-        self.COMBOBOX_NamGoiThau = CTkComboBox(master=self, values=year_array, command=change_handler)
-        self.COMBOBOX_NamGoiThau.set(str(current_year))  # Default to current year
-        self.COMBOBOX_NamGoiThau.place(x=50, y=160)
-        
-    # ==================================================================================================
-    # setup_COMBOBOX_ChangeTheme
-    # ==================================================================================================
-    def setup_COMBOBOX_ChangeTheme(self):
-        # Combobox for theme selection
-        themes = ["MoonlitSky", "NeonBanana", "DaynNight"]
-
-        def change_theme(choice):
-            print(f"Theme selected: {choice}")
-
-        self.COMBOBOX_ChangeTheme = CTkComboBox(master=self, values=themes, command=change_theme)
-        self.COMBOBOX_ChangeTheme.place(x=650, y=700)
-
-    # ==================================================================================================
-    # setup_entries
-    # ==================================================================================================
+    # Entry for notification number
     def setup_entries(self):
-        # Entry for notification number
-        self.ENTRY_SoThongBaoMoiThau = CTkEntry(master=self, placeholder_text="Start typing...", width=300)
-        self.ENTRY_SoThongBaoMoiThau.place(x=50, y=230)
-        self.ENTRY_SoThongBaoMoiThau.bind("<KeyRelease>", self.on_entry_change)
+        self.notification_entry = tk.Entry(self, width=30)
+        self.notification_entry.place(x=50, y=230)
+        self.notification_entry.bind("<KeyRelease>", self.on_entry_change)
 
-    # ==================================================================================================
-    # setup_BTN_TaoThuMucMoi
-    # ==================================================================================================
-    def setup_BTN_TaoThuMucMoi(self):
-        # Button to create folder
-        def BTN_TaoThuMucMoi_Click():
-            folder_name = self.LABEL_TenThuMucSeKhoiTao.cget("text")  # Get the current folder name
-            self.controller.create_folder(folder_name)  # Pass folder name to controller
+    # Button to create folder
+    def setup_btn_tao_thu_muc_moi(self):
+        def btn_tao_thu_muc_moi_click():
+            folder_name = self.folder_name_label.cget("text")
+            self.controller.create_folder(folder_name)
 
-        BTN_TaoThuMucMoi = CTkButton(self, text="Tạo thư mục mới", command=BTN_TaoThuMucMoi_Click)
-        BTN_TaoThuMucMoi.place(x=50, y=700)
+        create_folder_btn = tk.Button(self, text="Tạo thư mục mới", command=btn_tao_thu_muc_moi_click)
+        create_folder_btn.place(x=50, y=700)
 
-    # ==================================================================================================
-    # setup_BTN_ShowDashboard
-    # ==================================================================================================
-    def setup_BTN_ShowDashboard(self):
-        # Button to show the Dashboard window and hide KD01 view
-        def BTN_ShowDashboard_Click():
+    # Button to show Dashboard
+    def setup_btn_show_dashboard(self):
+        def btn_show_dashboard_click():
             if self.dashboard:
-                self.dashboard.deiconify()  # Show the Dashboard
-                self.destroy()  # Close the current KD01 view
+                self.dashboard.deiconify()
+                self.destroy()  # Close the current view
             else:
                 print("Dashboard window not initialized yet.")
-        
-        BTN_ShowDashboard = CTkButton(self, text="Show Dashboard", command=BTN_ShowDashboard_Click)
-        BTN_ShowDashboard.place(x=250, y=700)
 
-    # ==================================================================================================
-    # setup_switches
-    # ==================================================================================================
-    def setup_switches(self):
-        # Switch for light/dark mode
-        def SWITCH_DarkLightMode_Change():
-            current_mode = get_appearance_mode()
-            new_mode = "dark" if current_mode == "Light" else "light"
-            set_appearance_mode(new_mode)
-            print(f"Mode switched to {new_mode}")
+        show_dashboard_btn = tk.Button(self, text="Show Dashboard", command=btn_show_dashboard_click)
+        show_dashboard_btn.place(x=250, y=700)
 
-        SWITCH_DarkLightMode = CTkSwitch(self, text="Dark Mode", command=SWITCH_DarkLightMode_Change)
-        SWITCH_DarkLightMode.place(x=500, y=700)
-
-    # ==================================================================================================
-    # setup_scrollable_frame
-    # ==================================================================================================
+    # Scrollable frame for folder contents
     def setup_scrollable_frame(self):
-        # Scrollable frame for folder contents
-        self.scrollable_frame = CTkScrollableFrame(self, width=800, height=200)
+        self.scrollable_frame = tk.Frame(self, width=800, height=200)
         self.scrollable_frame.place(x=50, y=330)
+
+        canvas = tk.Canvas(self.scrollable_frame)
+        scrollbar = tk.Scrollbar(self.scrollable_frame, orient="vertical", command=canvas.yview)
+        canvas.configure(yscrollcommand=scrollbar.set)
+
+        scrollbar.pack(side="right", fill="y")
+        canvas.pack(side="left", fill="both", expand=True)
+
+        frame = tk.Frame(canvas)
+        canvas.create_window((0, 0), window=frame, anchor="nw")
 
         def refresh_scrollable_frame():
             # Simulate directory contents
             directory_contents = [f"Folder {i}" for i in range(1, 21)]
-            for widget in self.scrollable_frame.winfo_children():
+            for widget in frame.winfo_children():
                 widget.destroy()
             for item in directory_contents:
-                label = CTkLabel(self.scrollable_frame, text=item, font=("", 14))
+                label = tk.Label(frame, text=item, font=("Arial", 14))
                 label.pack(anchor="w")
 
         refresh_scrollable_frame()
-    
-    # ==================================================================================================
-    # on_entry_change
-    # ==================================================================================================
-    def on_COMBOBOX_NamGoiThau_change(self, event):
+
+        frame.update_idletasks()
+        canvas.config(scrollregion=canvas.bbox("all"))
+
+    # Combobox change handler
+    def on_combobox_nam_goi_thau_change(self, event):
         self.update_folder_name()
-    
-    # ==================================================================================================
-    # on_entry_change
-    # ==================================================================================================
+
+    # Entry change handler
     def on_entry_change(self, event):
         self.update_folder_name()
 
+    # Update folder name
     def update_folder_name(self):
-        # Get the year from COMBOBOX
-        selected_year = self.COMBOBOX_NamGoiThau.get()
-        year_suffix = selected_year[-2:]  # Get last 2 digits of the selected year
-        
-        # Get the notification number from ENTRY_SoThongBaoMoiThau and pad to 4 digits
-        notification_number = self.ENTRY_SoThongBaoMoiThau.get().zfill(4)
-        
-        # Construct the new folder name
+        selected_year = self.year_combobox.get()
+        year_suffix = selected_year[-2:]
+
+        notification_number = self.notification_entry.get().zfill(4)
+
         folder_name = f"{year_suffix}_GOI_THAU_0000_{notification_number}"
-        
-        # Update the LABEL_TenThuMucSeKhoiTao with the new folder name
-        self.LABEL_TenThuMucSeKhoiTao.configure(text=folder_name)
-        
-    # ==================================================================================================
-    # Run the main event loop
-    # ==================================================================================================
-    def main(self):
-        # Start the Tkinter main loop
-        self.mainloop()
-    
-    # ==================================================================================================
-    # on_close
-    # ==================================================================================================
+
+        self.folder_name_label.configure(text=folder_name)
+
+    # Close event handler
     def on_close(self):
-        # When the KD01 view is closed, show the Dashboard and close the KD01 view
         if self.dashboard:
-            self.dashboard.deiconify()  # Make Dashboard visible again
-        self.destroy()  # Close the KD01 view window
+            self.dashboard.deiconify()
+        self.destroy()  # Close the current view
+
+    # Run main event loop
+    def main(self):
+        self.mainloop()
+
+
+# To run the view
+if __name__ == "__main__":
+    view = KD01QuanLyGoiThauView()
+    view.main()

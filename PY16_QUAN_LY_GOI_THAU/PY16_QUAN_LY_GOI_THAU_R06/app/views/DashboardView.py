@@ -1,129 +1,23 @@
-# DashboardView.py
+# Project/Views/DashboardView_Iherit_Component.py
 import tkinter as tk
-from customtkinter import *  # Ensure all necessary components are imported
-from app.controllers.DashboardController import DashboardController
-from app.views.KD01QuanLyGoiThauView import KD01QuanLyGoiThauView
-from app.views.BaseView import BaseView  # Import the base view
+from components import *
+from utils import *
 
-class Dashboard(BaseView):
-    def __init__(self):
-        super().__init__()  # Call the parent (BaseView) constructor
-        
-        # Initialize controller
-        self.controller = DashboardController()  # Assign the controller to an instance variable
-        
-        
-        # Setup the components
-        # self.setup_logo()
-        self.setup_BTN_KD01QuanLyGoiThauView()
-        
-        
-    # ==================================================================================================
-    # center_window
-    # ==================================================================================================
-    def center_window(self):
-        # Get the screen width and height
-        screen_width = self.winfo_screenwidth()
-        screen_height = self.winfo_screenheight()
-
-        # Get the window's width and height
-        window_width = 900  # Window width you set
-        window_height = 800  # Window height you set
-
-        # Calculate the position to center the window
-        x_position = (screen_width - window_width) // 2
-        y_position = (screen_height - window_height) // 2
-
-        # Set the window's geometry with the calculated position
-        self.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
-        
-        
-    def create_menu(self):
-        # Create a Tkinter Menu bar
-        menubar = tk.Menu(self)
-
-        # Create a "Home" menu
-        help_menu = tk.Menu(menubar, tearoff=0)
-        menubar.add_cascade(label="Home", command=self.show_about)
-
-        # Create a "Quản lý gói thầu" menu
-        file_menu = tk.Menu(menubar, tearoff=0)
-        file_menu.add_command(label="Tạo mới gói thầu", command=self.open_file)
-        file_menu.add_command(label="Các gói thầu đã lập", command=self.save_file)
-        file_menu.add_separator()
-        file_menu.add_command(label="Exit", command=self.quit)
-        menubar.add_cascade(label="Quản lý gói thầu", menu=file_menu)
-
-        # Create a "Help" menu
-        help_menu = tk.Menu(menubar, tearoff=0)
-        help_menu.add_command(label="Đơn đặt hàng TALA", command=self.show_about)
-        menubar.add_cascade(label="Đơn đặt hàng", menu=help_menu)
-        
-        # Create a "Help" menu
-        help_menu = tk.Menu(menubar, tearoff=0)
-        help_menu.add_command(label="About", command=self.show_about)
-        menubar.add_cascade(label="Menu", menu=help_menu)
-
-        # Set the menu bar for the root window
-        self.config(menu=menubar)
-
-    def open_file(self):
-        print("Open file selected")
-
-    def save_file(self):
-        print("Save file selected")
-
-    def show_about(self):
-        print("About selected")
-        
-    def show_home(self):
-        print("Home selected")
-
-    def run_kd01_view(self):
-        print("Button clicked: Running KD01QuanLyGoiThauView")
-        # Your code to open KD01QuanLyGoiThauView window
-        # Optionally you can hide the Dashboard here using `self.withdraw()`
-
-    def run(self):
-        self.mainloop()
-
-    # ==================================================================================================
-    # setup_BTN_TaoThuMucMoi
-    # ==================================================================================================
-    def setup_BTN_KD01QuanLyGoiThauView(self):
-        # Button to create folder
-        def BTN_TaoThuMucMoi_Click():
-            folder_name = self.LABEL_TenThuMucSeKhoiTao.cget("text")  # Get the current folder name
-            self.controller.create_folder(folder_name)  # Pass folder name to controller
-
-        BTN_KD01QuanLyGoiThauView = CTkButton(self, text="Quản lý gói thầu", command=self.run_kd01_view)
-        BTN_KD01QuanLyGoiThauView.pack(pady=20)
-
-    def run(self):
-        print("Running the dashboard")
-        # Run the tkinter main loop
-        self.mainloop()
-
-    def run_kd01_view(self):
-        print("Button clicked: Running KD01QuanLyGoiThauView")
-        
-        # Destroy the current Dashboard window
-        self.withdraw()  # Hide the Dashboard window
-        
-        # Initialize and run the KD01QuanLyGoiThauView
-        kd01_view = KD01QuanLyGoiThauView()
-        
-        # Pass the current Dashboard instance to the KD01 view so it can be shown later
-        kd01_view.dashboard = self
-        
-        # Start the KD01 window's mainloop
-        kd01_view.main()
-
-    def run(self):
-        self.mainloop()
-        
-
-# Main execution block to run the app
-if __name__ == "__main__":
-    app = Dashboard()
-    app.run()
+def render_dashboard():
+    root = tk.Tk()
+    # root = ctk.CTk()
+    root.title("Dashboard")
+    
+    # Thiết lập kích thước cửa sổ
+    set_window_size(root)
+    
+    # Gọi các thành phần tái sử dụng
+    create_header(root)
+    create_menu_TK_02(root, root)
+    left_menu_frame  = create_left_menu(root)
+    right_banner_frame = create_right_banner(root)
+    
+    create_footer(root)
+    
+    # Start the Tkinter main loop
+    root.mainloop()
