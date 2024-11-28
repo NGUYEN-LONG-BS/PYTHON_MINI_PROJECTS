@@ -1,7 +1,7 @@
 import tkinter as tk
 import customtkinter as ctk
 
-def create_header(parent, title="Welcome to Our Application"):
+def create_header(parent, title="TUẤN ÂN GROUP"):
     header_frame = tk.Frame(parent)
     header_frame.pack(side=tk.TOP, fill=tk.X)
     

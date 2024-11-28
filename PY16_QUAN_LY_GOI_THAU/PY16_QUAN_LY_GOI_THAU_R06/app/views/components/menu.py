@@ -1,34 +1,59 @@
+# views/components/menu.py
 import tkinter as tk
-import customtkinter as ctk
 
-# Tkinter Menu
-def create_menu(parent):
-    menu_frame = tk.Frame(parent)
-    menu_frame.pack(side=tk.TOP, fill=tk.X)
+def create_menu_TK_02(parent):
     
-    menu_button1 = tk.Button(menu_frame, text="Home", command=lambda: print("Home clicked"))
-    menu_button1.pack(side=tk.LEFT, padx=10)
-    
-    menu_button2 = tk.Button(menu_frame, text="About", command=lambda: print("About clicked"))
-    menu_button2.pack(side=tk.LEFT, padx=10)
-    
-    menu_button3 = tk.Button(menu_frame, text="Services", command=lambda: print("Services clicked"))
-    menu_button3.pack(side=tk.LEFT, padx=10)
+        # Define the action fuctions for home menu
+        def Fucntion_Home_main():
+            print("Fucntion_Home_main selected")
+        
+        # Define the action fuctions for QLGT menu
+        def Fucntion_QLGT_TaoMoi():
+            print("Fucntion_QLGT_TaoMoi selected")
+        def Fucntion_QLGT_GoiThauDaLap():
+            print("Fucntion_QLGT_GoiThauDaLap selected")
+        
+        # Define the action fuctions for QLYCDT menu
+        def Fuction_QLYCDH_TALA():
+            print("Fuction_QLYCDH_TALA selected")
+        def Fuction_QLYCDH_TM():
+            print("Fuction_QLYCDH_TM selected")
+        
+        # Define the action fuctions for Help menu
+        def Fucntion_Help_About():
+            print("Fucntion_Help_About selected")
+        def Fucntion_Help_UserInfo():
+            print("Fucntion_Help_UserInfo selected")
+        
+            
+        # Create a Tkinter Menu bar
+        menubar_BP_KD = tk.Menu(parent)
 
-    return menu_frame
+        # Create a "Home" menu
+        help_menu = tk.Menu(menubar_BP_KD, tearoff=0)
+        menubar_BP_KD.add_cascade(label="Home", command=Fucntion_Home_main)
 
-# CustomTkinter Menu
-def create_custom_menu(parent):
-    menu_frame = ctk.CTkFrame(parent)
-    menu_frame.pack(side=tk.TOP, fill=tk.X)
-    
-    menu_button1 = ctk.CTkButton(menu_frame, text="Home", command=lambda: print("Home clicked"))
-    menu_button1.pack(side=tk.LEFT, padx=10)
-    
-    menu_button2 = ctk.CTkButton(menu_frame, text="About", command=lambda: print("About clicked"))
-    menu_button2.pack(side=tk.LEFT, padx=10)
-    
-    menu_button3 = ctk.CTkButton(menu_frame, text="Services", command=lambda: print("Services clicked"))
-    menu_button3.pack(side=tk.LEFT, padx=10)
+        # Create a "Quản lý gói thầu" menu
+        file_menu = tk.Menu(menubar_BP_KD, tearoff=0)
+        file_menu.add_command(label="Tạo mới gói thầu", command=Fucntion_QLGT_TaoMoi)
+        file_menu.add_command(label="Các gói thầu đã lập", command=Fucntion_QLGT_GoiThauDaLap)
+        file_menu.add_separator()
+        file_menu.add_command(label="Exit", command=parent.quit)
+        menubar_BP_KD.add_cascade(label="Quản lý gói thầu", menu=file_menu)
 
-    return menu_frame
+        # Create a "Quản lý yêu cầu đặt hàng" menu
+        help_menu = tk.Menu(menubar_BP_KD, tearoff=0)
+        help_menu.add_command(label="Yêu cầu đặt hàng TALA", command=Fuction_QLYCDH_TALA)
+        help_menu.add_command(label="Yêu cầu đặt hàng TM", command=Fuction_QLYCDH_TM)
+        menubar_BP_KD.add_cascade(label="Quản lý yêu cầu đặt hàng", menu=help_menu)
+        
+        # Create a "Help" menu
+        help_menu = tk.Menu(menubar_BP_KD, tearoff=0)
+        help_menu.add_command(label="About", command=Fucntion_Help_About)
+        help_menu.add_command(label="User-infor", command=Fucntion_Help_UserInfo)
+        menubar_BP_KD.add_cascade(label="Help", menu=help_menu)
+
+        # Set the menu bar for the root window
+        parent.config(menu=menubar_BP_KD)
+        
+        

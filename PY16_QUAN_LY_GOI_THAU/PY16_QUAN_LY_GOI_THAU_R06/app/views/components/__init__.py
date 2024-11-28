@@ -1,5 +1,6 @@
-# __init__.py
-from .menu import create_menu, create_custom_menu
+# views/components/__init__.py
+# from .menu import create_menu
+from .menu import create_menu_TK_02
 from .footer import create_footer
 from .header import create_header
 from .left_menu import create_left_menu
