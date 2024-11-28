@@ -1,4 +1,4 @@
-# Views/DashboardView_Iherit_Component.py
+# Project/Views/DashboardView_Iherit_Component.py
 import tkinter as tk
 import customtkinter as ctk
 from components import *
@@ -14,10 +14,16 @@ def render_dashboard():
     
     # Gọi các thành phần tái sử dụng
     create_header(root)
-    # create_menu(root)
     create_menu_TK_02(root)
-    create_left_menu(root)
-    create_right_banner(root)
+    left_menu_frame  = create_left_menu(root)
+    right_banner_frame = create_right_banner(root)
+    
+    # # Call create_main_content to add content to the dashboard
+    # create_main_content(root, content_type="statistics")  # You can change content type dynamically
+    
+     # Create the main content area
+    main_content_frame = create_main_content(root, left_menu_frame, right_banner_frame, content_type="statistics")
+    
     create_footer(root)
     
     # Start the Tkinter main loop

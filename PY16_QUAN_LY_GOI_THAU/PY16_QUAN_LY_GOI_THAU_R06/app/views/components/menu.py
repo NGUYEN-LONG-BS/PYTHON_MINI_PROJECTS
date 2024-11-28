@@ -1,4 +1,4 @@
-# views/components/menu.py
+# Project/views/components/menu.py
 import tkinter as tk
 
 def create_menu_TK_02(parent):
