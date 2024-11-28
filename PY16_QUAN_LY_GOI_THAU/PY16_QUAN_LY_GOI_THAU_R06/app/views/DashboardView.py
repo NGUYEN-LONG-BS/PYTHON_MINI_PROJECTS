@@ -1,4 +1,4 @@
-# Project/Views/DashboardView_Iherit_Component.py
+# Project/Views/DashboardView.py
 import tkinter as tk
 from components import *
 from utils import *
@@ -13,7 +13,7 @@ def render_dashboard():
     
     # Gọi các thành phần tái sử dụng
     create_header(root)
-    create_menu_TK_02(root, root)
+    create_top_menu(root, root)
     left_menu_frame  = create_left_menu(root)
     right_banner_frame = create_right_banner(root)
     

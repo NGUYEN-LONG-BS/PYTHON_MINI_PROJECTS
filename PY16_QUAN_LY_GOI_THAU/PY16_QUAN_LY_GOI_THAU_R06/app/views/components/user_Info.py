@@ -12,6 +12,13 @@ def setup_employee_info_labels(parent):
     # Create a frame to hold the labels horizontally
     frame = tk.Frame(parent, bd=2, relief='solid', padx=10, pady=10)  # Border with 2px width
     frame.pack(side='top', padx=10, pady=10, fill='x')  # Adjust padding and fill as needed
+    
+    # Wait for the window to render and then calculate the width of Frame_user_info
+    def update_user_info_frame_width():
+        # Update the width of Frame_user_info dynamically
+        frame.config(width=parent.winfo_width())
+            
+    parent.after(100, update_user_info_frame_width)
 
     # ID label
     id_label = tk.Label(frame, text="ID: TBD001", font=("Arial", 13))

@@ -5,10 +5,15 @@ from PIL import Image
 from datetime import datetime
 from app.controllers.KD01QuanLyGoiThauController import KD01QuanLyGoiThauController
 from utils import *
+from components import *
 from components.user_Info import setup_employee_info_labels  # Import the function
 from components.logo import setup_logo  # Import the setup_logo function
+from components.menu import create_top_menu  # Import the menu creation function
+
+
 
 class KD01QuanLyGoiThauView(tk.Tk):
+    
     def __init__(self):
         super().__init__()
 
@@ -18,6 +23,9 @@ class KD01QuanLyGoiThauView(tk.Tk):
         # Setup window
         set_window_size(self)
         self.title("QUẢN LÝ GÓI THẦU")
+        
+        # Create top menu (add the menu bar from menu.py)
+        create_top_menu(self, self)
 
         # Create a container frame to hold both the logo frame and user info frame
         frame_header_container = tk.Frame(self)
@@ -57,7 +65,7 @@ class KD01QuanLyGoiThauView(tk.Tk):
         self.dashboard = None  # Placeholder for Dashboard window
 
         # Bind close event
-        self.protocol("WM_DELETE_WINDOW", self.on_close)
+        self.protocol("WM_DELETE_WINDOW", self.Function_close_KD01_Click)
 
     # Employee Info Labels
     def setup_employee_info_labels(self):
@@ -167,10 +175,12 @@ class KD01QuanLyGoiThauView(tk.Tk):
         self.folder_name_label.configure(text=folder_name)
 
     # Close event handler
-    def on_close(self):
-        if self.dashboard:
-            self.dashboard.deiconify()
-        self.destroy()  # Close the current view
+    def Function_close_KD01_Click(self):
+        self.destroy()
+        # Now import KD01QuanLyGoiThauView inside the function to avoid circular import
+        from views.DashboardView import render_dashboard
+        render_dashboard()
+        
 
     # Run main event loop
     def main(self):
