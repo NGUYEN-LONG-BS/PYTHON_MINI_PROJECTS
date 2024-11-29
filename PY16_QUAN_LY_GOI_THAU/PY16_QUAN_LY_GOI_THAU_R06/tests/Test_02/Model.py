@@ -1,9 +1,9 @@
 import json
-from db_connection import create_connection  # Import hàm kết nối từ db_connection.py
+import pyodbc
 
 class Model:
-    def __init__(self, json_file):
-        self.json_file = json_file
+    def __init__(self):
+        self.json_file = "KD01_TABLE_ABC.JSON"
 
     def load_header_from_json(self):
         """Đọc header từ file JSON"""
@@ -12,13 +12,24 @@ class Model:
                 data = json.load(f)
                 return data.get("header", [])
         except FileNotFoundError:
+            print(f"File {self.json_file} không tìm thấy!")
             return []
 
-    def fetch_data_from_db(self, query):
-        """Truy vấn dữ liệu từ SQL Server"""
-        conn = create_connection()  # Gọi hàm kết nối từ db_connection.py
+    def fetch_data_from_db(self):
+        """Lấy dữ liệu từ SQL Server"""
+        # Kết nối và truy vấn SQL Server ở đây
+        server = '103.90.227.154'  # Replace with your server name
+        database = 'BAN_KINH_DOANH'  # Replace with your database name
+        username = 'sa'  # Replace with your SQL Server username
+        password = 'Ta#9999'  # Replace with your password
+
+        # SQL-Server connection string with Server Authentication
+        conn = pyodbc.connect(
+            f'DRIVER={{SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password};PORT=1433'
+        )
         cursor = conn.cursor()
+        query = "[BAN_KINH_DOANH].[dbo].[Proc_TB_QUAN_LY_GOI_THAU_SELECT_241129_09h07] '1'"  # Thay thế với câu lệnh SQL của bạn
         cursor.execute(query)
         rows = cursor.fetchall()
-        conn.close()
+        print("dữ liệu từ SQL")
         return rows

@@ -4,7 +4,7 @@ from View import View
 # Khởi tạo cửa sổ Tkinter
 root = tk.Tk()
 
-# Tạo View (View sẽ tự động xử lý việc load JSON và dữ liệu)
+# Tạo View và gắn file JSON vào View
 view = View(root)
 
 # Bắt đầu chạy ứng dụng Tkinter
