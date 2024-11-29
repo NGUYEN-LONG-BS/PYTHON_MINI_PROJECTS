@@ -1,5 +1,5 @@
 import json
-from db_connection import create_connection
+from db_connection import create_connection  # Import hàm kết nối từ db_connection.py
 
 class Model:
     def __init__(self, json_file):
@@ -16,7 +16,7 @@ class Model:
 
     def fetch_data_from_db(self, query):
         """Truy vấn dữ liệu từ SQL Server"""
-        conn = create_connection()  # Kết nối đến SQL Server
+        conn = create_connection()  # Gọi hàm kết nối từ db_connection.py
         cursor = conn.cursor()
         cursor.execute(query)
         rows = cursor.fetchall()
