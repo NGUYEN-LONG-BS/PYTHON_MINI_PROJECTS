@@ -26,10 +26,40 @@ class View:
         self.tree = ttk.Treeview(frame_of_treeview, show="headings")
         self.tree.pack(fill=tk.BOTH, expand=True)
 
-        # Create and configure horizontal scrollbar
-        self.h_scrollbar = tk.Scrollbar(frame_of_treeview, orient="horizontal", command=self.tree.xview)
-        self.h_scrollbar.pack(side=tk.BOTTOM, fill=tk.X)
-        self.tree.configure(xscrollcommand=self.h_scrollbar.set)
+        # Load table configuration from JSON
+        columns, scrollbars, general_settings = self.controller.get_table_config()
+
+        # Configure the general appearance of the Treeview
+        self.tree.configure(
+            height=20,
+            selectmode="browse"
+        )
+        
+        # Add the scrollbars if enabled
+        if scrollbars.get("vertical", {}).get("enabled", False):
+            vsb = tk.Scrollbar(frame_of_treeview, orient="vertical", command=self.tree.yview)
+            vsb.pack(side="right", fill="y")
+            self.tree.configure(yscrollcommand=vsb.set)
+
+        if scrollbars.get("horizontal", {}).get("enabled", False):
+            hsb = tk.Scrollbar(frame_of_treeview, orient="horizontal", command=self.tree.xview)
+            hsb.pack(side="bottom", fill="x")
+            self.tree.configure(xscrollcommand=hsb.set)
+
+        # Set column properties
+        self.tree["columns"] = [col["name"] for col in columns]
+        for col in columns:
+            self.tree.heading(col["name"], text=col["name"], anchor=col["anchor"])
+            self.tree.column(
+                col["name"], 
+                width=col["width"], 
+                # Keep minwidth if it's defined
+                minwidth=col["min_width"],
+                # Use stretch if it's defined
+                stretch=col["stretch"], 
+                anchor=col["anchor"]
+            )
+            self.tree.tag_configure(col["name"], font=(col["font"]["family"], col["font"]["size"], col["font"]["weight"]))
 
         # Nút tải dữ liệu
         self.load_button = tk.Button(self.root, text="Load Data", command=self.load_data)
@@ -41,10 +71,10 @@ class View:
     def load_data(self):
         """Tải dữ liệu từ Controller và hiển thị lên View"""
         self.clear()
-        header = self.controller.get_header()  # Lấy header từ Model (JSON)
-        rows = self.controller.get_data()  # Lấy dữ liệu từ DB
-        
-        self.update_data(header, rows)
+        """Load and display data (mockup for now)"""
+        data = self.controller.get_data()
+        for row in data:
+            self.tree.insert("", "end", values=row)
         
         # Debug
         thong_so = len(self.tree["columns"])
@@ -56,22 +86,6 @@ class View:
         self.tree["columns"] = header
         for col in header:
             self.tree.heading(col, text=col)
-        
-        # # Set specific width for each column
-        # if col == "STT":
-        #     self.tree.column(col, width=20, anchor="center")  # Set width for the first column
-        # elif col == "GHI_CHU":
-        #     self.tree.column(col, width=300, anchor="w")  # Set width for the second column
-        # elif col == "MA_NHAN_VIEN":
-        #     self.tree.column(col, width=150, anchor="center")  # Set width for the third column
-        # elif col == "TEN_NHAN_VIEN":
-        #     self.tree.column(col, width=200, anchor="w")  # Set width for the fourth column
-        # elif col == "ID_NHAN_VIEN":
-        #     self.tree.column(col, width=100, anchor="center")  # Set width for the fifth column
-        # elif col == "NGAY_TAO":
-        #     self.tree.column(col, width=150, anchor="e")  # Set width for the sixth column
-        # elif col == "XOA_SUA":
-        #     self.tree.column(col, width=100, anchor="center")  # Set width for the seventh column
 
         # Hiển thị dữ liệu
         for row in rows:
@@ -104,5 +118,4 @@ class View:
             else:
                 # Keep other items as they are
                 formatted_row.append(item)
-        
         return tuple(formatted_row)

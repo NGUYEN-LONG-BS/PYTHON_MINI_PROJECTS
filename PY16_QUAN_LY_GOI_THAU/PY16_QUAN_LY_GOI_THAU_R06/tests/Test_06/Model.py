@@ -6,24 +6,38 @@ import pandas as pd
 
 class Model:
     def __init__(self):
-        # Define the JSON file
+        """Define the JSON file"""
         # Get the absolute path of the current directory
         current_dir = os.path.dirname(os.path.abspath(__file__))  
         # Define the relative path to the JSON file
-        self.json_file = os.path.join(current_dir, 'KD01_TABLE_ABC.JSON')
+        self.json_file = os.path.join(current_dir, 'KD01_TABLE_ABC_FULL.JSON')
         
-        # # Debug
-        # print(f"đường dẫn file json: {os.path.abspath(self.json_file)}")
+        # debug
+        print(os.path.join(current_dir, 'KD01_TABLE_ABC_FULL.JSON'))
 
-    def load_header_from_json(self):
-        """Đọc header từ file JSON"""
+    # def load_header_from_json(self):
+    #     """Đọc header từ file JSON"""
+    #     try:
+    #         with open(self.json_file, 'r', encoding='utf-8') as f:
+    #             data = json.load(f)
+    #             return data.get("header", [])
+    #     except FileNotFoundError:
+    #         print(f"File {self.json_file} không tìm thấy!")
+    #         return []
+
+    def load_table_config_from_json(self):
+        """Load table and column configurations from JSON"""
         try:
             with open(self.json_file, 'r', encoding='utf-8') as f:
                 data = json.load(f)
-                return data.get("header", [])
+                table_info = data.get("table", {})
+                columns = table_info.get("columns", [])
+                scrollbars = table_info.get("scrollbars", {})
+                general_settings = table_info.get("general", {})
+                return columns, scrollbars, general_settings
         except FileNotFoundError:
-            print(f"File {self.json_file} không tìm thấy!")
-            return []
+            print(f"File {self.json_file} not found!")
+            return [], {}, {}
 
     
     def fetch_data_from_db(self):
@@ -42,19 +56,9 @@ class Model:
         query = "[BAN_KINH_DOANH].[dbo].[Proc_TB_QUAN_LY_GOI_THAU_SELECT_241130_11h09] 'NV01'"  # Thay thế với câu lệnh SQL của bạn
         cursor.execute(query)
         rows = cursor.fetchall()
-        
-        # # Lấy dữ liệu và tên cột từ cursor
-        # columns = [column[0] for column in cursor.description]
-        # rows = cursor.fetchall()
-        
-        # # Chuyển dữ liệu từ rows thành DataFrame pandas
-        # df = pd.DataFrame.from_records(rows, columns=columns)
 
         # Đóng kết nối
         conn.close()
-        
-        # # Debug
-        # print(rows)
         
         # return df
         return rows
