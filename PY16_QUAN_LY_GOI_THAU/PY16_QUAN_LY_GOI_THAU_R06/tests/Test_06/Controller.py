@@ -9,10 +9,6 @@ class Controller:
         """Lấy dữ liệu từ Model (SQL hoặc JSON nếu cần)"""
         return self.model.fetch_data_from_db()  # Lấy dữ liệu từ DB
 
-    # def get_header(self):
-    #     """Lấy header từ file JSON trong Model"""
-    #     return self.model.load_header_from_json()  # Lấy header từ file JSON
-
     def get_table_config(self):
         """
         Load the table configuration (header, columns, and scrollbars) from the JSON file.

@@ -99,9 +99,13 @@ class View:
             self.tree.delete(item)  # Xóa từng item
             
     def format_row(self, row):
-        """Format a row to handle datetime and None values"""
+        """Format a row to handle:
+             - datetime
+             - None values
+             - number
+             - percentage
+        """
         formatted_row = []
-        
         for item in row:
             if isinstance(item, datetime):
                 # Format datetime to string (e.g., YYYY-MM-DD)
