@@ -7,28 +7,46 @@ class CRUDTreeviewView:
     def __init__(self, master):
         self.master = master
         self.master.title("CRUD Treeview Example")
-        self.master.geometry("1100x700")
+        # Get the screen height and width
+        screen_width = self.master.winfo_screenwidth()
+        screen_height = self.master.winfo_screenheight()
+        # Set the window height to 4/5 of the screen height
+        window_height = int(4 * screen_height / 5)
+        # Set the window width (you can adjust as needed)
+        window_width = 1100
+        # Calculate the position to center the window
+        x_position = int((screen_width - window_width) / 2)
+        y_position = int((screen_height - window_height) / 2)
+        # Set the window geometry (centered window)
+        self.master.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
         
         # Create a canvas and a vertical scrollbar
         self.canvas = tk.Canvas(self.master)
         self.canvas.pack(side="left", fill="both", expand=True)
         
-        self.v_scrollbar = tk.Scrollbar(self.master, orient="vertical", command=self.canvas.yview)
+        self.v_scrollbar = tk.Scrollbar(self.master, orient="vertical", command=self.canvas.yview, bg="lightyellow")
         self.v_scrollbar.pack(side="right", fill="y")
+        # Configure the canvas to work with the scrollbar
         self.canvas.configure(yscrollcommand=self.v_scrollbar.set)
 
+        # Create a frame to hold the widgets (this frame will be inside the canvas)
+        frame_inside_canvas = tk.Frame(self.canvas)
+
+        # Create a window on the canvas to add the frame
+        self.canvas.create_window((0, 0), window=frame_inside_canvas, anchor="nw")
+
         # Create the frame to hold the entry fields
-        self.header_frame = tk.Frame(self.canvas, bd=2, relief="solid")
+        self.header_frame = tk.Frame(frame_inside_canvas, bd=2, relief="solid")
         self.header_frame.pack(fill="both", expand=True, padx=10, pady=10)
         
         # Create the frame to hold the entry fields
-        self.entries_frame = tk.Frame(self.canvas, bd=2, relief="solid")
+        self.entries_frame = tk.Frame(frame_inside_canvas, bd=2, relief="solid")
         self.entries_frame.pack(fill="both", expand=True, padx=10, pady=10)
         # Create 10 Entry fields for input
         self.add_entries_to_entries_frame()
         
         # Create the frame to hold the Treeview and scrollbar
-        self.treeview_frame = tk.Frame(self.canvas, bd=2, relief="solid", bg="lightyellow")
+        self.treeview_frame = tk.Frame(frame_inside_canvas, bd=2, relief="solid", bg="lightyellow")
         self.treeview_frame.pack(fill="both", expand=True, padx=10, pady=10)
         # Add elements to frame
         self.add_elements_to_treeview_frame()
@@ -39,14 +57,28 @@ class CRUDTreeviewView:
         self.add_elements_to_top_right_frame()
         
         # Create the frame to hold the buttons
-        self.buttons_frame = tk.Frame(self.canvas, bd=2, relief="solid", bg="lightblue", height=150)  # Fixed height
+        self.buttons_frame = tk.Frame(frame_inside_canvas, bd=2, relief="solid", bg="lightblue", height=150)  # Fixed height
         self.buttons_frame.pack(fill="both", side="bottom", expand=True, padx=10, pady=10)
         # Create buttons for CRUD operations
         self.add_elements_to_buttons_frame()
         
         # Update the scroll region of the canvas
         self.update_scroll_region()
+        
+        # Update the scrollregion of the canvas to match the size of the frame
+        frame_inside_canvas.update_idletasks()
+        self.canvas.config(scrollregion=self.canvas.bbox("all"))
+        
+        # Bind the mouse wheel event to the canvas (works anywhere on the window)
+        self.canvas.bind_all("<MouseWheel>", self.on_mouse_wheel)
 
+    def on_mouse_wheel(self, event):
+        # Scroll the canvas depending on the wheel movement (event.delta)
+        if event.delta > 0:  # Scroll up
+            self.canvas.yview_scroll(-1, "units")
+        else:  # Scroll down
+            self.canvas.yview_scroll(1, "units")
+    
     def add_elements_to_top_right_frame(self):      # Create 10 Entry fields for input
         # Create the refresh button in the top-right frame
         self.refresh_button = tk.Button(self.top_right_frame, text="Refresh", command=self.refresh_window)
