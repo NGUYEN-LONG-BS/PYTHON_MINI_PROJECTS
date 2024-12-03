@@ -13,7 +13,8 @@ class CRUDTreeviewView:
         # Set the window height to 4/5 of the screen height
         window_height = int(4 * screen_height / 5)
         # Set the window width (you can adjust as needed)
-        window_width = 1600
+        # window_width = 1600
+        window_width = window_height // 9 * 16
         # Calculate the position to center the window
         x_position = int((screen_width - window_width) / 2)
         y_position = int((screen_height - window_height) / 2)
