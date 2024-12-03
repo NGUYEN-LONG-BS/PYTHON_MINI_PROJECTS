@@ -81,7 +81,6 @@ class CRUDTreeviewView:
         # self.master.bind("<Configure>", self.adjust_frame_width)
 
     def function_adjust_the_sizes_dynamically(self, event):
-        # function_adjust_the_sizes_dynamically
         # Step: toggle_scrollbar_visibility
         # Check if the content of the canvas exceeds the window height
         bbox = self.canvas.bbox("all")
@@ -100,6 +99,16 @@ class CRUDTreeviewView:
 
         # Update the width of the frame_inside_canvas
         self.canvas.itemconfig(self.canvas_window, width=new_width)
+        
+        # Step: toggle_scrollbar_visibility
+        # Check the width of the Treeview content against the available width
+        treeview_width = self.treeview.bbox("all")[2]  # Get the width of the Treeview content
+        if treeview_width > self.treeview_frame.winfo_width():
+            # Show the horizontal scrollbar if the Treeview content is wider than the frame
+            self.h_scrollbar.pack(side="bottom", fill="x", padx=10, pady=5)
+        else:
+            # Hide the horizontal scrollbar if the Treeview content fits within the frame
+            self.h_scrollbar.pack_forget()
 
     def on_mouse_wheel(self, event):
         # Scroll the canvas depending on the wheel movement (event.delta)
