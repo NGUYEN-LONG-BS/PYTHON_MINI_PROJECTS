@@ -7,13 +7,13 @@ class CRUDTreeviewView:
     def __init__(self, master):
         self.master = master
         self.master.title("CRUD Treeview Example")
+        # =======================================================================================================================
         # Get the screen height and width
         screen_width = self.master.winfo_screenwidth()
         screen_height = self.master.winfo_screenheight()
         # Set the window height to 4/5 of the screen height
         window_height = int(4 * screen_height / 5)
         # Set the window width (you can adjust as needed)
-        # window_width = 1600
         window_width = window_height // 9 * 16
         # Calculate the position to center the window
         x_position = int((screen_width - window_width) / 2)
@@ -21,8 +21,9 @@ class CRUDTreeviewView:
         # Set the window geometry (centered window)
         self.master.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
         
+        # =======================================================================================================================
         # Create a canvas and a vertical scrollbar
-        self.canvas = tk.Canvas(self.master)
+        self.canvas = tk.Canvas(self.master, width=window_width)
         self.canvas.pack(side="left", fill="both", expand=True)
         
         self.v_scrollbar = tk.Scrollbar(self.master, orient="vertical", command=self.canvas.yview, bg="lightyellow")
@@ -30,6 +31,7 @@ class CRUDTreeviewView:
         # Configure the canvas to work with the scrollbar
         self.canvas.configure(yscrollcommand=self.v_scrollbar.set)
 
+        # =======================================================================================================================
         # Create a frame to hold the widgets (this frame will be inside the canvas)
         frame_inside_canvas = tk.Frame(self.canvas, bd=2, relief="solid")
         frame_inside_canvas.pack(fill="both", expand=True, padx=10, pady=10)
@@ -37,33 +39,37 @@ class CRUDTreeviewView:
         # Create a window on the canvas to add the frame
         self.canvas_window = self.canvas.create_window((0, 0), window=frame_inside_canvas, anchor="nw")
 
+        # =======================================================================================================================
         # Create the frame to hold the entry fields
         self.header_frame = tk.Frame(frame_inside_canvas, bd=2, relief="solid")
         self.header_frame.pack(fill="both", expand=True, padx=10, pady=10)
         
+        # =======================================================================================================================
         # Create the frame to hold the entry fields
         self.entries_frame = tk.Frame(frame_inside_canvas, bd=2, relief="solid")
         self.entries_frame.pack(fill="both", expand=True, padx=10, pady=10)
         # Create 10 Entry fields for input
         self.add_entries_to_entries_frame()
         
+        # =======================================================================================================================
         # Create the frame to hold the Treeview and scrollbar
         self.treeview_frame = tk.Frame(frame_inside_canvas, bd=2, relief="solid", bg="lightyellow")
         self.treeview_frame.pack(fill="both", expand=True, padx=10, pady=10)
-        # Add elements to frame
         self.add_elements_to_treeview_frame()
-        
+
+        # =======================================================================================================================
         # Create a frame for the top-right button (Refresh Button)
         self.top_right_frame = tk.Frame(self.header_frame, bd=2, relief="solid")
         self.top_right_frame.grid(row=0, column=10, padx=10, pady=10, sticky="ne")
         self.add_elements_to_top_right_frame()
-        
+
+        # =======================================================================================================================
         # Create the frame to hold the buttons
-        self.buttons_frame = tk.Frame(frame_inside_canvas, bd=2, relief="solid", bg="lightblue", height=150)  # Fixed height
+        self.buttons_frame = tk.Frame(frame_inside_canvas, bd=2, relief="solid", bg="lightblue", height=150, width=500)
         self.buttons_frame.pack(fill="both", side="bottom", expand=True, padx=10, pady=10)
-        # Create buttons for CRUD operations
         self.add_elements_to_buttons_frame()
         
+        # =======================================================================================================================
         # Update the scroll region of the canvas
         self.update_scroll_region()
         
@@ -76,11 +82,9 @@ class CRUDTreeviewView:
         
         # Monitor window size changes to toggle the scrollbar visibility
         self.master.bind("<Configure>", self.function_adjust_the_sizes_dynamically)
-        
-        # # Bind the window resize event to update frame width dynamically
-        # self.master.bind("<Configure>", self.adjust_frame_width)
 
     def function_adjust_the_sizes_dynamically(self, event):
+        # =======================================================================================================================
         # Step: toggle_scrollbar_visibility
         # Check if the content of the canvas exceeds the window height
         bbox = self.canvas.bbox("all")
@@ -92,14 +96,14 @@ class CRUDTreeviewView:
             else:
                 # Hide the scrollbar if content height is less than window height
                 self.v_scrollbar.pack_forget()
-        
+        # =======================================================================================================================
         # Step: Adjust the width of the frame inside the canvas dynamically.
         # Get the current width of the window and subtract 20
         new_width = self.master.winfo_width() - 0
 
         # Update the width of the frame_inside_canvas
         self.canvas.itemconfig(self.canvas_window, width=new_width)
-        
+        # =======================================================================================================================
         # Step: toggle_scrollbar_visibility
         # Check the width of the Treeview content against the available width
         treeview_width = self.treeview.bbox("all")[2]  # Get the width of the Treeview content
@@ -145,6 +149,7 @@ class CRUDTreeviewView:
         refresh_button = tk.Button(self.buttons_frame, text="Refresh", command=self.clear_entries)
         refresh_button.pack(side="left", fill="both", expand=True, padx=10, pady=10)
     
+    # =======================================================================================================================
     # CRUD Functions to interact with the Treeview
     def create_entry(self):
         # Get the values from the entry fields
