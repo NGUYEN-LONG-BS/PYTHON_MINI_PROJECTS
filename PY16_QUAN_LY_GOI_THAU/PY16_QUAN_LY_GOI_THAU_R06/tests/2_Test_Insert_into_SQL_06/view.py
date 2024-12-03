@@ -273,10 +273,6 @@ class CRUDTreeviewView:
         label_note = tk.Label(self.frame_entries_of_treeview, text=f"Ghi chú:")
         label_note.grid(row=2, column=0, padx=10, pady=5, sticky="w")
         
-        # entry_note = tk.Entry(self.frame_entries_of_treeview)
-        # entry_note.insert(0, "")  # Set the default value
-        # entry_note.grid(row=2, column=1, rowspan=3, columnspan=4, padx=10, pady=5, sticky="ew")
-        
         entry_note = tk.Text(self.frame_entries_of_treeview, height=4, wrap="word")
         entry_note.insert(tk.END, "")  # Set the default value
         entry_note.grid(row=2, column=1, rowspan=3, columnspan=4, padx=10, pady=5, sticky="ew")
