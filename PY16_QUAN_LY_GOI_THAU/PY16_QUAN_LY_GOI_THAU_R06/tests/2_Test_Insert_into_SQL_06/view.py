@@ -3,6 +3,9 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 import datetime
+import json
+import os
+import unicodedata  # This will help normalize Vietnamese characters
 
 class CRUDTreeviewView:
     def __init__(self, master):
@@ -71,6 +74,13 @@ class CRUDTreeviewView:
         self.frame_entries_of_treeview.pack(fill="both", expand=True, padx=10, pady=10)
         # Create 10 Entry fields for input
         self.f_add_elements_to_frame_entries_of_treeview()
+        
+        # =======================================================================================================================
+        # Create the frame to hold the entries of treeview
+        self.frame_test = tk.Frame(frame_inside_canvas, bd=var_bd, relief="solid")
+        self.frame_test.pack(fill="both", expand=True, padx=10, pady=10)
+        # Create 10 Entry fields for input
+        self.f_add_elements_to_frame_test()
         
         # =======================================================================================================================
         # Create the frame to hold the Treeview and scrollbar
@@ -156,9 +166,6 @@ class CRUDTreeviewView:
             
         # After resizing, update the scroll region of the canvas to include the new content
         self.f_update_scroll_region()
-        
-        # Reset the vertical scroll position to the top
-        # self.canvas.yview_moveto(0)
         
 
     # =======================================================================================================================
@@ -281,6 +288,109 @@ class CRUDTreeviewView:
         self.frame_entries_of_treeview.grid_rowconfigure(2, weight=2)  # Allow row 3 to expand to fill the space
         self.frame_entries_of_treeview.grid_columnconfigure(3, weight=2)  # Allow column 3 to expand to fill the space
         
+    def f_add_elements_to_frame_test(self):
+        # Load product data from JSON file
+        self.products = self.load_products_data()
+        
+        """Add a button to toggle the height of frame_test"""
+        toggle_button = tk.Button(self.frame_test, text="Toggle Height", command=self.toggle_height)
+        toggle_button.place(relx=1.0, rely=0, anchor="ne", x=-10, y=10)
+
+        # Extract product details for comboboxes
+        self.product_ids = [product["product_ID"] for product in self.products]
+        self.product_names = [product["product_name"] for product in self.products]
+
+        # Create combobox for product_ID
+        self.product_id_label = tk.Label(self.frame_test, text="Product ID:").grid(row=0, column=0, padx=10, pady=5, sticky="w")
+        self.product_id_combobox = ttk.Combobox(self.frame_test, values=self.product_ids, state="normal")
+        self.product_id_combobox.grid(row=0, column=1, padx=10, pady=5)
+        self.product_id_combobox.bind("<<ComboboxSelected>>", self.on_product_id_selected)
+        self.product_id_combobox.bind("<KeyRelease>", self.filter_product_ids)
+
+        # Create combobox for product_name
+        self.product_name_label = tk.Label(self.frame_test, text="Product Name:").grid(row=1, column=0, padx=10, pady=5, sticky="w")
+        self.product_name_combobox = ttk.Combobox(self.frame_test, values=self.product_names, state="normal")
+        self.product_name_combobox.grid(row=1, column=1, padx=10, pady=5)
+        self.product_name_combobox.bind("<<ComboboxSelected>>", self.on_product_name_selected)
+        self.product_name_combobox.bind("<KeyRelease>", self.filter_product_names)
+
+        # Create text widget for unit
+        self.product_unit_label = tk.Label(self.frame_test, text="Unit:").grid(row=2, column=0, padx=10, pady=5, sticky="w")
+        self.unit_text = tk.Text(self.frame_test, height=1, width=20)
+        self.unit_text.grid(row=2, column=1, padx=10, pady=5)
+
+        # Create text widget for quantity
+        self.product_quantity_label = tk.Label(self.frame_test, text="Quantity:").grid(row=3, column=0, padx=10, pady=5, sticky="w")
+        self.quantity_text = tk.Text(self.frame_test, height=1, width=20)
+        self.quantity_text.grid(row=3, column=1, padx=10, pady=5)
+        
+        # Store the widgets for later use (needed for toggling visibility)
+        self.widgets = [
+            self.product_id_combobox,
+            self.product_name_combobox,
+            self.unit_text,
+            self.quantity_text,
+            self.product_id_label,
+            self.product_name_label,
+            self.product_unit_label,
+            self.product_quantity_label
+        ]   
+        
+    def load_products_data(self):
+        """Load product data from a JSON file."""
+        file_path = os.path.join(os.path.dirname(__file__), "products.json")
+        try:
+            with open(file_path, "r", encoding="utf-8") as file:
+                data = json.load(file)
+            return data["products"]
+        except Exception as e:
+            print(f"Error loading products data: {e}")
+            return []
+        
+    def filter_product_ids(self, event):
+        """Filter the product IDs as you type, handling Vietnamese diacritics."""
+        search_term = self.product_id_combobox.get().lower()
+        filtered_ids = [product_id for product_id in self.product_ids if self.normalize(search_term) in self.normalize(product_id.lower())]
+        self.product_id_combobox['values'] = filtered_ids
+        self.product_id_combobox.set(search_term)  # Keep the current input
+
+    def filter_product_names(self, event):
+        """Filter the product names as you type, handling Vietnamese diacritics."""
+        search_term = self.product_name_combobox.get().lower()
+        filtered_names = [product_name for product_name in self.product_names if self.normalize(search_term) in self.normalize(product_name.lower())]
+        self.product_name_combobox['values'] = filtered_names
+        self.product_name_combobox.set(search_term)  # Keep the current input
+        
+    def normalize(self, text):
+        """Normalize the text by removing diacritics to handle search without worrying about accents."""
+        # Normalize the text to NFD (decomposed form), then remove diacritics (accents)
+        return ''.join(c for c in unicodedata.normalize('NFD', text) if unicodedata.category(c) != 'Mn')
+    
+    def on_product_id_selected(self, event):
+        """Update product name, unit, and quantity when product ID is selected."""
+        selected_id = self.product_id_combobox.get()
+        for product in self.products:
+            if product["product_ID"] == selected_id:
+                # Update product_name, unit, and quantity
+                self.product_name_combobox.set(product["product_name"])
+                self.unit_text.delete(1.0, tk.END)
+                self.unit_text.insert(tk.END, product["unit"])
+                self.quantity_text.delete(1.0, tk.END)
+                self.quantity_text.insert(tk.END, product["quantity"])
+                break
+
+    def on_product_name_selected(self, event):
+        """Update product ID, unit, and quantity when product name is selected."""
+        selected_name = self.product_name_combobox.get()
+        for product in self.products:
+            if product["product_name"] == selected_name:
+                # Update product_ID, unit, and quantity
+                self.product_id_combobox.set(product["product_ID"])
+                self.unit_text.delete(1.0, tk.END)
+                self.unit_text.insert(tk.END, product["unit"])
+                self.quantity_text.delete(1.0, tk.END)
+                self.quantity_text.insert(tk.END, product["quantity"])
+                break
     
     def f_add_elements_to_buttons_frame(self):       # Create buttons for CRUD operations
         create_button = tk.Button(self.buttons_frame, text="Create", command=self.f_create_entry)
@@ -298,20 +408,25 @@ class CRUDTreeviewView:
     # =======================================================================================================================
     # CRUD Functions to interact with the Treeview
     def f_create_entry(self):
-        # Get the values from the entry fields
-        values = [entry.get() for entry in self.entries]
+        # Get the values from the entry fields within frame_entries_of_treeview
+        values = []
+        for entry in self.frame_entries_of_treeview.winfo_children():
+            if isinstance(entry, tk.Entry):  # Only get values from Entry widgets
+                values.append(entry.get())
         
         # Check if all fields are filled
         if all(values):
-            # Insert a new row in the Treeview
+            # Insert the values as a new row into the Treeview
             self.treeview.insert("", "end", values=values)
             
-            # Clear entry fields
+            # Clear the entry fields
             self.f_clear_entries()
 
-            # # Sort the Treeview after insertion (if needed)
-            # self.f_sort_treeview()  # Sort after creating entry
+            # Optional: Sort the Treeview after insertion (uncomment if needed)
+            # self.f_sort_treeview()
+
         else:
+            # Show a warning if any field is empty
             messagebox.showwarning("Input Error", "Please fill in all fields")
 
     def f_update_entry(self):
@@ -433,3 +548,22 @@ class CRUDTreeviewView:
         self.canvas.config(scrollregion=self.canvas.bbox("all"))
         # Ensure frame is at the top-left corner
         self.canvas.coords(self.canvas_window, 0, 0)
+        
+    def toggle_height(self):
+        # Check current height of the frame
+        current_height = self.frame_test.winfo_height()
+        
+        # If the height is collapsed (10px), expand it to the original height
+        if current_height == 10:
+            self.frame_test.config(height=200)  # You can adjust this height as needed
+            # Show the widgets
+            for widget in self.widgets:
+                widget.grid()
+        else:
+            # Collapse the frame to 10px height
+            self.frame_test.config(height=10)
+            # Hide the widgets by calling grid_forget
+            for widget in self.widgets:
+                widget.grid_forget()
+                
+        print(self.frame_test.winfo_height())
