@@ -31,10 +31,11 @@ class CRUDTreeviewView:
         self.canvas.configure(yscrollcommand=self.v_scrollbar.set)
 
         # Create a frame to hold the widgets (this frame will be inside the canvas)
-        frame_inside_canvas = tk.Frame(self.canvas)
+        frame_inside_canvas = tk.Frame(self.canvas, bd=2, relief="solid")
+        frame_inside_canvas.pack(fill="both", expand=True, padx=10, pady=10)
 
         # Create a window on the canvas to add the frame
-        self.canvas.create_window((0, 0), window=frame_inside_canvas, anchor="nw")
+        self.canvas_window = self.canvas.create_window((0, 0), window=frame_inside_canvas, anchor="nw")
 
         # Create the frame to hold the entry fields
         self.header_frame = tk.Frame(frame_inside_canvas, bd=2, relief="solid")
@@ -72,6 +73,33 @@ class CRUDTreeviewView:
         
         # Bind the mouse wheel event to the canvas (works anywhere on the window)
         self.canvas.bind_all("<MouseWheel>", self.on_mouse_wheel)
+        
+        # Monitor window size changes to toggle the scrollbar visibility
+        self.master.bind("<Configure>", self.function_adjust_the_sizes_dynamically)
+        
+        # # Bind the window resize event to update frame width dynamically
+        # self.master.bind("<Configure>", self.adjust_frame_width)
+
+    def function_adjust_the_sizes_dynamically(self, event):
+        # function_adjust_the_sizes_dynamically
+        # Step: toggle_scrollbar_visibility
+        # Check if the content of the canvas exceeds the window height
+        bbox = self.canvas.bbox("all")
+        if bbox:
+            canvas_height = bbox[3]  # The bottommost coordinate of the content
+            if canvas_height > self.master.winfo_height():
+                # Show the scrollbar if content height is greater than window height
+                self.v_scrollbar.pack(side="right", fill="y")
+            else:
+                # Hide the scrollbar if content height is less than window height
+                self.v_scrollbar.pack_forget()
+        
+        # Step: Adjust the width of the frame inside the canvas dynamically.
+        # Get the current width of the window and subtract 20
+        new_width = self.master.winfo_width() - 0
+
+        # Update the width of the frame_inside_canvas
+        self.canvas.itemconfig(self.canvas_window, width=new_width)
 
     def on_mouse_wheel(self, event):
         # Scroll the canvas depending on the wheel movement (event.delta)
