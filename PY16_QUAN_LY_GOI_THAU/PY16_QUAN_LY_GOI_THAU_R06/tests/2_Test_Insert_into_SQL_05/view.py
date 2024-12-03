@@ -49,33 +49,33 @@ class CRUDTreeviewView:
         self.entries_frame = tk.Frame(frame_inside_canvas, bd=2, relief="solid")
         self.entries_frame.pack(fill="both", expand=True, padx=10, pady=10)
         # Create 10 Entry fields for input
-        self.add_entries_to_entries_frame()
+        self.f_add_entries_to_entries_frame()
         
         # =======================================================================================================================
         # Create the frame to hold the Treeview and scrollbar
         self.treeview_frame = tk.Frame(frame_inside_canvas, bd=2, relief="solid", bg="lightyellow")
         self.treeview_frame.pack(fill="both", expand=True, padx=10, pady=10)
-        self.add_elements_to_treeview_frame()
+        self.f_add_elements_to_treeview_frame()
         
         # Bind mouse wheel events to both treeview and canvas
-        self.treeview_frame.bind("<Enter>", self.enable_treeview_scroll)
-        self.treeview_frame.bind("<Leave>", self.enable_canvas_scroll)
+        self.treeview_frame.bind("<Enter>", self.f_enable_treeview_scroll)
+        self.treeview_frame.bind("<Leave>", self.f_enable_canvas_scroll)
 
         # =======================================================================================================================
         # Create a frame for the top-right button (Refresh Button)
         self.top_right_frame = tk.Frame(self.header_frame, bd=2, relief="solid")
         self.top_right_frame.grid(row=0, column=10, padx=10, pady=10, sticky="ne")
-        self.add_elements_to_top_right_frame()
+        self.f_add_elements_to_top_right_frame()
 
         # =======================================================================================================================
         # Create the frame to hold the buttons
         self.buttons_frame = tk.Frame(frame_inside_canvas, bd=2, relief="solid", bg="lightblue", height=150, width=500)
         self.buttons_frame.pack(fill="both", side="bottom", expand=True, padx=10, pady=10)
-        self.add_elements_to_buttons_frame()
+        self.f_add_elements_to_buttons_frame()
         
         # =======================================================================================================================
         # Update the scroll region of the canvas
-        self.update_scroll_region()
+        self.f_update_scroll_region()
         
         # Update the scrollregion of the canvas to match the size of the frame
         frame_inside_canvas.update_idletasks()
@@ -85,15 +85,15 @@ class CRUDTreeviewView:
         self.is_scrolling_canvas = True
         
         # Bind the mouse wheel event to the canvas (works anywhere on the window)
-        self.canvas.bind_all("<MouseWheel>", self.on_mouse_wheel)
+        self.canvas.bind_all("<MouseWheel>", self.f_on_mouse_wheel)
         
         # Monitor window size changes to toggle the scrollbar visibility
-        self.master.bind("<Configure>", self.function_adjust_the_sizes_dynamically)
+        self.master.bind("<Configure>", self.f_adjust_the_sizes_dynamically)
         
         # After everything is initialized, update scroll regions
-        self.master.after(100, self.update_scroll_region)
+        self.master.after(100, self.f_update_scroll_region)
 
-    def function_adjust_the_sizes_dynamically(self, event):
+    def f_adjust_the_sizes_dynamically(self, event):
         # =======================================================================================================================
         # Step: toggle_scrollbar_visibility
         # Check if the content of the canvas exceeds the window height
@@ -127,22 +127,22 @@ class CRUDTreeviewView:
             # Hide the horizontal scrollbar if the Treeview content fits within the frame
             self.h_scrollbar.pack_forget()
 
-    # def on_mouse_wheel(self, event):
+    # def f_on_mouse_wheel(self, event):
     #     # Scroll the canvas depending on the wheel movement (event.delta)
     #     if event.delta > 0:  # Scroll up
     #         self.canvas.yview_scroll(-1, "units")
     #     else:  # Scroll down
     #         self.canvas.yview_scroll(1, "units")
 
-    def enable_treeview_scroll(self, event):
+    def f_enable_treeview_scroll(self, event):
         # Enable scrolling for the Treeview when the cursor enters the Treeview frame
         self.is_scrolling_canvas = False
 
-    def enable_canvas_scroll(self, event):
+    def f_enable_canvas_scroll(self, event):
         # Enable scrolling for the Canvas when the cursor leaves the Treeview frame
         self.is_scrolling_canvas = True
 
-    def on_mouse_wheel(self, event):
+    def f_on_mouse_wheel(self, event):
         if self.is_scrolling_canvas:
             # Scroll the canvas depending on the wheel movement (event.delta)
             if event.delta > 0:  # Scroll up
@@ -156,12 +156,12 @@ class CRUDTreeviewView:
             else:  # Scroll down
                 self.treeview.yview_scroll(1, "units")
 
-    def add_elements_to_top_right_frame(self):      # Create 10 Entry fields for input
+    def f_add_elements_to_top_right_frame(self):      # Create 10 Entry fields for input
         # Create the refresh button in the top-right frame
-        self.refresh_button = tk.Button(self.top_right_frame, text="Refresh", command=self.refresh_window)
+        self.refresh_button = tk.Button(self.top_right_frame, text="Refresh", command=self.f_refresh_window)
         self.refresh_button.grid(row=0, column=0)
 
-    def add_entries_to_entries_frame(self):      # Create 10 Entry fields for input
+    def f_add_entries_to_entries_frame(self):      # Create 10 Entry fields for input
         self.entries = []
         for i in range(10):
             label = tk.Label(self.entries_frame, text=f"Field {i+1}:")
@@ -171,22 +171,22 @@ class CRUDTreeviewView:
             entry.grid(row=i+1, column=1, padx=10, pady=5)
             self.entries.append(entry)
     
-    def add_elements_to_buttons_frame(self):       # Create buttons for CRUD operations
-        create_button = tk.Button(self.buttons_frame, text="Create", command=self.create_entry)
+    def f_add_elements_to_buttons_frame(self):       # Create buttons for CRUD operations
+        create_button = tk.Button(self.buttons_frame, text="Create", command=self.f_create_entry)
         create_button.pack(side="left", fill="both", expand=True, padx=10, pady=10)
 
-        update_button = tk.Button(self.buttons_frame, text="Update", command=self.update_entry)
+        update_button = tk.Button(self.buttons_frame, text="Update", command=self.f_update_entry)
         update_button.pack(side="left", fill="both", expand=True, padx=10, pady=10)
 
-        delete_button = tk.Button(self.buttons_frame, text="Delete", command=self.delete_entry)
+        delete_button = tk.Button(self.buttons_frame, text="Delete", command=self.f_delete_entry)
         delete_button.pack(side="left", fill="both", expand=True, padx=10, pady=10)
 
-        refresh_button = tk.Button(self.buttons_frame, text="Refresh", command=self.clear_entries)
+        refresh_button = tk.Button(self.buttons_frame, text="Refresh", command=self.f_clear_entries)
         refresh_button.pack(side="left", fill="both", expand=True, padx=10, pady=10)
     
     # =======================================================================================================================
     # CRUD Functions to interact with the Treeview
-    def create_entry(self):
+    def f_create_entry(self):
         # Get the values from the entry fields
         values = [entry.get() for entry in self.entries]
         
@@ -196,32 +196,32 @@ class CRUDTreeviewView:
             self.treeview.insert("", "end", values=values)
             
             # Clear entry fields
-            self.clear_entries()
+            self.f_clear_entries()
 
             # # Sort the Treeview after insertion (if needed)
-            # self.sort_treeview()  # Sort after creating entry
+            # self.f_sort_treeview()  # Sort after creating entry
         else:
             messagebox.showwarning("Input Error", "Please fill in all fields")
 
-    def update_entry(self):
+    def f_update_entry(self):
         selected_item = self.treeview.selection()
         if selected_item:
             # Get the values from the entry fields
             values = [entry.get() for entry in self.entries]
             if all(values):
                 self.treeview.item(selected_item, values=values)
-                self.clear_entries()
-                # self.sort_treeview()  # Sort after deletion
+                self.f_clear_entries()
+                # self.f_sort_treeview()  # Sort after deletion
             else:
                 messagebox.showwarning("Input Error", "Please fill in all fields")
         else:
             messagebox.showwarning("Selection Error", "Please select an item to update")
 
-    def delete_entry(self):
+    def f_delete_entry(self):
         selected_item = self.treeview.selection()
         if selected_item:
             self.treeview.delete(selected_item)
-            # self.sort_treeview()  # Sort after deletion
+            # self.f_sort_treeview()  # Sort after deletion
         else:
             # If no row is selected, delete the last row
             all_items = self.treeview.get_children()
@@ -231,7 +231,7 @@ class CRUDTreeviewView:
             else:
                 messagebox.showwarning("No Rows", "There are no rows to delete.")
 
-    def select_item(self, event):
+    def f_select_item(self, event):
         selected_item = self.treeview.selection()
         if selected_item:
             values = self.treeview.item(selected_item, "values")
@@ -243,12 +243,12 @@ class CRUDTreeviewView:
             row_index = self.treeview.index(selected_item)
             self.selected_row_label.config(text=f"Selected Row: {row_index + 1}")
 
-    def clear_entries(self):
+    def f_clear_entries(self):
         for entry in self.entries:
             entry.delete(0, tk.END)
             entry.insert(0, f"Field {self.entries.index(entry)+1}")  # Set default value
 
-    def sort_treeview(self):
+    def f_sort_treeview(self):
         # Get all items in the Treeview
         items = self.treeview.get_children()
 
@@ -257,7 +257,7 @@ class CRUDTreeviewView:
             items, 
             key=lambda item: (
                 int(self.treeview.item(item, "values")[0]) 
-                if self.is_int(self.treeview.item(item, "values")[0]) 
+                if self.f_is_int(self.treeview.item(item, "values")[0]) 
                 else float('inf')  # Assign a large number to non-numeric values
             )
         )
@@ -271,21 +271,21 @@ class CRUDTreeviewView:
             values = self.treeview.item(item, "values")
             self.treeview.insert("", "end", values=values)
     
-    def is_int(self, value):
+    def f_is_int(self, value):
         try:
             int(value)  # Try to convert to an integer
             return True
         except ValueError:
             return False  # Return False if it fails
         
-    def refresh_window(self):
+    def f_refresh_window(self):
         """Refresh the window by clearing the Treeview and entry fields"""
         for item in self.treeview.get_children():
             self.treeview.delete(item)
-        self.clear_entries()
+        self.f_clear_entries()
         self.selected_row_label.config(text="Selected Row: 0")
         
-    def add_elements_to_treeview_frame(self):
+    def f_add_elements_to_treeview_frame(self):
         self.columns = [f"Column {i+1}" for i in range(10)]
         
         # Create the Treeview
@@ -306,7 +306,7 @@ class CRUDTreeviewView:
             self.treeview.column(self.columns[i], width=150)  # Adjust width as needed
 
         # Bind selection event to fill entries with the selected row's values
-        self.treeview.bind("<ButtonRelease-1>", self.select_item)
+        self.treeview.bind("<ButtonRelease-1>", self.f_select_item)
 
         # Add a horizontal scrollbar
         self.h_scrollbar = tk.Scrollbar(self.treeview_frame, orient="horizontal", command=self.treeview.xview)
@@ -317,7 +317,7 @@ class CRUDTreeviewView:
         self.selected_row_label = tk.Label(self.treeview_frame, text="Selected Row: 0", width=100)
         self.selected_row_label.pack(fill="x", side="bottom", padx=10, pady=5)
 
-    def update_scroll_region(self):
+    def f_update_scroll_region(self):
         """Update the scroll region of the canvas to match the size of its content"""
         self.canvas.config(scrollregion=self.canvas.bbox("all"))
         # Ensure frame is at the top-left corner
