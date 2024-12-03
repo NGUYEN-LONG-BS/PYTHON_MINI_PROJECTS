@@ -26,18 +26,18 @@ class CRUDTreeviewView:
         self.canvas = tk.Canvas(self.master, width=window_width)
         self.canvas.pack(side="left", fill="both", expand=True)
         
-        self.v_scrollbar = tk.Scrollbar(self.master, orient="vertical", command=self.canvas.yview, bg="lightyellow")
-        self.v_scrollbar.pack(side="right", fill="y")
+        self.v_scrollbar_of_frame_inside_canvas = tk.Scrollbar(self.master, orient="vertical", command=self.canvas.yview, bg="lightyellow")
+        self.v_scrollbar_of_frame_inside_canvas.pack(side="right", fill="y")
         # Configure the canvas to work with the scrollbar
-        self.canvas.configure(yscrollcommand=self.v_scrollbar.set)
+        self.canvas.configure(yscrollcommand=self.v_scrollbar_of_frame_inside_canvas.set)
 
         # =======================================================================================================================
         # Create a frame to hold the widgets (this frame will be inside the canvas)
         frame_inside_canvas = tk.Frame(self.canvas, bd=2, relief="solid")
-        frame_inside_canvas.pack(fill="both", expand=True, padx=10, pady=10)
+        frame_inside_canvas.pack(fill="x", side="top", padx=10, pady=10)
 
         # Create a window on the canvas to add the frame
-        self.canvas_window = self.canvas.create_window((0, 0), window=frame_inside_canvas, anchor="nw")
+        self.canvas_window = self.canvas.create_window(0, 0, window=frame_inside_canvas, anchor="nw")
 
         # =======================================================================================================================
         # Create the frame to hold the entry fields
@@ -56,6 +56,10 @@ class CRUDTreeviewView:
         self.treeview_frame = tk.Frame(frame_inside_canvas, bd=2, relief="solid", bg="lightyellow")
         self.treeview_frame.pack(fill="both", expand=True, padx=10, pady=10)
         self.add_elements_to_treeview_frame()
+        
+        # Bind mouse wheel events to both treeview and canvas
+        self.treeview_frame.bind("<Enter>", self.enable_treeview_scroll)
+        self.treeview_frame.bind("<Leave>", self.enable_canvas_scroll)
 
         # =======================================================================================================================
         # Create a frame for the top-right button (Refresh Button)
@@ -77,11 +81,17 @@ class CRUDTreeviewView:
         frame_inside_canvas.update_idletasks()
         self.canvas.config(scrollregion=self.canvas.bbox("all"))
         
+        # Default: scroll the canvas
+        self.is_scrolling_canvas = True
+        
         # Bind the mouse wheel event to the canvas (works anywhere on the window)
         self.canvas.bind_all("<MouseWheel>", self.on_mouse_wheel)
         
         # Monitor window size changes to toggle the scrollbar visibility
         self.master.bind("<Configure>", self.function_adjust_the_sizes_dynamically)
+        
+        # After everything is initialized, update scroll regions
+        self.master.after(100, self.update_scroll_region)
 
     def function_adjust_the_sizes_dynamically(self, event):
         # =======================================================================================================================
@@ -92,10 +102,10 @@ class CRUDTreeviewView:
             canvas_height = bbox[3]  # The bottommost coordinate of the content
             if canvas_height > self.master.winfo_height():
                 # Show the scrollbar if content height is greater than window height
-                self.v_scrollbar.pack(side="right", fill="y")
+                self.v_scrollbar_of_frame_inside_canvas.pack(side="right", fill="y")
             else:
                 # Hide the scrollbar if content height is less than window height
-                self.v_scrollbar.pack_forget()
+                self.v_scrollbar_of_frame_inside_canvas.pack_forget()
         # =======================================================================================================================
         # Step: Adjust the width of the frame inside the canvas dynamically.
         # Get the current width of the window and subtract 20
@@ -117,13 +127,35 @@ class CRUDTreeviewView:
             # Hide the horizontal scrollbar if the Treeview content fits within the frame
             self.h_scrollbar.pack_forget()
 
+    # def on_mouse_wheel(self, event):
+    #     # Scroll the canvas depending on the wheel movement (event.delta)
+    #     if event.delta > 0:  # Scroll up
+    #         self.canvas.yview_scroll(-1, "units")
+    #     else:  # Scroll down
+    #         self.canvas.yview_scroll(1, "units")
+
+    def enable_treeview_scroll(self, event):
+        # Enable scrolling for the Treeview when the cursor enters the Treeview frame
+        self.is_scrolling_canvas = False
+
+    def enable_canvas_scroll(self, event):
+        # Enable scrolling for the Canvas when the cursor leaves the Treeview frame
+        self.is_scrolling_canvas = True
+
     def on_mouse_wheel(self, event):
-        # Scroll the canvas depending on the wheel movement (event.delta)
-        if event.delta > 0:  # Scroll up
-            self.canvas.yview_scroll(-1, "units")
-        else:  # Scroll down
-            self.canvas.yview_scroll(1, "units")
-    
+        if self.is_scrolling_canvas:
+            # Scroll the canvas depending on the wheel movement (event.delta)
+            if event.delta > 0:  # Scroll up
+                self.canvas.yview_scroll(-1, "units")
+            else:  # Scroll down
+                self.canvas.yview_scroll(1, "units")
+        else:
+            # Scroll the Treeview (vertical scroll) when the cursor is over it
+            if event.delta > 0:  # Scroll up
+                self.treeview.yview_scroll(-1, "units")
+            else:  # Scroll down
+                self.treeview.yview_scroll(1, "units")
+
     def add_elements_to_top_right_frame(self):      # Create 10 Entry fields for input
         # Create the refresh button in the top-right frame
         self.refresh_button = tk.Button(self.top_right_frame, text="Refresh", command=self.refresh_window)
@@ -288,3 +320,5 @@ class CRUDTreeviewView:
     def update_scroll_region(self):
         """Update the scroll region of the canvas to match the size of its content"""
         self.canvas.config(scrollregion=self.canvas.bbox("all"))
+        # Ensure frame is at the top-left corner
+        self.canvas.coords(self.canvas_window, 0, 0)
