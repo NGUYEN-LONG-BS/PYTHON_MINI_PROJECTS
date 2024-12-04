@@ -1,0 +1,180 @@
+{
+    "products": [
+      {
+        "number": 1,
+        "product_ID": "P001",
+        "product_name": "Apple",
+        "unit": "kg",
+        "quantity": 100
+      },
+      {
+        "number": 2,
+        "product_ID": "P002",
+        "product_name": "Banana",
+        "unit": "kg",
+        "quantity": 150
+      },
+      {
+        "number": 3,
+        "product_ID": "P003",
+        "product_name": "Carrot",
+        "unit": "kg",
+        "quantity": 80
+      },
+      {
+        "number": 4,
+        "product_ID": "P004",
+        "product_name": "củ su hào",
+        "unit": "kg",
+        "quantity": 60
+      },
+      {
+        "number": 5,
+        "product_ID": "P005",
+        "product_name": "Quả bưởi",
+        "unit": "kg",
+        "quantity": 120
+      },
+      {
+        "number": 6,
+        "product_ID": "P006",
+        "product_name": "Lettuce",
+        "unit": "kg",
+        "quantity": 40
+      },
+      {
+        "number": 7,
+        "product_ID": "P007",
+        "product_name": "Potato",
+        "unit": "kg",
+        "quantity": 200
+      },
+      {
+        "number": 8,
+        "product_ID": "P008",
+        "product_name": "Onion",
+        "unit": "kg",
+        "quantity": 90
+      },
+      {
+        "number": 9,
+        "product_ID": "P009",
+        "product_name": "Garlic",
+        "unit": "kg",
+        "quantity": 50
+      },
+      {
+        "number": 10,
+        "product_ID": "P010",
+        "product_name": "Ginger",
+        "unit": "kg",
+        "quantity": 30
+      },
+      {
+        "number": 11,
+        "product_ID": "P011",
+        "product_name": "Mango",
+        "unit": "kg",
+        "quantity": 100
+      },
+      {
+        "number": 12,
+        "product_ID": "P012",
+        "product_name": "Pineapple",
+        "unit": "kg",
+        "quantity": 80
+      },
+      {
+        "number": 13,
+        "product_ID": "P013",
+        "product_name": "Watermelon",
+        "unit": "kg",
+        "quantity": 120
+      },
+      {
+        "number": 14,
+        "product_ID": "P014",
+        "product_name": "Strawberry",
+        "unit": "kg",
+        "quantity": 60
+      },
+      {
+        "number": 15,
+        "product_ID": "P015",
+        "product_name": "Blueberry",
+        "unit": "kg",
+        "quantity": 45
+      },
+      {
+        "number": 16,
+        "product_ID": "P016",
+        "product_name": "Orange",
+        "unit": "kg",
+        "quantity": 110
+      },
+      {
+        "number": 17,
+        "product_ID": "P017",
+        "product_name": "Avocado",
+        "unit": "kg",
+        "quantity": 70
+      },
+      {
+        "number": 18,
+        "product_ID": "P018",
+        "product_name": "Broccoli",
+        "unit": "kg",
+        "quantity": 90
+      },
+      {
+        "number": 19,
+        "product_ID": "P019",
+        "product_name": "Cauliflower",
+        "unit": "kg",
+        "quantity": 50
+      },
+      {
+        "number": 20,
+        "product_ID": "P020",
+        "product_name": "Eggplant",
+        "unit": "kg",
+        "quantity": 60
+      },
+      {
+        "number": 21,
+        "product_ID": "P021",
+        "product_name": "Bell Pepper",
+        "unit": "kg",
+        "quantity": 70
+      },
+      {
+        "number": 22,
+        "product_ID": "P022",
+        "product_name": "Chili Pepper",
+        "unit": "kg",
+        "quantity": 30
+      },
+      {
+        "number": 23,
+        "product_ID": "P023",
+        "product_name": "Zucchini",
+        "unit": "kg",
+        "quantity": 40
+      },
+      {
+        "number": 24,
+        "product_ID": "P024",
+        "product_name": "Asparagus",
+        "unit": "kg",
+        "quantity": 25
+      },
+      {
+        "number": 25,
+        "product_ID": "P025",
+        "product_name": "Spinach",
+        "unit": "kg",
+        "quantity": 55
+      }
+    ]
+  }
+  
