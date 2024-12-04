@@ -6,16 +6,16 @@ import datetime
 import json
 import os
 import unicodedata  # This will help normalize Vietnamese characters
-from KD02QuanLyYeuCauDatHangController import cls_controller
+from app.controllers.KD02QuanLyYeuCauDatHangController import cls_controller
 
-class cls_CRUDTreeviewView:
-    def __init__(self, master):
-        self.master = master
-        self.master.title("CRUD Treeview Example")
+class cls_CRUDTreeviewView(tk.Tk):
+    def __init__(self):
+        super().__init__()  # Gọi phương thức __init__ của lớp cha
+        self.title("CRUD Treeview Example")
         # =======================================================================================================================
         # Get the screen height and width
-        screen_width = self.master.winfo_screenwidth()
-        screen_height = self.master.winfo_screenheight()
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
         # Set the window height to 4/5 of the screen height
         window_height = int(4 * screen_height / 5)
         # Set the window width (you can adjust as needed)
@@ -24,7 +24,7 @@ class cls_CRUDTreeviewView:
         x_position = int((screen_width - window_width) / 2)
         y_position = int((screen_height - window_height) / 2)
         # Set the window geometry (centered window)
-        self.master.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
+        self.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
         
         # =======================================================================================================================
         # Theme
@@ -121,10 +121,10 @@ class cls_CRUDTreeviewView:
         self.canvas.bind_all("<MouseWheel>", self.f_on_mouse_wheel)
         
         # Monitor window size changes to toggle the scrollbar visibility
-        self.master.bind("<Configure>", self.f_adjust_the_sizes_dynamically)
+        self.bind("<Configure>", self.f_adjust_the_sizes_dynamically)
         
         # After everything is initialized, update scroll regions
-        self.master.after(100, self.f_update_scroll_region)
+        self.after(100, self.f_update_scroll_region)
 
     def f_adjust_the_sizes_dynamically(self, event):
         # =======================================================================================================================
@@ -133,7 +133,7 @@ class cls_CRUDTreeviewView:
         bbox = self.canvas.bbox("all")
         if bbox:
             canvas_height = bbox[3]  # The bottommost coordinate of the content
-            if canvas_height > self.master.winfo_height():
+            if canvas_height > self.winfo_height():
                 # Show the scrollbar if content height is greater than window height
                 self.v_scrollbar_of_frame_inside_canvas.pack(side="right", fill="y")
             else:
@@ -142,7 +142,7 @@ class cls_CRUDTreeviewView:
         # =======================================================================================================================
         # Step: Adjust the width of the frame inside the canvas dynamically.
         # Get the current width of the window and subtract 20
-        new_width = self.master.winfo_width() - 0
+        new_width = self.winfo_width() - 0
 
         # Update the width of the frame_inside_canvas
         self.canvas.itemconfig(self.canvas_window, width=new_width)
@@ -188,7 +188,7 @@ class cls_CRUDTreeviewView:
                 self.canvas.yview_scroll(1, "units")
                 
             # Trì hoãn việc cập nhật lại vị trí hoặc cuộn
-            self.master.after(100, self.f_update_scroll_region)
+            self.after(100, self.f_update_scroll_region)
         else:
             # Scroll the Treeview (vertical scroll) when the cursor is over it
             if event.delta > 0:  # Scroll up

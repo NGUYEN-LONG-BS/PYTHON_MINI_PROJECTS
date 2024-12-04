@@ -15,7 +15,7 @@ from components.menu import create_top_menu  # Import the menu creation function
 class KD01QuanLyGoiThauView(tk.Tk):
     
     def __init__(self):
-        super().__init__()
+        super().__init__()  # Gọi phương thức __init__ của lớp cha
 
         # Initialize controller
         self.controller = KD01QuanLyGoiThauController()

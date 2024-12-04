@@ -30,9 +30,12 @@ def create_top_menu(parent, dashboard_window):
     # =====================================================================================================================
     # Define the action fuctions for QLYCDT menu
     def Fuction_QLYCDH_TALA():
+        # Now import KD01QuanLyGoiThauView inside the function to avoid circular import
+        from views.KD02QuanLyYeuCauDatHangView import cls_CRUDTreeviewView
         print("Fuction_QLYCDH_TALA selected")
         dashboard_window.destroy()
-        kd01_view = KD01QuanLyGoiThauView()  # Create an instance of the KD01QuanLyGoiThauView
+        kd01_view = cls_CRUDTreeviewView()  # Create an instance of the KD01QuanLyGoiThauView
+        # KD02QuanLyYeuCauDatHangView
         kd01_view.dashboard = dashboard_window  # Pass the reference of the dashboard to KD01 view
         kd01_view.mainloop()  # Open the window by starting the Tkinter event loop for the new view
         

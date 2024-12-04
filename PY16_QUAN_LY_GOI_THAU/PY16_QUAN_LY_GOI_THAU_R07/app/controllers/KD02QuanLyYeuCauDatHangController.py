@@ -1,5 +1,5 @@
 # controller.py
-from KD02QuanLyYeuCauDatHangModel import cls_model
+from app.models.KD02QuanLyYeuCauDatHangModel import cls_model
 
 class cls_controller:
     def __init__(self):
