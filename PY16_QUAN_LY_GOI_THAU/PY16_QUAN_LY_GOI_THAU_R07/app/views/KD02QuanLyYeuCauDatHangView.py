@@ -7,11 +7,14 @@ import json
 import os
 import unicodedata  # This will help normalize Vietnamese characters
 from app.controllers.KD02QuanLyYeuCauDatHangController import cls_controller
+from components.menu import create_top_menu  # Import the menu creation function
 
 class cls_CRUDTreeviewView(tk.Tk):
     def __init__(self):
         super().__init__()  # Gọi phương thức __init__ của lớp cha
         self.title("CRUD Treeview Example")
+        # Create top menu (add the menu bar from menu.py)
+        create_top_menu(self, self)
         # =======================================================================================================================
         # Get the screen height and width
         screen_width = self.winfo_screenwidth()
