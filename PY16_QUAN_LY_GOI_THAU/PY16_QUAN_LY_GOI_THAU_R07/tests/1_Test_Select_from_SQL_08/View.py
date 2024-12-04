@@ -17,6 +17,7 @@ class View:
         # Tạo Controller trong View
         self.controller = Controller()  # Không cần biết về file JSON
         
+        # ==================================================================================================================================
         # Create a frame with a border
         frame_of_treeview = tk.Frame(root, bd=2, relief="solid")
         frame_of_treeview.pack(fill="both", expand=True, padx=10, pady=10)
@@ -68,6 +69,8 @@ class View:
         # Gọi load_data khi khởi tạo cửa sổ
         self.load_data()  # Tải dữ liệu ngay khi cửa sổ được khởi tạo
 
+    # =======================================================================================================================
+    # Fnction of treeview
     def load_data(self):
         """Tải dữ liệu từ Controller và hiển thị lên View"""
         self.clear()
