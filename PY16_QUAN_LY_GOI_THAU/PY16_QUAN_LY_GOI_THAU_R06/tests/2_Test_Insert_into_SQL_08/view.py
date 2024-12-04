@@ -6,6 +6,7 @@ import datetime
 import json
 import os
 import unicodedata  # This will help normalize Vietnamese characters
+from controller import controller
 
 class CRUDTreeviewView:
     def __init__(self, master):
@@ -546,6 +547,12 @@ class CRUDTreeviewView:
         
     def f_add_elements_to_treeview_frame(self):
         self.columns = [f"Column {i+1}" for i in range(10)]
+        print(self.columns)
+        
+        # Load table configuration from JSON
+        # columns, scrollbars, general_settings = self.controller.get_table_config()
+        columns, scrollbars, general_settings = controller.get_table_config()
+        print(columns)
         
         # Create the Treeview
         self.treeview = ttk.Treeview(self.treeview_frame, columns=self.columns, show="headings", height=10)
