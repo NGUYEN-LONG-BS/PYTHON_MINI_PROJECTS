@@ -27,9 +27,15 @@ def create_top_menu(parent, dashboard_window):
     def Fucntion_QLGT_GoiThauDaLap():
         print("Fucntion_QLGT_GoiThauDaLap selected")
     
+    # =====================================================================================================================
     # Define the action fuctions for QLYCDT menu
     def Fuction_QLYCDH_TALA():
         print("Fuction_QLYCDH_TALA selected")
+        dashboard_window.destroy()
+        kd01_view = KD01QuanLyGoiThauView()  # Create an instance of the KD01QuanLyGoiThauView
+        kd01_view.dashboard = dashboard_window  # Pass the reference of the dashboard to KD01 view
+        kd01_view.mainloop()  # Open the window by starting the Tkinter event loop for the new view
+        
     def Fuction_QLYCDH_TM():
         print("Fuction_QLYCDH_TM selected")
     

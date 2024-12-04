@@ -6,9 +6,9 @@ import datetime
 import json
 import os
 import unicodedata  # This will help normalize Vietnamese characters
-from controller import controller
+from KD02QuanLyYeuCauDatHangController import cls_controller
 
-class CRUDTreeviewView:
+class cls_CRUDTreeviewView:
     def __init__(self, master):
         self.master = master
         self.master.title("CRUD Treeview Example")
@@ -28,23 +28,24 @@ class CRUDTreeviewView:
         
         # =======================================================================================================================
         # Theme
-        var_bd = 1
-        bg_corlor_0 = "#d1dade"
-        bg_corlor_1 = "#b4ced9"
+        var_bd_0 = 0
+        var_bd_1 = 0
+        bg_corlor_0 = "#f0f0f0"
+        bg_corlor_1 = "#f0f0f0"
         
         # =======================================================================================================================
         # Create a canvas and a vertical scrollbar
         self.canvas = tk.Canvas(self.master, width=window_width, bg=bg_corlor_0)
         self.canvas.pack(side="left", fill="both", expand=True)
         
-        self.v_scrollbar_of_frame_inside_canvas = tk.Scrollbar(self.master, orient="vertical", command=self.canvas.yview, bg="lightyellow")
+        self.v_scrollbar_of_frame_inside_canvas = tk.Scrollbar(self.master, orient="vertical", command=self.canvas.yview, bg=bg_corlor_1)
         self.v_scrollbar_of_frame_inside_canvas.pack(side="right", fill="y")
         # Configure the canvas to work with the scrollbar
         self.canvas.configure(yscrollcommand=self.v_scrollbar_of_frame_inside_canvas.set)
 
         # =======================================================================================================================
         # Create a frame to hold the widgets (this frame will be inside the canvas)
-        frame_inside_canvas = tk.Frame(self.canvas, bd=var_bd, relief="solid", bg=bg_corlor_1)
+        frame_inside_canvas = tk.Frame(self.canvas, bd=var_bd_0, relief="solid", bg=bg_corlor_1)
         frame_inside_canvas.pack(fill="x", side="top", padx=10, pady=10)
 
         # Create a window on the canvas to add the frame
@@ -52,40 +53,40 @@ class CRUDTreeviewView:
 
         # =======================================================================================================================
         # Create the frame to hold the entry fields
-        self.frame_header_container = tk.Frame(frame_inside_canvas, bd=var_bd, relief="solid")
+        self.frame_header_container = tk.Frame(frame_inside_canvas, bd=var_bd_0, relief="solid")
         self.frame_header_container.pack(fill="both", expand=True, padx=10, pady=10)
 
         # =======================================================================================================================
         # Create the frame to hold the entries of treeview
-        self.H1_frame = tk.Frame(frame_inside_canvas, bd=var_bd, relief="solid")
+        self.H1_frame = tk.Frame(frame_inside_canvas, bd=var_bd_0, relief="solid")
         self.H1_frame.pack(fill="both", expand=True, padx=10, pady=10)
         # Create 10 Entry fields for input
         self.f_add_elements_to_frame_of_H1()
 
         # =======================================================================================================================
         # Create the frame to hold the entries of treeview
-        self.frame_entries_of_form = tk.Frame(frame_inside_canvas, bd=var_bd, relief="solid")
+        self.frame_entries_of_form = tk.Frame(frame_inside_canvas, bd=var_bd_0, relief="solid")
         self.frame_entries_of_form.pack(fill="both", expand=True, padx=10, pady=10)
         # Create 10 Entry fields for input
         self.f_add_elements_to_frame_entries_of_form()
         
         # =======================================================================================================================
         # Create the frame to hold the entries of treeview
-        self.frame_entries_of_treeview = tk.Frame(frame_inside_canvas, bd=var_bd, relief="solid")
+        self.frame_entries_of_treeview = tk.Frame(frame_inside_canvas, bd=var_bd_0, relief="solid")
         self.frame_entries_of_treeview.pack(fill="both", expand=True, padx=10, pady=10)
         # Create 10 Entry fields for input
         self.f_add_elements_to_frame_entries_of_treeview()
         
         # =======================================================================================================================
         # Create the frame to hold the entries of treeview
-        self.frame_test = tk.Frame(frame_inside_canvas, bd=var_bd, relief="solid")
+        self.frame_test = tk.Frame(frame_inside_canvas, bd=var_bd_0, relief="solid")
         self.frame_test.pack(fill="both", expand=True, padx=10, pady=10)
         # Create 10 Entry fields for input
         self.f_add_elements_to_frame_test()
         
         # =======================================================================================================================
         # Create the frame to hold the Treeview and scrollbar
-        self.treeview_frame = tk.Frame(frame_inside_canvas, bd=var_bd, relief="solid", bg="lightyellow")
+        self.treeview_frame = tk.Frame(frame_inside_canvas, bd=var_bd_0, relief="solid", bg=bg_corlor_1)
         self.treeview_frame.pack(fill="both", expand=True, padx=10, pady=10)
         self.f_add_elements_to_treeview_frame()
         
@@ -95,13 +96,13 @@ class CRUDTreeviewView:
 
         # =======================================================================================================================
         # Create a frame for the top-right button (Refresh Button)
-        self.frame_header_top_right = tk.Frame(self.frame_header_container, bd=var_bd, relief="solid")
+        self.frame_header_top_right = tk.Frame(self.frame_header_container, bd=var_bd_0, relief="solid")
         self.frame_header_top_right.grid(row=0, column=10, padx=10, pady=10, sticky="ne")
         self.f_add_elements_to_frame_header_top_right()
 
         # =======================================================================================================================
         # Create the frame to hold the buttons
-        self.buttons_frame = tk.Frame(frame_inside_canvas, bd=var_bd, relief="solid", bg="lightblue", height=150, width=500)
+        self.buttons_frame = tk.Frame(frame_inside_canvas, bd=var_bd_0, relief="solid", bg=bg_corlor_1, height=150, width=500)
         self.buttons_frame.pack(fill="both", side="bottom", expand=True, padx=10, pady=10)
         self.f_add_elements_to_buttons_frame()
         
@@ -549,10 +550,10 @@ class CRUDTreeviewView:
         self.columns = [f"Column {i+1}" for i in range(10)]
         print(self.columns)
         
-        # Load table configuration from JSON
-        # columns, scrollbars, general_settings = self.controller.get_table_config()
-        columns, scrollbars, general_settings = controller.get_table_config()
-        print(columns)
+        # # Load table configuration from JSON
+        # # columns, scrollbars, general_settings = self.controller.get_table_config()
+        # columns, scrollbars, general_settings = controller.get_table_config()
+        # print(columns)
         
         # Create the Treeview
         self.treeview = ttk.Treeview(self.treeview_frame, columns=self.columns, show="headings", height=10)

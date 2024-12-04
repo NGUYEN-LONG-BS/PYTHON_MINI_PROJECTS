@@ -4,7 +4,7 @@ import json
 import pyodbc
 import pandas as pd
 
-class model:
+class cls_model:
     def __init__(self):
         """Define the JSON file"""
         # Get the absolute path of the current directory

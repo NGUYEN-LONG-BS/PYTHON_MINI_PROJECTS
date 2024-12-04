@@ -1,7 +1,7 @@
 # controller.py
-from model import model
+from KD02QuanLyYeuCauDatHangModel import cls_model
 
-class controller:
+class cls_controller:
     def __init__(self):
         self.model = model()  # Model sẽ chịu trách nhiệm đọc file JSON và cơ sở dữ liệu
 
