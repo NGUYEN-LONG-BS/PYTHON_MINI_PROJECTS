@@ -6,6 +6,7 @@ class UserModel:
     def __init__(self):
         # Example credentials, can be replaced with a database or file storage
         self.credentials = {
+            "admin": "123",
             "user1": "password123",
             "user2": "mypassword"
         }
