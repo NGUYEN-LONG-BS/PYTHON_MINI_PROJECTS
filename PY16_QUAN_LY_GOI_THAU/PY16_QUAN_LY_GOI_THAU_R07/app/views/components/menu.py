@@ -13,10 +13,11 @@ def create_top_menu(parent, dashboard_window):
         from views.DashboardView import render_dashboard
         render_dashboard()
     
-    # Now import KD01QuanLyGoiThauView inside the function to avoid circular import
-    from views.KD01QuanLyGoiThauView import KD01QuanLyGoiThauView
+    
     # Define the action fuctions for QLGT menu
     def Fucntion_QLGT_TaoMoi_Click():
+        # Now import KD01QuanLyGoiThauView inside the function to avoid circular import
+        from views.KD01QuanLyGoiThauView import KD01QuanLyGoiThauView
         print("Fucntion_QLGT_TaoMoi_Click selected")
         # dashboard_window.withdraw()
         dashboard_window.destroy()
@@ -25,7 +26,13 @@ def create_top_menu(parent, dashboard_window):
         kd01_view.mainloop()  # Open the window by starting the Tkinter event loop for the new view
     
     def Fucntion_QLGT_GoiThauDaLap():
+        # Now import KD01QuanLyGoiThauView inside the function to avoid circular import
+        from views.KD01_01QuanLyGoiThauView import View
         print("Fucntion_QLGT_GoiThauDaLap selected")
+        dashboard_window.destroy()
+        kd01_view = View()  # Create an instance of the KD01QuanLyGoiThauView
+        kd01_view.dashboard = dashboard_window  # Pass the reference of the dashboard to KD01 view
+        kd01_view.mainloop()  # Open the window by starting the Tkinter event loop for the new view
     
     # =====================================================================================================================
     # Define the action fuctions for QLYCDT menu
@@ -35,7 +42,6 @@ def create_top_menu(parent, dashboard_window):
         print("Fuction_QLYCDH_TALA selected")
         dashboard_window.destroy()
         kd01_view = cls_CRUDTreeviewView()  # Create an instance of the KD01QuanLyGoiThauView
-        # KD02QuanLyYeuCauDatHangView
         kd01_view.dashboard = dashboard_window  # Pass the reference of the dashboard to KD01 view
         kd01_view.mainloop()  # Open the window by starting the Tkinter event loop for the new view
         
