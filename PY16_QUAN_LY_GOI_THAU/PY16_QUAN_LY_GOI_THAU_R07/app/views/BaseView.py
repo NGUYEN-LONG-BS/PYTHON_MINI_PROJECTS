@@ -28,7 +28,8 @@ class BaseView(CTk):
         self.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
 
     def create_menu(self):
-        create_menu_TK_02(self, self)
+        # create_menu_TK_02(self, self)
+        create_top_menu(self, self)
 
     def open_file(self):
         print("Open file selected")

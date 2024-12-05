@@ -3,13 +3,13 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import Image
 from datetime import datetime
-from app.controllers.KD01QuanLyGoiThauController import KD01QuanLyGoiThauController
+from app.controllers.KD01QuanLyGoiThauController import cls_KD01QuanLyGoiThauController
+from app.controllers.KD01QuanLyGoiThauController import cls_Controller_config_treeview
 from utils import *
 from components import *
 from components.user_Info import setup_employee_info_labels  # Import the function
 from components.logo import setup_logo  # Import the setup_logo function
 from components.menu import create_top_menu  # Import the menu creation function
-
 
 
 class KD01QuanLyGoiThauView(tk.Tk):
@@ -18,7 +18,8 @@ class KD01QuanLyGoiThauView(tk.Tk):
         super().__init__()  # Gọi phương thức __init__ của lớp cha
 
         # Initialize controller
-        self.controller = KD01QuanLyGoiThauController()
+        self.controller = cls_KD01QuanLyGoiThauController()
+        self.controller_02 = cls_Controller_config_treeview()
 
         # Setup window
         set_window_size(self)
@@ -35,6 +36,7 @@ class KD01QuanLyGoiThauView(tk.Tk):
         Frame_logo = tk.Frame(frame_header_container, width=100, height=100)
         Frame_logo.pack(side='left', padx=10)  # Pack the logo frame on the left side with some padding
         setup_logo(Frame_logo)  # Pass the frame as the parent for the logo
+        
         
         # Wait for the window to render and then calculate the width of Frame_user_info
         def update_user_info_frame_width():
@@ -59,7 +61,8 @@ class KD01QuanLyGoiThauView(tk.Tk):
         self.setup_combobox_nam_goi_thau()
         self.setup_entries()
         self.setup_btn_tao_thu_muc_moi()
-        self.setup_scrollable_frame()
+        # self.setup_scrollable_frame()
+        self.setup_treeview_frame()
         self.setup_btn_show_dashboard()
 
         self.dashboard = None  # Placeholder for Dashboard window
@@ -112,7 +115,8 @@ class KD01QuanLyGoiThauView(tk.Tk):
             self.controller.create_folder(folder_name)
 
         create_folder_btn = tk.Button(self, text="Tạo thư mục mới", command=btn_tao_thu_muc_moi_click)
-        create_folder_btn.place(x=50, y=700)
+        # create_folder_btn.place(x=50, y=700)
+        create_folder_btn.pack()
 
     # Button to show Dashboard
     def setup_btn_show_dashboard(self):
@@ -124,7 +128,8 @@ class KD01QuanLyGoiThauView(tk.Tk):
                 print("Dashboard window not initialized yet.")
 
         show_dashboard_btn = tk.Button(self, text="Show Dashboard", command=btn_show_dashboard_click)
-        show_dashboard_btn.place(x=250, y=700)
+        # show_dashboard_btn.place(x=250, y=700)
+        show_dashboard_btn.pack()
 
     # Scrollable frame for folder contents
     def setup_scrollable_frame(self):
@@ -154,34 +159,15 @@ class KD01QuanLyGoiThauView(tk.Tk):
 
         frame.update_idletasks()
         canvas.config(scrollregion=canvas.bbox("all"))
-
-    # Combobox change handler
-    def on_combobox_nam_goi_thau_change(self, event):
-        self.update_folder_name()
-
-    # Entry change handler
-    def on_entry_change(self, event):
-        self.update_folder_name()
-
-    # Update folder name
-    def update_folder_name(self):
-        selected_year = self.year_combobox.get()
-        year_suffix = selected_year[-2:]
-
-        notification_number = self.notification_entry.get().zfill(4)
-
-        folder_name = f"{year_suffix}_GOI_THAU_0000_{notification_number}"
-
-        self.folder_name_label.configure(text=folder_name)
-
-    # Close event handler
-    def Function_close_KD01_Click(self):
-        self.destroy()
-        # Now import KD01QuanLyGoiThauView inside the function to avoid circular import
-        from views.DashboardView import render_dashboard
-        render_dashboard()
         
-    # ==================================================================================================================================
+        refresh_scrollable_frame()
+
+        frame.update_idletasks()
+        canvas.config(scrollregion=canvas.bbox("all"))
+        
+    # Treeview
+    def setup_treeview_frame(self):
+        # ==================================================================================================================================
         # Create a frame with a border
         frame_of_treeview = tk.Frame(self, bd=2, relief="solid")
         frame_of_treeview.pack(fill="both", expand=True, padx=10, pady=10)
@@ -192,7 +178,7 @@ class KD01QuanLyGoiThauView(tk.Tk):
         self.tree.pack(fill=tk.BOTH, expand=True)
 
         # Load table configuration from JSON
-        columns, scrollbars, general_settings = self.controller.get_table_config()
+        columns, scrollbars, general_settings = self.controller_02.get_table_config()
 
         # Configure the general appearance of the Treeview
         self.tree.configure(
@@ -225,6 +211,33 @@ class KD01QuanLyGoiThauView(tk.Tk):
                 anchor=col["anchor"]
             )
             self.tree.tag_configure(col["name"], font=(col["font"]["family"], col["font"]["size"], col["font"]["weight"]))
+    
+
+    # Combobox change handler
+    def on_combobox_nam_goi_thau_change(self, event):
+        self.update_folder_name()
+
+    # Entry change handler
+    def on_entry_change(self, event):
+        self.update_folder_name()
+
+    # Update folder name
+    def update_folder_name(self):
+        selected_year = self.year_combobox.get()
+        year_suffix = selected_year[-2:]
+
+        notification_number = self.notification_entry.get().zfill(4)
+
+        folder_name = f"{year_suffix}_GOI_THAU_0000_{notification_number}"
+
+        self.folder_name_label.configure(text=folder_name)
+
+    # Close event handler
+    def Function_close_KD01_Click(self):
+        self.destroy()
+        # Now import KD01QuanLyGoiThauView inside the function to avoid circular import
+        from views.DashboardView import render_dashboard
+        render_dashboard()
 
         # Nút tải dữ liệu
         self.load_button = tk.Button(self.root, text="Load Data", command=self.load_data)
@@ -239,7 +252,7 @@ class KD01QuanLyGoiThauView(tk.Tk):
         """Tải dữ liệu từ Controller và hiển thị lên View"""
         self.clear()
         """Load and display data (mockup for now)"""
-        data = self.controller.get_data()
+        data = self.controller_02.get_data()
         for row in data:
             self.tree.insert("", "end", values=row)
         

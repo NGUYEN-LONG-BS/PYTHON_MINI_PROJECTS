@@ -2,7 +2,7 @@ import os
 from app.models.KD01QuanLyGoiThauModel import *
 from app.utils.theme_utils import load_theme
 
-class KD01QuanLyGoiThauController:
+class cls_KD01QuanLyGoiThauController:
     def __init__(self):
         # Base path where folders will be created
         self.base_path = r"\\172.16.0.191\2.0 ksnb\TUAN_AN_GROUP\BAN_KINH_DOANH\QUAN_LY_THAU"
@@ -30,3 +30,20 @@ class KD01QuanLyGoiThauController:
         """
         load_theme(theme_name)
         
+class cls_Controller_config_treeview:
+    def __init__(self):
+        self.model = Model()  # Model sẽ chịu trách nhiệm đọc file JSON và cơ sở dữ liệu
+
+    def get_data(self):
+        """Lấy dữ liệu từ Model (SQL hoặc JSON nếu cần)"""
+        return self.model.fetch_data_from_db()  # Lấy dữ liệu từ DB
+
+    def get_table_config(self):
+        """
+        Load the table configuration (header, columns, and scrollbars) from the JSON file.
+        Returns:
+            columns (list): List of column definitions.
+            scrollbars (dict): Scrollbar configuration for the table.
+            general_settings (dict): General settings for table appearance.
+        """
+        return self.model.load_table_config_from_json()
