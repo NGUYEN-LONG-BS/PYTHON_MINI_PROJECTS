@@ -56,10 +56,10 @@ class Model:
         # Get the absolute path of the current directory
         current_dir = os.path.dirname(os.path.abspath(__file__))  
         # Define the relative path to the JSON file
-        self.json_file = os.path.join(current_dir, 'KD01_TABLE_ABC_FULL.JSON')
+        self.json_file = os.path.join(current_dir, 'KD01_01KD01_TABLE_ABC_FULL.JSON')
         
         # debug
-        print(os.path.join(current_dir, 'KD01_TABLE_ABC_FULL.JSON'))
+        print(os.path.join(current_dir, 'KD01_01KD01_TABLE_ABC_FULL.JSON'))
 
     # def load_header_from_json(self):
     #     """Đọc header từ file JSON"""

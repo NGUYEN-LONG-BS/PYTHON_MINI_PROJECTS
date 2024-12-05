@@ -240,7 +240,7 @@ class KD01QuanLyGoiThauView(tk.Tk):
         render_dashboard()
 
         # Nút tải dữ liệu
-        self.load_button = tk.Button(self.root, text="Load Data", command=self.load_data)
+        self.load_button = tk.Button(self, text="Load Data", command=self.load_data)
         self.load_button.pack()
         
         # Gọi load_data khi khởi tạo cửa sổ
