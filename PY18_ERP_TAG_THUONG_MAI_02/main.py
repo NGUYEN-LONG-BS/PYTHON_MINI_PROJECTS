@@ -1,29 +1,78 @@
-import tkinter as tk
-from PY18_ERP_TAG_THUONG_MAI_02.app.views.components.header import Header
-from PY18_ERP_TAG_THUONG_MAI_02.app.views.components.footer import Footer
-from PY18_ERP_TAG_THUONG_MAI_02.app.views.components.left_menu import LeftMenu
-from PY18_ERP_TAG_THUONG_MAI_02.app.views.components.right_banner import RightBanner
-from app.views.dashboard.dashboard_view import DashboardView
+# Project/main.py
+import os
+import sys
+
+def setup_sys_path():
+    """
+    Thiết lập lại sys.path để Python có thể tìm thấy các module trong thư mục `app`.
+    """
+    # Lấy đường dẫn của file hiện tại
+    base_dir = os.path.dirname(__file__)
+    # Thêm đường dẫn tới thư mục app vào sys.path
+    app_path = os.path.join(base_dir, 'app')
+    if app_path not in sys.path:
+        sys.path.append(app_path)
+    # Thêm đường dẫn tới thư mục views trong app
+    views_path = os.path.join(app_path, 'views')
+    if views_path not in sys.path:
+        sys.path.append(views_path)
+        
+    # Thêm đường dẫn tới thư mục controllers trong app
+    controllers_path = os.path.join(app_path, 'controllers')
+    if controllers_path not in sys.path:
+        sys.path.append(controllers_path)
+        
+    # Thêm đường dẫn tới thư mục models trong app
+    models_path = os.path.join(app_path, 'models')
+    if models_path not in sys.path:
+        sys.path.append(models_path)
+        
+    # Thêm đường dẫn tới thư mục services trong app
+    services_path = os.path.join(app_path, 'services')
+    if services_path not in sys.path:
+        sys.path.append(services_path)
+        
+    # Thêm đường dẫn tới thư mục utils trong app
+    utils_path = os.path.join(app_path, 'utils')
+    if utils_path not in sys.path:
+        sys.path.append(utils_path)
+    
+    # Thêm đường dẫn tới thư mục assets vào sys.path
+    assets_path = os.path.join(base_dir, 'assets')
+    if assets_path not in sys.path:
+        sys.path.append(assets_path)
+        
+    # Thêm đường dẫn tới thư mục icons trong app
+    icons_path = os.path.join(assets_path, 'icons')
+    if icons_path not in sys.path:
+        sys.path.append(icons_path)
+        
+    # Thêm đường dẫn tới thư mục img trong app
+    img_path = os.path.join(assets_path, 'img')
+    if img_path not in sys.path:
+        sys.path.append(img_path)
+        
+    # Thêm đường dẫn tới thư mục styles trong app
+    styles_path = os.path.join(assets_path, 'styles')
+    if styles_path not in sys.path:
+        sys.path.append(styles_path)
+    
+    # Thêm đường dẫn tới thư mục styles trong app
+    templates_path = os.path.join(assets_path, 'templates')
+    if templates_path not in sys.path:
+        sys.path.append(templates_path)
 
 def main():
-    root = tk.Tk()
-    root.geometry("1024x768")
-    root.title("Modular Application")
+    """
+    Chạy ứng dụng và render dashboard.
+    """
+    setup_sys_path()  # Thiết lập đường dẫn
+    
+    # Import hàm render_dashboard từ DashboardView_Iherit_Component trong views
+    from PY18_ERP_TAG_THUONG_MAI_02.app.views.DashboardView import render_dashboard
 
-    # Create Layout Components
-    header = Header(root)
-    footer = Footer(root)
-    left_menu = LeftMenu(root)
-    right_banner = RightBanner(root)
-
-    # Create Main Content Area
-    main_frame = tk.Frame(root, bg="lightgray")
-    main_frame.pack(fill=tk.BOTH, expand=True, side=tk.LEFT)
-
-    # Load Dashboard View into the main content area
-    dashboard_view = DashboardView(main_frame)
-
-    root.mainloop()
+    # Gọi hàm render_dashboard để hiển thị dashboard
+    render_dashboard()
 
 if __name__ == "__main__":
     main()
