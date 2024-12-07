@@ -11,9 +11,6 @@ import tkinter as tk
 #     return header_frame
 
 
-
-import tkinter as tk
-
 class cls_Header:
     def __init__(self, master):
         self.master = master
