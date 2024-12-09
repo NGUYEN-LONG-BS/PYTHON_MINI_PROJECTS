@@ -9,17 +9,20 @@ class cls_Header:
 
         self.create_header()
 
-
     def create_header(self):
-        header_frame = tk.Frame(self.master)
+        header_frame = tk.Frame(
+            self.master
+            # ,bd=2
+            # ,relief="solid"
+            )
         header_frame.pack(side=tk.TOP, fill=tk.X)
         
-        header_label = tk.Label(header_frame, text="title", font=("Arial", 20), bg="lightblue")
+        header_label = tk.Label(
+            header_frame, 
+            text="TUẤN ÂN GROUP", 
+            font=("Arial", 20), 
+            bg="lightblue")
         header_label.pack()
-        
-        # Example header with a title and placeholder buttons
-        title = tk.Label(header_frame, text="My Application header", font=("Arial", 18), bg="lightblue")
-        title.pack(side=tk.LEFT, padx=10)
 
         logout_button = tk.Button(header_frame, text="Logout", command=self.logout)
         logout_button.pack(side=tk.RIGHT, padx=10)

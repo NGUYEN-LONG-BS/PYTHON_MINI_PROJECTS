@@ -2,8 +2,8 @@
 import tkinter as tk
 
 class cls_LeftMenu:
-    def __init__(self, master):
-        self.master = master
+    def __init__(self, parent):
+        self.master = parent
         self.left_frame = tk.Frame(self.master, bg="white", width=200)
         self.left_frame.pack(fill=tk.Y, side=tk.LEFT)
 

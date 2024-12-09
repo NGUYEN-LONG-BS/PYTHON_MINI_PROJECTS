@@ -14,31 +14,37 @@ class cls_Dashboard:
         self.master.title("Dashboard")
         set_window_size(self.master)
         
-        # Khởi tạo các thành phần
-        self.header = cls_Header(self.master)
-        self.top_menu = cls_Menu(self.master)
-        self.footer = cls_Footer(self.master)
-        self.left_menu = cls_LeftMenu(self.master)
-        self.right_banner = cls_RightBanner(self.master)
-        self.mainContent = cls_MainContent(self.master)
+        # Create frames for header, footer, and main content
+        self.header_frame = tk.Frame(self.master, 
+                                     bg="lightgrey"
+                                     ,bd=2
+                                     ,relief="solid"
+                                     )
+        self.footer_frame = tk.Frame(self.master
+                                     ,bg="lightgrey"
+                                     ,bd=2
+                                     ,relief="solid"
+                                     )
+        self.main_container_frame = tk.Frame(self.master
+                                             ,bg="white"
+                                             ,bd=2
+                                             ,relief="solid"
+                                             )
+        
+        # Place frames for layout management
+        self.header_frame.pack(side=tk.TOP, fill=tk.X)
+        self.footer_frame.pack(side=tk.BOTTOM, fill=tk.X)
+        self.main_container_frame.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+
 
     def render(self):
-        # Gọi các phương thức để render các phần tử giao diện
-        self.header.create_header()
-        self.top_menu.create_top_menu()
-        self.footer.create_footer()
-        self.left_menu.create_left_menu()
-        self.right_banner.create_right_banner()
-        self.mainContent.create_content()
-
-        # Bắt đầu vòng lặp Tkinter
+        # Khởi tạo các thành phần
+        self.top_menu = cls_Menu(self.master)
+        self.header = cls_Header(self.header_frame)  # Pass header_frame as parent
+        self.footer = cls_Footer(self.footer_frame)  # Pass footer_frame as parent
+        self.container = cls_MainContainer(self.main_container_frame)  # Pass footer_frame as parent
+        
         self.master.mainloop()
-
-    # @classmethod                # Khi một phương thức là classmethod, bạn phải gọi nó thông qua class chứ không phải qua đối tượng.
-    # def render_dashboard(cls):
-    #     # Không cần truyền root từ bên ngoài nữa, sẽ tự tạo
-    #     dashboard = cls()  # Khởi tạo cls_Dashboard, Tk sẽ tự tạo ở constructor
-    #     dashboard.render()  # Gọi phương thức render để hiển thị giao diện
         
     def render_dashboard(self):
         # Gọi phương thức render để hiển thị giao diện
