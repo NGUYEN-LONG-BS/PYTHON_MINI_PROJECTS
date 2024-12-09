@@ -1,0 +1,79 @@
+{
+    "table": {
+        "name": "Gói thầu thông tin",
+        "description": "Thông tin về các gói thầu, bao gồm tên, mã nhân viên và thời gian tạo.",
+        "columns": [
+            {
+                "name": "STT",
+                "width": 50,
+                "min_width": 80,
+                "anchor": "center",
+                "stretch": true,
+                "font": {"family": "Arial", "size": 12, "weight": "bold"},
+                "background_color": "#f0f0f0",
+                "foreground_color": "#000000",
+                "show": "headings"
+            },
+            {
+                "name": "Tên Folder",
+                "width": 200,
+                "min_width": 150,
+                "anchor": "w",
+                "stretch": true,
+                "font": {"family": "Verdana", "size": 12, "weight": "normal"},
+                "background_color": "#ffffff",
+                "foreground_color": "#000000",
+                "show": "headings"
+            },
+            {
+                "name": "Mã NV",
+                "width": 150,
+                "min_width": 120,
+                "anchor": "w",
+                "stretch": true,
+                "font": {"family": "Arial", "size": 12, "weight": "normal"},
+                "background_color": "#ffffff",
+                "foreground_color": "#000000",
+                "show": "headings"
+            },
+            {
+                "name": "Tên NV",
+                "width": 250,
+                "min_width": 200,
+                "anchor": "w",
+                "stretch": true,
+                "font": {"family": "Verdana", "size": 12, "weight": "normal"},
+                "background_color": "#ffffff",
+                "foreground_color": "#000000",
+                "show": "headings"
+            },
+            {
+                "name": "Thời gian tạo",
+                "width": 200,
+                "min_width": 180,
+                "anchor": "e",
+                "stretch": true,
+                "font": {"family": "Arial", "size": 12, "weight": "normal"},
+                "background_color": "#ffffff",
+                "foreground_color": "#000000",
+                "show": "headings"
+            }
+        ],
+        "scrollbars": {
+            "vertical": {
+                "enabled": true,
+                "command": "yscrollcommand"
+            },
+            "horizontal": {
+                "enabled": true,
+                "command": "xscrollcommand"
+            }
+        },
+        "general": {
+            "border_width": 2,
+            "relief": "solid",
+            "padding": 10,
+            "background_color": "#ffffff"
+        }
+    }
+}
