@@ -1,15 +1,6 @@
 # Project/views/components/footer.py
 import tkinter as tk
 
-# def create_footer(parent):
-#     footer_frame = tk.Frame(parent)
-#     footer_frame.pack(side=tk.BOTTOM, fill=tk.X)
-    
-#     footer_label = tk.Label(footer_frame, text="© 2025 Tuan An Group. All Rights Reserved.")
-#     footer_label.pack()
-    
-#     return footer_frame
-
 class cls_Footer:
     def __init__(self, master):
         self.master = master
@@ -19,10 +10,8 @@ class cls_Footer:
         self.create_footer()
 
     def create_footer(self):
-        # # Example footer with static text
-        # footer_label = tk.Label(self.footer_frame, text="© 2024 My Application. All rights reserved.", font=("Arial", 10), bg="lightgray")
-        # footer_label.pack(side=tk.LEFT, padx=10)
-        footer_frame = tk.Frame(self)
+        # Use self.master as the parent instead of self
+        footer_frame = tk.Frame(self.master)
         footer_frame.pack(side=tk.BOTTOM, fill=tk.X)
         
         footer_label = tk.Label(footer_frame, text="© 2025 Tuan An Group. All Rights Reserved.")

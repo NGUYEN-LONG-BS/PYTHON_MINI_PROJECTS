@@ -25,7 +25,7 @@ class cls_LeftMenu:
         
     def create_left_menu(self):
         # Create a frame for the left menu
-        left_menu_frame = tk.Frame(self, bg="#d3d3d3", width=200, height=500)
+        left_menu_frame = tk.Frame(self.master, bg="#d3d3d3", width=200, height=500)
         left_menu_frame.pack(side=tk.LEFT, fill=tk.Y)
         
         # Function to display the left menu if the mouse is within 10px from the left edge
@@ -45,8 +45,8 @@ class cls_LeftMenu:
                 left_menu_frame.pack_forget()
 
         # Bind the events to show/hide the menu based on mouse position
-        self.bind("<Enter>", show_left_menu)  # Show the left menu when entering the window
-        self.bind("<Leave>", hide_left_menu)  # Hide the menu when the mouse leaves the window
+        self.master.bind("<Enter>", show_left_menu)  # Show the left menu when entering the window
+        self.master.bind("<Leave>", hide_left_menu)  # Hide the menu when the mouse leaves the window
 
         # Define the action functions for each menu item
         def function_home_main():

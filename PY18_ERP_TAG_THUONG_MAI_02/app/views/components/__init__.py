@@ -1,9 +1,9 @@
 # Project/views/components/__init__.py
 
-from .menu import create_top_menu
+from .menu import cls_Menu
 from .main_content import create_main_content
 from .footer import cls_Footer
 from .header import cls_Header
-from .left_menu import create_left_menu
-from .right_banner import create_right_banner
+from .left_menu import cls_LeftMenu
+from .right_banner import cls_RightBanner
 from .notification import create_notification

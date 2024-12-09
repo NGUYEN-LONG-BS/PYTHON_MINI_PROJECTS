@@ -2,95 +2,77 @@
 import tkinter as tk
 from components.font_size import set_menu_font
 
-def create_top_menu(parent, dashboard_window):
+class cls_Menu:
+    def __init__(self, master):
+        self.master = master
+        self.create_top_menu()
     
-    
-    # Define the action fuctions for home menu
-    def Function_Home_main_Click():
+    def create_top_menu(self):
+        # Create the menu bar
+        menubar = tk.Menu(self.master)
+        
+        # Define Home menu
+        home_menu = tk.Menu(menubar, tearoff=0)
+        home_menu.add_command(label="Home Main", command=self.Function_Home_main_Click)
+        menubar.add_cascade(label="Home", menu=home_menu)
+
+        # Define QLGT (Quan Ly Goi Thau) menu
+        qlgt_menu = tk.Menu(menubar, tearoff=0)
+        qlgt_menu.add_command(label="Tao Moi", command=self.Fucntion_QLGT_TaoMoi_Click)
+        qlgt_menu.add_command(label="Goi Thau Da Lap", command=self.Fucntion_QLGT_GoiThauDaLap)
+        menubar.add_cascade(label="QLGT", menu=qlgt_menu)
+
+        # Define QLYCDT (Quan Ly Yeu Cau Dat Hang) menu
+        qlycdt_menu = tk.Menu(menubar, tearoff=0)
+        qlycdt_menu.add_command(label="TALA", command=self.Fuction_QLYCDH_TALA)
+        qlycdt_menu.add_command(label="TM", command=self.Fuction_QLYCDH_TM)
+        menubar.add_cascade(label="QLYCDT", menu=qlycdt_menu)
+
+        # Define Help menu
+        help_menu = tk.Menu(menubar, tearoff=0)
+        help_menu.add_command(label="About", command=self.Fucntion_Help_About)
+        help_menu.add_command(label="User Info", command=self.Fucntion_Help_UserInfo)
+        menubar.add_cascade(label="Help", menu=help_menu)
+
+        # Attach the menu bar to the main window
+        self.master.config(menu=menubar)
+
+    # Define the action functions for the menus
+    def Function_Home_main_Click(self):
         print("Function_Home_main_Click selected")
-        dashboard_window.destroy()
-        # Now import KD01QuanLyGoiThauView inside the function to avoid circular import
-        from views.DashboardView import render_dashboard
+        self.master.destroy()  # Assuming 'self.master' is the dashboard window
+        from PY18_ERP_TAG_THUONG_MAI_02.app.views.dashboard.DashboardView import render_dashboard
         render_dashboard()
-    
-    
-    # Define the action fuctions for QLGT menu
-    def Fucntion_QLGT_TaoMoi_Click():
-        # Now import KD01QuanLyGoiThauView inside the function to avoid circular import
-        from views.KD01QuanLyGoiThauView import KD01QuanLyGoiThauView
+
+    def Fucntion_QLGT_TaoMoi_Click(self):
         print("Fucntion_QLGT_TaoMoi_Click selected")
-        # dashboard_window.withdraw()
-        dashboard_window.destroy()
-        kd01_view = KD01QuanLyGoiThauView()  # Create an instance of the KD01QuanLyGoiThauView
-        kd01_view.dashboard = dashboard_window  # Pass the reference of the dashboard to KD01 view
-        kd01_view.mainloop()  # Open the window by starting the Tkinter event loop for the new view
-    
-    def Fucntion_QLGT_GoiThauDaLap():
-        # Now import KD01QuanLyGoiThauView inside the function to avoid circular import
-        from views.KD01_01QuanLyGoiThauView import View
+        self.master.destroy()
+        from views.KD01QuanLyGoiThauView import KD01QuanLyGoiThauView
+        kd01_view = KD01QuanLyGoiThauView()
+        kd01_view.dashboard = self.master
+        kd01_view.mainloop()
+
+    def Fucntion_QLGT_GoiThauDaLap(self):
         print("Fucntion_QLGT_GoiThauDaLap selected")
-        dashboard_window.destroy()
-        kd01_view = View()  # Create an instance of the KD01QuanLyGoiThauView
-        kd01_view.dashboard = dashboard_window  # Pass the reference of the dashboard to KD01 view
-        kd01_view.mainloop()  # Open the window by starting the Tkinter event loop for the new view
-    
-    # =====================================================================================================================
-    # Define the action fuctions for QLYCDT menu
-    def Fuction_QLYCDH_TALA():
-        # Now import KD01QuanLyGoiThauView inside the function to avoid circular import
-        from views.KD02QuanLyYeuCauDatHangView import cls_CRUDTreeviewView
+        self.master.destroy()
+        from views.KD01_01QuanLyGoiThauView import View
+        kd01_view = View()
+        kd01_view.dashboard = self.master
+        kd01_view.mainloop()
+
+    def Fuction_QLYCDH_TALA(self):
         print("Fuction_QLYCDH_TALA selected")
-        dashboard_window.destroy()
-        kd01_view = cls_CRUDTreeviewView()  # Create an instance of the KD01QuanLyGoiThauView
-        kd01_view.dashboard = dashboard_window  # Pass the reference of the dashboard to KD01 view
-        kd01_view.mainloop()  # Open the window by starting the Tkinter event loop for the new view
-        
-    def Fuction_QLYCDH_TM():
+        self.master.destroy()
+        from views.KD02QuanLyYeuCauDatHangView import cls_CRUDTreeviewView
+        kd01_view = cls_CRUDTreeviewView()
+        kd01_view.dashboard = self.master
+        kd01_view.mainloop()
+
+    def Fuction_QLYCDH_TM(self):
         print("Fuction_QLYCDH_TM selected")
-    
-    # Define the action fuctions for Help menu
-    def Fucntion_Help_About():
+
+    def Fucntion_Help_About(self):
         print("Fucntion_Help_About selected")
-    def Fucntion_Help_UserInfo():
+
+    def Fucntion_Help_UserInfo(self):
         print("Fucntion_Help_UserInfo selected")
-    
-        
-    # Create a Tkinter Menu bar
-    menubar_BP_KD = tk.Menu(parent)
-
-    # Create a "Home" menu
-    HOME_menu = tk.Menu(menubar_BP_KD, tearoff=0)
-    HOME_menu.add_command(label="Home", command=Function_Home_main_Click)
-    menubar_BP_KD.add_cascade(label="Home", menu=HOME_menu)
-
-    # Create a "Quản lý gói thầu" menu
-    QLGT_menu = tk.Menu(menubar_BP_KD, tearoff=0)
-    QLGT_menu.add_command(label="Tạo mới gói thầu", command=Fucntion_QLGT_TaoMoi_Click)
-    QLGT_menu.add_command(label="Các gói thầu đã lập", command=Fucntion_QLGT_GoiThauDaLap)
-    menubar_BP_KD.add_cascade(label="Quản lý gói thầu", menu=QLGT_menu)
-
-    # Create a "Quản lý yêu cầu đặt hàng" menu
-    QLYCDH_menu = tk.Menu(menubar_BP_KD, tearoff=0)
-    QLYCDH_menu.add_command(label="Yêu cầu đặt hàng TALA", command=Fuction_QLYCDH_TALA)
-    QLYCDH_menu.add_command(label="Yêu cầu đặt hàng TM", command=Fuction_QLYCDH_TM)
-    menubar_BP_KD.add_cascade(label="Quản lý yêu cầu đặt hàng", menu=QLYCDH_menu)
-    
-    # Create a "Help" menu
-    HELP_menu = tk.Menu(menubar_BP_KD, tearoff=0)
-    HELP_menu.add_command(label="About", command=Fucntion_Help_About)
-    HELP_menu.add_command(label="User-infor", command=Fucntion_Help_UserInfo)
-    HELP_menu.add_separator()
-    HELP_menu.add_command(label="Exit", command=parent.quit)
-    menubar_BP_KD.add_cascade(label="Help", menu=HELP_menu)
-    
-    # Set font size to 15 for all menus
-    font_size = 14
-    set_menu_font(HOME_menu, font_size)
-    set_menu_font(QLGT_menu, font_size)
-    set_menu_font(QLYCDH_menu, font_size)
-    set_menu_font(HELP_menu, font_size)
-
-    # Set the menu bar for the root window
-    parent.config(menu=menubar_BP_KD)
-        
-        
