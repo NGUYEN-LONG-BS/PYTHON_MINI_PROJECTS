@@ -67,13 +67,14 @@ def main():
     Chạy ứng dụng và render dashboard.
     """
     setup_sys_path()  # Thiết lập đường dẫn
-    
+
     # Import hàm render_dashboard từ DashboardView_Iherit_Component trong views
     from app.views.dashboard.DashboardView import cls_Dashboard
     
-    # Truyền root vào cls_Dashboard và gọi render_dashboard
-    dashboard_window = cls_Dashboard()
-    dashboard_window.render_dashboard()
-
+    # Khởi tạo cls_Dashboard mà không cần truyền root vào
+    dashboard = cls_Dashboard()  # root sẽ được khởi tạo bên trong class
+    # Gọi phương thức render_dashboard của cls_Dashboard
+    dashboard.render_dashboard()
+    
 if __name__ == "__main__":
     main()

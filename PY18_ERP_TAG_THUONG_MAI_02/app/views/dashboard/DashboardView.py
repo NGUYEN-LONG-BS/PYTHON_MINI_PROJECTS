@@ -6,7 +6,11 @@ from utils import *
 class cls_Dashboard:
     def __init__(self, master=None):
         # Nếu master không được truyền vào, thì tự tạo root
-        self.master = master or tk.Tk()
+        if master is None:
+            self.master = tk.Tk()  # Nếu không có master, tự khởi tạo root
+        else:
+            self.master = master
+        
         self.master.title("Dashboard")
         set_window_size(self.master)
         
@@ -16,6 +20,7 @@ class cls_Dashboard:
         self.footer = cls_Footer(self.master)
         self.left_menu = cls_LeftMenu(self.master)
         self.right_banner = cls_RightBanner(self.master)
+        self.mainContent = cls_MainContent(self.master)
 
     def render(self):
         # Gọi các phương thức để render các phần tử giao diện
@@ -24,6 +29,7 @@ class cls_Dashboard:
         self.footer.create_footer()
         self.left_menu.create_left_menu()
         self.right_banner.create_right_banner()
+        self.mainContent.create_content()
 
         # Bắt đầu vòng lặp Tkinter
         self.master.mainloop()
