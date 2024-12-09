@@ -2,6 +2,7 @@
 import tkinter as tk
 from components import *
 from utils import *
+# import inspect
 
 def render_dashboard():
     root = tk.Tk()
@@ -10,6 +11,10 @@ def render_dashboard():
     
     # Thiết lập kích thước cửa sổ
     set_window_size(root)
+
+    # Debug
+    # Kiểm tra đường dẫn của hàm set_window_size
+    f_find_my_function_path(set_window_size)
     
     # Gọi các thành phần tái sử dụng
     create_header(root)
