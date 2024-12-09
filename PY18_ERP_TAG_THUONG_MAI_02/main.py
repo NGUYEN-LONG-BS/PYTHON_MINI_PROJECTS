@@ -70,9 +70,6 @@ def main():
     
     # Import hàm render_dashboard từ DashboardView_Iherit_Component trong views
     from app.views.dashboard.DashboardView import cls_Dashboard
-
-    # Gọi hàm render_dashboard để hiển thị dashboard
-    # cls_Dashboard.render_dashboard()
     
     # Truyền root vào cls_Dashboard và gọi render_dashboard
     dashboard_window = cls_Dashboard()
