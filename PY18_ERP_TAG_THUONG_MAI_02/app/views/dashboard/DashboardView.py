@@ -28,8 +28,12 @@ class cls_Dashboard:
         # Bắt đầu vòng lặp Tkinter
         self.master.mainloop()
 
-    @classmethod                # Khi một phương thức là classmethod, bạn phải gọi nó thông qua class chứ không phải qua đối tượng.
-    def render_dashboard(cls):
-        # Không cần truyền root từ bên ngoài nữa, sẽ tự tạo
-        dashboard = cls()  # Khởi tạo cls_Dashboard, Tk sẽ tự tạo ở constructor
-        dashboard.render()  # Gọi phương thức render để hiển thị giao diện
+    # @classmethod                # Khi một phương thức là classmethod, bạn phải gọi nó thông qua class chứ không phải qua đối tượng.
+    # def render_dashboard(cls):
+    #     # Không cần truyền root từ bên ngoài nữa, sẽ tự tạo
+    #     dashboard = cls()  # Khởi tạo cls_Dashboard, Tk sẽ tự tạo ở constructor
+    #     dashboard.render()  # Gọi phương thức render để hiển thị giao diện
+        
+    def render_dashboard(self):
+        # Gọi phương thức render để hiển thị giao diện
+        self.render()

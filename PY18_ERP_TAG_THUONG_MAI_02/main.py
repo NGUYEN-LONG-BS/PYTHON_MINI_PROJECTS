@@ -72,7 +72,11 @@ def main():
     from app.views.dashboard.DashboardView import cls_Dashboard
 
     # Gọi hàm render_dashboard để hiển thị dashboard
-    cls_Dashboard.render_dashboard()
+    # cls_Dashboard.render_dashboard()
+    
+    # Truyền root vào cls_Dashboard và gọi render_dashboard
+    dashboard_window = cls_Dashboard()
+    dashboard_window.render_dashboard()
 
 if __name__ == "__main__":
     main()
