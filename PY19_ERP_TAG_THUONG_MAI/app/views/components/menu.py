@@ -10,8 +10,8 @@ def create_top_menu(parent, dashboard_window):
         print("Function_Home_main_Click selected")
         dashboard_window.destroy()
         # Now import KD01QuanLyGoiThauView inside the function to avoid circular import
-        from views.DashboardView import render_dashboard
-        render_dashboard()
+        from app.views.dashboard.DashboardView import f_render_dashboard
+        f_render_dashboard()
     
     
     # Define the action fuctions for QLGT menu

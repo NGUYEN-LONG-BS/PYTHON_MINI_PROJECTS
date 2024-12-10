@@ -1,4 +1,3 @@
-# Project/main.py
 import os
 import sys
 
@@ -51,18 +50,3 @@ def f_setup_sys_path():
     img_path = os.path.join(assets_path, 'img')
     if img_path not in sys.path:
         sys.path.append(img_path)
-
-def f_main():
-    """
-    Chạy ứng dụng và render dashboard.
-    """
-    f_setup_sys_path()  # Thiết lập đường dẫn
-    
-    # Import hàm render_dashboard từ DashboardView_Iherit_Component trong views
-    from app.views.dashboard.DashboardView import f_render_dashboard
-
-    # Gọi hàm render_dashboard để hiển thị dashboard
-    f_render_dashboard()
-
-if __name__ == "__main__":
-    f_main()

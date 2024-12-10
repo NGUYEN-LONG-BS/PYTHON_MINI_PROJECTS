@@ -1,10 +1,11 @@
 import os
+import sys
 import tkinter as tk
 from PIL import Image, ImageTk  # Import Image and ImageTk for Tkinter compatibility
 
 def setup_logo(parent_frame):
     # Get the project root directory
-    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../.."))  # Going 4 levels up
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.."))  # Going 3 levels up
     
     # Load the logo images
     logo_path_light = os.path.join(project_root, "assets/img/logo-Light.jpg")

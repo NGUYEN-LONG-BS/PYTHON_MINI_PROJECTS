@@ -236,8 +236,8 @@ class KD01QuanLyGoiThauView(tk.Tk):
     def Function_close_KD01_Click(self):
         self.destroy()
         # Now import KD01QuanLyGoiThauView inside the function to avoid circular import
-        from views.DashboardView import render_dashboard
-        render_dashboard()
+        from app.views.dashboard.DashboardView import f_render_dashboard
+        f_render_dashboard()
 
         # Nút tải dữ liệu
         self.load_button = tk.Button(self, text="Load Data", command=self.load_data)

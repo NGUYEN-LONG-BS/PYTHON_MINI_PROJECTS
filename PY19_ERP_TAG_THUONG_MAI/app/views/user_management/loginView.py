@@ -7,8 +7,8 @@ class UserModel:
         # Example credentials, can be replaced with a database or file storage
         self.credentials = {
             "admin": "123",
-            "user1": "password123",
-            "user2": "mypassword"
+            "ad": "123",
+            "ad1": "123"
         }
 
     def validate_user(self, username, password):
@@ -21,7 +21,7 @@ class LoginView:
     def __init__(self, root):
         self.root = root
         self.root.title("Login System")
-        self.center_window(300, 200)  # Center window with specified width and height
+        self.center_window(300, 210)  # Center window with specified width and height
 
         self.label_username = tk.Label(root, text="Username:")
         self.label_username.pack(pady=5)
