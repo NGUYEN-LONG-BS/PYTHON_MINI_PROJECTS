@@ -15,20 +15,20 @@ def create_top_menu(parent, dashboard_window):
     # Define the action fuctions for QLGT menu
     def Fucntion_QLGT_TaoMoi_Click():
         # Now import KD01QuanLyGoiThauView inside the function to avoid circular import
-        from views.KD01_QuanLyGoiThau.KD01QuanLyGoiThauView import KD01QuanLyGoiThauView
+        from views.KD01_QuanLyGoiThau.KD01QuanLyGoiThauView import cls_KD01QuanLyGoiThauView
         print("Fucntion_QLGT_TaoMoi_Click selected")
         # dashboard_window.withdraw()
         dashboard_window.destroy()
-        kd01_view = KD01QuanLyGoiThauView()  # Create an instance of the KD01QuanLyGoiThauView
+        kd01_view = cls_KD01QuanLyGoiThauView()  # Create an instance of the KD01QuanLyGoiThauView
         kd01_view.dashboard = dashboard_window  # Pass the reference of the dashboard to KD01 view
         kd01_view.mainloop()  # Open the window by starting the Tkinter event loop for the new view
     
     def Fucntion_QLGT_GoiThauDaLap():
         # Now import KD01QuanLyGoiThauView inside the function to avoid circular import
-        from views.KD01_QuanLyGoiThau.KD01_01QuanLyGoiThauView import View
+        from views.KD01_QuanLyGoiThau.KD01_01QuanLyGoiThauView import cls_View
         print("Fucntion_QLGT_GoiThauDaLap selected")
         dashboard_window.destroy()
-        kd01_view = View()  # Create an instance of the KD01QuanLyGoiThauView
+        kd01_view = cls_View()  # Create an instance of the KD01QuanLyGoiThauView
         kd01_view.dashboard = dashboard_window  # Pass the reference of the dashboard to KD01 view
         kd01_view.mainloop()  # Open the window by starting the Tkinter event loop for the new view
     

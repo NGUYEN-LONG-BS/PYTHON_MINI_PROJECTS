@@ -1,10 +1,9 @@
-# View.py
 import tkinter as tk
 from tkinter import ttk
-from KD01_01QuanLyGoiThauController import Controller
+from KD01_01QuanLyGoiThauController import cls_Controller
 from datetime import datetime
 
-class View(tk.Tk):
+class cls_View(tk.Tk):
     def __init__(self):
         super().__init__()  # Gọi phương thức __init__ của lớp cha
         # self.root = root
@@ -16,7 +15,7 @@ class View(tk.Tk):
         self.geometry(f"{width}x{height}")
 
         # Tạo Controller trong View
-        self.controller = Controller()  # Không cần biết về file JSON
+        self.controller = cls_Controller()  # Không cần biết về file JSON
         
         # ==================================================================================================================================
         # Create a frame with a border

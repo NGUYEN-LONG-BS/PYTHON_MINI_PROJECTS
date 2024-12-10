@@ -1,9 +1,9 @@
 # Controller.py
-from KD01_01QuanLyGoiThauModel import Model
+from KD01_01QuanLyGoiThauModel import cls_Model
 
-class Controller:
+class cls_Controller:
     def __init__(self):
-        self.model = Model()  # Model sẽ chịu trách nhiệm đọc file JSON và cơ sở dữ liệu
+        self.model = cls_Model()  # Model sẽ chịu trách nhiệm đọc file JSON và cơ sở dữ liệu
 
     def get_data(self):
         """Lấy dữ liệu từ Model (SQL hoặc JSON nếu cần)"""

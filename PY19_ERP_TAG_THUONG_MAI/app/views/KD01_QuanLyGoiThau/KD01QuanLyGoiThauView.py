@@ -11,8 +11,7 @@ from components.user_Info import setup_employee_info_labels  # Import the functi
 from components.logo import setup_logo  # Import the setup_logo function
 from components.menu import create_top_menu  # Import the menu creation function
 
-
-class KD01QuanLyGoiThauView(tk.Tk):
+class cls_KD01QuanLyGoiThauView(tk.Tk):
     
     def __init__(self):
         super().__init__()  # Gọi phương thức __init__ của lớp cha
