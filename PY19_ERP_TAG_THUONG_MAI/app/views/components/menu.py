@@ -17,7 +17,7 @@ def create_top_menu(parent, dashboard_window):
     # Define the action fuctions for QLGT menu
     def Fucntion_QLGT_TaoMoi_Click():
         # Now import KD01QuanLyGoiThauView inside the function to avoid circular import
-        from views.KD01QuanLyGoiThauView import KD01QuanLyGoiThauView
+        from views.KD01_QuanLyGoiThau.KD01QuanLyGoiThauView import KD01QuanLyGoiThauView
         print("Fucntion_QLGT_TaoMoi_Click selected")
         # dashboard_window.withdraw()
         dashboard_window.destroy()
@@ -27,7 +27,7 @@ def create_top_menu(parent, dashboard_window):
     
     def Fucntion_QLGT_GoiThauDaLap():
         # Now import KD01QuanLyGoiThauView inside the function to avoid circular import
-        from views.KD01_01QuanLyGoiThauView import View
+        from views.KD01_QuanLyGoiThau.KD01_01QuanLyGoiThauView import View
         print("Fucntion_QLGT_GoiThauDaLap selected")
         dashboard_window.destroy()
         kd01_view = View()  # Create an instance of the KD01QuanLyGoiThauView
@@ -38,7 +38,7 @@ def create_top_menu(parent, dashboard_window):
     # Define the action fuctions for QLYCDT menu
     def Fuction_QLYCDH_TALA():
         # Now import KD01QuanLyGoiThauView inside the function to avoid circular import
-        from views.KD02QuanLyYeuCauDatHangView import cls_CRUDTreeviewView
+        from app.views.KD02_QuanLyYeuCauDatHang.KD02QuanLyYeuCauDatHangView import cls_CRUDTreeviewView
         print("Fuction_QLYCDH_TALA selected")
         dashboard_window.destroy()
         kd01_view = cls_CRUDTreeviewView()  # Create an instance of the KD01QuanLyGoiThauView
