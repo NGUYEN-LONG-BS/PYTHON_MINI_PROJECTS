@@ -4,7 +4,6 @@ from components.font_size import set_menu_font
 
 def create_top_menu(parent, dashboard_window):
     
-    
     # Define the action fuctions for home menu
     def Function_Home_main_Click():
         print("Function_Home_main_Click selected")
@@ -12,7 +11,6 @@ def create_top_menu(parent, dashboard_window):
         # Now import KD01QuanLyGoiThauView inside the function to avoid circular import
         from app.views.dashboard.DashboardView import f_render_dashboard
         f_render_dashboard()
-    
     
     # Define the action fuctions for QLGT menu
     def Fucntion_QLGT_TaoMoi_Click():
@@ -54,7 +52,6 @@ def create_top_menu(parent, dashboard_window):
     def Fucntion_Help_UserInfo():
         print("Fucntion_Help_UserInfo selected")
     
-        
     # Create a Tkinter Menu bar
     menubar_BP_KD = tk.Menu(parent)
 
@@ -92,5 +89,4 @@ def create_top_menu(parent, dashboard_window):
 
     # Set the menu bar for the root window
     parent.config(menu=menubar_BP_KD)
-        
         
