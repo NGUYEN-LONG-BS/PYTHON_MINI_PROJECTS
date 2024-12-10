@@ -16,7 +16,7 @@ def f_render_dashboard():
     
     # Gọi các thành phần tái sử dụng
     create_header(root)
-    create_top_menu(root, root)
+    cls_Menu(root, root)
     create_left_menu(root)
     create_right_banner(root)
     

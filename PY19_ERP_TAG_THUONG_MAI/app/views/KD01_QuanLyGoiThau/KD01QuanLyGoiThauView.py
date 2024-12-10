@@ -9,7 +9,7 @@ from utils import *
 from components import *
 from components.user_Info import setup_employee_info_labels  # Import the function
 from components.logo import setup_logo  # Import the setup_logo function
-from components.menu import create_top_menu  # Import the menu creation function
+from app.views.components.menu import cls_Menu  # Import the menu creation function
 
 class cls_KD01QuanLyGoiThauView(tk.Tk):
     
@@ -25,7 +25,7 @@ class cls_KD01QuanLyGoiThauView(tk.Tk):
         self.title("QUẢN LÝ GÓI THẦU - KD01QuanLyGoiThauView")
         
         # Create top menu (add the menu bar from menu.py)
-        create_top_menu(self, self)
+        cls_Menu(self, self)
 
         # Create a container frame to hold both the logo frame and user info frame
         frame_header_container = tk.Frame(self)
