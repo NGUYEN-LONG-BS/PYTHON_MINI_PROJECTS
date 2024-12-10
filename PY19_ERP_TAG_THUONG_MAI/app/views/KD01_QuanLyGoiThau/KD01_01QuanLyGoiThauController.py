@@ -1,4 +1,3 @@
-# Controller.py
 from KD01_01QuanLyGoiThauModel import cls_Model
 
 class cls_Controller:

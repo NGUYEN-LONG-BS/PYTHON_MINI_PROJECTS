@@ -12,45 +12,34 @@ def f_setup_sys_path():
     app_path = os.path.join(base_dir, 'app')
     if app_path not in sys.path:
         sys.path.append(app_path)
-    # Thêm đường dẫn tới thư mục views trong app
-    views_path = os.path.join(app_path, 'views')
-    if views_path not in sys.path:
-        sys.path.append(views_path)
-        
-    # Thêm đường dẫn tới thư mục controllers trong app
-    controllers_path = os.path.join(app_path, 'controllers')
-    if controllers_path not in sys.path:
-        sys.path.append(controllers_path)
-        
-    # Thêm đường dẫn tới thư mục models trong app
-    models_path = os.path.join(app_path, 'models')
-    if models_path not in sys.path:
-        sys.path.append(models_path)
-        
-    # Thêm đường dẫn tới thư mục services trong app
-    services_path = os.path.join(app_path, 'services')
-    if services_path not in sys.path:
-        sys.path.append(services_path)
-        
-    # Thêm đường dẫn tới thư mục utils trong app
-    utils_path = os.path.join(app_path, 'utils')
-    if utils_path not in sys.path:
-        sys.path.append(utils_path)
     
-    # Thêm đường dẫn tới thư mục assets vào sys.path
+    # Thêm các thư mục con của app vào sys.path
+    app_subdirectories = ['views', 'controllers', 'models', 'services', 'utils']
+    for subdir in app_subdirectories:
+        subdir_path = os.path.join(app_path, subdir)
+        if subdir_path not in sys.path:
+            sys.path.append(subdir_path)
+    
+    # Thêm các thư mục con của app vào sys.path
+    app_views_subdirectories = ['components', 'dashboard', 'KD01_QuanLyGoiThau', 'KD02_QuanLyYeuCauDatHang', 'settings', 'user_management']
+    for subdir in app_views_subdirectories:
+        subdir_path = os.path.join(app_path, "views", subdir)
+        if subdir_path not in sys.path:
+            sys.path.append(subdir_path)
+            
+    # Thêm đường dẫn tới thư mục assets vào sys.path (nếu cần thiết)
     assets_path = os.path.join(base_dir, 'assets')
     if assets_path not in sys.path:
         sys.path.append(assets_path)
-        
-    # Thêm đường dẫn tới thư mục icons trong app
-    icons_path = os.path.join(assets_path, 'icons')
-    if icons_path not in sys.path:
-        sys.path.append(icons_path)
-        
-    # Thêm đường dẫn tới thư mục img trong app
-    img_path = os.path.join(assets_path, 'img')
-    if img_path not in sys.path:
-        sys.path.append(img_path)
+
+    # Thêm các thư mục con của assets vào sys.path
+    assets_subdirectories = ['icons', 'img', 'styles', 'templates']
+    for subdir in assets_subdirectories:
+        subdir_path = os.path.join(assets_path, subdir)
+        if subdir_path not in sys.path:
+            sys.path.append(subdir_path)
+    
+    # print(sys.path)
 
 def f_main():
     """
@@ -63,6 +52,7 @@ def f_main():
 
     # Gọi hàm render_dashboard để hiển thị dashboard
     f_render_dashboard()
+    
 
 if __name__ == "__main__":
     f_main()
