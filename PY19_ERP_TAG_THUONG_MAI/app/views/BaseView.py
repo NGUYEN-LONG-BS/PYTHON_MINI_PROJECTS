@@ -29,7 +29,7 @@ class BaseView(CTk):
 
     def create_menu(self):
         # create_menu_TK_02(self, self)
-        create_top_menu(self, self)
+        cls_Menu(self, self)
 
     def open_file(self):
         print("Open file selected")
