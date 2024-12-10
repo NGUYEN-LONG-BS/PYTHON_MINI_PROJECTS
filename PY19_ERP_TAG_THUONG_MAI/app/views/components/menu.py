@@ -3,6 +3,13 @@ import tkinter as tk
 from components.font_size import set_menu_font
 
 def create_top_menu(parent, dashboard_window):
+    # Create the menu
+    top_menu = tk.Menu(parent)
+    
+    # Set the background color for the entire menu
+    # top_menu.config(bg="lightblue")
+    top_menu.config(bg="white")
+    
     
     # Define the action fuctions for home menu
     def Function_Home_main_Click():
