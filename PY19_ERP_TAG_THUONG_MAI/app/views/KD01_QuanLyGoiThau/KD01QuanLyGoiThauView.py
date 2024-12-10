@@ -22,7 +22,7 @@ class cls_KD01QuanLyGoiThauView(tk.Tk):
 
         # Setup window
         set_window_size(self)
-        self.title("QUẢN LÝ GÓI THẦU")
+        self.title("QUẢN LÝ GÓI THẦU - KD01QuanLyGoiThauView")
         
         # Create top menu (add the menu bar from menu.py)
         create_top_menu(self, self)
@@ -60,8 +60,8 @@ class cls_KD01QuanLyGoiThauView(tk.Tk):
         self.setup_combobox_nam_goi_thau()
         self.setup_entries()
         self.setup_btn_tao_thu_muc_moi()
-        # self.setup_scrollable_frame()
-        self.setup_treeview_frame()
+        self.setup_scrollable_frame()
+        # self.setup_treeview_frame()
         self.setup_btn_show_dashboard()
 
         self.dashboard = None  # Placeholder for Dashboard window
@@ -311,9 +311,9 @@ class cls_KD01QuanLyGoiThauView(tk.Tk):
     
 
 
-# To run the view
-if __name__ == "__main__":
-    view = KD01QuanLyGoiThauView()
-    view.main()
+# # To run the view
+# if __name__ == "__main__":
+#     view = cls_KD01QuanLyGoiThauView()
+#     view.main()
     
     

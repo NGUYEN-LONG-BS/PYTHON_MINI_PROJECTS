@@ -1,4 +1,1 @@
-from .KD01_01QuanLyGoiThauView import cls_View
 from .KD01QuanLyGoiThauView import cls_KD01QuanLyGoiThauView
-from .KD01_01QuanLyGoiThauController import cls_Controller
-from .KD01_01QuanLyGoiThauModel import cls_Model

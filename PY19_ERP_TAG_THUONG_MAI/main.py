@@ -21,7 +21,7 @@ def f_setup_sys_path():
             sys.path.append(subdir_path)
     
     # Thêm các thư mục con của app vào sys.path
-    app_views_subdirectories = ['components', 'dashboard', 'KD01_QuanLyGoiThau', 'KD02_QuanLyYeuCauDatHang', 'settings', 'user_management']
+    app_views_subdirectories = ['components', 'dashboard', 'KD01_QuanLyGoiThau', 'KD01_QuanLyGoiThau_New', 'KD02_QuanLyYeuCauDatHang', 'settings', 'user_management']
     for subdir in app_views_subdirectories:
         subdir_path = os.path.join(app_path, "views", subdir)
         if subdir_path not in sys.path:
@@ -52,7 +52,6 @@ def f_main():
 
     # Gọi hàm render_dashboard để hiển thị dashboard
     f_render_dashboard()
-    
 
 if __name__ == "__main__":
     f_main()

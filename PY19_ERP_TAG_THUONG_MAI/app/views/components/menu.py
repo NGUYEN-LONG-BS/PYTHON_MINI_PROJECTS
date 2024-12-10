@@ -25,7 +25,7 @@ def create_top_menu(parent, dashboard_window):
     
     def Fucntion_QLGT_GoiThauDaLap():
         # Now import KD01QuanLyGoiThauView inside the function to avoid circular import
-        from views.KD01_QuanLyGoiThau.KD01_01QuanLyGoiThauView import cls_View
+        from views.KD01_QuanLyGoiThau_New.KD01_01QuanLyGoiThauView import cls_View
         print("Fucntion_QLGT_GoiThauDaLap selected")
         dashboard_window.destroy()
         kd01_view = cls_View()  # Create an instance of the KD01QuanLyGoiThauView

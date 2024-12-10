@@ -6,7 +6,7 @@ from utils import *
 def f_render_dashboard():
     root = tk.Tk()
     # root = ctk.CTk()
-    root.title("Dashboard")
+    root.title("DashboardView")
     
     # Thiết lập kích thước cửa sổ
     set_window_size(root)

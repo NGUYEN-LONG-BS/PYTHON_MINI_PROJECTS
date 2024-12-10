@@ -7,7 +7,7 @@ class cls_View(tk.Tk):
     def __init__(self):
         super().__init__()  # Gọi phương thức __init__ của lớp cha
         # self.root = root
-        self.title("Data from SQL Server")
+        self.title("KD01_01QuanLyGoiThauView")
         
         # Thiết lập kích thước cửa sổ với tỷ lệ 16:9 và chiều rộng = 900
         width = 900
