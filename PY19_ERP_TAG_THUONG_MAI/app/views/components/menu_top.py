@@ -1,6 +1,9 @@
 # Project/views/components/menu.py
 import tkinter as tk
 from utils import *
+import json
+import sys
+import os
 
 class cls_menu_top:
     def __init__(self, parent, dashboard_window):
@@ -10,7 +13,21 @@ class cls_menu_top:
         self.parent = parent
         self.dashboard_window = dashboard_window
         self.top_menu = tk.Menu(self.parent)
+        self.current_user = self.read_user_from_json()  # Read the logged-in user
         self.f_create_top_menu()
+
+    def read_user_from_json(self):
+        """ Reads the logged-in user's username from the JSON file. """
+        base_dir = os.path.dirname(__file__)
+        json_file = os.path.join(base_dir, '..\user_management\login_credentials.json')
+        json_file = r'views\user_management\login_credentials.json'
+        try:
+            with open(json_file, 'r') as f:
+                data = json.load(f)
+            return data.get("username", "")  # Return the username from the JSON file
+        except Exception as e:
+            print(f"Error reading credentials: {e}")
+            return ""
         
     def f_create_top_menu(self):
     
@@ -58,18 +75,6 @@ class cls_menu_top:
         HOME_menu = tk.Menu(top_menu, tearoff=0)
         HOME_menu.add_command(label="Home", command=Function_Home_main_Click)
         top_menu.add_cascade(label="Home", menu=HOME_menu)
-
-        # # Create a "Quản lý gói thầu" menu
-        # QLGT_menu = tk.Menu(top_menu, tearoff=0)
-        # QLGT_menu.add_command(label="Tạo mới gói thầu", command=Fucntion_QLGT_TaoMoi_Click)
-        # QLGT_menu.add_command(label="Các gói thầu đã lập", command=Fucntion_QLGT_GoiThauDaLap)
-        # top_menu.add_cascade(label="Quản lý gói thầu", menu=QLGT_menu)
-
-        # # Create a "Quản lý yêu cầu đặt hàng" menu
-        # QLYCDH_menu = tk.Menu(top_menu, tearoff=0)
-        # QLYCDH_menu.add_command(label="Yêu cầu đặt hàng TALA", command=Fuction_QLYCDH_TALA)
-        # QLYCDH_menu.add_command(label="Yêu cầu đặt hàng TM", command=Fuction_QLYCDH_TM)
-        # top_menu.add_cascade(label="Quản lý yêu cầu đặt hàng", menu=QLYCDH_menu)
         
         # menu của Kinh doanh
         KinhDoanh_menu = tk.Menu(top_menu, tearoff=0)
@@ -119,11 +124,16 @@ class cls_menu_top:
         kd01_view.mainloop()                            # Open the window by starting the Tkinter event loop for the new view
         
     def f_open_KD02QuanLyYeuCauDatHangView(self):
-        from app.views.KD02_QuanLyYeuCauDatHang.KD02QuanLyYeuCauDatHangView import cls_CRUDTreeviewView
-        self.dashboard_window.destroy()
-        kd01_view = cls_CRUDTreeviewView()
-        kd01_view.dashboard = self.dashboard_window
-        kd01_view.mainloop()
+        if self.current_user == "admin":
+            print("Fucntion_QLGT_GoiThauDaLap selected")
+        else:
+            print("You must be an admin to access this.")
+
+        # from app.views.KD02_QuanLyYeuCauDatHang.KD02QuanLyYeuCauDatHangView import cls_CRUDTreeviewView
+        # self.dashboard_window.destroy()
+        # kd01_view = cls_CRUDTreeviewView()
+        # kd01_view.dashboard = self.dashboard_window
+        # kd01_view.mainloop()
     
     def f_open_KD01_01QuanLyGoiThauView(self):
         from views.KD01_QuanLyGoiThau_New.KD01_01QuanLyGoiThauView import cls_View
