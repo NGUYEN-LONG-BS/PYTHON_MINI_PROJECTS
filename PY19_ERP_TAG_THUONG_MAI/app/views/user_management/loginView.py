@@ -1,5 +1,7 @@
+import os
 import tkinter as tk
 from tkinter import messagebox
+import json
 
 # View: The UI that the user interacts with
 class cls_LoginView(tk.Tk):
@@ -56,6 +58,9 @@ class cls_LoginView(tk.Tk):
 
     def show_message(self, login_sucess):
         if login_sucess == True:
+            print(self.entry_username.get())
+            print(self.entry_password.get())
+            self.write_credentials_to_json(self.entry_username.get(), self.entry_password.get())
             self.destroy()
             self.open_dashboard()
         else:
@@ -87,6 +92,26 @@ class cls_LoginView(tk.Tk):
 
         # Set the dimensions of the window and its position
         self.geometry(f'{width}x{height}+{position_right}+{position_top}')
+        
+    # Function to write credentials to a JSON file
+    def write_credentials_to_json(self, username, password):
+        print("Hàm write json")
+        base_dir = os.path.dirname(__file__)
+        json_file = os.path.join(base_dir, 'login_credentials.json')
+        
+        # Create a dictionary with the credentials
+        data = {
+            "username": username,
+            "password": password
+        }
+        
+        # Write to JSON file
+        try:
+            with open(json_file, 'w') as f:
+                json.dump(data, f, indent=4)
+            print(f"Credentials saved to {json_file}")
+        except Exception as e:
+            print(f"Error saving credentials: {e}")
 
 # Controller: The logic and interaction between the model and view
 class cls_LoginController:
