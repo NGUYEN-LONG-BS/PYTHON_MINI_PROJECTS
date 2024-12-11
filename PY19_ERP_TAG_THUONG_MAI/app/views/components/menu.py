@@ -13,36 +13,21 @@ class cls_Menu:
         self.f_create_top_menu()
         
     def f_create_top_menu(self):
-        
+    
         # Define the action fuctions for home menu
         def Function_Home_main_Click():
             print("Function_Home_main_Click selected")
-            self.dashboard_window.destroy()
-            # Now import KD01QuanLyGoiThauView inside the function to avoid circular import
-            from app.views.dashboard.DashboardView import f_render_dashboard
-            f_render_dashboard()
+            self.f_open_DashBoard()
         
         # Define the action fuctions for QLGT menu
         def Fucntion_QLGT_TaoMoi_Click():
-            # Now import KD01QuanLyGoiThauView inside the function to avoid circular import
-            from views.KD01_QuanLyGoiThau.KD01QuanLyGoiThauView import cls_KD01QuanLyGoiThauView
             print("Fucntion_QLGT_TaoMoi_Click selected")
-            # self.dashboard_window.withdraw()
-            self.dashboard_window.destroy()
-            kd01_view = cls_KD01QuanLyGoiThauView()  # Create an instance of the KD01QuanLyGoiThauView
-            kd01_view.dashboard = self.dashboard_window  # Pass the reference of the dashboard to KD01 view
-            kd01_view.mainloop()  # Open the window by starting the Tkinter event loop for the new view
+            self.f_open_KD01QuanLyGoiThauView()
         
         def Fucntion_QLGT_GoiThauDaLap():
-            # Now import KD01QuanLyGoiThauView inside the function to avoid circular import
-            from views.KD01_QuanLyGoiThau_New.KD01_01QuanLyGoiThauView import cls_View
             print("Fucntion_QLGT_GoiThauDaLap selected")
-            self.dashboard_window.destroy()
-            kd01_view = cls_View()  # Create an instance of the KD01QuanLyGoiThauView
-            kd01_view.dashboard = self.dashboard_window  # Pass the reference of the dashboard to KD01 view
-            kd01_view.mainloop()  # Open the window by starting the Tkinter event loop for the new view
+            self.f_open_KD01_01QuanLyGoiThauView()
         
-        # =====================================================================================================================
         # Define the action fuctions for QLYCDT menu
         def Fuction_QLYCDH_TALA():
             print("Fuction_QLYCDH_TALA selected")
@@ -106,7 +91,6 @@ class cls_Menu:
             
     def f_open_login_window(self):
         from views.user_management.loginView import cls_LoginView   # lazy import to avoid circular import
-        print("Fucntion_QLGT_TaoMoi_Click selected")
         self.dashboard_window.destroy()
         kd01_view = cls_LoginView()                     # Create an instance of the class
         kd01_view.dashboard = self.dashboard_window     # Pass the reference of the dashboard to KD01 view
@@ -114,11 +98,29 @@ class cls_Menu:
         
     def f_open_KD02QuanLyYeuCauDatHangView(self):
         from app.views.KD02_QuanLyYeuCauDatHang.KD02QuanLyYeuCauDatHangView import cls_CRUDTreeviewView
-        print("Fuction_QLYCDH_TALA selected")
         self.dashboard_window.destroy()
         kd01_view = cls_CRUDTreeviewView()
         kd01_view.dashboard = self.dashboard_window
         kd01_view.mainloop()
+    
+    def f_open_KD01_01QuanLyGoiThauView(self):
+        from views.KD01_QuanLyGoiThau_New.KD01_01QuanLyGoiThauView import cls_View
+        self.dashboard_window.destroy()
+        kd01_view = cls_View()
+        kd01_view.dashboard = self.dashboard_window
+        kd01_view.mainloop()
+    
+    def f_open_KD01QuanLyGoiThauView(self):
+        from views.KD01_QuanLyGoiThau.KD01QuanLyGoiThauView import cls_KD01QuanLyGoiThauView
+        self.dashboard_window.destroy()
+        kd01_view = cls_KD01QuanLyGoiThauView()
+        kd01_view.dashboard = self.dashboard_window
+        kd01_view.mainloop()
+
+    def f_open_DashBoard(self):
+        self.dashboard_window.destroy()
+        from app.views.dashboard.DashboardView import f_render_dashboard
+        f_render_dashboard()
         
     def f_destroy_current_window(self):
         self.dashboard_window.destroy()
