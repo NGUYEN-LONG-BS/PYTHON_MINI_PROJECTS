@@ -6,7 +6,8 @@ class cls_LoginView(tk.Tk):
     def __init__(self):
         super().__init__()  # Initialize the Tkinter root window
         
-        self.controller = cls_LoginController
+        model = cls_UserModel()
+        self.controller = cls_LoginController(model, self)
         
         self.title("Login System")
         self.geometry("300x200")  # Window size (300x200)
@@ -50,11 +51,21 @@ class cls_LoginView(tk.Tk):
         self.controller.handle_login(username, password)
 
     def set_controller(self, controller):
-        print("gọi hàm set_controller")
         self.controller = controller
+        # print(f"Controller được set: {self.controller}")
 
-    def show_message(self, message):
-        self.message_label.config(text=message)
+    def show_message(self, login_sucess):
+        if login_sucess == True:
+            self.destroy()
+            self.open_dashboard()
+        else:
+            self.message_label.config(text="Invalid username or password.")
+    
+    def open_dashboard(self):
+        # Import hàm render_dashboard từ DashboardView_Iherit_Component trong views
+        from app.views.dashboard.DashboardView import f_render_dashboard
+        # Gọi hàm render_dashboard để hiển thị dashboard
+        f_render_dashboard()
         
     def toggle_password(self):
         # Toggle the password visibility
@@ -64,7 +75,6 @@ class cls_LoginView(tk.Tk):
         else:
             self.entry_password.config(show='*')
             self.toggle_password_button.config(text="Show Password")
-        print("hiện/ẩn pass")
     
     def center_window(self, width, height):
         # Get the screen width and height
@@ -77,11 +87,6 @@ class cls_LoginView(tk.Tk):
 
         # Set the dimensions of the window and its position
         self.geometry(f'{width}x{height}+{position_right}+{position_top}')
-    
-    
-    # def f_main_loop(self):
-    #     root.mainloop()
-
 
 # Controller: The logic and interaction between the model and view
 class cls_LoginController:
@@ -89,41 +94,25 @@ class cls_LoginController:
         self.model = model
         self.view = view
         self.view.set_controller(self)
-        print("controller là đây")
 
     def handle_login(self, username, password):
+        # Xử lý đăng nhập
+        # print(f"Username: {username}, Password: {password}")
         if self.model.validate_user(username, password):
-            self.view.show_message("Login successful!")
+            self.view.show_message(True)
         else:
-            self.view.show_message("Invalid username or password.")
-            
-        """
-        Chạy ứng dụng và render dashboard.
-        """
-        # Import hàm render_dashboard từ DashboardView_Iherit_Component trong views
-        from app.views.dashboard.DashboardView import f_render_dashboard
-
-        # Gọi hàm render_dashboard để hiển thị dashboard
-        f_render_dashboard()
-    
-
-# # Main function to run the program
-# if __name__ == "__main__":
-#     root = tk.Tk()
-#     model = UserModel()
-#     view = cls_LoginView(root)
-#     controller = cls_LoginController(model, view)
-#     root.mainloop()
-
+            self.view.show_message(False)
 
 # Model: Handles data
-class UserModel:
+class cls_UserModel:
     def __init__(self):
         # Example credentials, can be replaced with a database or file storage
         self.credentials = {
-            "admin": "123",
-            "ad": "123",
-            "ad1": "123"
+            "admin": "123",     # admin
+            "kd1": "123",       # kinh doanh
+            "vt1": "123",       # vật tư
+            "tc1": "123",       # tài chính
+            "kt1": "123"        # kỹ thuật
         }
 
     def validate_user(self, username, password):
