@@ -78,7 +78,7 @@ class cls_menu_top:
         KinhDoanh_menu.add_separator()
         KinhDoanh_menu.add_command(label="Yêu cầu đặt hàng TALA", command=Fuction_QLYCDH_TALA)
         KinhDoanh_menu.add_command(label="Yêu cầu đặt hàng TM", command=Fuction_QLYCDH_TM)
-        top_menu.add_cascade(label="Quản lý gói thầu", menu=KinhDoanh_menu)
+        top_menu.add_cascade(label="Kinh doanh", menu=KinhDoanh_menu)
 
         # menu của Vật Tư
         VatTu_menu = tk.Menu(top_menu, tearoff=0)
