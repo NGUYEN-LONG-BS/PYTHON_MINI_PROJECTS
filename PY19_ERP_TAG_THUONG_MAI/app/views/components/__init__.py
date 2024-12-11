@@ -1,6 +1,7 @@
 # Project/views/components/__init__.py
 
 from .menu import cls_Menu
+from .menu_top import cls_menu_top
 from .main_content import create_main_content
 from .footer import create_footer
 from .header import create_header

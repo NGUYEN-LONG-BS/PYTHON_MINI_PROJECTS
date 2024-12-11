@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import font
 
 def set_window_size(root, width=1600, height=900):
     # Thiết lập kích thước cửa sổ
@@ -14,3 +15,9 @@ def set_window_size(root, width=1600, height=900):
     position_right = int(screen_width / 2 - width / 2)
     
     root.geometry(f'{width}x{height}+{position_right}+{position_top}')
+
+# Reusable function to set font for menu items
+def f_set_menu_font(widget, size=14, font_is="Arial"):
+    """Set the font for menu items to a specified size."""
+    custom_font = font.Font(family=font_is, size=size)  # Create a new Font object with the desired size
+    widget.config(font=custom_font)  # Apply the font to the menu

@@ -2,7 +2,7 @@
 import tkinter as tk
 from utils import *
 
-class cls_Menu:
+class cls_menu_top:
     def __init__(self, parent, dashboard_window):
         """
         Initializes the Menu with the given parent and dashboard window.

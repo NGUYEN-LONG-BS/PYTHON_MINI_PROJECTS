@@ -19,20 +19,3 @@ def set_window_size(root):      #, window_width=1600, window_height=900
     # print(x_position)
     # print(y_position)
     root.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
-
-
-
-    # # Thiết lập kích thước cửa sổ
-    # root.geometry(f"{width}x{height}")
-    
-    # # Đảm bảo cửa sổ không thể thay đổi kích thước
-    # # root.resizable(False, False)
-    # root.resizable(True, True)
-    
-    # # Nếu bạn muốn căn giữa cửa sổ, bạn có thể tính toán vị trí và đặt lại
-    # screen_width = root.winfo_screenwidth()
-    # screen_height = root.winfo_screenheight()
-    # position_top = int(screen_height / 2 - height / 2)
-    # position_right = int(screen_width / 2 - width / 2)
-    
-    # root.geometry(f'{width}x{height}+{position_right}+{position_top}')

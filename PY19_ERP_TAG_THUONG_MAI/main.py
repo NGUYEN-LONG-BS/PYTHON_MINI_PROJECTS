@@ -40,7 +40,7 @@ def f_setup_sys_path():
         subdir_path = os.path.join(assets_path, subdir)
         if subdir_path not in sys.path:
             sys.path.append(subdir_path)
-    
+
     # print(sys.path)
 
 def f_main():
