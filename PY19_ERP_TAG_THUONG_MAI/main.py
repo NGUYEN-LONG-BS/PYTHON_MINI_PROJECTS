@@ -21,7 +21,9 @@ def f_setup_sys_path():
             sys.path.append(subdir_path)
     
     # Thêm các thư mục con của app vào sys.path
-    app_views_subdirectories = ['components', 'dashboard', 'KD01_QuanLyGoiThau', 'KD01_QuanLyGoiThau_New', 'KD02_QuanLyYeuCauDatHang', 'settings', 'user_management']
+    app_views_subdirectories = ['components', 'dashboard', 'KD01_QuanLyGoiThau', 
+                                'KD01_QuanLyGoiThau_New', 'KD02_QuanLyYeuCauDatHang', 
+                                'settings', 'user_management']
     for subdir in app_views_subdirectories:
         subdir_path = os.path.join(app_path, "views", subdir)
         if subdir_path not in sys.path:
@@ -45,13 +47,17 @@ def f_main():
     """
     Chạy ứng dụng và render dashboard.
     """
-    f_setup_sys_path()  # Thiết lập đường dẫn
+    # Thiết lập các đường dẫn
+    f_setup_sys_path()
     
-    # Import hàm render_dashboard từ DashboardView_Iherit_Component trong views
-    from app.views.dashboard.DashboardView import f_render_dashboard
+    # Import đối tượng cls_LoginView
+    from app.views.user_management.loginView import cls_LoginView
 
-    # Gọi hàm render_dashboard để hiển thị dashboard
-    f_render_dashboard()
+    # Gọi cửa sổ LoginView
+    login_window = cls_LoginView()
+    # Start the Tkinter event loop
+    login_window.mainloop()
 
+# Main function to run the program
 if __name__ == "__main__":
     f_main()
