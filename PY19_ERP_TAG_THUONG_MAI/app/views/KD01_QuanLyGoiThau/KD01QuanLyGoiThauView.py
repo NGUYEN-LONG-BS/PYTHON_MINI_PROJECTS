@@ -23,9 +23,9 @@ class cls_KD01QuanLyGoiThauView(tk.Tk):
         # Setup window
         set_window_size(self)
         self.title("QUẢN LÝ GÓI THẦU - KD01QuanLyGoiThauView")
-        
-        # Create top menu (add the menu bar from menu.py)
-        cls_Menu(self, self)
+
+        # Gọi các thành phần tái sử dụng
+        cls_menu_top(self, self)
 
         # Create a container frame to hold both the logo frame and user info frame
         frame_header_container = tk.Frame(self)

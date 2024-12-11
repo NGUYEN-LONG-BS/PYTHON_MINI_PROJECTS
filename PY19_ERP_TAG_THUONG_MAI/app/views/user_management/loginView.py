@@ -27,6 +27,8 @@ class cls_LoginView(tk.Tk):
 
         self.entry_username = tk.Entry(self, width=50)
         self.entry_username.pack(pady=5)
+        # Set focus on the username entry field when the form initializes
+        self.entry_username.focus_set()
 
         self.label_password = tk.Label(self, text="Password:")
         self.label_password.pack(pady=5)

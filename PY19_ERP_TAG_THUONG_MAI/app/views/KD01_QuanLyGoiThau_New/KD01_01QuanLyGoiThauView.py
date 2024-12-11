@@ -2,12 +2,16 @@ import tkinter as tk
 from tkinter import ttk
 from KD01_01QuanLyGoiThauController import cls_Controller
 from datetime import datetime
+from components import *
 
 class cls_View(tk.Tk):
     def __init__(self):
         super().__init__()  # Gọi phương thức __init__ của lớp cha
         # self.root = root
         self.title("KD01_01QuanLyGoiThauView")
+
+        # Gọi các thành phần tái sử dụng
+        cls_menu_top(self, self)
         
         # Thiết lập kích thước cửa sổ với tỷ lệ 16:9 và chiều rộng = 900
         width = 900

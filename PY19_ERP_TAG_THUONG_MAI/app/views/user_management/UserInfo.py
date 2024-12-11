@@ -2,7 +2,7 @@ import os
 import tkinter as tk
 from utils import *
 from components.logo import setup_logo
-from components.menu import cls_Menu
+from components import *
 import json
 from utils import *
 
@@ -16,8 +16,8 @@ class cls_user_info(tk.Tk):
         self.f_create_element()
         
     def f_create_element(self):
-        # Create top menu
-        cls_Menu(self, self)
+        # Gọi các thành phần tái sử dụng
+        cls_menu_top(self, self)
         
         # Setup the logo in the Frame_logo using the imported function
         Frame_logo = tk.Frame(self, width=100, height=100)
