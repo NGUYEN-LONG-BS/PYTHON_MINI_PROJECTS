@@ -41,6 +41,7 @@ class cls_Menu:
         
         def Fucntion_Help_UserInfo():
             print("Fucntion_Help_UserInfo selected")
+            self.f_open_UserInfo()
         
         def Fucntion_signout_click():
             print("Fucntion_signout_click selected")
@@ -51,33 +52,45 @@ class cls_Menu:
             self.f_destroy_current_window()
         
         # Create a Tkinter Menu bar
-        menubar_BP_KD = tk.Menu(self.parent)
+        top_menu = tk.Menu(self.parent)
 
         # Create a "Home" menu
-        HOME_menu = tk.Menu(menubar_BP_KD, tearoff=0)
+        HOME_menu = tk.Menu(top_menu, tearoff=0)
         HOME_menu.add_command(label="Home", command=Function_Home_main_Click)
-        menubar_BP_KD.add_cascade(label="Home", menu=HOME_menu)
+        top_menu.add_cascade(label="Home", menu=HOME_menu)
 
         # Create a "Quản lý gói thầu" menu
-        QLGT_menu = tk.Menu(menubar_BP_KD, tearoff=0)
+        QLGT_menu = tk.Menu(top_menu, tearoff=0)
         QLGT_menu.add_command(label="Tạo mới gói thầu", command=Fucntion_QLGT_TaoMoi_Click)
         QLGT_menu.add_command(label="Các gói thầu đã lập", command=Fucntion_QLGT_GoiThauDaLap)
-        menubar_BP_KD.add_cascade(label="Quản lý gói thầu", menu=QLGT_menu)
+        top_menu.add_cascade(label="Quản lý gói thầu", menu=QLGT_menu)
 
         # Create a "Quản lý yêu cầu đặt hàng" menu
-        QLYCDH_menu = tk.Menu(menubar_BP_KD, tearoff=0)
+        QLYCDH_menu = tk.Menu(top_menu, tearoff=0)
         QLYCDH_menu.add_command(label="Yêu cầu đặt hàng TALA", command=Fuction_QLYCDH_TALA)
         QLYCDH_menu.add_command(label="Yêu cầu đặt hàng TM", command=Fuction_QLYCDH_TM)
-        menubar_BP_KD.add_cascade(label="Quản lý yêu cầu đặt hàng", menu=QLYCDH_menu)
+        top_menu.add_cascade(label="Quản lý yêu cầu đặt hàng", menu=QLYCDH_menu)
+        
+        # menu của Vật Tư
+        VatTu_menu = tk.Menu(top_menu, tearoff=0)
+        VatTu_menu.add_command(label="DS Yêu cầu đặt hàng", command=Fuction_QLYCDH_TALA)
+        VatTu_menu.add_command(label="QL Nhà Cung cấp", command=Fuction_QLYCDH_TM)
+        top_menu.add_cascade(label="Vật Tư", menu=VatTu_menu)
+    
+        # menu của Kỹ thuật
+        KyThuat_menu = tk.Menu(top_menu, tearoff=0)
+        KyThuat_menu.add_command(label="Yêu cầu KT 01", command=Fuction_QLYCDH_TALA)
+        KyThuat_menu.add_command(label="Yêu cầu KT 02", command=Fuction_QLYCDH_TM)
+        top_menu.add_cascade(label="Kỹ thuật", menu=KyThuat_menu)
         
         # Create a "Help" menu
-        HELP_menu = tk.Menu(menubar_BP_KD, tearoff=0)
+        HELP_menu = tk.Menu(top_menu, tearoff=0)
         HELP_menu.add_command(label="About", command=Fucntion_Help_About)
-        HELP_menu.add_command(label="User-infor", command=Fucntion_Help_UserInfo)
+        HELP_menu.add_command(label="User Info", command=Fucntion_Help_UserInfo)
         HELP_menu.add_separator()
         HELP_menu.add_command(label="Sign out", command=Fucntion_signout_click)
         HELP_menu.add_command(label="Exit", command=Fucntion_exit_click)
-        menubar_BP_KD.add_cascade(label="Help", menu=HELP_menu)
+        top_menu.add_cascade(label="Help", menu=HELP_menu)
         
         # Set font size to 15 for all menus
         font_size = 14
@@ -87,7 +100,7 @@ class cls_Menu:
         set_menu_font(HELP_menu, font_size)
 
         # Set the menu bar for the root window
-        self.parent.config(menu=menubar_BP_KD)
+        self.parent.config(menu=top_menu)
             
     def f_open_login_window(self):
         from views.user_management.loginView import cls_LoginView   # lazy import to avoid circular import
@@ -117,6 +130,13 @@ class cls_Menu:
         kd01_view.dashboard = self.dashboard_window
         kd01_view.mainloop()
 
+    def f_open_UserInfo(self):
+        from views.user_management.UserInfo import cls_user_info
+        self.dashboard_window.destroy()
+        kd01_view = cls_user_info()
+        kd01_view.dashboard = self.dashboard_window
+        kd01_view.mainloop()
+    
     def f_open_DashBoard(self):
         self.dashboard_window.destroy()
         from app.views.dashboard.DashboardView import f_render_dashboard
@@ -124,3 +144,5 @@ class cls_Menu:
         
     def f_destroy_current_window(self):
         self.dashboard_window.destroy()
+        
+    
