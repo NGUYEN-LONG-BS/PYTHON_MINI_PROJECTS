@@ -59,18 +59,27 @@ class cls_menu_top:
         HOME_menu.add_command(label="Home", command=Function_Home_main_Click)
         top_menu.add_cascade(label="Home", menu=HOME_menu)
 
-        # Create a "Quản lý gói thầu" menu
-        QLGT_menu = tk.Menu(top_menu, tearoff=0)
-        QLGT_menu.add_command(label="Tạo mới gói thầu", command=Fucntion_QLGT_TaoMoi_Click)
-        QLGT_menu.add_command(label="Các gói thầu đã lập", command=Fucntion_QLGT_GoiThauDaLap)
-        top_menu.add_cascade(label="Quản lý gói thầu", menu=QLGT_menu)
+        # # Create a "Quản lý gói thầu" menu
+        # QLGT_menu = tk.Menu(top_menu, tearoff=0)
+        # QLGT_menu.add_command(label="Tạo mới gói thầu", command=Fucntion_QLGT_TaoMoi_Click)
+        # QLGT_menu.add_command(label="Các gói thầu đã lập", command=Fucntion_QLGT_GoiThauDaLap)
+        # top_menu.add_cascade(label="Quản lý gói thầu", menu=QLGT_menu)
 
-        # Create a "Quản lý yêu cầu đặt hàng" menu
-        QLYCDH_menu = tk.Menu(top_menu, tearoff=0)
-        QLYCDH_menu.add_command(label="Yêu cầu đặt hàng TALA", command=Fuction_QLYCDH_TALA)
-        QLYCDH_menu.add_command(label="Yêu cầu đặt hàng TM", command=Fuction_QLYCDH_TM)
-        top_menu.add_cascade(label="Quản lý yêu cầu đặt hàng", menu=QLYCDH_menu)
+        # # Create a "Quản lý yêu cầu đặt hàng" menu
+        # QLYCDH_menu = tk.Menu(top_menu, tearoff=0)
+        # QLYCDH_menu.add_command(label="Yêu cầu đặt hàng TALA", command=Fuction_QLYCDH_TALA)
+        # QLYCDH_menu.add_command(label="Yêu cầu đặt hàng TM", command=Fuction_QLYCDH_TM)
+        # top_menu.add_cascade(label="Quản lý yêu cầu đặt hàng", menu=QLYCDH_menu)
         
+        # menu của Kinh doanh
+        KinhDoanh_menu = tk.Menu(top_menu, tearoff=0)
+        KinhDoanh_menu.add_command(label="Tạo mới gói thầu", command=Fucntion_QLGT_TaoMoi_Click)
+        KinhDoanh_menu.add_command(label="Các gói thầu đã lập", command=Fucntion_QLGT_GoiThauDaLap)
+        KinhDoanh_menu.add_separator()
+        KinhDoanh_menu.add_command(label="Yêu cầu đặt hàng TALA", command=Fuction_QLYCDH_TALA)
+        KinhDoanh_menu.add_command(label="Yêu cầu đặt hàng TM", command=Fuction_QLYCDH_TM)
+        top_menu.add_cascade(label="Quản lý gói thầu", menu=KinhDoanh_menu)
+
         # menu của Vật Tư
         VatTu_menu = tk.Menu(top_menu, tearoff=0)
         VatTu_menu.add_command(label="DS Yêu cầu đặt hàng", command=Fuction_QLYCDH_TALA)
@@ -94,8 +103,7 @@ class cls_menu_top:
         
         # Set font size to 15 for all menus
         f_set_menu_font(HOME_menu)
-        f_set_menu_font(QLGT_menu)
-        f_set_menu_font(QLYCDH_menu)
+        f_set_menu_font(KinhDoanh_menu)
         f_set_menu_font(VatTu_menu)
         f_set_menu_font(KyThuat_menu)
         f_set_menu_font(HELP_menu)
