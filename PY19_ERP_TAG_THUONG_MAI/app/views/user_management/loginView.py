@@ -17,6 +17,9 @@ class cls_LoginView(tk.Tk):
         # Add your widgets and layout here (e.g., Entry fields, buttons)
         self.create_widgets()
 
+        # Bind Enter key to on_enter method
+        self.bind('<Return>', self.on_enter)
+
     def create_widgets(self):
         # Example of adding an entry field and button
         self.label_username = tk.Label(self, text="Username:")
@@ -109,6 +112,10 @@ class cls_LoginView(tk.Tk):
             # print(f"Credentials saved to {json_file}")
         except Exception as e:
             print(f"Error saving credentials: {e}")
+
+    def on_enter(self, event):
+        self.on_login()
+
 
 # Controller: The logic and interaction between the model and view
 class cls_LoginController:
