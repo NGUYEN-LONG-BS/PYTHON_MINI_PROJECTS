@@ -10,9 +10,9 @@ class cls_Menu:
         self.parent = parent
         self.dashboard_window = dashboard_window
         self.top_menu = tk.Menu(self.parent)
-        self.create_top_menu()
+        self.f_create_top_menu()
         
-    def create_top_menu(self):
+    def f_create_top_menu(self):
         
         # Define the action fuctions for home menu
         def Function_Home_main_Click():
@@ -45,22 +45,25 @@ class cls_Menu:
         # =====================================================================================================================
         # Define the action fuctions for QLYCDT menu
         def Fuction_QLYCDH_TALA():
-            # Now import KD01QuanLyGoiThauView inside the function to avoid circular import
-            from app.views.KD02_QuanLyYeuCauDatHang.KD02QuanLyYeuCauDatHangView import cls_CRUDTreeviewView
             print("Fuction_QLYCDH_TALA selected")
-            self.dashboard_window.destroy()
-            kd01_view = cls_CRUDTreeviewView()  # Create an instance of the KD01QuanLyGoiThauView
-            kd01_view.dashboard = self.dashboard_window  # Pass the reference of the dashboard to KD01 view
-            kd01_view.mainloop()  # Open the window by starting the Tkinter event loop for the new view
+            self.f_open_KD02QuanLyYeuCauDatHangView()
             
         def Fuction_QLYCDH_TM():
             print("Fuction_QLYCDH_TM selected")
         
-        # Define the action fuctions for Help menu
         def Fucntion_Help_About():
             print("Fucntion_Help_About selected")
+        
         def Fucntion_Help_UserInfo():
             print("Fucntion_Help_UserInfo selected")
+        
+        def Fucntion_signout_click():
+            print("Fucntion_signout_click selected")
+            self.f_open_login_window()
+        
+        def Fucntion_exit_click():
+            print("Fucntion_exit_click selected")
+            self.f_destroy_current_window()
         
         # Create a Tkinter Menu bar
         menubar_BP_KD = tk.Menu(self.parent)
@@ -87,7 +90,8 @@ class cls_Menu:
         HELP_menu.add_command(label="About", command=Fucntion_Help_About)
         HELP_menu.add_command(label="User-infor", command=Fucntion_Help_UserInfo)
         HELP_menu.add_separator()
-        HELP_menu.add_command(label="Exit", command=self.parent.quit)
+        HELP_menu.add_command(label="Sign out", command=Fucntion_signout_click)
+        HELP_menu.add_command(label="Exit", command=Fucntion_exit_click)
         menubar_BP_KD.add_cascade(label="Help", menu=HELP_menu)
         
         # Set font size to 15 for all menus
@@ -100,3 +104,21 @@ class cls_Menu:
         # Set the menu bar for the root window
         self.parent.config(menu=menubar_BP_KD)
             
+    def f_open_login_window(self):
+        from views.user_management.loginView import cls_LoginView   # lazy import to avoid circular import
+        print("Fucntion_QLGT_TaoMoi_Click selected")
+        self.dashboard_window.destroy()
+        kd01_view = cls_LoginView()                     # Create an instance of the class
+        kd01_view.dashboard = self.dashboard_window     # Pass the reference of the dashboard to KD01 view
+        kd01_view.mainloop()                            # Open the window by starting the Tkinter event loop for the new view
+        
+    def f_open_KD02QuanLyYeuCauDatHangView(self):
+        from app.views.KD02_QuanLyYeuCauDatHang.KD02QuanLyYeuCauDatHangView import cls_CRUDTreeviewView
+        print("Fuction_QLYCDH_TALA selected")
+        self.dashboard_window.destroy()
+        kd01_view = cls_CRUDTreeviewView()
+        kd01_view.dashboard = self.dashboard_window
+        kd01_view.mainloop()
+        
+    def f_destroy_current_window(self):
+        self.dashboard_window.destroy()
