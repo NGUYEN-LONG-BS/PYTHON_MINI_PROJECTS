@@ -15,7 +15,7 @@ def f_render_dashboard():
     # f_find_my_function_path(set_window_size)
     
     # Gọi các thành phần tái sử dụng
-    cls_Menu(root, root)
+    cls_menu_top(root, root)
     
     create_header(root)
     create_left_menu(root)
