@@ -16,28 +16,29 @@ class cls_CRUDTreeviewView(tk.Tk):
         self.title("CRUD Treeview Example")
         # Gọi các thành phần tái sử dụng
         cls_menu_top(self, self)
-        # # Thiết lập kích thước cửa sổ
-        # f_set_window_size_is_4_per_5_screen(self, 0, 0)
-        # f_set_center_screen(self)
-        
-        # # Lấy kích thước của cửa sổ
-        # self.update_idletasks()  # Cập nhật các thay đổi về kích thước
-        # window_width = self.winfo_width()
-        # window_height = self.winfo_height()
-        
         # =======================================================================================================================
-        # Get the screen height and width
-        screen_width = self.winfo_screenwidth()
-        screen_height = self.winfo_screenheight()
-        # Set the window height to 4/5 of the screen height
-        window_height = int(4 * screen_height / 5)
-        # Set the window width (you can adjust as needed)
-        window_width = window_height // 9 * 16
-        # Calculate the position to center the window
-        x_position = int((screen_width - window_width) / 2)
-        y_position = int((screen_height - window_height) / 2)
-        # Set the window geometry (centered window)
-        self.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
+        # Thiết lập kích thước cửa sổ
+        f_set_window_size_is_4_per_5_screen(self, 0, 0)
+        f_set_center_screen(self)
+        
+        # Lấy kích thước của cửa sổ
+        self.update_idletasks()  # Cập nhật các thay đổi về kích thước
+        window_width = self.winfo_width()
+        window_height = self.winfo_height()
+        
+        # # =======================================================================================================================
+        # # Get the screen height and width
+        # screen_width = self.winfo_screenwidth()
+        # screen_height = self.winfo_screenheight()
+        # # Set the window height to 4/5 of the screen height
+        # window_height = int(4 * screen_height / 5)
+        # # Set the window width (you can adjust as needed)
+        # window_width = window_height // 9 * 16
+        # # Calculate the position to center the window
+        # x_position = int((screen_width - window_width) / 2)
+        # y_position = int((screen_height - window_height) / 2)
+        # # Set the window geometry (centered window)
+        # self.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
         
         # =======================================================================================================================
         # Theme
