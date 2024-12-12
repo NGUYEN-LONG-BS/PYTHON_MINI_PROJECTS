@@ -162,16 +162,11 @@ class cls_menu_top:
         kd01_view.mainloop()                            # Open the window by starting the Tkinter event loop for the new view
         
     def f_open_KD02QuanLyYeuCauDatHangView(self):
-        if self.current_user == "admin":
-            print("Fucntion_QLGT_GoiThauDaLap selected")
-        else:
-            print("You must be an admin to access this.")
-
-        # from app.views.KD02_QuanLyYeuCauDatHang.KD02QuanLyYeuCauDatHangView import cls_CRUDTreeviewView
-        # self.dashboard_window.destroy()
-        # kd01_view = cls_CRUDTreeviewView()
-        # kd01_view.dashboard = self.dashboard_window
-        # kd01_view.mainloop()
+        from app.views.KD02_QuanLyYeuCauDatHang.KD02QuanLyYeuCauDatHangView import cls_CRUDTreeviewView
+        self.dashboard_window.destroy()
+        kd01_view = cls_CRUDTreeviewView()
+        kd01_view.dashboard = self.dashboard_window
+        kd01_view.mainloop()
     
     def f_open_KD01_01QuanLyGoiThauView(self):
         from views.KD01_QuanLyGoiThau_New.KD01_01QuanLyGoiThauView import cls_View
