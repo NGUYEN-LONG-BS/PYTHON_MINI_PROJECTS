@@ -3,20 +3,25 @@ from tkinter import ttk
 from KD01_01QuanLyGoiThauController import cls_Controller
 from datetime import datetime
 from components import *
+from utils import *
 
 class cls_View(tk.Tk):
     def __init__(self):
         super().__init__()  # Gọi phương thức __init__ của lớp cha
         # self.root = root
         self.title("KD01_01QuanLyGoiThauView")
+        # Thiết lập kích thước cửa sổ
+        f_set_window_size_is_4_per_5_screen(self, 0, 0)
+        f_set_center_screen(self)
 
+        
         # Gọi các thành phần tái sử dụng
         cls_menu_top(self, self)
         
-        # Thiết lập kích thước cửa sổ với tỷ lệ 16:9 và chiều rộng = 900
-        width = 900
-        height = int((width / 16) * 9)  # Tính toán chiều cao theo tỷ lệ 16:9
-        self.geometry(f"{width}x{height}")
+        # # Thiết lập kích thước cửa sổ với tỷ lệ 16:9 và chiều rộng = 900
+        # width = 900
+        # height = int((width / 16) * 9)  # Tính toán chiều cao theo tỷ lệ 16:9
+        # self.geometry(f"{width}x{height}")
 
         # Tạo Controller trong View
         self.controller = cls_Controller()  # Không cần biết về file JSON

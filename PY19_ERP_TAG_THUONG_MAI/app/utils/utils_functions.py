@@ -1,5 +1,10 @@
 import tkinter as tk
 from tkinter import font
+import inspect
+
+def f_find_my_function_path(function_name):
+    source_file = inspect.getfile(function_name)
+    print(f"Function is defined in: {source_file}")
 
 def set_window_size(root, width=1600, height=900):
     # Thiết lập kích thước cửa sổ
@@ -16,15 +21,18 @@ def set_window_size(root, width=1600, height=900):
     
     root.geometry(f'{width}x{height}+{position_right}+{position_top}')
 
-def f_set_window_size_is_4_per_5_screen(root):
-    # lấy thông tin kích thước màn hình và tinh toán lại
-    screen_width = root.winfo_screenwidth()
-    screen_height = root.winfo_screenheight()
-    height = screen_height * 4 / 5
-    width = screen_width * 4 / 5
-    
-    # Đặt lại kích thước cửa sổ
-    root.geometry(f"{width}x{height}")
+def f_set_window_size_is_4_per_5_screen(root, width=0, height=0):
+    if width == 0 or height == 0:
+        # lấy thông tin kích thước màn hình và tinh toán lại
+        screen_width = root.winfo_screenwidth()
+        screen_height = root.winfo_screenheight()
+        height = int(screen_height * 4 / 5)
+        width = int(screen_width * 4 / 5)
+        
+        # Đặt lại kích thước cửa sổ
+        root.geometry(f"{width}x{height}")
+    else:
+        root.geometry(f"{width}x{height}")
 
 def f_set_center_screen(root):
     # Lấy kích thước của cửa sổ
@@ -35,7 +43,7 @@ def f_set_center_screen(root):
     # lấy thông tin kích thước màn hình và tinh toán lại
     screen_width = root.winfo_screenwidth()
     screen_height = root.winfo_screenheight()
-    position_top = int(screen_height / 2 - height / 2)
+    position_top = int(screen_height / 2 - height / 2) - 15
     position_right = int(screen_width / 2 - width / 2)
     
     root.geometry(f'{width}x{height}+{position_right}+{position_top}')

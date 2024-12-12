@@ -21,8 +21,11 @@ class cls_KD01QuanLyGoiThauView(tk.Tk):
         self.controller_02 = cls_Controller_config_treeview()
 
         # Setup window
-        set_window_size(self)
         self.title("QUẢN LÝ GÓI THẦU - KD01QuanLyGoiThauView")
+        
+        # Thiết lập kích thước cửa sổ
+        f_set_window_size_is_4_per_5_screen(self, 0, 0)
+        f_set_center_screen(self)
 
         # Gọi các thành phần tái sử dụng
         cls_menu_top(self, self)

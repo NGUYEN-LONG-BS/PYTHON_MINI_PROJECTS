@@ -11,8 +11,11 @@ class cls_user_info(tk.Tk):
         super().__init__()
         
         # Setup window
-        set_window_size(self)
         self.title("Thông tin người dùng - Userinfo")
+        # Thiết lập kích thước cửa sổ
+        f_set_window_size_is_4_per_5_screen(self, 0, 0)
+        f_set_center_screen(self)
+        
         self.f_create_element()
         
     def f_create_element(self):

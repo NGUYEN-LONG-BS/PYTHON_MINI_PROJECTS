@@ -9,7 +9,8 @@ def f_render_dashboard():
     root.title("DashboardView")
     
     # Thiết lập kích thước cửa sổ
-    set_window_size(root)
+    f_set_window_size_is_4_per_5_screen(root, 0, 0)
+    f_set_center_screen(root)
     
     # # Kiểm tra đường dẫn của hàm set_window_size
     # f_find_my_function_path(set_window_size)

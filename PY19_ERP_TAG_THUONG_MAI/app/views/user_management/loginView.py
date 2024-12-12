@@ -1,4 +1,5 @@
 import os
+from utils import *
 import tkinter as tk
 from tkinter import messagebox
 import json
@@ -12,7 +13,8 @@ class cls_LoginView(tk.Tk):
         self.controller = cls_LoginController(model, self)
         
         self.title("Login System")
-        self.geometry("300x200")  # Window size (300x200)
+        f_set_window_size_is_4_per_5_screen(self, 400, 300)
+        f_set_center_screen(self)
 
         # Add your widgets and layout here (e.g., Entry fields, buttons)
         self.create_widgets()
@@ -83,18 +85,6 @@ class cls_LoginView(tk.Tk):
         else:
             self.entry_password.config(show='*')
             self.toggle_password_button.config(text="Show Password")
-    
-    def center_window(self, width, height):
-        # Get the screen width and height
-        screen_width = self.winfo_screenwidth()
-        screen_height = self.winfo_screenheight()
-
-        # Calculate the position of the window to center it
-        position_top = int(screen_height / 2 - height / 2)
-        position_right = int(screen_width / 2 - width / 2)
-
-        # Set the dimensions of the window and its position
-        self.geometry(f'{width}x{height}+{position_right}+{position_top}')
         
     # Function to write credentials to a JSON file
     def write_credentials_to_json(self, username, password):

@@ -8,6 +8,7 @@ import os
 import unicodedata  # This will help normalize Vietnamese characters
 from app.controllers.KD02QuanLyYeuCauDatHangController import cls_controller
 from components import *
+from utils import *
 
 class cls_CRUDTreeviewView(tk.Tk):
     def __init__(self):
@@ -15,6 +16,15 @@ class cls_CRUDTreeviewView(tk.Tk):
         self.title("CRUD Treeview Example")
         # Gọi các thành phần tái sử dụng
         cls_menu_top(self, self)
+        # # Thiết lập kích thước cửa sổ
+        # f_set_window_size_is_4_per_5_screen(self, 0, 0)
+        # f_set_center_screen(self)
+        
+        # # Lấy kích thước của cửa sổ
+        # self.update_idletasks()  # Cập nhật các thay đổi về kích thước
+        # window_width = self.winfo_width()
+        # window_height = self.winfo_height()
+        
         # =======================================================================================================================
         # Get the screen height and width
         screen_width = self.winfo_screenwidth()
