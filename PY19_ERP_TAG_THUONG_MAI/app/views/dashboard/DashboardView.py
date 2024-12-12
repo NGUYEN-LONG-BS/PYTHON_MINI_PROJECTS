@@ -22,5 +22,6 @@ def f_render_dashboard():
     create_right_banner(root)
     create_footer(root)
     
+    
     # Start the Tkinter main loop
     root.mainloop()

@@ -77,7 +77,7 @@ class cls_menu_top:
             self.f_destroy_current_window()
             
         def Fuction_do_nothing():
-            print("do notthing")
+            f_show_fading_popup("coming soon")
         
         # Create a Tkinter Menu bar
         top_menu = tk.Menu(self.parent)
