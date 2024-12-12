@@ -15,12 +15,20 @@ class cls_menu_top:
         self.top_menu = tk.Menu(self.parent)
         self.current_user = self.read_user_from_json()  # Read the logged-in user
         self.f_create_top_menu()
+    #     self.f_check_credentials()
+        
+    # def f_check_credentials(self):
+    #     print("check credentials")
+    #     if self.current_user == "admin":
+    #         self.KinhDoanh_menu.configure(bg="lightblue")
+    #         print("Fucntion_QLGT_GoiThauDaLap selected")
+    #     else:
+    #         print("You must be an admin to access this.")
 
     def read_user_from_json(self):
         """ Reads the logged-in user's username from the JSON file. """
-        base_dir = os.path.dirname(__file__)
-        json_file = os.path.join(base_dir, '..\user_management\login_credentials.json')
-        json_file = r'views\user_management\login_credentials.json'
+        # Sử dụng đường dẫn tuyệt đối
+        json_file = os.path.join(os.path.dirname(__file__), '..', 'user_management', 'login_credentials.json')
         try:
             with open(json_file, 'r') as f:
                 data = json.load(f)
@@ -67,6 +75,9 @@ class cls_menu_top:
         def Fucntion_exit_click():
             print("Fucntion_exit_click selected")
             self.f_destroy_current_window()
+            
+        def Fuction_do_nothing():
+            print("do notthing")
         
         # Create a Tkinter Menu bar
         top_menu = tk.Menu(self.parent)
@@ -77,25 +88,51 @@ class cls_menu_top:
         top_menu.add_cascade(label="Home", menu=HOME_menu)
         
         # menu của Kinh doanh
-        KinhDoanh_menu = tk.Menu(top_menu, tearoff=0)
-        KinhDoanh_menu.add_command(label="Tạo mới gói thầu", command=Fucntion_QLGT_TaoMoi_Click)
-        KinhDoanh_menu.add_command(label="Các gói thầu đã lập", command=Fucntion_QLGT_GoiThauDaLap)
-        KinhDoanh_menu.add_separator()
-        KinhDoanh_menu.add_command(label="Yêu cầu đặt hàng TALA", command=Fuction_QLYCDH_TALA)
-        KinhDoanh_menu.add_command(label="Yêu cầu đặt hàng TM", command=Fuction_QLYCDH_TM)
-        top_menu.add_cascade(label="Kinh doanh", menu=KinhDoanh_menu)
-
+        khong_co_quyen_kinh_doanh = ["vt1", "tc1", "kt1"]
+        if self.current_user in khong_co_quyen_kinh_doanh:
+            KinhDoanh_menu = tk.Menu(top_menu, tearoff=0)
+            # print("không khỏi tạo menu kinh doanh")
+        else:
+            KinhDoanh_menu = tk.Menu(top_menu, tearoff=0)
+            KinhDoanh_menu.add_command(label="Tạo mới gói thầu", command=Fucntion_QLGT_TaoMoi_Click)
+            KinhDoanh_menu.add_command(label="Các gói thầu đã lập", command=Fucntion_QLGT_GoiThauDaLap)
+            KinhDoanh_menu.add_separator()
+            KinhDoanh_menu.add_command(label="Yêu cầu đặt hàng TALA", command=Fuction_QLYCDH_TALA)
+            KinhDoanh_menu.add_command(label="Yêu cầu đặt hàng TM", command=Fuction_QLYCDH_TM)
+            top_menu.add_cascade(label="Kinh doanh", menu=KinhDoanh_menu)
+            
         # menu của Vật Tư
-        VatTu_menu = tk.Menu(top_menu, tearoff=0)
-        VatTu_menu.add_command(label="DS Yêu cầu đặt hàng", command=Fuction_QLYCDH_TALA)
-        VatTu_menu.add_command(label="QL Nhà Cung cấp", command=Fuction_QLYCDH_TM)
-        top_menu.add_cascade(label="Vật Tư", menu=VatTu_menu)
+        khong_co_quyen_vat_tu = ["kd1", "tc1", "kt1"]
+        if self.current_user in khong_co_quyen_vat_tu:
+            VatTu_menu = tk.Menu(top_menu, tearoff=0)
+            # print("không khỏi tạo menu vật tư")
+        else:
+            VatTu_menu = tk.Menu(top_menu, tearoff=0)
+            VatTu_menu.add_command(label="DS Yêu cầu đặt hàng", command=Fuction_do_nothing)
+            VatTu_menu.add_command(label="QL Nhà Cung cấp", command=Fuction_do_nothing)
+            top_menu.add_cascade(label="Vật Tư", menu=VatTu_menu)
     
         # menu của Kỹ thuật
-        KyThuat_menu = tk.Menu(top_menu, tearoff=0)
-        KyThuat_menu.add_command(label="Yêu cầu KT 01", command=Fuction_QLYCDH_TALA)
-        KyThuat_menu.add_command(label="Yêu cầu KT 02", command=Fuction_QLYCDH_TM)
-        top_menu.add_cascade(label="Kỹ thuật", menu=KyThuat_menu)
+        khong_co_quyen_ky_thuat = ["kd1", "tc1", "vt1"]
+        if self.current_user in khong_co_quyen_ky_thuat:
+            KyThuat_menu = tk.Menu(top_menu, tearoff=0)
+            # print("không khỏi tạo menu kỹ thuật")
+        else:
+            KyThuat_menu = tk.Menu(top_menu, tearoff=0)
+            KyThuat_menu.add_command(label="Yêu cầu KT 01", command=Fuction_do_nothing)
+            KyThuat_menu.add_command(label="Yêu cầu KT 02", command=Fuction_do_nothing)
+            top_menu.add_cascade(label="Kỹ thuật", menu=KyThuat_menu)
+            
+        # menu của Tài chính
+        khong_co_quyen_tai_chinh = ["kd1", "kt1", "vt1"]
+        if self.current_user in khong_co_quyen_tai_chinh:
+            TaiChinh_menu = tk.Menu(top_menu, tearoff=0)
+            # print("không khỏi tạo menu kỹ thuật")
+        else:
+            TaiChinh_menu = tk.Menu(top_menu, tearoff=0)
+            TaiChinh_menu.add_command(label="Quỹ tiền mặt", command=Fuction_do_nothing)
+            TaiChinh_menu.add_command(label="Quỹ tiền gửi", command=Fuction_do_nothing)
+            top_menu.add_cascade(label="Tài chính", menu=TaiChinh_menu)
         
         # Create a "Help" menu
         HELP_menu = tk.Menu(top_menu, tearoff=0)
@@ -111,6 +148,7 @@ class cls_menu_top:
         f_set_menu_font(KinhDoanh_menu)
         f_set_menu_font(VatTu_menu)
         f_set_menu_font(KyThuat_menu)
+        f_set_menu_font(TaiChinh_menu)
         f_set_menu_font(HELP_menu)
 
         # Set the menu bar for the root window
