@@ -20,8 +20,8 @@ def f_setup_sys_path():
         if subdir_path not in sys.path:
             sys.path.append(subdir_path)
     
-    # Thêm các thư mục con của app vào sys.path
-    app_views_subdirectories = ['components', 'dashboard', 'KD01_QuanLyGoiThau', 
+    # Thêm các thư mục con của views
+    app_views_subdirectories = ['components', 'dashboard', 'KD0101_QuanLyGoiThau_View', 'KD01_QuanLyGoiThau', 
                                 'KD01_QuanLyGoiThau_New', 'KD02_QuanLyYeuCauDatHang', 
                                 'settings', 'user_management']
     for subdir in app_views_subdirectories:
@@ -29,6 +29,20 @@ def f_setup_sys_path():
         if subdir_path not in sys.path:
             sys.path.append(subdir_path)
             
+    # Thêm các thư mục con của controllers
+    app_controllers_subdirectories = ['KD0101_QuanLyGoiThau_View']
+    for subdir in app_controllers_subdirectories:
+        subdir_path = os.path.join(app_path, "controllers", subdir)
+        if subdir_path not in sys.path:
+            sys.path.append(subdir_path)
+            
+    # Thêm các thư mục con của models
+    app_models_subdirectories = ['KD0101_QuanLyGoiThau_Model']
+    for subdir in app_models_subdirectories:
+        subdir_path = os.path.join(app_path, "models", subdir)
+        if subdir_path not in sys.path:
+            sys.path.append(subdir_path)
+
     # Thêm đường dẫn tới thư mục assets vào sys.path (nếu cần thiết)
     assets_path = os.path.join(base_dir, 'assets')
     if assets_path not in sys.path:

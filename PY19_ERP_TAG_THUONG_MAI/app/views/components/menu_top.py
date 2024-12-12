@@ -15,15 +15,6 @@ class cls_menu_top:
         self.top_menu = tk.Menu(self.parent)
         self.current_user = self.read_user_from_json()  # Read the logged-in user
         self.f_create_top_menu()
-    #     self.f_check_credentials()
-        
-    # def f_check_credentials(self):
-    #     print("check credentials")
-    #     if self.current_user == "admin":
-    #         self.KinhDoanh_menu.configure(bg="lightblue")
-    #         print("Fucntion_QLGT_GoiThauDaLap selected")
-    #     else:
-    #         print("You must be an admin to access this.")
 
     def read_user_from_json(self):
         """ Reads the logged-in user's username from the JSON file. """
@@ -38,53 +29,12 @@ class cls_menu_top:
             return ""
         
     def f_create_top_menu(self):
-    
-        # Define the action fuctions for home menu
-        def Function_Home_main_Click():
-            print("Function_Home_main_Click selected")
-            self.f_open_DashBoard()
-        
-        # Define the action fuctions for QLGT menu
-        def Fucntion_QLGT_TaoMoi_Click():
-            print("Fucntion_QLGT_TaoMoi_Click selected")
-            self.f_open_KD01QuanLyGoiThauView()
-        
-        def Fucntion_QLGT_GoiThauDaLap():
-            print("Fucntion_QLGT_GoiThauDaLap selected")
-            self.f_open_KD01_01QuanLyGoiThauView()
-        
-        # Define the action fuctions for QLYCDT menu
-        def Fuction_QLYCDH_TALA():
-            print("Fuction_QLYCDH_TALA selected")
-            self.f_open_KD02QuanLyYeuCauDatHangView()
-            
-        def Fuction_QLYCDH_TM():
-            print("Fuction_QLYCDH_TM selected")
-        
-        def Fucntion_Help_About():
-            print("Fucntion_Help_About selected")
-        
-        def Fucntion_Help_UserInfo():
-            print("Fucntion_Help_UserInfo selected")
-            self.f_open_UserInfo()
-        
-        def Fucntion_signout_click():
-            print("Fucntion_signout_click selected")
-            self.f_open_login_window()
-        
-        def Fucntion_exit_click():
-            print("Fucntion_exit_click selected")
-            self.f_destroy_current_window()
-            
-        def Fuction_do_nothing():
-            f_show_fading_popup("coming soon")
-        
         # Create a Tkinter Menu bar
         top_menu = tk.Menu(self.parent)
 
         # Create a "Home" menu
         HOME_menu = tk.Menu(top_menu, tearoff=0)
-        HOME_menu.add_command(label="Home", command=Function_Home_main_Click)
+        HOME_menu.add_command(label="Home", command=self.f_Home_main_click)
         top_menu.add_cascade(label="Home", menu=HOME_menu)
         
         # menu của Kinh doanh
@@ -94,11 +44,13 @@ class cls_menu_top:
             # print("không khỏi tạo menu kinh doanh")
         else:
             KinhDoanh_menu = tk.Menu(top_menu, tearoff=0)
-            KinhDoanh_menu.add_command(label="Tạo mới gói thầu", command=Fucntion_QLGT_TaoMoi_Click)
-            KinhDoanh_menu.add_command(label="Các gói thầu đã lập", command=Fucntion_QLGT_GoiThauDaLap)
+            KinhDoanh_menu.add_command(label="Tạo mới gói thầu", command=self.f_QLGT_TaoMoi_click)
+            KinhDoanh_menu.add_command(label="Các gói thầu đã lập", command=self.f_QLGT_GoiThauDaLap_click)
             KinhDoanh_menu.add_separator()
-            KinhDoanh_menu.add_command(label="Yêu cầu đặt hàng TALA", command=Fuction_QLYCDH_TALA)
-            KinhDoanh_menu.add_command(label="Yêu cầu đặt hàng TM", command=Fuction_QLYCDH_TM)
+            KinhDoanh_menu.add_command(label="Yêu cầu đặt hàng TALA", command=self.f_QLYCDH_TALA_click)
+            KinhDoanh_menu.add_command(label="Yêu cầu đặt hàng TM", command=self.f_QLYCDH_TM_click)
+            KinhDoanh_menu.add_separator()
+            KinhDoanh_menu.add_command(label="KD0101 Quản lý gói thầu", command=self.f_KD0101_QuanLyGoiThau_click)
             top_menu.add_cascade(label="Kinh doanh", menu=KinhDoanh_menu)
             
         # menu của Vật Tư
@@ -108,8 +60,8 @@ class cls_menu_top:
             # print("không khỏi tạo menu vật tư")
         else:
             VatTu_menu = tk.Menu(top_menu, tearoff=0)
-            VatTu_menu.add_command(label="DS Yêu cầu đặt hàng", command=Fuction_do_nothing)
-            VatTu_menu.add_command(label="QL Nhà Cung cấp", command=Fuction_do_nothing)
+            VatTu_menu.add_command(label="DS Yêu cầu đặt hàng", command=self.f_do_nothing_click)
+            VatTu_menu.add_command(label="QL Nhà Cung cấp", command=self.f_do_nothing_click)
             top_menu.add_cascade(label="Vật Tư", menu=VatTu_menu)
     
         # menu của Kỹ thuật
@@ -119,8 +71,8 @@ class cls_menu_top:
             # print("không khỏi tạo menu kỹ thuật")
         else:
             KyThuat_menu = tk.Menu(top_menu, tearoff=0)
-            KyThuat_menu.add_command(label="Yêu cầu KT 01", command=Fuction_do_nothing)
-            KyThuat_menu.add_command(label="Yêu cầu KT 02", command=Fuction_do_nothing)
+            KyThuat_menu.add_command(label="Yêu cầu KT 01", command=self.f_do_nothing_click)
+            KyThuat_menu.add_command(label="Yêu cầu KT 02", command=self.f_do_nothing_click)
             top_menu.add_cascade(label="Kỹ thuật", menu=KyThuat_menu)
             
         # menu của Tài chính
@@ -130,17 +82,17 @@ class cls_menu_top:
             # print("không khỏi tạo menu kỹ thuật")
         else:
             TaiChinh_menu = tk.Menu(top_menu, tearoff=0)
-            TaiChinh_menu.add_command(label="Quỹ tiền mặt", command=Fuction_do_nothing)
-            TaiChinh_menu.add_command(label="Quỹ tiền gửi", command=Fuction_do_nothing)
+            TaiChinh_menu.add_command(label="Quỹ tiền mặt", command=self.f_do_nothing_click)
+            TaiChinh_menu.add_command(label="Quỹ tiền gửi", command=self.f_do_nothing_click)
             top_menu.add_cascade(label="Tài chính", menu=TaiChinh_menu)
         
         # Create a "Help" menu
         HELP_menu = tk.Menu(top_menu, tearoff=0)
-        HELP_menu.add_command(label="About", command=Fucntion_Help_About)
-        HELP_menu.add_command(label="User Info", command=Fucntion_Help_UserInfo)
+        HELP_menu.add_command(label="About", command=self.f_Help_About_click)
+        HELP_menu.add_command(label="User Info", command=self.f_Help_UserInfo_click)
         HELP_menu.add_separator()
-        HELP_menu.add_command(label="Sign out", command=Fucntion_signout_click)
-        HELP_menu.add_command(label="Exit", command=Fucntion_exit_click)
+        HELP_menu.add_command(label="Sign out", command=self.f_Help_Signout_click)
+        HELP_menu.add_command(label="Exit", command=self.f_Help_Exit_click)
         top_menu.add_cascade(label="Help", menu=HELP_menu)
         
         # Set font size to 15 for all menus
@@ -153,7 +105,51 @@ class cls_menu_top:
 
         # Set the menu bar for the root window
         self.parent.config(menu=top_menu)
-            
+        
+    # Define the action fuctions for home menu
+    def f_Home_main_click(self):
+        print("f_Home_main_click selected")
+        self.f_open_DashBoard()
+    
+    # Define the action fuctions for QLGT menu
+    def f_QLGT_TaoMoi_click(self):
+        print("f_QLGT_TaoMoi_click selected")
+        self.f_open_KD01QuanLyGoiThauView()
+        
+    def f_KD0101_QuanLyGoiThau_click(self):
+        print("f_QLGT_TaoMoi_click selected")
+        self.f_open_KD0101_QuanLyGoiThau_View()
+    
+    def f_QLGT_GoiThauDaLap_click(self):
+        print("f_QLGT_GoiThauDaLap_click selected")
+        self.f_open_KD01_01QuanLyGoiThauView()
+    
+    # Define the action fuctions for QLYCDT menu
+    def f_QLYCDH_TALA_click(self):
+        print("f_QLYCDH_TALA_click selected")
+        self.f_open_KD02QuanLyYeuCauDatHangView()
+        
+    def f_QLYCDH_TM_click(self):
+        print("f_QLYCDH_TM_click selected")
+    
+    def f_Help_About_click(self):
+        print("f_Help_About_click selected")
+    
+    def f_Help_UserInfo_click(self):
+        print("f_Help_UserInfo_click selected")
+        self.f_open_UserInfo()
+    
+    def f_Help_Signout_click(self):
+        print("f_Help_Signout_click selected")
+        self.f_open_login_window()
+    
+    def f_Help_Exit_click(self):
+        print("f_Help_Exit_click selected")
+        self.f_destroy_current_window()
+        
+    def f_do_nothing_click(self):
+        f_show_fading_popup("coming soon")
+    
     def f_open_login_window(self):
         from views.user_management.loginView import cls_LoginView   # lazy import to avoid circular import
         self.dashboard_window.destroy()
@@ -176,6 +172,13 @@ class cls_menu_top:
         kd01_view.mainloop()
     
     def f_open_KD01QuanLyGoiThauView(self):
+        from views.KD01_QuanLyGoiThau.KD01QuanLyGoiThauView import cls_KD01QuanLyGoiThauView
+        self.dashboard_window.destroy()
+        kd01_view = cls_KD01QuanLyGoiThauView()
+        kd01_view.dashboard = self.dashboard_window
+        kd01_view.mainloop()
+        
+    def f_open_KD0101_QuanLyGoiThau_View(self):
         from views.KD01_QuanLyGoiThau.KD01QuanLyGoiThauView import cls_KD01QuanLyGoiThauView
         self.dashboard_window.destroy()
         kd01_view = cls_KD01QuanLyGoiThauView()
