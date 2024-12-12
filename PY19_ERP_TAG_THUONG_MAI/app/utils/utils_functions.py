@@ -43,8 +43,12 @@ def f_set_center_screen(root):
     # lấy thông tin kích thước màn hình và tinh toán lại
     screen_width = root.winfo_screenwidth()
     screen_height = root.winfo_screenheight()
-    position_top = int(screen_height / 2 - height / 2)
-    position_right = int(screen_width / 2 - width / 2)
+    print(screen_width)
+    print(screen_height)
+    # position_top = int(screen_height / 2 - height / 2)
+    # position_right = int(screen_width / 2 - width / 2)
+    position_top = int(screen_height * 0.1)
+    position_right = int(screen_width * 0.1)
     
     root.geometry(f'{width}x{height}+{position_right}+{position_top}')
 
