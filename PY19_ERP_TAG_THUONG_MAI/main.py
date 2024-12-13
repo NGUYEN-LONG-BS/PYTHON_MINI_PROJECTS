@@ -21,7 +21,7 @@ def f_setup_sys_path():
             sys.path.append(subdir_path)
     
     # Thêm các thư mục con của views
-    app_views_subdirectories = ['components', 'dashboard', 'KD0101_QuanLyGoiThau_View', 'KD01_QuanLyGoiThau', 
+    app_views_subdirectories = ['components', 'Dashboard_View', 'KD0101_QuanLyGoiThau_View', 'KD01_QuanLyGoiThau', 
                                 'KD01_QuanLyGoiThau_New', 'KD02_QuanLyYeuCauDatHang', 
                                 'settings', 'user_management']
     for subdir in app_views_subdirectories:

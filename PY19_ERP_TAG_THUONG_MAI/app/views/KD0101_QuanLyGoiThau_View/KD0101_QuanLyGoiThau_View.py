@@ -310,13 +310,3 @@ class cls_KD0101_QuanLyGoiThau_View(tk.Tk):
     # Run main event loop
     def main(self):
         self.mainloop()
-        
-    
-
-
-# # To run the view
-# if __name__ == "__main__":
-#     view = cls_KD01QuanLyGoiThauView()
-#     view.main()
-    
-    

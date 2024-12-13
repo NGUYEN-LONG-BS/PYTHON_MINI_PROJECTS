@@ -72,10 +72,17 @@ class cls_LoginView(tk.Tk):
             self.message_label.config(text="Invalid username or password.")
     
     def open_dashboard(self):
+        # # Import hàm render_dashboard từ DashboardView_Iherit_Component trong views
+        # from app.views.dashboard.DashboardView import f_render_dashboard
+        # # Gọi hàm render_dashboard để hiển thị dashboard
+        # f_render_dashboard()
+
         # Import hàm render_dashboard từ DashboardView_Iherit_Component trong views
-        from app.views.dashboard.DashboardView import f_render_dashboard
+        from app.views.Dashboard_View.Dashboard_View import cls_Dashboard_View
         # Gọi hàm render_dashboard để hiển thị dashboard
-        f_render_dashboard()
+        cls_Dashboard_View()
+        # cls_Dashboard_View.f_render_dashboard()
+
         
     def toggle_password(self):
         # Toggle the password visibility

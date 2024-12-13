@@ -1,6 +1,6 @@
 import tkinter as tk
 
-class DashboardWidgets:
+class cls_Dashboard_Widgets:
     def __init__(self, master):
         self.master = master
 

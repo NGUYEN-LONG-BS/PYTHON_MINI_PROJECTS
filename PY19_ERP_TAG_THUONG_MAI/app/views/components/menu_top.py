@@ -1,4 +1,3 @@
-# Project/views/components/menu.py
 import tkinter as tk
 from utils import *
 import json
@@ -194,8 +193,11 @@ class cls_menu_top:
     
     def f_open_DashBoard(self):
         self.dashboard_window.destroy()
-        from app.views.dashboard.DashboardView import f_render_dashboard
-        f_render_dashboard()
+        # from app.views.dashboard.DashboardView import f_render_dashboard
+        # f_render_dashboard()
+
+        from app.views.Dashboard_View.Dashboard_View import cls_Dashboard_View
+        cls_Dashboard_View()
         
     def f_destroy_current_window(self):
         self.dashboard_window.destroy()
