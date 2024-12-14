@@ -203,7 +203,7 @@ class cls_menu_top:
         # from app.views.dashboard.DashboardView import f_render_dashboard
         # f_render_dashboard()
 
-        from app.views.Dashboard_View.Dashboard_View import cls_Dashboard_View
+        from app.views.AD0101_Dashboard_View.Dashboard_View import cls_Dashboard_View
         cls_Dashboard_View()
         
     def f_destroy_current_window(self):

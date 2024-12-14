@@ -3,7 +3,7 @@ from utils import *
 import tkinter as tk
 from tkinter import messagebox
 import json
-from Dashboard_View import *
+from AD0101_Dashboard_View import *
 from components.logo import setup_logo  # Import the setup_logo function
 from PIL import Image, ImageTk
 

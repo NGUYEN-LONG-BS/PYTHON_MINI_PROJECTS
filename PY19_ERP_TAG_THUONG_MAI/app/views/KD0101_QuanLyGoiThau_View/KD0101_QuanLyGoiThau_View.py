@@ -215,6 +215,13 @@ class cls_KD0101_QuanLyGoiThau_View(tk.Tk):
                 anchor=col["anchor"]
             )
             self.tree.tag_configure(col["name"], font=(col["font"]["family"], col["font"]["size"], col["font"]["weight"]))
+            
+        # Nút tải dữ liệu
+        self.load_button = tk.Button(self, text="Load Data", command=self.load_data)
+        self.load_button.pack()
+        
+        # Gọi load_data khi khởi tạo cửa sổ
+        self.load_data()  # Tải dữ liệu ngay khi cửa sổ được khởi tạo
     
 
     # Combobox change handler
@@ -240,15 +247,8 @@ class cls_KD0101_QuanLyGoiThau_View(tk.Tk):
     def Function_close_KD01_Click(self):
         self.destroy()
         # Now import KD01QuanLyGoiThauView inside the function to avoid circular import
-        from app.views.dashboard.DashboardView import f_render_dashboard
-        f_render_dashboard()
-
-        # Nút tải dữ liệu
-        self.load_button = tk.Button(self, text="Load Data", command=self.load_data)
-        self.load_button.pack()
-        
-        # Gọi load_data khi khởi tạo cửa sổ
-        self.load_data()  # Tải dữ liệu ngay khi cửa sổ được khởi tạo
+        from app.views.AD0101_Dashboard_View.Dashboard_View import cls_Dashboard_View
+        cls_Dashboard_View()
 
     # =======================================================================================================================
     # Fnction of treeview
