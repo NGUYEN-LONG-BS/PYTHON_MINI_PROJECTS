@@ -3,6 +3,7 @@ from utils import *
 import tkinter as tk
 from tkinter import messagebox
 import json
+from Dashboard_View import *
 
 # View: The UI that the user interacts with
 class cls_LoginView(tk.Tk):
@@ -77,11 +78,19 @@ class cls_LoginView(tk.Tk):
         # # Gọi hàm render_dashboard để hiển thị dashboard
         # f_render_dashboard()
 
+        # # Import hàm render_dashboard từ DashboardView_Iherit_Component trong views
+        # from app.views.Dashboard_View.Dashboard_View import cls_Dashboard_View
+        # # Gọi hàm render_dashboard để hiển thị dashboard
+        # cls_Dashboard_View()
+        # # cls_Dashboard_View.f_render_dashboard()
+        
         # Import hàm render_dashboard từ DashboardView_Iherit_Component trong views
-        from app.views.Dashboard_View.Dashboard_View import cls_Dashboard_View
+        # from Dashboard_View import *
+        # from components import *
         # Gọi hàm render_dashboard để hiển thị dashboard
         cls_Dashboard_View()
         # cls_Dashboard_View.f_render_dashboard()
+
 
         
     def toggle_password(self):
