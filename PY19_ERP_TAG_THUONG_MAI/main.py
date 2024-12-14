@@ -28,7 +28,7 @@ class App:
         # Thêm các thư mục con của views
         app_views_subdirectories = ['components', 'Dashboard_View', 'KD0101_QuanLyGoiThau_View', 'KD01_QuanLyGoiThau', 
                                     'KD01_QuanLyGoiThau_New', 'KD02_QuanLyYeuCauDatHang', 
-                                    'settings', 'user_management']
+                                    'settings', 'user_management', 'User_Management_View']
         for subdir in app_views_subdirectories:
             subdir_path = os.path.join(app_path, "views", subdir)
             if subdir_path not in sys.path:
@@ -67,9 +67,14 @@ class App:
         """
         Chạy ứng dụng và render dashboard.
         """
+        # # Import đối tượng cls_LoginView
+        # from app.views.user_management.loginView import cls_LoginView
+        # # Gọi cửa sổ LoginView
+        # login_window = cls_LoginView()
+        # login_window.mainloop()
+        
         # Import đối tượng cls_LoginView
-        from app.views.user_management.loginView import cls_LoginView
-
+        from app.views.User_Management_View.loginView import cls_LoginView
         # Gọi cửa sổ LoginView
         login_window = cls_LoginView()
         login_window.mainloop()

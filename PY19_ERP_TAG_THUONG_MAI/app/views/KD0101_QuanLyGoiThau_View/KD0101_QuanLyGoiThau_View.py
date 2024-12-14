@@ -9,6 +9,7 @@ from utils import *
 from components import *
 from components.user_Info import setup_employee_info_labels  # Import the function
 from components.logo import setup_logo  # Import the setup_logo function
+from components.icon import f_setup_icon
 from app.views.components.menu import cls_Menu  # Import the menu creation function
 
 class cls_KD0101_QuanLyGoiThau_View(tk.Tk):
@@ -21,12 +22,13 @@ class cls_KD0101_QuanLyGoiThau_View(tk.Tk):
         self.controller_02 = cls_Controller_config_treeview()
 
         # Setup window
-        self.title("QUẢN LÝ GÓI THẦU - KD01QuanLyGoiThauView")
+        self.title("QUẢN LÝ GÓI THẦU - KD0101_QuanLyGoiThau_View - 11h21")
         
         # Thiết lập kích thước cửa sổ
         f_set_window_size_is_4_per_5_screen(self, 0, 0)
         f_set_center_screen(self)
-
+        f_setup_icon(self)
+        
         # Gọi các thành phần tái sử dụng
         cls_menu_top(self, self)
 
