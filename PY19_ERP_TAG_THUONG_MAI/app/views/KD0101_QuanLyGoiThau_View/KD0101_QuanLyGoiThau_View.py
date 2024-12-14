@@ -22,7 +22,7 @@ class cls_KD0101_QuanLyGoiThau_View(tk.Tk):
         self.controller_02 = cls_Controller_config_treeview()
 
         # Setup window
-        self.title("QUẢN LÝ GÓI THẦU - KD0101_QuanLyGoiThau_View - 11h21")
+        self.title("KD0101 - QUẢN LÝ GÓI THẦU")
         
         # Thiết lập kích thước cửa sổ
         f_set_window_size_is_4_per_5_screen(self, 0, 0)

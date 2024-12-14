@@ -9,7 +9,7 @@ class cls_Dashboard_View(tk.Tk):
         super().__init__()
 
         # Thiết lập tiêu đề cửa sổ
-        self.title("DashboardView_10h20")
+        self.title("AD0101 - DashboardView")
         f_setup_icon(self)
         
         # Thiết lập kích thước cửa sổ và căn giữa

@@ -46,10 +46,11 @@ class cls_menu_top:
             KinhDoanh_menu.add_command(label="Tạo mới gói thầu", command=self.f_QLGT_TaoMoi_click)
             KinhDoanh_menu.add_command(label="Các gói thầu đã lập", command=self.f_QLGT_GoiThauDaLap_click)
             KinhDoanh_menu.add_separator()
-            KinhDoanh_menu.add_command(label="Yêu cầu đặt hàng TALA", command=self.f_QLYCDH_TALA_click)
-            KinhDoanh_menu.add_command(label="Yêu cầu đặt hàng TM", command=self.f_QLYCDH_TM_click)
+            KinhDoanh_menu.add_command(label="KD0201 |Yêu cầu đặt hàng TALA", command=self.f_QLYCDH_TALA_click)
+            KinhDoanh_menu.add_command(label="KD0202 |Yêu cầu đặt hàng TM", command=self.f_QLYCDH_TM_click)
             KinhDoanh_menu.add_separator()
-            KinhDoanh_menu.add_command(label="KD0101 Quản lý gói thầu", command=self.f_KD0101_QuanLyGoiThau_click)
+            KinhDoanh_menu.add_command(label="KD0101 |Quản lý gói thầu", command=self.f_KD0101_QuanLyGoiThau_click)
+            KinhDoanh_menu.add_command(label="KD0102 |Tạo mới gói thầu", command=self.f_KD0101_QuanLyGoiThau_click)
             top_menu.add_cascade(label="Kinh doanh", menu=KinhDoanh_menu)
             
         # menu của Vật Tư
@@ -178,9 +179,15 @@ class cls_menu_top:
         kd01_view.mainloop()
         
     def f_open_KD0101_QuanLyGoiThau_View(self):
-        from views.KD01_QuanLyGoiThau.KD01QuanLyGoiThauView import cls_KD01QuanLyGoiThauView
+        # from views.KD01_QuanLyGoiThau.KD01QuanLyGoiThauView import cls_KD01QuanLyGoiThauView
+        # self.dashboard_window.destroy()
+        # kd01_view = cls_KD01QuanLyGoiThauView()
+        # kd01_view.dashboard = self.dashboard_window
+        # kd01_view.mainloop()
+        
+        from views.KD0101_QuanLyGoiThau_View.KD0101_QuanLyGoiThau_View import cls_KD0101_QuanLyGoiThau_View
         self.dashboard_window.destroy()
-        kd01_view = cls_KD01QuanLyGoiThauView()
+        kd01_view = cls_KD0101_QuanLyGoiThau_View()
         kd01_view.dashboard = self.dashboard_window
         kd01_view.mainloop()
 
