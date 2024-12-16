@@ -46,20 +46,23 @@ class cls_menu_top:
             top_menu.add_cascade(label="Kinh doanh", menu=KinhDoanh_menu_Level_0)
             
             # Sub-menu level 1
-            KinhDoanh_menu_Level_1_KD01 = tk.Menu(KinhDoanh_menu_Level_0, tearoff=0)
-            KinhDoanh_menu_Level_0.add_cascade(label="Quản lý gói thầu", menu=KinhDoanh_menu_Level_1_KD01)
+            KinhDoanh_menu_Level_1_QuanLyGoiThau = tk.Menu(KinhDoanh_menu_Level_0, tearoff=0)
+            KinhDoanh_menu_Level_0.add_cascade(label="Quản lý gói thầu", menu=KinhDoanh_menu_Level_1_QuanLyGoiThau)
             KinhDoanh_menu_Level_0.add_separator()
             
-            KinhDoanh_menu_Level_1_KD02 = tk.Menu(KinhDoanh_menu_Level_0, tearoff=0)
-            KinhDoanh_menu_Level_0.add_cascade(label="Quản lý yêu cầu đặt hàng", menu=KinhDoanh_menu_Level_1_KD02)
+            KinhDoanh_menu_Level_1_QuanLyGoiThau.add_command(label="KD0101 |Quản lý gói thầu", command=self.f_KD0101_QuanLyGoiThau_click)
+            KinhDoanh_menu_Level_1_QuanLyGoiThau.add_command(label="KD0102 |Tạo mới gói thầu", command=self.f_KD0101_QuanLyGoiThau_click)
+            
+            KinhDoanh_menu_Level_1_QuanLyYeuCauDatHang = tk.Menu(KinhDoanh_menu_Level_0, tearoff=0)
+            KinhDoanh_menu_Level_0.add_cascade(label="Quản lý yêu cầu đặt hàng", menu=KinhDoanh_menu_Level_1_QuanLyYeuCauDatHang)
             KinhDoanh_menu_Level_0.add_separator()
             
-            KinhDoanh_menu_Level_1_KD02.add_command(label="KD0201 |Tạo mới YCĐH", command=self.f_QLYCDH_TALA_click)
-            KinhDoanh_menu_Level_1_KD02.add_command(label="KD0202 |Nhật ký YCĐH", command=self.f_QLYCDH_TM_click)
+            KinhDoanh_menu_Level_1_QuanLyYeuCauDatHang.add_command(label="KD0201 |Tạo mới YCĐH", command=self.f_QLYCDH_TALA_click)
+            KinhDoanh_menu_Level_1_QuanLyYeuCauDatHang.add_command(label="KD0202 |Nhật ký YCĐH", command=self.f_QLYCDH_TM_click)
 
             # Sub-menu level 2
-            KinhDoanh_menu_Level_2 = tk.Menu(KinhDoanh_menu_Level_1_KD02, tearoff=0)
-            KinhDoanh_menu_Level_1_KD02.add_cascade(label="Subsubmenu", menu=KinhDoanh_menu_Level_2)
+            KinhDoanh_menu_Level_2 = tk.Menu(KinhDoanh_menu_Level_1_QuanLyYeuCauDatHang, tearoff=0)
+            KinhDoanh_menu_Level_1_QuanLyYeuCauDatHang.add_cascade(label="Subsubmenu", menu=KinhDoanh_menu_Level_2)
             KinhDoanh_menu_Level_2.add_command(label="Subsuboption 1", command=self.f_do_nothing_click)
             KinhDoanh_menu_Level_2.add_command(label="Subsuboption 2", command=self.f_do_nothing_click)
             
@@ -141,7 +144,7 @@ class cls_menu_top:
         # Set font size to 15 for all menus
         f_set_menu_font(HOME_menu_Level_0)
         f_set_menu_font(KinhDoanh_menu_Level_0)
-        f_set_menu_font(KinhDoanh_menu_Level_1_KD02)
+        f_set_menu_font(KinhDoanh_menu_Level_1_QuanLyYeuCauDatHang)
         f_set_menu_font(KinhDoanh_menu_Level_2)
         f_set_menu_font(VatTu_menu_Level_0)
         f_set_menu_font(KyThuat_menu_Level_0)

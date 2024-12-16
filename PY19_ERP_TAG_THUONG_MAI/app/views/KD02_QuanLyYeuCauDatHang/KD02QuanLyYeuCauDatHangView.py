@@ -7,7 +7,7 @@ import json
 import os
 import unicodedata  # This will help normalize Vietnamese characters
 from app.controllers.KD02QuanLyYeuCauDatHangController import cls_controller
-from components import *
+from Components_View import *
 from utils import *
 
 class cls_CRUDTreeviewView(tk.Tk):

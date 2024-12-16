@@ -8,7 +8,7 @@ import os
 import unicodedata  # This will help normalize Vietnamese characters
 # from app.controllers.KD02QuanLyYeuCauDatHangController import cls_controller
 from app.controllers.KD02_QuanLyYeuCauDatHang_Controller import *
-from components import *
+from Components_View import *
 from utils import *
 
 class cls_KD0201_PhieuYeuCauDatHang_View(tk.Tk):
