@@ -46,8 +46,8 @@ class cls_menu_top:
             KinhDoanh_menu.add_command(label="Tạo mới gói thầu", command=self.f_QLGT_TaoMoi_click)
             KinhDoanh_menu.add_command(label="Các gói thầu đã lập", command=self.f_QLGT_GoiThauDaLap_click)
             KinhDoanh_menu.add_separator()
-            KinhDoanh_menu.add_command(label="KD0201 |Yêu cầu đặt hàng TALA", command=self.f_QLYCDH_TALA_click)
-            KinhDoanh_menu.add_command(label="KD0202 |Yêu cầu đặt hàng TM", command=self.f_QLYCDH_TM_click)
+            KinhDoanh_menu.add_command(label="KD0201 |Phiếu Yêu cầu đặt hàng", command=self.f_QLYCDH_TALA_click)
+            KinhDoanh_menu.add_command(label="KD0202 |Nhật ký yêu cầu đặt hàng", command=self.f_QLYCDH_TM_click)
             KinhDoanh_menu.add_separator()
             KinhDoanh_menu.add_command(label="KD0101 |Quản lý gói thầu", command=self.f_KD0101_QuanLyGoiThau_click)
             KinhDoanh_menu.add_command(label="KD0102 |Tạo mới gói thầu", command=self.f_KD0101_QuanLyGoiThau_click)
@@ -158,9 +158,15 @@ class cls_menu_top:
         kd01_view.mainloop()                            # Open the window by starting the Tkinter event loop for the new view
         
     def f_open_KD02QuanLyYeuCauDatHangView(self):
-        from app.views.KD02_QuanLyYeuCauDatHang.KD02QuanLyYeuCauDatHangView import cls_CRUDTreeviewView
+        # from app.views.KD02_QuanLyYeuCauDatHang.KD02QuanLyYeuCauDatHangView import cls_CRUDTreeviewView
+        # self.dashboard_window.destroy()
+        # kd01_view = cls_CRUDTreeviewView()
+        # kd01_view.dashboard = self.dashboard_window
+        # kd01_view.mainloop()
+        
+        from views.KD02_QuanLyYeuCauDatHang_View.KD0201_PhieuYeuCauDatHang_View import cls_KD0201_PhieuYeuCauDatHang_View
         self.dashboard_window.destroy()
-        kd01_view = cls_CRUDTreeviewView()
+        kd01_view = cls_KD0201_PhieuYeuCauDatHang_View()
         kd01_view.dashboard = self.dashboard_window
         kd01_view.mainloop()
     

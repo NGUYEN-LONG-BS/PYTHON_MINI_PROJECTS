@@ -10,10 +10,10 @@ from app.controllers.KD02QuanLyYeuCauDatHangController import cls_controller
 from components import *
 from utils import *
 
-class cls_CRUDTreeviewView(tk.Tk):
+class cls_KD0201_NhatKyYeuCauDatHang_View(tk.Tk):
     def __init__(self):
         super().__init__()  # Gọi phương thức __init__ của lớp cha
-        self.title("CRUD Treeview Example")
+        self.title("KD0201 - PHIẾU YÊU CẦU ĐẶT HÀNG")
         # Gọi các thành phần tái sử dụng
         cls_menu_top(self, self)
         # =======================================================================================================================
@@ -25,21 +25,6 @@ class cls_CRUDTreeviewView(tk.Tk):
         self.update_idletasks()  # Cập nhật các thay đổi về kích thước
         window_width = self.winfo_width()
         window_height = self.winfo_height()
-        
-        # # =======================================================================================================================
-        # # Get the screen height and width
-        # screen_width = self.winfo_screenwidth()
-        # screen_height = self.winfo_screenheight()
-        # # Set the window height to 4/5 of the screen height
-        # window_height = int(4 * screen_height / 5)
-        # # Set the window width (you can adjust as needed)
-        # window_width = window_height // 9 * 16
-        # # Calculate the position to center the window
-        # x_position = int((screen_width - window_width) / 2)
-        # y_position = int((screen_height - window_height) / 2)
-        # # Set the window geometry (centered window)
-        # self.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
-        
         # =======================================================================================================================
         # Theme
         var_bd_0 = 0
@@ -52,6 +37,8 @@ class cls_CRUDTreeviewView(tk.Tk):
         self.canvas = tk.Canvas(self.master, width=window_width, bg=bg_corlor_0)
         self.canvas.pack(side="left", fill="both", expand=True)
         
+        
+        # self.v_scrollbar_of_frame_inside_canvas = tk.Scrollbar(self.master, orient="vertical", command=self.canvas.yview, bg=bg_corlor_1)
         self.v_scrollbar_of_frame_inside_canvas = tk.Scrollbar(self.master, orient="vertical", command=self.canvas.yview, bg=bg_corlor_1)
         self.v_scrollbar_of_frame_inside_canvas.pack(side="right", fill="y")
         # Configure the canvas to work with the scrollbar
