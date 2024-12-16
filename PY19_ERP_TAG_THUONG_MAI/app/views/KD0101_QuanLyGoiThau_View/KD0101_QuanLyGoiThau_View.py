@@ -6,11 +6,11 @@ from datetime import datetime
 from app.controllers.KD01QuanLyGoiThauController import cls_KD01QuanLyGoiThauController
 from app.controllers.KD01QuanLyGoiThauController import cls_Controller_config_treeview
 from utils import *
-from components import *
-from components.user_Info import setup_employee_info_labels  # Import the function
-from components.logo import setup_logo  # Import the setup_logo function
-from components.icon import f_setup_icon
-from app.views.components.menu import cls_Menu  # Import the menu creation function
+from Components_View import *
+from Components_View.user_Info import setup_employee_info_labels  # Import the function
+from Components_View.logo import setup_logo  # Import the setup_logo function
+from Components_View.icon import f_setup_icon
+from app.views.Components_View.menu import cls_Menu  # Import the menu creation function
 
 class cls_KD0101_QuanLyGoiThau_View(tk.Tk):
     

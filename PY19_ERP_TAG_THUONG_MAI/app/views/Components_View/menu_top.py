@@ -73,8 +73,7 @@ class cls_menu_top:
             KinhDoanh_menu_Level_0.add_separator()
             KinhDoanh_menu_Level_0.add_command(label="KD0101 |Quản lý gói thầu", command=self.f_KD0101_QuanLyGoiThau_click)
             KinhDoanh_menu_Level_0.add_command(label="KD0102 |Tạo mới gói thầu", command=self.f_KD0101_QuanLyGoiThau_click)
-            KinhDoanh_menu_Level_0.add_command(label="Tạo mới gói thầu", command=self.f_QLGT_TaoMoi_click)
-            KinhDoanh_menu_Level_0.add_command(label="Các gói thầu đã lập", command=self.f_QLGT_GoiThauDaLap_click)
+            
             
             KinhDoanh_menu_Level_0.add_separator()
             KinhDoanh_menu_Level_0.add_command(label="Quản lý khách hàng", command=self.f_do_nothing_click)
@@ -140,12 +139,22 @@ class cls_menu_top:
         HELP_menu_Level_0.add_command(label="Sign out", command=self.f_Help_Signout_click)
         HELP_menu_Level_0.add_command(label="Exit", command=self.f_Help_Exit_click)
         
+        # Create a "Test" menu
+        TEST_menu_Level_0 = tk.Menu(top_menu, tearoff=0)
+        top_menu.add_cascade(label="TEST", menu=TEST_menu_Level_0)
+        
+        TEST_menu_Level_0.add_command(label="Các gói thầu đã lập", command=self.f_QLGT_GoiThauDaLap_click)
+        TEST_menu_Level_0.add_command(label="Tạo mới gói thầu", command=self.f_QLGT_TaoMoi_click)
+        TEST_menu_Level_0.add_command(label="Các gói thầu đã lập", command=self.f_QLGT_GoiThauDaLap_click)
+        
         
         # Set font size to 15 for all menus
         f_set_menu_font(HOME_menu_Level_0)
         f_set_menu_font(KinhDoanh_menu_Level_0)
         f_set_menu_font(KinhDoanh_menu_Level_1_QuanLyYeuCauDatHang)
+        f_set_menu_font(KinhDoanh_menu_Level_1_QuanLyGoiThau)
         f_set_menu_font(KinhDoanh_menu_Level_2)
+    
         f_set_menu_font(VatTu_menu_Level_0)
         f_set_menu_font(KyThuat_menu_Level_0)
         f_set_menu_font(TaiChinh_menu_Level_0)

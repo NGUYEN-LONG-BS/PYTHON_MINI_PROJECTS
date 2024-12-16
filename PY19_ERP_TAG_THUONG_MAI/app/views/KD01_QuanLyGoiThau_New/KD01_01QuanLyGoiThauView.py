@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from KD01_01QuanLyGoiThauController import cls_Controller
 from datetime import datetime
-from components import *
+from Components_View import *
 from utils import *
 
 class cls_View(tk.Tk):
