@@ -26,11 +26,11 @@ class App:
                 sys.path.append(subdir_path)
         
         # Thêm các thư mục con của views
-        app_views_subdirectories = ['components', 'AD0101_Dashboard_View',
+        app_views_subdirectories = ['Components_View', 'AD0101_Dashboard_View',
                                     'KD0101_QuanLyGoiThau_View', 'KD01_QuanLyGoiThau', 
                                     'KD01_QuanLyGoiThau_New',
                                     'KD0101_QuanLyGoiThau_View',
-                                    'KD02_QuanLyYeuCauDatHang', 'KD02_QuanLyYeuCauDatHang_View',
+                                    'KD02_QuanLyYeuCauDatHang_View',
                                     'settings', 'AD0001_User_Management_View']
         for subdir in app_views_subdirectories:
             subdir_path = os.path.join(app_path, "views", subdir)

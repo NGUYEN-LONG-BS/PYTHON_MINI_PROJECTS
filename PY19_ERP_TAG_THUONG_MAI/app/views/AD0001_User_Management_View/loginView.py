@@ -4,7 +4,7 @@ import tkinter as tk
 from tkinter import messagebox
 import json
 from AD0101_Dashboard_View import *
-from components.logo import setup_logo  # Import the setup_logo function
+from Components_View.logo import setup_logo  # Import the setup_logo function
 from PIL import Image, ImageTk
 
 # View: The UI that the user interacts with

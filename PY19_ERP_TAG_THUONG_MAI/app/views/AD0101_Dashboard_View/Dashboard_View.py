@@ -1,7 +1,7 @@
 import tkinter as tk
-from components import *
+from Components_View import *
 from utils import *
-from components.icon import f_setup_icon
+from Components_View.icon import f_setup_icon
 
 class cls_Dashboard_View(tk.Tk):
     def __init__(self):
