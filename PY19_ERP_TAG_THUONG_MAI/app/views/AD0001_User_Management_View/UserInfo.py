@@ -13,8 +13,8 @@ class cls_user_info(tk.Tk):
         # Setup window
         self.title("Thông tin người dùng - Userinfo")
         # Thiết lập kích thước cửa sổ
-        f_set_window_size_is_4_per_5_screen(self, 0, 0)
-        f_set_center_screen(self)
+        f_utils_set_window_size_is_4_per_5_screen(self, 0, 0)
+        f_utils_set_center_screen(self)
         
         self.f_create_element()
         
@@ -43,7 +43,7 @@ class cls_user_info(tk.Tk):
         
         for widget in frame_info.winfo_children():
             font_size = 20
-            f_set_menu_font(widget, font_size)
+            f_utils_set_menu_font(widget, font_size)
             # for widget in widget.winfo_children():
             #     if widget.winfo_children():
             #         set_menu_font(widget)

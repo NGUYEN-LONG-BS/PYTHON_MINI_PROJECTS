@@ -93,12 +93,12 @@ class cls_Menu:
         top_menu.add_cascade(label="Help", menu=HELP_menu)
         
         # Set font size to 15 for all menus
-        f_set_menu_font(HOME_menu)
-        f_set_menu_font(QLGT_menu)
-        f_set_menu_font(QLYCDH_menu)
-        f_set_menu_font(VatTu_menu)
-        f_set_menu_font(KyThuat_menu)
-        f_set_menu_font(HELP_menu)
+        f_utils_set_menu_font(HOME_menu)
+        f_utils_set_menu_font(QLGT_menu)
+        f_utils_set_menu_font(QLYCDH_menu)
+        f_utils_set_menu_font(VatTu_menu)
+        f_utils_set_menu_font(KyThuat_menu)
+        f_utils_set_menu_font(HELP_menu)
 
         # Set the menu bar for the root window
         self.parent.config(menu=top_menu)

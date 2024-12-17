@@ -37,7 +37,7 @@ def f_utils_setup_logo(parent_frame):
         error_label.pack()
 
 
-def f_find_my_function_path(function_name):
+def f_utils_find_my_function_path(function_name):
     source_file = inspect.getfile(function_name)
     print(f"Function is defined in: {source_file}")
 
@@ -56,7 +56,7 @@ def set_window_size(root, width=1600, height=900):
     
     root.geometry(f'{width}x{height}+{position_right}+{position_top}')
 
-def f_set_window_size_is_4_per_5_screen(root, width=0, height=0):
+def f_utils_set_window_size_is_4_per_5_screen(root, width=0, height=0):
     if width == 0 or height == 0:
         # lấy thông tin kích thước màn hình và tinh toán lại
         screen_width = root.winfo_screenwidth()
@@ -69,7 +69,7 @@ def f_set_window_size_is_4_per_5_screen(root, width=0, height=0):
     else:
         root.geometry(f"{width}x{height}")
 
-def f_set_center_screen(root):
+def f_utils_set_center_screen(root):
     # Lấy kích thước của cửa sổ
     root.update_idletasks()  # Cập nhật các thay đổi về kích thước
     width = root.winfo_width()
@@ -86,12 +86,12 @@ def f_set_center_screen(root):
     root.geometry(f'{width}x{height}+{position_right}+{position_top}')
 
 # Reusable function to set font for menu items
-def f_set_menu_font(widget, size=14, font_is="Arial"):
+def f_utils_set_menu_font(widget, size=14, font_is="Arial"):
     """Set the font for menu items to a specified size."""
     custom_font = font.Font(family=font_is, size=size)  # Create a new Font object with the desired size
     widget.config(font=custom_font)  # Apply the font to the menu
     
-def f_show_fading_popup(message):
+def f_utils_show_fading_popup(message):
     # Tạo cửa sổ popup
     popup = tk.Toplevel()
     popup.title("Thông báo")
@@ -100,8 +100,8 @@ def f_show_fading_popup(message):
     # Ẩn thanh tiêu đề (title bar)
     popup.overrideredirect(True)
     # Căn giữa màn hình
-    f_set_window_size_is_4_per_5_screen(popup, 150, 50)
-    f_set_center_screen(popup)
+    f_utils_set_window_size_is_4_per_5_screen(popup, 150, 50)
+    f_utils_set_center_screen(popup)
     
     # Add frame
     main_frame = tk.Frame(popup, width=popup.winfo_width(), height=popup.winfo_height(), bd=1, relief="solid")

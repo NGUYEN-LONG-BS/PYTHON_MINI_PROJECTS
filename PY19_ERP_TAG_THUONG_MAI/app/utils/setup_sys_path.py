@@ -1,7 +1,7 @@
 import os
 import sys
 
-def f_setup_sys_path():
+def f_utils_setup_sys_path():
     """
     Thiết lập lại sys.path để Python có thể tìm thấy các module trong thư mục `app`.
     """

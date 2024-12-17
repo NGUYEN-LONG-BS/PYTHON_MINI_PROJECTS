@@ -21,8 +21,8 @@ class cls_Dashboard_View(tk.Tk):
 
     def _initialize_window_size(self):
         """Thiết lập kích thước cửa sổ và căn giữa nó."""
-        f_set_window_size_is_4_per_5_screen(self, 0, 0)
-        f_set_center_screen(self)
+        f_utils_set_window_size_is_4_per_5_screen(self, 0, 0)
+        f_utils_set_center_screen(self)
 
     def f_render_dashboard(self):
         """Render các thành phần giao diện chính của Dashboard."""

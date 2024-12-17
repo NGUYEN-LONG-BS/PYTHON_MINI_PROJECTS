@@ -25,8 +25,8 @@ class cls_KD0101_QuanLyGoiThau_View(tk.Tk):
         self.title("KD0101 - QUẢN LÝ GÓI THẦU")
         
         # Thiết lập kích thước cửa sổ
-        f_set_window_size_is_4_per_5_screen(self, 0, 0)
-        f_set_center_screen(self)
+        f_utils_set_window_size_is_4_per_5_screen(self, 0, 0)
+        f_utils_set_center_screen(self)
         f_setup_icon(self)
         
         # Gọi các thành phần tái sử dụng

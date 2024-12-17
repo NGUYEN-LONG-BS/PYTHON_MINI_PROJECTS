@@ -16,8 +16,8 @@ class cls_LoginView(tk.Tk):
         self.controller = cls_LoginController(model, self)
         
         self.title("AD0001 - Login")
-        f_set_window_size_is_4_per_5_screen(self, 400, 300)
-        f_set_center_screen(self)
+        f_utils_set_window_size_is_4_per_5_screen(self, 400, 300)
+        f_utils_set_center_screen(self)
         
         self.f_create_faricon()
 

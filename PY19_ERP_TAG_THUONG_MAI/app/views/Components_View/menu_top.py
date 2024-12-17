@@ -94,17 +94,17 @@ class cls_menu_top:
             menu_KinhDoanh_QuanLyTonKho_BaoCaoTonKho.add_command(label="Báo cáo tồn kho 01", command=self.f_do_nothing_click)
             menu_KinhDoanh_QuanLyTonKho_BaoCaoTonKho.add_command(label="Báo cáo tồn kho 02", command=self.f_do_nothing_click)
             
-        f_set_menu_font(menu_KinhDoanh)
-        f_set_menu_font(menu_KinhDoanh_QuanLyGoiThau)
+        f_utils_set_menu_font(menu_KinhDoanh)
+        f_utils_set_menu_font(menu_KinhDoanh_QuanLyGoiThau)
         
-        f_set_menu_font(menu_KinhDoanh_QuanLyYeuCauDatHang)
-        f_set_menu_font(menu_KinhDoanh_QuanLyYeuCauDatHang_BaoCaoYCDH)
+        f_utils_set_menu_font(menu_KinhDoanh_QuanLyYeuCauDatHang)
+        f_utils_set_menu_font(menu_KinhDoanh_QuanLyYeuCauDatHang_BaoCaoYCDH)
         
-        f_set_menu_font(menu_KinhDoanh_QuanLyKhachHang)
-        f_set_menu_font(menu_KinhDoanh_QuanLyKhachHang_BaoCaoKH)
+        f_utils_set_menu_font(menu_KinhDoanh_QuanLyKhachHang)
+        f_utils_set_menu_font(menu_KinhDoanh_QuanLyKhachHang_BaoCaoKH)
         
-        f_set_menu_font(menu_KinhDoanh_QuanLyTonKho)
-        f_set_menu_font(menu_KinhDoanh_QuanLyTonKho_BaoCaoTonKho)
+        f_utils_set_menu_font(menu_KinhDoanh_QuanLyTonKho)
+        f_utils_set_menu_font(menu_KinhDoanh_QuanLyTonKho_BaoCaoTonKho)
     
     def f_create_top_menu(self):
         # Create a Tkinter Menu bar
@@ -191,15 +191,15 @@ class cls_menu_top:
         menu_TEST.add_command(label="KD0102 |Tạo mới gói thầu", command=self.f_KD0101_QuanLyGoiThau_click)
         
         # Set font size to 15 for all menus
-        f_set_menu_font(top_menu)
+        f_utils_set_menu_font(top_menu)
         
-        f_set_menu_font(menu_HOME)
-        # f_set_menu_font(menu_KinhDoanh)
-        f_set_menu_font(menu_VatTu)
-        f_set_menu_font(menu_KyThuat)
-        f_set_menu_font(menu_TaiChinh)
-        f_set_menu_font(menu_HELP)
-        f_set_menu_font(menu_TEST)
+        f_utils_set_menu_font(menu_HOME)
+        # f_utils_set_menu_font(menu_KinhDoanh)
+        f_utils_set_menu_font(menu_VatTu)
+        f_utils_set_menu_font(menu_KyThuat)
+        f_utils_set_menu_font(menu_TaiChinh)
+        f_utils_set_menu_font(menu_HELP)
+        f_utils_set_menu_font(menu_TEST)
         
         
         
@@ -248,7 +248,7 @@ class cls_menu_top:
         self.f_destroy_current_window()
         
     def f_do_nothing_click(self):
-        f_show_fading_popup("coming soon")
+        f_utils_show_fading_popup("coming soon")
     
     def f_open_login_window(self):
         from views.AD0001_User_Management_View.loginView import cls_LoginView   # lazy import to avoid circular import
