@@ -1,1 +1,3 @@
-from loginView import cls_LoginView
+from .AD0001_login_View import cls_Login_View
+from .AD0002_register_View import cls_Register_View
+from .AD0003_UserInfo_View import cls_user_info

@@ -8,7 +8,7 @@ from AD0101_Dashboard_View import *
 from PIL import Image, ImageTk
 
 # View: The UI that the user interacts with
-class cls_LoginView(tk.Tk):
+class cls_Login_View(tk.Tk):
     def __init__(self):
         super().__init__()
         
@@ -68,8 +68,15 @@ class cls_LoginView(tk.Tk):
         self.toggle_password_button = tk.Button(self.password_frame, text="Show Password", command=self.toggle_password)
         self.toggle_password_button.pack(side="left", pady=5)
         
-        self.login_button = tk.Button(self, text="Login", command=self.on_login)
-        self.login_button.pack(pady=10)
+        # Frame to contain the password entry and the toggle button side by side
+        self.button_frame = tk.Frame(self)
+        self.button_frame.pack(pady=5)
+        
+        self.login_button = tk.Button(self.button_frame, text="Login", width=10, command=self.on_login)
+        self.login_button.pack(side="left", padx=10)
+        
+        self.register_button = tk.Button(self.button_frame, text="Register", width=10, command=self.on_register)
+        self.register_button.pack(side="left", padx=10)
 
         self.message_label = tk.Label(self, text="", fg="red")
         self.message_label.pack(pady=5)
@@ -77,6 +84,11 @@ class cls_LoginView(tk.Tk):
         # self.f_main_loop()
 
     def on_login(self):
+        username = self.entry_username.get()
+        password = self.entry_password.get()
+        self.controller.handle_login(username, password)
+        
+    def on_register(self):
         username = self.entry_username.get()
         password = self.entry_password.get()
         self.controller.handle_login(username, password)

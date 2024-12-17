@@ -260,9 +260,9 @@ class cls_menu_top:
         f_utils_show_fading_popup("coming soon")
     
     def f_open_login_window(self):
-        from views.AD0001_User_Management_View.loginView import cls_LoginView   # lazy import to avoid circular import
+        from views.AD0001_User_Management_View.AD0001_login_View import cls_Login_View   # lazy import to avoid circular import
         self.dashboard_window.destroy()
-        kd01_view = cls_LoginView()                     # Create an instance of the class
+        kd01_view = cls_Login_View()                     # Create an instance of the class
         kd01_view.dashboard = self.dashboard_window     # Pass the reference of the dashboard to KD01 view
         kd01_view.mainloop()                            # Open the window by starting the Tkinter event loop for the new view
         
@@ -295,7 +295,7 @@ class cls_menu_top:
         kd01_view.mainloop()
 
     def f_open_UserInfo(self):
-        from views.AD0001_User_Management_View.UserInfo import cls_user_info
+        from AD0001_User_Management_View.AD0003_UserInfo_View import cls_user_info
         self.dashboard_window.destroy()
         kd01_view = cls_user_info()
         kd01_view.dashboard = self.dashboard_window

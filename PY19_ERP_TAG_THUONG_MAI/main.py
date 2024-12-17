@@ -68,9 +68,9 @@ class App:
     def run(self):
         """Chạy ứng dụng và render dashboard."""
         # Import đối tượng cls_LoginView
-        from app.views.AD0001_User_Management_View.loginView import cls_LoginView
+        from app.views.AD0001_User_Management_View.AD0001_login_View import cls_Login_View
         # Gọi cửa sổ LoginView
-        login_window = cls_LoginView()
+        login_window = cls_Login_View()
         login_window.mainloop()
 
 # Main function to run the program

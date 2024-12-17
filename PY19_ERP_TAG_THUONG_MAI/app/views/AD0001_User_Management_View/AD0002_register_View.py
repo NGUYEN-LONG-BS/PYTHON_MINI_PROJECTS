@@ -1,6 +1,6 @@
 import tkinter as tk
 
-class RegisterView:
+class cls_Register_View:
     def __init__(self, master, controller):
         self.master = master
         self.controller = controller
