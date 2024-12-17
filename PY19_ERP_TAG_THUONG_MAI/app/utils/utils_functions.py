@@ -61,6 +61,12 @@ def f_show_fading_popup(message):
     popup = tk.Toplevel()
     popup.title("Thông báo")
     
+    # Set background color of popup window
+    popup.config(bg="#4CAF50")  # Green background for the popup
+    
+    # Ẩn thanh tiêu đề (title bar)
+    popup.overrideredirect(True)
+    
     # Căn giữa màn hình
     f_set_center_screen(popup)
 
@@ -69,4 +75,4 @@ def f_show_fading_popup(message):
     label.pack(pady=10, padx=10)
 
     # Đặt thời gian để tự động đóng cửa sổ sau 3 giây (3000 milliseconds)
-    popup.after(3000, popup.destroy)
+    popup.after(1000, popup.destroy)

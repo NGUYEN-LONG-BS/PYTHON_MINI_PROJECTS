@@ -9,6 +9,7 @@ import unicodedata  # This will help normalize Vietnamese characters
 from app.controllers.KD02QuanLyYeuCauDatHangController import cls_controller
 from Components_View import *
 from utils import *
+from utils.define import *
 
 class cls_CRUDTreeviewView(tk.Tk):
     def __init__(self):
@@ -27,25 +28,11 @@ class cls_CRUDTreeviewView(tk.Tk):
         window_height = self.winfo_height()
         
         # # =======================================================================================================================
-        # # Get the screen height and width
-        # screen_width = self.winfo_screenwidth()
-        # screen_height = self.winfo_screenheight()
-        # # Set the window height to 4/5 of the screen height
-        # window_height = int(4 * screen_height / 5)
-        # # Set the window width (you can adjust as needed)
-        # window_width = window_height // 9 * 16
-        # # Calculate the position to center the window
-        # x_position = int((screen_width - window_width) / 2)
-        # y_position = int((screen_height - window_height) / 2)
-        # # Set the window geometry (centered window)
-        # self.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
-        
-        # =======================================================================================================================
-        # Theme
-        var_bd_0 = 0
-        var_bd_1 = 0
-        bg_corlor_0 = "#f0f0f0"
-        bg_corlor_1 = "#f0f0f0"
+        # # Theme
+        # var_bd_0 = 0
+        # var_bd_1 = 0
+        # bg_corlor_0 = "#f0f0f0"
+        # bg_corlor_1 = "#f0f0f0"
         
         # =======================================================================================================================
         # Create a canvas and a vertical scrollbar
