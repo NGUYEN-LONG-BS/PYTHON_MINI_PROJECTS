@@ -62,7 +62,6 @@ def f_show_fading_popup(message):
     popup = tk.Toplevel()
     popup.title("Thông báo")
     # Set background color of popup window
-    # popup.config(bg="#f0f0f0")
     popup.config(bg=bg_corlor_0)
     # Ẩn thanh tiêu đề (title bar)
     popup.overrideredirect(True)
