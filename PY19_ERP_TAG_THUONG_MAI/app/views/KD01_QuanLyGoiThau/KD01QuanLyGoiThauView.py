@@ -8,7 +8,7 @@ from app.controllers.KD01QuanLyGoiThauController import cls_Controller_config_tr
 from utils import *
 from Components_View import *
 from Components_View.user_Info import setup_employee_info_labels  # Import the function
-from PY19_ERP_TAG_THUONG_MAI.app.views.Components_View.logo import setup_logo  # Import the setup_logo function
+from Components_View.logo import setup_logo  # Import the setup_logo function
 
 class cls_KD01QuanLyGoiThauView(tk.Tk):
     
