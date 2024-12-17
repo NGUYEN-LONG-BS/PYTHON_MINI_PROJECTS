@@ -1,7 +1,7 @@
 import os
 import tkinter as tk
 from utils import *
-from Components_View.logo import setup_logo
+from PY19_ERP_TAG_THUONG_MAI.app.views.Components_View.logo import setup_logo
 from Components_View import *
 import json
 from utils import *

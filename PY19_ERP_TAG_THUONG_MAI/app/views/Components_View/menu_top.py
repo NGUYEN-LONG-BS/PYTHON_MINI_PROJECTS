@@ -15,6 +15,22 @@ class cls_menu_top:
         self.current_user = self.read_user_from_json()  # Read the logged-in user
         self.f_create_top_menu()
 
+    def f_create_top_menu(self):
+        # Create a Tkinter Menu bar
+        top_menu = tk.Menu(self.parent)
+        
+        # Khởi tạo các menu level 0
+        self.f_create_menu_Home(top_menu)
+        self.f_create_menu_kinhdoanh(top_menu)
+        self.f_create_menu_vattu(top_menu)
+        self.f_create_menu_kythuat(top_menu)
+        self.f_create_menu_taichinh(top_menu)
+        self.f_create_menu_Help(top_menu)
+        self.f_create_menu_Test(top_menu)
+        
+        # Set the menu bar for the root window
+        self.parent.config(menu=top_menu)
+    
     def read_user_from_json(self):
         """ Reads the logged-in user's username from the JSON file. """
         # Sử dụng đường dẫn tuyệt đối
@@ -36,10 +52,18 @@ class cls_menu_top:
                     }
         return self.current_user not in permissions.get(menu_name, [])
     
+    def f_create_menu_Home(self, top_menu):
+        # Create a "Home" menu
+        menu_HOME = tk.Menu(top_menu, tearoff=0)
+        menu_HOME.add_command(label="Home", command=self.f_Home_main_click)
+        top_menu.add_cascade(label="Home", menu=menu_HOME)
+        
+        # Set font-size
+        f_utils_set_menu_font(menu_HOME)
+    
     def f_create_menu_kinhdoanh(self, top_menu):
         if self.f_check_permission("kinhdoanh") == False:
             menu_KinhDoanh = tk.Menu(top_menu, tearoff=0)
-            # print("không khởi tạo menu kinh doanh")
         else:
             # menu_KinhDoanh level 0
             menu_KinhDoanh = tk.Menu(top_menu, tearoff=0)
@@ -93,7 +117,8 @@ class cls_menu_top:
             # menu_KinhDoanh level 3: menu_KinhDoanh_QuanLyTonKho_BaoCaoTonKho
             menu_KinhDoanh_QuanLyTonKho_BaoCaoTonKho.add_command(label="Báo cáo tồn kho 01", command=self.f_do_nothing_click)
             menu_KinhDoanh_QuanLyTonKho_BaoCaoTonKho.add_command(label="Báo cáo tồn kho 02", command=self.f_do_nothing_click)
-            
+        
+        # Set font-size
         f_utils_set_menu_font(menu_KinhDoanh)
         f_utils_set_menu_font(menu_KinhDoanh_QuanLyGoiThau)
         
@@ -106,46 +131,35 @@ class cls_menu_top:
         f_utils_set_menu_font(menu_KinhDoanh_QuanLyTonKho)
         f_utils_set_menu_font(menu_KinhDoanh_QuanLyTonKho_BaoCaoTonKho)
     
-    def f_create_top_menu(self):
-        # Create a Tkinter Menu bar
-        top_menu = tk.Menu(self.parent)
-
-        # Create a "Home" menu
-        menu_HOME = tk.Menu(top_menu, tearoff=0)
-        menu_HOME.add_command(label="Home", command=self.f_Home_main_click)
-        top_menu.add_cascade(label="Home", menu=menu_HOME)
-        
-        self.f_create_menu_kinhdoanh(top_menu)
-            
-        # menu của Vật Tư
-        khong_co_quyen_vat_tu = ["kd1", "tc1", "kt1"]
-        if self.current_user in khong_co_quyen_vat_tu:
+    def f_create_menu_vattu(self, top_menu):
+        if self.f_check_permission("vattu") == False:
             menu_VatTu = tk.Menu(top_menu, tearoff=0)
-            # print("không khởi tạo menu vật tư")
         else:
             menu_VatTu = tk.Menu(top_menu, tearoff=0)
             top_menu.add_cascade(label="Vật Tư", menu=menu_VatTu)
             
             menu_VatTu.add_command(label="DS Yêu cầu đặt hàng", command=self.f_do_nothing_click)
             menu_VatTu.add_command(label="QL Nhà Cung cấp", command=self.f_do_nothing_click)
-    
-        # menu của Kỹ thuật
-        khong_co_quyen_ky_thuat = ["kd1", "tc1", "vt1"]
-        if self.current_user in khong_co_quyen_ky_thuat:
+            
+        # Set font-size
+        f_utils_set_menu_font(menu_VatTu)
+            
+    def f_create_menu_kythuat(self, top_menu):
+        if self.f_check_permission("kythuat") == False:
             menu_KyThuat = tk.Menu(top_menu, tearoff=0)
-            # print("không khởi tạo menu kỹ thuật")
         else:
             menu_KyThuat = tk.Menu(top_menu, tearoff=0)
             top_menu.add_cascade(label="Kỹ thuật", menu=menu_KyThuat)
             
             menu_KyThuat.add_command(label="Yêu cầu KT 01", command=self.f_do_nothing_click)
             menu_KyThuat.add_command(label="Yêu cầu KT 02", command=self.f_do_nothing_click)
+        
+        # Set font-size
+        f_utils_set_menu_font(menu_KyThuat)
             
-        # menu của Tài chính
-        khong_co_quyen_tai_chinh = ["kd1", "kt1", "vt1"]
-        if self.current_user in khong_co_quyen_tai_chinh:
+    def f_create_menu_taichinh(self, top_menu):
+        if self.f_check_permission("taichinh") == False:
             menu_TaiChinh = tk.Menu(top_menu, tearoff=0)
-            # print("không khởi tạo menu kỹ thuật")
         else:
             menu_TaiChinh = tk.Menu(top_menu, tearoff=0)
             top_menu.add_cascade(label="Tài chính", menu=menu_TaiChinh)
@@ -164,7 +178,11 @@ class cls_menu_top:
             TaiChinh_menu_Level_1.add_command(label="TC0102 |Quỹ tiền gửi", command=self.f_do_nothing_click)
             TaiChinh_menu_Level_1.add_command(label="TC0103 |Thu chi tiền mặt", command=self.f_do_nothing_click)
             TaiChinh_menu_Level_1.add_command(label="TC0104 |Thu chi tiền gửi", command=self.f_do_nothing_click)
-        
+            
+        # Set font-size
+        f_utils_set_menu_font(menu_TaiChinh)
+    
+    def f_create_menu_Help(self, top_menu):
         # Create a "Help" menu
         menu_HELP = tk.Menu(top_menu, tearoff=0)
         top_menu.add_cascade(label="Help", menu=menu_HELP)
@@ -175,6 +193,10 @@ class cls_menu_top:
         menu_HELP.add_command(label="Sign out", command=self.f_menu_Help_Signout_click)
         menu_HELP.add_command(label="Exit", command=self.f_Help_Exit_click)
         
+        # Set font-size
+        f_utils_set_menu_font(menu_HELP)
+    
+    def f_create_menu_Test(self, top_menu):
         # Create a "Test" menu
         menu_TEST = tk.Menu(top_menu, tearoff=0)
         top_menu.add_cascade(label="TEST", menu=menu_TEST)
@@ -190,21 +212,8 @@ class cls_menu_top:
         menu_TEST.add_command(label="KD0101 |Quản lý gói thầu", command=self.f_KD0101_QuanLyGoiThau_click)
         menu_TEST.add_command(label="KD0102 |Tạo mới gói thầu", command=self.f_KD0101_QuanLyGoiThau_click)
         
-        # Set font size to 15 for all menus
-        f_utils_set_menu_font(top_menu)
-        
-        f_utils_set_menu_font(menu_HOME)
-        # f_utils_set_menu_font(menu_KinhDoanh)
-        f_utils_set_menu_font(menu_VatTu)
-        f_utils_set_menu_font(menu_KyThuat)
-        f_utils_set_menu_font(menu_TaiChinh)
-        f_utils_set_menu_font(menu_HELP)
+        # Set font-size
         f_utils_set_menu_font(menu_TEST)
-        
-        
-        
-        # Set the menu bar for the root window
-        self.parent.config(menu=top_menu)
     
     # Define the action fuctions for home menu
     def f_Home_main_click(self):
@@ -300,4 +309,3 @@ class cls_menu_top:
     def f_destroy_current_window(self):
         self.dashboard_window.destroy()
         
-    

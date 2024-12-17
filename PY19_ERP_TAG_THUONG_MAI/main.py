@@ -1,13 +1,12 @@
-# main.py
 import os
 import sys
 
 class App:
     def __init__(self):
         # Khởi tạo các cấu hình cần thiết, bao gồm thiết lập sys.path
-        self.f_utils_setup_sys_path()
+        self.f_setup_sys_path()
 
-    def f_utils_setup_sys_path(self):
+    def f_setup_sys_path(self):
         """
         Thiết lập lại sys.path để Python có thể tìm thấy các module trong thư mục `app`.
         """
