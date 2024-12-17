@@ -1,8 +1,8 @@
 import os
 import tkinter as tk
 from utils import *
-from components.logo import setup_logo
-from components import *
+from Components_View.logo import setup_logo
+from Components_View import *
 import json
 from utils import *
 

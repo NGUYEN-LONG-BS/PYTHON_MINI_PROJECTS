@@ -18,7 +18,7 @@ class cls_menu_top:
     def read_user_from_json(self):
         """ Reads the logged-in user's username from the JSON file. """
         # Sử dụng đường dẫn tuyệt đối
-        json_file = os.path.join(os.path.dirname(__file__), '..', 'user_management', 'login_credentials.json')
+        json_file = os.path.join(os.path.dirname(__file__), '..', 'AD0001_User_Management_View', 'login_credentials.json')
         try:
             with open(json_file, 'r') as f:
                 data = json.load(f)
@@ -34,15 +34,9 @@ class cls_menu_top:
                         "kythuat": ["kd1", "tc1", "vt1"],
                         "taichinh": ["kd1", "kt1", "vt1"]
                     }
-        print(self.current_user)
         return self.current_user not in permissions.get(menu_name, [])
     
     def f_create_menu_kinhdoanh(self, top_menu):
-        # # menu của Kinh doanh
-        # khong_co_quyen_kinh_doanh = ["vt1", "tc1", "kt1"]
-        # self.f_check_permission("kinhdoanh")
-        print(self.f_check_permission("kinhdoanh"))
-        
         if self.f_check_permission("kinhdoanh") == False:
             menu_KinhDoanh = tk.Menu(top_menu, tearoff=0)
             # print("không khởi tạo menu kinh doanh")
@@ -178,7 +172,7 @@ class cls_menu_top:
         menu_HELP.add_command(label="About", command=self.f_Help_About_click)
         menu_HELP.add_command(label="User Info", command=self.f_Help_UserInfo_click)
         menu_HELP.add_separator()
-        menu_HELP.add_command(label="Sign out", command=self.f_Help_Signout_click)
+        menu_HELP.add_command(label="Sign out", command=self.f_menu_Help_Signout_click)
         menu_HELP.add_command(label="Exit", command=self.f_Help_Exit_click)
         
         # Create a "Test" menu
@@ -245,8 +239,8 @@ class cls_menu_top:
         print("f_Help_UserInfo_click selected")
         self.f_open_UserInfo()
     
-    def f_Help_Signout_click(self):
-        print("f_Help_Signout_click selected")
+    def f_menu_Help_Signout_click(self):
+        print("f_menu_Help_Signout_click selected")
         self.f_open_login_window()
     
     def f_Help_Exit_click(self):
@@ -257,7 +251,7 @@ class cls_menu_top:
         f_show_fading_popup("coming soon")
     
     def f_open_login_window(self):
-        from views.user_management.loginView import cls_LoginView   # lazy import to avoid circular import
+        from views.AD0001_User_Management_View.loginView import cls_LoginView   # lazy import to avoid circular import
         self.dashboard_window.destroy()
         kd01_view = cls_LoginView()                     # Create an instance of the class
         kd01_view.dashboard = self.dashboard_window     # Pass the reference of the dashboard to KD01 view
@@ -292,7 +286,7 @@ class cls_menu_top:
         kd01_view.mainloop()
 
     def f_open_UserInfo(self):
-        from views.user_management.UserInfo import cls_user_info
+        from views.AD0001_User_Management_View.UserInfo import cls_user_info
         self.dashboard_window.destroy()
         kd01_view = cls_user_info()
         kd01_view.dashboard = self.dashboard_window

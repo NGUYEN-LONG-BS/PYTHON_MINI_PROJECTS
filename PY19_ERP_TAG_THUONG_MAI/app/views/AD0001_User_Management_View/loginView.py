@@ -4,7 +4,7 @@ import tkinter as tk
 from tkinter import messagebox
 import json
 from AD0101_Dashboard_View import *
-from Components_View.logo import setup_logo  # Import the setup_logo function
+# from Components_View.logo import setup_logo  # Import the setup_logo function
 from PIL import Image, ImageTk
 
 # View: The UI that the user interacts with
@@ -43,7 +43,7 @@ class cls_LoginView(tk.Tk):
         # Setup the logo in the Frame_logo using the imported function
         Frame_logo = tk.Frame(self, width=100, height=100)
         Frame_logo.pack(pady=5)  # Pack the logo frame on the left side with some padding
-        setup_logo(Frame_logo)  # Pass the frame as the parent for the logo
+        f_utils_setup_logo(Frame_logo)  # Pass the frame as the parent for the logo
         
         # Example of adding an entry field and button
         self.label_username = tk.Label(self, text="Username:")

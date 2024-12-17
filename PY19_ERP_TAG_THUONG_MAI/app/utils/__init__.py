@@ -1,3 +1,4 @@
+from .utils_functions import f_utils_setup_logo
 from .setup_sys_path import f_setup_sys_path
 
 from .utils_functions import f_set_menu_font
