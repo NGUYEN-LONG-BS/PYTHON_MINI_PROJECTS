@@ -1,7 +1,6 @@
 import tkinter as tk
 from Components_View import *
 from utils import *
-from Components_View.icon import f_setup_icon
 
 class cls_Dashboard_View(tk.Tk):
     def __init__(self):
@@ -10,7 +9,7 @@ class cls_Dashboard_View(tk.Tk):
 
         # Thiết lập tiêu đề cửa sổ
         self.title("AD0101 - DashboardView")
-        f_setup_icon(self)
+        f_utils_setup_fav_icon(self)
         
         # Thiết lập kích thước cửa sổ và căn giữa
         self._initialize_window_size()

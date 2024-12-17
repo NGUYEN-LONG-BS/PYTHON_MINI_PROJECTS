@@ -1,23 +1,16 @@
 import os
 import sys
-from PIL import Image, ImageTk  # Import Image and ImageTk for Tkinter compatibility
+from PIL import Image, ImageTk
 import tkinter as tk
 from tkinter import font
 import inspect
 from define import *
 
 def f_utils_setup_logo(parent_frame):
-    # Get the project root directory
-    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))  # Going 2 levels up
-    
-    # Load the logo images
-    logo_path_light = os.path.join(project_root, "assets/img/logo-Light.jpg")
-    logo_path_dark = os.path.join(project_root, "assets/img/logo-Dark.jpg")
-    
     try:
         # Try loading the light mode image first
-        logo_image_light = Image.open(logo_path_light)
-        logo_image_dark = Image.open(logo_path_dark)
+        logo_image_light = Image.open(PATH_LOGO_LIGHT)
+        logo_image_dark = Image.open(PATH_LOGO_DARK)
         
         # Convert the PIL image to a Tkinter-compatible photo image
         logo_image_light_tk = ImageTk.PhotoImage(logo_image_light)
@@ -30,12 +23,22 @@ def f_utils_setup_logo(parent_frame):
         # Create the tk.Label and display the image
         logo_label = tk.Label(parent_frame, image=logo_image_light_tk)
         logo_label.pack()  # Using pack to add it to the parent_frame
-
     except FileNotFoundError:
-        print(f"Logo file not found at {logo_path_light} or {logo_path_dark}")
+        print(f"Logo file not found at {logo_image_light} or {logo_image_dark}")
         error_label = tk.Label(parent_frame, text="Logo not found", font=("", 16))
         error_label.pack()
 
+def f_utils_setup_fav_icon(window):
+        # Get the project root directory
+        project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))  # Going 2 levels up
+        
+        # Load the logo images
+        fav_icon = os.path.join(project_root, "assets/icons/favicon.png")
+        
+        img = Image.open(fav_icon)  # Replace with the path to your image file
+        logo = ImageTk.PhotoImage(img)
+        # Set the window icon
+        window.iconphoto(False, logo)
 
 def f_utils_find_my_function_path(function_name):
     source_file = inspect.getfile(function_name)

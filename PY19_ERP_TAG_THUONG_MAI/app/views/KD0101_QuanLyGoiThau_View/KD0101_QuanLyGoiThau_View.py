@@ -9,7 +9,6 @@ from utils import *
 from Components_View import *
 from Components_View.user_Info import setup_employee_info_labels  # Import the function
 from Components_View.logo import setup_logo  # Import the setup_logo function
-from Components_View.icon import f_setup_icon
 
 class cls_KD0101_QuanLyGoiThau_View(tk.Tk):
     
@@ -26,7 +25,7 @@ class cls_KD0101_QuanLyGoiThau_View(tk.Tk):
         # Thiết lập kích thước cửa sổ
         f_utils_set_window_size_is_4_per_5_screen(self, 0, 0)
         f_utils_set_center_screen(self)
-        f_setup_icon(self)
+        f_utils_setup_fav_icon(self)
         
         # Gọi các thành phần tái sử dụng
         cls_menu_top(self, self)
