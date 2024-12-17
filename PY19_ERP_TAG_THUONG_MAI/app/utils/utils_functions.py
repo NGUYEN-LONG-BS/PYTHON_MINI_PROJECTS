@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import font
 import inspect
+from define import *
 
 def f_find_my_function_path(function_name):
     source_file = inspect.getfile(function_name)
@@ -60,18 +61,22 @@ def f_show_fading_popup(message):
     # Tạo cửa sổ popup
     popup = tk.Toplevel()
     popup.title("Thông báo")
-    
     # Set background color of popup window
-    popup.config(bg="#4CAF50")  # Green background for the popup
-    
+    # popup.config(bg="#f0f0f0")
+    popup.config(bg=bg_corlor_0)
     # Ẩn thanh tiêu đề (title bar)
     popup.overrideredirect(True)
-    
     # Căn giữa màn hình
+    f_set_window_size_is_4_per_5_screen(popup, 150, 50)
     f_set_center_screen(popup)
+    
+    # Add frame
+    main_frame = tk.Frame(popup, width=popup.winfo_width(), height=popup.winfo_height(), bd=1, relief="solid")
+    # main_frame.grid(row=0, column=0)
+    main_frame.pack()
 
     # Tạo nhãn để hiển thị thông báo
-    label = tk.Label(popup, text=message, font=("Helvetica", 12))
+    label = tk.Label(main_frame, text=message, font=("Helvetica", 12))
     label.pack(pady=10, padx=10)
 
     # Đặt thời gian để tự động đóng cửa sổ sau 3 giây (3000 milliseconds)
