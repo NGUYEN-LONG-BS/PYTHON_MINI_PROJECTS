@@ -74,7 +74,6 @@ class cls_menu_top:
             KinhDoanh_menu_Level_0.add_command(label="KD0101 |Quản lý gói thầu", command=self.f_KD0101_QuanLyGoiThau_click)
             KinhDoanh_menu_Level_0.add_command(label="KD0102 |Tạo mới gói thầu", command=self.f_KD0101_QuanLyGoiThau_click)
             
-            
             KinhDoanh_menu_Level_0.add_separator()
             KinhDoanh_menu_Level_0.add_command(label="Quản lý khách hàng", command=self.f_do_nothing_click)
             
@@ -89,7 +88,6 @@ class cls_menu_top:
             
             VatTu_menu_Level_0.add_command(label="DS Yêu cầu đặt hàng", command=self.f_do_nothing_click)
             VatTu_menu_Level_0.add_command(label="QL Nhà Cung cấp", command=self.f_do_nothing_click)
-            
     
         # menu của Kỹ thuật
         khong_co_quyen_ky_thuat = ["kd1", "tc1", "vt1"]
