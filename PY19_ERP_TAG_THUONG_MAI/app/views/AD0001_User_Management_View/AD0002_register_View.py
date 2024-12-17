@@ -16,6 +16,7 @@ class cls_Register_View(tk.Tk):
         
         # Bind Enter key to on_enter method
         self.bind('<Return>', self.f_button_register_click)
+        self.protocol("WM_DELETE_WINDOW", self.f_button_login_click)
 
     def f_create_faricon(self):
         # Get the project root directory
@@ -43,18 +44,18 @@ class cls_Register_View(tk.Tk):
         email_label = tk.Label(self, text="Email")
         email_label.pack()
         email_entry = tk.Entry(self)
-        email_entry.pack()
+        email_entry.pack(pady=10)
 
         password_label = tk.Label(self, text="Password")
-        password_label.pack()
+        password_label.pack(pady=10)
         password_entry = tk.Entry(self, show="*")
-        password_entry.pack()
+        password_entry.pack(pady=10)
 
         register_button = tk.Button(self, text="Register", command=self.f_button_register_click)
-        register_button.pack()
+        register_button.pack(pady=10)
         
         login_button = tk.Button(self, text="login", command=self.f_button_login_click)
-        login_button.pack()
+        login_button.pack(pady=10)
         
     def f_button_register_click(self):
         print("Đã đăng ký")
