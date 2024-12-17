@@ -4,7 +4,6 @@ import tkinter as tk
 from tkinter import messagebox
 import json
 from AD0101_Dashboard_View import *
-# from Components_View.logo import setup_logo  # Import the setup_logo function
 from PIL import Image, ImageTk
 
 # View: The UI that the user interacts with
@@ -18,7 +17,6 @@ class cls_Login_View(tk.Tk):
         self.title("AD0001 - Login")
         f_utils_set_window_size_is_4_per_5_screen(self, 400, 300)
         f_utils_set_center_screen(self)
-        
         self.f_create_faricon()
 
         # Add your widgets and layout here (e.g., Entry fields, buttons)
@@ -89,9 +87,8 @@ class cls_Login_View(tk.Tk):
         self.controller.handle_login(username, password)
         
     def on_register(self):
-        username = self.entry_username.get()
-        password = self.entry_password.get()
-        self.controller.handle_login(username, password)
+        self.destroy()
+        self.open_register()
 
     def set_controller(self, controller):
         self.controller = controller
@@ -108,6 +105,10 @@ class cls_Login_View(tk.Tk):
     def open_dashboard(self):
         cls_Dashboard_View()
         
+    def open_register(self):
+        from AD0002_register_View import cls_Register_View
+        cls_Register_View()
+    
     def toggle_password(self):
         # Toggle the password visibility
         if self.entry_password.cget('show') == '*':
@@ -149,7 +150,6 @@ class cls_LoginController:
 
     def handle_login(self, username, password):
         # Xử lý đăng nhập
-        # print(f"Username: {username}, Password: {password}")
         if self.model.validate_user(username, password):
             self.view.show_message(True)
         else:
