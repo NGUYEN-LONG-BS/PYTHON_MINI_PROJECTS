@@ -32,135 +32,164 @@ class cls_menu_top:
         top_menu = tk.Menu(self.parent)
 
         # Create a "Home" menu
-        HOME_menu_Level_0 = tk.Menu(top_menu, tearoff=0)
-        HOME_menu_Level_0.add_command(label="Home", command=self.f_Home_main_click)
-        top_menu.add_cascade(label="Home", menu=HOME_menu_Level_0)
+        menu_HOME = tk.Menu(top_menu, tearoff=0)
+        menu_HOME.add_command(label="Home", command=self.f_Home_main_click)
+        top_menu.add_cascade(label="Home", menu=menu_HOME)
         
         # menu của Kinh doanh
         khong_co_quyen_kinh_doanh = ["vt1", "tc1", "kt1"]
         if self.current_user in khong_co_quyen_kinh_doanh:
-            KinhDoanh_menu_Level_0 = tk.Menu(top_menu, tearoff=0)
+            menu_KinhDoanh = tk.Menu(top_menu, tearoff=0)
             # print("không khỏi tạo menu kinh doanh")
         else:
-            KinhDoanh_menu_Level_0 = tk.Menu(top_menu, tearoff=0)
-            top_menu.add_cascade(label="Kinh doanh", menu=KinhDoanh_menu_Level_0)
+            # menu_KinhDoanh level 0
+            menu_KinhDoanh = tk.Menu(top_menu, tearoff=0)
+            top_menu.add_cascade(label="Kinh doanh", menu=menu_KinhDoanh)
             
-            # Sub-menu level 1
-            KinhDoanh_menu_Level_1_QuanLyGoiThau = tk.Menu(KinhDoanh_menu_Level_0, tearoff=0)
-            KinhDoanh_menu_Level_0.add_cascade(label="Quản lý gói thầu", menu=KinhDoanh_menu_Level_1_QuanLyGoiThau)
-            KinhDoanh_menu_Level_0.add_separator()
+            # menu_KinhDoanh level 1
+            menu_KinhDoanh_QuanLyGoiThau = tk.Menu(menu_KinhDoanh, tearoff=0)
+            menu_KinhDoanh.add_cascade(label="Quản lý gói thầu", menu=menu_KinhDoanh_QuanLyGoiThau)
+            menu_KinhDoanh.add_separator()
+            menu_KinhDoanh_QuanLyYeuCauDatHang = tk.Menu(menu_KinhDoanh, tearoff=0)
+            menu_KinhDoanh.add_cascade(label="Quản lý yêu cầu đặt hàng", menu=menu_KinhDoanh_QuanLyYeuCauDatHang)
+            menu_KinhDoanh.add_separator()
+            menu_KinhDoanh_QuanLyKhachHang = tk.Menu(menu_KinhDoanh, tearoff=0)
+            menu_KinhDoanh.add_cascade(label="Quản lý khách hàng", menu=menu_KinhDoanh_QuanLyKhachHang)
+            menu_KinhDoanh.add_separator()
+            menu_KinhDoanh_QuanLyTonKho = tk.Menu(menu_KinhDoanh, tearoff=0)
+            menu_KinhDoanh.add_cascade(label="Quản lý tồn kho", menu=menu_KinhDoanh_QuanLyTonKho)
             
-            KinhDoanh_menu_Level_1_QuanLyGoiThau.add_command(label="KD0101 |Quản lý gói thầu", command=self.f_KD0101_QuanLyGoiThau_click)
-            KinhDoanh_menu_Level_1_QuanLyGoiThau.add_command(label="KD0102 |Tạo mới gói thầu", command=self.f_KD0101_QuanLyGoiThau_click)
+            # menu_KinhDoanh level 2: menu_KinhDoanh_QuanLyGoiThau
+            menu_KinhDoanh_QuanLyGoiThau.add_command(label="KD0101 |Quản lý gói thầu", command=self.f_KD0101_QuanLyGoiThau_click)
+            menu_KinhDoanh_QuanLyGoiThau.add_command(label="KD0102 |Tạo mới gói thầu", command=self.f_KD0101_QuanLyGoiThau_click)
             
-            KinhDoanh_menu_Level_1_QuanLyYeuCauDatHang = tk.Menu(KinhDoanh_menu_Level_0, tearoff=0)
-            KinhDoanh_menu_Level_0.add_cascade(label="Quản lý yêu cầu đặt hàng", menu=KinhDoanh_menu_Level_1_QuanLyYeuCauDatHang)
-            KinhDoanh_menu_Level_0.add_separator()
+            # menu_KinhDoanh level 2: menu_KinhDoanh_QuanLyYeuCauDatHang
+            menu_KinhDoanh_QuanLyYeuCauDatHang.add_command(label="KD0201 |Tạo mới YCĐH", command=self.f_QLYCDH_TALA_click)
+            menu_KinhDoanh_QuanLyYeuCauDatHang.add_command(label="KD0202 |Nhật ký YCĐH", command=self.f_QLYCDH_TM_click)
+            menu_KinhDoanh_QuanLyYeuCauDatHang_BaoCaoYCDH = tk.Menu(menu_KinhDoanh_QuanLyYeuCauDatHang, tearoff=0)
+            menu_KinhDoanh_QuanLyYeuCauDatHang.add_cascade(label="Báo cáo YCDH", menu=menu_KinhDoanh_QuanLyYeuCauDatHang_BaoCaoYCDH)
             
-            KinhDoanh_menu_Level_1_QuanLyYeuCauDatHang.add_command(label="KD0201 |Tạo mới YCĐH", command=self.f_QLYCDH_TALA_click)
-            KinhDoanh_menu_Level_1_QuanLyYeuCauDatHang.add_command(label="KD0202 |Nhật ký YCĐH", command=self.f_QLYCDH_TM_click)
-
-            # Sub-menu level 2
-            KinhDoanh_menu_Level_2 = tk.Menu(KinhDoanh_menu_Level_1_QuanLyYeuCauDatHang, tearoff=0)
-            KinhDoanh_menu_Level_1_QuanLyYeuCauDatHang.add_cascade(label="Subsubmenu", menu=KinhDoanh_menu_Level_2)
-            KinhDoanh_menu_Level_2.add_command(label="Subsuboption 1", command=self.f_do_nothing_click)
-            KinhDoanh_menu_Level_2.add_command(label="Subsuboption 2", command=self.f_do_nothing_click)
+            # menu_KinhDoanh level 2: menu_KinhDoanh_QuanLyKhachHang
+            menu_KinhDoanh_QuanLyKhachHang.add_command(label="KD0301 |Quản lý khách hàng", command=self.f_do_nothing_click)
+            menu_KinhDoanh_QuanLyKhachHang.add_command(label="KD0301 |Tạo mới khách hàng", command=self.f_do_nothing_click)
+            menu_KinhDoanh_QuanLyKhachHang.add_separator()
+            menu_KinhDoanh_QuanLyKhachHang_BaoCaoKH = tk.Menu(menu_KinhDoanh_QuanLyKhachHang, tearoff=0)
+            menu_KinhDoanh_QuanLyKhachHang.add_cascade(label="Báo cáo khách hàng", menu=menu_KinhDoanh_QuanLyKhachHang_BaoCaoKH)
             
-            KinhDoanh_menu_Level_0.add_separator()
-            KinhDoanh_menu_Level_0.add_command(label="KD0201 |Phiếu Yêu cầu đặt hàng", command=self.f_QLYCDH_TALA_click)
-            KinhDoanh_menu_Level_0.add_command(label="KD0202 |Nhật ký yêu cầu đặt hàng", command=self.f_QLYCDH_TM_click)
+            # menu_KinhDoanh level 2: menu_KinhDoanh_QuanLyTonKho
+            menu_KinhDoanh_QuanLyTonKho.add_command(label="KD0401 |Yêu cầu tạo mã hàng mới", command=self.f_do_nothing_click)
+            menu_KinhDoanh_QuanLyTonKho_BaoCaoTonKho = tk.Menu(menu_KinhDoanh_QuanLyTonKho, tearoff=0)
+            menu_KinhDoanh_QuanLyTonKho.add_cascade(label="Báo cáo tồn kho", menu=menu_KinhDoanh_QuanLyTonKho_BaoCaoTonKho)
             
-            KinhDoanh_menu_Level_0.add_separator()
-            KinhDoanh_menu_Level_0.add_command(label="KD0101 |Quản lý gói thầu", command=self.f_KD0101_QuanLyGoiThau_click)
-            KinhDoanh_menu_Level_0.add_command(label="KD0102 |Tạo mới gói thầu", command=self.f_KD0101_QuanLyGoiThau_click)
+            # menu_KinhDoanh level 3: menu_KinhDoanh_QuanLyKhachHang_BaoCaoKH
+            menu_KinhDoanh_QuanLyKhachHang_BaoCaoKH.add_command(label="Báo cáo 01", command=self.f_do_nothing_click)
+            menu_KinhDoanh_QuanLyKhachHang_BaoCaoKH.add_command(label="Báo cáo 02", command=self.f_do_nothing_click)
             
-            KinhDoanh_menu_Level_0.add_separator()
-            KinhDoanh_menu_Level_0.add_command(label="Quản lý khách hàng", command=self.f_do_nothing_click)
+            # menu_KinhDoanh level 3: menu_KinhDoanh_QuanLyYeuCauDatHang_BaoCaoYCDH
+            menu_KinhDoanh_QuanLyYeuCauDatHang_BaoCaoYCDH.add_command(label="Báo cáo YCDH 01", command=self.f_do_nothing_click)
+            menu_KinhDoanh_QuanLyYeuCauDatHang_BaoCaoYCDH.add_command(label="Báo cáo YCDH 02", command=self.f_do_nothing_click)
+            
+            # menu_KinhDoanh level 3: menu_KinhDoanh_QuanLyTonKho_BaoCaoTonKho
+            menu_KinhDoanh_QuanLyTonKho_BaoCaoTonKho.add_command(label="Báo cáo tồn kho 01", command=self.f_do_nothing_click)
+            menu_KinhDoanh_QuanLyTonKho_BaoCaoTonKho.add_command(label="Báo cáo tồn kho 02", command=self.f_do_nothing_click)
             
         # menu của Vật Tư
         khong_co_quyen_vat_tu = ["kd1", "tc1", "kt1"]
         if self.current_user in khong_co_quyen_vat_tu:
-            VatTu_menu_Level_0 = tk.Menu(top_menu, tearoff=0)
+            menu_VatTu = tk.Menu(top_menu, tearoff=0)
             # print("không khỏi tạo menu vật tư")
         else:
-            VatTu_menu_Level_0 = tk.Menu(top_menu, tearoff=0)
-            top_menu.add_cascade(label="Vật Tư", menu=VatTu_menu_Level_0)
+            menu_VatTu = tk.Menu(top_menu, tearoff=0)
+            top_menu.add_cascade(label="Vật Tư", menu=menu_VatTu)
             
-            VatTu_menu_Level_0.add_command(label="DS Yêu cầu đặt hàng", command=self.f_do_nothing_click)
-            VatTu_menu_Level_0.add_command(label="QL Nhà Cung cấp", command=self.f_do_nothing_click)
+            menu_VatTu.add_command(label="DS Yêu cầu đặt hàng", command=self.f_do_nothing_click)
+            menu_VatTu.add_command(label="QL Nhà Cung cấp", command=self.f_do_nothing_click)
     
         # menu của Kỹ thuật
         khong_co_quyen_ky_thuat = ["kd1", "tc1", "vt1"]
         if self.current_user in khong_co_quyen_ky_thuat:
-            KyThuat_menu_Level_0 = tk.Menu(top_menu, tearoff=0)
+            menu_KyThuat = tk.Menu(top_menu, tearoff=0)
             # print("không khỏi tạo menu kỹ thuật")
         else:
-            KyThuat_menu_Level_0 = tk.Menu(top_menu, tearoff=0)
-            top_menu.add_cascade(label="Kỹ thuật", menu=KyThuat_menu_Level_0)
+            menu_KyThuat = tk.Menu(top_menu, tearoff=0)
+            top_menu.add_cascade(label="Kỹ thuật", menu=menu_KyThuat)
             
-            KyThuat_menu_Level_0.add_command(label="Yêu cầu KT 01", command=self.f_do_nothing_click)
-            KyThuat_menu_Level_0.add_command(label="Yêu cầu KT 02", command=self.f_do_nothing_click)
-            
+            menu_KyThuat.add_command(label="Yêu cầu KT 01", command=self.f_do_nothing_click)
+            menu_KyThuat.add_command(label="Yêu cầu KT 02", command=self.f_do_nothing_click)
             
         # menu của Tài chính
         khong_co_quyen_tai_chinh = ["kd1", "kt1", "vt1"]
         if self.current_user in khong_co_quyen_tai_chinh:
-            TaiChinh_menu_Level_0 = tk.Menu(top_menu, tearoff=0)
+            menu_TaiChinh = tk.Menu(top_menu, tearoff=0)
             # print("không khỏi tạo menu kỹ thuật")
         else:
-            TaiChinh_menu_Level_0 = tk.Menu(top_menu, tearoff=0)
-            top_menu.add_cascade(label="Tài chính", menu=TaiChinh_menu_Level_0)
+            menu_TaiChinh = tk.Menu(top_menu, tearoff=0)
+            top_menu.add_cascade(label="Tài chính", menu=menu_TaiChinh)
             
             # Sub-menu level 1
-            TaiChinh_menu_Level_1 = tk.Menu(KinhDoanh_menu_Level_0, tearoff=0)
-            TaiChinh_menu_Level_0.add_cascade(label="Quản lý thu chi", menu=TaiChinh_menu_Level_1)
+            TaiChinh_menu_Level_1 = tk.Menu(menu_TaiChinh, tearoff=0)
+            menu_TaiChinh.add_cascade(label="Quản lý thu chi", menu=TaiChinh_menu_Level_1)
             TaiChinh_menu_Level_1.add_command(label="TC0101 |Quỹ tiền mặt", command=self.f_do_nothing_click)
             TaiChinh_menu_Level_1.add_command(label="TC0102 |Quỹ tiền gửi", command=self.f_do_nothing_click)
             TaiChinh_menu_Level_1.add_command(label="TC0103 |Thu chi tiền mặt", command=self.f_do_nothing_click)
             TaiChinh_menu_Level_1.add_command(label="TC0104 |Thu chi tiền gửi", command=self.f_do_nothing_click)
             
             # Sub-menu level 1
-            TaiChinh_menu_Level_0.add_cascade(label="Quản lý thu chi", menu=TaiChinh_menu_Level_1)
+            menu_TaiChinh.add_cascade(label="Quản lý thu chi", menu=TaiChinh_menu_Level_1)
             TaiChinh_menu_Level_1.add_command(label="TC0101 |Quỹ tiền mặt", command=self.f_do_nothing_click)
             TaiChinh_menu_Level_1.add_command(label="TC0102 |Quỹ tiền gửi", command=self.f_do_nothing_click)
             TaiChinh_menu_Level_1.add_command(label="TC0103 |Thu chi tiền mặt", command=self.f_do_nothing_click)
             TaiChinh_menu_Level_1.add_command(label="TC0104 |Thu chi tiền gửi", command=self.f_do_nothing_click)
-            
         
         # Create a "Help" menu
-        HELP_menu_Level_0 = tk.Menu(top_menu, tearoff=0)
-        top_menu.add_cascade(label="Help", menu=HELP_menu_Level_0)
+        menu_HELP = tk.Menu(top_menu, tearoff=0)
+        top_menu.add_cascade(label="Help", menu=menu_HELP)
         
-        HELP_menu_Level_0.add_command(label="About", command=self.f_Help_About_click)
-        HELP_menu_Level_0.add_command(label="User Info", command=self.f_Help_UserInfo_click)
-        HELP_menu_Level_0.add_separator()
-        HELP_menu_Level_0.add_command(label="Sign out", command=self.f_Help_Signout_click)
-        HELP_menu_Level_0.add_command(label="Exit", command=self.f_Help_Exit_click)
+        menu_HELP.add_command(label="About", command=self.f_Help_About_click)
+        menu_HELP.add_command(label="User Info", command=self.f_Help_UserInfo_click)
+        menu_HELP.add_separator()
+        menu_HELP.add_command(label="Sign out", command=self.f_Help_Signout_click)
+        menu_HELP.add_command(label="Exit", command=self.f_Help_Exit_click)
         
         # Create a "Test" menu
-        TEST_menu_Level_0 = tk.Menu(top_menu, tearoff=0)
-        top_menu.add_cascade(label="TEST", menu=TEST_menu_Level_0)
+        menu_TEST = tk.Menu(top_menu, tearoff=0)
+        top_menu.add_cascade(label="TEST", menu=menu_TEST)
         
-        TEST_menu_Level_0.add_command(label="Các gói thầu đã lập", command=self.f_QLGT_GoiThauDaLap_click)
-        TEST_menu_Level_0.add_command(label="Tạo mới gói thầu", command=self.f_QLGT_TaoMoi_click)
-        TEST_menu_Level_0.add_command(label="Các gói thầu đã lập", command=self.f_QLGT_GoiThauDaLap_click)
+        menu_TEST.add_command(label="Các gói thầu đã lập", command=self.f_QLGT_GoiThauDaLap_click)
+        menu_TEST.add_command(label="Tạo mới gói thầu", command=self.f_QLGT_TaoMoi_click)
+        menu_TEST.add_command(label="Các gói thầu đã lập", command=self.f_QLGT_GoiThauDaLap_click)
+    
+        menu_TEST.add_command(label="KD0201 |Phiếu Yêu cầu đặt hàng", command=self.f_QLYCDH_TALA_click)
+        menu_TEST.add_command(label="KD0202 |Nhật ký yêu cầu đặt hàng", command=self.f_QLYCDH_TM_click)
         
+        menu_TEST.add_separator()
+        menu_TEST.add_command(label="KD0101 |Quản lý gói thầu", command=self.f_KD0101_QuanLyGoiThau_click)
+        menu_TEST.add_command(label="KD0102 |Tạo mới gói thầu", command=self.f_KD0101_QuanLyGoiThau_click)
         
         # Set font size to 15 for all menus
-        f_set_menu_font(HOME_menu_Level_0)
-        f_set_menu_font(KinhDoanh_menu_Level_0)
-        f_set_menu_font(KinhDoanh_menu_Level_1_QuanLyYeuCauDatHang)
-        f_set_menu_font(KinhDoanh_menu_Level_1_QuanLyGoiThau)
-        f_set_menu_font(KinhDoanh_menu_Level_2)
-    
-        f_set_menu_font(VatTu_menu_Level_0)
-        f_set_menu_font(KyThuat_menu_Level_0)
-        f_set_menu_font(TaiChinh_menu_Level_0)
-        f_set_menu_font(HELP_menu_Level_0)
-
+        f_set_menu_font(top_menu)
+        
+        f_set_menu_font(menu_HOME)
+        f_set_menu_font(menu_KinhDoanh)
+        f_set_menu_font(menu_VatTu)
+        f_set_menu_font(menu_KyThuat)
+        f_set_menu_font(menu_TaiChinh)
+        f_set_menu_font(menu_HELP)
+        f_set_menu_font(menu_TEST)
+        
+        f_set_menu_font(menu_KinhDoanh_QuanLyGoiThau)
+        
+        f_set_menu_font(menu_KinhDoanh_QuanLyYeuCauDatHang)
+        f_set_menu_font(menu_KinhDoanh_QuanLyYeuCauDatHang_BaoCaoYCDH)
+        
+        f_set_menu_font(menu_KinhDoanh_QuanLyKhachHang)
+        f_set_menu_font(menu_KinhDoanh_QuanLyKhachHang_BaoCaoKH)
+        
+        f_set_menu_font(menu_KinhDoanh_QuanLyTonKho)
+        f_set_menu_font(menu_KinhDoanh_QuanLyTonKho_BaoCaoTonKho)
+        
         # Set the menu bar for the root window
         self.parent.config(menu=top_menu)
-        
     
     # Define the action fuctions for home menu
     def f_Home_main_click(self):
