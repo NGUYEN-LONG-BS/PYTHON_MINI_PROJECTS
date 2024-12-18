@@ -1,12 +1,18 @@
 # Project/views/components/header.py
 import tkinter as tk
-import customtkinter as ctk
+from utils import *
 
 def create_header(parent, title="TUẤN ÂN GROUP"):
-    header_frame = tk.Frame(parent)
-    header_frame.pack(side=tk.TOP, fill=tk.X)
+    # Tạo một Frame container cho header
+    header_frame_container = tk.Frame(parent)
+    header_frame_container.pack(side='top', fill=tk.X)
     
-    header_label = tk.Label(header_frame, text=title, font=("Arial", 20))
-    header_label.pack()
+    # Setup the logo in the Frame_logo using the imported function
+    Frame_logo = tk.Frame(header_frame_container, width=100, height=100)
+    Frame_logo.pack(side='left', pady=10)
+    f_utils_setup_logo(Frame_logo)
     
-    return header_frame
+    header_label = tk.Label(header_frame_container, text=title, font=("Arial", 20))
+    header_label.pack(side='left', pady=10)
+    
+    return header_frame_container

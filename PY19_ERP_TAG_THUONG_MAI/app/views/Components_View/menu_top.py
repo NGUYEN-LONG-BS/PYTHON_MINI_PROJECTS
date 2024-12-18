@@ -88,7 +88,7 @@ class cls_menu_top:
             
             # menu_KinhDoanh level 2: menu_KinhDoanh_QuanLyYeuCauDatHang
             menu_KinhDoanh_QuanLyYeuCauDatHang.add_command(label="KD0201 |Tạo mới YCĐH", command=self.f_QLYCDH_TALA_click)
-            menu_KinhDoanh_QuanLyYeuCauDatHang.add_command(label="KD0202 |Nhật ký YCĐH", command=self.f_QLYCDH_TM_click)
+            menu_KinhDoanh_QuanLyYeuCauDatHang.add_command(label="KD0202 |Nhật ký YCĐH", command=self.f_do_nothing_click)
             menu_KinhDoanh_QuanLyYeuCauDatHang.add_separator()
             menu_KinhDoanh_QuanLyYeuCauDatHang_BaoCaoYCDH = tk.Menu(menu_KinhDoanh_QuanLyYeuCauDatHang, tearoff=0)
             menu_KinhDoanh_QuanLyYeuCauDatHang.add_cascade(label="Báo cáo YCDH", menu=menu_KinhDoanh_QuanLyYeuCauDatHang_BaoCaoYCDH)
@@ -260,7 +260,7 @@ class cls_menu_top:
         f_utils_show_fading_popup("coming soon")
     
     def f_open_login_window(self):
-        from views.AD0001_User_Management_View.AD0001_login_View import cls_Login_View   # lazy import to avoid circular import
+        from views.AD00_User_Management_View.AD0001_login_View import cls_Login_View   # lazy import to avoid circular import
         self.dashboard_window.destroy()
         kd01_view = cls_Login_View()                     # Create an instance of the class
         kd01_view.dashboard = self.dashboard_window     # Pass the reference of the dashboard to KD01 view
@@ -274,28 +274,28 @@ class cls_menu_top:
         kd01_view.mainloop()
     
     def f_open_KD01_01QuanLyGoiThauView(self):
-        from views.KD01_QuanLyGoiThau_New.KD01_01QuanLyGoiThauView import cls_View
+        from views.KD01_QuanLyGoiThau_TEST_02.KD01_01QuanLyGoiThauView import cls_View
         self.dashboard_window.destroy()
         kd01_view = cls_View()
         kd01_view.dashboard = self.dashboard_window
         kd01_view.mainloop()
     
     def f_open_KD01QuanLyGoiThauView(self):
-        from views.KD01_QuanLyGoiThau.KD01QuanLyGoiThauView import cls_KD01QuanLyGoiThauView
+        from views.KD01_QuanLyGoiThau_TEST_01.KD01QuanLyGoiThauView import cls_KD01QuanLyGoiThauView
         self.dashboard_window.destroy()
         kd01_view = cls_KD01QuanLyGoiThauView()
         kd01_view.dashboard = self.dashboard_window
         kd01_view.mainloop()
         
     def f_open_KD0101_QuanLyGoiThau_View(self):
-        from views.KD0101_QuanLyGoiThau_View.KD0101_QuanLyGoiThau_View import cls_KD0101_QuanLyGoiThau_View
+        from views.KD01_QuanLyGoiThau_View.KD0101_QuanLyGoiThau_View import cls_KD0101_QuanLyGoiThau_View
         self.dashboard_window.destroy()
         kd01_view = cls_KD0101_QuanLyGoiThau_View()
         kd01_view.dashboard = self.dashboard_window
         kd01_view.mainloop()
 
     def f_open_UserInfo(self):
-        from AD0001_User_Management_View.AD0003_UserInfo_View import cls_user_info
+        from AD00_User_Management_View.AD0003_UserInfo_View import cls_user_info
         self.dashboard_window.destroy()
         kd01_view = cls_user_info()
         kd01_view.dashboard = self.dashboard_window
@@ -303,7 +303,7 @@ class cls_menu_top:
     
     def f_open_DashBoard(self):
         self.dashboard_window.destroy()
-        from app.views.AD0101_Dashboard_View.Dashboard_View import cls_Dashboard_View
+        from views.AD01_Dashboard_View.Dashboard_View import cls_Dashboard_View
         cls_Dashboard_View()
         
     def f_destroy_current_window(self):

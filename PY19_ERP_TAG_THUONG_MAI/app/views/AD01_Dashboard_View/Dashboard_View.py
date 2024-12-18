@@ -25,11 +25,6 @@ class cls_Dashboard_View(tk.Tk):
 
     def f_render_dashboard(self):
         """Render các thành phần giao diện chính của Dashboard."""
-        # Setup the logo in the Frame_logo using the imported function
-        Frame_logo = tk.Frame(self, width=100, height=100)
-        Frame_logo.pack(side='top', pady=10)  # Pack the logo frame on the left side with some padding
-        f_utils_setup_logo(Frame_logo)  # Pass the frame as the parent for the logo
-        
         self._create_menu_top()
         self._create_header()
         self._create_left_menu()

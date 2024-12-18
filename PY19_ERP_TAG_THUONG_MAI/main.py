@@ -25,12 +25,13 @@ class App:
                 sys.path.append(subdir_path)
         
         # Thêm các thư mục con của views
-        app_views_subdirectories = ['Components_View', 'AD0101_Dashboard_View',
-                                    'KD0101_QuanLyGoiThau_View', 'KD01_QuanLyGoiThau', 
-                                    'KD01_QuanLyGoiThau_New',
-                                    'KD0101_QuanLyGoiThau_View',
-                                    'KD02_QuanLyYeuCauDatHang_View',
-                                    'settings', 'AD0001_User_Management_View']
+        app_views_subdirectories = ['Components_View',
+                                    'AD00_User_Management_View',
+                                    'AD01_Dashboard_View',
+                                    'AD02_SETTINGS_View',
+                                    'KD01_QuanLyGoiThau_View', 'KD01_QuanLyGoiThau_TEST_01', 'KD01_QuanLyGoiThau_TEST_02',
+                                    'KD02_QuanLyYeuCauDatHang_View','KD02_QuanLyYeuCauDatHang_TEST_01'
+                                    ]
         for subdir in app_views_subdirectories:
             subdir_path = os.path.join(app_path, "views", subdir)
             if subdir_path not in sys.path:
@@ -68,7 +69,7 @@ class App:
     def run(self):
         """Chạy ứng dụng và render dashboard."""
         # Import đối tượng cls_LoginView
-        from app.views.AD0001_User_Management_View.AD0001_login_View import cls_Login_View
+        from app.views.AD00_User_Management_View.AD0001_login_View import cls_Login_View
         # Gọi cửa sổ LoginView
         login_window = cls_Login_View()
         login_window.mainloop()
