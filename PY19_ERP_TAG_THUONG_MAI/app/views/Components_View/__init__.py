@@ -1,3 +1,4 @@
+from .frame import *
 from .menu_top import cls_menu_top
 from .main_content import create_main_content
 from .footer import create_footer

@@ -10,11 +10,13 @@ WINDOW_POSITION_RIGHT = 400
 WINDOW_POSITION_DOWN = 200
 
 # Color
-var_bd_0 = 0
-var_bd_1 = 0
-bg_corlor_0 = "#f0f0f0"
-bg_corlor_1 = "#f0f0f0"
+BG_COLOR_0_0 = "#f0f0f0"
+BG_COLOR_0_1 = "#f0f0f5"
+BG_COLOR_0_2 = "#f0f0f9"
 
+BG_COLOR_1 = "#f0f0f0"
+
+COLOR_GRAY = "#f0f0f0"
 COLOR_BLACK = "#726461"
 COLOR_RED = "#ff3333"
 COLOR_BLUE = "#53D4F7"
@@ -22,5 +24,9 @@ COLOR_GREEN = "#00b359"
 COLOR_WHITE = "#ffffff"
 COLOR_PURPLE = "#a64dff"
 COLOR_YELLOW = "#ffff00"
+COLOR_PINK = "#f7b5e2"
 COLOR_BACKGROUND = "#E2F7B5"
 
+# Border size
+BORDER_SIZE_0 = 0
+BORDER_SIZE_1 = 0

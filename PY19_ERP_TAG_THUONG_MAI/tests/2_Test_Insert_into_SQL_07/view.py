@@ -28,12 +28,12 @@ class CRUDTreeviewView:
         # =======================================================================================================================
         # Theme
         var_bd = 1
-        bg_corlor_0 = "#d1dade"
-        bg_corlor_1 = "#b4ced9"
+        BG_COLOR_0_0 = "#d1dade"
+        BG_COLOR_1 = "#b4ced9"
         
         # =======================================================================================================================
         # Create a canvas and a vertical scrollbar
-        self.canvas = tk.Canvas(self.master, width=window_width, bg=bg_corlor_0)
+        self.canvas = tk.Canvas(self.master, width=window_width, bg=BG_COLOR_0_0)
         self.canvas.pack(side="left", fill="both", expand=True)
         
         self.v_scrollbar_of_frame_inside_canvas = tk.Scrollbar(self.master, orient="vertical", command=self.canvas.yview, bg="lightyellow")
@@ -43,7 +43,7 @@ class CRUDTreeviewView:
 
         # =======================================================================================================================
         # Create a frame to hold the widgets (this frame will be inside the canvas)
-        frame_inside_canvas = tk.Frame(self.canvas, bd=var_bd, relief="solid", bg=bg_corlor_1)
+        frame_inside_canvas = tk.Frame(self.canvas, bd=var_bd, relief="solid", bg=BG_COLOR_1)
         frame_inside_canvas.pack(fill="x", side="top", padx=10, pady=10)
 
         # Create a window on the canvas to add the frame
