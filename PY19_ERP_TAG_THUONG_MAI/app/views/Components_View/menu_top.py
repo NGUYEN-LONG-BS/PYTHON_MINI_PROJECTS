@@ -1,5 +1,6 @@
 import tkinter as tk
 from utils import *
+from utils.define import *
 import json
 import sys
 import os
@@ -34,7 +35,8 @@ class cls_menu_top:
     def read_user_from_json(self):
         """ Reads the logged-in user's username from the JSON file. """
         # Sử dụng đường dẫn tuyệt đối
-        json_file = os.path.join(os.path.dirname(__file__), '..', 'AD0001_User_Management_View', 'login_credentials.json')
+        json_file = os.path.join(PATH_ROOT, 'app', 'views','AD00_User_Management_View', 'login_credentials.json')
+        # print(json_file)
         try:
             with open(json_file, 'r') as f:
                 data = json.load(f)

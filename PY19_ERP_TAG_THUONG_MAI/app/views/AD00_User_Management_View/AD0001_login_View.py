@@ -105,11 +105,11 @@ class cls_Login_View(tk.Tk):
             self.entry_password.config(show='*')
             self.toggle_password_button.config(text="Show Password")
         
-    # Function to write credentials to a JSON file
-    def write_credentials_to_json(self, username, password):
+    def write_credentials_to_json(self, username, password):    # Function to write credentials to a JSON file
         # Xác định đường dẫn file json
         base_dir = os.path.dirname(__file__)
         json_file = os.path.join(base_dir, 'login_credentials.json')
+        # print(json_file)
         
         # Create a dictionary with the credentials
         data = {

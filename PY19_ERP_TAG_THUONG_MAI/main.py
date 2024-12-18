@@ -38,14 +38,17 @@ class App:
                 sys.path.append(subdir_path)
                 
         # Thêm các thư mục con của controllers
-        app_controllers_subdirectories = ['KD0101_QuanLyGoiThau_View']
+        app_controllers_subdirectories = ['KD01_QuanLyGoiThau', 'KD0101_QuanLyGoiThau_Controller',
+                                          'KD02_QuanLyYeuCauDatHang_Controller', 'KD02_QuanLyYeuCauDatHang']
         for subdir in app_controllers_subdirectories:
             subdir_path = os.path.join(app_path, "controllers", subdir)
             if subdir_path not in sys.path:
                 sys.path.append(subdir_path)
                 
         # Thêm các thư mục con của models
-        app_models_subdirectories = ['KD0101_QuanLyGoiThau_Model']
+        app_models_subdirectories = ['KD01_QuanLyGoiThau','KD02_QuanLyYeuCauDatHang',
+                                     'KD0101_QuanLyGoiThau_Model',
+                                     'KD02_QuanLyYeuCauDatHang_Model']
         for subdir in app_models_subdirectories:
             subdir_path = os.path.join(app_path, "models", subdir)
             if subdir_path not in sys.path:

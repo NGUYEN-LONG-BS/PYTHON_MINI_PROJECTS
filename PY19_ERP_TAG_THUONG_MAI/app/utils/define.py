@@ -1,6 +1,6 @@
 import os
 # Khai báo đường dẫn ngắn gọn
-PATH_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))  # Going 2 levels up
+PATH_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 PATH_LOGO_LIGHT = os.path.join(PATH_ROOT, "assets/img/logo-Light.jpg")
 PATH_LOGO_DARK = os.path.join(PATH_ROOT, "assets/img/logo-Dark.jpg")
 

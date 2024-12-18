@@ -1,10 +1,11 @@
-# Project/Views/KD01QuanLyGoiThauView.py
 import tkinter as tk
 from tkinter import ttk
 from PIL import Image
 from datetime import datetime
-from app.controllers.KD01QuanLyGoiThauController import cls_KD01QuanLyGoiThauController
-from app.controllers.KD01QuanLyGoiThauController import cls_Controller_config_treeview
+# from app.controllers.KD01QuanLyGoiThauController import cls_KD01QuanLyGoiThauController
+# from app.controllers.KD01QuanLyGoiThauController import cls_Controller_config_treeview
+from controllers.KD01_QuanLyGoiThau_Controller import cls_KD01QuanLyGoiThauController
+from controllers.KD01_QuanLyGoiThau_Controller import cls_Controller_config_treeview
 from utils import *
 from Components_View import *
 from Components_View.user_Info import setup_employee_info_labels  # Import the function
@@ -20,7 +21,7 @@ class cls_KD0101_QuanLyGoiThau_View(tk.Tk):
         self.controller_02 = cls_Controller_config_treeview()
 
         # Setup window
-        self.title("KD0101 - QUẢN LÝ GÓI THẦU_241218_08h12")
+        self.title("KD0101 - QUẢN LÝ GÓI THẦU_241218_10h00")
         
         # Thiết lập kích thước cửa sổ
         f_utils_set_window_size_is_4_per_5_screen(self, 0, 0)
@@ -245,7 +246,7 @@ class cls_KD0101_QuanLyGoiThau_View(tk.Tk):
     def Function_close_KD01_Click(self):
         self.destroy()
         # Now import KD01QuanLyGoiThauView inside the function to avoid circular import
-        from app.views.AD0101_Dashboard_View.Dashboard_View import cls_Dashboard_View
+        from views.AD01_Dashboard_View.Dashboard_View import cls_Dashboard_View
         cls_Dashboard_View()
 
     # =======================================================================================================================
