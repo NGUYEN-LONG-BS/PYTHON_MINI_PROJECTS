@@ -140,6 +140,16 @@ class cls_menu_top:
             menu_VatTu = tk.Menu(top_menu, tearoff=0)
             top_menu.add_cascade(label="Vật Tư", menu=menu_VatTu)
             
+            # menu_KinhDoanh level 1
+            menu_VatTu_QuanLyDonDatHang = tk.Menu(menu_VatTu, tearoff=0)
+            menu_VatTu.add_cascade(label="Quản lý đơn đặt hàng", menu=menu_VatTu_QuanLyDonDatHang)
+            menu_VatTu.add_separator()
+            
+            # menu_KinhDoanh level 2: menu_KinhDoanh_QuanLyGoiThau
+            menu_VatTu_QuanLyDonDatHang.add_command(label="Tạo mới đơn đặt hàng", command=self.f_open_cls_VT0101_DonDatHang_View)
+            menu_VatTu_QuanLyDonDatHang.add_command(label="Nhật ký đơn đặt hàng", command=self.f_do_nothing_click)
+            
+            menu_VatTu.add_separator()
             menu_VatTu.add_command(label="DS Yêu cầu đặt hàng", command=self.f_do_nothing_click)
             menu_VatTu.add_command(label="QL Nhà Cung cấp", command=self.f_do_nothing_click)
             
@@ -293,6 +303,13 @@ class cls_menu_top:
         from views.KD01_QuanLyGoiThau_View.KD0101_QuanLyGoiThau_View import cls_KD0101_QuanLyGoiThau_View
         self.dashboard_window.destroy()
         kd01_view = cls_KD0101_QuanLyGoiThau_View()
+        kd01_view.dashboard = self.dashboard_window
+        kd01_view.mainloop()
+        
+    def f_open_cls_VT0101_DonDatHang_View(self):
+        from views.VT01_QuanLyDonDatHang_View.VT0101_DonDatHang_View import cls_VT0101_DonDatHang_View
+        self.dashboard_window.destroy()
+        kd01_view = cls_VT0101_DonDatHang_View()
         kd01_view.dashboard = self.dashboard_window
         kd01_view.mainloop()
 

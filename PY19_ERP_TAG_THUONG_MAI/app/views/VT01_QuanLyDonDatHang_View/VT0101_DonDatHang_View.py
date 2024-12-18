@@ -1,20 +1,19 @@
-# view.py
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 import datetime
 import json
 import os
-import unicodedata  # This will help normalize Vietnamese characters
-# from app.controllers.KD02QuanLyYeuCauDatHangController import cls_controller
+import unicodedata
 from controllers.KD02_QuanLyYeuCauDatHang_Controller import *
 from Components_View import *
 from utils import *
+from utils.define import *
 
 class cls_VT0101_DonDatHang_View(tk.Tk):
     def __init__(self):
         super().__init__()  # Gọi phương thức __init__ của lớp cha
-        self.title("KD0201 - PHIẾU YÊU CẦU ĐẶT HÀNG - 11h15")
+        self.title("VT0101 | ĐƠN ĐẶT HÀNG")
         # Gọi các thành phần tái sử dụng
         cls_menu_top(self, self)
         # =======================================================================================================================
@@ -171,7 +170,6 @@ class cls_VT0101_DonDatHang_View(tk.Tk):
         # After resizing, update the scroll region of the canvas to include the new content
         self.f_update_scroll_region()
         
-
     # =======================================================================================================================
     def f_enable_treeview_scroll(self, event):
         # Enable scrolling for the Treeview when the cursor enters the Treeview frame
