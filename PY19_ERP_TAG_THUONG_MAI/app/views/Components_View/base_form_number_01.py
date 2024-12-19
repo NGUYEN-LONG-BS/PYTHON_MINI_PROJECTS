@@ -1,5 +1,6 @@
 import tkinter as tk
 from Components_View import *
+from Components_View.menu_top import cls_menu_top
 from utils import *
 from utils.define import *
 
@@ -35,7 +36,8 @@ class cls_base_form_number_01(tk.Tk):
         """Initializes reusable components."""
         try:
             # cls_menu_top(self, self)
-            
+            cls_menu_top(self.winfo_toplevel(), self.winfo_toplevel())
+
             frame_main = cls_Frame_Main(self)
             frame_main.grid(row=0, column=0, sticky="nsew")
             
