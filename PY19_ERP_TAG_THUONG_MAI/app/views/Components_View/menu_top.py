@@ -330,8 +330,9 @@ class cls_menu_top:
     
     def f_open_DashBoard(self):
         self.dashboard_window.destroy()
-        from views.AD01_Dashboard_View.Dashboard_View import cls_Dashboard_View
-        cls_Dashboard_View()
+        # from views.AD01_Dashboard_View.Dashboard_View import cls_Dashboard_View
+        # cls_Dashboard_View()
+        f_utils_open_dashboard()
         
     def f_destroy_current_window(self):
         self.dashboard_window.destroy()
