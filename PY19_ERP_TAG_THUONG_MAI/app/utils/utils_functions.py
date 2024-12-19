@@ -107,7 +107,8 @@ def f_utils_set_menu_font(widget, size=14, font_is="Arial"):
 
 def f_utils_open_dashboard():
     from views.AD01_Dashboard_View.Dashboard_View import cls_Dashboard_View
-    cls_Dashboard_View()
+    new_view = cls_Dashboard_View()
+    new_view.focus_force()
     
 def f_utils_show_fading_popup(message):
     # Tạo cửa sổ popup

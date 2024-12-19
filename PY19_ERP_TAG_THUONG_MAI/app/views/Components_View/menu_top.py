@@ -156,6 +156,7 @@ class cls_menu_top:
             
         # Set font-size
         f_utils_set_menu_font(menu_VatTu)
+        f_utils_set_menu_font(menu_VatTu_QuanLyDonDatHang)
             
     def f_create_menu_kythuat(self, top_menu):
         if self.f_check_permission("kythuat") == False:
@@ -277,61 +278,67 @@ class cls_menu_top:
         self.dashboard_window.destroy()
         kd01_view = cls_Login_View()                     # Create an instance of the class
         kd01_view.dashboard = self.dashboard_window     # Pass the reference of the dashboard to KD01 view
-        kd01_view.mainloop()                            # Open the window by starting the Tkinter event loop for the new view
+        kd01_view.focus_force()                         # Ensure the new window is in focus
+        # kd01_view.mainloop()                            # Open the window by starting the Tkinter event loop for the new view
         
     def f_open_KD02QuanLyYeuCauDatHangView(self):
         from views.KD02_QuanLyYeuCauDatHang_View.KD0201_PhieuYeuCauDatHang_View import cls_KD0201_PhieuYeuCauDatHang_View
         self.dashboard_window.destroy()
         kd01_view = cls_KD0201_PhieuYeuCauDatHang_View()
         kd01_view.dashboard = self.dashboard_window
-        kd01_view.mainloop()
+        kd01_view.focus_force()
+        # kd01_view.mainloop()
     
     def f_open_KD01_01QuanLyGoiThauView(self):
         from views.KD01_QuanLyGoiThau_TEST_02.KD01_01QuanLyGoiThauView import cls_View
         self.dashboard_window.destroy()
         kd01_view = cls_View()
         kd01_view.dashboard = self.dashboard_window
-        kd01_view.mainloop()
+        kd01_view.focus_force()
+        # kd01_view.mainloop()
     
     def f_open_KD01QuanLyGoiThauView(self):
         from views.KD01_QuanLyGoiThau_TEST_01.KD01QuanLyGoiThauView import cls_KD01QuanLyGoiThauView
         self.dashboard_window.destroy()
         kd01_view = cls_KD01QuanLyGoiThauView()
         kd01_view.dashboard = self.dashboard_window
-        kd01_view.mainloop()
+        kd01_view.focus_force()
+        # kd01_view.mainloop()
         
     def f_open_KD0101_QuanLyGoiThau_View(self):
         from views.KD01_QuanLyGoiThau_View.KD0101_QuanLyGoiThau_View import cls_KD0101_QuanLyGoiThau_View
         self.dashboard_window.destroy()
         kd01_view = cls_KD0101_QuanLyGoiThau_View()
         kd01_view.dashboard = self.dashboard_window
-        kd01_view.mainloop()
+        kd01_view.focus_force()
+        # kd01_view.mainloop()
         
     def f_open_cls_VT0101_DonDatHang_View(self):
         from views.VT01_QuanLyDonDatHang_View.VT0101_DonDatHang_View import cls_VT0101_DonDatHang_View
         self.dashboard_window.destroy()
         kd01_view = cls_VT0101_DonDatHang_View()
         kd01_view.dashboard = self.dashboard_window
-        kd01_view.mainloop()
+        kd01_view.focus_force()
+        # kd01_view.mainloop()
         
     def f_open_cls_VT0102_DonDatHang_TM_View(self):
         from views.VT01_QuanLyDonDatHang_View.VT0102_DonDatHang_TM_View import cls_VT0102_DonDatHang_TM_View
         self.dashboard_window.destroy()
         kd01_view = cls_VT0102_DonDatHang_TM_View()
         kd01_view.dashboard = self.dashboard_window
-        kd01_view.mainloop()
+        kd01_view.focus_force()
+        # kd01_view.mainloop()
 
     def f_open_UserInfo(self):
         from AD00_User_Management_View.AD0003_UserInfo_View import cls_user_info
         self.dashboard_window.destroy()
         kd01_view = cls_user_info()
         kd01_view.dashboard = self.dashboard_window
-        kd01_view.mainloop()
+        kd01_view.focus_force()
+        # kd01_view.mainloop()
     
     def f_open_DashBoard(self):
         self.dashboard_window.destroy()
-        # from views.AD01_Dashboard_View.Dashboard_View import cls_Dashboard_View
-        # cls_Dashboard_View()
         f_utils_open_dashboard()
         
     def f_destroy_current_window(self):
