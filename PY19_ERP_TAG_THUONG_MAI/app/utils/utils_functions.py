@@ -7,6 +7,15 @@ import inspect
 from define import *
 
 def f_utils_setup_logo(parent_frame):
+    # Define function when click
+    def on_logo_click(event):
+        # Get the top-level window containing the parent_frame
+        parent_window = parent_frame.winfo_toplevel()
+        parent_window.destroy()  # Close the parent window
+        # Open Dashboard
+        from views.AD01_Dashboard_View.Dashboard_View import cls_Dashboard_View
+        cls_Dashboard_View()
+        
     try:
         # Try loading the light mode image first
         logo_image_light = Image.open(PATH_LOGO_LIGHT)
@@ -22,11 +31,13 @@ def f_utils_setup_logo(parent_frame):
         
         # Create the tk.Label and display the image
         logo_label = tk.Label(parent_frame, image=logo_image_light_tk)
-        logo_label.pack()  # Using pack to add it to the parent_frame
+        logo_label.pack(fill="both", expand=True) # Using pack to add it to the parent_frame
+        logo_label.bind("<Button-1>", on_logo_click)  # Button-1 is left mouse click
     except FileNotFoundError:
         print(f"Logo file not found at {logo_image_light} or {logo_image_dark}")
         error_label = tk.Label(parent_frame, text="Logo not found", font=("", 16))
-        error_label.pack()
+        error_label.pack(fill="both", expand=True)
+        error_label.bind("<Button-1>", on_logo_click)  # Button-1 is left mouse click
 
 def f_utils_setup_fav_icon(window):
         # Get the project root directory
