@@ -104,6 +104,10 @@ def f_utils_set_menu_font(widget, size=14, font_is="Arial"):
     """Set the font for menu items to a specified size."""
     custom_font = font.Font(family=font_is, size=size)  # Create a new Font object with the desired size
     widget.config(font=custom_font)  # Apply the font to the menu
+
+def f_utils_open_dashboard():
+    from views.AD01_Dashboard_View.Dashboard_View import cls_Dashboard_View
+    cls_Dashboard_View()
     
 def f_utils_show_fading_popup(message):
     # Tạo cửa sổ popup

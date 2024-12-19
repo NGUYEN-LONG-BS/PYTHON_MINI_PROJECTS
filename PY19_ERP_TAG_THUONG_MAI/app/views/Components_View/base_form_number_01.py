@@ -68,5 +68,4 @@ class cls_base_form_number_01(tk.Tk):
             
     def _close_window_Click(self):
         self.destroy()
-        from views.AD01_Dashboard_View.Dashboard_View import cls_Dashboard_View
-        cls_Dashboard_View()
+        f_utils_open_dashboard()
