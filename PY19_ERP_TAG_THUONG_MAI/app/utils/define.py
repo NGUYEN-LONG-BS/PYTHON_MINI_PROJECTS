@@ -1,9 +1,11 @@
 import os
-# Khai báo đường dẫn ngắn gọn
+
+# Define paths
 PATH_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 PATH_LOGO_LIGHT = os.path.join(PATH_ROOT, "assets/img/logo-Light.jpg")
 PATH_LOGO_DARK = os.path.join(PATH_ROOT, "assets/img/logo-Dark.jpg")
 
+# Window dimensions and positions
 WINDOW_WIDTH = 600
 WINDOW_HEIGHT = 400
 WINDOW_POSITION_RIGHT = 400
