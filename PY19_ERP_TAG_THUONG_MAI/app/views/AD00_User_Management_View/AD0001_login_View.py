@@ -9,9 +9,6 @@ from utils import *
 from utils.define import *
 from AD01_Dashboard_View import *
 
-
-
-
 # View: The UI that the user interacts with
 class cls_Login_View(tk.Tk):
     def __init__(self):
@@ -32,8 +29,11 @@ class cls_Login_View(tk.Tk):
         self.bind('<Return>', self.on_enter)
     
     def create_widgets(self):
+        Frame_main = tk.Frame(self)
+        Frame_main.pack(fill="both", expand=True)  # Pack the main frame to fill the window
+        
         # Setup the logo in the Frame_logo using the imported function
-        Frame_logo = tk.Frame(self, width=100, height=100)
+        Frame_logo = tk.Frame(Frame_main, width=100, height=100)
         Frame_logo.pack(pady=5)  # Pack the logo frame on the left side with some padding
         try:
             # Try loading the light mode image first
@@ -54,21 +54,21 @@ class cls_Login_View(tk.Tk):
             error_label.pack(fill="both", expand=True)
         
         # Example of adding an entry field and button
-        self.label_username = cls_my_label_num_01(self)
+        self.label_username = cls_my_label_num_01(Frame_main)
         self.label_username.configure(text="Username:")
         self.label_username.pack(pady=5)
 
-        self.entry_username = cls_my_entry_num_01(self)
+        self.entry_username = cls_my_entry_num_01(Frame_main)
         self.entry_username.configure(width=50)
         self.entry_username.pack(pady=5)
         self.entry_username.focus_set()
 
-        self.label_password = cls_my_label_num_01(self)
+        self.label_password = cls_my_label_num_01(Frame_main)
         self.label_password.configure(text="Password:")
         self.label_password.pack(pady=5)
 
         # Frame to contain the password entry and the toggle button side by side
-        self.password_frame = tk.Frame(self)
+        self.password_frame = tk.Frame(Frame_main)
         self.password_frame.pack(pady=5)
 
         self.entry_password = cls_my_entry_num_01(self.password_frame)
@@ -82,7 +82,7 @@ class cls_Login_View(tk.Tk):
         self.toggle_password_button.pack(side="left", pady=5)
         
         # Frame to contain the password entry and the toggle button side by side
-        self.button_frame = tk.Frame(self)
+        self.button_frame = tk.Frame(Frame_main)
         self.button_frame.pack(pady=5)
         
         self.login_button = cls_my_button_num_01(self.button_frame)

@@ -278,7 +278,6 @@ class cls_menu_top:
         self.parent.destroy()
         new_view = cls_Login_View()                             # Create an instance of the class
         new_view.dashboard = self.parent                        # Pass the reference of the dashboard to KD01 view
-        f_utils_set_window_size_is_4_per_5_screen(new_view)     # Set the window size to 4/5 of the screen
         f_utils_set_center_screen(new_view)                     # Center the new window on the screen
         new_view.focus_force()                                  # Ensure the new window is in focus
         
