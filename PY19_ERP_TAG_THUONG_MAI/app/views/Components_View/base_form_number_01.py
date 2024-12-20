@@ -143,11 +143,21 @@ class cls_base_form_number_01(tk.Tk):
         self.frame_info_of_slip.grid_columnconfigure(3, weight=2)  # Allow column 3 to expand to fill the space
         
     def f_add_elements_to_frame_button(self):
-        Button_01 = tk.Button(self.frame_button, text="BTN 01", command=self.f_do_nothing)
-        Button_01.grid(row=0, column=1, padx=10, pady=5)
+        from Components_View import cls_my_button_num_01
         
-        Button_02 = tk.Button(self.frame_button, text="BTN 02", command=self.f_do_nothing)
-        Button_02.grid(row=0, column=2, padx=10, pady=5)
+        Button_01 = cls_my_button_num_01(self.frame_button, text="BTN 01", command=self.f_do_nothing)
+        Button_01.grid(row=0, column=0, padx=10, pady=5, sticky="ew")
+        
+        Button_02 = cls_my_button_num_01(self.frame_button, text="BTN 02", command=self.f_do_nothing)
+        Button_02.grid(row=0, column=1, padx=10, pady=5, sticky="ew")
+        
+        Button_03 = cls_my_button_num_01(self.frame_button, text="BTN 03", command=self.f_do_nothing)
+        Button_03.grid(row=0, column=2, padx=10, pady=5, sticky="ew")
+        
+        # Configure grid columns to expand equally
+        self.frame_button.grid_columnconfigure(0, weight=1)
+        self.frame_button.grid_columnconfigure(1, weight=1)
+        self.frame_button.grid_columnconfigure(2, weight=1)
         
     def f_do_nothing(self):
         print("Button click")
