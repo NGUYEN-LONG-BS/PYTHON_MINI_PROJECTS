@@ -33,7 +33,7 @@ class cls_Dashboard_View(tk.Tk):
 
     def _create_menu_top(self):
         """Tạo menu trên cùng."""
-        cls_menu_top(self, self)
+        cls_menu_top(self)
 
     def _create_header(self):
         """Tạo phần tiêu đề (header)."""

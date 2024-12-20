@@ -16,7 +16,7 @@ class cls_CRUDTreeviewView(tk.Tk):
         super().__init__()  # Gọi phương thức __init__ của lớp cha
         self.title("CRUD Treeview Example - 10h11")
         # Gọi các thành phần tái sử dụng
-        cls_menu_top(self, self)
+        cls_menu_top(self)
         # =======================================================================================================================
         # Thiết lập kích thước cửa sổ
         f_utils_set_window_size_is_4_per_5_screen(self, 0, 0)

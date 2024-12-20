@@ -37,7 +37,7 @@ class cls_base_form_number_01(tk.Tk):
         """Initializes reusable components."""
         try:
             # Add cls_menu_top
-            cls_menu_top(self, self)
+            cls_menu_top(self)
 
             frame_main = cls_Frame_Main(self)
             frame_main.grid(row=0, column=0, sticky="nsew")

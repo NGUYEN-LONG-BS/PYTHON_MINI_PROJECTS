@@ -67,21 +67,23 @@ def set_window_size(root, width=1600, height=900):
     screen_height = root.winfo_screenheight()
     position_top = int(screen_height / 2 - height / 2)
     position_right = int(screen_width / 2 - width / 2)
+    print(f"Position Right: {position_right}, Position Top: {position_top}")
     
     root.geometry(f'{width}x{height}+{position_right}+{position_top}')
 
 def f_utils_set_window_size_is_4_per_5_screen(root, width=0, height=0):
+    """Set the window size to 4/5 of the screen size."""
     if width == 0 or height == 0:
-        # lấy thông tin kích thước màn hình và tinh toán lại
+        # Get screen dimensions
         screen_width = root.winfo_screenwidth()
         screen_height = root.winfo_screenheight()
+        
+        # Calculate 4/5 of screen dimensions
         height = int(screen_height * 4 / 5)
         width = int(screen_width * 4 / 5)
-        
-        # Đặt lại kích thước cửa sổ
-        root.geometry(f"{width}x{height}")
-    else:
-        root.geometry(f"{width}x{height}")
+    
+    # Set the window size
+    root.geometry(f"{width}x{height}")
 
 def f_utils_set_center_screen(root):
     # Lấy kích thước của cửa sổ
@@ -92,11 +94,12 @@ def f_utils_set_center_screen(root):
     # lấy thông tin kích thước màn hình và tinh toán lại
     screen_width = root.winfo_screenwidth()
     screen_height = root.winfo_screenheight()
-    # print(screen_width)
-    # print(screen_height)
-    position_top = int(screen_height / 2 - height / 2)
+
+    # Tính toán vị trí để căn giữa cửa sổ
+    position_top = int(screen_height / 2 - height / 2) - 50
     position_right = int(screen_width / 2 - width / 2)
-    
+
+    # Đặt lại vị trí của cửa sổ
     root.geometry(f'{width}x{height}+{position_right}+{position_top}')
 
 # Reusable function to set font for menu items
@@ -108,6 +111,8 @@ def f_utils_set_menu_font(widget, size=14, font_is="Arial"):
 def f_utils_open_dashboard():
     from views.AD01_Dashboard_View.Dashboard_View import cls_Dashboard_View
     new_view = cls_Dashboard_View()
+    f_utils_set_window_size_is_4_per_5_screen(new_view)
+    f_utils_set_center_screen(new_view)
     new_view.focus_force()
     
 def f_utils_show_fading_popup(message):

@@ -16,7 +16,7 @@ class cls_View(tk.Tk):
 
         
         # Gọi các thành phần tái sử dụng
-        cls_menu_top(self, self)
+        cls_menu_top(self)
         
         # # Thiết lập kích thước cửa sổ với tỷ lệ 16:9 và chiều rộng = 900
         # width = 900

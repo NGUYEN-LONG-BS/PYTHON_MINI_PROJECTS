@@ -29,7 +29,7 @@ class cls_KD0101_QuanLyGoiThau_View(tk.Tk):
         f_utils_setup_fav_icon(self)
         
         # Gọi các thành phần tái sử dụng
-        cls_menu_top(self, self)
+        cls_menu_top(self)
 
         # Create a container frame to hold both the logo frame and user info frame
         frame_header_container = tk.Frame(self)

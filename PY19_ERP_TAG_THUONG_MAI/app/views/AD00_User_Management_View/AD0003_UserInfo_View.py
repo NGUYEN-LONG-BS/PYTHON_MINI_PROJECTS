@@ -20,7 +20,7 @@ class cls_user_info(tk.Tk):
         
     def f_create_element(self):
         # Gọi các thành phần tái sử dụng
-        cls_menu_top(self, self)
+        cls_menu_top(self)
         
         # Setup the logo in the Frame_logo using the imported function
         Frame_logo = tk.Frame(self, width=100, height=100)

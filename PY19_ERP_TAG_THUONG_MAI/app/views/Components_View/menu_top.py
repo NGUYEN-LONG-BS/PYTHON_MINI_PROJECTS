@@ -6,12 +6,12 @@ import sys
 import os
 
 class cls_menu_top:
-    def __init__(self, parent, dashboard_window):
+    def __init__(self, parent):
         """
         Initializes the Menu with the given parent and dashboard window.
         """
         self.parent = parent
-        self.dashboard_window = dashboard_window
+        self.parent = parent
         self.top_menu = tk.Menu(self.parent)
         self.current_user = self.read_user_from_json()  # Read the logged-in user
         self.f_create_top_menu()
@@ -28,6 +28,7 @@ class cls_menu_top:
         self.f_create_menu_taichinh(top_menu)
         self.f_create_menu_Help(top_menu)
         self.f_create_menu_Test(top_menu)
+        self.f_create_menu_Exit(top_menu)
         
         # Set the menu bar for the root window
         self.parent.config(menu=top_menu)
@@ -54,14 +55,13 @@ class cls_menu_top:
                     }
         return self.current_user not in permissions.get(menu_name, [])
     
+    def f_create_menu_Exit(self, top_menu):
+        # Create a "Exit" menu
+        top_menu.add_command(label="Exit", command=self.f_destroy_current_window)
+
     def f_create_menu_Home(self, top_menu):
         # Create a "Home" menu
-        menu_HOME = tk.Menu(top_menu, tearoff=0)
-        menu_HOME.add_command(label="Home", command=self.f_Home_main_click)
-        top_menu.add_cascade(label="Home", menu=menu_HOME)
-        
-        # Set font-size
-        f_utils_set_menu_font(menu_HOME)
+        top_menu.add_command(label="Home", command=self.f_Home_main_click)
     
     def f_create_menu_kinhdoanh(self, top_menu):
         if self.f_check_permission("kinhdoanh") == False:
@@ -275,72 +275,87 @@ class cls_menu_top:
     
     def f_open_login_window(self):
         from views.AD00_User_Management_View.AD0001_login_View import cls_Login_View   # lazy import to avoid circular import
-        self.dashboard_window.destroy()
-        kd01_view = cls_Login_View()                     # Create an instance of the class
-        kd01_view.dashboard = self.dashboard_window     # Pass the reference of the dashboard to KD01 view
-        kd01_view.focus_force()                         # Ensure the new window is in focus
-        # kd01_view.mainloop()                            # Open the window by starting the Tkinter event loop for the new view
+        self.parent.destroy()
+        new_view = cls_Login_View()                             # Create an instance of the class
+        new_view.dashboard = self.parent                        # Pass the reference of the dashboard to KD01 view
+        f_utils_set_window_size_is_4_per_5_screen(new_view)     # Set the window size to 4/5 of the screen
+        f_utils_set_center_screen(new_view)                     # Center the new window on the screen
+        new_view.focus_force()                                  # Ensure the new window is in focus
         
     def f_open_KD02QuanLyYeuCauDatHangView(self):
         from views.KD02_QuanLyYeuCauDatHang_View.KD0201_PhieuYeuCauDatHang_View import cls_KD0201_PhieuYeuCauDatHang_View
-        self.dashboard_window.destroy()
-        kd01_view = cls_KD0201_PhieuYeuCauDatHang_View()
-        kd01_view.dashboard = self.dashboard_window
-        kd01_view.focus_force()
-        # kd01_view.mainloop()
+        self.parent.destroy()
+        new_view = cls_KD0201_PhieuYeuCauDatHang_View()
+        new_view.dashboard = self.parent
+        f_utils_set_window_size_is_4_per_5_screen(new_view)
+        f_utils_set_center_screen(new_view)
+        new_view.focus_force()
+        
     
     def f_open_KD01_01QuanLyGoiThauView(self):
         from views.KD01_QuanLyGoiThau_TEST_02.KD01_01QuanLyGoiThauView import cls_View
-        self.dashboard_window.destroy()
-        kd01_view = cls_View()
-        kd01_view.dashboard = self.dashboard_window
-        kd01_view.focus_force()
-        # kd01_view.mainloop()
+        self.parent.destroy()
+        new_view = cls_View()
+        new_view.dashboard = self.parent
+        f_utils_set_window_size_is_4_per_5_screen(new_view)
+        f_utils_set_center_screen(new_view)
+        new_view.focus_force()
+        
     
     def f_open_KD01QuanLyGoiThauView(self):
         from views.KD01_QuanLyGoiThau_TEST_01.KD01QuanLyGoiThauView import cls_KD01QuanLyGoiThauView
-        self.dashboard_window.destroy()
-        kd01_view = cls_KD01QuanLyGoiThauView()
-        kd01_view.dashboard = self.dashboard_window
-        kd01_view.focus_force()
-        # kd01_view.mainloop()
+        self.parent.destroy()
+        new_view = cls_KD01QuanLyGoiThauView()
+        new_view.dashboard = self.parent
+        f_utils_set_window_size_is_4_per_5_screen(new_view)
+        f_utils_set_center_screen(new_view)
+        new_view.focus_force()
+        
         
     def f_open_KD0101_QuanLyGoiThau_View(self):
         from views.KD01_QuanLyGoiThau_View.KD0101_QuanLyGoiThau_View import cls_KD0101_QuanLyGoiThau_View
-        self.dashboard_window.destroy()
-        kd01_view = cls_KD0101_QuanLyGoiThau_View()
-        kd01_view.dashboard = self.dashboard_window
-        kd01_view.focus_force()
-        # kd01_view.mainloop()
+        self.parent.destroy()
+        new_view = cls_KD0101_QuanLyGoiThau_View()
+        new_view.dashboard = self.parent
+        f_utils_set_window_size_is_4_per_5_screen(new_view)
+        f_utils_set_center_screen(new_view)
+        new_view.focus_force()
+        
         
     def f_open_cls_VT0101_DonDatHang_View(self):
         from views.VT01_QuanLyDonDatHang_View.VT0101_DonDatHang_View import cls_VT0101_DonDatHang_View
-        self.dashboard_window.destroy()
-        kd01_view = cls_VT0101_DonDatHang_View()
-        kd01_view.dashboard = self.dashboard_window
-        kd01_view.focus_force()
-        # kd01_view.mainloop()
+        self.parent.destroy()
+        new_view = cls_VT0101_DonDatHang_View()
+        new_view.dashboard = self.parent
+        f_utils_set_window_size_is_4_per_5_screen(new_view)
+        f_utils_set_center_screen(new_view)
+        new_view.focus_force()
+        
         
     def f_open_cls_VT0102_DonDatHang_TM_View(self):
         from views.VT01_QuanLyDonDatHang_View.VT0102_DonDatHang_TM_View import cls_VT0102_DonDatHang_TM_View
-        self.dashboard_window.destroy()
-        kd01_view = cls_VT0102_DonDatHang_TM_View()
-        kd01_view.dashboard = self.dashboard_window
-        kd01_view.focus_force()
-        # kd01_view.mainloop()
+        self.parent.destroy()
+        new_view = cls_VT0102_DonDatHang_TM_View()
+        new_view.dashboard = self.parent
+        f_utils_set_window_size_is_4_per_5_screen(new_view)
+        f_utils_set_center_screen(new_view)
+        new_view.focus_force()
+        
 
     def f_open_UserInfo(self):
         from AD00_User_Management_View.AD0003_UserInfo_View import cls_user_info
-        self.dashboard_window.destroy()
-        kd01_view = cls_user_info()
-        kd01_view.dashboard = self.dashboard_window
-        kd01_view.focus_force()
-        # kd01_view.mainloop()
+        self.parent.destroy()
+        new_view = cls_user_info()
+        new_view.dashboard = self.parent
+        f_utils_set_window_size_is_4_per_5_screen(new_view)
+        f_utils_set_center_screen(new_view)
+        new_view.focus_force()
+        
     
     def f_open_DashBoard(self):
-        self.dashboard_window.destroy()
+        self.parent.destroy()
         f_utils_open_dashboard()
         
     def f_destroy_current_window(self):
-        self.dashboard_window.destroy()
+        self.parent.destroy()
         

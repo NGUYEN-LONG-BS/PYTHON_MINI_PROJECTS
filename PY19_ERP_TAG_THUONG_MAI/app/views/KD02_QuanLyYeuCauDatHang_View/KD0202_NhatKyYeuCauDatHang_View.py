@@ -15,7 +15,7 @@ class cls_KD0201_NhatKyYeuCauDatHang_View(tk.Tk):
         super().__init__()  # Gọi phương thức __init__ của lớp cha
         self.title("KD0201 - PHIẾU YÊU CẦU ĐẶT HÀNG")
         # Gọi các thành phần tái sử dụng
-        cls_menu_top(self, self)
+        cls_menu_top(self)
         # =======================================================================================================================
         # Thiết lập kích thước cửa sổ
         f_utils_set_window_size_is_4_per_5_screen(self, 0, 0)

@@ -1,20 +1,24 @@
 import os
-from utils import *
 import tkinter as tk
 from tkinter import messagebox
 import json
-from AD01_Dashboard_View import *
-from Components_View import cls_my_button_num_01, cls_my_label_num_01, cls_my_entry_num_01
-from utils.define import *
 from PIL import Image, ImageTk
+
+from Components_View import cls_my_button_num_01, cls_my_label_num_01, cls_my_entry_num_01
+from utils import *
+from utils.define import *
+from AD01_Dashboard_View import *
+
+
+
 
 # View: The UI that the user interacts with
 class cls_Login_View(tk.Tk):
     def __init__(self):
         super().__init__()
         
-        model = cls_UserModel()
-        self.controller = cls_LoginController(model, self)
+        model = cls_User_Model()
+        self.controller = cls_Login_Controller(model, self)
         
         self.title("AD0001 - Login")
         f_utils_set_window_size_is_4_per_5_screen(self, 400, 300)
@@ -114,13 +118,13 @@ class cls_Login_View(tk.Tk):
     def show_message(self, login_sucess):
         if login_sucess == True:
             self.write_credentials_to_json(self.entry_username.get(), self.entry_password.get())
-            self.destroy()
             self.open_dashboard()
         else:
             self.message_label.config(text="Invalid username or password.")
     
     def open_dashboard(self):
-        cls_Dashboard_View()
+        self.destroy()
+        f_utils_open_dashboard()
         
     def open_register(self):
         from AD0002_register_View import cls_Register_View
@@ -159,7 +163,7 @@ class cls_Login_View(tk.Tk):
 
 
 # Controller: The logic and interaction between the model and view
-class cls_LoginController:
+class cls_Login_Controller:
     def __init__(self, model, view):
         self.model = model
         self.view = view
@@ -173,7 +177,7 @@ class cls_LoginController:
             self.view.show_message(False)
 
 # Model: Handles data
-class cls_UserModel:
+class cls_User_Model:
     def __init__(self):
         # Example credentials, can be replaced with a database or file storage
         self.credentials = {

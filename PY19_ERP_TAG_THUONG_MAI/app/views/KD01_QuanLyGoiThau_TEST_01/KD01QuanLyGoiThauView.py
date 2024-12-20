@@ -27,7 +27,7 @@ class cls_KD01QuanLyGoiThauView(tk.Tk):
         f_utils_set_center_screen(self)
 
         # Gọi các thành phần tái sử dụng
-        cls_menu_top(self, self)
+        cls_menu_top(self)
 
         # Create a container frame to hold both the logo frame and user info frame
         frame_header_container = tk.Frame(self)
