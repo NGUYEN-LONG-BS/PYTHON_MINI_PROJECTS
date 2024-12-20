@@ -4,6 +4,9 @@ import tkinter as tk
 from tkinter import messagebox
 import json
 from AD01_Dashboard_View import *
+from Components_View import cls_my_button_num_01, cls_my_label_num_01, cls_my_entry_num_01
+from utils.define import *
+from PIL import Image, ImageTk
 
 # View: The UI that the user interacts with
 class cls_Login_View(tk.Tk):
@@ -28,45 +31,72 @@ class cls_Login_View(tk.Tk):
         # Setup the logo in the Frame_logo using the imported function
         Frame_logo = tk.Frame(self, width=100, height=100)
         Frame_logo.pack(pady=5)  # Pack the logo frame on the left side with some padding
-        f_utils_setup_logo(Frame_logo)  # Pass the frame as the parent for the logo
+        try:
+            # Try loading the light mode image first
+            logo_image_light = Image.open(PATH_LOGO_LIGHT)
+            
+            # Convert the PIL image to a Tkinter-compatible photo image
+            logo_image_light_tk = ImageTk.PhotoImage(logo_image_light)
+            
+            # Store the image as an attribute of the Frame_logo (to prevent it from being garbage collected)
+            Frame_logo.logo_image_light = logo_image_light_tk
+            
+            # Create the tk.Label and display the image
+            logo_label = tk.Label(Frame_logo, image=logo_image_light_tk)
+            logo_label.pack(fill="both", expand=True) # Using pack to add it to the Frame_logo
+        except FileNotFoundError:
+            print(f"Logo file not found at {PATH_LOGO_LIGHT}")
+            error_label = tk.Label(Frame_logo, text="Logo not found", font=("", 16))
+            error_label.pack(fill="both", expand=True)
         
         # Example of adding an entry field and button
-        self.label_username = tk.Label(self, text="Username:")
+        self.label_username = cls_my_label_num_01(self)
+        self.label_username.configure(text="Username:")
         self.label_username.pack(pady=5)
 
-        self.entry_username = tk.Entry(self, width=50)
+        self.entry_username = cls_my_entry_num_01(self)
+        self.entry_username.configure(width=50)
         self.entry_username.pack(pady=5)
-        # Set focus on the username entry field when the form initializes
         self.entry_username.focus_set()
 
-        self.label_password = tk.Label(self, text="Password:")
+        self.label_password = cls_my_label_num_01(self)
+        self.label_password.configure(text="Password:")
         self.label_password.pack(pady=5)
 
         # Frame to contain the password entry and the toggle button side by side
         self.password_frame = tk.Frame(self)
         self.password_frame.pack(pady=5)
 
-        self.entry_password = tk.Entry(self.password_frame, show="*", width=30)
+        self.entry_password = cls_my_entry_num_01(self.password_frame)
+        self.entry_password.configure(show="*", width=30)
         self.entry_password.pack(side="left", pady=5)
 
         # Button to toggle password visibility
-        self.toggle_password_button = tk.Button(self.password_frame, text="Show Password", command=self.toggle_password)
+        self.toggle_password_button = cls_my_button_num_01(self.password_frame)
+        self.toggle_password_button.configure(text="Show Password", command=self.toggle_password, font=("Arial", 10))
+        # self.toggle_password_button = tk.Button(self.password_frame, text="Show Password", command=self.toggle_password)
         self.toggle_password_button.pack(side="left", pady=5)
         
         # Frame to contain the password entry and the toggle button side by side
         self.button_frame = tk.Frame(self)
         self.button_frame.pack(pady=5)
         
-        self.login_button = tk.Button(self.button_frame, text="Login", width=10, command=self.on_login)
+        self.login_button = cls_my_button_num_01(self.button_frame)
+        self.login_button.configure(text="Login", width=10, command=self.on_login, font=("Arial", 10))
         self.login_button.pack(side="left", padx=10)
         
-        self.register_button = tk.Button(self.button_frame, text="Register", width=10, command=self.on_register)
+        self.register_button = cls_my_button_num_01(self.button_frame)
+        self.register_button.configure(text="Register", width=10, command=self.on_register, font=("Arial", 10))
         self.register_button.pack(side="left", padx=10)
 
         self.message_label = tk.Label(self, text="", fg="red")
         self.message_label.pack(pady=5)
         
         # self.f_main_loop()
+
+    def on_logo_click(self, event):
+        # Define the action to be taken when the logo is clicked
+        print("Logo clicked")
 
     def on_login(self):
         username = self.entry_username.get()
