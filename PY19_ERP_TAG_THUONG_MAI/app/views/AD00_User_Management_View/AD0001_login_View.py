@@ -1,6 +1,7 @@
 import os
 import tkinter as tk
 from tkinter import messagebox
+from tkinter import PhotoImage
 import json
 from PIL import Image, ImageTk
 
@@ -75,9 +76,24 @@ class cls_Login_View(tk.Tk):
         self.entry_password.configure(show="*", width=30)
         self.entry_password.pack(side="left", pady=5)
 
+        # Load the icon image
+        icon_path_hide = os.path.join(PATH_ASSETS_ICONS, "icon-closed-eye-50.png")
+        icon_image_hide = Image.open(icon_path_hide)
+        icon_image_hide = icon_image_hide.resize((20, 20), Image.LANCZOS)  # Resize the image to fit the button
+        
+        icon_path_unhide = os.path.join(PATH_ASSETS_ICONS, "icon-opening-eye-26.png")
+        icon_image_unhide = Image.open(icon_path_unhide)
+        icon_image_unhide = icon_image_unhide.resize((20, 20), Image.LANCZOS)  # Resize the image to fit the button
+        
+        self.icon_image_hide = ImageTk.PhotoImage(icon_image_hide)
+        self.icon_image_unhide = ImageTk.PhotoImage(icon_image_unhide)
+        
         # Button to toggle password visibility
         self.toggle_password_button = cls_my_button_num_01(self.password_frame)
-        self.toggle_password_button.configure(text="Show Password", command=self.toggle_password, font=("Arial", 10))
+        self.toggle_password_button.configure(command=self.toggle_password, font=("Arial", 10),
+                                              image=self.icon_image_hide,  # Set the icon image
+                                                compound="center"  # Position the text to the right of the icon
+                                                )
         # self.toggle_password_button = tk.Button(self.password_frame, text="Show Password", command=self.toggle_password)
         self.toggle_password_button.pack(side="left", pady=5)
         
@@ -134,10 +150,10 @@ class cls_Login_View(tk.Tk):
         # Toggle the password visibility
         if self.entry_password.cget('show') == '*':
             self.entry_password.config(show='')
-            self.toggle_password_button.config(text="Hide Password")
+            self.toggle_password_button.config(image=self.icon_image_unhide)
         else:
             self.entry_password.config(show='*')
-            self.toggle_password_button.config(text="Show Password")
+            self.toggle_password_button.config(image=self.icon_image_hide)
         
     def write_credentials_to_json(self, username, password):    # Function to write credentials to a JSON file
         # Xác định đường dẫn file json

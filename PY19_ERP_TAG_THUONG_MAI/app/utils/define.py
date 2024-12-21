@@ -2,6 +2,7 @@ import os
 
 # Define paths
 PATH_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+PATH_ASSETS_ICONS = os.path.join(PATH_ROOT, "assets/icons")
 PATH_LOGO_LIGHT = os.path.join(PATH_ROOT, "assets/img/logo-Light.jpg")
 PATH_LOGO_DARK = os.path.join(PATH_ROOT, "assets/img/logo-Dark.jpg")
 
