@@ -5,7 +5,7 @@ from tkinter import PhotoImage
 import json
 from PIL import Image, ImageTk
 
-from Components_View import cls_my_button_num_01, cls_my_label_num_01, cls_my_entry_num_01
+from Components_View import cls_my_button_num_01, cls_my_label_num_01, cls_my_entry_num_01, cls_frame_while_design, cls_frame_normal
 from utils import *
 from utils.define import *
 from AD01_Dashboard_View import *
@@ -31,12 +31,15 @@ class cls_Login_View(tk.Tk):
         self.bind('<Return>', self.on_enter)
     
     def create_widgets_all_frames(self):
-        self.Frame_main = tk.Frame(self, bd=1, relief="solid")
+        # self.Frame_main = tk.Frame(self)
+        # self.Frame_main = cls_frame_normal(self)
+        self.Frame_main = cls_frame_while_design(self, ControlTipText="Frame_main")
         self.Frame_main.pack(fill="both", expand=True)
         
         # Setup the logo in the Frame_logo using the imported function
-        self.Frame_logo = tk.Frame(self.Frame_main, width=100, height=100, bd=1, relief="solid")
-        self.Frame_logo.pack(pady=5)  # Pack the logo frame on the left side with some padding
+        # self.Frame_logo = cls_frame_normal(self.Frame_main, width=100, height=100)
+        self.Frame_logo = cls_frame_while_design(self.Frame_main, width=100, height=100, ControlTipText="Frame Logo")
+        self.Frame_logo.pack(pady=5)
         self.create_widgets_in_frame_logo()
         
         self.Frame_content = tk.Frame(self.Frame_main, bd=1, relief="solid")
@@ -72,36 +75,27 @@ class cls_Login_View(tk.Tk):
     def create_widgets_in_frame_content(self):
         parent_frame = self.Frame_content
         
-        # Frame to contain the password entry and the toggle button side by side
-        self.user_frame = tk.Frame(parent_frame)
-        self.user_frame.pack(pady=5)
-        self.create_widgets_in_frame_user()
+        # # Configure the grid layout to center the buttons
+        # parent_frame.grid_rowconfigure(0, weight=1)
+        # parent_frame.grid_rowconfigure(1, weight=1)
         
-        # Frame to contain the password entry and the toggle button side by side
-        self.password_frame = tk.Frame(parent_frame)
-        self.password_frame.pack(pady=5)
-        self.create_widgets_in_frame_password()
-        
-    def create_widgets_in_frame_user(self):
-        parent_frame = self.user_frame
+        parent_frame.grid_columnconfigure(0, weight=0)
+        parent_frame.grid_columnconfigure(1, weight=1)
+        parent_frame.grid_columnconfigure(2, weight=0)
+
         self.label_username = cls_my_label_num_01(parent_frame)
         self.label_username.configure(text="Username:")
-        self.label_username.pack(pady=5)
+        self.label_username.pack(anchor="w", padx=5)
 
         self.entry_username = cls_my_entry_num_01(parent_frame)
-        self.entry_username.configure(width=50)
-        self.entry_username.pack(pady=5)
+        self.entry_username.pack(anchor="w", padx=5)
         self.entry_username.focus_set()
-
-    
-    def create_widgets_in_frame_password(self):
-        parent_frame = self.password_frame
         
-        self.label_password_frame = tk.Frame(parent_frame)
-        self.label_password_frame.pack(side="top", pady=5)
+        self.label_password_frame = tk.Frame(parent_frame, bd=1, relief="solid")
+        self.label_password_frame.pack(anchor="w", padx=5)
         
-        self.entry_password_frame = tk.Frame(parent_frame)
-        self.entry_password_frame.pack(side="top", pady=5)
+        self.entry_password_frame = tk.Frame(parent_frame, bd=1, relief="solid")
+        self.entry_password_frame.pack(anchor="w", padx=5)
         
         self.label_password = cls_my_label_num_01(self.label_password_frame)
         self.label_password.configure(text="Password:")
@@ -114,8 +108,6 @@ class cls_Login_View(tk.Tk):
         self.entry_password.configure(show="*", width=30)
         self.entry_password.pack(side="left")
 
-        
-        
         # Button to toggle password visibility
         self.create_icons()
         self.toggle_password_button = cls_my_button_num_01(self.entry_password_frame)
@@ -124,7 +116,6 @@ class cls_Login_View(tk.Tk):
                                             image=self.icon_image_hide,
                                             compound="center"
                                             )
-        
         
     def create_icons(self):
         # Load the icon image
