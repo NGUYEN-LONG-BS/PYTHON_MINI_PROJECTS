@@ -29,6 +29,7 @@ class cls_menu_top:
         self.f_create_menu_Help(top_menu)
         self.f_create_menu_Test(top_menu)
         self.f_create_menu_Exit(top_menu)
+        self.f_create_menu_Signout(top_menu)
         
         # Set the menu bar for the root window
         self.parent.config(menu=top_menu)
@@ -58,6 +59,10 @@ class cls_menu_top:
     def f_create_menu_Exit(self, top_menu):
         # Create a "Exit" menu
         top_menu.add_command(label="Exit", command=self.f_destroy_current_window)
+        
+    def f_create_menu_Signout(self, top_menu):
+        # Create a "Exit" menu
+        top_menu.add_command(label="Sign out", command=self.f_menu_Help_Signout_click)
 
     def f_create_menu_Home(self, top_menu):
         # Create a "Home" menu
@@ -120,19 +125,19 @@ class cls_menu_top:
             menu_KinhDoanh_QuanLyTonKho_BaoCaoTonKho.add_command(label="Báo cáo tồn kho 01", command=self.f_do_nothing_click)
             menu_KinhDoanh_QuanLyTonKho_BaoCaoTonKho.add_command(label="Báo cáo tồn kho 02", command=self.f_do_nothing_click)
         
-        # Set font-size
-        f_utils_set_menu_font(menu_KinhDoanh)
-        f_utils_set_menu_font(menu_KinhDoanh_QuanLyGoiThau)
+            # Set font-size
+            f_utils_set_menu_font(menu_KinhDoanh)
+            f_utils_set_menu_font(menu_KinhDoanh_QuanLyGoiThau)
+            
+            f_utils_set_menu_font(menu_KinhDoanh_QuanLyYeuCauDatHang)
+            f_utils_set_menu_font(menu_KinhDoanh_QuanLyYeuCauDatHang_BaoCaoYCDH)
+            
+            f_utils_set_menu_font(menu_KinhDoanh_QuanLyKhachHang)
+            f_utils_set_menu_font(menu_KinhDoanh_QuanLyKhachHang_BaoCaoKH)
+            
+            f_utils_set_menu_font(menu_KinhDoanh_QuanLyTonKho)
+            f_utils_set_menu_font(menu_KinhDoanh_QuanLyTonKho_BaoCaoTonKho)
         
-        f_utils_set_menu_font(menu_KinhDoanh_QuanLyYeuCauDatHang)
-        f_utils_set_menu_font(menu_KinhDoanh_QuanLyYeuCauDatHang_BaoCaoYCDH)
-        
-        f_utils_set_menu_font(menu_KinhDoanh_QuanLyKhachHang)
-        f_utils_set_menu_font(menu_KinhDoanh_QuanLyKhachHang_BaoCaoKH)
-        
-        f_utils_set_menu_font(menu_KinhDoanh_QuanLyTonKho)
-        f_utils_set_menu_font(menu_KinhDoanh_QuanLyTonKho_BaoCaoTonKho)
-    
     def f_create_menu_vattu(self, top_menu):
         if self.f_check_permission("vattu") == False:
             menu_VatTu = tk.Menu(top_menu, tearoff=0)
@@ -145,7 +150,7 @@ class cls_menu_top:
             menu_VatTu.add_cascade(label="Quản lý đơn đặt hàng", menu=menu_VatTu_QuanLyDonDatHang)
             menu_VatTu.add_separator()
             
-            # menu_KinhDoanh level 2: menu_KinhDoanh_QuanLyGoiThau
+            # menu_KinhDoanh level 2:
             menu_VatTu_QuanLyDonDatHang.add_command(label="Đơn đặt hàng TALA", command=self.f_open_cls_VT0101_DonDatHang_View)
             menu_VatTu_QuanLyDonDatHang.add_command(label="Đơn đặt hàng TM", command=self.f_open_cls_VT0102_DonDatHang_TM_View)
             menu_VatTu_QuanLyDonDatHang.add_command(label="Nhật ký đơn đặt hàng", command=self.f_do_nothing_click)
@@ -154,9 +159,9 @@ class cls_menu_top:
             menu_VatTu.add_command(label="DS Yêu cầu đặt hàng", command=self.f_do_nothing_click)
             menu_VatTu.add_command(label="QL Nhà Cung cấp", command=self.f_do_nothing_click)
             
-        # Set font-size
-        f_utils_set_menu_font(menu_VatTu)
-        f_utils_set_menu_font(menu_VatTu_QuanLyDonDatHang)
+            # Set font-size
+            f_utils_set_menu_font(menu_VatTu)
+            f_utils_set_menu_font(menu_VatTu_QuanLyDonDatHang)
             
     def f_create_menu_kythuat(self, top_menu):
         if self.f_check_permission("kythuat") == False:
@@ -168,8 +173,8 @@ class cls_menu_top:
             menu_KyThuat.add_command(label="Yêu cầu KT 01", command=self.f_do_nothing_click)
             menu_KyThuat.add_command(label="Yêu cầu KT 02", command=self.f_do_nothing_click)
         
-        # Set font-size
-        f_utils_set_menu_font(menu_KyThuat)
+            # Set font-size
+            f_utils_set_menu_font(menu_KyThuat)
             
     def f_create_menu_taichinh(self, top_menu):
         if self.f_check_permission("taichinh") == False:
@@ -193,8 +198,8 @@ class cls_menu_top:
             TaiChinh_menu_Level_1.add_command(label="TC0103 |Thu chi tiền mặt", command=self.f_do_nothing_click)
             TaiChinh_menu_Level_1.add_command(label="TC0104 |Thu chi tiền gửi", command=self.f_do_nothing_click)
             
-        # Set font-size
-        f_utils_set_menu_font(menu_TaiChinh)
+            # Set font-size
+            f_utils_set_menu_font(menu_TaiChinh)
     
     def f_create_menu_Help(self, top_menu):
         # Create a "Help" menu

@@ -1,10 +1,9 @@
 import os
 import tkinter as tk
 from tkinter import messagebox
-from tkinter import PhotoImage
+# from tkinter import PhotoImage
 import json
 from PIL import Image, ImageTk
-
 from Components_View import cls_my_button_num_01, cls_my_label_num_01, cls_my_entry_num_01, cls_frame_while_design, cls_frame_normal
 from utils import *
 from utils.define import *
@@ -25,11 +24,11 @@ class cls_Login_View(tk.Tk):
         self.resizable(False, False)
 
         # Add your widgets and layout here (e.g., Entry fields, buttons)
-        # self.create_widgets_all_frames()
+        # self.f_create_widgets_all_frames()
         self.f_create_widgets()
 
-        # Bind Enter key to on_enter method
-        self.bind('<Return>', self.on_enter)
+        # Bind Enter key to f_on_enter method
+        self.bind('<Return>', self.f_on_enter)
     
     def f_create_widgets(self):
         # Logo Section
@@ -37,13 +36,15 @@ class cls_Login_View(tk.Tk):
         self.logo_frame.pack(pady=20)
 
         try:
-            logo_image = Image.open(os.path.join(os.path.abspath(os.path.join(os.path.dirname(__file__))), "assets/img/logo-Light.jpg"))  # Replace with your logo path
+            logo_image = Image.open(PATH_LOGO_LIGHT)
+            # logo_image = Image.open(os.path.join(os.path.abspath(os.path.join(os.path.dirname(__file__))), "../..", "assets/img/logo-Light.jpg"))
             logo_image = logo_image.resize((100, 42), Image.LANCZOS)
             self.logo = ImageTk.PhotoImage(logo_image)
             logo_label = tk.Label(self.logo_frame, image=self.logo, bg="#f0f0f5")
             logo_label.pack()
         except FileNotFoundError:
             tk.Label(self.logo_frame, text="[Logo Here]", font=("Arial", 16), bg="#f0f0f5", fg="#666").pack()
+            # print(os.path.join(os.path.abspath(os.path.join(os.path.dirname(__file__))), "....", "assets/img/logo-Light.jpg"))
 
         # Title Label
         self.title_label = tk.Label(self, text="Welcome Back!", font=("Helvetica", 20, "bold"), bg="#f0f0f5", fg="#333")
@@ -58,6 +59,7 @@ class cls_Login_View(tk.Tk):
 
         self.entry_username = tk.Entry(self.username_frame, font=("Arial", 12), bg="#ffffff", relief="solid", bd=1)
         self.entry_username.pack(fill="x", pady=5)
+        self.entry_username.focus_set()
 
         # Password Section
         self.password_frame = tk.Frame(self, bg="#f0f0f5")
@@ -70,21 +72,19 @@ class cls_Login_View(tk.Tk):
         self.entry_password.pack(fill="x", pady=5)
 
         # Toggle Password Visibility
-        self.toggle_password_button = tk.Button(self.password_frame, text="Show", font=("Arial", 10), command=self.toggle_password, relief="flat", bg="#f0f0f5", fg="#007bff", cursor="hand2")
-        self.toggle_password_button.pack(anchor="ne", pady=5)
+        self.button_toggle_password = tk.Button(self.password_frame, text="Show", font=("Arial", 10), command=self.f_toggle_password, relief="flat", bg="#f0f0f5", fg="#007bff", cursor="hand2")
+        self.button_toggle_password.pack(anchor="ne", pady=5)
 
         # Login Button
-        username = self.entry_username.get()
-        password = self.entry_password.get()
-        self.login_button = tk.Button(self, text="Login", font=("Arial", 14, "bold"), bg="#4CAF50", fg="white", relief="flat", command=self.controller.on_login, cursor="hand2")
+        self.login_button = tk.Button(self, text="Login", font=("Arial", 14, "bold"), bg="#4CAF50", fg="white", relief="flat", command=self.f_on_login, cursor="hand2")
         self.login_button.pack(pady=20, padx=30, fill="x")
 
         # Register Link
         self.register_label = tk.Label(self, text="Don't have an account? Register", font=("Arial", 10), bg="#f0f0f5", fg="#007bff", cursor="hand2")
         self.register_label.pack(pady=10)
-        self.register_label.bind("<Button-1>", lambda e: self.open_register())
+        self.register_label.bind("<Button-1>", lambda e: self.f_open_register())
     
-    def create_widgets_all_frames(self):
+    def f_create_widgets_all_frames(self):
         # self.Frame_main = tk.Frame(self)
         # self.Frame_main = cls_frame_normal(self)
         self.Frame_main = cls_frame_while_design(self, ControlTipText="Frame_main")
@@ -94,18 +94,18 @@ class cls_Login_View(tk.Tk):
         # self.Frame_logo = cls_frame_normal(self.Frame_main, width=100, height=100)
         self.Frame_logo = cls_frame_while_design(self.Frame_main, width=100, height=100, ControlTipText="Frame Logo")
         self.Frame_logo.pack(pady=5)
-        self.create_widgets_in_frame_logo()
+        self.f_create_widgets_in_frame_logo()
         
         self.Frame_content = tk.Frame(self.Frame_main, bd=1, relief="solid")
         self.Frame_content.pack(fill="both", expand=True)
-        self.create_widgets_in_frame_content()
+        self.f_create_widgets_in_frame_content()
         
         # Frame to contain the password entry and the toggle button side by side
         self.button_frame = tk.Frame(self.Frame_main, bd=1, relief="solid")
         self.button_frame.pack(fill="both", expand=True)
-        self.create_widgets_in_frame_buttons()
+        self.f_create_widgets_in_frame_buttons()
         
-    def create_widgets_in_frame_logo(self):
+    def f_create_widgets_in_frame_logo(self):
         # Load the logo image
         parent_frame = self.Frame_logo
         try:
@@ -126,7 +126,7 @@ class cls_Login_View(tk.Tk):
             error_label = tk.Label(parent_frame, text="Logo not found", font=("", 16))
             error_label.pack(fill="both", expand=True)
     
-    def create_widgets_in_frame_content(self):
+    def f_create_widgets_in_frame_content(self):
         parent_frame = self.Frame_content
         
         # # Configure the grid layout to center the buttons
@@ -163,15 +163,15 @@ class cls_Login_View(tk.Tk):
         self.entry_password.pack(side="left")
 
         # Button to toggle password visibility
-        self.create_icons()
-        self.toggle_password_button = cls_my_button_num_01(self.entry_password_frame)
-        self.toggle_password_button.pack(side="left", padx=5)
-        self.toggle_password_button.configure(command=self.toggle_password, font=("Arial", 10),
+        self.f_create_icons()
+        self.button_toggle_password = cls_my_button_num_01(self.entry_password_frame)
+        self.button_toggle_password.pack(side="left", padx=5)
+        self.button_toggle_password.configure(command=self.f_toggle_password, font=("Arial", 10),
                                             image=self.icon_image_hide,
                                             compound="center"
                                             )
         
-    def create_icons(self):
+    def f_create_icons(self):
         # Load the icon image
         icon_path_hide = os.path.join(PATH_ASSETS_ICONS, "icon-closed-eye-50.png")
         icon_image_hide = Image.open(icon_path_hide)
@@ -184,7 +184,7 @@ class cls_Login_View(tk.Tk):
         self.icon_image_hide = ImageTk.PhotoImage(icon_image_hide)
         self.icon_image_unhide = ImageTk.PhotoImage(icon_image_unhide)
         
-    def create_widgets_in_frame_buttons(self):
+    def f_create_widgets_in_frame_buttons(self):
         parent_frame = self.button_frame
         
         # Configure the grid layout to center the buttons
@@ -195,62 +195,57 @@ class cls_Login_View(tk.Tk):
         parent_frame.grid_columnconfigure(4, weight=1)
         
         self.login_button = cls_my_button_num_01(parent_frame)
-        self.login_button.configure(text="Login", width=10, command=self.on_login, font=("Arial", 10))
+        self.login_button.configure(text="Login", width=10, command=self.f_on_login, font=("Arial", 10))
         # self.login_button.pack(side="left", padx=10, anchor="center")
         self.login_button.grid(row=0, column=1, padx=10, pady=5, sticky="ew")
         
         self.register_button = cls_my_button_num_01(parent_frame)
-        self.register_button.configure(text="Register", width=10, command=self.on_register, font=("Arial", 10))
+        self.register_button.configure(text="Register", width=10, command=self.f_on_register, font=("Arial", 10))
         # self.register_button.pack(side="left", padx=10, anchor="center")
         self.register_button.grid(row=0, column=3, padx=10, pady=5, sticky="ew")
 
-    def on_logo_click(self, event):
-        # Define the action to be taken when the logo is clicked
-        print("Logo clicked")
-
-    def on_login(self):
+    def f_on_login(self):
         username = self.entry_username.get()
         password = self.entry_password.get()
-        self.controller.handle_login(username, password)
+        self.controller.f_handle_login(username, password)
         
-    def on_register(self):
+    def f_on_register(self):
         self.destroy()
-        self.open_register()
+        self.f_open_register()
 
-    def set_controller(self, controller):
+    def f_set_controller(self, controller):
         self.controller = controller
         # print(f"Controller được set: {self.controller}")
 
-    def show_message(self, login_sucess):
+    def f_show_message(self, login_sucess):
         if login_sucess == True:
-            self.write_credentials_to_json(self.entry_username.get(), self.entry_password.get())
-            self.open_dashboard()
+            self.f_write_credentials_to_json(self.entry_username.get(), self.entry_password.get())
+            self.f_open_dashboard()
         else:
             # self.message_label.config(text="Invalid username or password.")
             messagebox.showerror("Error", "Invalid username or password")
     
-    def open_dashboard(self):
+    def f_open_dashboard(self):
         self.destroy()
         f_utils_open_dashboard()
         
-    def open_register(self):
+    def f_open_register(self):
         from AD0002_register_View import cls_Register_View
         cls_Register_View()
     
-    def toggle_password(self):
+    def f_toggle_password(self):
         # Toggle the password visibility
         if self.entry_password.cget('show') == '*':
             self.entry_password.config(show='')
-            # self.toggle_password_button.config(image=self.icon_image_unhide)
+            self.button_toggle_password.config(text="Hide")
         else:
             self.entry_password.config(show='*')
-            # self.toggle_password_button.config(image=self.icon_image_hide)
+            self.button_toggle_password.config(text="Show")
         
-    def write_credentials_to_json(self, username, password):    # Function to write credentials to a JSON file
+    def f_write_credentials_to_json(self, username, password):    # Function to write credentials to a JSON file
         # Xác định đường dẫn file json
         base_dir = os.path.dirname(__file__)
         json_file = os.path.join(base_dir, 'login_credentials.json')
-        # print(json_file)
         
         # Create a dictionary with the credentials
         data = {
@@ -265,8 +260,8 @@ class cls_Login_View(tk.Tk):
         except Exception as e:
             print(f"Error saving credentials: {e}")
 
-    def on_enter(self, event):
-        self.on_login()
+    def f_on_enter(self, event):
+        self.f_on_login()
 
 
 # Controller: The logic and interaction between the model and view
@@ -274,14 +269,14 @@ class cls_Login_Controller:
     def __init__(self, model, view):
         self.model = model
         self.view = view
-        self.view.set_controller(self)
+        self.view.f_set_controller(self)
 
-    def handle_login(self, username, password):
+    def f_handle_login(self, username, password):
         # Xử lý đăng nhập
-        if self.model.validate_user(username, password):
-            self.view.show_message(True)
+        if self.model.f_validate_user(username, password):
+            self.view.f_show_message(True)
         else:
-            self.view.show_message(False)
+            self.view.f_show_message(False)
 
 # Model: Handles data
 class cls_User_Model:
@@ -295,6 +290,6 @@ class cls_User_Model:
             "kt1": "123"        # kỹ thuật
         }
 
-    def validate_user(self, username, password):
+    def f_validate_user(self, username, password):
         # Validate the user's credentials
         return self.credentials.get(username) == password
