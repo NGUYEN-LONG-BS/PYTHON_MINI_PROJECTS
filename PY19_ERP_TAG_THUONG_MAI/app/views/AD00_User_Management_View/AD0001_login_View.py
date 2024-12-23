@@ -18,17 +18,71 @@ class cls_Login_View(tk.Tk):
         model = cls_User_Model()
         self.controller = cls_Login_Controller(model, self)
         
-        self.title("AD0001 - Login")
-        f_utils_set_window_size_is_4_per_5_screen(self, 400, 300)
+        self.title("AD0001 - Login Form")
+        f_utils_set_window_size_is_4_per_5_screen(self, 400, 500)
         f_utils_set_center_screen(self)
         f_utils_setup_fav_icon(self)
         self.resizable(False, False)
 
         # Add your widgets and layout here (e.g., Entry fields, buttons)
-        self.create_widgets_all_frames()
+        # self.create_widgets_all_frames()
+        self.f_create_widgets()
 
         # Bind Enter key to on_enter method
         self.bind('<Return>', self.on_enter)
+    
+    def f_create_widgets(self):
+        # Logo Section
+        self.logo_frame = tk.Frame(self, bg="#f0f0f5")
+        self.logo_frame.pack(pady=20)
+
+        try:
+            logo_image = Image.open(os.path.join(os.path.abspath(os.path.join(os.path.dirname(__file__))), "assets/img/logo-Light.jpg"))  # Replace with your logo path
+            logo_image = logo_image.resize((100, 42), Image.LANCZOS)
+            self.logo = ImageTk.PhotoImage(logo_image)
+            logo_label = tk.Label(self.logo_frame, image=self.logo, bg="#f0f0f5")
+            logo_label.pack()
+        except FileNotFoundError:
+            tk.Label(self.logo_frame, text="[Logo Here]", font=("Arial", 16), bg="#f0f0f5", fg="#666").pack()
+
+        # Title Label
+        self.title_label = tk.Label(self, text="Welcome Back!", font=("Helvetica", 20, "bold"), bg="#f0f0f5", fg="#333")
+        self.title_label.pack(pady=10)
+
+        # Username Section
+        self.username_frame = tk.Frame(self, bg="#f0f0f5")
+        self.username_frame.pack(pady=10, padx=30, fill="x")
+
+        self.username_label = tk.Label(self.username_frame, text="Username", font=("Arial", 12), bg="#f0f0f5", anchor="w")
+        self.username_label.pack(fill="x")
+
+        self.entry_username = tk.Entry(self.username_frame, font=("Arial", 12), bg="#ffffff", relief="solid", bd=1)
+        self.entry_username.pack(fill="x", pady=5)
+
+        # Password Section
+        self.password_frame = tk.Frame(self, bg="#f0f0f5")
+        self.password_frame.pack(pady=10, padx=30, fill="x")
+
+        self.password_label = tk.Label(self.password_frame, text="Password", font=("Arial", 12), bg="#f0f0f5", anchor="w")
+        self.password_label.pack(fill="x")
+
+        self.entry_password = tk.Entry(self.password_frame, font=("Arial", 12), bg="#ffffff", relief="solid", bd=1, show="*")
+        self.entry_password.pack(fill="x", pady=5)
+
+        # Toggle Password Visibility
+        self.toggle_password_button = tk.Button(self.password_frame, text="Show", font=("Arial", 10), command=self.toggle_password, relief="flat", bg="#f0f0f5", fg="#007bff", cursor="hand2")
+        self.toggle_password_button.pack(anchor="ne", pady=5)
+
+        # Login Button
+        username = self.entry_username.get()
+        password = self.entry_password.get()
+        self.login_button = tk.Button(self, text="Login", font=("Arial", 14, "bold"), bg="#4CAF50", fg="white", relief="flat", command=self.controller.on_login, cursor="hand2")
+        self.login_button.pack(pady=20, padx=30, fill="x")
+
+        # Register Link
+        self.register_label = tk.Label(self, text="Don't have an account? Register", font=("Arial", 10), bg="#f0f0f5", fg="#007bff", cursor="hand2")
+        self.register_label.pack(pady=10)
+        self.register_label.bind("<Button-1>", lambda e: self.open_register())
     
     def create_widgets_all_frames(self):
         # self.Frame_main = tk.Frame(self)
@@ -172,7 +226,8 @@ class cls_Login_View(tk.Tk):
             self.write_credentials_to_json(self.entry_username.get(), self.entry_password.get())
             self.open_dashboard()
         else:
-            self.message_label.config(text="Invalid username or password.")
+            # self.message_label.config(text="Invalid username or password.")
+            messagebox.showerror("Error", "Invalid username or password")
     
     def open_dashboard(self):
         self.destroy()
@@ -186,10 +241,10 @@ class cls_Login_View(tk.Tk):
         # Toggle the password visibility
         if self.entry_password.cget('show') == '*':
             self.entry_password.config(show='')
-            self.toggle_password_button.config(image=self.icon_image_unhide)
+            # self.toggle_password_button.config(image=self.icon_image_unhide)
         else:
             self.entry_password.config(show='*')
-            self.toggle_password_button.config(image=self.icon_image_hide)
+            # self.toggle_password_button.config(image=self.icon_image_hide)
         
     def write_credentials_to_json(self, username, password):    # Function to write credentials to a JSON file
         # Xác định đường dẫn file json
