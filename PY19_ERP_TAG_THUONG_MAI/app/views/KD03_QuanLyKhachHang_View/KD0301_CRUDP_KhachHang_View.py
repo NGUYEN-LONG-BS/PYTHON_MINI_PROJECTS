@@ -1,7 +1,9 @@
 import tkinter as tk
 from tkinter import ttk
-from utils import *
 from Components_View import *
+from utils import *
+from utils.define import *
+
 
 class cls_KD0301_CRUDP_KhachHang_View(tk.Tk):
 

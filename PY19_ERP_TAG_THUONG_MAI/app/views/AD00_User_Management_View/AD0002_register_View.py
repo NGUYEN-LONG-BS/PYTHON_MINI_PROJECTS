@@ -49,4 +49,5 @@ class cls_Register_View(tk.Tk):
     def f_button_login_click(self):
         self.destroy()
         from AD0001_login_View import cls_Login_View
-        cls_Login_View()
+        new_view = cls_Login_View()
+        new_view.focus_force()

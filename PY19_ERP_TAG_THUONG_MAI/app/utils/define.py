@@ -3,8 +3,13 @@ import os
 # Define paths
 PATH_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 PATH_ASSETS_ICONS = os.path.join(PATH_ROOT, "assets/icons")
+
 PATH_LOGO_LIGHT = os.path.join(PATH_ROOT, "assets/img/logo-Light.jpg")
 PATH_LOGO_DARK = os.path.join(PATH_ROOT, "assets/img/logo-Dark.jpg")
+
+PATH_ICON_HIDE = os.path.join(PATH_ASSETS_ICONS, "icon-closed-eye-50.png")
+PATH_ICON_UNHIDE = os.path.join(PATH_ASSETS_ICONS, "icon-opening-eye-26.png")
+
 
 # Window dimensions and positions
 WINDOW_WIDTH = 600
@@ -25,7 +30,6 @@ BG_COLOR_0_2 = "#f0f0f9"
 BG_COLOR_1 = "#f0f0f0"
 
 
-
 COLOR_GRAY = "#f0f0f0"
 COLOR_BLACK = "#726461"
 COLOR_RED = "#ff3333"
@@ -36,8 +40,10 @@ COLOR_PURPLE = "#a64dff"
 COLOR_YELLOW = "#ffff00"
 COLOR_PINK = "#f7b5e2"
 
-
+# Font
+FONT_DEFAULT_NUM_01 = ("Arial", 10)
 
 # Border size
 BORDER_SIZE_0 = 0
 BORDER_SIZE_1 = 0
+
