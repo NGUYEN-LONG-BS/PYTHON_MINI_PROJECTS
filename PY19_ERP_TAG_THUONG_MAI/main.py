@@ -30,7 +30,8 @@ class App:
                                     'AD01_Dashboard_View',
                                     'AD02_SETTINGS_View',
                                     'KD01_QuanLyGoiThau_View', 'KD01_QuanLyGoiThau_TEST_01', 'KD01_QuanLyGoiThau_TEST_02',
-                                    'KD02_QuanLyYeuCauDatHang_View','KD02_QuanLyYeuCauDatHang_TEST_01'
+                                    'KD02_QuanLyYeuCauDatHang_View','KD02_QuanLyYeuCauDatHang_TEST_01',
+                                    'KD03_QuanLyKhachHang_View'
                                     ]
         for subdir in app_views_subdirectories:
             subdir_path = os.path.join(app_path, "views", subdir)
@@ -39,7 +40,9 @@ class App:
                 
         # Thêm các thư mục con của controllers
         app_controllers_subdirectories = ['KD01_QuanLyGoiThau', 'KD0101_QuanLyGoiThau_Controller',
-                                          'KD02_QuanLyYeuCauDatHang_Controller', 'KD02_QuanLyYeuCauDatHang']
+                                          'KD02_QuanLyYeuCauDatHang_Controller', 'KD02_QuanLyYeuCauDatHang',
+                                          'KD03_QuanLyKhachHang_Controller'
+                                          ]
         for subdir in app_controllers_subdirectories:
             subdir_path = os.path.join(app_path, "controllers", subdir)
             if subdir_path not in sys.path:
@@ -48,7 +51,9 @@ class App:
         # Thêm các thư mục con của models
         app_models_subdirectories = ['KD01_QuanLyGoiThau','KD02_QuanLyYeuCauDatHang',
                                      'KD0101_QuanLyGoiThau_Model',
-                                     'KD02_QuanLyYeuCauDatHang_Model']
+                                     'KD02_QuanLyYeuCauDatHang_Model',
+                                     'KD03_QuanLyKhachHang_Model'
+                                     ]
         for subdir in app_models_subdirectories:
             subdir_path = os.path.join(app_path, "models", subdir)
             if subdir_path not in sys.path:

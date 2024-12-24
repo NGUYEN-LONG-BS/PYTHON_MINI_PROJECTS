@@ -101,8 +101,8 @@ class cls_menu_top:
             menu_KinhDoanh_QuanLyYeuCauDatHang.add_cascade(label="Báo cáo YCDH", menu=menu_KinhDoanh_QuanLyYeuCauDatHang_BaoCaoYCDH)
             
             # menu_KinhDoanh level 2: menu_KinhDoanh_QuanLyKhachHang
-            menu_KinhDoanh_QuanLyKhachHang.add_command(label="KD0301 |Quản lý khách hàng", command=self.f_do_nothing_click)
-            menu_KinhDoanh_QuanLyKhachHang.add_command(label="KD0301 |Tạo mới khách hàng", command=self.f_do_nothing_click)
+            menu_KinhDoanh_QuanLyKhachHang.add_command(label="KD0301 |Tạo mới khách hàng", command=self.f_KD_CRUDP_KhachHang_click)
+            menu_KinhDoanh_QuanLyKhachHang.add_command(label="KD0302 |Quản lý khách hàng", command=self.f_do_nothing_click)
             menu_KinhDoanh_QuanLyKhachHang.add_separator()
             menu_KinhDoanh_QuanLyKhachHang_BaoCaoKH = tk.Menu(menu_KinhDoanh_QuanLyKhachHang, tearoff=0)
             menu_KinhDoanh_QuanLyKhachHang.add_cascade(label="Báo cáo khách hàng", menu=menu_KinhDoanh_QuanLyKhachHang_BaoCaoKH)
@@ -257,6 +257,10 @@ class cls_menu_top:
         print("f_QLYCDH_TALA_click selected")
         self.f_open_KD02QuanLyYeuCauDatHangView()
         
+    def f_KD_CRUDP_KhachHang_click(self):
+        print("f_KD_QuanLyKhachHang_click selected")
+        self.f_open_KD0301_CRUDP_KhachHang_View()
+        
     def f_QLYCDH_TM_click(self):
         print("f_QLYCDH_TM_click selected")
     
@@ -295,6 +299,14 @@ class cls_menu_top:
         f_utils_set_center_screen(new_view)
         new_view.focus_force()
         
+    def f_open_KD0301_CRUDP_KhachHang_View(self):
+        from views.KD03_QuanLyKhachHang_View.KD0301_CRUDP_KhachHang_View import cls_KD0301_CRUDP_KhachHang_View
+        self.parent.destroy()
+        new_view = cls_KD0301_CRUDP_KhachHang_View()
+        new_view.dashboard = self.parent
+        f_utils_set_window_size_is_4_per_5_screen(new_view)
+        f_utils_set_center_screen(new_view)
+        new_view.focus_force()
     
     def f_open_KD01_01QuanLyGoiThauView(self):
         from views.KD01_QuanLyGoiThau_TEST_02.KD01_01QuanLyGoiThauView import cls_View
