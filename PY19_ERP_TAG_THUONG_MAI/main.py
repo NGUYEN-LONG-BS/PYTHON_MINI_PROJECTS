@@ -24,7 +24,7 @@ class App:
             if subdir_path not in sys.path:
                 sys.path.append(subdir_path)
         
-        # Thêm các thư mục con của views
+        # Thêm các thư mục con của viewsad,
         app_views_subdirectories = ['Components_View',
                                     'AD00_User_Management_View',
                                     'AD01_Dashboard_View',

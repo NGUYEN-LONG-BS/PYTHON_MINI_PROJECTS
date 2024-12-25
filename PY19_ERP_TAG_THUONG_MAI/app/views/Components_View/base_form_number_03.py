@@ -12,9 +12,8 @@ class cls_base_form_number_03_DashBoard(tk.Tk):
         self.title_of_form = title_of_form
         self.title(self.title_of_form)
         
-        f_utils_setup_fav_icon(self)
-        
         # Set up favicon and window configuration
+        f_utils_setup_fav_icon(self)
         self.f_Thiet_lap_Kich_thuoc_Cua_So()
         
         # Set up reusable components
@@ -24,7 +23,14 @@ class cls_base_form_number_03_DashBoard(tk.Tk):
         parent_window = self.winfo_toplevel()
         parent_window.protocol("WM_DELETE_WINDOW", self._close_window_Click)
         
-        
+    def f_set_initial_frame_widths(self):
+        # Set the initial width of the left and right frames to 10
+        self.frame_left_body.config(width=10)
+        self.frame_right_body.config(width=10)
+        total_width = self.frame_main.winfo_width()
+        middle_width = total_width - 20
+        self.frame_middle_body.config(width=middle_width)
+    
     def f_Thiet_lap_Kich_thuoc_Cua_So(self):
         """Configures window size and position."""
         f_utils_set_window_size_is_4_per_5_screen(self, 0, 0)
@@ -62,6 +68,7 @@ class cls_base_form_number_03_DashBoard(tk.Tk):
         if frame_main:
             frame_main.rowconfigure(0, weight=1)
             frame_main.columnconfigure(0, weight=1)
+        
             
     def _close_window_Click(self):
         self.destroy()
@@ -72,9 +79,9 @@ class cls_base_form_number_03_DashBoard(tk.Tk):
     
     def f_add_elements_to_frame_main(self):
         # Create 3 Frame
-        self.frame_left_body = tk.Frame(self.frame_main, bg="yellow")
-        self.frame_middle_body = tk.Frame(self.frame_main, bg="white")
-        self.frame_right_body = tk.Frame(self.frame_main, bg="green")
+        self.frame_left_body = tk.Frame(self.frame_main, bg=COLOR_HIGHLIGHT_LIGHT_ORANGE)
+        self.frame_middle_body = tk.Frame(self.frame_main, bg=COLOR_BACKGROUND)
+        self.frame_right_body = tk.Frame(self.frame_main, bg=COLOR_HIGHLIGHT_LIGHT_GREEN)
         # Pack frames
         self.frame_left_body.pack(side="left", fill="both", expand=True)
         self.frame_middle_body.pack(side="left", fill="both", expand=True)
@@ -105,7 +112,7 @@ class cls_base_form_number_03_DashBoard(tk.Tk):
     def _frame_right_body_Hover(self):
         total_width = self.frame_main.winfo_width()
         left_width = 10
-        right_width = 200
+        right_width = 100
         middle_width = total_width - left_width - right_width
         self._animate_frame_width(self.frame_left_body, left_width)
         self._animate_frame_width(self.frame_middle_body, middle_width)
@@ -122,3 +129,5 @@ class cls_base_form_number_03_DashBoard(tk.Tk):
 
         frame.config(width=new_width)
         self.after(2, self._animate_frame_width, frame, target_width, step)
+        
+
