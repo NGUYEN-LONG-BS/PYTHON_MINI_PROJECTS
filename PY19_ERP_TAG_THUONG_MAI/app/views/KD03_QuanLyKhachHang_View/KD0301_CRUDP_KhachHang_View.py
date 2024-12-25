@@ -5,7 +5,7 @@ from utils import *
 from utils.define import *
 
 
-class cls_KD0301_CRUDP_KhachHang_View(tk.Tk):
+class cls_KD0301_CRUDP_KhachHang_View(cls_base_form_number_02):
 
     def __init__(self):
         super().__init__()  # Gọi phương thức __init__ của lớp cha

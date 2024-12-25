@@ -5,7 +5,7 @@ from utils import *
 from utils.define import *
 import datetime
 
-class cls_base_form_number_01(tk.Tk):
+class cls_base_form_number_01_EntryForm(tk.Tk):
     def __init__(self, title_of_form="Default Title", name_of_slip="Default Name"):
         super().__init__()  # Gọi phương thức __init__ của lớp cha
         self.name_of_slip = name_of_slip
