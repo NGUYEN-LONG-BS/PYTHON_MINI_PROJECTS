@@ -94,44 +94,25 @@ class cls_base_form_number_02_ManyTabs(tk.Tk):
         self.notebook.add(self.tab3, text="Tab-03")
 
         # Settings tab content
-        self.f_create_widgets_of_tab_01()
-        self.f_create_widgets_of_tab_02()
-        self.f_create_widgets_of_tab_03()
+        self._f_create_widgets_of_tab_01()
+        self._f_create_widgets_of_tab_02()
+        self._f_create_widgets_of_tab_03()
         
-    def f_create_widgets_of_tab_01(self):
+    def _f_create_widgets_of_tab_01(self):
         # Create form fields
         self.frame_content_of_tab_01 = ttk.Frame(self.tab1, padding="20")
         self.frame_content_of_tab_01.pack(fill="both", expand=True)
         
         tk.Label(self.frame_content_of_tab_01, text="Tiêu đề tab-01", font=("Arial", 18)).grid(column=0, row=0, columnspan=2)
 
-        # tk.Label(frame_content_of_tab_01, text="Name:", font=("Arial", 12)).grid(column=0, row=1)
-        # self.name_entry = tk.Entry(frame_content_of_tab_01, font=("Arial", 12), width=30)
-        # self.name_entry.grid(column=1, row=1)
-
-        # tk.Label(frame_content_of_tab_01, text="Email:", font=("Arial", 12)).grid(column=0, row=2)
-        # self.email_entry = tk.Entry(frame_content_of_tab_01, font=("Arial", 12), width=30)
-        # self.email_entry.grid(column=1, row=2)
-
-        # tk.Label(frame_content_of_tab_01, text="Phone:", font=("Arial", 12)).grid(column=0, row=3)
-        # self.phone_entry = tk.Entry(frame_content_of_tab_01, font=("Arial", 12), width=30)
-        # self.phone_entry.grid(column=1, row=3)
-
-        # tk.Label(frame_content_of_tab_01, text="Address:", font=("Arial", 12)).grid(column=0, row=4)
-        # self.address_entry = tk.Text(frame_content_of_tab_01, font=("Arial", 12), height=5, width=30)
-        # self.address_entry.grid(column=1, row=4)
-
-        # submit_button = tk.Button(frame_content_of_tab_01, text="Register", command=self.f_submit_button_click, bg="#007bff", fg="white", font=("Arial", 12))
-        # submit_button.grid(column=1, row=5, pady=10)
-
-    def f_create_widgets_of_tab_02(self):
+    def _f_create_widgets_of_tab_02(self):
         # Create form fields
         self.frame_content_of_tab_02 = ttk.Frame(self.tab2, padding="20")
         self.frame_content_of_tab_02.pack(fill="both", expand=True)
         
         tk.Label(self.frame_content_of_tab_02, text="Tiêu đề tab-02", font=("Arial", 18)).grid(column=0, row=0, columnspan=2)
     
-    def f_create_widgets_of_tab_03(self):
+    def _f_create_widgets_of_tab_03(self):
         # Create form fields
         self.frame_content_of_tab_03 = ttk.Frame(self.tab3, padding="20")
         self.frame_content_of_tab_03.pack(fill="both", expand=True)
