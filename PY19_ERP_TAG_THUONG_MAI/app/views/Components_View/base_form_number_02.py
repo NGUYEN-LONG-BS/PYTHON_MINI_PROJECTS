@@ -79,29 +79,8 @@ class cls_base_form_number_02_ManyTabs(tk.Tk):
         f_utils_open_dashboard()
     
     def f_add_elements_to_frame_body(self):
-        # Add Frame_Info_of_Slip at the top
-        # self.frame_info_of_slip = tk.Frame(self.Frame_Body, bg="lightblue")
-        # self.frame_info_of_slip.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
-        
-        # # Add Frame_Treeview
-        # self.frame_treeview = tk.Frame(self.Frame_Body, bg="white")
-        # self.frame_treeview.grid(row=1, column=0, sticky="nsew", padx=5, pady=5)
-        
-        # # Add Frame_Button
-        # self.frame_button = tk.Frame(self.Frame_Body, bg="gray")
-        # self.frame_button.grid(row=2, column=0, sticky="ew", padx=5, pady=5)
-        
-        # # Configure internal rows and columns in Frame_Body
-        # self.Frame_Body.rowconfigure(0, weight=0)  # Info of Slip
-        # self.Frame_Body.rowconfigure(1, weight=1)  # Treeview (expandable)
-        # self.Frame_Body.rowconfigure(2, weight=0)  # Button
-        # self.Frame_Body.columnconfigure(0, weight=1)
-        
-        # # Add elements to frame_info_of_slip
-        # self.f_add_elements_to_frame_info_of_slip()
-        # # Add elements to frame_button
-        # self.f_add_elements_to_frame_button()
-        self.notebook = ttk.Notebook(self)
+        # Create a notebook (tabs)
+        self.notebook = ttk.Notebook(self.Frame_Body)
         self.notebook.pack(fill="both", expand=True)
 
         # Create tabs
@@ -110,104 +89,54 @@ class cls_base_form_number_02_ManyTabs(tk.Tk):
         self.tab3 = ttk.Frame(self.notebook)
 
         # Add tabs to notebook
-        self.notebook.add(self.tab1, text="Thông tin")
-        self.notebook.add(self.tab2, text="Phân loại")
-        self.notebook.add(self.tab3, text="About")
+        self.notebook.add(self.tab1, text="Tab-01")
+        self.notebook.add(self.tab2, text="Tab-02")
+        self.notebook.add(self.tab3, text="Tab-03")
 
         # Settings tab content
-        tk.Label(self.tab2, text="Settings", font=("Arial", 24)).pack(pady=20)
-        tk.Checkbutton(self.tab2, text="Option 1").pack()
-        tk.Checkbutton(self.tab2, text="Option 2").pack()
-
-        # About tab content
-        tk.Label(self.tab3, text="About us", font=("Arial", 24)).pack(pady=20)
-        tk.Label(self.tab3, text="This is a beautiful dashboard made with Tkinter.").pack(pady=10)
-        
         self.f_create_widgets_of_tab_01()
+        self.f_create_widgets_of_tab_02()
+        self.f_create_widgets_of_tab_03()
         
     def f_create_widgets_of_tab_01(self):
         # Create form fields
-        form_fields = ttk.Frame(self.tab1, padding="20")
-        form_fields.pack(fill="both", expand=True)
+        self.frame_content_of_tab_01 = ttk.Frame(self.tab1, padding="20")
+        self.frame_content_of_tab_01.pack(fill="both", expand=True)
         
-        tk.Label(form_fields, text="Thông tin khách hàng", font=("Arial", 18)).grid(column=0, row=0, columnspan=2)
+        tk.Label(self.frame_content_of_tab_01, text="Tiêu đề tab-01", font=("Arial", 18)).grid(column=0, row=0, columnspan=2)
 
-        tk.Label(form_fields, text="Name:", font=("Arial", 12)).grid(column=0, row=1)
-        self.name_entry = tk.Entry(form_fields, font=("Arial", 12), width=30)
-        self.name_entry.grid(column=1, row=1)
+        # tk.Label(frame_content_of_tab_01, text="Name:", font=("Arial", 12)).grid(column=0, row=1)
+        # self.name_entry = tk.Entry(frame_content_of_tab_01, font=("Arial", 12), width=30)
+        # self.name_entry.grid(column=1, row=1)
 
-        tk.Label(form_fields, text="Email:", font=("Arial", 12)).grid(column=0, row=2)
-        self.email_entry = tk.Entry(form_fields, font=("Arial", 12), width=30)
-        self.email_entry.grid(column=1, row=2)
+        # tk.Label(frame_content_of_tab_01, text="Email:", font=("Arial", 12)).grid(column=0, row=2)
+        # self.email_entry = tk.Entry(frame_content_of_tab_01, font=("Arial", 12), width=30)
+        # self.email_entry.grid(column=1, row=2)
 
-        tk.Label(form_fields, text="Phone:", font=("Arial", 12)).grid(column=0, row=3)
-        self.phone_entry = tk.Entry(form_fields, font=("Arial", 12), width=30)
-        self.phone_entry.grid(column=1, row=3)
+        # tk.Label(frame_content_of_tab_01, text="Phone:", font=("Arial", 12)).grid(column=0, row=3)
+        # self.phone_entry = tk.Entry(frame_content_of_tab_01, font=("Arial", 12), width=30)
+        # self.phone_entry.grid(column=1, row=3)
 
-        tk.Label(form_fields, text="Address:", font=("Arial", 12)).grid(column=0, row=4)
-        self.address_entry = tk.Text(form_fields, font=("Arial", 12), height=5, width=30)
-        self.address_entry.grid(column=1, row=4)
+        # tk.Label(frame_content_of_tab_01, text="Address:", font=("Arial", 12)).grid(column=0, row=4)
+        # self.address_entry = tk.Text(frame_content_of_tab_01, font=("Arial", 12), height=5, width=30)
+        # self.address_entry.grid(column=1, row=4)
 
-        submit_button = tk.Button(form_fields, text="Register", command=self.f_submit_button_click, bg="#007bff", fg="white", font=("Arial", 12))
-        submit_button.grid(column=1, row=5, pady=10)
+        # submit_button = tk.Button(frame_content_of_tab_01, text="Register", command=self.f_submit_button_click, bg="#007bff", fg="white", font=("Arial", 12))
+        # submit_button.grid(column=1, row=5, pady=10)
+
+    def f_create_widgets_of_tab_02(self):
+        # Create form fields
+        self.frame_content_of_tab_02 = ttk.Frame(self.tab2, padding="20")
+        self.frame_content_of_tab_02.pack(fill="both", expand=True)
+        
+        tk.Label(self.frame_content_of_tab_02, text="Tiêu đề tab-02", font=("Arial", 18)).grid(column=0, row=0, columnspan=2)
     
-    # def f_add_elements_to_frame_info_of_slip(self):
-    #     from Components_View import cls_my_entry_num_01
+    def f_create_widgets_of_tab_03(self):
+        # Create form fields
+        self.frame_content_of_tab_03 = ttk.Frame(self.tab3, padding="20")
+        self.frame_content_of_tab_03.pack(fill="both", expand=True)
         
-    #     # Get today's date in the format dd/mm/yyyy
-    #     today = datetime.datetime.today().strftime('%d/%m/%Y')
-        
-    #     # Row 0: Date
-    #     label_date_on_slip = tk.Label(self.frame_info_of_slip, text=f"Ngày:")
-    #     label_date_on_slip.grid(row=0, column=0, padx=10, pady=5, sticky="w")
-        
-    #     entry_date_on_slip = cls_my_entry_num_01(self.frame_info_of_slip)
-    #     entry_date_on_slip.insert(0, today)  # Set the default value
-    #     entry_date_on_slip.grid(row=0, column=1, padx=10, pady=5)
-        
-    #     # Row 0: Slip Number
-    #     label_number_of_slip = tk.Label(self.frame_info_of_slip, text=f"Số phiếu:")
-    #     label_number_of_slip.grid(row=0, column=2, padx=10, pady=5, sticky="w")
-        
-    #     entry_number_of_slip = cls_my_entry_num_01(self.frame_info_of_slip)
-    #     entry_number_of_slip.insert(0, "")  # Set the default value
-    #     entry_number_of_slip.grid(row=0, column=3, padx=10, pady=5, sticky="w")
-        
-    #     # Row 1: Customer ID
-    #     label_ma_doi_tuong = tk.Label(self.frame_info_of_slip, text=f"Mã KH:")
-    #     label_ma_doi_tuong.grid(row=1, column=0, padx=10, pady=5, sticky="w")
-        
-    #     entry_ma_doi_tuong = cls_my_entry_num_01(self.frame_info_of_slip)
-    #     entry_ma_doi_tuong.insert(0, "")  # Set the default value
-    #     entry_ma_doi_tuong.grid(row=1, column=1, padx=10, pady=5)
-        
-    #     # Row 1: Customer Name - Span to the end of the frame
-    #     label_ten_doi_tuong = tk.Label(self.frame_info_of_slip, text=f"Tên KH:")
-    #     label_ten_doi_tuong.grid(row=1, column=2, padx=10, pady=5, sticky="w")
-        
-    #     entry_ten_doi_tuong = cls_my_entry_num_01(self.frame_info_of_slip)
-    #     entry_ten_doi_tuong.insert(0, "")  # Set the default value
-    #     entry_ten_doi_tuong.grid(row=1, column=3, columnspan=2, padx=10, pady=5, sticky="ew")
-        
-    #     # Configure grid to stretch properly
-    #     self.frame_info_of_slip.grid_columnconfigure(3, weight=2)  # Allow column 3 to expand to fill the space
-        
-    # def f_add_elements_to_frame_button(self):
-    #     from Components_View import cls_my_button_num_01
-        
-    #     Button_01 = cls_my_button_num_01(self.frame_button, text="BTN 01", command=self.f_do_nothing)
-    #     Button_01.grid(row=0, column=0, padx=10, pady=5, sticky="ew")
-        
-    #     Button_02 = cls_my_button_num_01(self.frame_button, text="BTN 02", command=self.f_do_nothing)
-    #     Button_02.grid(row=0, column=1, padx=10, pady=5, sticky="ew")
-        
-    #     Button_03 = cls_my_button_num_01(self.frame_button, text="BTN 03", command=self.f_do_nothing)
-    #     Button_03.grid(row=0, column=2, padx=10, pady=5, sticky="ew")
-        
-    #     # Configure grid columns to expand equally
-    #     self.frame_button.grid_columnconfigure(0, weight=1)
-    #     self.frame_button.grid_columnconfigure(1, weight=1)
-    #     self.frame_button.grid_columnconfigure(2, weight=1)
+        tk.Label(self.frame_content_of_tab_03, text="Tiêu đề tab-03", font=("Arial", 18)).grid(column=0, row=0, columnspan=2)
         
     def f_do_nothing(self):
         print("Button click")

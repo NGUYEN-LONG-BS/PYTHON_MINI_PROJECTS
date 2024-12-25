@@ -5,26 +5,29 @@ from utils import *
 from utils.define import *
 
 
-class cls_KD0301_CRUDP_KhachHang_View(cls_base_form_number_02):
-
+class cls_KD0301_CRUDP_KhachHang_View(cls_base_form_number_02_ManyTabs):
     def __init__(self):
-        super().__init__()  # Gọi phương thức __init__ của lớp cha
-
-        # Initialize controller
-        # self.controller = cls_KD01QuanLyGoiThauController()
-        # self.controller_02 = cls_Controller_config_treeview()
-
-        # Setup window
-        self.title("KD0301 | THÔNG TIN KHÁCH HÀNG")
+        title = "KD0301 | THÔNG TIN KHÁCH HÀNG"
+        name = "THÔNG TIN KHÁCH HÀNG"
+        super().__init__(title_of_form=title, name_of_slip=name)
         
-        # Thiết lập kích thước cửa sổ
-        f_utils_set_window_size_is_4_per_5_screen(self, 0, 0)
-        f_utils_set_center_screen(self)
-        f_utils_setup_fav_icon(self)
+        # super().__init__()  # Gọi phương thức __init__ của lớp cha
+
+        # # Initialize controller
+        # # self.controller = cls_KD01QuanLyGoiThauController()
+        # # self.controller_02 = cls_Controller_config_treeview()
+
+        # # Setup window
+        # self.title("KD0301 | THÔNG TIN KHÁCH HÀNG")
         
-        # Gọi các thành phần tái sử dụng
-        cls_menu_top(self)
-        self.f_create_widgets()
+        # # Thiết lập kích thước cửa sổ
+        # f_utils_set_window_size_is_4_per_5_screen(self, 0, 0)
+        # f_utils_set_center_screen(self)
+        # f_utils_setup_fav_icon(self)
+        
+        # # Gọi các thành phần tái sử dụng
+        # cls_menu_top(self)
+        # self.f_create_widgets()
         
     # Employee Info Labels
     def f_create_widgets(self):
