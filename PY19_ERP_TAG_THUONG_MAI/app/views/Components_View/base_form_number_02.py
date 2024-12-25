@@ -13,8 +13,6 @@ class cls_base_form_number_02_ManyTabs(tk.Tk):
         self.title_of_form = title_of_form
         self.title(self.title_of_form)
         
-        f_utils_setup_fav_icon(self)
-        
         # Set up favicon and window configuration
         self.f_Thiet_lap_Kich_thuoc_Cua_So()
         
@@ -89,9 +87,9 @@ class cls_base_form_number_02_ManyTabs(tk.Tk):
         self.tab3 = ttk.Frame(self.notebook)
 
         # Add tabs to notebook
-        self.notebook.add(self.tab1, text="Tab-01")
-        self.notebook.add(self.tab2, text="Tab-02")
-        self.notebook.add(self.tab3, text="Tab-03")
+        self.notebook.add(self.tab1, text="Tab-00")
+        self.notebook.add(self.tab2, text="Tab-01")
+        self.notebook.add(self.tab3, text="Tab-02")
 
         # Settings tab content
         self._f_create_widgets_of_tab_01()
@@ -103,21 +101,21 @@ class cls_base_form_number_02_ManyTabs(tk.Tk):
         self.frame_content_of_tab_01 = ttk.Frame(self.tab1, padding="20")
         self.frame_content_of_tab_01.pack(fill="both", expand=True)
         
-        tk.Label(self.frame_content_of_tab_01, text="Tiêu đề tab-01", font=("Arial", 18)).grid(column=0, row=0, columnspan=2)
+        TieuDeTab_01 = tk.Label(self.frame_content_of_tab_01, text="Tiêu đề tab-01", font=("Arial", 18))
+        TieuDeTab_01.grid(column=0, row=0, columnspan=2)
 
     def _f_create_widgets_of_tab_02(self):
         # Create form fields
         self.frame_content_of_tab_02 = ttk.Frame(self.tab2, padding="20")
         self.frame_content_of_tab_02.pack(fill="both", expand=True)
         
-        tk.Label(self.frame_content_of_tab_02, text="Tiêu đề tab-02", font=("Arial", 18)).grid(column=0, row=0, columnspan=2)
+        TieuDeTab_02 = tk.Label(self.frame_content_of_tab_02, text="Tiêu đề tab-02", font=("Arial", 18))
+        TieuDeTab_02.grid(column=0, row=0, columnspan=2)
     
     def _f_create_widgets_of_tab_03(self):
         # Create form fields
         self.frame_content_of_tab_03 = ttk.Frame(self.tab3, padding="20")
         self.frame_content_of_tab_03.pack(fill="both", expand=True)
         
-        tk.Label(self.frame_content_of_tab_03, text="Tiêu đề tab-03", font=("Arial", 18)).grid(column=0, row=0, columnspan=2)
-        
-    def f_do_nothing(self):
-        print("Button click")
+        TieuDeTab_03 = tk.Label(self.frame_content_of_tab_03, text="Tiêu đề tab-03", font=("Arial", 18))
+        TieuDeTab_03.grid(column=0, row=0, columnspan=2)
