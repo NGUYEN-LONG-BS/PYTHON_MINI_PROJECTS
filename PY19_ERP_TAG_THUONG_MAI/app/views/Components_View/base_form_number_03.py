@@ -1,10 +1,8 @@
 import tkinter as tk
-from tkinter import ttk
 from Components_View import *
 from Components_View.menu_top import cls_menu_top
 from utils import *
 from utils.define import *
-import datetime
 
 class cls_base_form_number_03_DashBoard(tk.Tk):
     def __init__(self, title_of_form="Default Title"):
@@ -23,13 +21,8 @@ class cls_base_form_number_03_DashBoard(tk.Tk):
         parent_window = self.winfo_toplevel()
         parent_window.protocol("WM_DELETE_WINDOW", self._close_window_Click)
         
-    def f_set_initial_frame_widths(self):
-        # Set the initial width of the left and right frames to 10
-        self.frame_left_body.config(width=10)
-        self.frame_right_body.config(width=10)
-        total_width = self.frame_main.winfo_width()
-        middle_width = total_width - 20
-        self.frame_middle_body.config(width=middle_width)
+        # Store a reference to scheduled animations so they can be cancelled if needed
+        self.animations = []
     
     def f_Thiet_lap_Kich_thuoc_Cua_So(self):
         """Configures window size and position."""
@@ -79,44 +72,90 @@ class cls_base_form_number_03_DashBoard(tk.Tk):
     
     def f_add_elements_to_frame_main(self):
         # Create 3 Frame
-        self.frame_left_body = tk.Frame(self.frame_main, bg=COLOR_HIGHLIGHT_LIGHT_ORANGE)
-        self.frame_middle_body = tk.Frame(self.frame_main, bg=COLOR_BACKGROUND)
-        self.frame_right_body = tk.Frame(self.frame_main, bg=COLOR_HIGHLIGHT_LIGHT_GREEN)
+        self.frame_left_body = tk.Frame(self.frame_main, bg=COLOR_HIGHLIGHT_LIGHT_ORANGE, width=10)
+        self.frame_right_body = tk.Frame(self.frame_main, bg=COLOR_HIGHLIGHT_LIGHT_GREEN, width=10)
+
+        left_width = 200
+        right_width = 200
+        middle_width = self.frame_main.winfo_width() - 10 - 10
+
+        # Initially, we set their width to 10
+        self.frame_left_body.grid_propagate(False)  # Disable automatic resizing
+        self.frame_right_body.grid_propagate(False)  # Disable automatic resizing
+
+        # Initially, the middle frame will take the remaining width
+        self.frame_middle_body = tk.Frame(self.frame_main, bg=COLOR_BACKGROUND, width=middle_width)
+        
+         # Use the 'place' geometry manager to have more control over the position
+        self.frame_left_body.place(x=10-left_width, y=0, width=left_width, height=self.frame_main.winfo_height())  # Initial position
+        self.frame_middle_body.place(x=10, y=0, width=middle_width, height=self.frame_main.winfo_height())
+        self.frame_right_body.place(x=self.frame_main.winfo_width() - 10, y=0, width=right_width, height=self.frame_main.winfo_height())
+
         # Pack frames
-        self.frame_left_body.pack(side="left", fill="both", expand=True)
+        self.frame_left_body.pack(side="left", fill="both", expand=False)
         self.frame_middle_body.pack(side="left", fill="both", expand=True)
-        self.frame_right_body.pack(side="left", fill="both", expand=True)
+        self.frame_right_body.pack(side="left", fill="both", expand=False)
+
         # Bind hover events
         self.frame_left_body.bind("<Enter>", lambda event: self._frame_left_body_Hover())
         self.frame_middle_body.bind("<Enter>", lambda event: self._frame_middle_body_Hover())
         self.frame_right_body.bind("<Enter>", lambda event: self._frame_right_body_Hover())
         
     def _frame_left_body_Hover(self):
+        # # unpack all elements in right body
+        # self.f_unpack_all_elements_in_right_body()
+        
         total_width = self.frame_main.winfo_width()
         left_width = 200
-        right_width = 10
-        middle_width = total_width - left_width - right_width
-        self._animate_frame_width(self.frame_left_body, left_width)
+        right_width = 200
+        middle_width = total_width - left_width - right_width + 190
+        # self._animate_frame_width(self.frame_left_body, left_width)
+        # self._animate_frame_width(self.frame_middle_body, middle_width)
+        # self._animate_frame_width(self.frame_right_body, right_width)
+        
+        # Animation step for left body movement
+        self._animate_frame_left_position(self.frame_left_body, -190)  # Move left by 190 pixels
         self._animate_frame_width(self.frame_middle_body, middle_width)
         self._animate_frame_width(self.frame_right_body, right_width)
+        
+        # self.f_re_pack_all_elements_in_left_body()
 
     def _frame_middle_body_Hover(self):
+        # # unpack all elements in right and left body
+        # self.f_unpack_all_elements_in_left_body()
+        # self.f_unpack_all_elements_in_right_body()
+        
         total_width = self.frame_main.winfo_width()
-        left_width = 10
-        right_width = 10
-        middle_width = total_width - left_width - right_width
-        self._animate_frame_width(self.frame_left_body, left_width)
+        left_width = 200
+        right_width = 200
+        middle_width = total_width - left_width - right_width + 190 + 190
+        # self._animate_frame_width(self.frame_left_body, left_width)
+        # self._animate_frame_width(self.frame_middle_body, middle_width)
+        # self._animate_frame_width(self.frame_right_body, right_width)
+        
+        # Animation step for left body movement
+        self._animate_frame_left_position(self.frame_left_body, -190)  # Move left by 190 pixels
+        self._animate_frame_right_position(self.frame_right_body, 190)  # Move left by 190 pixels
         self._animate_frame_width(self.frame_middle_body, middle_width)
-        self._animate_frame_width(self.frame_right_body, right_width)
 
     def _frame_right_body_Hover(self):
+        # # unpack all elements in left body
+        # self.f_unpack_all_elements_in_left_body()
+        
         total_width = self.frame_main.winfo_width()
-        left_width = 10
-        right_width = 100
-        middle_width = total_width - left_width - right_width
-        self._animate_frame_width(self.frame_left_body, left_width)
+        left_width = 200
+        right_width = 200
+        middle_width = total_width - left_width - right_width + 190
+        # self._animate_frame_width(self.frame_left_body, left_width)
+        # self._animate_frame_width(self.frame_middle_body, middle_width)
+        # self._animate_frame_width(self.frame_right_body, right_width)
+        
+        # Animation step for left body movement
+        self._animate_frame_right_position(self.frame_right_body, 190)  # Move left by 190 pixels
         self._animate_frame_width(self.frame_middle_body, middle_width)
         self._animate_frame_width(self.frame_right_body, right_width)
+        
+        # self.f_re_pack_all_elements_in_right_body()
 
     def _animate_frame_width(self, frame, target_width, step=2):
         current_width = frame.winfo_width()
@@ -130,4 +169,34 @@ class cls_base_form_number_03_DashBoard(tk.Tk):
         frame.config(width=new_width)
         self.after(2, self._animate_frame_width, frame, target_width, step)
         
+        
+    def _animate_frame_left_position(self, frame, target_x, step=2):
+        """Animate the position of the left frame to the target_x position."""
+        current_x = frame.winfo_x()
 
+        if current_x < target_x:
+            new_x = min(current_x + step, target_x)
+        elif current_x > target_x:
+            new_x = max(current_x - step, target_x)
+        else:
+            return  # Animation complete
+
+        frame.place(x=new_x)  # Update position
+
+        self.after(2, self._animate_frame_left_position, frame, target_x, step)
+        
+    def _animate_frame_right_position(self, frame, target_x, step=2):
+        """Animate the position of the left frame to the target_x position."""
+        current_x = frame.winfo_x()
+
+        if current_x < target_x:
+            new_x = min(current_x + step, target_x)
+        elif current_x > target_x:
+            new_x = max(current_x - step, target_x)
+        else:
+            return  # Animation complete
+
+        frame.place(x=new_x)  # Update position
+
+        self.after(2, self._animate_frame_left_position, frame, target_x, step)
+        
