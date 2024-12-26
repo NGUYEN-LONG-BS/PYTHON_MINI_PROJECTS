@@ -110,4 +110,4 @@ class cls_KD0301_CRUDP_KhachHang_View(cls_base_form_number_02_ManyTabs):
         
         return notebook
 
-        
+
