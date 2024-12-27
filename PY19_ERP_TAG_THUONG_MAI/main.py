@@ -1,7 +1,7 @@
 import os
 import sys
 
-class App:
+class cls_App:
     def __init__(self):
         # Khởi tạo các cấu hình cần thiết, bao gồm thiết lập sys.path
         self.f_setup_sys_path()
@@ -85,5 +85,5 @@ class App:
 # Main function to run the program
 if __name__ == "__main__":
     # Khởi tạo đối tượng của class App và chạy ứng dụng
-    app = App()
+    app = cls_App()
     app.run()
