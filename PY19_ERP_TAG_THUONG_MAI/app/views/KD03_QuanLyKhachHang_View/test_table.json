@@ -1,0 +1,73 @@
+{
+    "columns": [
+        {
+            "name": "STT",
+            "width": 50,
+            "min_width": 80,
+            "anchor": "center",
+            "stretch": true,
+            "font": {
+                "family": "Arial",
+                "size": 12,
+                "weight": "bold"
+            },
+            "background_color": "#f0f0f0",
+            "foreground_color": "#000000"
+        },
+        {
+            "name": "ID",
+            "width": 100,
+            "min_width": 100,
+            "anchor": "center",
+            "stretch": true,
+            "font": {
+                "family": "Arial",
+                "size": 12,
+                "weight": "bold"
+            },
+            "background_color": "#f0f0f0",
+            "foreground_color": "#000000"
+        },
+        {
+            "name": "Name",
+            "width": 150,
+            "min_width": 150,
+            "anchor": "center",
+            "stretch": true,
+            "font": {
+                "family": "Arial",
+                "size": 12,
+                "weight": "bold"
+            },
+            "background_color": "#f0f0f0",
+            "foreground_color": "#000000"
+        },
+        {
+            "name": "Age",
+            "width": 50,
+            "min_width": 50,
+            "anchor": "center",
+            "stretch": true,
+            "font": {
+                "family": "Arial",
+                "size": 12,
+                "weight": "bold"
+            },
+            "background_color": "#f0f0f0",
+            "foreground_color": "#000000"
+        }
+    ],
+    "scrollbars": {
+        "vertical": {
+            "enabled": true
+        },
+        "horizontal": {
+            "enabled": true
+        }
+    },
+    "general_settings": {
+        "border_width": 2,
+        "relief": "solid",
+        "padding": 10
+    }
+}

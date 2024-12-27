@@ -5,14 +5,14 @@ class cls_test_View(tk.Tk):
     def __init__(self):
         super().__init__()
         self.f_create_main_window()
-        self.f_create_MVC()
+        self.f_add_MVC_class()
         self.f_create_widgets()    
 
     def f_create_main_window(self):
         self.title("Data Entry Table")
         self.geometry("500x500")
         
-    def f_create_MVC(self):
+    def f_add_MVC_class(self):
         # Import đối tượng cls_test_Controller
         from test_Controller import cls_test_Controller
         # Gọi cửa sổ Controller
@@ -40,6 +40,35 @@ class cls_test_View(tk.Tk):
         columns = ("ID", "Name", "Age")
         self.table = ttk.Treeview(self, columns=columns, show="headings", height=10)
         self.table.grid(row=4, column=0, columnspan=2, pady=10)
+        
+        # # ===========================================================
+        # # Load table configuration from the controller
+        # columns, scrollbars, general_settings = self.controller.get_table_config()
+        
+        # # Table (Treeview)
+        # self.table = ttk.Treeview(self, columns=[col["name"] for col in columns], show="headings", height=10)
+        # self.table.grid(row=4, column=0, columnspan=2, pady=10)
+        
+        # # Configure columns
+        # for col in columns:
+        #     self.table.heading(col["name"], text=col["name"])
+        #     self.table.column(col["name"], width=col["width"], minwidth=col["min_width"], anchor=col["anchor"], stretch=col["stretch"])
+            
+        # # Configure scrollbars
+        # if scrollbars.get("vertical", {}).get("enabled", False):
+        #     vsb = ttk.Scrollbar(self, orient="vertical", command=self.table.yview)
+        #     self.table.configure(yscrollcommand=vsb.set)
+        #     vsb.grid(row=4, column=2, sticky="ns")
+
+        # if scrollbars.get("horizontal", {}).get("enabled", False):
+        #     hsb = ttk.Scrollbar(self, orient="horizontal", command=self.table.xview)
+        #     self.table.configure(xscrollcommand=hsb.set)
+        #     hsb.grid(row=5, column=0, columnspan=2, sticky="ew")
+
+        # # Apply general settings
+        # # self.table.configure(bd=general_settings.get("border_width", 2), relief=general_settings.get("relief", "solid"))
+        # self.table.grid_configure(padx=general_settings.get("padding", 10), pady=general_settings.get("padding", 10))
+        # # ===========================================================
 
         # create headings
         for col in columns:

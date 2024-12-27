@@ -1,6 +1,13 @@
 class cls_test_Controller():
     def __init__(self):
         super().__init__()
+        self.f_add_MVC_class()
+        
+    def f_add_MVC_class(self):
+        # Import đối tượng cls_test_Controller
+        from test_Model import cls_test_Model
+        # Gọi cửa sổ Controller
+        self.model = cls_test_Model()
         
     def f_check_input(self, id_value, name_value, age_value):    
         if not id_value or not name_value or not age_value:
@@ -40,3 +47,13 @@ class cls_test_Controller():
         error_message ="Row added successfully!"
         
         return is_valid, error_message
+    
+    def get_table_config(self):
+        """
+        Load the table configuration (header, columns, and scrollbars) from the JSON file.
+        Returns:
+            columns (list): List of column definitions.
+            scrollbars (dict): Scrollbar configuration for the table.
+            general_settings (dict): General settings for table appearance.
+        """
+        return self.model.load_table_config_from_json()
