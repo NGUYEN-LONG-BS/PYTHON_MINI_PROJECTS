@@ -14,14 +14,14 @@ class cls_test_Model():
     def f_load_table_config_from_json(self):
         """Load table and column configurations from JSON"""
         try:
-            with open(self.json_file, 'r') as file:
+            with open(self.json_file, 'r', encoding='utf-8') as file:
                 self.data_to_config_table = json.load(file)  # Load the JSON data
 
             # Extract column names using the helper function
             # column_names = self.f_extract_column_names(self.data_to_config_table)
             
             # # Extract column names using the helper function
-            column_names = self.data_to_config_table["table"]["columns"]["name"]
+            column_names = self.extract_column_names(self.data_to_config_table)
             # scrollbars = self.data_to_config_table["table"]["scrollbars"]
             # general_settings = self.data_to_config_table["table"]["general"]
             
@@ -35,6 +35,19 @@ class cls_test_Model():
             print("Error: The JSON file is not properly formatted.")
         except Exception as e:
             print(f"An error occurred: {e}")
+
+    # Function to extract column names
+    def extract_column_names(self, data):
+        if "columns" in data["table"]:
+            column_names = [column["name"] for column in data["table"]["columns"]]
+            print("Column names:", column_names)
+            return column_names
+        else:
+            return []
+        
+        # except Exception as e:
+        #     print(f"An error occurred: {e}")
+
 
     def f_extract_column_names(self):
         """Extract column names from the provided JSON data"""

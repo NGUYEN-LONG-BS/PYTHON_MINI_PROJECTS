@@ -36,15 +36,17 @@ class cls_test_View(tk.Tk):
         self.add_button = tk.Button(self, text="Add Row", command=self.f_add_button_click)
         self.add_button.grid(row=3, column=0, columnspan=2, pady=10)
 
-        # Table (Treeview)
-        columns_01 = ("ID", "Name", "Age")
-        self.table = ttk.Treeview(self, columns=columns_01, show="headings", height=10)
-        self.table.grid(row=4, column=0, columnspan=2, pady=10)
+        # # Table (Treeview)
+        # columns_01 = ("ID", "Name", "Age")
+        # self.table = ttk.Treeview(self, columns=columns_01, show="headings", height=10)
+        # self.table.grid(row=4, column=0, columnspan=2, pady=10)
         
         # ===========================================================
         # Load table configuration from the controller
         # columns, scrollbars, general_settings = self.controller.f_get_table_config()
         columns = self.controller.f_get_table_config()
+        self.table = ttk.Treeview(self, columns=columns, show="headings", height=10)
+        self.table.grid(row=4, column=0, columnspan=2, pady=10)
         
         # # Table (Treeview)
         # self.table = ttk.Treeview(self, columns=[col["name"] for col in columns], show="headings", height=10)
