@@ -10,7 +10,7 @@ class cls_test_View(tk.Tk):
 
     def f_create_main_window(self):
         self.title("Data Entry Table")
-        self.geometry("500x500")
+        self.geometry("700x550")
         
     def f_add_MVC_class(self):
         # Import đối tượng cls_test_Controller
@@ -19,105 +19,160 @@ class cls_test_View(tk.Tk):
         self.controller = cls_test_Controller()
     
     def f_create_widgets(self):
+        # Create a notebook (tabs)
+        self.notebook = ttk.Notebook(self)
+        self.notebook.pack(fill="both", expand=True)
+
+        # Create tabs
+        self.tab_01 = ttk.Frame(self.notebook)
+        self.tab_02 = ttk.Frame(self.notebook)
+
+        # Add tabs to notebook
+        self.notebook.add(self.tab_01, text="Tạo mới")
+        self.notebook.add(self.tab_02, text="Danh sách")
+        
+        # Settings tab content
+        self._f_create_widgets_of_tab_01()
+        self._f_create_widgets_of_tab_02()
+        
+    def _f_create_widgets_of_tab_01(self):
+        # Title
+        tk.Label(self.tab_01, text="PHIẾU YÊU CẦU ĐẶT HÀNG").grid(row=0, column=0, padx=10, pady=5, sticky="e")
+        
         # Input fields
-        tk.Label(self, text="ID:").grid(row=0, column=0, padx=10, pady=5, sticky="e")
-        self.id_entry = tk.Entry(self)
-        self.id_entry.grid(row=0, column=1, padx=10, pady=5)
+        tk.Label(self.tab_01, text="ID:").grid(row=1, column=0, padx=10, pady=5, sticky="e")
+        self.tab_01_entry_id = tk.Entry(self.tab_01)
+        self.tab_01_entry_id.grid(row=1, column=1, padx=10, pady=5)
 
-        tk.Label(self, text="Name:").grid(row=1, column=0, padx=10, pady=5, sticky="e")
-        self.name_entry = tk.Entry(self)
-        self.name_entry.grid(row=1, column=1, padx=10, pady=5)
+        tk.Label(self.tab_01, text="Name:").grid(row=2, column=0, padx=10, pady=5, sticky="e")
+        self.tab_01_entry_name = tk.Entry(self.tab_01)
+        self.tab_01_entry_name.grid(row=2, column=1, padx=10, pady=5)
 
-        tk.Label(self, text="Age:").grid(row=2, column=0, padx=10, pady=5, sticky="e")
-        self.age_entry = tk.Entry(self)
-        self.age_entry.grid(row=2, column=1, padx=10, pady=5)
+        tk.Label(self.tab_01, text="Age:").grid(row=3, column=0, padx=10, pady=5, sticky="e")
+        self.tab_01_entry_age = tk.Entry(self.tab_01)
+        self.tab_01_entry_age.grid(row=3, column=1, padx=10, pady=5)
 
         # Add button
-        self.add_button = tk.Button(self, text="Add Row", command=self.f_add_button_click)
-        self.add_button.grid(row=3, column=0, columnspan=2, pady=10)
+        self.tab_01_button_add = tk.Button(self.tab_01, text="Add Row", command=self.f_tab_01_button_add_click)
+        self.tab_01_button_add.grid(row=4, column=0, columnspan=2, pady=10)
 
-        # # Table (Treeview)
-        # columns_01 = ("ID", "Name", "Age")
-        # self.table = ttk.Treeview(self, columns=columns_01, show="headings", height=10)
-        # self.table.grid(row=4, column=0, columnspan=2, pady=10)
+        # Table (Treeview)
+        tab_01_table_columns = self.controller.f_get_table_config()
+        self.table_of_tab_01 = ttk.Treeview(self.tab_01, columns=tab_01_table_columns, show="headings", height=10)
+        # self.table_of_tab_01 = ttk.Treeview(self.tab_01, columns=[], show="headings", height=10)
+        self.table_of_tab_01.grid(row=5, column=0, columnspan=2, pady=10)
+        self.table_of_tab_01.bind("<ButtonRelease-1>", self.f_table_tab_01_click)
         
-        # ===========================================================
-        # Load table configuration from the controller
-        # columns, scrollbars, general_settings = self.controller.f_get_table_config()
-        columns = self.controller.f_get_table_config()
-        self.table = ttk.Treeview(self, columns=columns, show="headings", height=10)
-        self.table.grid(row=4, column=0, columnspan=2, pady=10)
-        
-        # # Table (Treeview)
-        # self.table = ttk.Treeview(self, columns=[col["name"] for col in columns], show="headings", height=10)
-        # self.table.grid(row=4, column=0, columnspan=2, pady=10)
-        
-        # # Configure columns
-        # for col in columns:
-        #     self.table.heading(col["name"], text=col["name"])
-        #     self.table.column(col["name"], width=col["width"], minwidth=col["min_width"], anchor=col["anchor"], stretch=col["stretch"])
-            
-        # # Configure scrollbars
-        # if scrollbars.get("vertical", {}).get("enabled", False):
-        #     vsb = ttk.Scrollbar(self, orient="vertical", command=self.table.yview)
-        #     self.table.configure(yscrollcommand=vsb.set)
-        #     vsb.grid(row=4, column=2, sticky="ns")
-
-        # if scrollbars.get("horizontal", {}).get("enabled", False):
-        #     hsb = ttk.Scrollbar(self, orient="horizontal", command=self.table.xview)
-        #     self.table.configure(xscrollcommand=hsb.set)
-        #     hsb.grid(row=5, column=0, columnspan=2, sticky="ew")
-
-        # # Apply general settings
-        # # self.table.configure(bd=general_settings.get("border_width", 2), relief=general_settings.get("relief", "solid"))
-        # self.table.grid_configure(padx=general_settings.get("padding", 10), pady=general_settings.get("padding", 10))
-        # # ===========================================================
-
         # create headings
-        for col in columns:
-            self.table.heading(col, text=col)
-            self.table.column(col, width=100)
+        for col in tab_01_table_columns:
+            self.table_of_tab_01.heading(col, text=col)
+            self.table_of_tab_01.column(col, width=100)
 
         # Get Data button
-        self.get_button = tk.Button(self, text="Print Data Array", command=self.f_get_button_click)
-        self.get_button.grid(row=5, column=0, columnspan=2, pady=10)
+        self.tab_01_button_get = tk.Button(self.tab_01, text="Print Data Array", command=self.f_tab_01_button_get_click)
+        self.tab_01_button_get.grid(row=6, column=0, columnspan=2, pady=10)
+        
+        # Export Data button
+        self.tab_01_button_export = tk.Button(self.tab_01, text="Export Data to SQL", command=self.f_tab_01_button_export_click)
+        self.tab_01_button_export.grid(row=6, column=2, columnspan=2, pady=10)
 
         # Result label
-        self.result_label = tk.Label(self, text="")
-        self.result_label.grid(row=6, column=0, columnspan=2)
+        self.tab_01_label_result = tk.Label(self.tab_01, text="")
+        self.tab_01_label_result.grid(row=7, column=0, columnspan=2)
+        
+    def _f_create_widgets_of_tab_02(self):
+        # Title
+        tk.Label(self.tab_02, text="NHẬT KÝ YÊU CẦU ĐẶT HÀNG").grid(row=0, column=0, padx=10, pady=5, sticky="e")
+        
+        # Input fields
+        tk.Label(self.tab_02, text="ID:").grid(row=1, column=0, padx=10, pady=5, sticky="e")
+        self.tab_02_entry_id = tk.Entry(self.tab_02)
+        self.tab_02_entry_id.grid(row=1, column=1, padx=10, pady=5)
 
-    # Function to get all data from the table
-    def f_get_button_click(self):
-        self.result_label.config(text=self.controller.f_get_data(self.table), fg="blue")
+        tk.Label(self.tab_02, text="Name:").grid(row=2, column=0, padx=10, pady=5, sticky="e")
+        self.tab_02_entry_name = tk.Entry(self.tab_02)
+        self.tab_02_entry_name.grid(row=2, column=1, padx=10, pady=5)
 
-    # Function to add a row to the table
-    def f_add_button_click(self):
-        """
-        Handle the button click event to add a new row to the table.
-        Args:
-            id_entry: Entry widget for ID input.
-            name_entry: Entry widget for Name input.
-            age_entry: Entry widget for Age input.
-            table: Treeview widget to add the new row.
-            result_label: Label widget to display messages.
-            f_check_input: Function to validate the input.
-        """
-        id_value = self.id_entry.get()
-        name_value = self.name_entry.get()
-        age_value = self.age_entry.get()
-        table = self.table
+        tk.Label(self.tab_02, text="Age:").grid(row=3, column=0, padx=10, pady=5, sticky="e")
+        self.tab_02_entry_age = tk.Entry(self.tab_02)
+        self.tab_02_entry_age.grid(row=3, column=1, padx=10, pady=5)
+
+        # Add button
+        self.tab_02_button_add = tk.Button(self.tab_02, text="Add Row", command=self.f_tab_02_button_add_click)
+        self.tab_02_button_add.grid(row=4, column=0, columnspan=2, pady=10)
+
+        # Table (Treeview)
+        tab_02_table_columns = self.controller.f_get_table_config()
+        self.table_of_tab_02 = ttk.Treeview(self.tab_02, columns=tab_02_table_columns, show="headings", height=10)
+        # Gắn sự kiện click vào Treeview
+        self.table_of_tab_02.bind("<ButtonRelease-1>", self.f_table_tab_02_click)
+        self.table_of_tab_02.grid(row=5, column=0, columnspan=2, pady=10)
+        
+        # create headings
+        for col in tab_02_table_columns:
+            self.table_of_tab_01.heading(col, text=col)
+            self.table_of_tab_01.column(col, width=100)
+
+        # Get Data button
+        self.tab_02_button_get = tk.Button(self.tab_02, text="Print Data Array", command=self.f_tab_02_button_get_click)
+        self.tab_02_button_get.grid(row=6, column=0, columnspan=2, pady=10)
+        
+        # Export Data button
+        self.tab_02_button_export = tk.Button(self.tab_02, text="Export Data to SQL", command=self.f_tab_02_button_export_click)
+        self.tab_02_button_export.grid(row=6, column=2, columnspan=2, pady=10)
+
+        # Result label
+        self.tab_02_label_result = tk.Label(self.tab_02, text="")
+        self.tab_02_label_result.grid(row=7, column=0, columnspan=2)
+
+    #===================================================================================================================
+    # Event Handlers of tab number 01
+    #===================================================================================================================
+    def f_tab_01_button_get_click(self):
+        self.tab_01_label_result.config(text=self.controller.f_get_data(self.table_of_tab_01), fg="blue")
+        
+    def f_tab_01_button_add_click(self):
+        id_value = self.tab_01_entry_id.get()
+        name_value = self.tab_01_entry_name.get()
+        age_value = self.tab_01_entry_age.get()
+        table = self.table_of_tab_01
         
         # Validate input using the helper function
         is_valid, error_message = self.controller.f_add_row(id_value, name_value, age_value, table)
         if not is_valid:
-            self.result_label.config(text=error_message, fg="red")
+            self.tab_01_label_result.config(text=error_message, fg="red")
             return
         else:
-            # print the result_label
-            self.result_label.config(text=error_message, fg="green")
-            self.f_clear_input_fileds()
+            # print the tab_01_label_result
+            self.tab_01_label_result.config(text=error_message, fg="green")
+            self.f_clear_input_fileds_of_tab_01()
+    
+    def f_tab_01_button_export_click(self):
+        self.tab_01_label_result.config(text=self.controller.f_export_data_to_SQL(self.table_of_tab_01), fg="blue")
+    
+    def f_table_tab_01_click(self, event):
+        selected_item = self.table_of_tab_01.selection()  # Lấy dòng được chọn
+        # print(selected_item)
+        for item in selected_item:
+            row_data = self.table_of_tab_01.item(item, "values")  # Extract data from the selected row
+            print(row_data)  # Print all data in the selected row
+        
+    def f_clear_input_fileds_of_tab_01(self):
+        self.tab_01_entry_id.delete(0, tk.END)
+        self.tab_01_entry_name.delete(0, tk.END)
+        self.tab_01_entry_age.delete(0, tk.END)
+        
+    #===================================================================================================================
+    # Event Handlers of tab number 02
+    #===================================================================================================================
+    def f_tab_02_button_get_click(self):
+        print("Get Data tab 02")
 
-    def f_clear_input_fileds(self):
-        self.id_entry.delete(0, tk.END)
-        self.name_entry.delete(0, tk.END)
-        self.age_entry.delete(0, tk.END)
+    def f_tab_02_button_add_click(self):
+        print("Add Row tab 02")
+        
+    def f_tab_02_button_export_click(self):
+        print("Export Data to SQL tab 02")
+        
+    def f_table_tab_02_click(self, event):
+        print("Table tab 02 click")

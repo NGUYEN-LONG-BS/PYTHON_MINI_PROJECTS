@@ -34,6 +34,19 @@ class cls_test_Controller():
         print("Current data array:", rows)
         return "Data printed to console!"
     
+    def f_get_data_from_table(self, table):
+        """
+        Retrieve all rows from the table and print them to the console.
+        Args:
+            table: The Treeview widget containing the data.
+            result_label: The Label widget to display messages.
+        """
+        rows = []
+        for child in table.get_children():
+            rows.append(table.item(child)["values"])
+        print("Current data array:", rows)
+        return rows
+    
     # Function to add a row to the table
     def f_add_row(self, id_entry, name_entry, age_entry, table):
         
@@ -57,3 +70,20 @@ class cls_test_Controller():
             general_settings (dict): General settings for table appearance.
         """
         return self.model.f_load_table_config_from_json()
+    
+    def f_export_data_to_SQL(self, table):
+        data_array = self.f_get_data_from_table(table)
+        self.model.f_goi_ham_Export_to_SQL(data_array)
+        return "Data exported to SQL Server!"
+    
+    def f_select_item(self, event):
+        selected_item = self.treeview.selection()
+        if selected_item:
+            values = self.treeview.item(selected_item, "values")
+            for i in range(10):
+                self.entries[i].delete(0, tk.END)
+                self.entries[i].insert(0, values[i])
+                
+            # Update the label with the selected row's index
+            row_index = self.treeview.index(selected_item)
+            self.selected_row_label.config(text=f"Selected Row: {row_index + 1}")

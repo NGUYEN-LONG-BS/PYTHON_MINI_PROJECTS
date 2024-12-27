@@ -554,11 +554,6 @@ class cls_CRUDTreeviewView(tk.Tk):
         self.columns = [f"Column {i+1}" for i in range(10)]
         print(self.columns)
         
-        # # Load table configuration from JSON
-        # # columns, scrollbars, general_settings = self.controller.get_table_config()
-        # columns, scrollbars, general_settings = controller.get_table_config()
-        # print(columns)
-        
         # Create the Treeview
         self.treeview = ttk.Treeview(self.treeview_frame, columns=self.columns, show="headings", height=10)
         self.treeview.pack(fill="x", padx=10, pady=5)
