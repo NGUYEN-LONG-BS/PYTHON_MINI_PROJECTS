@@ -11,7 +11,7 @@ class cls_test_Model():
         # Get the absolute path of the current directory
         current_dir = os.path.dirname(__file__)  
         # Define the relative path to the JSON file
-        self.json_file = os.path.join(current_dir, 'test_table.JSON')
+        self.json_file = os.path.join(current_dir, 'test_table_input.JSON')
         
     def f_load_table_config_from_json(self):
         """Load table and column configurations from JSON"""

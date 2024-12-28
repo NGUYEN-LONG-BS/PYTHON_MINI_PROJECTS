@@ -5,6 +5,7 @@ import tkinter as tk
 from tkinter import font
 import inspect
 from define import *
+import time
 
 def f_utils_setup_logo(parent_frame):
     # Define function when click

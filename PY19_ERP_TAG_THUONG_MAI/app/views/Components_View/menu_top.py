@@ -230,6 +230,8 @@ class cls_menu_top:
         menu_TEST.add_separator()
         menu_TEST.add_command(label="KD0101 |Quản lý gói thầu", command=self.f_KD0101_QuanLyGoiThau_click)
         menu_TEST.add_command(label="KD0102 |Tạo mới gói thầu", command=self.f_KD0101_QuanLyGoiThau_click)
+        menu_TEST.add_separator()
+        menu_TEST.add_command(label="Test tốt import, Export", command=self.f_test_tot_click)
         
         # Set font-size
         f_utils_set_menu_font(menu_TEST)
@@ -247,6 +249,10 @@ class cls_menu_top:
     def f_KD0101_QuanLyGoiThau_click(self):
         print("f_QLGT_TaoMoi_click selected")
         self.f_open_KD0101_QuanLyGoiThau_View()
+    
+    def f_test_tot_click(self):
+        print("f_test_tot_click selected")
+        self.f_open_f_test_tot_click_View()
     
     def f_QLGT_GoiThauDaLap_click(self):
         print("f_QLGT_GoiThauDaLap_click selected")
@@ -337,6 +343,14 @@ class cls_menu_top:
         f_utils_set_center_screen(new_view)
         new_view.focus_force()
         
+    def f_open_f_test_tot_click_View(self):
+        from views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
+        self.parent.destroy()
+        new_view = cls_test_View()
+        new_view.dashboard = self.parent
+        f_utils_set_window_size_is_4_per_5_screen(new_view)
+        f_utils_set_center_screen(new_view)
+        new_view.focus_force()
         
     def f_open_cls_VT0101_DonDatHang_View(self):
         from views.VT01_QuanLyDonDatHang_View.VT0101_DonDatHang_View import cls_VT0101_DonDatHang_View

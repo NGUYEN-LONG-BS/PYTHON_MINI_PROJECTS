@@ -1,12 +1,17 @@
 import tkinter as tk
 from tkinter import ttk
+import time
 
 class cls_test_View(tk.Tk):
     def __init__(self):
         super().__init__()
         self.f_create_main_window()
         self.f_add_MVC_class()
-        self.f_create_widgets()    
+        self.f_create_widgets()
+        
+        # Timer interval (in milliseconds)
+        self.last_click_time = 0
+        self.double_click_interval = 0.3  # 300 ms
 
     def f_create_main_window(self):
         self.title("Data Entry Table")
@@ -61,7 +66,9 @@ class cls_test_View(tk.Tk):
         self.table_of_tab_01 = ttk.Treeview(self.tab_01, columns=tab_01_table_columns, show="headings", height=10)
         # self.table_of_tab_01 = ttk.Treeview(self.tab_01, columns=[], show="headings", height=10)
         self.table_of_tab_01.grid(row=5, column=0, columnspan=2, pady=10)
-        self.table_of_tab_01.bind("<ButtonRelease-1>", self.f_table_tab_01_click)
+        
+        self.table_of_tab_01.bind("<ButtonRelease-1>", self.f_tab_01_table_on_click)
+        self.table_of_tab_01.bind("<Double-1>", self.f_tab_01_table_on_click)
         
         # create headings
         for col in tab_01_table_columns:
@@ -149,13 +156,9 @@ class cls_test_View(tk.Tk):
     
     def f_tab_01_button_export_click(self):
         self.tab_01_label_result.config(text=self.controller.f_export_data_to_SQL(self.table_of_tab_01), fg="blue")
-    
-    def f_table_tab_01_click(self, event):
-        selected_item = self.table_of_tab_01.selection()  # Lấy dòng được chọn
-        # print(selected_item)
-        for item in selected_item:
-            row_data = self.table_of_tab_01.item(item, "values")  # Extract data from the selected row
-            print(row_data)  # Print all data in the selected row
+        
+    def f_tab_01_table_on_click(self, event):
+        self.controller.f_handle_event_click_on_table_of_tab_01(self.last_click_time, time.time(), self.double_click_interval)
         
     def f_clear_input_fileds_of_tab_01(self):
         self.tab_01_entry_id.delete(0, tk.END)

@@ -1,3 +1,6 @@
+from utils import *
+import time
+
 class cls_test_Controller():
     def __init__(self):
         super().__init__()
@@ -76,14 +79,11 @@ class cls_test_Controller():
         self.model.f_goi_ham_Export_to_SQL(data_array)
         return "Data exported to SQL Server!"
     
-    def f_select_item(self, event):
-        selected_item = self.treeview.selection()
-        if selected_item:
-            values = self.treeview.item(selected_item, "values")
-            for i in range(10):
-                self.entries[i].delete(0, tk.END)
-                self.entries[i].insert(0, values[i])
-                
-            # Update the label with the selected row's index
-            row_index = self.treeview.index(selected_item)
-            self.selected_row_label.config(text=f"Selected Row: {row_index + 1}")
+    def f_handle_event_click_on_table_of_tab_01(self, last_click_time, current_time, double_click_interval):
+        if current_time - last_click_time < double_click_interval:
+            print("Double click!")
+            # Xử lý double click
+        else:
+            print("Single click!")
+            # Xử lý single click
+        
