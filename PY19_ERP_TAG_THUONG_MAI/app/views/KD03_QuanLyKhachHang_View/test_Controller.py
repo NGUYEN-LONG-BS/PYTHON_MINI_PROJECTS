@@ -81,9 +81,13 @@ class cls_test_Controller():
     
     def f_handle_event_click_on_table_of_tab_01(self, last_click_time, current_time, double_click_interval):
         if current_time - last_click_time < double_click_interval:
-            print("Double click!")
-            # Xử lý double click
+            return True  # Double click detected
         else:
-            print("Single click!")
-            # Xử lý single click
+            return False  # Single click detected
+        
+    def f_tab_01_table_single_click(self):
+        print("Handled single click!")
+    
+    def f_tab_01_table_double_click(self):
+        print("Handled double click!")
         

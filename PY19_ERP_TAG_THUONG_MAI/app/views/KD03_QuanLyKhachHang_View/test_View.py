@@ -68,7 +68,6 @@ class cls_test_View(tk.Tk):
         self.table_of_tab_01.grid(row=5, column=0, columnspan=2, pady=10)
         
         self.table_of_tab_01.bind("<ButtonRelease-1>", self.f_tab_01_table_on_click)
-        self.table_of_tab_01.bind("<Double-1>", self.f_tab_01_table_on_click)
         
         # create headings
         for col in tab_01_table_columns:
@@ -158,8 +157,17 @@ class cls_test_View(tk.Tk):
         self.tab_01_label_result.config(text=self.controller.f_export_data_to_SQL(self.table_of_tab_01), fg="blue")
         
     def f_tab_01_table_on_click(self, event):
-        self.controller.f_handle_event_click_on_table_of_tab_01(self.last_click_time, time.time(), self.double_click_interval)
-        
+        # Call the controller to handle the event
+        self.current_time = time.time()
+        is_double_click = self.controller.f_handle_event_click_on_table_of_tab_01(self.last_click_time, self.current_time, self.double_click_interval)
+        # Update last click time only after handling
+        self.last_click_time = self.current_time
+        # Handle the action for single and double click
+        if is_double_click:
+            self.controller.f_tab_01_table_double_click()
+        else:
+            self.controller.f_tab_01_table_single_click()
+    
     def f_clear_input_fileds_of_tab_01(self):
         self.tab_01_entry_id.delete(0, tk.END)
         self.tab_01_entry_name.delete(0, tk.END)
