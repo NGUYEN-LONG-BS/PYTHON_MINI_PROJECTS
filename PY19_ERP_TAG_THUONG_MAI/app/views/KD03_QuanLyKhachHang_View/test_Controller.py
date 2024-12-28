@@ -85,9 +85,36 @@ class cls_test_Controller():
         else:
             return False  # Single click detected
         
-    def f_tab_01_table_single_click(self):
-        print("Handled single click!")
+    def f_tab_01_table_single_click(self, event):
+        treeview = event.widget
+        # Get the selected row ID
+        selected_item = treeview.selection()
+        if selected_item:
+            # Fetch the values of the selected row
+            row_values = treeview.item(selected_item[0], "values")
+            # print("Selected row values:", row_values)
+            if len(row_values) >= 3:
+                return row_values[0], row_values[1], row_values[2]
+            else:
+                return None, None, None
+        else:
+            # print("Warning: No row selected.")
+            return None, None, None
     
-    def f_tab_01_table_double_click(self):
-        print("Handled double click!")
+    def f_tab_01_table_double_click(self, event):
+        # Get the Treeview widget from the event
+        treeview = event.widget
+        # Get the selected row ID
+        selected_item = treeview.selection()
+        if selected_item:
+            # Fetch the values of the selected row
+            row_values = treeview.item(selected_item[0], "values")
+            # Print the first and third values, if they exist
+            if len(row_values) >= 3:
+                print("First value:", row_values[0])
+                print("Third value:", row_values[2])
+            else:
+                print("Insufficient data in row!")
+        
+
         

@@ -18,17 +18,10 @@ class cls_test_Model():
         try:
             with open(self.json_file, 'r', encoding='utf-8') as file:
                 self.data_to_config_table = json.load(file)  # Load the JSON data
-
-            # Extract column names using the helper function
-            # column_names = self.f_extract_column_names(self.data_to_config_table)
-            
-            # # Extract column names using the helper function
-            column_names = self.extract_column_names(self.data_to_config_table)
-            # scrollbars = self.data_to_config_table["table"]["scrollbars"]
-            # general_settings = self.data_to_config_table["table"]["general"]
-            
-            
-            print("Extracted column names:", column_names)
+            column_names = self.f_extract_from_json_column_names(self.data_to_config_table)
+            # print("Extracted column names:", column_names)
+            column_width = self.f_extract_from_json_column_width(self.data_to_config_table)
+            print("Extracted column width:", column_width)
             return column_names
 
         except FileNotFoundError:
@@ -38,29 +31,38 @@ class cls_test_Model():
         except Exception as e:
             print(f"An error occurred: {e}")
 
-    # Function to extract column names
-    def extract_column_names(self, data):
-        if "columns" in data["table"]:
-            column_names = [column["name"] for column in data["table"]["columns"]]
-            print("Column names:", column_names)
-            return column_names
-        else:
+    def f_extract_from_json_column_names(self, data):
+        try:
+            if "columns" in data["table"]:
+                columns_names = data["table"]["columns"]
+                column_names = [column.get("name", "Unknown") for column in columns_names]
+                return column_names
+            else:
+                print("Warning: 'columns names' key not found in JSON.")
+                return []
+        except KeyError:
+            print("Error: Key 'table' is missing from JSON.")
             return []
-        
-        # except Exception as e:
-        #     print(f"An error occurred: {e}")
-
-
-    def f_extract_column_names(self):
-        """Extract column names from the provided JSON data"""
-        if "columns" in self.data_to_config_table:
-            # Extract the "name" field from each column in the "columns" list
-            column_names = tuple(column["name"] for column in self.data_to_config_table["columns"])
-            return column_names
-        else:
-            print("Error: 'columns' key not found in the JSON data.")
-            return ()
-       
+        except TypeError:
+            print("Error: Invalid data structure for 'columns'.")
+            return []
+    
+    def f_extract_from_json_column_width(self, data):
+        try:
+            if "width" in data["table"]:
+                columns_width = data["table"]["columns"]
+                column_width = [column.get("width", 100) for column in columns_width]  # Default width is 100
+                print("Column width:", column_width)
+                return column_width
+            else:
+                print("Warning: 'columns width' key not found in JSON.")
+                return []
+        except KeyError:    
+            print("Error: Key 'table' is missing from JSON.")
+            return []
+        except TypeError:
+            print("Error: Invalid data structure for 'columns'.")
+            return []
 
     # ============================================================================
     def f_insert_data_to_sql(self, server_name, database_name, login_name, login_pass, table_name, data_array):

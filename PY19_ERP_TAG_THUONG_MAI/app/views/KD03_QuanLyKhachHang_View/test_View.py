@@ -164,9 +164,21 @@ class cls_test_View(tk.Tk):
         self.last_click_time = self.current_time
         # Handle the action for single and double click
         if is_double_click:
-            self.controller.f_tab_01_table_double_click()
+            self.controller.f_tab_01_table_double_click(event)
         else:
-            self.controller.f_tab_01_table_single_click()
+            id_value, name_value, age_value = self.controller.f_tab_01_table_single_click(event)
+            # Clear and update the Entry widgets if values are returned
+            if id_value is not None:
+                self.tab_01_entry_id.delete(0, tk.END)
+                self.tab_01_entry_id.insert(0, id_value)
+
+            if name_value is not None:
+                self.tab_01_entry_name.delete(0, tk.END)
+                self.tab_01_entry_name.insert(0, name_value)
+
+            if age_value is not None:
+                self.tab_01_entry_age.delete(0, tk.END)
+                self.tab_01_entry_age.insert(0, age_value)
     
     def f_clear_input_fileds_of_tab_01(self):
         self.tab_01_entry_id.delete(0, tk.END)
