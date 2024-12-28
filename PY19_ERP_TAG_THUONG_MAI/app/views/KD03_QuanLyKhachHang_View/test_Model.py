@@ -22,7 +22,7 @@ class cls_test_Model():
             # print("Extracted column names:", column_names)
             column_width = self.f_extract_from_json_column_width(self.data_to_config_table)
             print("Extracted column width:", column_width)
-            return column_names
+            return column_names, column_width
 
         except FileNotFoundError:
             print(f"Error: The file '{self.json_file}' was not found.")
@@ -49,7 +49,7 @@ class cls_test_Model():
     
     def f_extract_from_json_column_width(self, data):
         try:
-            if "width" in data["table"]:
+            if "columns" in data["table"]:
                 columns_width = data["table"]["columns"]
                 column_width = [column.get("width", 100) for column in columns_width]  # Default width is 100
                 print("Column width:", column_width)

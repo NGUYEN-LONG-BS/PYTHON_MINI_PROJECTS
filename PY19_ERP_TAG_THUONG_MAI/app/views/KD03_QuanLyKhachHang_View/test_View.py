@@ -62,17 +62,19 @@ class cls_test_View(tk.Tk):
         self.tab_01_button_add.grid(row=4, column=0, columnspan=2, pady=10)
 
         # Table (Treeview)
-        tab_01_table_columns = self.controller.f_get_table_config()
-        self.table_of_tab_01 = ttk.Treeview(self.tab_01, columns=tab_01_table_columns, show="headings", height=10)
+        tab_01_table_column_names, tab_01_table_column_widths = self.controller.f_get_table_config()
+        self.table_of_tab_01 = ttk.Treeview(self.tab_01, columns=tab_01_table_column_names, show="headings", height=10)
         # self.table_of_tab_01 = ttk.Treeview(self.tab_01, columns=[], show="headings", height=10)
         self.table_of_tab_01.grid(row=5, column=0, columnspan=2, pady=10)
         
         self.table_of_tab_01.bind("<ButtonRelease-1>", self.f_tab_01_table_on_click)
         
+        print(tab_01_table_column_names)
+        print(tab_01_table_column_widths)
         # create headings
-        for col in tab_01_table_columns:
+        for col, width in zip(tab_01_table_column_names, tab_01_table_column_widths):
             self.table_of_tab_01.heading(col, text=col)
-            self.table_of_tab_01.column(col, width=100)
+            self.table_of_tab_01.column(col, width=width)
 
         # Get Data button
         self.tab_01_button_get = tk.Button(self.tab_01, text="Print Data Array", command=self.f_tab_01_button_get_click)
