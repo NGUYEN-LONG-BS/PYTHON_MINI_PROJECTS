@@ -5,6 +5,7 @@ import time
 class cls_test_View(tk.Tk):
     def __init__(self):
         super().__init__()
+        
         self.f_create_main_window()
         self.f_add_MVC_class()
         self.f_create_widgets()
@@ -62,19 +63,20 @@ class cls_test_View(tk.Tk):
         self.tab_01_button_add.grid(row=4, column=0, columnspan=2, pady=10)
 
         # Table (Treeview)
-        tab_01_table_column_names, tab_01_table_column_widths = self.controller.f_get_table_config()
+        tab_01_table_column_names, tab_01_table_column_widths, tab_01_table_column_min_widths, tab_01_table_column_anchors, tab_01_table_column_stretchs = self.controller.f_get_table_config()
         self.table_of_tab_01 = ttk.Treeview(self.tab_01, columns=tab_01_table_column_names, show="headings", height=10)
         # self.table_of_tab_01 = ttk.Treeview(self.tab_01, columns=[], show="headings", height=10)
         self.table_of_tab_01.grid(row=5, column=0, columnspan=2, pady=10)
         
         self.table_of_tab_01.bind("<ButtonRelease-1>", self.f_tab_01_table_on_click)
         
-        print(tab_01_table_column_names)
-        print(tab_01_table_column_widths)
+        # print(tab_01_table_column_names)
+        # print(tab_01_table_column_widths)
+        
         # create headings
-        for col, width in zip(tab_01_table_column_names, tab_01_table_column_widths):
+        for col, width, min_width, anchor, stretch in zip(tab_01_table_column_names, tab_01_table_column_widths, tab_01_table_column_min_widths, tab_01_table_column_anchors, tab_01_table_column_stretchs):
             self.table_of_tab_01.heading(col, text=col)
-            self.table_of_tab_01.column(col, width=width)
+            self.table_of_tab_01.column(col, width=width, minwidth=min_width, anchor=anchor, stretch=stretch)
 
         # Get Data button
         self.tab_01_button_get = tk.Button(self.tab_01, text="Print Data Array", command=self.f_tab_01_button_get_click)

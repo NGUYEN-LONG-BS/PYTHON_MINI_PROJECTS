@@ -19,10 +19,14 @@ class cls_test_Model():
             with open(self.json_file, 'r', encoding='utf-8') as file:
                 self.data_to_config_table = json.load(file)  # Load the JSON data
             column_names = self.f_extract_from_json_column_names(self.data_to_config_table)
-            # print("Extracted column names:", column_names)
             column_width = self.f_extract_from_json_column_width(self.data_to_config_table)
-            print("Extracted column width:", column_width)
-            return column_names, column_width
+            column_min_width = self.f_extract_from_json_column_min_width(self.data_to_config_table)
+            column_anchor = self.f_extract_from_json_column_anchor(self.data_to_config_table)
+            column_stretch = self.f_extract_from_json_column_stretch(self.data_to_config_table)
+            
+            # print("Extracted column names:", column_names)
+            # print("Extracted column width:", column_width)
+            return column_names, column_width, column_min_width, column_anchor, column_stretch
 
         except FileNotFoundError:
             print(f"Error: The file '{self.json_file}' was not found.")
@@ -56,6 +60,57 @@ class cls_test_Model():
                 return column_width
             else:
                 print("Warning: 'columns width' key not found in JSON.")
+                return []
+        except KeyError:    
+            print("Error: Key 'table' is missing from JSON.")
+            return []
+        except TypeError:
+            print("Error: Invalid data structure for 'columns'.")
+            return []
+    
+    def f_extract_from_json_column_min_width(self, data):
+        try:
+            if "columns" in data["table"]:
+                columns_min_width = data["table"]["columns"]
+                column_min_width = [column.get("width", 50) for column in columns_min_width]  # Default min_width is 50
+                print("Column width:", column_min_width)
+                return column_min_width
+            else:
+                print("Warning: 'columns min_width' key not found in JSON.")
+                return []
+        except KeyError:    
+            print("Error: Key 'table' is missing from JSON.")
+            return []
+        except TypeError:
+            print("Error: Invalid data structure for 'columns'.")
+            return []
+    
+    def f_extract_from_json_column_anchor(self, data):
+        try:
+            if "columns" in data["table"]:
+                columns_anchor = data["table"]["columns"]
+                column_anchor = [column.get("anchor", "w") for column in columns_anchor]  # Default width is w
+                print("Column anchor:", column_anchor)
+                return column_anchor
+            else:
+                print("Warning: 'columns anchor' key not found in JSON.")
+                return []
+        except KeyError:    
+            print("Error: Key 'table' is missing from JSON.")
+            return []
+        except TypeError:
+            print("Error: Invalid data structure for 'columns'.")
+            return []
+
+    def f_extract_from_json_column_stretch(self, data):
+        try:
+            if "columns" in data["table"]:
+                columns_stretch = data["table"]["columns"]
+                column_stretch = [column.get("anchor", "True") for column in columns_stretch]  # Default width is True
+                print("Column anchor:", column_stretch)
+                return column_stretch
+            else:
+                print("Warning: 'columns stretch' key not found in JSON.")
                 return []
         except KeyError:    
             print("Error: Key 'table' is missing from JSON.")

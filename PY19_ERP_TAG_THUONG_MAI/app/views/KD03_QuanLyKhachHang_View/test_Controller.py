@@ -65,13 +65,6 @@ class cls_test_Controller():
         return is_valid, error_message
     
     def f_get_table_config(self):
-        """
-        Load the table configuration (header, columns, and scrollbars) from the JSON file.
-        Returns:
-            columns (list): List of column definitions.
-            scrollbars (dict): Scrollbar configuration for the table.
-            general_settings (dict): General settings for table appearance.
-        """
         return self.model.f_load_table_config_from_json()
     
     def f_export_data_to_SQL(self, table):
