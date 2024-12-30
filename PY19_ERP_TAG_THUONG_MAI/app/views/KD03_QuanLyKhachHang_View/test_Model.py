@@ -35,6 +35,14 @@ class cls_test_Model():
         except Exception as e:
             print(f"An error occurred: {e}")
 
+    def f_extract_from_json_columns_config(self):
+        # Extract column configurations from the JSON
+        columns_config = self.data_to_config_table["table"]["columns"]
+        column_names = [col["name"] for col in columns_config]
+        print(columns_config)
+        print(column_names)
+        return columns_config, column_names
+    
     def f_extract_from_json_column_names(self, data):
         try:
             if "columns" in data["table"]:
@@ -106,11 +114,28 @@ class cls_test_Model():
         try:
             if "columns" in data["table"]:
                 columns_stretch = data["table"]["columns"]
-                column_stretch = [column.get("anchor", "True") for column in columns_stretch]  # Default width is True
-                print("Column anchor:", column_stretch)
+                column_stretch = [column.get("stretch", "True") for column in columns_stretch]  # Default width is True
+                print("Column stretch:", column_stretch)
                 return column_stretch
             else:
                 print("Warning: 'columns stretch' key not found in JSON.")
+                return []
+        except KeyError:    
+            print("Error: Key 'table' is missing from JSON.")
+            return []
+        except TypeError:
+            print("Error: Invalid data structure for 'columns'.")
+            return []
+    
+    def f_extract_from_json_column_font(self, data):
+        try:
+            if "columns" in data["table"]:
+                columns_font = data["table"]["columns"]
+                column_font = [column.get("font", {"family": "Arial", "size": 12, "weight": "normal"}) for column in columns_font]  # Default width is {"family": "Arial", "size": 12, "weight": "normal"}
+                print("Column font:", column_font)
+                return column_font
+            else:
+                print("Warning: 'columns_font' key not found in JSON.")
                 return []
         except KeyError:    
             print("Error: Key 'table' is missing from JSON.")

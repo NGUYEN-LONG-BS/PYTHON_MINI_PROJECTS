@@ -77,6 +77,37 @@ class cls_test_View(tk.Tk):
         # Treeview config
         for col in tab_01_table_column_names:
             self.table_of_tab_01.heading(col, text=col)
+        
+        for col, width, min_width, anchor, stretch in zip(
+            tab_01_table_column_names, 
+            tab_01_table_column_widths, 
+            tab_01_table_column_min_widths, 
+            tab_01_table_column_anchors, 
+            tab_01_table_column_stretchs
+        ):    
+            self.table_of_tab_01.heading(col, text=col)  # Set header text
+            self.table_of_tab_01.column(
+                col, 
+                width=width, 
+                minwidth=min_width, 
+                anchor=anchor, 
+                stretch=stretch
+                )
+        
+        # Configure the columns based on the JSON data
+        for col, config in zip(self.column_names_02, self.columns_config_02):
+            # Configure each column
+            self.table_of_tab_01.heading(col, text=col)  # Set header text
+            self.table_of_tab_01.column(
+                col,
+                width=config["width"],
+                minwidth=config["min_width"],
+                anchor=config["anchor"],
+                stretch=config["stretch"]
+            )
+
+            # Apply the background and font settings
+            self.table_of_tab_01.tag_configure(col, background=config["background_color"], foreground=config["foreground_color"])
             
         # for col, width, min_width, anchor, stretch in zip(tab_01_table_column_names, tab_01_table_column_widths, tab_01_table_column_min_widths, tab_01_table_column_anchors, tab_01_table_column_stretchs):
         #     self.table_of_tab_01.heading(col, text=col)
@@ -174,7 +205,7 @@ class cls_test_View(tk.Tk):
         if is_double_click:
             self.controller.f_tab_01_table_double_click(event)
         else:
-            id_value, name_value, age_value = self.controller.f_tab_01_table_single_click(event)
+            id_value, name_value, age_value, self.column_names_02, self.columns_config_02 = self.controller.f_tab_01_table_single_click(event)
             # Clear and update the Entry widgets if values are returned
             if id_value is not None:
                 self.tab_01_entry_id.delete(0, tk.END)

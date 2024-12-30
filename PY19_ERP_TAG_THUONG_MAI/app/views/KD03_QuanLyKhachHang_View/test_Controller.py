@@ -77,8 +77,14 @@ class cls_test_Controller():
             return True  # Double click detected
         else:
             return False  # Single click detected
-        
+    
+    
     def f_tab_01_table_single_click(self, event):
+        print("this is columns config:")
+        a, b = self.model.f_extract_from_json_columns_config()
+        print(a)
+        print(b)
+        
         treeview = event.widget
         # Get the selected row ID
         selected_item = treeview.selection()
@@ -87,12 +93,12 @@ class cls_test_Controller():
             row_values = treeview.item(selected_item[0], "values")
             # print("Selected row values:", row_values)
             if len(row_values) >= 3:
-                return row_values[0], row_values[1], row_values[2]
+                return row_values[0], row_values[1], row_values[2], a, b
             else:
-                return None, None, None
+                return None, None, None, None, None
         else:
             # print("Warning: No row selected.")
-            return None, None, None
+            return None, None, None, None, None
     
     def f_tab_01_table_double_click(self, event):
         # Get the Treeview widget from the event
