@@ -9,7 +9,7 @@
                 "min_width": 50,
                 "anchor": "center",
                 "stretch": true,
-                "font": {"family": "Arial", "size": 12, "weight": "bold"},
+                "font": {"family": "Arial", "size": 20, "weight": "bold"},
                 "background_color": "#f0f0f0",
                 "foreground_color": "#000000",
                 "show": "headings"
