@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import time
+import json
 
 class cls_test_View(tk.Tk):
     def __init__(self):
@@ -66,6 +67,7 @@ class cls_test_View(tk.Tk):
 
         # Table (Treeview)
         tab_01_table_column_names, tab_01_table_column_widths, tab_01_table_column_min_widths, tab_01_table_column_anchors, tab_01_table_column_stretchs = self.controller.f_get_table_config()
+        # tab_01_table_column_names = self.controller.f_get_table_config()
         self.table_of_tab_01 = ttk.Treeview(self.tab_01, columns=tab_01_table_column_names, show="headings", height=10)
         # self.table_of_tab_01 = ttk.Treeview(self.tab_01, columns=[], show="headings", height=10)
         self.table_of_tab_01.grid(row=5, column=0, columnspan=2, pady=10)
@@ -79,34 +81,46 @@ class cls_test_View(tk.Tk):
         for col in tab_01_table_column_names:
             self.table_of_tab_01.heading(col, text=col)
         
-        for col, width, min_width, anchor, stretch in zip(
-            tab_01_table_column_names, 
-            tab_01_table_column_widths, 
-            tab_01_table_column_min_widths, 
-            tab_01_table_column_anchors, 
-            tab_01_table_column_stretchs
-        ):    
-            self.table_of_tab_01.heading(col, text=col)  # Set header text
-            self.table_of_tab_01.column(
-                col, 
-                width=width, 
-                minwidth=min_width, 
-                anchor=anchor, 
-                stretch=stretch
-                )
-        
+        # for col, width, min_width, anchor, stretch in zip(
+        #     tab_01_table_column_names, 
+        #     tab_01_table_column_widths, 
+        #     tab_01_table_column_min_widths, 
+        #     tab_01_table_column_anchors, 
+        #     tab_01_table_column_stretchs
+        # ):    
+        #     self.table_of_tab_01.heading(col, text=col)  # Set header text
+        #     self.table_of_tab_01.column(
+        #         col, 
+        #         width=width, 
+        #         minwidth=min_width, 
+        #         anchor=anchor, 
+        #         stretch=stretch
+        #         )
 
+        # Frame button
+        self.tab_01_frame_button = tk.Frame(self.tab_01)
+        self.tab_01_frame_button.grid(row=6, column=0, columnspan=2, pady=10)
+        
         # Get Data button
-        self.tab_01_button_get = tk.Button(self.tab_01, text="Print Data Array", command=self.f_tab_01_button_get_click)
-        self.tab_01_button_get.grid(row=6, column=0, columnspan=2, pady=10)
+        self.tab_01_button_get = tk.Button(self.tab_01_frame_button, text="Print Data Array", command=self.f_tab_01_button_get_click)
+        # self.tab_01_button_get.grid(row=6, column=0, columnspan=2, pady=10)
+        self.tab_01_button_get.pack(side="left", padx=10)
         
         # Export Data button
-        self.tab_01_button_export = tk.Button(self.tab_01, text="Export Data to SQL", command=self.f_tab_01_button_export_click)
-        self.tab_01_button_export.grid(row=6, column=2, columnspan=2, pady=10)
+        self.tab_01_button_export = tk.Button(self.tab_01_frame_button, text="Export Data to SQL", command=self.f_tab_01_button_export_click)
+        self.tab_01_button_export.pack(side="left", padx=10)
         
         # Table config
-        self.tab_01_config_export = tk.Button(self.tab_01, text="cấu hình bảng", command=self.f_tab_01_button_config_click)
-        self.tab_01_config_export.grid(row=6, column=3, columnspan=2, pady=10)
+        self.tab_01_config_num_01 = tk.Button(self.tab_01_frame_button, text="cấu hình bảng cách 01", command=self.f_tab_01_button_config_01_click)
+        self.tab_01_config_num_01.pack(side="left", padx=10)
+        
+        # Table config
+        self.tab_01_config_num_02 = tk.Button(self.tab_01_frame_button, text="cấu hình bảng cách 02", command=self.f_tab_01_button_config_02_click)
+        self.tab_01_config_num_02.pack(side="left", padx=10)
+        
+        # print config
+        self.tab_01_print_config = tk.Button(self.tab_01_frame_button, text="in cấu hình của bảng", command=self.f_button_print_config_click)
+        self.tab_01_print_config.pack(side="left", padx=10)
 
         # Result label
         self.tab_01_label_result = tk.Label(self.tab_01, text="")
@@ -144,6 +158,11 @@ class cls_test_View(tk.Tk):
         # for col in tab_02_table_columns:
         #     self.table_of_tab_01.heading(col, text=col)
         #     self.table_of_tab_01.column(col, width=100)
+        
+        # Add sample data to the Treeview (just for testing)
+        self.table_of_tab_02.insert("", "end", values=("1", "Nguyễn Văn A", "0901234567"))
+        self.table_of_tab_02.insert("", "end", values=("2", "Trần Thị B", "0907654321"))
+        
 
         # Get Data button
         self.tab_02_button_get = tk.Button(self.tab_02, text="Print Data Array", command=self.f_tab_02_button_get_click)
@@ -182,7 +201,31 @@ class cls_test_View(tk.Tk):
     def f_tab_01_button_export_click(self):
         self.tab_01_label_result.config(text=self.controller.f_export_data_to_SQL(self.table_of_tab_01), fg="blue")
     
-    def f_tab_01_button_config_click(self):
+    def f_tab_01_button_config_01_click(self):
+        # Table (Treeview)
+        tab_01_table_column_names, tab_01_table_column_widths, tab_01_table_column_min_widths, tab_01_table_column_anchors, tab_01_table_column_stretchs = self.controller.f_get_table_config()
+        
+        # Treeview config
+        for col in tab_01_table_column_names:
+            self.table_of_tab_01.heading(col, text=col)
+        
+        for col, width, min_width, anchor, stretch in zip(
+            tab_01_table_column_names, 
+            tab_01_table_column_widths, 
+            tab_01_table_column_min_widths, 
+            tab_01_table_column_anchors, 
+            tab_01_table_column_stretchs
+        ):    
+            self.table_of_tab_01.heading(col, text=col)  # Set header text
+            self.table_of_tab_01.column(
+                col, 
+                width=width, 
+                minwidth=min_width, 
+                anchor=anchor, 
+                stretch=stretch
+                )
+    
+    def f_tab_01_button_config_02_click(self):
         self.column_names_02, self.columns_config_02 = self.controller.f_tab_01_button_config_click(self.table_of_tab_01)
         # Configure the columns based on the JSON data
         print(zip(self.column_names_02, self.columns_config_02))
@@ -204,8 +247,17 @@ class cls_test_View(tk.Tk):
 
             # Apply the background and font settings
             self.table_of_tab_01.tag_configure(col, background=config["background_color"], foreground=config["foreground_color"])
-            
+    
+    def f_button_print_config_click(self):
+        self.f_print_table_of_tab_01_config()
         
+    def f_print_table_of_tab_01_config(self):
+        # Get the Treeview configuration
+        config = self.table_of_tab_01.config()
+
+        # Save the configuration to a JSON file
+        with open("treeview_config.json", "w") as json_file:
+            json.dump(config, json_file, indent=4)
     
     def f_tab_01_table_on_click(self, event):
         # Call the controller to handle the event
