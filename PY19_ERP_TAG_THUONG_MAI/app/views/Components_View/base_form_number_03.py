@@ -97,9 +97,9 @@ class cls_base_form_number_03_DashBoard(tk.Tk):
         self.frame_right_body.pack(side="left", fill="both", expand=False)
 
         # Bind hover events
-        self.frame_left_body.bind("<Enter>", lambda event: self._frame_left_body_Hover())
-        self.frame_middle_body.bind("<Enter>", lambda event: self._frame_middle_body_Hover())
-        self.frame_right_body.bind("<Enter>", lambda event: self._frame_right_body_Hover())
+        # self.frame_left_body.bind("<Enter>", lambda event: self._frame_left_body_Hover())
+        # self.frame_middle_body.bind("<Enter>", lambda event: self._frame_middle_body_Hover())
+        # self.frame_right_body.bind("<Enter>", lambda event: self._frame_right_body_Hover())
         
     def _frame_left_body_Hover(self):
         # # unpack all elements in right body

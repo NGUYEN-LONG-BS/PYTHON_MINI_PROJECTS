@@ -5,10 +5,13 @@ import time
 class cls_test_View(tk.Tk):
     def __init__(self):
         super().__init__()
-        
+        print("Running part 1")
         self.f_create_main_window()
+        print("Running part 2")
         self.f_add_MVC_class()
+        print("Running part 3")
         self.f_create_widgets()
+        print("Running part 4")
         
         # Timer interval (in milliseconds)
         self.last_click_time = 0
