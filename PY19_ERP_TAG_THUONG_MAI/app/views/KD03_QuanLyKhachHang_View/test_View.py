@@ -14,6 +14,7 @@ class cls_test_View(tk.Tk):
         # Timer interval (in milliseconds)
         self.last_click_time = 0
         self.double_click_interval = 0.3  # 300 ms
+        self.column_names_02, self.columns_config_02 = [], []
 
     def f_create_main_window(self):
         self.title("Data Entry Table")
@@ -94,24 +95,6 @@ class cls_test_View(tk.Tk):
                 stretch=stretch
                 )
         
-        # Configure the columns based on the JSON data
-        for col, config in zip(self.column_names_02, self.columns_config_02):
-            # Configure each column
-            self.table_of_tab_01.heading(col, text=col)  # Set header text
-            self.table_of_tab_01.column(
-                col,
-                width=config["width"],
-                minwidth=config["min_width"],
-                anchor=config["anchor"],
-                stretch=config["stretch"]
-            )
-
-            # Apply the background and font settings
-            self.table_of_tab_01.tag_configure(col, background=config["background_color"], foreground=config["foreground_color"])
-            
-        # for col, width, min_width, anchor, stretch in zip(tab_01_table_column_names, tab_01_table_column_widths, tab_01_table_column_min_widths, tab_01_table_column_anchors, tab_01_table_column_stretchs):
-        #     self.table_of_tab_01.heading(col, text=col)
-        #     self.table_of_tab_01.column(col, width=width, minwidth=min_width, anchor=anchor, stretch=stretch)
 
         # Get Data button
         self.tab_01_button_get = tk.Button(self.tab_01, text="Print Data Array", command=self.f_tab_01_button_get_click)
@@ -120,6 +103,10 @@ class cls_test_View(tk.Tk):
         # Export Data button
         self.tab_01_button_export = tk.Button(self.tab_01, text="Export Data to SQL", command=self.f_tab_01_button_export_click)
         self.tab_01_button_export.grid(row=6, column=2, columnspan=2, pady=10)
+        
+        # Table config
+        self.tab_01_config_export = tk.Button(self.tab_01, text="cấu hình bảng", command=self.f_tab_01_button_config_click)
+        self.tab_01_config_export.grid(row=6, column=3, columnspan=2, pady=10)
 
         # Result label
         self.tab_01_label_result = tk.Label(self.tab_01, text="")
@@ -194,7 +181,27 @@ class cls_test_View(tk.Tk):
     
     def f_tab_01_button_export_click(self):
         self.tab_01_label_result.config(text=self.controller.f_export_data_to_SQL(self.table_of_tab_01), fg="blue")
+    
+    def f_tab_01_button_config_click(self):
+        self.column_names_02, self.columns_config_02 = self.controller.f_tab_01_button_config_click(self.table_of_tab_01)
+        # Configure the columns based on the JSON data
+        print(zip(self.column_names_02, self.columns_config_02))
+        # for col, config in zip(self.column_names_02, self.columns_config_02):
+        #     # Configure each column
+        #     self.table_of_tab_01.heading(col, text=col)  # Set header text
+        #     self.table_of_tab_01.column(
+        #         col,
+        #         width=config["width"],
+        #         minwidth=config["min_width"],
+        #         anchor=config["anchor"],
+        #         stretch=config["stretch"]
+        #     )
+
+        #     # Apply the background and font settings
+        #     self.table_of_tab_01.tag_configure(col, background=config["background_color"], foreground=config["foreground_color"])
+            
         
+    
     def f_tab_01_table_on_click(self, event):
         # Call the controller to handle the event
         self.current_time = time.time()
