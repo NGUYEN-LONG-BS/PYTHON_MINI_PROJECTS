@@ -73,10 +73,13 @@ class cls_test_View(tk.Tk):
         # print(tab_01_table_column_names)
         # print(tab_01_table_column_widths)
         
-        # create headings
-        for col, width, min_width, anchor, stretch in zip(tab_01_table_column_names, tab_01_table_column_widths, tab_01_table_column_min_widths, tab_01_table_column_anchors, tab_01_table_column_stretchs):
+        # Treeview config
+        for col in tab_01_table_column_names:
             self.table_of_tab_01.heading(col, text=col)
-            self.table_of_tab_01.column(col, width=width, minwidth=min_width, anchor=anchor, stretch=stretch)
+            
+        # for col, width, min_width, anchor, stretch in zip(tab_01_table_column_names, tab_01_table_column_widths, tab_01_table_column_min_widths, tab_01_table_column_anchors, tab_01_table_column_stretchs):
+        #     self.table_of_tab_01.heading(col, text=col)
+        #     self.table_of_tab_01.column(col, width=width, minwidth=min_width, anchor=anchor, stretch=stretch)
 
         # Get Data button
         self.tab_01_button_get = tk.Button(self.tab_01, text="Print Data Array", command=self.f_tab_01_button_get_click)
@@ -115,13 +118,13 @@ class cls_test_View(tk.Tk):
         tab_02_table_columns = self.controller.f_get_table_config()
         self.table_of_tab_02 = ttk.Treeview(self.tab_02, columns=tab_02_table_columns, show="headings", height=10)
         # Gắn sự kiện click vào Treeview
-        self.table_of_tab_02.bind("<ButtonRelease-1>", self.f_table_tab_02_click)
+        # self.table_of_tab_02.bind("<ButtonRelease-1>", self.f_table_tab_02_click)
         self.table_of_tab_02.grid(row=5, column=0, columnspan=2, pady=10)
         
-        # create headings
-        for col in tab_02_table_columns:
-            self.table_of_tab_01.heading(col, text=col)
-            self.table_of_tab_01.column(col, width=100)
+        # # create headings
+        # for col in tab_02_table_columns:
+        #     self.table_of_tab_01.heading(col, text=col)
+        #     self.table_of_tab_01.column(col, width=100)
 
         # Get Data button
         self.tab_02_button_get = tk.Button(self.tab_02, text="Print Data Array", command=self.f_tab_02_button_get_click)
