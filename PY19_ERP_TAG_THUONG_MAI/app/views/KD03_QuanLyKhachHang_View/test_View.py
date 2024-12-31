@@ -8,26 +8,26 @@ class cls_test_View(tk.Tk):
         super().__init__()
         
         # Create all function
-        self.f_create_main_window()
-        self.f_add_MVC_class()
-        self.f_create_widgets()
+        self.f_view_create_main_window()
+        self.f_view_add_MVC_class()
+        self.f_view_create_widgets()
         
         # Timer interval (in milliseconds)
         self.last_click_time = 0
         self.double_click_interval = 0.3  # 300 ms
         self.column_names_02, self.columns_config_02 = [], []
 
-    def f_create_main_window(self):
+    def f_view_create_main_window(self):
         self.title("Data Entry Table")
         self.geometry("700x550")
         
-    def f_add_MVC_class(self):
+    def f_view_add_MVC_class(self):
         # Import đối tượng cls_test_Controller
         from test_Controller import cls_test_Controller
         # Gọi cửa sổ Controller
         self.controller = cls_test_Controller()
     
-    def f_create_widgets(self):
+    def f_view_create_widgets(self):
         # Create a notebook (tabs)
         self.notebook = ttk.Notebook(self)
         self.notebook.pack(fill="both", expand=True)
@@ -41,10 +41,10 @@ class cls_test_View(tk.Tk):
         self.notebook.add(self.tab_02, text="Danh sách")
         
         # Settings tab content
-        self._f_create_widgets_of_tab_01()
-        self._f_create_widgets_of_tab_02()
+        self._f_view_create_widgets_of_tab_01()
+        self._f_view_create_widgets_of_tab_02()
         
-    def _f_create_widgets_of_tab_01(self):
+    def _f_view_create_widgets_of_tab_01(self):
         # Title
         tk.Label(self.tab_01, text="PHIẾU YÊU CẦU ĐẶT HÀNG").grid(row=0, column=0, padx=10, pady=5, sticky="e")
         
@@ -62,40 +62,22 @@ class cls_test_View(tk.Tk):
         self.tab_01_entry_age.grid(row=3, column=1, padx=10, pady=5)
 
         # Add button
-        self.tab_01_button_add = tk.Button(self.tab_01, text="Add Row", command=self.f_tab_01_button_add_click)
+        self.tab_01_button_add = tk.Button(self.tab_01, text="Add Row", command=self.f_view_tab_01_button_add_click)
         self.tab_01_button_add.grid(row=4, column=0, columnspan=2, pady=10)
 
+        # Frame treeview
+        self.tab_01_frame_treeview = tk.Frame(self.tab_01)
+        self.tab_01_frame_treeview.grid(row=5, column=0, columnspan=2, pady=10)
+        
         # Table (Treeview)
-        tab_01_table_column_names, tab_01_table_column_widths, tab_01_table_column_min_widths, tab_01_table_column_anchors, tab_01_table_column_stretchs = self.controller.f_get_table_config()
-        # tab_01_table_column_names = self.controller.f_get_table_config()
-        self.table_of_tab_01 = ttk.Treeview(self.tab_01, columns=tab_01_table_column_names, show="headings", height=10)
-        # self.table_of_tab_01 = ttk.Treeview(self.tab_01, columns=[], show="headings", height=10)
+        tab_01_table_column_names = ["Col_01","Col_02","Col_03"]
+        self.table_of_tab_01 = ttk.Treeview(self.tab_01_frame_treeview, columns=tab_01_table_column_names, show="headings", height=10)
         self.table_of_tab_01.grid(row=5, column=0, columnspan=2, pady=10)
-        
-        self.table_of_tab_01.bind("<ButtonRelease-1>", self.f_tab_01_table_on_click)
-        
-        # print(tab_01_table_column_names)
-        # print(tab_01_table_column_widths)
-        
+        self.table_of_tab_01.bind("<ButtonRelease-1>", self.f_view_table_of_tab_01_click)
+
         # Treeview config
         for col in tab_01_table_column_names:
             self.table_of_tab_01.heading(col, text=col)
-        
-        # for col, width, min_width, anchor, stretch in zip(
-        #     tab_01_table_column_names, 
-        #     tab_01_table_column_widths, 
-        #     tab_01_table_column_min_widths, 
-        #     tab_01_table_column_anchors, 
-        #     tab_01_table_column_stretchs
-        # ):    
-        #     self.table_of_tab_01.heading(col, text=col)  # Set header text
-        #     self.table_of_tab_01.column(
-        #         col, 
-        #         width=width, 
-        #         minwidth=min_width, 
-        #         anchor=anchor, 
-        #         stretch=stretch
-        #         )
 
         # Frame button
         self.tab_01_frame_button = tk.Frame(self.tab_01)
@@ -126,7 +108,7 @@ class cls_test_View(tk.Tk):
         self.tab_01_label_result = tk.Label(self.tab_01, text="")
         self.tab_01_label_result.grid(row=7, column=0, columnspan=2)
         
-    def _f_create_widgets_of_tab_02(self):
+    def _f_view_create_widgets_of_tab_02(self):
         # Title
         tk.Label(self.tab_02, text="NHẬT KÝ YÊU CẦU ĐẶT HÀNG").grid(row=0, column=0, padx=10, pady=5, sticky="e")
         
@@ -148,22 +130,11 @@ class cls_test_View(tk.Tk):
         self.tab_02_button_add.grid(row=4, column=0, columnspan=2, pady=10)
 
         # Table (Treeview)
-        tab_02_table_columns = self.controller.f_get_table_config()
-        self.table_of_tab_02 = ttk.Treeview(self.tab_02, columns=tab_02_table_columns, show="headings", height=10)
-        # Gắn sự kiện click vào Treeview
-        # self.table_of_tab_02.bind("<ButtonRelease-1>", self.f_table_tab_02_click)
+        tab_02_table_column_names = ["Col_01","Col_02","Col_03"]
+        self.table_of_tab_02 = ttk.Treeview(self.tab_02, columns=tab_02_table_column_names, show="headings", height=10)
         self.table_of_tab_02.grid(row=5, column=0, columnspan=2, pady=10)
+        self.table_of_tab_02.bind("<ButtonRelease-1>", self.f_tab_02_table_on_click)
         
-        # # create headings
-        # for col in tab_02_table_columns:
-        #     self.table_of_tab_01.heading(col, text=col)
-        #     self.table_of_tab_01.column(col, width=100)
-        
-        # Add sample data to the Treeview (just for testing)
-        self.table_of_tab_02.insert("", "end", values=("1", "Nguyễn Văn A", "0901234567"))
-        self.table_of_tab_02.insert("", "end", values=("2", "Trần Thị B", "0907654321"))
-        
-
         # Get Data button
         self.tab_02_button_get = tk.Button(self.tab_02, text="Print Data Array", command=self.f_tab_02_button_get_click)
         self.tab_02_button_get.grid(row=6, column=0, columnspan=2, pady=10)
@@ -182,7 +153,7 @@ class cls_test_View(tk.Tk):
     def f_tab_01_button_get_click(self):
         self.tab_01_label_result.config(text=self.controller.f_get_data(self.table_of_tab_01), fg="blue")
         
-    def f_tab_01_button_add_click(self):
+    def f_view_tab_01_button_add_click(self):
         id_value = self.tab_01_entry_id.get()
         name_value = self.tab_01_entry_name.get()
         age_value = self.tab_01_entry_age.get()
@@ -202,8 +173,14 @@ class cls_test_View(tk.Tk):
         self.tab_01_label_result.config(text=self.controller.f_export_data_to_SQL(self.table_of_tab_01), fg="blue")
     
     def f_tab_01_button_config_01_click(self):
-        # Table (Treeview)
+        # Clear the existing columns
+        self.table_of_tab_01.delete(*self.table_of_tab_01.get_children())
+        for col in self.table_of_tab_01["columns"]:
+            self.table_of_tab_01.heading(col, text="")  # Remove headings
+        
+        # Trước khi cấu hình, phải thiết lập cột cho Treeview
         tab_01_table_column_names, tab_01_table_column_widths, tab_01_table_column_min_widths, tab_01_table_column_anchors, tab_01_table_column_stretchs = self.controller.f_get_table_config()
+        self.table_of_tab_01["columns"] = tab_01_table_column_names     
         
         # Treeview config
         for col in tab_01_table_column_names:
@@ -226,6 +203,16 @@ class cls_test_View(tk.Tk):
                 )
     
     def f_tab_01_button_config_02_click(self):
+        # Clear the existing columns
+        self.table_of_tab_01.delete(*self.table_of_tab_01.get_children())
+        for col in self.table_of_tab_01["columns"]:
+            self.table_of_tab_01.heading(col, text="")  # Remove headings
+        
+        # Trước khi cấu hình, phải thiết lập cột cho Treeview
+        tab_01_table_column_names, tab_01_table_column_widths, tab_01_table_column_min_widths, tab_01_table_column_anchors, tab_01_table_column_stretchs = self.controller.f_get_table_config()
+        self.table_of_tab_01["columns"] = tab_01_table_column_names     
+        
+        
         self.column_names_02, self.columns_config_02 = self.controller.f_tab_01_button_config_click(self.table_of_tab_01)
         # Configure the columns based on the JSON data
         print(zip(self.column_names_02, self.columns_config_02))
@@ -259,7 +246,7 @@ class cls_test_View(tk.Tk):
         with open("treeview_config.json", "w") as json_file:
             json.dump(config, json_file, indent=4)
     
-    def f_tab_01_table_on_click(self, event):
+    def f_view_table_of_tab_01_click(self, event):
         # Call the controller to handle the event
         self.current_time = time.time()
         is_double_click = self.controller.f_handle_event_click_on_table_of_tab_01(self.last_click_time, self.current_time, self.double_click_interval)
@@ -283,6 +270,9 @@ class cls_test_View(tk.Tk):
                 self.tab_01_entry_age.delete(0, tk.END)
                 self.tab_01_entry_age.insert(0, age_value)
     
+    def f_tab_02_table_on_click(self, event):
+        print("f_tab_02_table_on_click")    
+
     def f_clear_input_fileds_of_tab_01(self):
         self.tab_01_entry_id.delete(0, tk.END)
         self.tab_01_entry_name.delete(0, tk.END)

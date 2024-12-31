@@ -1,5 +1,6 @@
 import os
 import tkinter as tk
+from tkinter import ttk
 from tkinter import messagebox
 import json
 from PIL import Image, ImageTk
@@ -18,7 +19,7 @@ class cls_Login_View(tk.Tk):
         self.controller = cls_Login_Controller(model, self)
         
         self.title("AD0001 - Login Form")
-        f_utils_set_window_size_is_4_per_5_screen(self, 400, 500)
+        f_utils_set_window_size_is_4_per_5_screen(self, 400, 550)
         f_utils_set_center_screen(self)
         f_utils_setup_fav_icon(self)
         self.resizable(False, False)
@@ -77,6 +78,18 @@ class cls_Login_View(tk.Tk):
         self.button_toggle_password = tk.Button(self.password_frame, text="Show", font=FONT_DEFAULT_NUM_01, command=self.f_toggle_password, relief="flat", bg="#f0f0f5", fg="#007bff", cursor="hand2")
         self.button_toggle_password.pack(anchor="ne", pady=5)
 
+        # Subsidiary Selection
+        self.subsidiary_frame = tk.Frame(self, bg="#f0f0f5")
+        self.subsidiary_frame.pack(pady=10, padx=30, fill="x")
+
+        self.subsidiary_label = tk.Label(self.subsidiary_frame, text="Subsidiary", font=("Arial", 12), bg="#f0f0f5", anchor="w")
+        self.subsidiary_label.pack(fill="x")
+
+        self.subsidiary_combobox = ttk.Combobox(self.subsidiary_frame, font=("Arial", 12), state="readonly")
+        self.subsidiary_combobox['values'] = ["TA Thiết bị điện", "TA Hà Nội", "TA Việt An", "TA Nam An", "TA Long An"]
+        self.subsidiary_combobox.current(0)  # Set default value
+        self.subsidiary_combobox.pack(fill="x", pady=5)
+        
         # Login Button
         self.login_button = tk.Button(self, text="Login", font=("Arial", 14, "bold"), bg="#4CAF50", fg="white", relief="flat", command=self.f_on_login, cursor="hand2")
         self.login_button.pack(pady=20, padx=30, fill="x")
@@ -101,7 +114,7 @@ class cls_Login_View(tk.Tk):
 
     def f_show_message(self, login_sucess):
         if login_sucess == True:
-            self.f_write_credentials_to_json(self.entry_username.get(), self.entry_password.get())
+            self.f_write_credentials_to_json(self.entry_username.get(), self.subsidiary_combobox.get())
             self.f_open_dashboard()
         else:
             # self.message_label.config(text="Invalid username or password.")
@@ -125,20 +138,21 @@ class cls_Login_View(tk.Tk):
             self.entry_password.config(show='*')
             self.button_toggle_password.config(text="Show")
         
-    def f_write_credentials_to_json(self, username, password):    # Function to write credentials to a JSON file
+    def f_write_credentials_to_json(self, username, subsidiary):    # Function to write credentials to a JSON file
         # Xác định đường dẫn file json
         base_dir = os.path.dirname(__file__)
         json_file = os.path.join(base_dir, 'login_credentials.json')
         
         # Create a dictionary with the credentials
         data = {
-            "username": username
+            "username": username,
+            "Subsidiary": subsidiary
             }
         
         # Write to JSON file
         try:
-            with open(json_file, 'w') as f:
-                json.dump(data, f, indent=4)
+            with open(json_file, 'w', encoding='utf-8') as f:
+                json.dump(data, f, indent=4, ensure_ascii=False)
             # print(f"Credentials saved to {json_file}")
         except Exception as e:
             print(f"Error saving credentials: {e}")

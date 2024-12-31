@@ -39,8 +39,6 @@ class cls_test_Model():
         # Extract column configurations from the JSON
         columns_config = self.data_to_config_table["table"]["columns"]
         column_names = [col["name"] for col in columns_config]
-        print(columns_config)
-        print(column_names)
         return columns_config, column_names
     
     def f_extract_from_json_column_names(self, data):
@@ -64,7 +62,6 @@ class cls_test_Model():
             if "columns" in data["table"]:
                 columns_width = data["table"]["columns"]
                 column_width = [column.get("width", 100) for column in columns_width]  # Default width is 100
-                print("Column width:", column_width)
                 return column_width
             else:
                 print("Warning: 'columns width' key not found in JSON.")
@@ -81,7 +78,6 @@ class cls_test_Model():
             if "columns" in data["table"]:
                 columns_min_width = data["table"]["columns"]
                 column_min_width = [column.get("width", 50) for column in columns_min_width]  # Default min_width is 50
-                print("Column width:", column_min_width)
                 return column_min_width
             else:
                 print("Warning: 'columns min_width' key not found in JSON.")
@@ -98,7 +94,6 @@ class cls_test_Model():
             if "columns" in data["table"]:
                 columns_anchor = data["table"]["columns"]
                 column_anchor = [column.get("anchor", "w") for column in columns_anchor]  # Default width is w
-                print("Column anchor:", column_anchor)
                 return column_anchor
             else:
                 print("Warning: 'columns anchor' key not found in JSON.")
@@ -115,7 +110,6 @@ class cls_test_Model():
             if "columns" in data["table"]:
                 columns_stretch = data["table"]["columns"]
                 column_stretch = [column.get("stretch", "True") for column in columns_stretch]  # Default width is True
-                print("Column stretch:", column_stretch)
                 return column_stretch
             else:
                 print("Warning: 'columns stretch' key not found in JSON.")
@@ -132,7 +126,6 @@ class cls_test_Model():
             if "columns" in data["table"]:
                 columns_font = data["table"]["columns"]
                 column_font = [column.get("font", {"family": "Arial", "size": 12, "weight": "normal"}) for column in columns_font]  # Default width is {"family": "Arial", "size": 12, "weight": "normal"}
-                print("Column font:", column_font)
                 return column_font
             else:
                 print("Warning: 'columns_font' key not found in JSON.")
