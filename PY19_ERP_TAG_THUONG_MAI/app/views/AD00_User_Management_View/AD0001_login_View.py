@@ -84,10 +84,12 @@ class cls_Login_View(tk.Tk):
 
         self.subsidiary_label = tk.Label(self.subsidiary_frame, text="Subsidiary", font=("Arial", 12), bg="#f0f0f5", anchor="w")
         self.subsidiary_label.pack(fill="x")
-
+        
         self.subsidiary_combobox = ttk.Combobox(self.subsidiary_frame, font=("Arial", 12), state="readonly")
         self.subsidiary_combobox['values'] = ["TA Thiết bị điện", "TA Hà Nội", "TA Việt An", "TA Nam An", "TA Long An"]
         self.subsidiary_combobox.current(0)  # Set default value
+        # Load subsidiary from JSON if exists
+        self.f_load_subsidiary_from_json()
         self.subsidiary_combobox.pack(fill="x", pady=5)
         
         # Login Button
@@ -156,6 +158,24 @@ class cls_Login_View(tk.Tk):
             # print(f"Credentials saved to {json_file}")
         except Exception as e:
             print(f"Error saving credentials: {e}")
+            
+    def f_load_subsidiary_from_json(self):
+        base_dir = os.path.dirname(__file__)
+        json_file = os.path.join(base_dir, 'login_credentials.json')
+        
+        if os.path.exists(json_file):
+            try:
+                with open(json_file, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                    subsidiary = data.get("Subsidiary", None)
+                    if subsidiary:
+                        # Set the combobox value to the saved subsidiary
+                        try:
+                            self.subsidiary_combobox.set(subsidiary)
+                        except Exception as e:
+                            print(f"Error setting subsidiary value: {e}")
+            except Exception as e:
+                print(f"Error loading credentials: {e}")
 
 # Controller: The logic and interaction between the model and view
 class cls_Login_Controller:
