@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import ttk
 import time
 import json
+from Components_View import *
+from Components_View.treeview import cls_Treeview_frame_number_01
 
 class cls_test_View(tk.Tk):
     def __init__(self):
@@ -15,7 +17,7 @@ class cls_test_View(tk.Tk):
         # Timer interval (in milliseconds)
         self.last_click_time = 0
         self.double_click_interval = 0.3  # 300 ms
-        self.column_names_02, self.columns_config_02 = [], []
+        # self.column_names_02, self.columns_config_02 = [], []
 
     def f_view_create_main_window(self):
         self.title("Data Entry Table")
@@ -65,23 +67,34 @@ class cls_test_View(tk.Tk):
         self.tab_01_button_add = tk.Button(self.tab_01, text="Add Row", command=self.f_view_tab_01_button_add_click)
         self.tab_01_button_add.grid(row=4, column=0, columnspan=2, pady=10)
 
-        # Frame treeview
-        self.tab_01_frame_treeview = tk.Frame(self.tab_01)
-        self.tab_01_frame_treeview.grid(row=5, column=0, columnspan=2, pady=10)
+        # # Frame treeview
+        # self.tab_01_frame_treeview_01 = tk.Frame(self.tab_01)
+        # self.tab_01_frame_treeview_01.grid(row=5, column=0, columnspan=2, pady=10)
         
-        # Table (Treeview)
-        tab_01_table_column_names = ["Col_01","Col_02","Col_03"]
-        self.table_of_tab_01 = ttk.Treeview(self.tab_01_frame_treeview, columns=tab_01_table_column_names, show="headings", height=10)
-        self.table_of_tab_01.grid(row=5, column=0, columnspan=2, pady=10)
-        self.table_of_tab_01.bind("<ButtonRelease-1>", self.f_view_table_of_tab_01_click)
+        # # Table (Treeview)
+        # tab_01_table_column_names = ["Col_01","Col_02","Col_03"]
+        # self.table_of_tab_01 = ttk.Treeview(self.tab_01_frame_treeview_01, columns=tab_01_table_column_names, show="headings", height=10)
+        # # self.table_of_tab_01.grid(row=5, column=0, columnspan=2, pady=10)
+        # self.table_of_tab_01.grid(row=0, column=0, sticky="nsew")
+        # self.table_of_tab_01.bind("<ButtonRelease-1>", self.f_view_table_of_tab_01_click)
 
-        # Treeview config
-        for col in tab_01_table_column_names:
-            self.table_of_tab_01.heading(col, text=col)
+        # # Treeview config
+        # for col in tab_01_table_column_names:
+        #     self.table_of_tab_01.heading(col, text=col)
 
+        # Frame treeview
+        # self.tab_01_frame_treeview_02 = tk.Frame(self.tab_01, width=400, height=200, bg="white")
+        self.tab_01_frame_treeview_02 = cls_Treeview_frame_number_01(self.tab_01)
+        self.tab_01_frame_treeview_02.grid(row=6, column=0, columnspan=2, pady=10)
+        
+        self.tab_01_frame_treeview_01 = self.tab_01_frame_treeview_02
+        self.table_of_tab_01 = self.tab_01_frame_treeview_02.treeview_normal
+        self.treeview_test_of_tag_01 = self.tab_01_frame_treeview_02.treeview_normal
+        self.treeview_test_of_tag_01.bind("<ButtonRelease-1>", self.f_view_table_of_tab_01_click)
+        
         # Frame button
         self.tab_01_frame_button = tk.Frame(self.tab_01)
-        self.tab_01_frame_button.grid(row=6, column=0, columnspan=2, pady=10)
+        self.tab_01_frame_button.grid(row=7, column=0, columnspan=2, pady=10)
         
         # Get Data button
         self.tab_01_button_get = tk.Button(self.tab_01_frame_button, text="Print Data Array", command=self.f_tab_01_button_get_click)
@@ -106,7 +119,7 @@ class cls_test_View(tk.Tk):
 
         # Result label
         self.tab_01_label_result = tk.Label(self.tab_01, text="")
-        self.tab_01_label_result.grid(row=7, column=0, columnspan=2)
+        self.tab_01_label_result.grid(row=8, column=0, columnspan=2)
         
     def _f_view_create_widgets_of_tab_02(self):
         # Title
@@ -204,36 +217,59 @@ class cls_test_View(tk.Tk):
     
     def f_tab_01_button_config_02_click(self):
         # Clear the existing columns
-        self.table_of_tab_01.delete(*self.table_of_tab_01.get_children())
-        for col in self.table_of_tab_01["columns"]:
-            self.table_of_tab_01.heading(col, text="")  # Remove headings
+        self.treeview_test_of_tag_01.delete(*self.treeview_test_of_tag_01.get_children())
+        for col in self.treeview_test_of_tag_01["columns"]:
+            self.treeview_test_of_tag_01.heading(col, text="")  # Remove headings
         
         # Trước khi cấu hình, phải thiết lập cột cho Treeview
-        tab_01_table_column_names, tab_01_table_column_widths, tab_01_table_column_min_widths, tab_01_table_column_anchors, tab_01_table_column_stretchs = self.controller.f_get_table_config()
-        self.table_of_tab_01["columns"] = tab_01_table_column_names     
+        tab_01_table_column_names = self.controller.f_get_table_config_name_only()
+        self.treeview_test_of_tag_01["columns"] = tab_01_table_column_names
         
-        
-        self.column_names_02, self.columns_config_02 = self.controller.f_tab_01_button_config_click(self.table_of_tab_01)
-        # Configure the columns based on the JSON data
-        print(zip(self.column_names_02, self.columns_config_02))
-        
-        for config, col in zip(self.column_names_02, self.columns_config_02):
-            print(col)
-            print("col nè")
-            print(config)
-            print("config nè")
+        # Treeview config
+        list_table_of_tab_01_column_configs, list_table_of_tab_01_column_names, tuple_table_of_tab_01_header_font = self.controller.f_tab_01_button_config_click(self.table_of_tab_01)
+        for config, col in zip(list_table_of_tab_01_column_configs, list_table_of_tab_01_column_names):
             # Configure each column
-            self.table_of_tab_01.heading(col, text=col)  # Set header text
-            self.table_of_tab_01.column(
+            self.treeview_test_of_tag_01.heading(col, text=col)  # Set header text
+            self.treeview_test_of_tag_01.column(
                 col,
                 width=config["width"],
                 minwidth=config["min_width"],
                 anchor=config["anchor"],
                 stretch=config["stretch"]
             )
-
+            # Set the header font style
+            style = ttk.Style()
+            style.configure("Treeview.Heading", font=tuple_table_of_tab_01_header_font)
+            
             # Apply the background and font settings
-            self.table_of_tab_01.tag_configure(col, background=config["background_color"], foreground=config["foreground_color"])
+            # self.table_of_tab_01.tag_configure(col, background=config["background_color"], foreground=config["foreground_color"])
+             # Apply row styles if needed
+            for row in self.treeview_test_of_tag_01.get_children():
+                self.treeview_test_of_tag_01.item(row, tags=(row,))
+                self.treeview_test_of_tag_01.tag_configure(
+                    row,
+                    background=config["background_color"],
+                    foreground=config["foreground_color"]
+                    )
+            
+        # # Configure scrollbars
+        # scrollbar_config = self.controller.f_get_scrollbar_config()
+        # if scrollbar_config["vertical"]["enabled"]:
+        #     self.v_scrollbar = ttk.Scrollbar(self.tab_01_frame_treeview_01, orient="vertical", command=self.treeview_test_of_tag_01.yview)
+        #     self.treeview_test_of_tag_01.configure(yscrollcommand=self.v_scrollbar.set)
+        #     self.v_scrollbar.grid(row=0, column=1, sticky="ns")
+        # if scrollbar_config["horizontal"]["enabled"]:
+        #     self.h_scrollbar = ttk.Scrollbar(self.tab_01_frame_treeview_01, orient="horizontal", command=self.treeview_test_of_tag_01.xview)
+        #     self.treeview_test_of_tag_01.configure(xscrollcommand=self.h_scrollbar.set)
+        #     self.h_scrollbar.grid(row=1, column=0, sticky="ew", columnspan=2)
+
+        # # Treeview (placed on the left side)
+        # self.treeview_test_of_tag_01.grid(row=0, column=0, sticky="nsew")  # Treeview takes up the whole space
+        
+        # # Adjust the parent frame to expand as needed
+        # self.tab_01_frame_treeview_01.grid_rowconfigure(0, weight=1, uniform="treeview")
+        # self.tab_01_frame_treeview_01.grid_columnconfigure(0, weight=1)
+        
     
     def f_button_print_config_click(self):
         self.f_print_table_of_tab_01_config()
@@ -242,9 +278,24 @@ class cls_test_View(tk.Tk):
         # Get the Treeview configuration
         config = self.table_of_tab_01.config()
 
+        # Convert Tcl objects to JSON-serializable Python objects
+        json_serializable_config = {}
+        for key, value in config.items():
+            # Attempt to convert each value
+            try:
+                if isinstance(value, (list, tuple)):
+                    # Recursively convert list or tuple
+                    json_serializable_config[key] = [str(item) for item in value]
+                else:
+                    # Convert single value to string
+                    json_serializable_config[key] = str(value)
+            except Exception as e:
+                # Handle unconvertible values (optional)
+                json_serializable_config[key] = f"Error converting: {e}"
+
         # Save the configuration to a JSON file
-        with open("treeview_config.json", "w") as json_file:
-            json.dump(config, json_file, indent=4)
+        with open("treeview_config.json", "w" ,encoding='utf-8') as json_file:
+            json.dump(json_serializable_config, json_file, indent=4, ensure_ascii=False)
     
     def f_view_table_of_tab_01_click(self, event):
         # Call the controller to handle the event

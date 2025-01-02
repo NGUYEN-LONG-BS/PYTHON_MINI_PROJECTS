@@ -66,7 +66,16 @@ class cls_test_Controller():
     
     def f_get_table_config(self):
         return self.model.f_load_table_config_from_json()
-    
+
+    def f_get_table_config_name_only(self):
+        return self.model.f_load_table_config_from_json_name_only()
+
+    def f_get_scrollbar_config(self):
+        return {
+            "vertical": {"enabled": True, "command": "yscrollcommand"},
+            "horizontal": {"enabled": True, "command": "xscrollcommand"},
+        }
+
     def f_export_data_to_SQL(self, table):
         data_array = self.f_get_data_from_table(table)
         self.model.f_goi_ham_Export_to_SQL(data_array)
@@ -80,11 +89,8 @@ class cls_test_Controller():
     
     
     def f_tab_01_button_config_click(self, treeview_widget):
-        a, b = self.model.f_extract_from_json_columns_config()
-        # print("this is columns config:")
-        # print(a)
-        # print(b)
-        return a, b
+        var_01, var_02, var_03 = self.model.f_extract_from_json_columns_config()
+        return var_01, var_02, var_03
         
     
     def f_tab_01_table_single_click(self, event):

@@ -4,27 +4,83 @@
         "columns",
         "Columns",
         "",
-        [
-            "STT",
-            "T\u00ean kh\u00e1ch h\u00e0ng",
-            "S\u1ed1 \u0111i\u1ec7n tho\u1ea1i"
-        ]
+        "('STT', 'Tên khách hàng', 'Số điện thoại')"
     ],
     "displaycolumns": [
         "displaycolumns",
         "displayColumns",
         "DisplayColumns",
-        [
-            "#all"
-        ],
-        [
-            "#all"
-        ]
+        "('#all',)",
+        "('#all',)"
     ],
     "show": [
         "show",
         "show",
         "Show",
         "tree headings",
-        [
-            
+        "(<index object: 'headings'>,)"
+    ],
+    "selectmode": [
+        "selectmode",
+        "selectMode",
+        "SelectMode",
+        "extended",
+        "extended"
+    ],
+    "height": [
+        "height",
+        "height",
+        "Height",
+        "10",
+        "10"
+    ],
+    "padding": [
+        "padding",
+        "padding",
+        "Pad",
+        "",
+        ""
+    ],
+    "xscrollcommand": [
+        "xscrollcommand",
+        "xScrollCommand",
+        "ScrollCommand",
+        "",
+        "2354698485824set"
+    ],
+    "yscrollcommand": [
+        "yscrollcommand",
+        "yScrollCommand",
+        "ScrollCommand",
+        "",
+        "2354698641856set"
+    ],
+    "takefocus": [
+        "takefocus",
+        "takeFocus",
+        "TakeFocus",
+        "ttk::takefocus",
+        "ttk::takefocus"
+    ],
+    "cursor": [
+        "cursor",
+        "cursor",
+        "Cursor",
+        "",
+        ""
+    ],
+    "style": [
+        "style",
+        "style",
+        "Style",
+        "",
+        ""
+    ],
+    "class": [
+        "class",
+        "",
+        "",
+        "",
+        ""
+    ]
+}

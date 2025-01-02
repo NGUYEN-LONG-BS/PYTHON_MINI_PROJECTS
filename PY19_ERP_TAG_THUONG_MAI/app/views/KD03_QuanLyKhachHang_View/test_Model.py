@@ -35,11 +35,28 @@ class cls_test_Model():
         except Exception as e:
             print(f"An error occurred: {e}")
 
+    def f_load_table_config_from_json_name_only(self):
+        """Load table and column configurations from JSON"""
+        try:
+            with open(self.json_file, 'r', encoding='utf-8') as file:
+                self.data_to_config_table = json.load(file)  # Load the JSON data
+            column_names = self.f_extract_from_json_column_names(self.data_to_config_table)
+            return column_names
+
+        except FileNotFoundError:
+            print(f"Error: The file '{self.json_file}' was not found.")
+        except json.JSONDecodeError:
+            print("Error: The JSON file is not properly formatted.")
+        except Exception as e:
+            print(f"An error occurred: {e}")
+
     def f_extract_from_json_columns_config(self):
         # Extract column configurations from the JSON
         columns_config = self.data_to_config_table["table"]["columns"]
         column_names = [col["name"] for col in columns_config]
-        return columns_config, column_names
+        header_font_config = self.data_to_config_table["table"]["headings"]
+        header_font_tuple = (header_font_config['family'], header_font_config['size'], header_font_config['weight'])
+        return columns_config, column_names, header_font_tuple
     
     def f_extract_from_json_column_names(self, data):
         try:
