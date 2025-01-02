@@ -44,8 +44,8 @@ class cls_test_View(tk.Tk):
         self.tab_02 = ttk.Frame(self.notebook)
 
         # Add tabs to notebook
-        self.notebook.add(self.tab_01, text="Tạo mới")
-        self.notebook.add(self.tab_02, text="Danh sách")
+        self.notebook.add(self.tab_01, text="Tạo mới YCDH")
+        self.notebook.add(self.tab_02, text="Danh sách YCDH")
         
         # Settings tab content
         self._f_view_create_widgets_of_tab_01()
@@ -85,24 +85,37 @@ class cls_test_View(tk.Tk):
         tk.Label(self.tab_01_frame_entries, text="PHIẾU YÊU CẦU ĐẶT HÀNG").grid(row=0, column=0, padx=10, pady=5, sticky="e")
         
         # Input fields
-        tk.Label(self.tab_01_frame_entries, text="ID:").grid(row=1, column=0, padx=10, pady=5, sticky="e")
+        tk.Label(self.tab_01_frame_entries, text="STT:").grid(row=1, column=0, padx=10, pady=5, sticky="e")
         self.tab_01_entry_id = tk.Entry(self.tab_01_frame_entries)
         self.tab_01_entry_id.grid(row=1, column=1, padx=10, pady=5)
+        self.tab_01_entry_id.config(state="disabled")  # This makes the entry non-editable
 
-        tk.Label(self.tab_01_frame_entries, text="Name:").grid(row=2, column=0, padx=10, pady=5, sticky="e")
+        tk.Label(self.tab_01_frame_entries, text="Tên hàng:").grid(row=2, column=0, padx=10, pady=5, sticky="e")
         self.tab_01_entry_name = tk.Entry(self.tab_01_frame_entries)
         self.tab_01_entry_name.grid(row=2, column=1, padx=10, pady=5)
 
-        tk.Label(self.tab_01_frame_entries, text="Age:").grid(row=3, column=0, padx=10, pady=5, sticky="e")
+        tk.Label(self.tab_01_frame_entries, text="Số lượng:").grid(row=3, column=0, padx=10, pady=5, sticky="e")
         self.tab_01_entry_age = tk.Entry(self.tab_01_frame_entries)
         self.tab_01_entry_age.grid(row=3, column=1, padx=10, pady=5)
 
     def _f_view_create_widgets_in_tab_01_tab_01_frame_button_01(self):
+        # Create a sub-frame to organize buttons in the center
+        button_container = tk.Frame(self.tab_01_frame_button_01)
+        button_container.pack(expand=True, pady=10)
+        
         # Add button
-        self.tab_01_button_add = tk.Button(self.tab_01_frame_button_01, text="Add Row", command=self.f_view_tab_01_button_add_click)
+        self.tab_01_button_add = tk.Button(button_container, text="Add Row", command=self.f_view_tab_01_button_add_click)
         # self.tab_01_button_add.pack(side="center", padx=10)
-        self.tab_01_button_add.pack()
+        self.tab_01_button_add.pack(side="left", padx=10)
+        
+        # Delete button
+        self.tab_01_button_delete = tk.Button(button_container, text="delete Row", command=self.f_view_tab_01_button_delete_click)
+        # self.tab_01_button_add.pack(side="center", padx=10)
+        self.tab_01_button_delete.pack(side="left", padx=10)
 
+    def f_view_tab_01_button_delete_click(self):
+        print("Delete Row tab 01")
+    
     def _f_view_create_widgets_in_tab_01_tab_01_frame_treeview(self):
         self.tab_01_frame_treeview_01 = self.tab_01_frame_treeview_02
         self.table_of_tab_01 = self.tab_01_frame_treeview_02.treeview_normal
@@ -110,7 +123,7 @@ class cls_test_View(tk.Tk):
         self.treeview_test_of_tag_01.bind("<ButtonRelease-1>", self.f_view_table_of_tab_01_click)
     
     def _f_view_create_widgets_in_tab_01_tab_01_frame_button_02(self):
-         # Create a sub-frame to organize buttons in the center
+        # Create a sub-frame to organize buttons in the center
         button_container = tk.Frame(self.tab_01_frame_button_02)
         button_container.pack(expand=True, pady=10)
         

@@ -16,7 +16,7 @@
                 "show": "headings"
             },
             {
-                "name": "Tên khách hàng",
+                "name": "Tên mặt hàng",
                 "width": 600,
                 "min_width": 300,
                 "anchor": "w",
@@ -27,7 +27,7 @@
                 "show": "headings"
             },
             {
-                "name": "Số điện thoại",
+                "name": "Số lượng",
                 "width": 120,
                 "min_width": 120,
                 "anchor": "w",
