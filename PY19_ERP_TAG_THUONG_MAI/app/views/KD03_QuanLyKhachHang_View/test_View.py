@@ -3,7 +3,9 @@ from tkinter import ttk
 import time
 import json
 from Components_View import *
+from Components_View import cls_frame_normal
 from Components_View.treeview import cls_Treeview_frame_number_01
+from test_Controller import cls_test_Controller
 
 class cls_test_View(tk.Tk):
     def __init__(self):
@@ -20,16 +22,17 @@ class cls_test_View(tk.Tk):
         # Timer interval (in milliseconds)
         self.last_click_time = 0
         self.double_click_interval = 0.3  # 300 ms
+        
+        # Bind the <Configure> event to the root window
+        self.bind("<Configure>", lambda event: self._f_config_position_of_tab_01_frame_notification())
 
     def f_view_create_main_window(self):
         self.title("Data Entry Table")
-        self.geometry("700x550")
         
     def f_view_add_MVC_class(self):
-        # Import đối tượng cls_test_Controller
-        from test_Controller import cls_test_Controller
-        # Gọi cửa sổ Controller
+        # Import controller
         self.controller = cls_test_Controller()
+        self.controller.view = self
     
     def f_view_create_widgets(self):
         # Create a notebook (tabs)
@@ -49,63 +52,98 @@ class cls_test_View(tk.Tk):
         self._f_view_create_widgets_of_tab_02()
         
     def _f_view_create_widgets_of_tab_01(self):
-        # Title
-        tk.Label(self.tab_01, text="PHIẾU YÊU CẦU ĐẶT HÀNG").grid(row=0, column=0, padx=10, pady=5, sticky="e")
-        
-        # Input fields
-        tk.Label(self.tab_01, text="ID:").grid(row=1, column=0, padx=10, pady=5, sticky="e")
-        self.tab_01_entry_id = tk.Entry(self.tab_01)
-        self.tab_01_entry_id.grid(row=1, column=1, padx=10, pady=5)
+        # Frame entries
+        self.tab_01_frame_entries = cls_frame_normal(self.tab_01)
+        self.tab_01_frame_entries.pack(fill="both", expand=True)
+        self._f_view_create_widgets_in_tab_01_tab_01_frame_entries()
 
-        tk.Label(self.tab_01, text="Name:").grid(row=2, column=0, padx=10, pady=5, sticky="e")
-        self.tab_01_entry_name = tk.Entry(self.tab_01)
-        self.tab_01_entry_name.grid(row=2, column=1, padx=10, pady=5)
-
-        tk.Label(self.tab_01, text="Age:").grid(row=3, column=0, padx=10, pady=5, sticky="e")
-        self.tab_01_entry_age = tk.Entry(self.tab_01)
-        self.tab_01_entry_age.grid(row=3, column=1, padx=10, pady=5)
-
-        # Add button
-        self.tab_01_button_add = tk.Button(self.tab_01, text="Add Row", command=self.f_view_tab_01_button_add_click)
-        self.tab_01_button_add.grid(row=4, column=0, columnspan=2, pady=10)
+        # Frame button
+        self.tab_01_frame_button_01 = tk.Frame(self.tab_01)
+        self.tab_01_frame_button_01.pack(fill="both", expand=True)
+        self._f_view_create_widgets_in_tab_01_tab_01_frame_button_01()
 
         # Frame treeview
         self.tab_01_frame_treeview_02 = cls_Treeview_frame_number_01(self.tab_01)
-        self.tab_01_frame_treeview_02.grid(row=6, column=0, columnspan=2, pady=10)
+        self.tab_01_frame_treeview_02.pack(fill="both", expand=True)
+        self._f_view_create_widgets_in_tab_01_tab_01_frame_treeview()
         
+        # Frame button
+        self.tab_01_frame_button_02 = tk.Frame(self.tab_01)
+        self.tab_01_frame_button_02.pack(fill="both", expand=True)
+        self._f_view_create_widgets_in_tab_01_tab_01_frame_button_02()
+        
+        # Frame notication
+        self.tab_01_frame_notification = tk.Frame(self.tab_01)
+        self.update_idletasks()
+        frame_notification_top = self.winfo_height() - 50
+        frame_notification_left = self.winfo_width()/2 - self.tab_01_frame_notification.winfo_width()/2
+        self.tab_01_frame_notification.place(x=frame_notification_left, y=frame_notification_top)
+        self._f_view_create_widgets_in_tab_01_tab_01_frame_notification()
+    
+    def _f_view_create_widgets_in_tab_01_tab_01_frame_entries(self):
+        # Title
+        tk.Label(self.tab_01_frame_entries, text="PHIẾU YÊU CẦU ĐẶT HÀNG").grid(row=0, column=0, padx=10, pady=5, sticky="e")
+        
+        # Input fields
+        tk.Label(self.tab_01_frame_entries, text="ID:").grid(row=1, column=0, padx=10, pady=5, sticky="e")
+        self.tab_01_entry_id = tk.Entry(self.tab_01_frame_entries)
+        self.tab_01_entry_id.grid(row=1, column=1, padx=10, pady=5)
+
+        tk.Label(self.tab_01_frame_entries, text="Name:").grid(row=2, column=0, padx=10, pady=5, sticky="e")
+        self.tab_01_entry_name = tk.Entry(self.tab_01_frame_entries)
+        self.tab_01_entry_name.grid(row=2, column=1, padx=10, pady=5)
+
+        tk.Label(self.tab_01_frame_entries, text="Age:").grid(row=3, column=0, padx=10, pady=5, sticky="e")
+        self.tab_01_entry_age = tk.Entry(self.tab_01_frame_entries)
+        self.tab_01_entry_age.grid(row=3, column=1, padx=10, pady=5)
+
+    def _f_view_create_widgets_in_tab_01_tab_01_frame_button_01(self):
+        # Add button
+        self.tab_01_button_add = tk.Button(self.tab_01_frame_button_01, text="Add Row", command=self.f_view_tab_01_button_add_click)
+        # self.tab_01_button_add.pack(side="center", padx=10)
+        self.tab_01_button_add.pack()
+
+    def _f_view_create_widgets_in_tab_01_tab_01_frame_treeview(self):
         self.tab_01_frame_treeview_01 = self.tab_01_frame_treeview_02
         self.table_of_tab_01 = self.tab_01_frame_treeview_02.treeview_normal
         self.treeview_test_of_tag_01 = self.tab_01_frame_treeview_02.treeview_normal
         self.treeview_test_of_tag_01.bind("<ButtonRelease-1>", self.f_view_table_of_tab_01_click)
-        
-        # Frame button
-        self.tab_01_frame_button = tk.Frame(self.tab_01)
-        self.tab_01_frame_button.grid(row=7, column=0, columnspan=2, pady=10)
+    
+    def _f_view_create_widgets_in_tab_01_tab_01_frame_button_02(self):
+         # Create a sub-frame to organize buttons in the center
+        button_container = tk.Frame(self.tab_01_frame_button_02)
+        button_container.pack(expand=True, pady=10)
         
         # Get Data button
-        self.tab_01_button_get = tk.Button(self.tab_01_frame_button, text="Print Data Array", command=self.f_tab_01_button_get_click)
-        # self.tab_01_button_get.grid(row=6, column=0, columnspan=2, pady=10)
+        self.tab_01_button_get = tk.Button(button_container, text="Print Data Array", command=self.f_tab_01_button_get_click)
         self.tab_01_button_get.pack(side="left", padx=10)
         
         # Export Data button
-        self.tab_01_button_export = tk.Button(self.tab_01_frame_button, text="Export Data to SQL", command=self.f_tab_01_button_export_click)
+        self.tab_01_button_export = tk.Button(button_container, text="Export Data to SQL", command=self.f_tab_01_button_export_click)
         self.tab_01_button_export.pack(side="left", padx=10)
         
         # Table config
-        self.tab_01_config_num_01 = tk.Button(self.tab_01_frame_button, text="cấu hình bảng cách 01", command=self.f_tab_01_button_config_01_click)
-        self.tab_01_config_num_01.pack(side="left", padx=10)
-        
-        # Table config
-        self.tab_01_config_num_02 = tk.Button(self.tab_01_frame_button, text="cấu hình bảng cách 02", command=self.f_tab_01_button_config_02_click)
+        self.tab_01_config_num_02 = tk.Button(button_container, text="Print", command=self.f_tab_01_button_print_click)
         self.tab_01_config_num_02.pack(side="left", padx=10)
         
+        # Table config
+        self.tab_01_btn_import = tk.Button(button_container, text="Import Excel", command=self.f_tab_01_button_import_click)
+        self.tab_01_btn_import.pack(side="left", padx=10)
+        
         # print config
-        self.tab_01_print_config = tk.Button(self.tab_01_frame_button, text="in cấu hình của bảng", command=self.f_button_print_config_click)
+        self.tab_01_print_config = tk.Button(button_container, text="in cấu hình của bảng", command=self.f_button_print_config_click)
         self.tab_01_print_config.pack(side="left", padx=10)
 
+    def f_tab_01_button_print_click(self):
+        print("Print config")
+    
+    def f_tab_01_button_import_click(self):
+        print("Import config")
+    
+    def _f_view_create_widgets_in_tab_01_tab_01_frame_notification(self):
         # Result label
-        self.tab_01_label_result = tk.Label(self.tab_01, text="")
-        self.tab_01_label_result.grid(row=8, column=0, columnspan=2)
+        self.tab_01_label_result = tk.Label(self.tab_01_frame_notification, text="")
+        self.tab_01_label_result.pack()
         
     def _f_view_create_widgets_of_tab_02(self):
         # Title
@@ -151,6 +189,7 @@ class cls_test_View(tk.Tk):
     #===================================================================================================================
     def f_tab_01_button_get_click(self):
         self.tab_01_label_result.config(text=self.controller.f_get_data(self.table_of_tab_01), fg="blue")
+        self._f_show_and_hide_the_notification_frame()
         
     def f_view_tab_01_button_add_click(self):
         id_value = self.tab_01_entry_id.get()
@@ -161,45 +200,33 @@ class cls_test_View(tk.Tk):
         # Validate input using the helper function
         is_valid, error_message = self.controller.f_add_row(id_value, name_value, age_value, table)
         if not is_valid:
-            self.tab_01_label_result.config(text=error_message, fg="red")
+            # Show error message
+            self._f_config_notification(text=error_message, fg="red")
             return
         else:
-            # print the tab_01_label_result
-            self.tab_01_label_result.config(text=error_message, fg="green")
+            # Show success message
+            self._f_config_notification(text=error_message, fg="green")
             self.f_clear_input_fileds_of_tab_01()
     
-    def f_tab_01_button_export_click(self):
-        self.tab_01_label_result.config(text=self.controller.f_export_data_to_SQL(self.table_of_tab_01), fg="blue")
+    def _f_config_notification(self, text="", fg="black"):
+        self.tab_01_label_result.config(text=text, fg=fg)
+        self._f_show_and_hide_the_notification_frame()
+        
+    def _f_show_and_hide_the_notification_frame(self):
+        # Show the notification frame
+        self._f_config_position_of_tab_01_frame_notification()
+        self.tab_01_frame_notification.after(3000, self.tab_01_frame_notification.place_forget)
     
-    def f_tab_01_button_config_01_click(self):
-        # Clear the existing columns
-        self.table_of_tab_01.delete(*self.table_of_tab_01.get_children())
-        for col in self.table_of_tab_01["columns"]:
-            self.table_of_tab_01.heading(col, text="")  # Remove headings
-        
-        # Trước khi cấu hình, phải thiết lập cột cho Treeview
-        tab_01_table_column_names, tab_01_table_column_widths, tab_01_table_column_min_widths, tab_01_table_column_anchors, tab_01_table_column_stretchs = self.controller.f_get_table_config()
-        self.table_of_tab_01["columns"] = tab_01_table_column_names     
-        
-        # Treeview config
-        for col in tab_01_table_column_names:
-            self.table_of_tab_01.heading(col, text=col)
-        
-        for col, width, min_width, anchor, stretch in zip(
-            tab_01_table_column_names, 
-            tab_01_table_column_widths, 
-            tab_01_table_column_min_widths, 
-            tab_01_table_column_anchors, 
-            tab_01_table_column_stretchs
-        ):    
-            self.table_of_tab_01.heading(col, text=col)  # Set header text
-            self.table_of_tab_01.column(
-                col, 
-                width=width, 
-                minwidth=min_width, 
-                anchor=anchor, 
-                stretch=stretch
-                )
+    def f_tab_01_button_export_click(self):
+        text = self.controller.f_export_data_to_SQL(self.table_of_tab_01)
+        self._f_config_notification(text=text, fg="blue")
+    
+    def _f_config_position_of_tab_01_frame_notification(self):
+        self.update_idletasks()
+        frame_notification_top = self.winfo_height() - 50
+        frame_notification_left = self.winfo_width()/2 - self.tab_01_frame_notification.winfo_width()/2
+        self.tab_01_frame_notification.place(x=frame_notification_left, y=frame_notification_top)
+
     def f_view_set_up_formats(self):
         self.f_tab_01_button_config_02_click()
         
@@ -239,25 +266,6 @@ class cls_test_View(tk.Tk):
                     background=config["background_color"],
                     foreground=config["foreground_color"]
                     )
-            
-        # # Configure scrollbars
-        # scrollbar_config = self.controller.f_get_scrollbar_config()
-        # if scrollbar_config["vertical"]["enabled"]:
-        #     self.v_scrollbar = ttk.Scrollbar(self.tab_01_frame_treeview_01, orient="vertical", command=self.treeview_test_of_tag_01.yview)
-        #     self.treeview_test_of_tag_01.configure(yscrollcommand=self.v_scrollbar.set)
-        #     self.v_scrollbar.grid(row=0, column=1, sticky="ns")
-        # if scrollbar_config["horizontal"]["enabled"]:
-        #     self.h_scrollbar = ttk.Scrollbar(self.tab_01_frame_treeview_01, orient="horizontal", command=self.treeview_test_of_tag_01.xview)
-        #     self.treeview_test_of_tag_01.configure(xscrollcommand=self.h_scrollbar.set)
-        #     self.h_scrollbar.grid(row=1, column=0, sticky="ew", columnspan=2)
-
-        # # Treeview (placed on the left side)
-        # self.treeview_test_of_tag_01.grid(row=0, column=0, sticky="nsew")  # Treeview takes up the whole space
-        
-        # # Adjust the parent frame to expand as needed
-        # self.tab_01_frame_treeview_01.grid_rowconfigure(0, weight=1, uniform="treeview")
-        # self.tab_01_frame_treeview_01.grid_columnconfigure(0, weight=1)
-        
     
     def f_button_print_config_click(self):
         self.f_print_table_of_tab_01_config()

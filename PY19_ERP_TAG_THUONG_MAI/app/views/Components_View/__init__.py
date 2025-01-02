@@ -8,7 +8,7 @@
 # ]
 
 # Import the symbols to be included in the package namespace
-from .frame import *
+from .frame import *; cls_frame_normal
 from .button import cls_my_button_num_01
 from .label import cls_my_label_num_01
 from .base_form_number_01 import cls_base_form_number_01_EntryForm

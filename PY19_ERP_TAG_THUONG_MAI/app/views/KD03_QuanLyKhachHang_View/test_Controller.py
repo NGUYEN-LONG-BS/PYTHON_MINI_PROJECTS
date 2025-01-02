@@ -1,16 +1,22 @@
 from utils import *
 import time
+from test_Model import cls_test_Model  # Import Model at the top
 
 class cls_test_Controller():
     def __init__(self):
-        super().__init__()
+        # super().__init__()
+        self.model = None
         self.f_add_MVC_class()
         
     def f_add_MVC_class(self):
-        # Import đối tượng cls_test_Controller
-        from test_Model import cls_test_Model
-        # Gọi cửa sổ Controller
-        self.model = cls_test_Model()
+        """Initialize and bind Model and View classes to the controller."""
+        try:
+            # Initialize Model
+            self.model = cls_test_Model()  
+            # If model or view need controller reference
+            self.model.controller = self  # Avoid recursion by passing after initialization
+        except Exception as e:
+            print(f"Error initializing MVC components: {e}")
         
     def f_check_input(self, id_value, name_value, age_value):    
         if not id_value or not name_value or not age_value:

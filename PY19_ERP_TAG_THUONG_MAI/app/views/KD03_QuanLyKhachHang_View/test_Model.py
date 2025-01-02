@@ -4,7 +4,7 @@ import pyodbc
 
 class cls_test_Model():
     def __init__(self):
-        super().__init__()
+        # super().__init__()
         self.f_define_table_configurations_json_file()
     
     def f_define_table_configurations_json_file(self):
