@@ -14,10 +14,12 @@ class cls_test_View(tk.Tk):
         self.f_view_add_MVC_class()
         self.f_view_create_widgets()
         
+        # set up formats
+        self.f_view_set_up_formats()
+        
         # Timer interval (in milliseconds)
         self.last_click_time = 0
         self.double_click_interval = 0.3  # 300 ms
-        # self.column_names_02, self.columns_config_02 = [], []
 
     def f_view_create_main_window(self):
         self.title("Data Entry Table")
@@ -67,23 +69,7 @@ class cls_test_View(tk.Tk):
         self.tab_01_button_add = tk.Button(self.tab_01, text="Add Row", command=self.f_view_tab_01_button_add_click)
         self.tab_01_button_add.grid(row=4, column=0, columnspan=2, pady=10)
 
-        # # Frame treeview
-        # self.tab_01_frame_treeview_01 = tk.Frame(self.tab_01)
-        # self.tab_01_frame_treeview_01.grid(row=5, column=0, columnspan=2, pady=10)
-        
-        # # Table (Treeview)
-        # tab_01_table_column_names = ["Col_01","Col_02","Col_03"]
-        # self.table_of_tab_01 = ttk.Treeview(self.tab_01_frame_treeview_01, columns=tab_01_table_column_names, show="headings", height=10)
-        # # self.table_of_tab_01.grid(row=5, column=0, columnspan=2, pady=10)
-        # self.table_of_tab_01.grid(row=0, column=0, sticky="nsew")
-        # self.table_of_tab_01.bind("<ButtonRelease-1>", self.f_view_table_of_tab_01_click)
-
-        # # Treeview config
-        # for col in tab_01_table_column_names:
-        #     self.table_of_tab_01.heading(col, text=col)
-
         # Frame treeview
-        # self.tab_01_frame_treeview_02 = tk.Frame(self.tab_01, width=400, height=200, bg="white")
         self.tab_01_frame_treeview_02 = cls_Treeview_frame_number_01(self.tab_01)
         self.tab_01_frame_treeview_02.grid(row=6, column=0, columnspan=2, pady=10)
         
@@ -214,7 +200,9 @@ class cls_test_View(tk.Tk):
                 anchor=anchor, 
                 stretch=stretch
                 )
-    
+    def f_view_set_up_formats(self):
+        self.f_tab_01_button_config_02_click()
+        
     def f_tab_01_button_config_02_click(self):
         # Clear the existing columns
         self.treeview_test_of_tag_01.delete(*self.treeview_test_of_tag_01.get_children())
