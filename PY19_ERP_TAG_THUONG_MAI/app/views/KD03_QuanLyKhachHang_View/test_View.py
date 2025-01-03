@@ -24,6 +24,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self._f_setup_all_global_variants()
         # Set up all events
         self._f_setup_all_events()
+        self._f_hide_components_when_initialzing()
     
     def _f_view_thay_doi_gia_tri_cua_base_form(self):
         # Thay đổi thông tin các tab
@@ -143,42 +144,51 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_frame_entries.grid_rowconfigure(0, weight=1)
         
     def _f_view_create_widgets_in_tab_01_frame_entries(self):
+        # frame 1
+        self.frame_entries_of_slip = tk.Frame(self.tab_01_frame_entries)
+        self.frame_entries_of_slip.pack(side="left")
+        self._f_view_create_widgets_in_frame_entries_of_slip()
+        # frame 2
+        self.frame_information_of_slip = cls_Frame_date_and_number_of_slip(self.tab_01_frame_entries)
+        self.frame_information_of_slip.pack(side="left")
+        
+    def _f_view_create_widgets_in_frame_entries_of_slip(self):
         # Input fields
-        tk.Label(self.tab_01_frame_entries, text="STT:").grid(row=0, column=0, padx=10, pady=5, sticky="e")
-        self.tab_01_entry_id = tk.Entry(self.tab_01_frame_entries)
+        tk.Label(self.frame_entries_of_slip, text="STT:").grid(row=0, column=0, padx=10, pady=5, sticky="e")
+        self.tab_01_entry_id = tk.Entry(self.frame_entries_of_slip)
         self.tab_01_entry_id.grid(row=0, column=1, padx=10, pady=5)
         self.tab_01_entry_id.config(state="disabled")  # This makes the entry non-editable
 
-        tk.Label(self.tab_01_frame_entries, text="Mã KH:").grid(row=1, column=0, padx=10, pady=5, sticky="e")
+        tk.Label(self.frame_entries_of_slip, text="Mã KH:").grid(row=1, column=0, padx=10, pady=5, sticky="e")
         # self.tab_01_entry_name = tk.Entry(self.tab_01_frame_entries)
         itiems_tab_01_combobox_client_ID = self.controller.f_controller_show_get_items_of_combobox_01()
-        self.tab_01_combobox_client_ID = cls_my_combobox_num_01(self.tab_01_frame_entries, values=itiems_tab_01_combobox_client_ID)
+        self.tab_01_combobox_client_ID = cls_my_combobox_num_01(self.frame_entries_of_slip, values=itiems_tab_01_combobox_client_ID)
         self.tab_01_combobox_client_ID.grid(row=1, column=1, padx=10, pady=5)
         
-        tk.Label(self.tab_01_frame_entries, text="Tên KH:").grid(row=2, column=0, padx=10, pady=5, sticky="e")
+        tk.Label(self.frame_entries_of_slip, text="Tên KH:").grid(row=2, column=0, padx=10, pady=5, sticky="e")
         # self.tab_01_entry_name = tk.Entry(self.tab_01_frame_entries)
         itiems_tab_01_combobox_client_name = self.controller.f_controller_show_get_items_of_combobox_01()
-        self.tab_01_combobox_client_name = cls_my_combobox_num_01(self.tab_01_frame_entries, values=itiems_tab_01_combobox_client_name)
+        self.tab_01_combobox_client_name = cls_my_combobox_num_01(self.frame_entries_of_slip, values=itiems_tab_01_combobox_client_name)
         self.tab_01_combobox_client_name.grid(row=2, column=1, padx=10, pady=5)
 
-        tk.Label(self.tab_01_frame_entries, text="Mã hàng:").grid(row=3, column=0, padx=10, pady=5, sticky="e")
+        tk.Label(self.frame_entries_of_slip, text="Mã hàng:").grid(row=3, column=0, padx=10, pady=5, sticky="e")
         # self.tab_01_entry_name = tk.Entry(self.tab_01_frame_entries)
         itiems_tab_01_combobox_inventory_ID = self.controller.f_controller_show_get_items_of_combobox_01()
-        self.tab_01_combobox_inventory_ID = cls_my_combobox_num_01(self.tab_01_frame_entries, values=itiems_tab_01_combobox_inventory_ID)
+        self.tab_01_combobox_inventory_ID = cls_my_combobox_num_01(self.frame_entries_of_slip, values=itiems_tab_01_combobox_inventory_ID)
         self.tab_01_combobox_inventory_ID.grid(row=3, column=1, padx=10, pady=5)
         
-        tk.Label(self.tab_01_frame_entries, text="Tên hàng:").grid(row=4, column=0, padx=10, pady=5, sticky="e")
+        tk.Label(self.frame_entries_of_slip, text="Tên hàng:").grid(row=4, column=0, padx=10, pady=5, sticky="e")
         # self.tab_01_entry_name = tk.Entry(self.tab_01_frame_entries)
         itiems_tab_01_combobox_inventory_name = self.controller.f_controller_show_get_items_of_combobox_01()
-        self.tab_01_combobox_inventory_name = cls_my_combobox_num_01(self.tab_01_frame_entries, values=itiems_tab_01_combobox_inventory_name)
+        self.tab_01_combobox_inventory_name = cls_my_combobox_num_01(self.frame_entries_of_slip, values=itiems_tab_01_combobox_inventory_name)
         self.tab_01_combobox_inventory_name.grid(row=4, column=1, padx=10, pady=5)
         
-        tk.Label(self.tab_01_frame_entries, text="ĐVT:").grid(row=5, column=0, padx=10, pady=5, sticky="e")
-        self.tab_01_entry_name = tk.Entry(self.tab_01_frame_entries)
+        tk.Label(self.frame_entries_of_slip, text="ĐVT:").grid(row=5, column=0, padx=10, pady=5, sticky="e")
+        self.tab_01_entry_name = tk.Entry(self.frame_entries_of_slip)
         self.tab_01_entry_name.grid(row=5, column=1, padx=10, pady=5)
 
-        tk.Label(self.tab_01_frame_entries, text="Số lượng:").grid(row=6, column=0, padx=10, pady=5, sticky="e")
-        self.tab_01_entry_age = tk.Entry(self.tab_01_frame_entries)
+        tk.Label(self.frame_entries_of_slip, text="Số lượng:").grid(row=6, column=0, padx=10, pady=5, sticky="e")
+        self.tab_01_entry_age = tk.Entry(self.frame_entries_of_slip)
         self.tab_01_entry_age.grid(row=6, column=1, padx=10, pady=5)
 
     def _f_view_create_widgets_in_tab_01_frame_button_01(self):
@@ -291,6 +301,11 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         # Show the notification frame
         self._f_config_position_of_tab_01_frame_notification()
         self.tab_01_frame_notification.after(3000, self.tab_01_frame_notification.place_forget)
+        
+    def _f_hide_components_when_initialzing(self):
+        # Show the notification frame
+        self._f_config_position_of_tab_01_frame_notification()
+        self.tab_01_frame_notification.after(50, self.tab_01_frame_notification.place_forget)
     
     def f_tab_01_button_export_click(self):
         text = self.controller.f_export_data_to_SQL(self.table_of_tab_01)
@@ -332,8 +347,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
             style.configure("Treeview.Heading", font=tuple_table_of_tab_01_header_font)
             
             # Apply the background and font settings
-            # self.table_of_tab_01.tag_configure(col, background=config["background_color"], foreground=config["foreground_color"])
-             # Apply row styles if needed
+            # Apply row styles if needed
             for row in self.treeview_test_of_tag_01.get_children():
                 self.treeview_test_of_tag_01.item(row, tags=(row,))
                 self.treeview_test_of_tag_01.tag_configure(

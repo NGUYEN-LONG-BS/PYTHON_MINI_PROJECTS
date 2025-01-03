@@ -3,9 +3,6 @@ from .label import *
 from utils import *
 from utils.define import *
 
-# ======================================================================================================================
-# ======================================================================================================================
-# ======================================================================================================================
 class cls_ToolTip:
     """Custom tooltip class."""
     def __init__(self, widget, text):
@@ -49,9 +46,6 @@ class cls_frame_while_design(tk.Frame):
     def hide_tooltip(self, event):
         self.tooltip.hide_tip()
 
-# ======================================================================================================================
-# ======================================================================================================================
-# ======================================================================================================================
 class cls_frame_normal(tk.Frame):
     def __init__(self, master=None, *args, **kwargs):
         super().__init__(master, *args, **kwargs)
@@ -60,9 +54,6 @@ class cls_frame_normal(tk.Frame):
     def f_set_style(self):
         self.configure(bd=0, relief="flat")
         
-# ======================================================================================================================
-# ======================================================================================================================
-# ======================================================================================================================
 class cls_Frame_Element_number_01(tk.Frame):
     def __init__(self, parent, *args, **kwargs):
         super().__init__(parent, *args, **kwargs)
@@ -152,3 +143,37 @@ class cls_Frame_Body(cls_Frame_Main):
         super().f_setup_style_of_frame()
         self.configure(bd=0, relief='flat')
         
+class cls_Frame_date_and_number_of_slip(tk.Frame):
+    def __init__(self, parent, *args, **kwargs):
+        super().__init__(parent, *args, **kwargs)
+        # Configure initial appearance
+        self.config(bg=BG_COLOR_0_0, width=200, height=200, bd=1, relief="groove")
+        
+        # Create a shadow frame as a child of the parent
+        self.shadow = tk.Frame(parent, bg=BG_COLOR_0_0, bd=0)
+        self.shadow.lower()  # Ensure shadow is below the main frame
+
+        # Create grid layout inside the frame
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_rowconfigure(1, weight=1)
+        self.grid_rowconfigure(2, weight=1)
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_columnconfigure(1, weight=1)
+
+        # Add Row, Date, and Number of Slips
+        self.create_widgets()
+
+    def create_widgets(self):
+        # Row Label and Entry
+        # self.sub_frame = tk.Frame(self).grid(row=0, column=0, padx=10, pady=10, sticky="ew")
+        tk.Label(self, text="Chứng từ:", bg=BG_COLOR_0_0).grid(row=0, column=0, padx=10, pady=10, sticky="ew")
+
+        # Date Label and Entry
+        tk.Label(self, text="Ngày:", bg=BG_COLOR_0_0).grid(row=1, column=0, padx=10, pady=10, sticky="e")
+        self.date_entry = tk.Entry(self)
+        self.date_entry.grid(row=1, column=1, padx=10, pady=10)
+
+        # Number of Slips Label and Entry
+        tk.Label(self, text="Số chứng từ:", bg=BG_COLOR_0_0).grid(row=2, column=0, padx=10, pady=10, sticky="e")
+        self.slips_entry = tk.Entry(self)
+        self.slips_entry.grid(row=2, column=1, padx=10, pady=10)
