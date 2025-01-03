@@ -101,6 +101,11 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         
     def _f_view_create_all_container_frames_of_tab_01(self):
         # Frame entries
+        self.tab_01_frame_H2 = cls_frame_normal(self.tab_01)
+        self.tab_01_frame_H2.pack(fill="both", expand=True)
+        self._f_view_create_widgets_in_tab_01_frame_H2()
+
+        # Frame entries
         self.tab_01_frame_entries = cls_frame_normal(self.tab_01)
         self.tab_01_frame_entries.pack(fill="both", expand=True)
         self._f_view_create_widgets_in_tab_01_frame_entries()
@@ -124,24 +129,29 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_frame_notification = tk.Frame(self.tab_01)
         self._f_view_create_widgets_in_tab_01_frame_notification()
     
+    def _f_view_create_widgets_in_tab_01_frame_H2(self):
+        # Title H2
+        cls_my_label_num_03_title_H2(self.tab_01_frame_H2, text="PHIẾU YÊU CẦU ĐẶT HÀNG").pack(anchor="center", padx=10, pady=10)
+    
     def _f_view_create_widgets_in_tab_01_frame_entries(self):
-        # Title
-        # tk.Label(self.tab_01_frame_entries, text="PHIẾU YÊU CẦU ĐẶT HÀNG").grid(row=0, column=0, padx=10, pady=5, sticky="e")
-        cls_my_label_num_03_title_H2(self.tab_01_frame_entries, text="PHIẾU YÊU CẦU ĐẶT HÀNG").grid(row=0, column=0, padx=10, pady=5, sticky="e")
-        
         # Input fields
         tk.Label(self.tab_01_frame_entries, text="STT:").grid(row=1, column=0, padx=10, pady=5, sticky="e")
         self.tab_01_entry_id = tk.Entry(self.tab_01_frame_entries)
         self.tab_01_entry_id.grid(row=1, column=1, padx=10, pady=5)
         self.tab_01_entry_id.config(state="disabled")  # This makes the entry non-editable
 
-        tk.Label(self.tab_01_frame_entries, text="Tên hàng:").grid(row=2, column=0, padx=10, pady=5, sticky="e")
+        tk.Label(self.tab_01_frame_entries, text="Mã hàng:").grid(row=2, column=0, padx=10, pady=5, sticky="e")
+        # self.tab_01_entry_name = tk.Entry(self.tab_01_frame_entries)
+        self.tab_01_combobox_inventory_ID = cls_my_combobox_num_01(self.tab_01_frame_entries)
+        self.tab_01_combobox_inventory_ID.grid(row=2, column=1, padx=10, pady=5)
+        
+        tk.Label(self.tab_01_frame_entries, text="Tên hàng:").grid(row=3, column=0, padx=10, pady=5, sticky="e")
         self.tab_01_entry_name = tk.Entry(self.tab_01_frame_entries)
-        self.tab_01_entry_name.grid(row=2, column=1, padx=10, pady=5)
+        self.tab_01_entry_name.grid(row=3, column=1, padx=10, pady=5)
 
-        tk.Label(self.tab_01_frame_entries, text="Số lượng:").grid(row=3, column=0, padx=10, pady=5, sticky="e")
+        tk.Label(self.tab_01_frame_entries, text="Số lượng:").grid(row=4, column=0, padx=10, pady=5, sticky="e")
         self.tab_01_entry_age = tk.Entry(self.tab_01_frame_entries)
-        self.tab_01_entry_age.grid(row=3, column=1, padx=10, pady=5)
+        self.tab_01_entry_age.grid(row=4, column=1, padx=10, pady=5)
 
     def _f_view_create_widgets_in_tab_01_frame_button_01(self):
         # Create a sub-frame to organize buttons in the center

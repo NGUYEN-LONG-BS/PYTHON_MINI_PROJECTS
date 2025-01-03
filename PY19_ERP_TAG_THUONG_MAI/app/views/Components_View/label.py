@@ -28,4 +28,4 @@ class cls_my_label_num_03_title_H2(tk.Label):
 
     def f_set_style(self):
         # Configure initial appearance
-        self.config(bg=BG_COLOR_0_0, fg="black", font=("Arial", 15, "bold"))
+        self.config(bg=BG_COLOR_0_0, fg="black", font=("Arial", 18, "normal"))
