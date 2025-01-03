@@ -57,7 +57,7 @@ class cls_test_Controller():
         return rows
     
     # Function to add a row to the table
-    def f_add_row(self, id_entry, name_entry, age_entry, table):
+    def f_controller_add_row(self, id_entry, name_entry, age_entry, table):
         
         # Validate input using the helper function
         is_valid, error_message = self.f_check_input(id_entry, name_entry, age_entry)
@@ -129,6 +129,14 @@ class cls_test_Controller():
                 print("Third value:", row_values[2])
             else:
                 print("Insufficient data in row!")
-        
+    
+    def f_controller_show_get_items_of_combobox_01(self):
+        # Fetch data from the model
+        items_of_combobox_01 = self.model.f_model_get_items_to_combobox_01()
+        return items_of_combobox_01
+    
+    def f_controller_get_row_count(self, treeview):
+        # Get all child items (rows) and count them
+        return len(treeview.get_children())    
 
-        
+    

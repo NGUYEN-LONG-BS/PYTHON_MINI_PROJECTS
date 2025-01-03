@@ -19,6 +19,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self._f_view_create_all_container_frames_of_window()
         # set up formats
         self._f_view_set_up_formats()
+        self._f_view_set_rows_count_of_treeview_01_when_add_new_row()
         # Set up all global variants
         self._f_setup_all_global_variants()
         # Set up all events
@@ -108,6 +109,8 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         # Frame entries
         self.tab_01_frame_entries = cls_frame_normal(self.tab_01)
         self.tab_01_frame_entries.pack(fill="both", expand=True)
+        self.tab_01_frame_entries.pack(padx=20, pady=20)
+        self._f_view_format_tab_01_frame_entries()
         self._f_view_create_widgets_in_tab_01_frame_entries()
 
         # Frame button
@@ -132,26 +135,51 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
     def _f_view_create_widgets_in_tab_01_frame_H2(self):
         # Title H2
         cls_my_label_num_03_title_H2(self.tab_01_frame_H2, text="PHIẾU YÊU CẦU ĐẶT HÀNG").pack(anchor="center", padx=10, pady=10)
-    
+
+    def _f_view_format_tab_01_frame_entries(self):
+        # Column and row configuration for better resizing behavior
+        self.tab_01_frame_entries.grid_columnconfigure(0, weight=1, uniform="equal")
+        self.tab_01_frame_entries.grid_columnconfigure(1, weight=2, uniform="equal")
+        self.tab_01_frame_entries.grid_rowconfigure(0, weight=1)
+        
     def _f_view_create_widgets_in_tab_01_frame_entries(self):
         # Input fields
-        tk.Label(self.tab_01_frame_entries, text="STT:").grid(row=1, column=0, padx=10, pady=5, sticky="e")
+        tk.Label(self.tab_01_frame_entries, text="STT:").grid(row=0, column=0, padx=10, pady=5, sticky="e")
         self.tab_01_entry_id = tk.Entry(self.tab_01_frame_entries)
-        self.tab_01_entry_id.grid(row=1, column=1, padx=10, pady=5)
+        self.tab_01_entry_id.grid(row=0, column=1, padx=10, pady=5)
         self.tab_01_entry_id.config(state="disabled")  # This makes the entry non-editable
 
-        tk.Label(self.tab_01_frame_entries, text="Mã hàng:").grid(row=2, column=0, padx=10, pady=5, sticky="e")
+        tk.Label(self.tab_01_frame_entries, text="Mã KH:").grid(row=1, column=0, padx=10, pady=5, sticky="e")
         # self.tab_01_entry_name = tk.Entry(self.tab_01_frame_entries)
-        self.tab_01_combobox_inventory_ID = cls_my_combobox_num_01(self.tab_01_frame_entries)
-        self.tab_01_combobox_inventory_ID.grid(row=2, column=1, padx=10, pady=5)
+        itiems_tab_01_combobox_client_ID = self.controller.f_controller_show_get_items_of_combobox_01()
+        self.tab_01_combobox_client_ID = cls_my_combobox_num_01(self.tab_01_frame_entries, values=itiems_tab_01_combobox_client_ID)
+        self.tab_01_combobox_client_ID.grid(row=1, column=1, padx=10, pady=5)
         
-        tk.Label(self.tab_01_frame_entries, text="Tên hàng:").grid(row=3, column=0, padx=10, pady=5, sticky="e")
-        self.tab_01_entry_name = tk.Entry(self.tab_01_frame_entries)
-        self.tab_01_entry_name.grid(row=3, column=1, padx=10, pady=5)
+        tk.Label(self.tab_01_frame_entries, text="Tên KH:").grid(row=2, column=0, padx=10, pady=5, sticky="e")
+        # self.tab_01_entry_name = tk.Entry(self.tab_01_frame_entries)
+        itiems_tab_01_combobox_client_name = self.controller.f_controller_show_get_items_of_combobox_01()
+        self.tab_01_combobox_client_name = cls_my_combobox_num_01(self.tab_01_frame_entries, values=itiems_tab_01_combobox_client_name)
+        self.tab_01_combobox_client_name.grid(row=2, column=1, padx=10, pady=5)
 
-        tk.Label(self.tab_01_frame_entries, text="Số lượng:").grid(row=4, column=0, padx=10, pady=5, sticky="e")
+        tk.Label(self.tab_01_frame_entries, text="Mã hàng:").grid(row=3, column=0, padx=10, pady=5, sticky="e")
+        # self.tab_01_entry_name = tk.Entry(self.tab_01_frame_entries)
+        itiems_tab_01_combobox_inventory_ID = self.controller.f_controller_show_get_items_of_combobox_01()
+        self.tab_01_combobox_inventory_ID = cls_my_combobox_num_01(self.tab_01_frame_entries, values=itiems_tab_01_combobox_inventory_ID)
+        self.tab_01_combobox_inventory_ID.grid(row=3, column=1, padx=10, pady=5)
+        
+        tk.Label(self.tab_01_frame_entries, text="Tên hàng:").grid(row=4, column=0, padx=10, pady=5, sticky="e")
+        # self.tab_01_entry_name = tk.Entry(self.tab_01_frame_entries)
+        itiems_tab_01_combobox_inventory_name = self.controller.f_controller_show_get_items_of_combobox_01()
+        self.tab_01_combobox_inventory_name = cls_my_combobox_num_01(self.tab_01_frame_entries, values=itiems_tab_01_combobox_inventory_name)
+        self.tab_01_combobox_inventory_name.grid(row=4, column=1, padx=10, pady=5)
+        
+        tk.Label(self.tab_01_frame_entries, text="ĐVT:").grid(row=5, column=0, padx=10, pady=5, sticky="e")
+        self.tab_01_entry_name = tk.Entry(self.tab_01_frame_entries)
+        self.tab_01_entry_name.grid(row=5, column=1, padx=10, pady=5)
+
+        tk.Label(self.tab_01_frame_entries, text="Số lượng:").grid(row=6, column=0, padx=10, pady=5, sticky="e")
         self.tab_01_entry_age = tk.Entry(self.tab_01_frame_entries)
-        self.tab_01_entry_age.grid(row=4, column=1, padx=10, pady=5)
+        self.tab_01_entry_age.grid(row=6, column=1, padx=10, pady=5)
 
     def _f_view_create_widgets_in_tab_01_frame_button_01(self):
         # Create a sub-frame to organize buttons in the center
@@ -160,17 +188,22 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         
         # Add button
         self.tab_01_button_add = tk.Button(button_container, text="Add Row", command=self.f_view_tab_01_button_add_click)
-        # self.tab_01_button_add.pack(side="center", padx=10)
         self.tab_01_button_add.pack(side="left", padx=10)
         
+        # Delete update
+        self.tab_01_button_update = tk.Button(button_container, text="Update Row", command=self.f_view_tab_01_button_update_click)
+        self.tab_01_button_update.pack(side="left", padx=10)
+        
         # Delete button
-        self.tab_01_button_delete = tk.Button(button_container, text="delete Row", command=self.f_view_tab_01_button_delete_click)
-        # self.tab_01_button_add.pack(side="center", padx=10)
+        self.tab_01_button_delete = tk.Button(button_container, text="Delete Row", command=self.f_view_tab_01_button_delete_click)
         self.tab_01_button_delete.pack(side="left", padx=10)
 
     def f_view_tab_01_button_delete_click(self):
         print("Delete Row tab 01")
-    
+
+    def f_view_tab_01_button_update_click(self):
+        print("Update Row tab 01")
+        
     def _f_view_create_widgets_in_tab_01_frame_treeview(self):
         self.tab_01_frame_treeview_01 = self.tab_01_frame_treeview_02
         self.table_of_tab_01 = self.tab_01_frame_treeview_02.treeview_normal
@@ -223,21 +256,32 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self._f_show_and_hide_the_notification_frame()
         
     def f_view_tab_01_button_add_click(self):
+        # Update the row count
+        self._f_view_set_rows_count_of_treeview_01_when_add_new_row()
         id_value = self.tab_01_entry_id.get()
         name_value = self.tab_01_entry_name.get()
         age_value = self.tab_01_entry_age.get()
         table = self.table_of_tab_01
         
         # Validate input using the helper function
-        is_valid, error_message = self.controller.f_add_row(id_value, name_value, age_value, table)
+        is_valid, error_message = self.controller.f_controller_add_row(id_value, name_value, age_value, table)
         if not is_valid:
             # Show error message
             self._f_config_notification(text=error_message, fg="red")
-            return
+            # return
         else:
             # Show success message
             self._f_config_notification(text=error_message, fg="green")
             self.f_clear_input_fileds_of_tab_01()
+        # Update the row count
+        self._f_view_set_rows_count_of_treeview_01_when_add_new_row()
+        
+    def _f_view_set_rows_count_of_treeview_01_when_add_new_row(self):
+        row_count = 1 + self.controller.f_controller_get_row_count(self.table_of_tab_01)
+        self.tab_01_entry_id.config(state="normal")  # Enable the Entry widget to update the value
+        self.tab_01_entry_id.delete(0, tk.END)  # Clear the existing value
+        self.tab_01_entry_id.insert(0, row_count)  # Insert the new value (ID)
+        self.tab_01_entry_id.config(state="disabled")  # Disable the Entry widget again
     
     def _f_config_notification(self, text="", fg="black"):
         self.tab_01_label_result.config(text=text, fg=fg)
@@ -337,8 +381,10 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
             id_value, name_value, age_value = self.controller.f_tab_01_table_single_click(event)
             # Clear and update the Entry widgets if values are returned
             if id_value is not None:
+                self.tab_01_entry_id.config(state="normal")  # Enable the Entry widget to update the value
                 self.tab_01_entry_id.delete(0, tk.END)
                 self.tab_01_entry_id.insert(0, id_value)
+                self.tab_01_entry_id.config(state="disabled")  # Disable the Entry widget again
 
             if name_value is not None:
                 self.tab_01_entry_name.delete(0, tk.END)

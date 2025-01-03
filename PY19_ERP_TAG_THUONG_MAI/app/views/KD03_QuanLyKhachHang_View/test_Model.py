@@ -231,3 +231,7 @@ class cls_test_Model():
         # ]
         
         self.f_insert_data_to_sql(server_name, database_name, login_name, login_pass, table_name, data_array)
+        
+    def f_model_get_items_to_combobox_01(self):
+        # Simulate fetching data (from a database or API, for example)
+        return ['Item 1', 'Item 2', 'Item 3', 'Item 4']
