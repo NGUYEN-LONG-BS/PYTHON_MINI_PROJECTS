@@ -7,82 +7,127 @@ from Components_View import cls_frame_normal
 from Components_View.treeview import cls_Treeview_frame_number_01
 from test_Controller import cls_test_Controller
 
-class cls_test_View(tk.Tk):
+class cls_test_View(cls_base_form_number_02_ManyTabs):
     def __init__(self):
-        super().__init__()
-        
-        # Create all function
-        self.f_view_create_main_window()
+        title = "KD02 | QUẢN LÝ YÊU CẦU ĐẶT HÀNG"
+        name = "QUẢN LÝ YÊU CẦU ĐẶT HÀNG"
+        super().__init__(title_of_form=title, name_of_slip=name)
+        # Create all functions
         self.f_view_add_MVC_class()
-        self.f_view_create_widgets()
-        
+        # call reuse components
+        self._f_view_thay_doi_gia_tri_cua_base_form()
+        self._f_view_create_all_container_frames_of_window()
         # set up formats
-        self.f_view_set_up_formats()
+        self._f_view_set_up_formats()
+        # Set up all global variants
+        self._f_setup_all_global_variants()
+        # Set up all events
+        self._f_setup_all_events()
+    
+    def _f_view_thay_doi_gia_tri_cua_base_form(self):
+        # Thay đổi thông tin các tab
+        notebook = None
+        def find_notebook(widget):
+            nonlocal notebook
+            for child in widget.winfo_children():
+                if isinstance(child, ttk.Notebook):
+                    notebook = child
+                    return True
+                if find_notebook(child):
+                    return True
+            return False
+
+        find_notebook(self) 
+
+        if not notebook:
+            print("Error: notebook not found!")
+            return
+
+        # Change the text of the second tabs
+        notebook.tab(0, text="TẠO MỚI YÊU CẦU ĐẶT HÀNG")
+        notebook.tab(1, text="QUẢN LÝ YÊU CẦU ĐẶT HÀNG")
         
+        # Delete the third tab
+        notebook.forget(2)
+
+        # # Create new tabs
+        # tab3 = ttk.Frame(notebook)
+        # tab4 = ttk.Frame(notebook)
+
+        # notebook.add(tab3, text="Tab mới thêm số 3")
+        # notebook.add(tab4, text="Tab mới thêm số 4")
+        
+        # Change the title of TieuDeTab_01
+        for child in self.tab1.winfo_children():
+            if isinstance(child, ttk.Frame):
+                for grandchild in child.winfo_children():
+                    if isinstance(grandchild, tk.Label) and grandchild.cget("text") == "Tiêu đề tab-01":
+                        # grandchild.config(text="THÔNG TIN YÊU CẦU ĐẶT HÀNG")
+                        # grandchild.grid_forget()  # Remove from grid layout
+                        grandchild.destroy()
+                        break
+        # Change the title of TieuDeTab_01
+        for child in self.tab2.winfo_children():
+            if isinstance(child, ttk.Frame):
+                for grandchild in child.winfo_children():
+                    if isinstance(grandchild, tk.Label) and grandchild.cget("text") == "Tiêu đề tab-02":
+                        # grandchild.config(text="NHẬT KÝ YÊU CẦU ĐẶT HÀNG")
+                        # grandchild.grid_forget()  # Remove from grid layout
+                        grandchild.destroy()
+                        break
+        return notebook
+
+    def _f_setup_all_global_variants(self):    
         # Timer interval (in milliseconds)
         self.last_click_time = 0
         self.double_click_interval = 0.3  # 300 ms
         
+    def _f_setup_all_events(self):
         # Bind the <Configure> event to the root window
         self.bind("<Configure>", lambda event: self._f_config_position_of_tab_01_frame_notification())
 
-    def f_view_create_main_window(self):
-        self.title("Data Entry Table")
-        
     def f_view_add_MVC_class(self):
         # Import controller
         self.controller = cls_test_Controller()
         self.controller.view = self
     
-    def f_view_create_widgets(self):
-        # Create a notebook (tabs)
-        self.notebook = ttk.Notebook(self)
-        self.notebook.pack(fill="both", expand=True)
-
+    def _f_view_create_all_container_frames_of_window(self):
         # Create tabs
-        self.tab_01 = ttk.Frame(self.notebook)
-        self.tab_02 = ttk.Frame(self.notebook)
-
-        # Add tabs to notebook
-        self.notebook.add(self.tab_01, text="Tạo mới YCDH")
-        self.notebook.add(self.tab_02, text="Danh sách YCDH")
-        
+        self.tab_01 = self.tab1
+        self.tab_02 = self.tab2
         # Settings tab content
-        self._f_view_create_widgets_of_tab_01()
-        self._f_view_create_widgets_of_tab_02()
+        self._f_view_create_all_container_frames_of_tab_01()
+        self._f_view_create_all_container_frames_of_tab_02()
         
-    def _f_view_create_widgets_of_tab_01(self):
+    def _f_view_create_all_container_frames_of_tab_01(self):
         # Frame entries
         self.tab_01_frame_entries = cls_frame_normal(self.tab_01)
         self.tab_01_frame_entries.pack(fill="both", expand=True)
-        self._f_view_create_widgets_in_tab_01_tab_01_frame_entries()
+        self._f_view_create_widgets_in_tab_01_frame_entries()
 
         # Frame button
         self.tab_01_frame_button_01 = tk.Frame(self.tab_01)
         self.tab_01_frame_button_01.pack(fill="both", expand=True)
-        self._f_view_create_widgets_in_tab_01_tab_01_frame_button_01()
+        self._f_view_create_widgets_in_tab_01_frame_button_01()
 
         # Frame treeview
         self.tab_01_frame_treeview_02 = cls_Treeview_frame_number_01(self.tab_01)
         self.tab_01_frame_treeview_02.pack(fill="both", expand=True)
-        self._f_view_create_widgets_in_tab_01_tab_01_frame_treeview()
+        self._f_view_create_widgets_in_tab_01_frame_treeview()
         
         # Frame button
         self.tab_01_frame_button_02 = tk.Frame(self.tab_01)
         self.tab_01_frame_button_02.pack(fill="both", expand=True)
-        self._f_view_create_widgets_in_tab_01_tab_01_frame_button_02()
+        self._f_view_create_widgets_in_tab_01_frame_button_02()
         
         # Frame notication
         self.tab_01_frame_notification = tk.Frame(self.tab_01)
-        self.update_idletasks()
-        frame_notification_top = self.winfo_height() - 50
-        frame_notification_left = self.winfo_width()/2 - self.tab_01_frame_notification.winfo_width()/2
-        self.tab_01_frame_notification.place(x=frame_notification_left, y=frame_notification_top)
-        self._f_view_create_widgets_in_tab_01_tab_01_frame_notification()
+        self._f_view_create_widgets_in_tab_01_frame_notification()
     
-    def _f_view_create_widgets_in_tab_01_tab_01_frame_entries(self):
+    def _f_view_create_widgets_in_tab_01_frame_entries(self):
         # Title
-        tk.Label(self.tab_01_frame_entries, text="PHIẾU YÊU CẦU ĐẶT HÀNG").grid(row=0, column=0, padx=10, pady=5, sticky="e")
+        # tk.Label(self.tab_01_frame_entries, text="PHIẾU YÊU CẦU ĐẶT HÀNG").grid(row=0, column=0, padx=10, pady=5, sticky="e")
+        cls_my_label_num_03_title_H2(self.tab_01_frame_entries, text="PHIẾU YÊU CẦU ĐẶT HÀNG").grid(row=0, column=0, padx=10, pady=5, sticky="e")
         
         # Input fields
         tk.Label(self.tab_01_frame_entries, text="STT:").grid(row=1, column=0, padx=10, pady=5, sticky="e")
@@ -98,7 +143,7 @@ class cls_test_View(tk.Tk):
         self.tab_01_entry_age = tk.Entry(self.tab_01_frame_entries)
         self.tab_01_entry_age.grid(row=3, column=1, padx=10, pady=5)
 
-    def _f_view_create_widgets_in_tab_01_tab_01_frame_button_01(self):
+    def _f_view_create_widgets_in_tab_01_frame_button_01(self):
         # Create a sub-frame to organize buttons in the center
         button_container = tk.Frame(self.tab_01_frame_button_01)
         button_container.pack(expand=True, pady=10)
@@ -116,13 +161,13 @@ class cls_test_View(tk.Tk):
     def f_view_tab_01_button_delete_click(self):
         print("Delete Row tab 01")
     
-    def _f_view_create_widgets_in_tab_01_tab_01_frame_treeview(self):
+    def _f_view_create_widgets_in_tab_01_frame_treeview(self):
         self.tab_01_frame_treeview_01 = self.tab_01_frame_treeview_02
         self.table_of_tab_01 = self.tab_01_frame_treeview_02.treeview_normal
         self.treeview_test_of_tag_01 = self.tab_01_frame_treeview_02.treeview_normal
         self.treeview_test_of_tag_01.bind("<ButtonRelease-1>", self.f_view_table_of_tab_01_click)
     
-    def _f_view_create_widgets_in_tab_01_tab_01_frame_button_02(self):
+    def _f_view_create_widgets_in_tab_01_frame_button_02(self):
         # Create a sub-frame to organize buttons in the center
         button_container = tk.Frame(self.tab_01_frame_button_02)
         button_container.pack(expand=True, pady=10)
@@ -153,53 +198,16 @@ class cls_test_View(tk.Tk):
     def f_tab_01_button_import_click(self):
         print("Import config")
     
-    def _f_view_create_widgets_in_tab_01_tab_01_frame_notification(self):
+    def _f_view_create_widgets_in_tab_01_frame_notification(self):
         # Result label
         self.tab_01_label_result = tk.Label(self.tab_01_frame_notification, text="")
         self.tab_01_label_result.pack()
         
-    def _f_view_create_widgets_of_tab_02(self):
-        # Title
-        tk.Label(self.tab_02, text="NHẬT KÝ YÊU CẦU ĐẶT HÀNG").grid(row=0, column=0, padx=10, pady=5, sticky="e")
-        
-        # Input fields
-        tk.Label(self.tab_02, text="ID:").grid(row=1, column=0, padx=10, pady=5, sticky="e")
-        self.tab_02_entry_id = tk.Entry(self.tab_02)
-        self.tab_02_entry_id.grid(row=1, column=1, padx=10, pady=5)
-
-        tk.Label(self.tab_02, text="Name:").grid(row=2, column=0, padx=10, pady=5, sticky="e")
-        self.tab_02_entry_name = tk.Entry(self.tab_02)
-        self.tab_02_entry_name.grid(row=2, column=1, padx=10, pady=5)
-
-        tk.Label(self.tab_02, text="Age:").grid(row=3, column=0, padx=10, pady=5, sticky="e")
-        self.tab_02_entry_age = tk.Entry(self.tab_02)
-        self.tab_02_entry_age.grid(row=3, column=1, padx=10, pady=5)
-
-        # Add button
-        self.tab_02_button_add = tk.Button(self.tab_02, text="Add Row", command=self.f_tab_02_button_add_click)
-        self.tab_02_button_add.grid(row=4, column=0, columnspan=2, pady=10)
-
-        # Table (Treeview)
-        tab_02_table_column_names = ["Col_01","Col_02","Col_03"]
-        self.table_of_tab_02 = ttk.Treeview(self.tab_02, columns=tab_02_table_column_names, show="headings", height=10)
-        self.table_of_tab_02.grid(row=5, column=0, columnspan=2, pady=10)
-        self.table_of_tab_02.bind("<ButtonRelease-1>", self.f_tab_02_table_on_click)
-        
-        # Get Data button
-        self.tab_02_button_get = tk.Button(self.tab_02, text="Print Data Array", command=self.f_tab_02_button_get_click)
-        self.tab_02_button_get.grid(row=6, column=0, columnspan=2, pady=10)
-        
-        # Export Data button
-        self.tab_02_button_export = tk.Button(self.tab_02, text="Export Data to SQL", command=self.f_tab_02_button_export_click)
-        self.tab_02_button_export.grid(row=6, column=2, columnspan=2, pady=10)
-
-        # Result label
-        self.tab_02_label_result = tk.Label(self.tab_02, text="")
-        self.tab_02_label_result.grid(row=7, column=0, columnspan=2)
-
-    #===================================================================================================================
+    def _f_view_create_all_container_frames_of_tab_02(self):
+        print("Create tab 02")
+    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     # Event Handlers of tab number 01
-    #===================================================================================================================
+    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     def f_tab_01_button_get_click(self):
         self.tab_01_label_result.config(text=self.controller.f_get_data(self.table_of_tab_01), fg="blue")
         self._f_show_and_hide_the_notification_frame()
@@ -234,13 +242,13 @@ class cls_test_View(tk.Tk):
         text = self.controller.f_export_data_to_SQL(self.table_of_tab_01)
         self._f_config_notification(text=text, fg="blue")
     
-    def _f_config_position_of_tab_01_frame_notification(self):
+    def _f_config_position_of_tab_01_frame_notification(self):        
         self.update_idletasks()
-        frame_notification_top = self.winfo_height() - 50
-        frame_notification_left = self.winfo_width()/2 - self.tab_01_frame_notification.winfo_width()/2
+        frame_notification_top = self.tab_01.winfo_height() - 25
+        frame_notification_left = self.tab_01.winfo_width()/2 - self.tab_01_frame_notification.winfo_width()/2
         self.tab_01_frame_notification.place(x=frame_notification_left, y=frame_notification_top)
 
-    def f_view_set_up_formats(self):
+    def _f_view_set_up_formats(self):
         self.f_tab_01_button_config_02_click()
         
     def f_tab_01_button_config_02_click(self):
@@ -338,9 +346,9 @@ class cls_test_View(tk.Tk):
         self.tab_01_entry_name.delete(0, tk.END)
         self.tab_01_entry_age.delete(0, tk.END)
         
-    #===================================================================================================================
+    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     # Event Handlers of tab number 02
-    #===================================================================================================================
+    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     def f_tab_02_button_get_click(self):
         print("Get Data tab 02")
 

@@ -1,4 +1,5 @@
 import tkinter as tk
+from .label import *
 from utils import *
 from utils.define import *
 
@@ -79,14 +80,19 @@ class cls_Frame_Element_number_01(tk.Frame):
         
     def f_on_enter_02(self, event):
         """Change appearance when the mouse enters the frame."""
-        # self.shadow.place(in_=self, x=-5, y=-5, relwidth=1.1, relheight=1.1)
+        # Add a shadow effect
         self.shadow.place(in_=self, x=-0.5, y=-0.5, relwidth=1.01, relheight=1.02)
-        self.shadow.config(bg=HIGHLIGHT_COLOR)
+        self.shadow.config(bg=COLOR_HIGHLIGHT_BORDER_OF_LOGO)
+        # # Change the cursor to pointer (hand icon)
+        # event.widget.config(cursor="hand2")
 
     def f_on_leave_02(self, event):
         """Revert appearance when the mouse leaves the frame."""
+        # remove the shadow effect
         self.shadow.place_forget()
         self.shadow.config(bg=BG_COLOR_0_0)
+        # # change the cursor back to normal
+        # event.widget.config(cursor="")
 
 class cls_Frame_Main(tk.Frame):
     def __init__(self, parent, *args, **kwargs):
@@ -115,11 +121,11 @@ class cls_Frame_Header(cls_Frame_Main):
         f_utils_setup_logo(Frame_logo)
         
     def f_setup_Label_Name(self):
+        # Create a frame for the name of the slip
         Name_Label_Frame = tk.Frame(self, width=100, height=100, bd=0, relief='flat')
         Name_Label_Frame.pack(fill='both', expand=True)
-                
-        Name_label = tk.Label(Name_Label_Frame, text=self.name_of_slip)
-        f_utils_set_menu_font(Name_label, 25, "Arial")
+        # Create a label for the name of the slip
+        Name_label = cls_my_label_num_02_title_H1(Name_Label_Frame, text=self.name_of_slip)
         Name_label.place(relx=0.5, rely=0.5, anchor="center")
         
 class cls_Frame_Footer(cls_Frame_Main):
