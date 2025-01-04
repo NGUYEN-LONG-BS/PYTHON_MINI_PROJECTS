@@ -26,6 +26,7 @@ class cls_menu_top:
         self.f_create_menu_vattu(top_menu)
         self.f_create_menu_kythuat(top_menu)
         self.f_create_menu_taichinh(top_menu)
+        self.f_create_menu_admin(top_menu)
         self.f_create_menu_Help(top_menu)
         self.f_create_menu_Test(top_menu)
         self.f_create_menu_Exit(top_menu)
@@ -52,6 +53,7 @@ class cls_menu_top:
                         "kinhdoanh": ["vt1", "tc1", "kt1"],
                         "vattu": ["kd1", "tc1", "kt1"],
                         "kythuat": ["kd1", "tc1", "vt1"],
+                        "admin": ["kd1", "tc1", "vt1", "kt1"],
                         "taichinh": ["kd1", "kt1", "vt1"]
                     }
         return self.current_user not in permissions.get(menu_name, [])
@@ -200,6 +202,27 @@ class cls_menu_top:
             
             # Set font-size
             f_utils_set_menu_font(menu_TaiChinh)
+
+    def f_create_menu_admin(self, top_menu):
+        if self.f_check_permission("admin") == False:
+            menu_Admin = tk.Menu(top_menu, tearoff=0)
+        else:
+            menu_Admin = tk.Menu(top_menu, tearoff=0)
+            top_menu.add_cascade(label="Admin", menu=menu_Admin)
+            
+            # Sub-menu level 1
+            Admin_menu_Level_1 = tk.Menu(menu_Admin, tearoff=0)
+            menu_Admin.add_cascade(label="Quản lý danh sách chi nhánh", menu=Admin_menu_Level_1)
+            Admin_menu_Level_1.add_command(label="AD0101 |Tạo mới chi nhánh", command=self.f_do_nothing_click)
+            Admin_menu_Level_1.add_command(label="AD0102 |Danh sách chi nhánh", command=self.f_do_nothing_click)
+            
+            # Sub-menu level 1
+            menu_Admin.add_cascade(label="Quản lý danh sách người dùng", menu=Admin_menu_Level_1)
+            Admin_menu_Level_1.add_command(label="AD0101 |Tạo mới người dùng", command=self.f_do_nothing_click)
+            Admin_menu_Level_1.add_command(label="AD0102 |Danh sách người dùng", command=self.f_do_nothing_click)
+            
+            # Set font-size
+            f_utils_set_menu_font(menu_Admin)
     
     def f_create_menu_Help(self, top_menu):
         # Create a "Help" menu
