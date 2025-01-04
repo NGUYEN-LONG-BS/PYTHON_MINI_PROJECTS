@@ -6,7 +6,7 @@ from tkinter import ttk
 class cls_frame_client_information_model:
     def __init__(self):
         # Sample data to simulate the model
-        self.header = ["ID", "Name", "MST", "Địa chỉ"]
+        self.header = ["Mã KH", "Tên KH", "MST", "Địa chỉ"]
         self.data = [
             ("BH01", "Công ty TNHH Con số", "02641368626", "04 đường Nguyễn Trãi, Cần Thơ, Việt Nam"),
             ("BH02", "Công ty TNHH Cửa Hàng", "02641368125", "26 đường Nguyễn Duy Hưng, Đà Nẵng, Việt Nam"),
@@ -216,17 +216,3 @@ class cls_TreeviewCombobox(ttk.Entry):
 
     def set_additional_entries(self, entries):
         self.additional_entries = entries
-
-
-# Sample usage
-if __name__ == "__main__":
-    root = tk.Tk()
-    root.title("Treeview Combobox Example with Additional Entries")
-    root.config(width=1600, height=600)
-
-    # Create and pack the view
-    frame_client_view = cls_frame_client_information_view(root)    
-    frame_client_view.pack(fill="x", padx=10, pady=10)
-    
-
-    root.mainloop()

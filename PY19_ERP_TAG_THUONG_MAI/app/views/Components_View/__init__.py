@@ -9,6 +9,8 @@
 
 # Import the symbols to be included in the package namespace
 from .combobox import *
+from .frame_clients_informations import *
+from .frame_inventories_informations import *
 from .frame import *
 from .label import *
 from .treeview import *

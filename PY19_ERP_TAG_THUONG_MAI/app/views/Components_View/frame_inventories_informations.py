@@ -2,17 +2,17 @@ import tkinter as tk
 from tkinter import ttk
 # from PIL import Image, ImageTk
 
-# Model: cls_frame_client_information_model
-class cls_frame_client_information_model:
+# Model: cls_frame_inventories_information_model
+class cls_frame_inventories_information_model:
     def __init__(self):
         # Sample data to simulate the model
-        self.header = ["ID", "Name", "MST", "Địa chỉ"]
+        self.header = ["Mã hàng", "Tên hàng", "Đvt", "SL khả dụng"]
         self.data = [
-            ("BH01", "Công ty TNHH Con số", "02641368626", "04 đường Nguyễn Trãi, Cần Thơ, Việt Nam"),
-            ("BH02", "Công ty TNHH Cửa Hàng", "02641368125", "26 đường Nguyễn Duy Hưng, Đà Nẵng, Việt Nam"),
-            ("BH03", "Công ty TNHH Một Thành Viên", "0264151515", "04 đường Lê Lợi, TP. Hồ Chí Minh, Việt Nam"),
-            ("BH04", "Công ty TNHH TTL", "0264136516", "28 đường Trường Chinh, Bình Định, Việt Nam"),
-            ("BH05", "Công ty CP Khổng lồ", "02641361121", "297 đường Phan Bội Châu, Quy Nhơn, Bình Định, Việt Nam"),
+            ("HH-01A-039", "Dây chì", "sợi", 15),
+            ("HH-02A-010", "Tủ điện trung thế", "cái", 26),
+            ("HH-01B-001", "MBC 120AM", "cái", 50),
+            ("TM-01A-009", "LA 4000A", "cái", 60),
+            ("MT-05A-025", "Nắp chụp LA - màu vàng", "cái", 22),
         ]
         
 
@@ -29,11 +29,11 @@ class cls_frame_client_information_model:
                 filtered_data.append(row)
         return filtered_data
 
-# Controller: cls_frame_client_information_controller
-class cls_frame_client_information_controller:
+# Controller: cls_frame_inventories_information_controller
+class cls_frame_inventories_information_controller:
     def __init__(self):
-        self.model = cls_frame_client_information_model()  # Create an instance of the model
-        # self.view = cls_frame_client_information_view
+        self.model = cls_frame_inventories_information_model()  # Create an instance of the model
+        # self.view = cls_frame_inventories_information_view
         # self.view.controller = self
 
     def get_data(self):
@@ -46,8 +46,8 @@ class cls_frame_client_information_controller:
         filtered_data = self.model.filter_data(query)
         self.view.update_combobox_data(filtered_data)
         
-# View: cls_frame_client_information_view
-class cls_frame_client_information_view(tk.Frame):
+# View: cls_frame_inventories_information_view
+class cls_frame_inventories_information_view(tk.Frame):
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
         # setup first
@@ -71,15 +71,15 @@ class cls_frame_client_information_view(tk.Frame):
         self._f_create_widgets_of_frame_row_2()
         
     def _f_setup_MVC(self):
-        self.controller = cls_frame_client_information_controller()  # Create an instance of the controller
+        self.controller = cls_frame_inventories_information_controller()  # Create an instance of the controller
 
     def _f_create_widgets_of_frame_row_1(self):
         # Create label and TreeviewCombobox
-        label = ttk.Label(self.frame_row_1, text="Khách hàng:")
+        label = ttk.Label(self.frame_row_1, text="Mã hàng:")
         label.pack(side="left", padx=10, pady=5)
 
-        # Main cls_TreeviewCombobox
-        self.treeview_combobox = cls_TreeviewCombobox(
+        # Main cls_TreeviewCombobox_inventories
+        self.treeview_combobox = cls_TreeviewCombobox_inventories(
             self.frame_row_1,
             columns=self.controller.get_header(),
             data=self.controller.get_data(),
@@ -108,7 +108,7 @@ class cls_frame_client_information_view(tk.Frame):
         entry_client_address.pack(side="left", fill="x", expand=True, padx=(0, 10), pady=5)
         self.additional_entries.append(entry_client_address)
 
-        # Link additional Entry widgets to the cls_TreeviewCombobox
+        # Link additional Entry widgets to the cls_TreeviewCombobox_inventories
         self.treeview_combobox.set_additional_entries(self.additional_entries)
 
     def update_combobox_data(self, data):
@@ -116,7 +116,7 @@ class cls_frame_client_information_view(tk.Frame):
         self.treeview_combobox.refresh_data()
 
 
-class cls_TreeviewCombobox(ttk.Entry):
+class cls_TreeviewCombobox_inventories(ttk.Entry):
     def __init__(self, master, columns, data, dropdown_width=800, dropdown_height=600, **kwargs):
         super().__init__(master, **kwargs)
         self.columns = columns
@@ -216,17 +216,3 @@ class cls_TreeviewCombobox(ttk.Entry):
 
     def set_additional_entries(self, entries):
         self.additional_entries = entries
-
-
-# Sample usage
-if __name__ == "__main__":
-    root = tk.Tk()
-    root.title("Treeview Combobox Example with Additional Entries")
-    root.config(width=1600, height=600)
-
-    # Create and pack the view
-    frame_client_view = cls_frame_client_information_view(root)    
-    frame_client_view.pack(fill="x", padx=10, pady=10)
-    
-
-    root.mainloop()
