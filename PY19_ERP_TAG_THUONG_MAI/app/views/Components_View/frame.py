@@ -177,3 +177,10 @@ class cls_Frame_date_and_number_of_slip(tk.Frame):
         tk.Label(self, text="Số chứng từ:", bg=BG_COLOR_0_0).grid(row=2, column=0, padx=10, pady=10, sticky="e")
         self.slips_entry = tk.Entry(self)
         self.slips_entry.grid(row=2, column=1, padx=10, pady=10)
+        
+class cls_Frame_client_information(tk.Frame):
+    def __init__(self, parent, *args, **kwargs):
+        super().__init__(parent, *args, **kwargs)
+        # Configure initial appearance
+        self.config(bg=BG_COLOR_0_0, width=200, height=200, bd=1, relief="groove")
+        
