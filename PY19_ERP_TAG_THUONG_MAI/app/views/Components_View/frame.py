@@ -147,11 +147,11 @@ class cls_Frame_date_and_number_of_slip(tk.Frame):
     def __init__(self, parent, *args, **kwargs):
         super().__init__(parent, *args, **kwargs)
         # Configure initial appearance
-        self.config(bg=BG_COLOR_0_0, width=200, height=200, bd=1, relief="groove")
-        
+        # self.config(bg=BG_COLOR_0_0, width=200, height=200, bd=1, relief="groove")
+        self.config(bg=BG_COLOR_0_0)
         # Create a shadow frame as a child of the parent
-        self.shadow = tk.Frame(parent, bg=BG_COLOR_0_0, bd=0)
-        self.shadow.lower()  # Ensure shadow is below the main frame
+        # self.shadow = tk.Frame(parent, bg=BG_COLOR_0_0, bd=0)
+        # self.shadow.lower()  # Ensure shadow is below the main frame
 
         # Create grid layout inside the frame
         self.grid_rowconfigure(0, weight=1)
@@ -166,17 +166,17 @@ class cls_Frame_date_and_number_of_slip(tk.Frame):
     def create_widgets(self):
         # Row Label and Entry
         # self.sub_frame = tk.Frame(self).grid(row=0, column=0, padx=10, pady=10, sticky="ew")
-        tk.Label(self, text="Chứng từ:", bg=BG_COLOR_0_0).grid(row=0, column=0, padx=10, pady=10, sticky="ew")
+        # tk.Label(self, text="Chứng từ:", bg=BG_COLOR_0_0).grid(row=0, column=0, padx=10, pady=10, sticky="ew")
 
         # Date Label and Entry
-        tk.Label(self, text="Ngày:", bg=BG_COLOR_0_0).grid(row=1, column=0, padx=10, pady=10, sticky="e")
+        tk.Label(self, text="Ngày:", bg=BG_COLOR_0_0).pack(side="left")
         self.date_entry = tk.Entry(self)
-        self.date_entry.grid(row=1, column=1, padx=10, pady=10)
+        self.date_entry.pack(side="left")
 
         # Number of Slips Label and Entry
-        tk.Label(self, text="Số chứng từ:", bg=BG_COLOR_0_0).grid(row=2, column=0, padx=10, pady=10, sticky="e")
+        tk.Label(self, text="Số chứng từ:", bg=BG_COLOR_0_0).pack(side="left")
         self.slips_entry = tk.Entry(self)
-        self.slips_entry.grid(row=2, column=1, padx=10, pady=10)
+        self.slips_entry.pack(side="left")
         
 class cls_Frame_client_information(tk.Frame):
     def __init__(self, parent, *args, **kwargs):

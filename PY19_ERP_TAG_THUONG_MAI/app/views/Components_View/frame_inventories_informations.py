@@ -76,7 +76,7 @@ class cls_frame_inventories_information_view(tk.Frame):
     def _f_create_widgets_of_frame_row_1(self):
         # Create label and TreeviewCombobox
         label = ttk.Label(self.frame_row_1, text="Mã hàng:")
-        label.pack(side="left", padx=10, pady=5)
+        label.pack(side="left", padx=(10,2), pady=5)
 
         # Main cls_TreeviewCombobox_inventories
         self.treeview_combobox = cls_TreeviewCombobox_inventories(
@@ -87,7 +87,7 @@ class cls_frame_inventories_information_view(tk.Frame):
             dropdown_height=300,
             width=15,
         )
-        self.treeview_combobox.pack(side="left", padx=(5, 2), pady=5)
+        self.treeview_combobox.pack(side="left", padx=(0, 2), pady=5)
 
         # Additional Entry widgets for other column values
         self.additional_entries = []
@@ -104,7 +104,10 @@ class cls_frame_inventories_information_view(tk.Frame):
         entry_client_tax_numbers.pack(side="left", padx=(10, 2), pady=5)
         self.additional_entries.append(entry_client_tax_numbers)
 
-        entry_client_address = ttk.Entry(self.frame_row_2)
+        label = ttk.Label(self.frame_row_2, text="SL khả dụng:")
+        label.pack(side="left", padx=(10, 2), pady=5)
+
+        entry_client_address = ttk.Entry(self.frame_row_2, width=15)
         entry_client_address.pack(side="left", fill="x", expand=True, padx=(0, 10), pady=5)
         self.additional_entries.append(entry_client_address)
 
