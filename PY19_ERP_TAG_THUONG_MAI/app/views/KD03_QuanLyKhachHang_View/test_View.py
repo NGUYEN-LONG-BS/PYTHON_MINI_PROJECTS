@@ -91,7 +91,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self._f_view_create_all_container_frames_of_tab_02()
         
     def _f_view_create_all_container_frames_of_tab_01(self):
-        # Frame entries
+        # Frame H2
         self.tab_01_frame_H2 = cls_frame_normal(self.tab_01)
         # self.tab_01_frame_H2.pack(fill="both", expand=True)
         self.tab_01_frame_H2.pack(side="top", fill="x")
@@ -104,13 +104,13 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self._f_view_create_widgets_in_tab_01_frame_entries()
 
         # Frame button
-        self.tab_01_frame_button_01 = tk.Frame(self.tab_01)
-        self.tab_01_frame_button_01.pack(side="top", fill="x")
-        self._f_view_create_widgets_in_tab_01_frame_button_01()
+        self.tab_01_frame_button_of_treeview = tk.Frame(self.tab_01)
+        self.tab_01_frame_button_of_treeview.pack(side="top", fill="x")
+        self._f_view_create_widgets_in_tab_01_frame_button_of_treeview()
 
         # Frame treeview
-        self.tab_01_frame_treeview_02 = cls_Treeview_frame_number_01(self.tab_01)
-        self.tab_01_frame_treeview_02.pack(side="top", fill="both", expand=True)
+        self.tab_01_frame_treeview = cls_Treeview_frame_number_01(self.tab_01)
+        self.tab_01_frame_treeview.pack(side="top", fill="both", expand=True)
         self._f_view_create_widgets_in_tab_01_frame_treeview()
         
         # Frame button
@@ -188,9 +188,9 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_entry_name = tk.Entry(self.Sub_frame_01_in_frame_inventories_informations)
         self.tab_01_entry_name.pack(side="left")
 
-    def _f_view_create_widgets_in_tab_01_frame_button_01(self):
+    def _f_view_create_widgets_in_tab_01_frame_button_of_treeview(self):
         # Create a sub-frame to organize buttons in the center
-        button_container = tk.Frame(self.tab_01_frame_button_01)
+        button_container = tk.Frame(self.tab_01_frame_button_of_treeview)
         button_container.pack(expand=True, pady=10)
         
         # Add button
@@ -212,9 +212,9 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         print("Update Row tab 01")
         
     def _f_view_create_widgets_in_tab_01_frame_treeview(self):
-        self.tab_01_frame_treeview_01 = self.tab_01_frame_treeview_02
-        self.table_of_tab_01 = self.tab_01_frame_treeview_02.treeview_normal
-        self.treeview_test_of_tag_01 = self.tab_01_frame_treeview_02.treeview_normal
+        self.tab_01_frame_treeview_01 = self.tab_01_frame_treeview
+        self.table_of_tab_01 = self.tab_01_frame_treeview.treeview_normal
+        self.treeview_test_of_tag_01 = self.tab_01_frame_treeview.treeview_normal
         self.treeview_test_of_tag_01.bind("<ButtonRelease-1>", self.f_view_table_of_tab_01_click)
     
     def _f_view_create_widgets_in_tab_01_frame_button_02(self):
