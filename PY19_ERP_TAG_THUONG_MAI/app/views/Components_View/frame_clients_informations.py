@@ -92,7 +92,7 @@ class cls_frame_client_information_view(tk.Frame):
         # Additional Entry widgets for other column values
         self.additional_entries = []
         
-        entry_client_names = ttk.Entry(self.frame_row_1)
+        entry_client_names = ttk.Entry(self.frame_row_1, width=50)
         entry_client_names.pack(side="left", fill="x", expand=True, padx=(0, 10), pady=5)
         self.additional_entries.append(entry_client_names)
     

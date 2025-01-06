@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 import time
 import json
+from PIL import Image, ImageTk
 from Components_View import *
 from Components_View import cls_frame_normal
 from Components_View.treeview import cls_Treeview_frame_number_01
@@ -134,12 +135,12 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         
     def _f_view_create_widgets_in_frame_entries_of_slip(self):
         # Create container for date and number of slip
-        self.Frame_container_date_and_number = tk.Frame(self.frame_entries_of_slip, bd=1, relief="solid")
+        self.Frame_container_date_and_number = tk.Frame(self.frame_entries_of_slip)
         self.Frame_container_date_and_number.pack(side="top", fill="x", expand=True)
         self._f_view_create_widgets_in_frame_date_and_number()
 
         # Create container for client and inventories
-        self.Frame_clients_and_inventories_information = tk.Frame(self.frame_entries_of_slip, bd=1, relief="solid")
+        self.Frame_clients_and_inventories_information = tk.Frame(self.frame_entries_of_slip)
         self.Frame_clients_and_inventories_information.pack(side="top", fill="x", expand=True, pady=(5,0))
         self._f_view_create_widgets_in_frame_clients_and_inventories()
 
@@ -150,17 +151,19 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
 
     def _f_view_create_widgets_in_frame_date_and_number(self):
         # Create frame date and number of slip 
-        self.frame_date_and_number = cls_Frame_date_and_number_of_slip(self.Frame_container_date_and_number, bd=1, relief="solid")
+        self.frame_date_and_number = cls_Frame_date_and_number_of_slip(self.Frame_container_date_and_number)
         self.frame_date_and_number.pack(anchor="center")
 
     def _f_view_create_widgets_in_frame_clients_and_inventories(self):
         # Create frame clients informations
         self.frame_clients_informations = cls_frame_client_information_view(self.Frame_clients_and_inventories_information)
-        self.frame_clients_informations.pack(side="left", fill="both", pady=10)
+        self.frame_clients_informations.config(bd=0, relief="flat")
+        self.frame_clients_informations.pack(side="left", fill="both", expand=True)
         
         # Create frame inventories informations
         self.frame_inventories_informations = cls_frame_inventories_information_view(self.Frame_clients_and_inventories_information)
-        self.frame_inventories_informations.pack(side="left", fill="both", pady=10)
+        self.frame_inventories_informations.config(bd=0, relief="flat")
+        self.frame_inventories_informations.pack(side="left", fill="both", expand=True, padx=(10,0))
         self._f_view_add_widget_into_frame_inventories_informations()
         
     def _f_view_create_widgets_in_frame_slip_informations(self):
@@ -173,20 +176,30 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         # Input fields
         tk.Label(self.frame_slip_informations, text="Thông tin thêm:").pack(side="left")
         self.tab_01_note_for_slip = tk.Entry(self.frame_slip_informations)
-        self.tab_01_note_for_slip.pack(side="left", fill="x", pady=10)
+        self.tab_01_note_for_slip.pack(side="left", fill="x", expand=True, pady=10)
         
 
     def _f_view_add_widget_into_frame_inventories_informations(self):
-        self.Sub_frame_01_in_frame_inventories_informations = tk.Frame(self.frame_inventories_informations)
-        self.Sub_frame_01_in_frame_inventories_informations.pack(side="bottom")
+        frame_row_02_of_inventories_frame = self.frame_inventories_informations.frame_row_2
+        
+        tk.Label(frame_row_02_of_inventories_frame, text="nhu cầu:").pack(side="left")
+        self.tab_01_entry_nhu_cau = tk.Entry(frame_row_02_of_inventories_frame, width=15)
+        self.tab_01_entry_nhu_cau.pack(side="left")
+        
+        tk.Label(frame_row_02_of_inventories_frame, text="SL giữ chỗ:").pack(side="left")
+        self.tab_01_entry_sl_giu_cho = tk.Entry(frame_row_02_of_inventories_frame, width=15)
+        self.tab_01_entry_sl_giu_cho.pack(side="left")
+        
+        tk.Label(frame_row_02_of_inventories_frame, text="SL YCĐH:").pack(side="left")
+        self.tab_01_entry_sl_YCDH = tk.Entry(frame_row_02_of_inventories_frame, width=15)
+        self.tab_01_entry_sl_YCDH.pack(side="left")
+        
+        frame_row_03_of_inventories_frame = tk.Frame(self.frame_inventories_informations)
+        frame_row_03_of_inventories_frame.pack(side="bottom", fill="x", expand=True)
 
-        tk.Label(self.Sub_frame_01_in_frame_inventories_informations, text="SL YCĐH:").pack(side="left")
-        self.tab_01_entry_age = tk.Entry(self.Sub_frame_01_in_frame_inventories_informations)
-        self.tab_01_entry_age.pack(side="left")
-
-        tk.Label(self.Sub_frame_01_in_frame_inventories_informations, text="Ghi chú mặt hàng:").pack(side="left")
-        self.tab_01_entry_name = tk.Entry(self.Sub_frame_01_in_frame_inventories_informations)
-        self.tab_01_entry_name.pack(side="left")
+        tk.Label(frame_row_03_of_inventories_frame, text="Ghi chú mặt hàng:").pack(side="left")
+        self.tab_01_entry_ghi_chu_mat_hang = tk.Entry(frame_row_03_of_inventories_frame)
+        self.tab_01_entry_ghi_chu_mat_hang.pack(side="left", fill="x", expand=True, padx=(0, 10))
 
     def _f_view_create_widgets_in_tab_01_frame_button_of_treeview(self):
         # Create a sub-frame to organize buttons in the center
@@ -204,12 +217,19 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         # Delete button
         self.tab_01_button_delete = tk.Button(button_container, text="Delete Row", command=self.f_view_tab_01_button_delete_click)
         self.tab_01_button_delete.pack(side="left", padx=10)
+        
+        # Clear button
+        self.tab_01_button_clear = tk.Button(button_container, text="Clear Rows", command=self.f_view_tab_01_button_clear_click)
+        self.tab_01_button_clear.pack(side="left", padx=10)
 
     def f_view_tab_01_button_delete_click(self):
         print("Delete Row tab 01")
 
     def f_view_tab_01_button_update_click(self):
         print("Update Row tab 01")
+        
+    def f_view_tab_01_button_clear_click(self):
+        print("Clear Rows tab 01")
         
     def _f_view_create_widgets_in_tab_01_frame_treeview(self):
         self.tab_01_frame_treeview_01 = self.tab_01_frame_treeview
@@ -227,25 +247,40 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_button_get.pack(side="left", padx=10)
         
         # Export Data button
-        self.tab_01_button_export = tk.Button(button_container, text="Export Data to SQL", command=self.f_tab_01_button_export_click)
+        self.tab_01_button_export = tk.Button(button_container, text="SAVE", command=self.f_tab_01_button_export_click)
         self.tab_01_button_export.pack(side="left", padx=10)
         
-        # Table config
+        # print button
         self.tab_01_config_num_02 = tk.Button(button_container, text="Print", command=self.f_tab_01_button_print_click)
         self.tab_01_config_num_02.pack(side="left", padx=10)
         
-        # Table config
+        # import button
         self.tab_01_btn_import = tk.Button(button_container, text="Import Excel", command=self.f_tab_01_button_import_click)
         self.tab_01_btn_import.pack(side="left", padx=10)
         
-        # print config
+        # print button
         self.tab_01_print_config = tk.Button(button_container, text="in cấu hình của bảng", command=self.f_button_print_config_click)
         self.tab_01_print_config.pack(side="left", padx=10)
+        
+        # temp button
+        self.tab_01_btn_template = tk.Button(button_container, text="TEMPLATE", command=self.f_tab_01_button_template_click)
+        self.tab_01_btn_template.pack(side="left", padx=10)
+        
+        # get file button
+        self.tab_01_btn_get_import_file = tk.Button(button_container, text="GET FILE", command=self.f_tab_01_button_template_click)
+        self.tab_01_btn_get_import_file.pack(side="left", padx=10)
+        
+        # star import button
+        self.tab_01_btn_start_import_file = tk.Button(button_container, text="START IMPORT", command=self.f_tab_01_button_template_click)
+        self.tab_01_btn_start_import_file.pack(side="left", padx=10)
 
     def f_tab_01_button_print_click(self):
         print("Print config")
     
     def f_tab_01_button_import_click(self):
+        print("Import config")
+        
+    def f_tab_01_button_template_click(self):
         print("Import config")
     
     def _f_view_create_widgets_in_tab_01_frame_notification(self):
@@ -266,8 +301,8 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         # Update the row count
         self._f_view_set_rows_count_of_treeview_01_when_add_new_row()
         id_value = self.tab_01_entry_id.get()
-        name_value = self.tab_01_entry_name.get()
-        age_value = self.tab_01_entry_age.get()
+        name_value = self.tab_01_entry_ghi_chu_mat_hang.get()
+        age_value = self.tab_01_entry_sl_YCDH.get()
         table = self.table_of_tab_01
         
         # Validate input using the helper function
@@ -398,20 +433,20 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
                 self.tab_01_entry_id.config(state="disabled")  # Disable the Entry widget again
 
             if name_value is not None:
-                self.tab_01_entry_name.delete(0, tk.END)
-                self.tab_01_entry_name.insert(0, name_value)
+                self.tab_01_entry_ghi_chu_mat_hang.delete(0, tk.END)
+                self.tab_01_entry_ghi_chu_mat_hang.insert(0, name_value)
 
             if age_value is not None:
-                self.tab_01_entry_age.delete(0, tk.END)
-                self.tab_01_entry_age.insert(0, age_value)
+                self.tab_01_entry_sl_YCDH.delete(0, tk.END)
+                self.tab_01_entry_sl_YCDH.insert(0, age_value)
     
     def f_tab_02_table_on_click(self, event):
         print("f_tab_02_table_on_click")    
 
     def f_clear_input_fileds_of_tab_01(self):
         self.tab_01_entry_id.delete(0, tk.END)
-        self.tab_01_entry_name.delete(0, tk.END)
-        self.tab_01_entry_age.delete(0, tk.END)
+        self.tab_01_entry_ghi_chu_mat_hang.delete(0, tk.END)
+        self.tab_01_entry_sl_YCDH.delete(0, tk.END)
         
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     # Event Handlers of tab number 02

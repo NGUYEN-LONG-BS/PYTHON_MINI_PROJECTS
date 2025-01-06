@@ -75,8 +75,8 @@ class cls_frame_inventories_information_view(tk.Frame):
 
     def _f_create_widgets_of_frame_row_1(self):
         # Create label and TreeviewCombobox
-        label = ttk.Label(self.frame_row_1, text="Mã hàng:")
-        label.pack(side="left", padx=(10,2), pady=5)
+        label_ma_hang = ttk.Label(self.frame_row_1, text="Mã hàng:")
+        label_ma_hang.pack(side="left", padx=(10,2), pady=5)
 
         # Main cls_TreeviewCombobox_inventories
         self.treeview_combobox = cls_TreeviewCombobox_inventories(
@@ -92,24 +92,24 @@ class cls_frame_inventories_information_view(tk.Frame):
         # Additional Entry widgets for other column values
         self.additional_entries = []
         
-        entry_client_names = ttk.Entry(self.frame_row_1)
-        entry_client_names.pack(side="left", fill="x", expand=True, padx=(0, 10), pady=5)
-        self.additional_entries.append(entry_client_names)
+        entry_inventory_names = ttk.Entry(self.frame_row_1)
+        entry_inventory_names.pack(side="left", fill="x", expand=True, padx=(0, 10), pady=5)
+        self.additional_entries.append(entry_inventory_names)
     
-    def _f_create_widgets_of_frame_row_2(self):    
-        entry_client_tax_numbers = ttk.Entry(
-            self.frame_row_2, 
-            width=15
-        )
-        entry_client_tax_numbers.pack(side="left", padx=(10, 2), pady=5)
-        self.additional_entries.append(entry_client_tax_numbers)
+    def _f_create_widgets_of_frame_row_2(self):
+        label_dvt = ttk.Label(self.frame_row_2, text="Đvt:")
+        label_dvt.pack(side="left", padx=(10,2), pady=5)
+           
+        entry_dvt = ttk.Entry(self.frame_row_2, width=10)
+        entry_dvt.pack(side="left", padx=(0, 2), pady=5)
+        self.additional_entries.append(entry_dvt)
 
-        label = ttk.Label(self.frame_row_2, text="SL khả dụng:")
-        label.pack(side="left", padx=(10, 2), pady=5)
+        label_sl_kha_dung = ttk.Label(self.frame_row_2, text="SL khả dụng:")
+        label_sl_kha_dung.pack(side="left", padx=(10, 2), pady=5)
 
-        entry_client_address = ttk.Entry(self.frame_row_2, width=15)
-        entry_client_address.pack(side="left", fill="x", expand=True, padx=(0, 10), pady=5)
-        self.additional_entries.append(entry_client_address)
+        entry_sl_kha_dung = ttk.Entry(self.frame_row_2, width=15)
+        entry_sl_kha_dung.pack(side="left", padx=(0, 10), pady=5)
+        self.additional_entries.append(entry_sl_kha_dung)
 
         # Link additional Entry widgets to the cls_TreeviewCombobox_inventories
         self.treeview_combobox.set_additional_entries(self.additional_entries)
