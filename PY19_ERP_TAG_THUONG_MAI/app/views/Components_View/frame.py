@@ -52,7 +52,8 @@ class cls_frame_normal(tk.Frame):
         self.f_set_style()
         
     def f_set_style(self):
-        self.configure(bd=0, relief="flat")
+        # self.configure(bd=0, relief="flat")
+        self.configure(bd=1, relief="solid")
         
 class cls_Frame_Element_number_01(tk.Frame):
     def __init__(self, parent, *args, **kwargs):

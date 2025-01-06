@@ -93,29 +93,29 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
     def _f_view_create_all_container_frames_of_tab_01(self):
         # Frame entries
         self.tab_01_frame_H2 = cls_frame_normal(self.tab_01)
-        self.tab_01_frame_H2.pack(fill="both", expand=True)
+        # self.tab_01_frame_H2.pack(fill="both", expand=True)
+        self.tab_01_frame_H2.pack(side="top", fill="x")
         self._f_view_create_widgets_in_tab_01_frame_H2()
 
         # Frame entries
         self.tab_01_frame_entries = cls_frame_normal(self.tab_01)
-        self.tab_01_frame_entries.pack(fill="both", expand=True)
-        self.tab_01_frame_entries.pack(padx=20, pady=20)
-        # self._f_view_format_tab_01_frame_entries()
+        self.tab_01_frame_entries.pack(side="top", fill="x")
+        # self.tab_01_frame_entries.pack(padx=20, pady=20)
         self._f_view_create_widgets_in_tab_01_frame_entries()
 
         # Frame button
         self.tab_01_frame_button_01 = tk.Frame(self.tab_01)
-        self.tab_01_frame_button_01.pack(fill="both", expand=True)
+        self.tab_01_frame_button_01.pack(side="top", fill="x")
         self._f_view_create_widgets_in_tab_01_frame_button_01()
 
         # Frame treeview
         self.tab_01_frame_treeview_02 = cls_Treeview_frame_number_01(self.tab_01)
-        self.tab_01_frame_treeview_02.pack(fill="both", expand=True)
+        self.tab_01_frame_treeview_02.pack(side="top", fill="both", expand=True)
         self._f_view_create_widgets_in_tab_01_frame_treeview()
         
         # Frame button
         self.tab_01_frame_button_02 = tk.Frame(self.tab_01)
-        self.tab_01_frame_button_02.pack(fill="both", expand=True)
+        self.tab_01_frame_button_02.pack(side="bottom", fill="x")
         self._f_view_create_widgets_in_tab_01_frame_button_02()
         
         # Frame notication
@@ -124,43 +124,46 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
     
     def _f_view_create_widgets_in_tab_01_frame_H2(self):
         # Title H2
-        cls_my_label_num_03_title_H2(self.tab_01_frame_H2, text="PHIẾU YÊU CẦU ĐẶT HÀNG").pack(anchor="center", padx=10, pady=10)
-
-    # def _f_view_format_tab_01_frame_entries(self):
-    #     # Column and row configuration for better resizing behavior
-    #     self.tab_01_frame_entries.grid_columnconfigure(0, weight=1, uniform="equal")
-    #     self.tab_01_frame_entries.grid_columnconfigure(1, weight=2, uniform="equal")
-    #     self.tab_01_frame_entries.grid_rowconfigure(0, weight=1)
+        cls_my_label_num_03_title_H2(self.tab_01_frame_H2, text="PHIẾU YÊU CẦU ĐẶT HÀNG").pack(anchor="center")
         
     def _f_view_create_widgets_in_tab_01_frame_entries(self):
         self.frame_entries_of_slip = tk.Frame(self.tab_01_frame_entries)
-        self.frame_entries_of_slip.pack(side="left", fill="x", padx=10)
+        self.frame_entries_of_slip.pack(side="top", fill="x", expand=True)
         self._f_view_create_widgets_in_frame_entries_of_slip()
         
         
     def _f_view_create_widgets_in_frame_entries_of_slip(self):
-        # Create frame date and number of slip 
-        self.frame_information_of_slip = cls_Frame_date_and_number_of_slip(self.frame_entries_of_slip)
-        # self.frame_information_of_slip.pack(side="top", fill="x", pady=10)
-        self.frame_information_of_slip.pack(side="top", anchor="center")
+        # Create container for date and number of slip
+        self.Frame_container_date_and_number = tk.Frame(self.frame_entries_of_slip, bd=1, relief="solid")
+        self.Frame_container_date_and_number.pack(side="top", fill="x", expand=True)
+        self._f_view_create_widgets_in_frame_date_and_number()
 
         # Create container for client and inventories
-        self.Frame_clients_and_inventories_information = tk.Frame(self.frame_entries_of_slip)
-        self.Frame_clients_and_inventories_information.pack(side="top", fill="x", pady=10)
+        self.Frame_clients_and_inventories_information = tk.Frame(self.frame_entries_of_slip, bd=1, relief="solid")
+        self.Frame_clients_and_inventories_information.pack(side="top", fill="x", expand=True, pady=(5,0))
+        self._f_view_create_widgets_in_frame_clients_and_inventories()
 
+        # Create frame inventories informations
+        self.frame_slip_informations = tk.Frame(self.frame_entries_of_slip)
+        self.frame_slip_informations.pack(side="top", fill="x", expand=True, pady=(5,0))
+        self._f_view_create_widgets_in_frame_slip_informations()
+
+    def _f_view_create_widgets_in_frame_date_and_number(self):
+        # Create frame date and number of slip 
+        self.frame_date_and_number = cls_Frame_date_and_number_of_slip(self.Frame_container_date_and_number, bd=1, relief="solid")
+        self.frame_date_and_number.pack(anchor="center")
+
+    def _f_view_create_widgets_in_frame_clients_and_inventories(self):
         # Create frame clients informations
         self.frame_clients_informations = cls_frame_client_information_view(self.Frame_clients_and_inventories_information)
-        self.frame_clients_informations.pack(side="left", fill="x", pady=10)
+        self.frame_clients_informations.pack(side="left", fill="both", pady=10)
         
         # Create frame inventories informations
         self.frame_inventories_informations = cls_frame_inventories_information_view(self.Frame_clients_and_inventories_information)
-        self.frame_inventories_informations.pack(side="left", fill="x", pady=10)
+        self.frame_inventories_informations.pack(side="left", fill="both", pady=10)
         self._f_view_add_widget_into_frame_inventories_informations()
         
-        # Create frame inventories informations
-        self.frame_slip_informations = tk.Frame(self.frame_entries_of_slip)
-        self.frame_slip_informations.pack(side="top", fill="x", pady=10)
-        
+    def _f_view_create_widgets_in_frame_slip_informations(self):
         # Input fields
         tk.Label(self.frame_slip_informations, text="STT:").pack(side="left")
         self.tab_01_entry_id = tk.Entry(self.frame_slip_informations)
