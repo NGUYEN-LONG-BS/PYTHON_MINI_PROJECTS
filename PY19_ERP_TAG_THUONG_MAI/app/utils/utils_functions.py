@@ -139,3 +139,21 @@ def f_utils_show_fading_popup(message):
 
     # Đặt thời gian để tự động đóng cửa sổ sau 3 giây (3000 milliseconds)
     popup.after(1000, popup.destroy)
+
+
+def f_utils_tim_component_label_with_text(root=None, text_to_find=""):
+    if root is None:  # Start from self if root is not provided
+        # root = self
+        return
+    
+    # Loop through all children of the current root
+    for widget in root.winfo_children():
+        # Check if widget is a Label and its text matches
+        if isinstance(widget, tk.Label) and widget.cget("text") == text_to_find:
+            return widget  # Found the Label, return it
+
+        # If widget has children, recursively search in its children
+        result = f_utils_tim_component_label_with_text(widget, text_to_find)
+        if result:
+            return result
+    return None  # No matching Label found

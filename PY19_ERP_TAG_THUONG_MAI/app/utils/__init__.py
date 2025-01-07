@@ -8,3 +8,4 @@ from .utils_functions import f_utils_set_center_screen
 from .utils_functions import f_utils_set_window_size_is_4_per_5_screen
 from .utils_functions import f_utils_find_my_function_path
 from .utils_functions import f_utils_open_dashboard
+from .utils_functions import f_utils_tim_component_label_with_text

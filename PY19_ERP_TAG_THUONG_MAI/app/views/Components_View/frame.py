@@ -123,17 +123,27 @@ class cls_Frame_Header(cls_Frame_Main):
 class cls_Frame_Footer(cls_Frame_Main):
     def __init__(self, parent, *args, **kwargs):
         super().__init__(parent, *args, **kwargs)
-        self.f_setup_style_of_frame()
-        self.f_create_footer_label()
+        self._f_setup_frame_style()
+        self._f_create_footer_labels()
     
-    def f_setup_style_of_frame(self):
+    def _f_setup_frame_style(self):
         super().f_setup_style_of_frame()
-        self.configure(height=40)
-        self.configure(bd=0, relief='flat')
+        self.configure(height=40, bd=0, relief='flat')
     
-    def f_create_footer_label(self):
-        footer_label = tk.Label(self, text="© 2025 Tuan An Group. All Rights Reserved.")
-        footer_label.pack()
+    def _f_create_footer_labels(self):
+        # Label for "All Rights Reserved" message
+        tk.Label(
+            self,
+            text="© 2025 Tuan An Group. All Rights Reserved."
+        ).pack()
+    
+        # Label for notifications
+        self.footer_notification = tk.Label(self, text="Notification")
+        self.footer_notification.place(x=0, y=0)
+        
+    def f_update_notification(self, text="", fg="dark"):
+        """Update the notification label with new text and foreground color."""
+        self.footer_notification.config(text=text, fg=fg)
         
 class cls_Frame_Body(cls_Frame_Main):
     def __init__(self, parent, *args, **kwargs):

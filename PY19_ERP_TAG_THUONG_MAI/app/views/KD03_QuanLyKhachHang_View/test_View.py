@@ -7,6 +7,7 @@ from Components_View import *
 from Components_View import cls_frame_normal
 from Components_View.treeview import cls_Treeview_frame_number_01
 from test_Controller import cls_test_Controller
+from utils import *
 
 class cls_test_View(cls_base_form_number_02_ManyTabs):
     def __init__(self):
@@ -23,9 +24,6 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self._f_view_set_rows_count_of_treeview_01_when_add_new_row()
         # Set up all global variants
         self._f_setup_all_global_variants()
-        # Set up all events
-        self._f_setup_all_events()
-        self._f_hide_components_when_initialzing()
     
     def _f_view_thay_doi_gia_tri_cua_base_form(self):
         # Thay đổi thông tin các tab
@@ -68,15 +66,12 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
                         grandchild.destroy()
                         break
         return notebook
-
+        
     def _f_setup_all_global_variants(self):    
         # Timer interval (in milliseconds)
         self.last_click_time = 0
         self.double_click_interval = 0.3  # 300 ms
-        
-    def _f_setup_all_events(self):
-        # Bind the <Configure> event to the root window
-        self.bind("<Configure>", lambda event: self._f_config_position_of_tab_01_frame_notification())
+        self.label_footer = f_utils_tim_component_label_with_text(self, "Notification")
 
     def f_view_add_MVC_class(self):
         # Import controller
@@ -118,10 +113,6 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_frame_button_02 = tk.Frame(self.tab_01)
         self.tab_01_frame_button_02.pack(side="bottom", fill="x")
         self._f_view_create_widgets_in_tab_01_frame_button_02()
-        
-        # Frame notication
-        self.tab_01_frame_notification = tk.Frame(self.tab_01)
-        self._f_view_create_widgets_in_tab_01_frame_notification()
     
     def _f_view_create_widgets_in_tab_01_frame_H2(self):
         # Title H2
@@ -282,11 +273,6 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         
     def f_tab_01_button_template_click(self):
         print("Import config")
-    
-    def _f_view_create_widgets_in_tab_01_frame_notification(self):
-        # Result label
-        self.tab_01_label_result = tk.Label(self.tab_01_frame_notification, text="")
-        self.tab_01_label_result.pack()
         
     def _f_view_create_all_container_frames_of_tab_02(self):
         print("Create tab 02")
@@ -294,8 +280,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
     # Event Handlers of tab number 01
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     def f_tab_01_button_get_click(self):
-        self.tab_01_label_result.config(text=self.controller.f_get_data(self.table_of_tab_01), fg="blue")
-        self._f_show_and_hide_the_notification_frame()
+        self._f_config_notification(text=self.controller.f_get_data(self.table_of_tab_01), fg="blue")
         
     def f_view_tab_01_button_add_click(self):
         # Update the row count
@@ -304,6 +289,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         name_value = self.tab_01_entry_ghi_chu_mat_hang.get()
         age_value = self.tab_01_entry_sl_YCDH.get()
         table = self.table_of_tab_01
+        
         
         # Validate input using the helper function
         is_valid, error_message = self.controller.f_controller_add_row(id_value, name_value, age_value, table)
@@ -315,6 +301,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
             # Show success message
             self._f_config_notification(text=error_message, fg="green")
             self.f_clear_input_fileds_of_tab_01()
+        
         # Update the row count
         self._f_view_set_rows_count_of_treeview_01_when_add_new_row()
         
@@ -326,28 +313,11 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_entry_id.config(state="disabled")  # Disable the Entry widget again
     
     def _f_config_notification(self, text="", fg="black"):
-        self.tab_01_label_result.config(text=text, fg=fg)
-        self._f_show_and_hide_the_notification_frame()
-        
-    def _f_show_and_hide_the_notification_frame(self):
-        # Show the notification frame
-        self._f_config_position_of_tab_01_frame_notification()
-        self.tab_01_frame_notification.after(3000, self.tab_01_frame_notification.place_forget)
-        
-    def _f_hide_components_when_initialzing(self):
-        # Show the notification frame
-        self._f_config_position_of_tab_01_frame_notification()
-        self.tab_01_frame_notification.after(50, self.tab_01_frame_notification.place_forget)
+        self.label_footer.config(text=text, fg=fg)
     
     def f_tab_01_button_export_click(self):
         text = self.controller.f_export_data_to_SQL(self.table_of_tab_01)
         self._f_config_notification(text=text, fg="blue")
-    
-    def _f_config_position_of_tab_01_frame_notification(self):        
-        self.update_idletasks()
-        frame_notification_top = self.tab_01.winfo_height() - 25
-        frame_notification_left = self.tab_01.winfo_width()/2 - self.tab_01_frame_notification.winfo_width()/2
-        self.tab_01_frame_notification.place(x=frame_notification_left, y=frame_notification_top)
 
     def _f_view_set_up_formats(self):
         self.f_tab_01_button_config_02_click()
