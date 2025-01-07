@@ -258,7 +258,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_btn_template.pack(side="left", padx=10)
         
         # get file button
-        self.tab_01_btn_get_import_file = tk.Button(button_container, text="GET FILE", command=self.f_tab_01_button_template_click)
+        self.tab_01_btn_get_import_file = tk.Button(button_container, text="GET FILE", command=self.f_tab_01_button_get_import_file_click)
         self.tab_01_btn_get_import_file.pack(side="left", padx=10)
         
         # star import button
@@ -273,6 +273,9 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         
     def f_tab_01_button_template_click(self):
         print("Import config")
+        
+    def f_tab_01_button_get_import_file_click(self):
+        self._f_config_notification(f_utils_open_file(),"black")
         
     def _f_view_create_all_container_frames_of_tab_02(self):
         print("Create tab 02")

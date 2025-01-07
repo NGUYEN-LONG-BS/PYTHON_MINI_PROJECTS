@@ -3,6 +3,7 @@ import sys
 from PIL import Image, ImageTk
 import tkinter as tk
 from tkinter import font
+from tkinter import filedialog, messagebox
 import inspect
 from define import *
 import time
@@ -157,3 +158,19 @@ def f_utils_tim_component_label_with_text(root=None, text_to_find=""):
         if result:
             return result
     return None  # No matching Label found
+
+def f_utils_open_file():
+    # Open file dialog to select a file
+    file_path = filedialog.askopenfilename(title="Select a File")
+    file_name = os.path.basename(file_path)
+    if file_path:
+        # Check if the file is an Excel file
+        if file_path.endswith(('.xls', '.xlsx')):
+            # messagebox.showinfo("File Selected", f"Valid Excel file selected:\n{file_path}")
+            # return file_path[-50:]
+            return file_name
+        else:
+            # print("Not valid")
+            # messagebox.showerror("Invalid File", "The selected file is not a valid Excel file!")
+            # return file_path[-50:]
+            return file_name
