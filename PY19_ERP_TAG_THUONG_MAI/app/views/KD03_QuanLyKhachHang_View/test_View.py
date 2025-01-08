@@ -347,7 +347,6 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.tab_02_button_DELETE = tk.Button(tab_02_button_container_02, text="DELETE")
         self.tab_02_button_DELETE.pack(side="left", padx=10)
         
-
     def f_tab_01_button_print_click(self):
         print("Print config")
     
