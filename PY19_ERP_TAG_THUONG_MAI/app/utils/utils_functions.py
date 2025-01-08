@@ -4,6 +4,9 @@ from PIL import Image, ImageTk
 import tkinter as tk
 from tkinter import font
 from tkinter import filedialog, messagebox
+from openpyxl import Workbook
+from openpyxl.styles import Font, Alignment
+from openpyxl.styles import Font, Alignment, PatternFill
 import inspect
 from define import *
 import time
@@ -166,11 +169,43 @@ def f_utils_open_file():
     if file_path:
         # Check if the file is an Excel file
         if file_path.endswith(('.xls', '.xlsx')):
-            # messagebox.showinfo("File Selected", f"Valid Excel file selected:\n{file_path}")
-            # return file_path[-50:]
             return file_name
         else:
-            # print("Not valid")
-            # messagebox.showerror("Invalid File", "The selected file is not a valid Excel file!")
-            # return file_path[-50:]
             return file_name
+
+def f_utils_create_template_excel_file(file_name="template_wb.xlsx",sheet_name="template_sh",column_names=["Col1", "Col2", "Col3"]):
+    # Open a file dialog to select the save location
+    desktop_path = os.path.join(os.path.expanduser("~"), "Desktop")
+    root = tk.Tk()
+    root.withdraw()  # Hide the main tkinter window
+    file_path = filedialog.asksaveasfilename(
+        defaultextension=".xlsx",
+        initialdir=desktop_path,
+        initialfile=file_name,
+        filetypes=[("Excel files", "*.xlsx"), ("All files", "*.*")],
+        title="Save Excel File"
+    )
+    if not file_path:
+        print("No file selected. Exiting.")
+        return
+
+    # Create a new Excel workbook and sheet
+    workbook = Workbook()
+    sheet = workbook.active
+    sheet.title = sheet_name
+
+    # Write column names to the first row
+    for col_num, column_name in enumerate(column_names, start=1):
+        cell = sheet.cell(row=1, column=col_num, value=column_name)
+        # Apply formatting to the header row
+        cell.font = Font(bold=True, color="FFFFFF")
+        cell.alignment = Alignment(horizontal="center", vertical="center")
+        sheet.column_dimensions[cell.column_letter].width = 15  # Adjust column width
+
+    # Set background color for the header row
+    for cell in sheet[1]:
+        cell.fill = PatternFill(start_color="4F81BD", end_color="4F81BD", fill_type="solid")
+
+    # Save the workbook
+    workbook.save(file_path)
+    return f"Excel file created and saved to: {file_path}"

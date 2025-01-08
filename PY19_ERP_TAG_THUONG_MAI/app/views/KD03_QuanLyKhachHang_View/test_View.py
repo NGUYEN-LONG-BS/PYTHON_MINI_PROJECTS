@@ -331,7 +331,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_btn_get_import_file.pack(side="left", padx=10)
         
         # star import button
-        self.tab_01_btn_start_import_file = tk.Button(tab_01_button_container_02, text="START IMPORT", command=self.f_tab_01_button_template_click)
+        self.tab_01_btn_start_import_file = tk.Button(tab_01_button_container_02, text="START IMPORT")
         self.tab_01_btn_start_import_file.pack(side="left", padx=10)
         
     def _f_view_create_widgets_in_tab_02_frame_button_02(self):
@@ -355,7 +355,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         print("Import config")
         
     def f_tab_01_button_template_click(self):
-        print("Import config")
+        self._f_config_notification(f_utils_create_template_excel_file(),"black")
         
     def f_tab_01_button_get_import_file_click(self):
         self._f_config_notification(f_utils_open_file(),"black")
