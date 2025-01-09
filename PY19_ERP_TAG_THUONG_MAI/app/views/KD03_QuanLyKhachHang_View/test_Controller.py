@@ -87,6 +87,13 @@ class cls_test_Controller():
         self.model.f_goi_ham_Export_to_SQL(data_array)
         return "Data exported to SQL Server!"
     
+    def f_controller_handle_btn_save_02_click_(self, table):
+        data_array = self.model.f_model_data_to_SQL_TB_KD02_YEU_CAU_DAT_HANG()
+        database_name = "TEST_NE_TU_TD"
+        table_name = "[TB_KD02_YEU_CAU_DAT_HANG]"
+        self.model.f_goi_ham_Export_to_SQL(data_array, database_name, table_name)
+        return "Data exported to SQL Server KD02_YEU_CAU_DAT_HANG!"
+    
     def f_handle_event_click_on_table_of_tab_01(self, last_click_time, current_time, double_click_interval):
         if current_time - last_click_time < double_click_interval:
             return True  # Double click detected

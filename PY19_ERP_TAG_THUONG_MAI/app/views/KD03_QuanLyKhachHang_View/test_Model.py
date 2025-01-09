@@ -1,6 +1,7 @@
 import os
 import json
 import pyodbc
+import uuid
 
 class cls_test_Model():
     def __init__(self):
@@ -232,6 +233,55 @@ class cls_test_Model():
         
         self.f_insert_data_to_sql(server_name, database_name, login_name, login_pass, table_name, data_array)
         
+    def f_goi_ham_Export_to_TB_KD02_YEU_CAU_DAT_HANG(self, data_array, database_name, table_name):
+        server_name = "14.225.192.238, 1433"  # Địa chỉ IP của SQL Server
+        database_name = database_name
+        login_name = "sa"
+        login_pass = "Ta#9999"
+        table_name = table_name
+
+        print("Chuẩn bị chèn dữ liệu vào SQL Server...")
+        print("Dữ liệu cần chèn:", data_array)
+        self.f_insert_data_to_sql(server_name, database_name, login_name, login_pass, table_name, data_array)
+        
     def f_model_get_items_to_combobox_01(self):
         # Simulate fetching data (from a database or API, for example)
         return ['Item 1', 'Item 2', 'Item 3', 'Item 4']
+    
+    def f_model_data_to_SQL_TB_KD02_YEU_CAU_DAT_HANG(self):
+        # Define sample data
+        sample_data = [
+            {
+                "ID": str(uuid.uuid4()),
+                "ID_NHAN_VIEN": "NV001",
+                "XOA_SUA": "Không",
+                "SO_PHIEU": "SP001",
+                "NGAY_TREN_PHIEU": "2025-01-09",
+                "MA_DOI_TUONG": "KH001",
+                "TEN_DOI_TUONG": "Nguyễn Văn A",
+                "GHI_CHU_PHIEU": "Khách hàng yêu cầu giao gấp.",
+                "STT_DONG": 1,
+                "MA_HANG": "MH001",
+                "TEN_HANG": "Sản phẩm A",
+                "DVT": "Cái",
+                "SO_LUONG": 100.50,
+                "GHI_CHU_SP": "Sản phẩm chất lượng cao.",
+            },
+            {
+                "ID": str(uuid.uuid4()),
+                "ID_NHAN_VIEN": "NV002",
+                "XOA_SUA": "Không",
+                "SO_PHIEU": "SP002",
+                "NGAY_TREN_PHIEU": "2025-01-10",
+                "MA_DOI_TUONG": "KH002",
+                "TEN_DOI_TUONG": "Trần Thị B",
+                "GHI_CHU_PHIEU": "Khách hàng yêu cầu giao gấp.",
+                "STT_DONG": 2,
+                "MA_HANG": "MH002",
+                "TEN_HANG": "Sản phẩm B",
+                "DVT": "Thùng",
+                "SO_LUONG": 50.00,
+                "GHI_CHU_SP": "Giao hàng vào buổi sáng.",
+            },
+        ]
+        return sample_data

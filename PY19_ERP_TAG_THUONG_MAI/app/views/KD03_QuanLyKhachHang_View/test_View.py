@@ -298,40 +298,47 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.treeview_test_of_tag_02.bind("<ButtonRelease-1>", self.f_view_table_of_tab_02_click)
     
     def _f_view_create_widgets_in_tab_01_frame_button_02(self):
-        # Create a sub-frame to organize buttons in the center
-        tab_01_button_container_02 = tk.Frame(self.tab_01_frame_button_02)
-        tab_01_button_container_02.pack(expand=True, pady=10)
-        
-        # Get Data button
-        self.tab_01_button_get = tk.Button(tab_01_button_container_02, text="Print Data Array", command=self.f_tab_01_button_get_click)
-        self.tab_01_button_get.pack(side="left", padx=10)
+        # Create a sub-frame on the right
+        tab_01_button_container_02_on_the_right = tk.Frame(self.tab_01_frame_button_02)
+        tab_01_button_container_02_on_the_right.pack(side="right", expand=True, pady=10)
+        # Create a sub-frame on the left
+        tab_01_button_container_02_on_the_left = tk.Frame(self.tab_01_frame_button_02)
+        tab_01_button_container_02_on_the_left.pack(side="left", expand=True, pady=10)
         
         # Export Data button
-        self.tab_01_button_export = tk.Button(tab_01_button_container_02, text="SAVE", command=self.f_tab_01_button_export_click)
-        self.tab_01_button_export.pack(side="left", padx=10)
+        self.tab_01_button_save_02 = tk.Button(tab_01_button_container_02_on_the_right, text="SAVE 02", command=self.f_tab_01_button_save_02_click)
+        self.tab_01_button_save_02.pack(side="right", padx=10)
+        
+        # Export Data button
+        self.tab_01_button_export = tk.Button(tab_01_button_container_02_on_the_right, text="SAVE", command=self.f_tab_01_button_export_click)
+        self.tab_01_button_export.pack(side="right", padx=10)
+        
+        # Get Data button
+        self.tab_01_button_get = tk.Button(tab_01_button_container_02_on_the_right, text="Print Data Array", command=self.f_tab_01_button_get_click)
+        self.tab_01_button_get.pack(side="right", padx=10)
         
         # print button
-        self.tab_01_config_num_02 = tk.Button(tab_01_button_container_02, text="Print", command=self.f_tab_01_button_print_click)
-        self.tab_01_config_num_02.pack(side="left", padx=10)
-        
-        # import button
-        self.tab_01_btn_import = tk.Button(tab_01_button_container_02, text="Import Excel", command=self.f_tab_01_button_import_click)
-        self.tab_01_btn_import.pack(side="left", padx=10)
+        self.tab_01_print_config = tk.Button(tab_01_button_container_02_on_the_right, text="in cấu hình của bảng", command=self.f_button_print_config_click)
+        self.tab_01_print_config.pack(side="right", padx=10)
         
         # print button
-        self.tab_01_print_config = tk.Button(tab_01_button_container_02, text="in cấu hình của bảng", command=self.f_button_print_config_click)
-        self.tab_01_print_config.pack(side="left", padx=10)
+        self.tab_01_config_num_02 = tk.Button(tab_01_button_container_02_on_the_right, text="Print", command=self.f_tab_01_button_print_click)
+        self.tab_01_config_num_02.pack(side="right", padx=10)
         
         # temp button
-        self.tab_01_btn_template = tk.Button(tab_01_button_container_02, text="TEMPLATE", command=self.f_tab_01_button_template_click)
+        self.tab_01_btn_template = tk.Button(tab_01_button_container_02_on_the_left, text="TEMPLATE", command=self.f_tab_01_button_template_click)
         self.tab_01_btn_template.pack(side="left", padx=10)
         
         # get file button
-        self.tab_01_btn_get_import_file = tk.Button(tab_01_button_container_02, text="GET FILE", command=self.f_tab_01_button_get_import_file_click)
+        self.tab_01_btn_get_import_file = tk.Button(tab_01_button_container_02_on_the_left, text="GET FILE", command=self.f_tab_01_button_get_import_file_click)
         self.tab_01_btn_get_import_file.pack(side="left", padx=10)
         
+        # import button
+        self.tab_01_btn_import = tk.Button(tab_01_button_container_02_on_the_left, text="Import Excel", command=self.f_tab_01_button_import_click)
+        self.tab_01_btn_import.pack(side="left", padx=10)
+        
         # star import button
-        self.tab_01_btn_start_import_file = tk.Button(tab_01_button_container_02, text="START IMPORT")
+        self.tab_01_btn_start_import_file = tk.Button(tab_01_button_container_02_on_the_left, text="START IMPORT")
         self.tab_01_btn_start_import_file.pack(side="left", padx=10)
         
     def _f_view_create_widgets_in_tab_02_frame_button_02(self):
@@ -400,6 +407,11 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
     def f_tab_01_button_export_click(self):
         text = self.controller.f_export_data_to_SQL(self.table_of_tab_01)
         self._f_config_notification(text=text, fg="blue")
+        
+    def f_tab_01_button_save_02_click(self):
+        text = self.controller.f_controller_handle_btn_save_02_click_(self.table_of_tab_01)
+        self._f_config_notification(text=text, fg="blue")
+    
 
     def _f_view_set_up_formats(self):
         self.f_tab_01_button_config_02_click()
