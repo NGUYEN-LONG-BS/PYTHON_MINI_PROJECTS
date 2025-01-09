@@ -378,9 +378,44 @@ class cls_test_Model():
             'Cái',
             1100.50,
             'Loại có kính mica.'
+            ),
+            (
+            'NV001',
+            '',
+            'SP001',
+            '2025-01-09',
+            'KH001',
+            'Nguyễn Văn A',
+            'Khách hàng yêu cầu giao gấp.',
+            3,
+            'MH003',
+            'Sản phẩm B phức tạp',
+            'Cái',
+            1100.50,
+            'Loại có kính mica.'
+            ),
+            (
+            'NV001',
+            '',
+            'SP001',
+            '2025-01-09',
+            'KH001',
+            'Nguyễn Văn A',
+            'Khách hàng yêu cầu giao gấp.',
+            4,
+            'MH002',
+            'Sản phẩm B phức tạp',
+            'Cái',
+            1100.50,
+            'Loại có kính mica.'
             )
         ]
         return sample_data
+    
+    def f_model_get_unique_ma_hang(self, sample_data, number_column):
+        # Trích xuất cột thứ n và loại bỏ trùng lặp
+        unique_ma_hang = list(set(row[number_column] for row in sample_data))
+        return unique_ma_hang
     
     def f_validate_data_format(self, data_array):
         """

@@ -89,7 +89,7 @@ class cls_test_Controller():
     
     def f_controller_handle_btn_save_02_click_(self, table):
         data_array = self.model.f_model_data_to_SQL_TB_KD02_YEU_CAU_DAT_HANG_ver_02_only_necessary_colmuns()
-        
+        self.f_controller_lay_list_ma_hang(data_array, 8)
         if self.model.f_validate_data_format(data_array):
             print("Data is valid. Ready for insertion.")
             database_name = "TEST_NE_TU_TD"
@@ -98,6 +98,9 @@ class cls_test_Controller():
             return "Data exported to SQL Server KD02_YEU_CAU_DAT_HANG!"
         else:
             return "Data validation failed. Please fix the errors."
+        
+    def f_controller_lay_list_ma_hang(self, data, number_column):
+        print("danh sách mã hàng là:", self.model.f_model_get_unique_ma_hang(data, number_column))
         
     def f_handle_event_click_on_table_of_tab_01(self, last_click_time, current_time, double_click_interval):
         if current_time - last_click_time < double_click_interval:
