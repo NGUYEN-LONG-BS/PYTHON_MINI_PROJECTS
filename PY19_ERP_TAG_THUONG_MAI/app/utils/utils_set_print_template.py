@@ -1,5 +1,6 @@
 import os
 import xlsxwriter
+import platform
 
 def calculate_start_column(start_column: str, left_shape_width: int) -> str:
     """
@@ -79,123 +80,128 @@ def create_workbook_with_unique_name(base_name="Print_Template.xlsx"):
 
     # Create the workbook
     workbook = xlsxwriter.Workbook(file_name)
-    # worksheet = workbook.add_worksheet("Template")
-    
-    # Add content or configurations here as needed
-    # worksheet.write("A1", "This is a new workbook.")
     
     # # Close workbook
     # workbook.close()
 
     return workbook, file_name
+    
+def open_file(file_path):
+        if platform.system() == "Windows":
+            os.startfile(file_path)  # For Windows
+        elif platform.system() == "Darwin":
+            os.system(f"open {file_path}")  # For macOS
+        else:
+            os.system(f"xdg-open {file_path}")  # For Linux
 
-# Example usage:
-left_shape_width = 64 * 5  # Width in pixels
-start_column = "A"      # Left shape starts at column A
-right_shape_start_column = calculate_start_column(start_column, left_shape_width)
-print(f"Right shape should start at column: {right_shape_start_column}")
+def f_utils_create_print_template():
+    # Example usage:
+    left_shape_width = 64 * 5  # Width in pixels
+    start_column = "A"      # Left shape starts at column A
+    right_shape_start_column = calculate_start_column(start_column, left_shape_width)
+    print(f"Right shape should start at column: {right_shape_start_column}")
 
 
-# Create a new workbook and add a worksheet
-workbook, file_name = create_workbook_with_unique_name()
-# workbook = xlsxwriter.Workbook("Excel_Template_with_Shapes.xlsx")
-worksheet = workbook.add_worksheet("Print_sh")
+    # Create a new workbook and add a worksheet
+    workbook, file_name = create_workbook_with_unique_name()
+    worksheet = workbook.add_worksheet("Print_sh")
 
-# Set height of Row 1
-row_1_height_in_points = 100
-header_shape_height_in_pixels = int(row_1_height_in_points * 1.33)
-worksheet.set_row(0, row_1_height_in_points)
+    # Set height of Row 1
+    row_1_height_in_points = 100
+    header_shape_height_in_pixels = int(row_1_height_in_points * 1.33)
+    worksheet.set_row(0, row_1_height_in_points)
 
-# Set height of Row 2
-row_2_height_in_points = 200
-second_row_shape_height_in_pixels = int(row_2_height_in_points * 1.33)
-worksheet.set_row(1, row_2_height_in_points)
+    # Set height of Row 2
+    row_2_height_in_points = 200
+    second_row_shape_height_in_pixels = int(row_2_height_in_points * 1.33)
+    worksheet.set_row(1, row_2_height_in_points)
 
-# Set height of Row 16
-row_16_height_in_points = 100
-third_row_shape_height_in_pixels = int(row_16_height_in_points * 1.33)
-worksheet.set_row(15, row_16_height_in_points)
+    # Set height of Row 16
+    row_16_height_in_points = 100
+    third_row_shape_height_in_pixels = int(row_16_height_in_points * 1.33)
+    worksheet.set_row(15, row_16_height_in_points)
 
-# Add first shape (A1:F1)
-worksheet.insert_textbox('A1', 'First Shape', {
-    'width': 64*10,
-    'height': header_shape_height_in_pixels,
-    'align': {'vertical': 'middle', 'horizontal': 'center'},
-    'font': {'bold': True, 'size': 14},
-    'fill': {'color': '#FFFFFF'},
-    'line': {'color': '#000000'}
-})
+    # Add first shape (A1:F1)
+    worksheet.insert_textbox('A1', 'First Shape', {
+        'width': 64*10,
+        'height': header_shape_height_in_pixels,
+        'align': {'vertical': 'middle', 'horizontal': 'center'},
+        'font': {'bold': True, 'size': 14},
+        'fill': {'color': '#FFFFFF'},
+        'line': {'color': '#000000'}
+    })
 
-# Second shape on the left (A2:C2)
-second_shape_on_the_left = """
-Mã khách hàng: [__________]
-Tên khách hàng: [__________]
-Địa chỉ: [__________]
-Số điện thoại: [__________]
-"""
-worksheet.insert_textbox('A2', second_shape_on_the_left, {
-    'width': 400,  # Half of 800
-    'height': second_row_shape_height_in_pixels,  # Same height for both shapes
-    'align': {'vertical': 'middle', 'horizontal': 'left'},
-    'font': {'size': 12},
-    'fill': {'color': '#FFFFFF'},
-    'line': {'color': '#000000'}
-})
+    # Second shape on the left (A2:C2)
+    second_shape_on_the_left = """
+    Mã khách hàng: [__________]
+    Tên khách hàng: [__________]
+    Địa chỉ: [__________]
+    Số điện thoại: [__________]
+    """
+    worksheet.insert_textbox('A2', second_shape_on_the_left, {
+        'width': 400,  # Half of 800
+        'height': second_row_shape_height_in_pixels,  # Same height for both shapes
+        'align': {'vertical': 'middle', 'horizontal': 'left'},
+        'font': {'size': 12},
+        'fill': {'color': '#FFFFFF'},
+        'line': {'color': '#000000'}
+    })
 
-# Second shape on the right (D2:F2)
-second_shape_on_the_right = """
-Số phiếu: [__________]
-Số hợp đồng: [__________]
-"""
-column_start_right_shape = calculate_start_column("A",400)
-worksheet.insert_textbox(column_start_right_shape + '2', second_shape_on_the_right, {
-    'width': 64*3,
-    'height': second_row_shape_height_in_pixels,  # Same height for both shapes
-    'align': {'vertical': 'middle', 'horizontal': 'left'},
-    'font': {'size': 12},
-    'fill': {'color': '#FFFFFF'},
-    'line': {'color': '#000000'}
-})
+    # Second shape on the right (D2:F2)
+    second_shape_on_the_right = """
+    Số phiếu: [__________]
+    Số hợp đồng: [__________]
+    """
+    column_start_right_shape = calculate_start_column("A",400)
+    worksheet.insert_textbox(column_start_right_shape + '2', second_shape_on_the_right, {
+        'width': 64*3,
+        'height': second_row_shape_height_in_pixels,  # Same height for both shapes
+        'align': {'vertical': 'middle', 'horizontal': 'left'},
+        'font': {'size': 12},
+        'fill': {'color': '#FFFFFF'},
+        'line': {'color': '#000000'}
+    })
 
-# Add a table from A3:F15
-columns = ['Column 1', 'Column 2', 'Column 3', 'Column 4', 'Column 5', 'Column 6']
-data = [
-    ['Data 1', 'Data 2', 'Data 3', 'Data 4', 'Data 5', 'Data 6'] for _ in range(13)
-]
+    # Add a table from A3:F15
+    columns = ['Column 1', 'Column 2', 'Column 3', 'Column 4', 'Column 5', 'Column 6']
+    data = [
+        ['Data 1', 'Data 2', 'Data 3', 'Data 4', 'Data 5', 'Data 6'] for _ in range(13)
+    ]
 
-worksheet.add_table('A3:F15', {
-    'columns': [{'header': col} for col in columns],
-    'data': data,
-    'style': 'Table Style Medium 9'
-})
+    worksheet.add_table('A3:F15', {
+        'columns': [{'header': col} for col in columns],
+        'data': data,
+        'style': 'Table Style Medium 9'
+    })
 
-# Add third shape (A16:F16)
-worksheet.insert_textbox('A16', 'Third Shape', {
-    'width': 64*8,
-    'height': third_row_shape_height_in_pixels,
-    'align': {'vertical': 'middle', 'horizontal': 'center'},
-    'font': {'bold': True, 'size': 14},
-    'fill': {'color': '#FFFFFF'},
-    'line': {'color': '#000000'}
-})
+    # Add third shape (A16:F16)
+    worksheet.insert_textbox('A16', 'Third Shape', {
+        'width': 64*8,
+        'height': third_row_shape_height_in_pixels,
+        'align': {'vertical': 'middle', 'horizontal': 'center'},
+        'font': {'bold': True, 'size': 14},
+        'fill': {'color': '#FFFFFF'},
+        'line': {'color': '#000000'}
+    })
 
-# Example usage
-margins = {
-    'top': 1.0,    # 1 inch
-    'left': 0.5,   # 0.5 inch
-    'right': 0.5,  # 0.5 inch
-    'bottom': 1.0  # 1 inch
-}
+    # Example usage
+    margins = {
+        'top': 1.0,    # 1 inch
+        'left': 0.5,   # 0.5 inch
+        'right': 0.5,  # 0.5 inch
+        'bottom': 1.0  # 1 inch
+    }
 
-# Set the print margins
-worksheet.set_margins(
-    left=margins.get('left', 0.7),     # Default left margin is 0.7 inches
-    right=margins.get('right', 0.7),  # Default right margin is 0.7 inches
-    top=margins.get('top', 0.75),     # Default top margin is 0.75 inches
-    bottom=margins.get('bottom', 0.75)  # Default bottom margin is 0.75 inches
-)
+    # Set the print margins
+    worksheet.set_margins(
+        left=margins.get('left', 0.7),     # Default left margin is 0.7 inches
+        right=margins.get('right', 0.7),  # Default right margin is 0.7 inches
+        top=margins.get('top', 0.75),     # Default top margin is 0.75 inches
+        bottom=margins.get('bottom', 0.75)  # Default bottom margin is 0.75 inches
+    )
 
-# Close the workbook
-workbook.close()
+    # Close the workbook
+    workbook.close()
 
-print("Excel file created: Excel_Template_with_Shapes.xlsx")
+    # Open the workbook file
+    open_file(file_name)

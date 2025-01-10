@@ -11,3 +11,4 @@ from .utils_functions import f_utils_open_dashboard
 from .utils_functions import f_utils_tim_component_label_with_text
 from .utils_functions import f_utils_open_file
 from .utils_functions import f_utils_create_template_excel_file
+from .utils_set_print_template import f_utils_create_print_template
