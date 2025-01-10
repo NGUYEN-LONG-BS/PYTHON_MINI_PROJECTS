@@ -1,3 +1,4 @@
+import os
 import xlsxwriter
 
 def calculate_start_column(start_column: str, left_shape_width: int) -> str:
@@ -56,6 +57,38 @@ def set_print_area_width(workbook, worksheet, header_shape_width: int):
     # Set the print area
     worksheet.print_area(0, 0, 0, ord(end_column.upper()) - 65)
     
+def create_workbook_with_unique_name(base_name="Print_Template.xlsx"):
+    """
+    Creates a new Excel workbook with a unique name if a file with the base name already exists.
+
+    Parameters:
+    base_name (str): The desired base name for the file.
+
+    Returns:
+    str: The name of the created workbook file.
+    """
+    file_name = base_name
+    base_name_no_ext = os.path.splitext(base_name)[0]
+    extension = os.path.splitext(base_name)[1]
+    counter = 1
+
+    # Check if file already exists, generate a new name if necessary
+    while os.path.exists(file_name):
+        file_name = f"{base_name_no_ext}_{counter}{extension}"
+        counter += 1
+
+    # Create the workbook
+    workbook = xlsxwriter.Workbook(file_name)
+    # worksheet = workbook.add_worksheet("Template")
+    
+    # Add content or configurations here as needed
+    # worksheet.write("A1", "This is a new workbook.")
+    
+    # # Close workbook
+    # workbook.close()
+
+    return workbook, file_name
+
 # Example usage:
 left_shape_width = 64 * 5  # Width in pixels
 start_column = "A"      # Left shape starts at column A
@@ -64,8 +97,9 @@ print(f"Right shape should start at column: {right_shape_start_column}")
 
 
 # Create a new workbook and add a worksheet
-workbook = xlsxwriter.Workbook("Excel_Template_with_Shapes.xlsx")
-worksheet = workbook.add_worksheet("Template")
+workbook, file_name = create_workbook_with_unique_name()
+# workbook = xlsxwriter.Workbook("Excel_Template_with_Shapes.xlsx")
+worksheet = workbook.add_worksheet("Print_sh")
 
 # Set height of Row 1
 row_1_height_in_points = 100
