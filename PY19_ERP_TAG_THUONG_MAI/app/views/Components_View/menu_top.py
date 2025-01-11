@@ -94,6 +94,10 @@ class cls_menu_top:
             # menu_KinhDoanh level 2: menu_KinhDoanh_QuanLyGoiThau
             menu_KinhDoanh_QuanLyGoiThau.add_command(label="KD0101 |Quản lý gói thầu", command=self.f_KD0101_QuanLyGoiThau_click)
             menu_KinhDoanh_QuanLyGoiThau.add_command(label="KD0102 |Tạo mới gói thầu", command=self.f_KD0101_QuanLyGoiThau_click)
+            menu_KinhDoanh_QuanLyGoiThau.add_separator()
+            menu_KinhDoanh_QuanLyGoiThau.add_command(label="KD0103 |Quản lý kế hoạch đặt hàng", command=self.f_do_nothing_click)
+            menu_KinhDoanh_QuanLyGoiThau.add_command(label="KD0104 |Tạo mới kế hoạch đặt hàng", command=self.f_do_nothing_click)
+            menu_KinhDoanh_QuanLyGoiThau.add_command(label="KD0105 |Nhật ký giao hàng", command=self.f_do_nothing_click)
             
             # menu_KinhDoanh level 2: menu_KinhDoanh_QuanLyYeuCauDatHang
             menu_KinhDoanh_QuanLyYeuCauDatHang.add_command(label="KD0201 |Tạo mới YCĐH", command=self.f_QLYCDH_TALA_click)
