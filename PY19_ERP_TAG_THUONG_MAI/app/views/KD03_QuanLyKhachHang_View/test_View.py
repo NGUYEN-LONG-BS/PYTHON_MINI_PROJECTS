@@ -8,6 +8,8 @@ from Components_View import cls_frame_normal
 from Components_View.treeview import cls_Treeview_frame_number_01
 from test_Controller import cls_test_Controller
 from utils import *
+from openpyxl import load_workbook, Workbook
+from tkinter import messagebox
 
 class cls_test_View(cls_base_form_number_02_ManyTabs):
     def __init__(self):
@@ -325,6 +327,10 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_config_num_02 = tk.Button(tab_01_button_container_02_on_the_right, text="Print", command=self.f_tab_01_button_print_click)
         self.tab_01_config_num_02.pack(side="right", padx=10)
         
+        # print button
+        self.tab_01_button_print_02 = tk.Button(tab_01_button_container_02_on_the_right, text="Print 02", command=self.f_tab_01_button_print_02_click)
+        self.tab_01_button_print_02.pack(side="right", padx=10)
+        
         # temp button
         self.tab_01_btn_template = tk.Button(tab_01_button_container_02_on_the_left, text="TEMPLATE", command=self.f_tab_01_button_template_click)
         self.tab_01_btn_template.pack(side="left", padx=10)
@@ -357,6 +363,15 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
     def f_tab_01_button_print_click(self):
         print("f_tab_01_button_print_click")
         f_utils_create_print_template()
+        
+    def f_tab_01_button_print_02_click(self):
+        print("f_tab_01_button_print_02_click")
+        # Path to your Excel file
+        excel_path = PATH_PRINT_TEMPLATES  # Replace with your file's path
+        try:
+            os.startfile(excel_path)  # Open the file with the default associated application
+        except Exception as e:
+            print(f"Error: {e}")
     
     def f_tab_01_button_import_click(self):
         print("Import config")

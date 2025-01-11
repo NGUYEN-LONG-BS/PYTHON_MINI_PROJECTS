@@ -26,6 +26,7 @@ class cls_menu_top:
         self.f_create_menu_vattu(top_menu)
         self.f_create_menu_kythuat(top_menu)
         self.f_create_menu_taichinh(top_menu)
+        self.f_create_menu_nhansu(top_menu)
         self.f_create_menu_admin(top_menu)
         self.f_create_menu_Help(top_menu)
         self.f_create_menu_Test(top_menu)
@@ -50,11 +51,12 @@ class cls_menu_top:
     
     def f_check_permission(self, menu_name):
         permissions = {
-                        "kinhdoanh": ["vt1", "tc1", "kt1"],
-                        "vattu": ["kd1", "tc1", "kt1"],
-                        "kythuat": ["kd1", "tc1", "vt1"],
-                        "admin": ["kd1", "tc1", "vt1", "kt1"],
-                        "taichinh": ["kd1", "kt1", "vt1"]
+                        "kinhdoanh": ["vt1", "tc1", "kt1", "ns1"],
+                        "vattu": ["kd1", "tc1", "kt1", "ns1"],
+                        "kythuat": ["kd1", "tc1", "vt1", "ns1"],
+                        "admin": ["kd1", "tc1", "vt1", "kt1", "ns1"],
+                        "taichinh": ["kd1", "kt1", "vt1", "ns1"],
+                        "nhansu": ["kd1", "kt1", "vt1", "tc1"]
                     }
         return self.current_user not in permissions.get(menu_name, [])
     
@@ -190,22 +192,61 @@ class cls_menu_top:
             top_menu.add_cascade(label="Tài chính", menu=menu_TaiChinh)
             
             # Sub-menu level 1
-            TaiChinh_menu_Level_1 = tk.Menu(menu_TaiChinh, tearoff=0)
-            menu_TaiChinh.add_cascade(label="Quản lý thu chi", menu=TaiChinh_menu_Level_1)
-            TaiChinh_menu_Level_1.add_command(label="TC0101 |Quỹ tiền mặt", command=self.f_do_nothing_click)
-            TaiChinh_menu_Level_1.add_command(label="TC0102 |Quỹ tiền gửi", command=self.f_do_nothing_click)
-            TaiChinh_menu_Level_1.add_command(label="TC0103 |Thu chi tiền mặt", command=self.f_do_nothing_click)
-            TaiChinh_menu_Level_1.add_command(label="TC0104 |Thu chi tiền gửi", command=self.f_do_nothing_click)
+            menu_TaiChinh_QuanLyThuChi = tk.Menu(menu_TaiChinh, tearoff=0)
+            menu_TaiChinh.add_cascade(label="Quản lý thu chi", menu=menu_TaiChinh_QuanLyThuChi)
+            menu_TaiChinh.add_separator()
+            menu_TaiChinh_QuanLyKyQuy = tk.Menu(menu_TaiChinh, tearoff=0)
+            menu_TaiChinh.add_cascade(label="Quản lý ký quỹ", menu=menu_TaiChinh_QuanLyKyQuy)
             
-            # Sub-menu level 1
-            menu_TaiChinh.add_cascade(label="Quản lý thu chi", menu=TaiChinh_menu_Level_1)
-            TaiChinh_menu_Level_1.add_command(label="TC0101 |Quỹ tiền mặt", command=self.f_do_nothing_click)
-            TaiChinh_menu_Level_1.add_command(label="TC0102 |Quỹ tiền gửi", command=self.f_do_nothing_click)
-            TaiChinh_menu_Level_1.add_command(label="TC0103 |Thu chi tiền mặt", command=self.f_do_nothing_click)
-            TaiChinh_menu_Level_1.add_command(label="TC0104 |Thu chi tiền gửi", command=self.f_do_nothing_click)
+            # Sub-menu level 2
+            menu_TaiChinh_QuanLyThuChi.add_command(label="TC0101 |Quỹ tiền mặt", command=self.f_do_nothing_click)
+            menu_TaiChinh_QuanLyThuChi.add_command(label="TC0102 |Quỹ tiền gửi", command=self.f_do_nothing_click)
+            
+            # Sub-menu level 2
+            menu_TaiChinh_QuanLyKyQuy.add_command(label="TC0201 |Ký quỹ tiền mặt", command=self.f_do_nothing_click)
+            menu_TaiChinh_QuanLyKyQuy.add_command(label="TC0202 |Ký quỹ bằng tài sản", command=self.f_do_nothing_click)
             
             # Set font-size
             f_utils_set_menu_font(menu_TaiChinh)
+            
+            f_utils_set_menu_font(menu_TaiChinh_QuanLyThuChi)
+            f_utils_set_menu_font(menu_TaiChinh_QuanLyKyQuy)
+
+    def f_create_menu_nhansu(self, top_menu):
+        if self.f_check_permission("nhansu") == False:
+            menu_NhanSu = tk.Menu(top_menu, tearoff=0)
+        else:
+            menu_NhanSu = tk.Menu(top_menu, tearoff=0)
+            top_menu.add_cascade(label="Nhân sự", menu=menu_NhanSu)
+            
+            # Sub-menu level 1
+            menu_NhanSu_QuanLyNhanVien = tk.Menu(menu_NhanSu, tearoff=0)
+            menu_NhanSu.add_cascade(label="Quản lý nhân viên", menu=menu_NhanSu_QuanLyNhanVien)
+            menu_NhanSu.add_separator()
+            menu_NhanSu_QuanLyCongPhep = tk.Menu(menu_NhanSu, tearoff=0)
+            menu_NhanSu.add_cascade(label="Quản lý công - phép", menu=menu_NhanSu_QuanLyCongPhep)
+            menu_NhanSu.add_separator()
+            menu_NhanSu_QuanLyThongBao = tk.Menu(menu_NhanSu, tearoff=0)
+            menu_NhanSu.add_cascade(label="Quản lý thông báo", menu=menu_NhanSu_QuanLyThongBao)
+
+            # Sub-menu level 2
+            menu_NhanSu_QuanLyNhanVien.add_command(label="NS0101 |Danh sách nhân viên", command=self.f_do_nothing_click)
+            menu_NhanSu_QuanLyNhanVien.add_command(label="NS0102 |Tạo mới nhân viên", command=self.f_do_nothing_click)
+
+            # Sub-menu level 2
+            menu_NhanSu_QuanLyCongPhep.add_command(label="NS0101 |Danh sách nghỉ phép", command=self.f_do_nothing_click)
+            menu_NhanSu_QuanLyCongPhep.add_command(label="NS0102 |Điều chỉnh công - phép", command=self.f_do_nothing_click)
+            
+            # Sub-menu level 2
+            menu_NhanSu_QuanLyThongBao.add_command(label="NS0101 |Danh sách thông báo", command=self.f_do_nothing_click)
+            menu_NhanSu_QuanLyThongBao.add_command(label="NS0102 |Tạo mới thông báo", command=self.f_do_nothing_click)
+            
+            # Set font-size
+            f_utils_set_menu_font(menu_NhanSu)
+            
+            f_utils_set_menu_font(menu_NhanSu_QuanLyCongPhep)
+            f_utils_set_menu_font(menu_NhanSu_QuanLyNhanVien)
+            f_utils_set_menu_font(menu_NhanSu_QuanLyThongBao)
 
     def f_create_menu_admin(self, top_menu):
         if self.f_check_permission("admin") == False:

@@ -3,12 +3,15 @@ import os
 # Define paths
 PATH_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 PATH_ASSETS_ICONS = os.path.join(PATH_ROOT, "assets/icons")
+PATH_ASSETS_TEMPLATES = os.path.join(PATH_ROOT, "assets/templates")
 
 PATH_LOGO_LIGHT = os.path.join(PATH_ROOT, "assets/img/logo-Light.jpg")
 PATH_LOGO_DARK = os.path.join(PATH_ROOT, "assets/img/logo-Dark.jpg")
 
 PATH_ICON_HIDE = os.path.join(PATH_ASSETS_ICONS, "icon-closed-eye-50.png")
 PATH_ICON_UNHIDE = os.path.join(PATH_ASSETS_ICONS, "icon-opening-eye-26.png")
+
+PATH_PRINT_TEMPLATES = os.path.join(PATH_ASSETS_TEMPLATES, "print_templates.xlsx")
 
 
 # Window dimensions and positions
