@@ -1,9 +1,11 @@
 import time
 from test_Model import cls_test_Model  # Import Model at the top
 import xlwings as xw
-from Components_View import *
+from Components_View import *   # Tại sao lại phải import Components_View
+# print(Components_View.__file__)
 from utils import *
-
+# print(utils.__file__)
+from openpyxl import load_workbook, Workbook
 
 class cls_test_Controller():
     def __init__(self):
@@ -110,7 +112,7 @@ class cls_test_Controller():
             # Start a new Excel instance
             app = xw.App(visible=False, add_book=False)  # Start a new Excel process
             app.display_alerts = False  # Suppress Excel alerts
-            app.screen_updating = False  # Speed up operations
+            # app.screen_updating = False  # Speed up operations
 
             # Open the workbook
             wb = app.books.open(excel_path)
@@ -125,14 +127,24 @@ class cls_test_Controller():
                 # Copy the "PRINT" sheet to the new workbook
                 print_sheet.api.Copy(Before=new_wb.sheets[0].api)
                 print("Sheet 'PRINT' copied successfully.")
+                
+                
+                
+                # Make the new workbook visible to the user
+                new_wb.app.visible = True
+                print("New workbook opened for user.")
 
-                # Save the new workbook
-                new_file_path = "Copied_PRINT_Sheet.xlsx"  # Update as needed
-                new_wb.save(new_file_path)
-                print(f"New workbook saved as: {new_file_path}")
+                # Maximize the new workbook window
+                new_wb.app.api.WindowState = -4137  # -4137 corresponds to the "maximized" state
+                print("New workbook maximized and opened for user.")
+                
+                # # Save the new workbook
+                # new_file_path = "Copied_PRINT_Sheet.xlsx"  # Update as needed
+                # new_wb.save(new_file_path)
+                # print(f"New workbook saved as: {new_file_path}")
 
-                # Close the new workbook
-                new_wb.close()
+                # # Close the new workbook
+                # new_wb.close()
             else:
                 print("Sheet 'PRINT' does not exist in the workbook.")
 
@@ -142,7 +154,9 @@ class cls_test_Controller():
             print(f"Error: {e}")
         finally:
             # Ensure the Excel application started by this code is closed
-            app.quit()
+            if not app.books:  # If no books are left open, quit the app
+                app.quit()
+            # app.quit()
             print("Excel application closed.")
 
         
