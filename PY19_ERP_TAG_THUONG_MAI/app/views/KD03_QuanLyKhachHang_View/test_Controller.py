@@ -1,6 +1,9 @@
-from utils import *
 import time
 from test_Model import cls_test_Model  # Import Model at the top
+import xlwings as xw
+from Components_View import *
+from utils import *
+
 
 class cls_test_Controller():
     def __init__(self):
@@ -98,6 +101,50 @@ class cls_test_Controller():
             return "Data exported to SQL Server KD02_YEU_CAU_DAT_HANG!"
         else:
             return "Data validation failed. Please fix the errors."
+        
+    def f_controller_handle_btn_print_02_click_(self):
+        # Path to your Excel file
+        excel_path = PATH_PRINT_TEMPLATES  # Replace with your file's path
+            
+        try:
+            # Start a new Excel instance
+            app = xw.App(visible=False, add_book=False)  # Start a new Excel process
+            app.display_alerts = False  # Suppress Excel alerts
+            app.screen_updating = False  # Speed up operations
+
+            # Open the workbook
+            wb = app.books.open(excel_path)
+
+            # Check if the "PRINT" sheet exists
+            if "PRINT" in [sheet.name for sheet in wb.sheets]:
+                print_sheet = wb.sheets["PRINT"]
+
+                # Create a new workbook
+                new_wb = xw.Book()
+
+                # Copy the "PRINT" sheet to the new workbook
+                print_sheet.api.Copy(Before=new_wb.sheets[0].api)
+                print("Sheet 'PRINT' copied successfully.")
+
+                # Save the new workbook
+                new_file_path = "Copied_PRINT_Sheet.xlsx"  # Update as needed
+                new_wb.save(new_file_path)
+                print(f"New workbook saved as: {new_file_path}")
+
+                # Close the new workbook
+                new_wb.close()
+            else:
+                print("Sheet 'PRINT' does not exist in the workbook.")
+
+            # Close the original workbook
+            wb.close()
+        except Exception as e:
+            print(f"Error: {e}")
+        finally:
+            # Ensure the Excel application started by this code is closed
+            app.quit()
+            print("Excel application closed.")
+
         
     def f_controller_lay_list_ma_hang(self, data, number_column):
         print("danh sách mã hàng là:", self.model.f_model_get_unique_ma_hang(data, number_column))

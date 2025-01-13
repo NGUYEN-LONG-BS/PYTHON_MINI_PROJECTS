@@ -1,13 +1,3 @@
-# # Define which symbols are imported with 'from Components_View import *'
-# __all__ = [
-#     'cls_my_entry_num_01',
-#     'cls_menu_top',
-#     'cls_Frame_Main', 'cls_Frame_Header',
-#     'cls_Frame_Body', 'cls_Frame_Footer',
-#     'cls_base_form_number_01_EntryForm'
-# ]
-
-# Import the symbols to be included in the package namespace
 from .combobox import *
 from .frame_clients_informations import *
 from .frame_inventories_informations import *
