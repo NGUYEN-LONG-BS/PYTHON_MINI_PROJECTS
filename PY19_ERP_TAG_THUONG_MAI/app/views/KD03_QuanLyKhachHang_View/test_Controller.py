@@ -1,11 +1,11 @@
 import time
 from test_Model import cls_test_Model  # Import Model at the top
-import xlwings as xw
+# import xlwings as xw
 from Components_View import *   # Tại sao lại phải import Components_View
 # print(Components_View.__file__)
 from utils import *
 # print(utils.__file__)
-from openpyxl import load_workbook, Workbook
+# from openpyxl import load_workbook, Workbook
 
 class cls_test_Controller():
     def __init__(self):
@@ -105,60 +105,9 @@ class cls_test_Controller():
             return "Data validation failed. Please fix the errors."
         
     def f_controller_handle_btn_print_02_click_(self):
-        # Path to your Excel file
-        excel_path = PATH_PRINT_TEMPLATES  # Replace with your file's path
-            
-        try:
-            # Start a new Excel instance
-            app = xw.App(visible=False, add_book=False)  # Start a new Excel process
-            app.display_alerts = False  # Suppress Excel alerts
-            # app.screen_updating = False  # Speed up operations
-
-            # Open the workbook
-            wb = app.books.open(excel_path)
-
-            # Check if the "PRINT" sheet exists
-            if "PRINT" in [sheet.name for sheet in wb.sheets]:
-                print_sheet = wb.sheets["PRINT"]
-
-                # Create a new workbook
-                new_wb = xw.Book()
-
-                # Copy the "PRINT" sheet to the new workbook
-                print_sheet.api.Copy(Before=new_wb.sheets[0].api)
-                print("Sheet 'PRINT' copied successfully.")
-                
-                
-                
-                # Make the new workbook visible to the user
-                new_wb.app.visible = True
-                print("New workbook opened for user.")
-
-                # Maximize the new workbook window
-                new_wb.app.api.WindowState = -4137  # -4137 corresponds to the "maximized" state
-                print("New workbook maximized and opened for user.")
-                
-                # # Save the new workbook
-                # new_file_path = "Copied_PRINT_Sheet.xlsx"  # Update as needed
-                # new_wb.save(new_file_path)
-                # print(f"New workbook saved as: {new_file_path}")
-
-                # # Close the new workbook
-                # new_wb.close()
-            else:
-                print("Sheet 'PRINT' does not exist in the workbook.")
-
-            # Close the original workbook
-            wb.close()
-        except Exception as e:
-            print(f"Error: {e}")
-        finally:
-            # Ensure the Excel application started by this code is closed
-            if not app.books:  # If no books are left open, quit the app
-                app.quit()
-            # app.quit()
-            print("Excel application closed.")
-
+        path_template_file = os.path.join(PATH_ASSETS_TEMPLATES_EXCEL, "PRINT_KD0201.xlsx")
+        sheet_name = "KD0201_YEU_CAU_DAT_HANG"
+        f_utils_open_print_template(path_template_file, sheet_name)
         
     def f_controller_lay_list_ma_hang(self, data, number_column):
         print("danh sách mã hàng là:", self.model.f_model_get_unique_ma_hang(data, number_column))

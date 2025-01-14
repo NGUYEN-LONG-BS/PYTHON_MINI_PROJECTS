@@ -1,15 +1,24 @@
 import os
 import sys
-from PIL import Image, ImageTk
+import time
+import inspect
+
 import tkinter as tk
 from tkinter import font
 from tkinter import filedialog, messagebox
+
+from PIL import Image, ImageTk
+
+import openpyxl
 from openpyxl import Workbook
 from openpyxl.styles import Font, Alignment
 from openpyxl.styles import Font, Alignment, PatternFill
-import inspect
+from openpyxl import load_workbook
+
+import xlwings as xw
+
 from define import *
-import time
+
 
 def f_utils_setup_logo(parent_frame):
     # Define function when click
@@ -144,7 +153,6 @@ def f_utils_show_fading_popup(message):
     # Đặt thời gian để tự động đóng cửa sổ sau 3 giây (3000 milliseconds)
     popup.after(1000, popup.destroy)
 
-
 def f_utils_tim_component_label_with_text(root=None, text_to_find=""):
     if root is None:  # Start from self if root is not provided
         # root = self
@@ -209,3 +217,192 @@ def f_utils_create_template_excel_file(file_name="template_wb.xlsx",sheet_name="
     # Save the workbook
     workbook.save(file_path)
     return f"Excel file created and saved to: {file_path}"
+
+def f_utils_find_string_in_row_of_excel(file_path, sheet_name, target_string, row_number=1, case_sensitive=True, return_as_index=True):
+    """
+    Find a string in a specified row of an Excel sheet.
+    
+    Parameters:
+        file_path (str): Path to the Excel file.
+        sheet_name (str): Name of the sheet to search.
+        target_string (str): String to search for.
+        row_number (int): Row number to search in (default is 1).
+        case_sensitive (bool): Whether the search should be case-sensitive (default is True).
+        return_as_index (bool): Whether to return the column index (True) or column name (False).
+    
+    Returns:
+        int or str: Column index or name where the string is found. Returns None if not found.
+    """
+    try:
+        # Load the workbook and sheet
+        workbook = openpyxl.load_workbook(file_path)
+        if sheet_name not in workbook.sheetnames:
+            raise ValueError(f"Sheet '{sheet_name}' does not exist in the workbook.")
+        sheet = workbook[sheet_name]
+
+        # Check for valid row number
+        if row_number < 1 or row_number > sheet.max_row:
+            raise ValueError(f"Invalid row number: {row_number}. It must be between 1 and {sheet.max_row}.")
+
+        # Iterate through columns in the specified row
+        for col in sheet.iter_cols(1, sheet.max_column):
+            cell = col[row_number - 1]  # Row numbers are 1-based
+            if cell.value is not None:
+                cell_value = str(cell.value)
+                if not case_sensitive:
+                    if cell_value.lower() == target_string.lower():
+                        return cell.column if return_as_index else cell.column_letter
+                else:
+                    if cell_value == target_string:
+                        return cell.column if return_as_index else cell.column_letter
+        
+        return None  # String not found
+    
+    except FileNotFoundError:
+        raise FileNotFoundError(f"The file '{file_path}' does not exist.")
+    except Exception as e:
+        raise Exception(f"An error occurred: {str(e)}")
+
+def f_utils_find_string_in_column_of_excel(file_path, sheet_name, target_string, column_number=1, case_sensitive=True, return_as_index=True):
+    """
+    Find a string in a specified column of an Excel sheet.
+    
+    Parameters:
+        file_path (str): Path to the Excel file.
+        sheet_name (str): Name of the sheet to search.
+        target_string (str): String to search for.
+        column_number (int): Column number to search in (default is 1).
+        case_sensitive (bool): Whether the search should be case-sensitive (default is True).
+        return_as_index (bool): Whether to return the row index (True) or cell reference (False).
+    
+    Returns:
+        int or str: Row index or cell reference where the string is found. Returns None if not found.
+    """
+    try:
+        # Load the workbook and sheet
+        workbook = openpyxl.load_workbook(file_path)
+        if sheet_name not in workbook.sheetnames:
+            raise ValueError(f"Sheet '{sheet_name}' does not exist in the workbook.")
+        sheet = workbook[sheet_name]
+
+        # Check for valid column number
+        if column_number < 1 or column_number > sheet.max_column:
+            raise ValueError(f"Invalid column number: {column_number}. It must be between 1 and {sheet.max_column}.")
+
+        # Iterate through rows in the specified column
+        for row in sheet.iter_rows(1, sheet.max_row):
+            cell = row[column_number - 1]  # Column numbers are 1-based
+            if cell.value is not None:
+                cell_value = str(cell.value)
+                if not case_sensitive:
+                    if cell_value.lower() == target_string.lower():
+                        return cell.row if return_as_index else f"{cell.column_letter}{cell.row}"
+                else:
+                    if cell_value == target_string:
+                        return cell.row if return_as_index else f"{cell.column_letter}{cell.row}"
+        
+        return None  # String not found
+    
+    except FileNotFoundError:
+        raise FileNotFoundError(f"The file '{file_path}' does not exist.")
+    except Exception as e:
+        raise Exception(f"An error occurred: {str(e)}")
+
+def f_utils_copy_sheet_to_new_workbook(file_path, sheet_name):
+    try:
+        # Start a new Excel instance
+        app = xw.App(visible=False, add_book=False)  # Start a new Excel process
+        app.display_alerts = False  # Suppress Excel alerts
+        # app.screen_updating = False  # Speed up operations
+
+        # Open the workbook
+        wb = app.books.open(file_path)
+
+        # Check if the "PRINT" sheet exists
+        if sheet_name in [sheet.name for sheet in wb.sheets]:
+            print_sheet = wb.sheets[sheet_name]
+
+            # Create a new workbook
+            new_wb = xw.Book()
+
+            # Copy the "PRINT" sheet to the new workbook
+            print_sheet.api.Copy(Before=new_wb.sheets[0].api)
+            print("Sheet {sheet_name} copied successfully.")
+            
+            # Make the new workbook visible to the user
+            new_wb.app.visible = True
+            print("New workbook opened for user.")
+
+            # Maximize the new workbook window
+            new_wb.app.api.WindowState = -4137  # -4137 corresponds to the "maximized" state
+            print("New workbook maximized and opened for user.")
+        else:
+            print("Sheet 'PRINT' does not exist in the workbook.")
+
+        # Close the original workbook
+        wb.close()
+    except Exception as e:
+        print(f"Error: {e}")
+    finally:
+        # Ensure the Excel application started by this code is closed
+        if not app.books:  # If no books are left open, quit the app
+            app.quit()
+
+def f_utils_delete_extend_row_and_column(file_path, sheet_name, start_column, end_column, start_row, last_row):
+    """
+    Delete rows and columns in an Excel sheet based on specified ranges.
+
+    Parameters:
+        file_path (str): Path to the Excel file.
+        sheet_name (str): Name of the sheet to modify.
+        start_column (int): Start column index to delete before.
+        end_column (int): End column index to delete after.
+        start_row (int): Start row index to delete before.
+        last_row (int): Last row index to delete after.
+
+    Returns:
+        None: The function modifies the Excel file in place.
+    """
+    try:
+        # Load the workbook and sheet
+        workbook = openpyxl.load_workbook(file_path)
+        if sheet_name not in workbook.sheetnames:
+            raise ValueError(f"Sheet '{sheet_name}' does not exist in the workbook.")
+        sheet = workbook[sheet_name]
+
+        # Delete rows above start_row (if applicable)
+        if start_row > 1:
+            sheet.delete_rows(1, start_row - 1)
+
+        # Delete rows below last_row (if applicable)
+        if last_row < sheet.max_row:
+            sheet.delete_rows(last_row + 1, sheet.max_row - last_row)
+
+        # Delete columns to the left of start_column (if applicable)
+        if start_column > 1:
+            sheet.delete_cols(1, start_column - 1)
+
+        # Delete columns to the right of end_column (if applicable)
+        if end_column < sheet.max_column:
+            sheet.delete_cols(end_column + 1, sheet.max_column - end_column)
+
+        # Save the modified workbook
+        workbook.save(file_path)
+        print(f"Modifications completed successfully for '{sheet_name}' in file '{file_path}'.")
+
+    except FileNotFoundError:
+        raise FileNotFoundError(f"The file '{file_path}' does not exist.")
+    except Exception as e:
+        raise Exception(f"An error occurred: {str(e)}")
+
+def f_utils_open_print_template(file_path, sheet_name):
+    start_column = f_utils_find_string_in_row_of_excel(file_path, sheet_name, "FIRST_COLUMN", row_number=1, case_sensitive=True, return_as_index=True)
+    end_column = f_utils_find_string_in_row_of_excel(file_path, sheet_name, "LAST_COLUMN", row_number=1, case_sensitive=True, return_as_index=True)
+    value_column = f_utils_find_string_in_row_of_excel(file_path, sheet_name, "VALUE_COLUMN", row_number=1, case_sensitive=True, return_as_index=True)
+    start_row = f_utils_find_string_in_column_of_excel(file_path, sheet_name, "FIRST_ROW", column_number=1, case_sensitive=True, return_as_index=True)
+    last_row = f_utils_find_string_in_column_of_excel(file_path, sheet_name, "LAST_ROW", column_number=1, case_sensitive=True, return_as_index=True)
+    
+    f_utils_copy_sheet_to_new_workbook(file_path, sheet_name)
+    f_utils_delete_extend_row_and_column(file_path, sheet_name, start_column, end_column, start_row, last_row)
+    
+    

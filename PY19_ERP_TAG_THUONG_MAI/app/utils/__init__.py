@@ -1,7 +1,7 @@
-from .utils_functions import f_utils_setup_logo
-from .utils_functions import f_utils_setup_fav_icon
 from .setup_sys_path import f_utils_setup_sys_path
 
+from .utils_functions import f_utils_setup_logo
+from .utils_functions import f_utils_setup_fav_icon
 from .utils_functions import f_utils_set_menu_font
 from .utils_functions import f_utils_show_fading_popup
 from .utils_functions import f_utils_set_center_screen
@@ -11,4 +11,7 @@ from .utils_functions import f_utils_open_dashboard
 from .utils_functions import f_utils_tim_component_label_with_text
 from .utils_functions import f_utils_open_file
 from .utils_functions import f_utils_create_template_excel_file
+from .utils_functions import f_utils_find_string_in_row_of_excel
+from .utils_functions import f_utils_open_print_template
+
 from .utils_set_print_template import f_utils_create_print_template
