@@ -139,13 +139,13 @@ class cls_TreeviewCombobox(cls_my_text_entry_num_01):
         self.bind("<Button-1>", self.f_handle_event_left_click)
         self.bind("<KeyRelease>", self.filter_data)
         self.master.bind("<Button-1>", self.on_click_outside)  # Bind click event to master frame to hide dropdown
-        # self.bind("<FocusOut>", self.hide_dropdown)
+        
+        parent_widget = self.master.nametowidget(self.master.winfo_parent())
+        parent_widget.bind("<Button-1>", self.on_click_outside)
 
     def on_click_outside(self, event):
         print("on_click_outside")
-        # Check if the click is outside the dropdown or the Entry widget
-        if self.dropdown and not self.dropdown.winfo_containing(event.x_root, event.y_root):
-            self.hide_dropdown()
+        self.hide_dropdown()
     
     def f_handle_event_left_click(self, event):
         self.f_on_click_clear_placeholder(event)
