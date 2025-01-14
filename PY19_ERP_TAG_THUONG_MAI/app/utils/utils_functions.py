@@ -472,7 +472,6 @@ def f_utils_on_entry_change(entry_widget):
     Callback to handle changes in the Entry widget.
     :param entry_widget: The Tkinter Entry widget being edited.
     """
-    
     def format_entry_as_number(entry_widget):
         """
         Formats the content of the given Entry widget as a number with commas and two decimal places.
@@ -498,7 +497,6 @@ def f_utils_on_entry_change(entry_widget):
         except ValueError:
             # If the text is not a valid number, ignore the formatting
             pass
-    
     entry_widget.after(100, lambda: format_entry_as_number(entry_widget))
     
 def f_utils_access_widget_by_path(root, widget_path):

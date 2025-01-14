@@ -4,7 +4,7 @@ from tkinter import ttk
 from tkinter import messagebox
 import json
 from PIL import Image, ImageTk
-from Components_View import cls_my_entry_num_01
+from Components_View import cls_my_text_entry_num_01
 from utils import *
 from utils.define import *
 from AD01_Dashboard_View import *
@@ -60,7 +60,7 @@ class cls_Login_View(tk.Tk):
         self.username_label.pack(fill="x")
 
         # self.entry_username = tk.Entry(self.username_frame, font=("Arial", 12), bg="#ffffff", relief="solid", bd=1)
-        self.entry_username = cls_my_entry_num_01(self.username_frame, font=("Arial", 12), bg="#ffffff", relief="solid", bd=1)
+        self.entry_username = cls_my_text_entry_num_01(self.username_frame, font=("Arial", 12), bg="#ffffff", relief="solid", bd=1)
         self.entry_username.pack(fill="x", pady=5)
         self.entry_username.focus_set()
 
@@ -71,7 +71,7 @@ class cls_Login_View(tk.Tk):
         self.password_label = tk.Label(self.password_frame, text="Password", font=("Arial", 12), bg="#f0f0f5", anchor="w")
         self.password_label.pack(fill="x")
 
-        self.entry_password = cls_my_entry_num_01(self.password_frame, font=("Arial", 12), bg="#ffffff", relief="solid", bd=1, show="*")
+        self.entry_password = cls_my_text_entry_num_01(self.password_frame, font=("Arial", 12), bg="#ffffff", relief="solid", bd=1, show="*")
         self.entry_password.pack(fill="x", pady=5)
 
         # Toggle Password Visibility

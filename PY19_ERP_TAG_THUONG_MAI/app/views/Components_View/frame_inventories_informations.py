@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
 # from PIL import Image, ImageTk
+# import entry
+from entry import *
 
 # Model: cls_frame_inventories_information_model
 class cls_frame_inventories_information_model:
@@ -92,7 +94,7 @@ class cls_frame_inventories_information_view(tk.Frame):
         # Additional Entry widgets for other column values
         self.additional_entries = []
         
-        entry_inventory_names = ttk.Entry(self.frame_row_1)
+        entry_inventory_names = cls_my_text_entry_num_01(self.frame_row_1)
         entry_inventory_names.pack(side="left", fill="x", expand=True, padx=(0, 10), pady=5)
         self.additional_entries.append(entry_inventory_names)
     
@@ -100,14 +102,15 @@ class cls_frame_inventories_information_view(tk.Frame):
         label_dvt = ttk.Label(self.frame_row_2, text="Đvt:")
         label_dvt.pack(side="left", padx=(10,2), pady=5)
            
-        entry_dvt = ttk.Entry(self.frame_row_2, width=10, name="entry_dvt")
+        entry_dvt = cls_my_text_entry_num_01(self.frame_row_2, width=10, name="entry_dvt")
         entry_dvt.pack(side="left", padx=(0, 2), pady=5)
         self.additional_entries.append(entry_dvt)
 
-        label_sl_kha_dung = ttk.Label(self.frame_row_2, text="SL khả dụng:", name="entry_sl_kha_dung1")
+        label_sl_kha_dung = ttk.Label(self.frame_row_2, text="SL khả dụng:")
         label_sl_kha_dung.pack(side="left", padx=(10, 2), pady=5)
 
-        entry_sl_kha_dung = ttk.Entry(self.frame_row_2, width=15, name="entry_sl_kha_dung")
+        # entry_sl_kha_dung = ttk.Entry(self.frame_row_2, width=15, name="entry_sl_kha_dung")
+        entry_sl_kha_dung = cls_my_number_entry_num_01(self.frame_row_2, width=15, name="entry_sl_kha_dung")
         entry_sl_kha_dung.pack(side="left", padx=(0, 10), pady=5)
         self.additional_entries.append(entry_sl_kha_dung)
 
@@ -119,7 +122,7 @@ class cls_frame_inventories_information_view(tk.Frame):
         self.treeview_combobox.refresh_data()
 
 
-class cls_TreeviewCombobox_inventories(ttk.Entry):
+class cls_TreeviewCombobox_inventories(cls_my_text_entry_num_01):
     def __init__(self, master, columns, data, dropdown_width=800, dropdown_height=600, **kwargs):
         super().__init__(master, **kwargs)
         self.columns = columns
@@ -131,14 +134,14 @@ class cls_TreeviewCombobox_inventories(ttk.Entry):
         # Placeholder setup
         self.placeholder = "search here"
         self.default_fg_color = "gray"  # Color for placeholder text
+        self.active_fg_color = "black"
 
         # Set placeholder text color and the initial text
         self.insert(0, self.placeholder)
         self.config(foreground=self.default_fg_color)
 
         # Bind events to show and interact with dropdown
-        # self.bind("<FocusIn>", self.show_dropdown)
-        self.bind("<Button-1>", self.show_dropdown)
+        self.bind("<Button-1>", self.f_handle_event_left_click)
         self.bind("<KeyRelease>", self.filter_data)
         self.master.bind("<Button-1>", self.on_click_outside)  # Bind click event to master frame to hide dropdown
         # self.bind("<FocusOut>", self.hide_dropdown)
@@ -149,7 +152,11 @@ class cls_TreeviewCombobox_inventories(ttk.Entry):
         if self.dropdown and not self.dropdown.winfo_containing(event.x_root, event.y_root):
             self.hide_dropdown()
 
-    def show_dropdown(self, event=None):
+    def f_handle_event_left_click(self, event):
+        self.f_on_click_clear_placeholder(event)
+        self.f_show_dropdown(event)
+    
+    def f_show_dropdown(self, event=None):
         if not self.dropdown:
             # Create a Toplevel dropdown
             self.dropdown = tk.Toplevel(self)
@@ -219,3 +226,9 @@ class cls_TreeviewCombobox_inventories(ttk.Entry):
 
     def set_additional_entries(self, entries):
         self.additional_entries = entries
+        
+    def f_on_click_clear_placeholder(self, event):
+        """Clear placeholder text when clicking on the entry."""
+        if self.get() == self.placeholder:
+            self.delete(0, tk.END)
+            self.config(foreground=self.active_fg_color)

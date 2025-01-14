@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from entry import *
 # from PIL import Image, ImageTk
 
 # Model: cls_frame_client_information_model
@@ -92,19 +93,19 @@ class cls_frame_client_information_view(tk.Frame):
         # Additional Entry widgets for other column values
         self.additional_entries = []
         
-        entry_client_names = ttk.Entry(self.frame_row_1, width=50)
+        entry_client_names = cls_my_text_entry_num_01(self.frame_row_1, width=50)
         entry_client_names.pack(side="left", fill="x", expand=True, padx=(0, 10), pady=5)
         self.additional_entries.append(entry_client_names)
     
     def _f_create_widgets_of_frame_row_2(self):    
-        entry_client_tax_numbers = ttk.Entry(
+        entry_client_tax_numbers = cls_my_text_entry_num_01(
             self.frame_row_2, 
             width=15
         )
         entry_client_tax_numbers.pack(side="left", padx=(10, 2), pady=5)
         self.additional_entries.append(entry_client_tax_numbers)
 
-        entry_client_address = ttk.Entry(self.frame_row_2)
+        entry_client_address = cls_my_text_entry_num_01(self.frame_row_2)
         entry_client_address.pack(side="left", fill="x", expand=True, padx=(0, 10), pady=5)
         self.additional_entries.append(entry_client_address)
 
@@ -116,7 +117,7 @@ class cls_frame_client_information_view(tk.Frame):
         self.treeview_combobox.refresh_data()
 
 
-class cls_TreeviewCombobox(ttk.Entry):
+class cls_TreeviewCombobox(cls_my_text_entry_num_01):
     def __init__(self, master, columns, data, dropdown_width=800, dropdown_height=600, **kwargs):
         super().__init__(master, **kwargs)
         self.columns = columns
@@ -128,14 +129,14 @@ class cls_TreeviewCombobox(ttk.Entry):
         # Placeholder setup
         self.placeholder = "search here"
         self.default_fg_color = "gray"  # Color for placeholder text
+        self.active_fg_color = "black"
 
         # Set placeholder text color and the initial text
         self.insert(0, self.placeholder)
         self.config(foreground=self.default_fg_color)
 
         # Bind events to show and interact with dropdown
-        # self.bind("<FocusIn>", self.show_dropdown)
-        self.bind("<Button-1>", self.show_dropdown)
+        self.bind("<Button-1>", self.f_handle_event_left_click)
         self.bind("<KeyRelease>", self.filter_data)
         self.master.bind("<Button-1>", self.on_click_outside)  # Bind click event to master frame to hide dropdown
         # self.bind("<FocusOut>", self.hide_dropdown)
@@ -145,8 +146,12 @@ class cls_TreeviewCombobox(ttk.Entry):
         # Check if the click is outside the dropdown or the Entry widget
         if self.dropdown and not self.dropdown.winfo_containing(event.x_root, event.y_root):
             self.hide_dropdown()
-
-    def show_dropdown(self, event=None):
+    
+    def f_handle_event_left_click(self, event):
+        self.f_on_click_clear_placeholder(event)
+        self.f_show_dropdown(event)
+    
+    def f_show_dropdown(self, event=None):
         if not self.dropdown:
             # Create a Toplevel dropdown
             self.dropdown = tk.Toplevel(self)
@@ -216,3 +221,9 @@ class cls_TreeviewCombobox(ttk.Entry):
 
     def set_additional_entries(self, entries):
         self.additional_entries = entries
+        
+    def f_on_click_clear_placeholder(self, event):
+        """Clear placeholder text when clicking on the entry."""
+        if self.get() == self.placeholder:
+            self.delete(0, tk.END)
+            self.config(foreground=self.active_fg_color)

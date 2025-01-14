@@ -34,22 +34,8 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self._f_setup_all_binding()
     
     def _f_setup_all_binding(self):
-        # Attach the callback to handle real-time formatting
-        # number_entry_01 = self.frame_inventories_informations_tab_01
-        
-        # Example usage
-        widget_path = ".!cls_frame_main.!cls_frame_body.!notebook.!frame.!cls_frame_normal2.!frame.!frame2.!cls_frame_inventories_information_view.!frame2.!label3"
-        widget = f_utils_access_widget_by_path(self, widget_path)
-        number_entry_01 = f_utils_tim_component_label_with_text(self, "nhu cầu:")
-        print(number_entry_01)
-        print(widget)
-        # widget_path_02 = ".!cls_frame_main.!cls_frame_body.!notebook.!frame.!cls_frame_normal2.!frame.!frame2.!cls_frame_inventories_information_view.!frame2"
-        # frame_02 = f_utils_access_widget_by_path(self, widget_path_02)
-        entry03 = f_utils_tim_component_with_name(self, "entry_sl_kha_dung")
-        print(entry03)
-        # number_entry_01.bind("<FocusOut>", lambda event: f_utils_on_entry_change(number_entry_01))
-        
-    
+        entry_sl_kha_dung = f_utils_tim_component_with_name(self, "entry_sl_kha_dung")
+        entry_sl_kha_dung.bind("<FocusOut>", lambda event: f_utils_on_entry_change(entry_sl_kha_dung))
     
     def _f_view_thay_doi_gia_tri_cua_base_form(self):
         # Thay đổi thông tin các tab

@@ -102,7 +102,7 @@ class cls_base_form_number_01_EntryForm(tk.Tk):
         self.f_add_elements_to_frame_button()
     
     def f_add_elements_to_frame_info_of_slip(self):
-        from Components_View import cls_my_entry_num_01
+        from Components_View import cls_my_text_entry_num_01
         
         # Get today's date in the format dd/mm/yyyy
         today = datetime.datetime.today().strftime('%d/%m/%Y')
@@ -111,7 +111,7 @@ class cls_base_form_number_01_EntryForm(tk.Tk):
         label_date_on_slip = tk.Label(self.frame_info_of_slip, text=f"Ngày:")
         label_date_on_slip.grid(row=0, column=0, padx=10, pady=5, sticky="w")
         
-        entry_date_on_slip = cls_my_entry_num_01(self.frame_info_of_slip)
+        entry_date_on_slip = cls_my_text_entry_num_01(self.frame_info_of_slip)
         entry_date_on_slip.insert(0, today)  # Set the default value
         entry_date_on_slip.grid(row=0, column=1, padx=10, pady=5)
         
@@ -119,7 +119,7 @@ class cls_base_form_number_01_EntryForm(tk.Tk):
         label_number_of_slip = tk.Label(self.frame_info_of_slip, text=f"Số phiếu:")
         label_number_of_slip.grid(row=0, column=2, padx=10, pady=5, sticky="w")
         
-        entry_number_of_slip = cls_my_entry_num_01(self.frame_info_of_slip)
+        entry_number_of_slip = cls_my_text_entry_num_01(self.frame_info_of_slip)
         entry_number_of_slip.insert(0, "")  # Set the default value
         entry_number_of_slip.grid(row=0, column=3, padx=10, pady=5, sticky="w")
         
@@ -127,7 +127,7 @@ class cls_base_form_number_01_EntryForm(tk.Tk):
         label_ma_doi_tuong = tk.Label(self.frame_info_of_slip, text=f"Mã KH:")
         label_ma_doi_tuong.grid(row=1, column=0, padx=10, pady=5, sticky="w")
         
-        entry_ma_doi_tuong = cls_my_entry_num_01(self.frame_info_of_slip)
+        entry_ma_doi_tuong = cls_my_text_entry_num_01(self.frame_info_of_slip)
         entry_ma_doi_tuong.insert(0, "")  # Set the default value
         entry_ma_doi_tuong.grid(row=1, column=1, padx=10, pady=5)
         
@@ -135,7 +135,7 @@ class cls_base_form_number_01_EntryForm(tk.Tk):
         label_ten_doi_tuong = tk.Label(self.frame_info_of_slip, text=f"Tên KH:")
         label_ten_doi_tuong.grid(row=1, column=2, padx=10, pady=5, sticky="w")
         
-        entry_ten_doi_tuong = cls_my_entry_num_01(self.frame_info_of_slip)
+        entry_ten_doi_tuong = cls_my_text_entry_num_01(self.frame_info_of_slip)
         entry_ten_doi_tuong.insert(0, "")  # Set the default value
         entry_ten_doi_tuong.grid(row=1, column=3, columnspan=2, padx=10, pady=5, sticky="ew")
         
