@@ -100,14 +100,14 @@ class cls_frame_inventories_information_view(tk.Frame):
         label_dvt = ttk.Label(self.frame_row_2, text="Đvt:")
         label_dvt.pack(side="left", padx=(10,2), pady=5)
            
-        entry_dvt = ttk.Entry(self.frame_row_2, width=10)
+        entry_dvt = ttk.Entry(self.frame_row_2, width=10, name="entry_dvt")
         entry_dvt.pack(side="left", padx=(0, 2), pady=5)
         self.additional_entries.append(entry_dvt)
 
-        label_sl_kha_dung = ttk.Label(self.frame_row_2, text="SL khả dụng:")
+        label_sl_kha_dung = ttk.Label(self.frame_row_2, text="SL khả dụng:", name="entry_sl_kha_dung1")
         label_sl_kha_dung.pack(side="left", padx=(10, 2), pady=5)
 
-        entry_sl_kha_dung = ttk.Entry(self.frame_row_2, width=15)
+        entry_sl_kha_dung = ttk.Entry(self.frame_row_2, width=15, name="entry_sl_kha_dung")
         entry_sl_kha_dung.pack(side="left", padx=(0, 10), pady=5)
         self.additional_entries.append(entry_sl_kha_dung)
 

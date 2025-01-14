@@ -9,9 +9,12 @@ from .utils_functions import f_utils_set_window_size_is_4_per_5_screen
 from .utils_functions import f_utils_find_my_function_path
 from .utils_functions import f_utils_open_dashboard
 from .utils_functions import f_utils_tim_component_label_with_text
+from .utils_functions import f_utils_tim_component_with_name
 from .utils_functions import f_utils_open_file
 from .utils_functions import f_utils_create_template_excel_file
 from .utils_functions import f_utils_find_string_in_row_of_excel
 from .utils_functions import f_utils_open_print_template
+from .utils_functions import f_utils_on_entry_change
+from .utils_functions import f_utils_access_widget_by_path
 
 from .utils_set_print_template import f_utils_create_print_template

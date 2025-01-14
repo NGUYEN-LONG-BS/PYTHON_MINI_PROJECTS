@@ -109,6 +109,9 @@ class cls_test_Controller():
         sheet_name = "KD0201_YEU_CAU_DAT_HANG"
         f_utils_open_print_template(path_template_file, sheet_name)
         
+    def f_controller_get_all_info_of_slip(self):
+        print("")
+        
     def f_controller_lay_list_ma_hang(self, data, number_column):
         print("danh sách mã hàng là:", self.model.f_model_get_unique_ma_hang(data, number_column))
         

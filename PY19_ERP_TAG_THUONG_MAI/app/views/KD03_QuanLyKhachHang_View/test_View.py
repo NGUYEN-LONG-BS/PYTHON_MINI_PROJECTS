@@ -1,15 +1,20 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
+
+from PIL import Image, ImageTk
+
 import time
 import json
-from PIL import Image, ImageTk
+
 from Components_View import *
 from Components_View import cls_frame_normal
 from Components_View.treeview import cls_Treeview_frame_number_01
-from test_Controller import cls_test_Controller
+
 from utils import *
-from openpyxl import load_workbook, Workbook
+
+from test_Controller import cls_test_Controller
+# from openpyxl import load_workbook, Workbook
 
 class cls_test_View(cls_base_form_number_02_ManyTabs):
     def __init__(self):
@@ -26,6 +31,25 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self._f_view_set_rows_count_of_treeview_01_when_add_new_row()
         # Set up all global variants
         self._f_setup_all_global_variants()
+        self._f_setup_all_binding()
+    
+    def _f_setup_all_binding(self):
+        # Attach the callback to handle real-time formatting
+        # number_entry_01 = self.frame_inventories_informations_tab_01
+        
+        # Example usage
+        widget_path = ".!cls_frame_main.!cls_frame_body.!notebook.!frame.!cls_frame_normal2.!frame.!frame2.!cls_frame_inventories_information_view.!frame2.!label3"
+        widget = f_utils_access_widget_by_path(self, widget_path)
+        number_entry_01 = f_utils_tim_component_label_with_text(self, "nhu cầu:")
+        print(number_entry_01)
+        print(widget)
+        # widget_path_02 = ".!cls_frame_main.!cls_frame_body.!notebook.!frame.!cls_frame_normal2.!frame.!frame2.!cls_frame_inventories_information_view.!frame2"
+        # frame_02 = f_utils_access_widget_by_path(self, widget_path_02)
+        entry03 = f_utils_tim_component_with_name(self, "entry_sl_kha_dung")
+        print(entry03)
+        # number_entry_01.bind("<FocusOut>", lambda event: f_utils_on_entry_change(number_entry_01))
+        
+    
     
     def _f_view_thay_doi_gia_tri_cua_base_form(self):
         # Thay đổi thông tin các tab
@@ -225,7 +249,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
     def _f_view_add_widget_into_frame_inventories_informations_tab_01(self):
         frame_row_02_of_inventories_frame = self.frame_inventories_informations_tab_01.frame_row_2
         
-        tk.Label(frame_row_02_of_inventories_frame, text="nhu cầu:").pack(side="left")
+        self.label13_nhu_cau = tk.Label(frame_row_02_of_inventories_frame, text="nhu cầu:").pack(side="left")
         self.tab_01_entry_nhu_cau = tk.Entry(frame_row_02_of_inventories_frame, width=15)
         self.tab_01_entry_nhu_cau.pack(side="left")
         

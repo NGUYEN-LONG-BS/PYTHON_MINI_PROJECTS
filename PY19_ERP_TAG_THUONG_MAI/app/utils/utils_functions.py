@@ -170,6 +170,29 @@ def f_utils_tim_component_label_with_text(root=None, text_to_find=""):
             return result
     return None  # No matching Label found
 
+def f_utils_tim_component_with_name(root=None, name_to_find=""):
+    """
+    Recursively searches for a Label widget with a specific name.
+    :param root: The root widget to start the search from.
+    :param name_to_find: The name of the widget to find.
+    :return: The found Label widget, or None if not found.
+    """
+    if root is None:
+        return None  # If no root is provided, return None
+
+    # Iterate through all children of the current root
+    for widget in root.winfo_children():
+        # Check if the widget's name matches the target name
+        if widget.winfo_name() == name_to_find:
+            return widget  # Found the widget, return it
+
+        # Recursively search in the widget's children
+        result = f_utils_tim_component_with_name(widget, name_to_find)
+        if result:
+            return result
+
+    return None  # No matching widget found
+
 def f_utils_open_file():
     # Open file dialog to select a file
     file_path = filedialog.askopenfilename(title="Select a File")
@@ -431,7 +454,7 @@ def f_utils_copy_all_cells_and_paste_value(file_path, sheet_name):
 def f_utils_open_print_template(file_path, sheet_name):
     start_column = f_utils_find_string_in_row_of_excel(file_path, sheet_name, "FIRST_COLUMN", row_number=1, case_sensitive=True, return_as_index=True)
     end_column = f_utils_find_string_in_row_of_excel(file_path, sheet_name, "LAST_COLUMN", row_number=1, case_sensitive=True, return_as_index=True)
-    value_column = f_utils_find_string_in_row_of_excel(file_path, sheet_name, "VALUE_COLUMN", row_number=1, case_sensitive=True, return_as_index=True)
+    value_column = f_utils_find_string_in_row_of_excel(file_path, sheet_name, "VALUE_COLUMN", row_number=1, case_sensitive=True, return_as_index=False)
     start_row = f_utils_find_string_in_column_of_excel(file_path, sheet_name, "FIRST_ROW", column_number=1, case_sensitive=True, return_as_index=True)
     last_row = f_utils_find_string_in_column_of_excel(file_path, sheet_name, "LAST_ROW", column_number=1, case_sensitive=True, return_as_index=True)
     
@@ -444,4 +467,45 @@ def f_utils_open_print_template(file_path, sheet_name):
     f_utils_copy_sheet_to_new_workbook(file_path, sheet_name)
     # f_utils_delete_extend_row_and_column(file_path, sheet_name, start_column, end_column, start_row, last_row)
     
+def f_utils_on_entry_change(entry_widget):
+    """
+    Callback to handle changes in the Entry widget.
+    :param entry_widget: The Tkinter Entry widget being edited.
+    """
     
+    def format_entry_as_number(entry_widget):
+        """
+        Formats the content of the given Entry widget as a number with commas and two decimal places.
+        :param entry_widget: The Tkinter Entry widget to format.
+        """
+        try:
+            # Get the current text from the Entry widget
+            current_text = entry_widget.get()
+
+            # Remove any commas and validate as a number
+            clean_text = current_text.replace(",", "")
+
+            if clean_text.strip() == "":
+                entry_widget.delete(0, tk.END)
+                return
+
+            # Convert the text to a float and format it
+            formatted_text = f"{float(clean_text):,.2f}"
+
+            # Update the Entry widget with the formatted text
+            entry_widget.delete(0, tk.END)
+            entry_widget.insert(0, formatted_text)
+        except ValueError:
+            # If the text is not a valid number, ignore the formatting
+            pass
+    
+    entry_widget.after(100, lambda: format_entry_as_number(entry_widget))
+    
+def f_utils_access_widget_by_path(root, widget_path):
+    try:
+        widget = root.nametowidget(widget_path)
+        # print(f"Found widget: {widget}")
+        return widget
+    except KeyError:
+        print(f"Widget not found: {widget_path}")
+        return None
