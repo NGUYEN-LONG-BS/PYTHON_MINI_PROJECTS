@@ -395,6 +395,39 @@ def f_utils_delete_extend_row_and_column(file_path, sheet_name, start_column, en
     except Exception as e:
         raise Exception(f"An error occurred: {str(e)}")
 
+def f_utils_copy_all_cells_and_paste_value(file_path, sheet_name):
+    """
+    Select all cells in the specified sheet and paste their values (removing any formulas).
+
+    Parameters:
+        file_path (str): Path to the Excel file.
+        sheet_name (str): Name of the sheet to process.
+
+    Returns:
+        None: The function modifies the Excel file in place.
+    """
+    try:
+        # Load the workbook and sheet
+        workbook = openpyxl.load_workbook(file_path)
+        if sheet_name not in workbook.sheetnames:
+            raise ValueError(f"Sheet '{sheet_name}' does not exist in the workbook.")
+        sheet = workbook[sheet_name]
+
+        # Iterate through all cells in the sheet and copy values
+        for row in sheet.iter_rows():
+            for cell in row:
+                if cell.value is not None:
+                    cell.value = cell.value  # Keep the value, remove any formulas
+
+        # Save the modified workbook
+        workbook.save(file_path)
+        print(f"All cell values have been pasted as values in sheet '{sheet_name}'.")
+
+    except FileNotFoundError:
+        raise FileNotFoundError(f"The file '{file_path}' does not exist.")
+    except Exception as e:
+        raise Exception(f"An error occurred: {str(e)}")
+
 def f_utils_open_print_template(file_path, sheet_name):
     start_column = f_utils_find_string_in_row_of_excel(file_path, sheet_name, "FIRST_COLUMN", row_number=1, case_sensitive=True, return_as_index=True)
     end_column = f_utils_find_string_in_row_of_excel(file_path, sheet_name, "LAST_COLUMN", row_number=1, case_sensitive=True, return_as_index=True)
@@ -402,7 +435,13 @@ def f_utils_open_print_template(file_path, sheet_name):
     start_row = f_utils_find_string_in_column_of_excel(file_path, sheet_name, "FIRST_ROW", column_number=1, case_sensitive=True, return_as_index=True)
     last_row = f_utils_find_string_in_column_of_excel(file_path, sheet_name, "LAST_ROW", column_number=1, case_sensitive=True, return_as_index=True)
     
+    print(start_column)
+    print(end_column)
+    print(value_column)
+    print(start_row)
+    print(last_row)
+    
     f_utils_copy_sheet_to_new_workbook(file_path, sheet_name)
-    f_utils_delete_extend_row_and_column(file_path, sheet_name, start_column, end_column, start_row, last_row)
+    # f_utils_delete_extend_row_and_column(file_path, sheet_name, start_column, end_column, start_row, last_row)
     
     

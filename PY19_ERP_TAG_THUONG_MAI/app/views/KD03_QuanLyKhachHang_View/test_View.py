@@ -11,7 +11,6 @@ from test_Controller import cls_test_Controller
 from utils import *
 from openpyxl import load_workbook, Workbook
 
-
 class cls_test_View(cls_base_form_number_02_ManyTabs):
     def __init__(self):
         title = "KD02 | QUẢN LÝ YÊU CẦU ĐẶT HÀNG"
@@ -368,8 +367,6 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
     def f_tab_01_button_print_02_click(self):
         print("f_tab_01_button_print_02_click")
         self.controller.f_controller_handle_btn_print_02_click_()
-        # Path to your Excel file
-        excel_path = PATH_PRINT_TEMPLATES  # Replace with your file's path
     
     def f_tab_01_button_import_click(self):
         print("Import config")
