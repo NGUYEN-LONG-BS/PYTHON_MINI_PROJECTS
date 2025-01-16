@@ -3,7 +3,6 @@ from tkinter import messagebox
 from docx import Document
 from docx.shared import Cm
 
-
 def set_default_margins():
     # Create a new Word document
     doc = Document()
