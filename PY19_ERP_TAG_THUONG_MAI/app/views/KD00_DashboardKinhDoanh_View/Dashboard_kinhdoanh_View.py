@@ -2,7 +2,6 @@ import tkinter as tk
 from Components_View import *
 from utils import *
 
-import tkinter as tk
 from tkinter import ttk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
@@ -16,19 +15,16 @@ class cls_Dashboard_kinhdoanh_View(cls_base_form_number_04_dashboard):
         self.create_dashboard()
         
     def create_dashboard(self):
-        self.Frame_Body.configure(bg="#f0f0f0")
-
-        # Create frames
-        # header_frame = tk.Frame(self.Frame_Body, bg="#283593", height=80)
-        # header_frame.pack(side="top", fill="x")
-
-        content_frame = tk.Frame(self.Frame_Body, bg="#ffffff")
+        self.Frame_Body.configure(bg=BG_COLOR_0_0)
+        
+        # content_frame = tk.Frame(self.Frame_Body, bg="#ffffff")
+        content_frame = tk.Frame(self.Frame_Body, bg=BG_COLOR_0_0)
         content_frame.pack(side="top", fill="both", expand=True, padx=20, pady=20)
 
-        sidebar_frame = tk.Frame(content_frame, bg="#f5f5f5", width=200)
+        sidebar_frame = tk.Frame(content_frame, bg=BG_COLOR_0_0, width=200)        
         sidebar_frame.pack(side="left", fill="y")
 
-        main_frame = tk.Frame(content_frame, bg="#ffffff")
+        main_frame = tk.Frame(content_frame, bg=BG_COLOR_0_0)
         main_frame.pack(side="right", fill="both", expand=True)
 
         canvas = tk.Canvas(main_frame)
@@ -45,13 +41,6 @@ class cls_Dashboard_kinhdoanh_View(cls_base_form_number_04_dashboard):
 
         canvas.pack(side="left", fill="both", expand=True)
         scrollbar.pack(side="right", fill="y")
-
-        # # Header
-        # header_label = tk.Label(
-        #     header_frame, text="Dashboard", fg="#ffffff", bg="#283593",
-        #     font=("Arial", 24, "bold"), pady=20
-        # )
-        # header_label.pack()
 
         # Sidebar menu
         for i, item in enumerate(["Home", "Reports", "Settings", "Help"]):
