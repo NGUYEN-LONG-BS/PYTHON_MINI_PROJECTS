@@ -9,6 +9,12 @@ PATH_LOGO_LIGHT = os.path.join(PATH_ROOT, "assets/img/logo-Light.jpg")
 PATH_LOGO_DARK = os.path.join(PATH_ROOT, "assets/img/logo-Dark.jpg")
 
 PATH_CARD_IMG = os.path.join(PATH_ROOT, "assets/img/teamwork.jpg")
+PATH_CARD_BAN_KINH_DOANH = os.path.join(PATH_ROOT, "assets/img/BanKinhDoanh.png")
+PATH_CARD_BAN_VAT_TU = os.path.join(PATH_ROOT, "assets/img/VAT_TU.png")
+PATH_CARD_KHO = os.path.join(PATH_ROOT, "assets/img/KHO.png")
+PATH_CARD_BAN_TAI_CHINH = os.path.join(PATH_ROOT, "assets/img/TAI_CHINH.png")
+PATH_CARD_BAN_KY_THUAT = os.path.join(PATH_ROOT, "assets/img/KY_THUAT.png")
+PATH_CARD_BAN_NHAN_SU = os.path.join(PATH_ROOT, "assets/img/NHAN_SU.png")
 
 PATH_ICON_HIDE = os.path.join(PATH_ASSETS_ICONS, "icon-closed-eye-50.png")
 PATH_ICON_UNHIDE = os.path.join(PATH_ASSETS_ICONS, "icon-opening-eye-26.png")

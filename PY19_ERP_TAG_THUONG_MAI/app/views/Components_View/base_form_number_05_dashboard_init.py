@@ -75,42 +75,6 @@ class cls_base_form_number_05_DashBoard_init(tk.Tk):
         
         # Add elements to frame_body
         self.f_add_elements_to_frame_body()
-                    
-    def f_add_elements_to_frame_body_02(self):
-        # Cấu hình số dòng và cột
-        rows = 2
-        columns = 3
-
-        # Đường dẫn đến ảnh mẫu (thay đổi thành đường dẫn ảnh của bạn)
-        image_path = PATH_CARD_IMG  # Đặt ảnh của bạn tại đây
-
-        # Mở và resize ảnh
-        img = Image.open(image_path)
-        img = img.resize((200, 140))  # Điều chỉnh kích thước ảnh phù hợp với card
-        img_tk = ImageTk.PhotoImage(img)
-
-        for row in range(rows):
-            for col in range(columns):
-                # Tạo một frame cho từng "card"
-                card = tk.Frame(
-                    self.Frame_Body,
-                    bg="lightblue",
-                    width=300,
-                    height=240,
-                    highlightbackground="gray",
-                    highlightthickness=1,
-                )
-                card.grid(row=row, column=col, padx=10, pady=10)
-
-                # Thêm label chứa hình ảnh vào card
-                image_label = tk.Label(card, image=img_tk, bg="lightblue")
-                image_label.image = img_tk  # Lưu tham chiếu để tránh ảnh bị thu hồi
-                image_label.pack(pady=5)
-
-                # Thêm label chứa text vào card
-                text_label = tk.Label(card, text=f"Card {row * columns + col + 1}", bg="lightblue", font=("Arial", 12))
-                text_label.pack()
-        print("tạo dashboard xong")
         
     def f_add_elements_to_frame_body(self):
         # Số dòng và cột
@@ -123,19 +87,24 @@ class cls_base_form_number_05_DashBoard_init(tk.Tk):
 
         # Danh sách hình ảnh và nội dung cho mỗi card
         cards_data = [
-            {"image": PATH_CARD_IMG, "text": "KINH DOANH"},
-            {"image": PATH_CARD_IMG, "text": "VẬT TƯ"},
-            {"image": PATH_CARD_IMG, "text": "KỸ THUẬT"},
-            {"image": PATH_CARD_IMG, "text": "KHO"},
-            {"image": PATH_CARD_IMG, "text": "TÀI CHÍNH"},
-            {"image": PATH_CARD_IMG, "text": "NHÂN SỰ"},
+            {"image": PATH_CARD_BAN_KINH_DOANH, "text": "KINH DOANH"},
+            {"image": PATH_CARD_BAN_VAT_TU, "text": "VẬT TƯ"},
+            {"image": PATH_CARD_BAN_KY_THUAT, "text": "KỸ THUẬT"},
+            {"image": PATH_CARD_KHO, "text": "KHO"},
+            {"image": PATH_CARD_BAN_TAI_CHINH, "text": "TÀI CHÍNH"},
+            {"image": PATH_CARD_BAN_NHAN_SU, "text": "NHÂN SỰ"},
         ]
 
+        # Kích thước card và padding
+        card_width = 300
+        card_height = 300
+        image_padding = 10  # Padding xung quanh hình ảnh
+        
         # Load và resize ảnh
         images = []
         for card_data in cards_data:
             img = Image.open(card_data["image"])
-            img = img.resize((100, 70))  # Điều chỉnh kích thước ảnh phù hợp với card
+            img = img.resize((card_width - 2 * image_padding, card_height - 2 * image_padding))  # Điều chỉnh kích thước ảnh phù hợp với card
             img_tk = ImageTk.PhotoImage(img)
             images.append(img_tk)  # Lưu ảnh để tránh bị thu hồi
 
@@ -148,22 +117,39 @@ class cls_base_form_number_05_DashBoard_init(tk.Tk):
             card = tk.Frame(
                 self.Frame_Body,
                 bg=BG_COLOR_0_0,
-                width=150,
-                height=150,
+                width=card_width,
+                height=card_height,
                 highlightbackground="gray",
                 highlightthickness=1,
+                cursor="hand2"
             )
             card.grid(row=row, column=col, padx=10, pady=10, sticky="nsew")
 
             # Thêm label chứa hình ảnh vào card
-            image_label = tk.Label(card, image=images[index], bg=BG_COLOR_0_0)
+            image_label = tk.Label(
+                card, 
+                image=images[index], 
+                bg=BG_COLOR_0_0, 
+                # bg=COLOR_GREEN, 
+                cursor="hand2" 
+                )
             image_label.image = images[index]  # Lưu tham chiếu để tránh ảnh bị thu hồi
-            image_label.pack(pady=5)
+            image_label.pack(fill=tk.BOTH, expand=True)
 
+
+            # Bind click event to print card name
+            image_label.bind("<Button-1>", lambda event, name=card_data["text"]: self.print_name(name))
+            
             # Thêm label chứa text vào card
             text_label = tk.Label(card, text=card_data["text"], bg=BG_COLOR_0_0, font=("Arial", 12))
             text_label.pack()
         
+            # Bind click event to print card name
+            card.bind("<Button-1>", lambda event, name=card_data["text"]: self.print_name(name))
+    
+    def print_name(self, name):
+        """Print the name of the card."""
+        print(f"Card clicked: {name}")
     
     def _configure_grid_weights_of_self(self):
         """Configures grid weights for resizing."""
