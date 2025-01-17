@@ -74,7 +74,7 @@ class cls_base_form_number_04_dashboard(tk.Tk):
             
     def _close_window_Click(self):
         self.destroy()
-        f_utils_open_dashboard()
+        f_utils_open_dashboard_main()
     
     def f_add_elements_to_frame_body(self):
         print("f_add_elements_to_frame_body")

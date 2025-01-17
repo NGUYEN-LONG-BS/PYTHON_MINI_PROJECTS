@@ -124,7 +124,7 @@ class cls_Login_View(tk.Tk):
     
     def f_open_dashboard(self):
         self.destroy()
-        f_utils_open_dashboard()
+        f_utils_open_dashboard_main()
         
     def f_open_register(self):
         self.destroy()

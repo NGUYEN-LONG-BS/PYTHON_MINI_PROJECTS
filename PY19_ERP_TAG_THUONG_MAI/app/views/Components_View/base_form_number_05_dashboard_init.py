@@ -87,12 +87,12 @@ class cls_base_form_number_05_DashBoard_init(tk.Tk):
 
         # Danh sách hình ảnh và nội dung cho mỗi card
         cards_data = [
-            {"image": PATH_CARD_BAN_KINH_DOANH, "text": "KINH DOANH"},
-            {"image": PATH_CARD_BAN_VAT_TU, "text": "VẬT TƯ"},
-            {"image": PATH_CARD_BAN_KY_THUAT, "text": "KỸ THUẬT"},
-            {"image": PATH_CARD_KHO, "text": "KHO"},
-            {"image": PATH_CARD_BAN_TAI_CHINH, "text": "TÀI CHÍNH"},
-            {"image": PATH_CARD_BAN_NHAN_SU, "text": "NHÂN SỰ"},
+            {"image": PATH_CARD_BAN_KINH_DOANH, "text": "KINH DOANH", "click_event": self.f_open_dashboard_Kinh_Doanh},
+            {"image": PATH_CARD_BAN_VAT_TU, "text": "VẬT TƯ", "click_event": self.f_open_dashboard_vat_tu},
+            {"image": PATH_CARD_BAN_KY_THUAT, "text": "KỸ THUẬT", "click_event": self.f_open_dashboard_ky_thuat},
+            {"image": PATH_CARD_KHO, "text": "KHO", "click_event": self.f_open_dashboard_kho},
+            {"image": PATH_CARD_BAN_TAI_CHINH, "text": "TÀI CHÍNH", "click_event": self.f_open_dashboard_tai_chinh},
+            {"image": PATH_CARD_BAN_NHAN_SU, "text": "NHÂN SỰ", "click_event": self.f_open_dashboard_nhan_su},
         ]
 
         # Kích thước card và padding
@@ -135,21 +135,34 @@ class cls_base_form_number_05_DashBoard_init(tk.Tk):
                 )
             image_label.image = images[index]  # Lưu tham chiếu để tránh ảnh bị thu hồi
             image_label.pack(fill=tk.BOTH, expand=True)
-
-
-            # Bind click event to print card name
-            image_label.bind("<Button-1>", lambda event, name=card_data["text"]: self.print_name(name))
             
             # Thêm label chứa text vào card
             text_label = tk.Label(card, text=card_data["text"], bg=BG_COLOR_0_0, font=("Arial", 12))
             text_label.pack()
-        
+
             # Bind click event to print card name
-            card.bind("<Button-1>", lambda event, name=card_data["text"]: self.print_name(name))
+            text_label.bind("<Button-1>", card_data["click_event"])
+            image_label.bind("<Button-1>", card_data["click_event"])
+            card.bind("<Button-1>", card_data["click_event"])
     
-    def print_name(self, name):
-        """Print the name of the card."""
-        print(f"Card clicked: {name}")
+    def f_open_dashboard_Kinh_Doanh(self, event):
+        self.destroy()
+        f_utils_open_dashboard_kinh_doanh()
+        
+    def f_open_dashboard_vat_tu(self, event):
+        print("f_open_dashboard_vat_tu")
+    
+    def f_open_dashboard_kho(self, event):
+        print("f_open_dashboard_kho")
+
+    def f_open_dashboard_ky_thuat(self, event):
+        print("f_open_dashboard_ky_thuat")
+
+    def f_open_dashboard_nhan_su(self, event):
+        print("f_open_dashboard_nhan_su")
+    
+    def f_open_dashboard_tai_chinh(self, event):
+        print("f_open_dashboard_tai_chinh")
     
     def _configure_grid_weights_of_self(self):
         """Configures grid weights for resizing."""
@@ -163,6 +176,3 @@ class cls_base_form_number_05_DashBoard_init(tk.Tk):
             frame_main.rowconfigure(1, weight=1)  # Body
             frame_main.rowconfigure(2, weight=0)  # Footer
             frame_main.columnconfigure(0, weight=1)
-        
-
-        

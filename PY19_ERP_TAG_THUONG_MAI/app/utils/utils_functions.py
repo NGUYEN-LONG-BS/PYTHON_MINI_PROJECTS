@@ -122,9 +122,16 @@ def f_utils_set_menu_font(widget, size=14, font_is="Arial"):
     custom_font = font.Font(family=font_is, size=size)  # Create a new Font object with the desired size
     widget.config(font=custom_font)  # Apply the font to the menu
 
-def f_utils_open_dashboard():
+def f_utils_open_dashboard_main():
     from views.AD01_Dashboard_View.Dashboard_View import cls_Dashboard_View
     new_view = cls_Dashboard_View()
+    f_utils_set_window_size_is_4_per_5_screen(new_view)
+    f_utils_set_center_screen(new_view)
+    new_view.focus_force()
+    
+def f_utils_open_dashboard_kinh_doanh():
+    from views.KD00_DashboardKinhDoanh_View.Dashboard_kinhdoanh_View import cls_Dashboard_kinhdoanh_View
+    new_view = cls_Dashboard_kinhdoanh_View()
     f_utils_set_window_size_is_4_per_5_screen(new_view)
     f_utils_set_center_screen(new_view)
     new_view.focus_force()

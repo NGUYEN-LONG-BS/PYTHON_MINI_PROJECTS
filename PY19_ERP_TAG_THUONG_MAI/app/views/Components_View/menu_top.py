@@ -467,7 +467,7 @@ class cls_menu_top:
     
     def f_open_DashBoard(self):
         self.parent.destroy()
-        f_utils_open_dashboard()
+        f_utils_open_dashboard_main()
         
     def f_destroy_current_window(self):
         self.parent.destroy()

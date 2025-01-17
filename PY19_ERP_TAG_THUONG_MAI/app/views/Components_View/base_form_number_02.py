@@ -73,7 +73,7 @@ class cls_base_form_number_02_ManyTabs(tk.Tk):
             
     def _close_window_Click(self):
         self.destroy()
-        f_utils_open_dashboard()
+        f_utils_open_dashboard_main()
     
     def f_add_elements_to_frame_body(self):
         # Create a notebook (tabs)
