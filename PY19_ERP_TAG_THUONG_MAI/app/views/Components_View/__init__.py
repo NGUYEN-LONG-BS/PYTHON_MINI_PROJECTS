@@ -9,6 +9,7 @@ from .button import cls_my_button_num_01
 from .base_form_number_01 import cls_base_form_number_01_EntryForm
 from .base_form_number_02 import cls_base_form_number_02_ManyTabs
 from .base_form_number_03 import cls_base_form_number_03_DashBoard
+from .base_form_number_04_dashboard import cls_base_form_number_04_dashboard
 from .menu_top import cls_menu_top
 from .entry import cls_my_text_entry_num_01
 from .entry import cls_my_number_entry_num_01

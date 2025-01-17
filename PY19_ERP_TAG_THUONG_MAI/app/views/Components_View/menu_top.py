@@ -228,6 +228,8 @@ class cls_menu_top:
             menu_NhanSu.add_separator()
             menu_NhanSu_QuanLyThongBao = tk.Menu(menu_NhanSu, tearoff=0)
             menu_NhanSu.add_cascade(label="Quản lý thông báo", menu=menu_NhanSu_QuanLyThongBao)
+            menu_NhanSu.add_separator()
+            menu_NhanSu.add_command(label="Form mẫu", command=self.f_HR01_click)
 
             # Sub-menu level 2
             menu_NhanSu_QuanLyNhanVien.add_command(label="NS0101 |Danh sách nhân viên", command=self.f_do_nothing_click)
@@ -331,6 +333,10 @@ class cls_menu_top:
         print("f_QLYCDH_TALA_click selected")
         self.f_open_KD02QuanLyYeuCauDatHangView()
         
+    def f_HR01_click(self):
+        print("f_HR01_click selected")
+        self.f_open_HR01()
+        
     def f_KD_CRUDP_KhachHang_click(self):
         print("f_KD_QuanLyKhachHang_click selected")
         self.f_open_KD0301_CRUDP_KhachHang_View()
@@ -372,7 +378,16 @@ class cls_menu_top:
         f_utils_set_window_size_is_4_per_5_screen(new_view)
         f_utils_set_center_screen(new_view)
         new_view.focus_force()
-        
+    
+    def f_open_HR01(self):
+        from views.HR01_FORM_VIEW.set_margins import cls_hr01_view
+        self.parent.destroy()
+        new_view = cls_hr01_view()
+        new_view.dashboard = self.parent
+        f_utils_set_window_size_is_4_per_5_screen(new_view)
+        f_utils_set_center_screen(new_view)
+        new_view.focus_force()
+    
     def f_open_KD0301_CRUDP_KhachHang_View(self):
         from views.KD03_QuanLyKhachHang_View.KD0301_CRUDP_KhachHang_View import cls_KD0301_CRUDP_KhachHang_View
         self.parent.destroy()

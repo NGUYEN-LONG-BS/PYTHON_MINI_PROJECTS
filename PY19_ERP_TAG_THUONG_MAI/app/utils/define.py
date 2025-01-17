@@ -14,6 +14,24 @@ PATH_ICON_UNHIDE = os.path.join(PATH_ASSETS_ICONS, "icon-opening-eye-26.png")
 PATH_ASSETS_TEMPLATES_EXCEL = os.path.join(PATH_ASSETS_TEMPLATES, "excel")
 PATH_PRINT_TEMPLATES = os.path.join(PATH_ASSETS_TEMPLATES, "print_templates.xlsx")
 
+PATH_ASSETS_TEMPLATES_JSON = os.path.join(PATH_ASSETS_TEMPLATES, "json")
+
+def f_define_PATH_DEFAUL():
+    paths_to_check = [
+        r"C:\\Users\\ADMIN\\Desktop",
+        r"C:\\",
+        r"D:\\",
+        r"E:\\"
+    ]
+
+    for path in paths_to_check:
+        if os.path.exists(path):
+            return path
+
+    return None  # Return None if no path exists
+
+PATH_DEFAUL = f_define_PATH_DEFAUL()
+
 
 # Window dimensions and positions
 WINDOW_WIDTH = 600
