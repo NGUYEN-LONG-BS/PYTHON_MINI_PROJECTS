@@ -37,6 +37,7 @@ class cls_base_form_number_04_dashboard(tk.Tk):
         try:
             # Add cls_menu_top
             cls_menu_top(self)
+            
             # Add cls_Frame_Main
             frame_main = cls_Frame_Main(self)
             frame_main.grid(row=0, column=0, sticky="nsew")
@@ -45,12 +46,12 @@ class cls_base_form_number_04_dashboard(tk.Tk):
             # Add elements to frame_main
             Frame_Header = cls_Frame_Header(frame_main, name_of_slip=self.name_of_slip)
             Frame_Header.grid(row=0, column=0, sticky="ew")
+
+            self.Frame_Body = cls_Frame_Body(frame_main)
+            self.Frame_Body.grid(row=1, column=0, sticky="nsew")
             
             Frame_Footer = cls_Frame_Footer(frame_main)
             Frame_Footer.grid(row=2, column=0, sticky="ew")
-            
-            self.Frame_Body = cls_Frame_Body(frame_main)
-            self.Frame_Body.grid(row=1, column=0, sticky="nsew")
             
             # Add elements to frame_body
             self.f_add_elements_to_frame_body()

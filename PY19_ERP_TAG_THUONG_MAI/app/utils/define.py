@@ -8,6 +8,8 @@ PATH_ASSETS_TEMPLATES = os.path.join(PATH_ROOT, "assets/templates")
 PATH_LOGO_LIGHT = os.path.join(PATH_ROOT, "assets/img/logo-Light.jpg")
 PATH_LOGO_DARK = os.path.join(PATH_ROOT, "assets/img/logo-Dark.jpg")
 
+PATH_CARD_IMG = os.path.join(PATH_ROOT, "assets/img/teamwork.jpg")
+
 PATH_ICON_HIDE = os.path.join(PATH_ASSETS_ICONS, "icon-closed-eye-50.png")
 PATH_ICON_UNHIDE = os.path.join(PATH_ASSETS_ICONS, "icon-opening-eye-26.png")
 
