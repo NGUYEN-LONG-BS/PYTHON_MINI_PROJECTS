@@ -8,18 +8,136 @@ from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 import numpy as np
 
-class cls_Dashboard_kinhdoanh_View(cls_base_form_number_04_dashboard):
+class cls_Dashboard_kinhdoanh_View(cls_base_form_number_02_ManyTabs):
     def __init__(self):
         title = "KD00 - DashboardKinhDoanhView"
         name_of_slip = "KINH DOANH"
         super().__init__(title_of_form=title, name_of_slip=name_of_slip)
-        self.create_dashboard()
+        # call reuse components
+        self._f_view_thay_doi_gia_tri_cua_base_form()
+        self._f_view_create_all_container_frames_of_window()
+    
+    def _f_view_thay_doi_gia_tri_cua_base_form(self):
+        # Thay đổi thông tin các tab
+        notebook = None
+        def find_notebook(widget):
+            nonlocal notebook
+            for child in widget.winfo_children():
+                if isinstance(child, ttk.Notebook):
+                    notebook = child
+                    return True
+                if find_notebook(child):
+                    return True
+            return False
+
+        find_notebook(self) 
+
+        if not notebook:
+            print("Error: notebook not found!")
+            return
+
+        # Change the text of the second tabs
+        notebook.tab(0, text="DANH SÁCH NGHIÊP VỤ")
+        notebook.tab(1, text="TỔNG QUAN CÔNG VIỆC")
         
-    def create_dashboard(self):
+        # Delete the third tab
+        notebook.forget(2)
+        
+        # Change the title of TieuDeTab_01
+        for child in self.tab1.winfo_children():
+            if isinstance(child, ttk.Frame):
+                for grandchild in child.winfo_children():
+                    if isinstance(grandchild, tk.Label) and grandchild.cget("text") == "Tiêu đề tab-01":
+                        grandchild.destroy()
+                        break
+        # Change the title of TieuDeTab_01
+        for child in self.tab2.winfo_children():
+            if isinstance(child, ttk.Frame):
+                for grandchild in child.winfo_children():
+                    if isinstance(grandchild, tk.Label) and grandchild.cget("text") == "Tiêu đề tab-02":
+                        grandchild.destroy()
+                        break
+        return notebook
+   
+    def _f_view_create_all_container_frames_of_window(self):
+        # Create tabs
+        self.tab_01 = self.tab1
+        self.tab_02 = self.tab2
+        # Settings tab content
+        self._f_view_create_in_tab_01_all_container_frames()
+        self._f_add_elements_to_card_QL_KHACHANG()
+        self._f_view_create_in_tab_02_all_container_frames()
+    
+    def _f_view_create_in_tab_01_all_container_frames(self):
+        parent_frame = self.tab_01
+        # parent_frame = tk.Frame(self.tab_01)
+        # parent_frame.pack(fill="both", expand=True)
+        # parent_frame.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
+        rows = 2
+        columns = 3
+
+        # Center-align the grid
+        parent_frame.grid_rowconfigure(tuple(range(rows)), weight=1)  # Center vertically
+        parent_frame.grid_columnconfigure(tuple(range(columns)), weight=1)  # Center horizontally
+
+        # Danh sách hình ảnh và nội dung cho mỗi card
+        cards_data = [
+            {"text": "DANH SÁCH KHÁCH HÀNG","name_of_card": "card_frame_yeu_cau_dat_hang"},
+            {"text": "DANH SÁCH HÀNG HOÁ","name_of_card": "card_frame_2"},
+            {"text": "QUẢN LÝ GÓI THẦU","name_of_card": "card_frame_3"},
+            {"text": "QUẢN LÝ CÔNG NỢ","name_of_card": "card_frame_4"},
+            {"text": "QUẢN LÝ YÊU CẦU ĐẶT HÀNG","name_of_card": "card_frame_5"},
+            {"text": "QUẢN LÝ GIAO NHẬN","name_of_card": "card_frame_danh_sach_khach_hang"},
+        ]
+
+        # Kích thước card và padding
+        card_width = 300
+        card_height = 300
+
+        # Thêm card vào parent_frame
+        for index, card_data in enumerate(cards_data):
+            row = index // columns
+            col = index % columns
+
+            # Tạo một frame cho từng "card"
+            card = tk.Frame(
+                parent_frame,
+                bg=BG_COLOR_0_0,
+                width=card_width,
+                height=card_height,
+                highlightbackground="gray",
+                highlightthickness=1,
+                name=card_data["name_of_card"]
+            )
+            card.grid(row=row, column=col, padx=10, pady=10, sticky="nsew")
+            
+            # Thêm label chứa text vào card
+            text_label = tk.Label(card, text=card_data["text"], bg=BG_COLOR_0_0, font=("Arial", 12))
+            text_label.pack()
+
+            # Bind click event to print card name
+            # text_label.bind("<Button-1>", card_data["click_event"])
+            # card.bind("<Button-1>", card_data["click_event"])
+    
+    def _f_add_elements_to_card_QL_KHACHANG(self):
+        try:
+            parent_frame = self.tab_01.nametowidget("card_frame_yeu_cau_dat_hang")
+        except KeyError:
+            print("Error: Frame 'card_frame_yeu_cau_dat_hang' not found!")
+            return
+
+        frame_01 = tk.Frame(parent_frame)
+        frame_01.pack(fill="x", expand=True, padx=10, pady=10)
+
+        BTN_01 = tk.Button(frame_01, text="Nhật ký yêu cầu đặt hàng", font=("Arial", 12), command=self.f_view_tab_01_button_NhatKyYeuCauDatHang_click)
+        BTN_01.pack(side="left", padx=10, pady=5)
+    
+    def _f_view_create_in_tab_02_all_container_frames(self):
+        parent_frame = self.tab_02
         self.Frame_Body.configure(bg=BG_COLOR_0_0)
 
         # Create a frame to hold the chart
-        chart_frame_01 = ttk.Frame(self.Frame_Body, padding="10", borderwidth=2, relief="solid")
+        chart_frame_01 = ttk.Frame(parent_frame, padding="10", borderwidth=2, relief="solid")
         chart_frame_01.pack(side="top", fill=tk.BOTH, expand=True, padx=10, pady=10)
 
         # Create a Matplotlib figure and plot
@@ -37,7 +155,7 @@ class cls_Dashboard_kinhdoanh_View(cls_base_form_number_04_dashboard):
         canvas_widget.pack(fill=tk.BOTH, expand=True)
         
         # Create a frame to hold the chart
-        chart_frame_02 = ttk.Frame(self.Frame_Body, padding="10", borderwidth=2, relief="solid")
+        chart_frame_02 = ttk.Frame(parent_frame, padding="10", borderwidth=2, relief="solid")
         chart_frame_02.pack(side="top", fill=tk.BOTH, expand=True, padx=10, pady=10)
         
         # Create a Matplotlib figure and plot
@@ -55,4 +173,12 @@ class cls_Dashboard_kinhdoanh_View(cls_base_form_number_04_dashboard):
         canvas_widget.pack(fill=tk.BOTH, expand=True)
 
         
-        
+    def f_view_tab_01_button_NhatKyYeuCauDatHang_click(self):
+        print("f_view_tab_01_button_NhatKyYeuCauDatHang_click")
+        from views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
+        self.destroy()
+        new_view = cls_test_View()
+        # new_view.dashboard = self.parent
+        f_utils_set_window_size_is_4_per_5_screen(new_view)
+        f_utils_set_center_screen(new_view)
+        new_view.focus_force()

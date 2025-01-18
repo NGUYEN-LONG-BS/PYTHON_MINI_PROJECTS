@@ -1,105 +1,80 @@
 import tkinter as tk
 from tkinter import ttk
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-import matplotlib.pyplot as plt
-import numpy as np
 
-def create_dashboard():
-    # Create the main window
-    root = tk.Tk()
-    root.title("Dashboard")
-    root.geometry("1000x600")
-    root.configure(bg="#f0f0f0")
+class ModernDashboardApp:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Modern Dashboard")
+        self.root.geometry("900x600")
+        self.root.configure(bg="#2c3e50")
 
-    # Create frames
-    header_frame = tk.Frame(root, bg="#283593", height=80)
-    header_frame.pack(side="top", fill="x")
+        self.create_header()
+        self.create_tabs()
 
-    content_frame = tk.Frame(root, bg="#ffffff")
-    content_frame.pack(side="top", fill="both", expand=True, padx=20, pady=20)
+    def create_header(self):
+        header = tk.Frame(self.root, bg="#34495e", height=60)
+        header.pack(fill="x")
 
-    sidebar_frame = tk.Frame(content_frame, bg="#f5f5f5", width=200)
-    sidebar_frame.pack(side="left", fill="y")
+        title = tk.Label(header, text="Modern Dashboard", font=("Arial", 20, "bold"), bg="#34495e", fg="white")
+        title.pack(side="left", padx=20)
 
-    main_frame = tk.Frame(content_frame, bg="#ffffff")
-    main_frame.pack(side="right", fill="both", expand=True)
+    def create_tabs(self):
+        # Create a Notebook widget with styled tabs
+        style = ttk.Style()
+        style.configure("TNotebook", background="#2c3e50", tabmargins=[2, 5, 2, 0])
+        style.configure("TNotebook.Tab", background="#34495e", foreground="white", font=("Arial", 12, "bold"))
+        style.map("TNotebook.Tab", background=[("selected", "#1abc9c")], foreground=[("selected", "white")])
 
-    canvas = tk.Canvas(main_frame)
-    scrollbar = ttk.Scrollbar(main_frame, orient="vertical", command=canvas.yview)
-    scrollable_frame = tk.Frame(canvas)
+        self.notebook = ttk.Notebook(self.root, style="TNotebook")
+        self.notebook.pack(fill="both", expand=True, padx=10, pady=10)
 
-    scrollable_frame.bind(
-        "<Configure>",
-        lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
-    )
+        # Create tabs
+        self.tab1 = ttk.Frame(self.notebook, style="TFrame")
+        self.tab2 = ttk.Frame(self.notebook, style="TFrame")
+        self.tab3 = ttk.Frame(self.notebook, style="TFrame")
 
-    canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
-    canvas.configure(yscrollcommand=scrollbar.set)
+        # Add tabs to the notebook
+        self.notebook.add(self.tab1, text="Dashboard")
+        self.notebook.add(self.tab2, text="Settings")
+        self.notebook.add(self.tab3, text="About")
 
-    canvas.pack(side="left", fill="both", expand=True)
-    scrollbar.pack(side="right", fill="y")
+        # Add content to each tab
+        self.create_dashboard_tab()
+        self.create_settings_tab()
+        self.create_about_tab()
 
-    # Header
-    header_label = tk.Label(
-        header_frame, text="Dashboard", fg="#ffffff", bg="#283593",
-        font=("Arial", 24, "bold"), pady=20
-    )
-    header_label.pack()
+    def create_dashboard_tab(self):
+        label = tk.Label(self.tab1, text="Welcome to the Dashboard", font=("Arial", 18, "bold"), fg="#1abc9c", bg="#2c3e50")
+        label.pack(pady=20)
 
-    # Sidebar menu
-    for i, item in enumerate(["Home", "Reports", "Settings", "Help"]):
-        btn = ttk.Button(sidebar_frame, text=item)
-        btn.pack(pady=10, padx=10, fill="x")
+        tk.Button(self.tab1, text="View Reports", font=("Arial", 14), bg="#1abc9c", fg="white", relief="flat", command=self.view_reports).pack(pady=10)
 
-    # Chart 1: Line Chart
-    fig1, ax1 = plt.subplots(figsize=(5, 3))
-    x = np.linspace(0, 10, 100)
-    y = np.sin(x)
-    ax1.plot(x, y, label="Sine Wave", color="blue")
-    ax1.set_title("Line Chart")
-    ax1.set_xlabel("X Axis")
-    ax1.set_ylabel("Y Axis")
-    ax1.legend()
+    def create_settings_tab(self):
+        label = tk.Label(self.tab2, text="Settings", font=("Arial", 18, "bold"), fg="#1abc9c", bg="#2c3e50")
+        label.pack(pady=20)
 
-    chart1 = FigureCanvasTkAgg(fig1, scrollable_frame)
-    chart1.get_tk_widget().pack(fill="both", expand=True, pady=10)
+        tk.Label(self.tab2, text="Option 1:", font=("Arial", 14), fg="white", bg="#2c3e50").pack(anchor="w", padx=20)
+        tk.Entry(self.tab2).pack(anchor="w", padx=20, pady=5)
 
-    # Chart 2: Column Chart
-    fig2, ax2 = plt.subplots(figsize=(5, 3))
-    categories = ['A', 'B', 'C', 'D']
-    values = [23, 45, 56, 78]
-    ax2.bar(categories, values, color="skyblue")
-    ax2.set_title("Column Chart")
-    ax2.set_ylabel("Values")
+        tk.Label(self.tab2, text="Option 2:", font=("Arial", 14), fg="white", bg="#2c3e50").pack(anchor="w", padx=20)
+        tk.Entry(self.tab2).pack(anchor="w", padx=20, pady=5)
 
-    chart2 = FigureCanvasTkAgg(fig2, scrollable_frame)
-    chart2.get_tk_widget().pack(fill="both", expand=True, pady=10)
+        tk.Button(self.tab2, text="Save Settings", font=("Arial", 14), bg="#1abc9c", fg="white", relief="flat", command=self.save_settings).pack(pady=20)
 
-    # Chart 3: Pie Chart
-    fig3, ax3 = plt.subplots(figsize=(5, 3))
-    labels = ['Category 1', 'Category 2', 'Category 3', 'Category 4']
-    sizes = [15, 30, 45, 10]
-    ax3.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90, colors=["gold", "lightcoral", "lightskyblue", "yellowgreen"])
-    ax3.set_title("Pie Chart")
+    def create_about_tab(self):
+        label = tk.Label(self.tab3, text="About This App", font=("Arial", 18, "bold"), fg="#1abc9c", bg="#2c3e50")
+        label.pack(pady=20)
 
-    chart3 = FigureCanvasTkAgg(fig3, scrollable_frame)
-    chart3.get_tk_widget().pack(fill="both", expand=True, pady=10)
+        about_text = "This is a modern dashboard application built with Tkinter.\nIt demonstrates how to create a beautiful and functional UI."
+        tk.Label(self.tab3, text=about_text, font=("Arial", 14), fg="white", bg="#2c3e50", wraplength=600, justify="center").pack(pady=10)
 
-    # Chart 4: Waterfall Chart
-    fig4, ax4 = plt.subplots(figsize=(5, 3))
-    steps = [10, 15, -5, 20, -10]
-    cumulative = np.cumsum([0] + steps)
-    ax4.bar(range(len(steps)), steps, color=["green" if x > 0 else "red" for x in steps])
-    ax4.step(range(len(cumulative)), cumulative, where="mid", color="blue")
-    ax4.set_title("Waterfall Chart")
-    ax4.set_xlabel("Steps")
-    ax4.set_ylabel("Cumulative Value")
+    def view_reports(self):
+        print("Viewing reports...")
 
-    chart4 = FigureCanvasTkAgg(fig4, scrollable_frame)
-    chart4.get_tk_widget().pack(fill="both", expand=True, pady=10)
-
-    # Run the application
-    root.mainloop()
+    def save_settings(self):
+        print("Settings saved!")
 
 if __name__ == "__main__":
-    create_dashboard()
+    root = tk.Tk()
+    app = ModernDashboardApp(root)
+    root.mainloop()

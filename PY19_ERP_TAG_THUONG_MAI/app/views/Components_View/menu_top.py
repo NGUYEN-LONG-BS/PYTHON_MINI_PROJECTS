@@ -430,7 +430,7 @@ class cls_menu_top:
         from views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
         self.parent.destroy()
         new_view = cls_test_View()
-        new_view.dashboard = self.parent
+        # new_view.dashboard = self.parent
         f_utils_set_window_size_is_4_per_5_screen(new_view)
         f_utils_set_center_screen(new_view)
         new_view.focus_force()
@@ -439,7 +439,7 @@ class cls_menu_top:
         from views.VT01_QuanLyDonDatHang_View.VT0101_DonDatHang_View import cls_VT0101_DonDatHang_View
         self.parent.destroy()
         new_view = cls_VT0101_DonDatHang_View()
-        new_view.dashboard = self.parent
+        # new_view.dashboard = self.parent
         f_utils_set_window_size_is_4_per_5_screen(new_view)
         f_utils_set_center_screen(new_view)
         new_view.focus_force()
@@ -449,7 +449,7 @@ class cls_menu_top:
         from views.VT01_QuanLyDonDatHang_View.VT0102_DonDatHang_TM_View import cls_VT0102_DonDatHang_TM_View
         self.parent.destroy()
         new_view = cls_VT0102_DonDatHang_TM_View()
-        new_view.dashboard = self.parent
+        # new_view.dashboard = self.parent
         f_utils_set_window_size_is_4_per_5_screen(new_view)
         f_utils_set_center_screen(new_view)
         new_view.focus_force()
@@ -459,7 +459,7 @@ class cls_menu_top:
         from AD00_User_Management_View.AD0003_UserInfo_View import cls_user_info
         self.parent.destroy()
         new_view = cls_user_info()
-        new_view.dashboard = self.parent
+        # new_view.dashboard = self.parent
         f_utils_set_window_size_is_4_per_5_screen(new_view)
         f_utils_set_center_screen(new_view)
         new_view.focus_force()
