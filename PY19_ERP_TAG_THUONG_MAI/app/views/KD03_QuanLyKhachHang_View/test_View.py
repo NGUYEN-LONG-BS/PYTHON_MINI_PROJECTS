@@ -255,15 +255,15 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         parent_frame = self.frame_inventories_informations_tab_01.frame_row_2
         
         self.label13_nhu_cau = tk.Label(parent_frame, text="nhu cầu:").pack(side="left")
-        self.tab_01_entry_nhu_cau = cls_my_number_entry_num_01(parent_frame, width=15, bg="#FFFFFF")
+        self.tab_01_entry_nhu_cau = cls_my_number_entry_num_01(parent_frame, width=7, bg="#FFFFFF")
         self.tab_01_entry_nhu_cau.pack(side="left")
         
         tk.Label(parent_frame, text="SL giữ chỗ:").pack(side="left")
-        self.tab_01_entry_sl_giu_cho = cls_my_number_entry_num_01(parent_frame, width=15, state="readonly")
+        self.tab_01_entry_sl_giu_cho = cls_my_number_entry_num_01(parent_frame, width=7, state="readonly")
         self.tab_01_entry_sl_giu_cho.pack(side="left")
         
         tk.Label(parent_frame, text="SL YCĐH:").pack(side="left")
-        self.tab_01_entry_sl_YCDH = cls_my_number_entry_num_01(parent_frame, width=15, state="readonly")
+        self.tab_01_entry_sl_YCDH = cls_my_number_entry_num_01(parent_frame, width=7, state="readonly")
         self.tab_01_entry_sl_YCDH.pack(side="left")
         
         self._f_view_add_row_03_into_frame_inventories_informations_tab_01()
