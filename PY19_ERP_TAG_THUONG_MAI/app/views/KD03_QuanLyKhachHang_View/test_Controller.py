@@ -3,7 +3,6 @@ from test_Model import cls_test_Model
 from Components_View import *   # Tại sao lại phải import Components_View
 from utils import *
 import traceback
-from tkinter import StringVar
 
 class cls_test_Controller():
     def __init__(self):
@@ -225,53 +224,47 @@ class cls_test_Controller_03_auto_update_number():
         self.entry_sl_giu_cho = entry_sl_giu_cho
         self.entry_sl_yeu_cau_dat_hang = entry_sl_yeu_cau_dat_hang
         
-        # # Variables to store the values of the entries
-        # self.entry_num01_var = StringVar()
-        # self.entry_num02_var = StringVar()
-        # self.entry_num03_var = StringVar()
-        # self.entry_num04_var = StringVar()
+        # Trace to monitor changes in entry_sl_kha_dung
+        self.var_sl_kha_dung = tk.StringVar()
+        self.entry_sl_kha_dung.config(textvariable=self.var_sl_kha_dung)
+        self.var_sl_kha_dung.trace_add("write", lambda *args: self.update_entries())
         
-        # # Link updates to changes in the first two entries
-        # self.entry_num01_var.trace("w", lambda *args: self.update_entries(self.entry_num01_var, self.entry_num02_var, self.entry_num03_var, self.entry_num04_var))
-        # self.entry_num02_var.trace("w", lambda *args: self.update_entries(self.entry_num01_var, self.entry_num02_var, self.entry_num03_var, self.entry_num04_var))
-        
-        # Link updates to changes in input variables
-        self.entry_sl_kha_dung.trace("w", lambda *args: self.update_entries())
-        self.entry_sl_nhu_cau.trace("w", lambda *args: self.update_entries())
-        
-    # def update_entries(self, *args):
-    #     try:
-    #         # Retrieve and convert the input values
-    #         num01 = float(self.entry_sl_kha_dung.get()) if self.entry_sl_kha_dung.get() else 0
-    #         num02 = float(self.entry_sl_nhu_cau.get()) if self.entry_sl_nhu_cau.get() else 0
-
-    #         # Calculate the values for the dependent entries
-    #         min_value = min(num01, num02)
-    #         difference = max((num02 - num01), 0)
-
-    #         # Update the dependent entries
-    #         self.entry_sl_giu_cho.set(f"{min_value}")
-    #         self.entry_sl_yeu_cau_dat_hang.set(f"{difference}")
-    #     except ValueError:
-    #         # Handle invalid input gracefully
-    #         self.entry_sl_giu_cho.set("Error")
-    #         self.entry_sl_yeu_cau_dat_hang.set("Error")
+        # Bind updates to changes in the first two entries
+        self.entry_sl_nhu_cau.bind("<KeyRelease>", self.update_entries)
             
-    def update_entries(self):
+    def validate_and_update(self, proposed_value):
+        self.update_entries()
+        return True
+    
+    def update_entries(self, event=None):
         try:
-            # Retrieve and convert input values
+            # Retrieve and convert the input values
             num_kha_dung = float(self.entry_sl_kha_dung.get()) if self.entry_sl_kha_dung.get() else 0
             num_nhu_cau = float(self.entry_sl_nhu_cau.get()) if self.entry_sl_nhu_cau.get() else 0
 
-            # Calculate dependent values
-            min_value = min(num_kha_dung, num_nhu_cau)  # Số lượng giữ chỗ
-            difference = max(num_nhu_cau - num_kha_dung, 0)  # Yêu cầu đặt hàng
+            # Calculate the values for the dependent entries
+            min_value = min(num_kha_dung, num_nhu_cau)
+            difference = max((num_nhu_cau - num_kha_dung), 0)
 
-            # Update output entries
-            self.entry_sl_giu_cho.set(f"{min_value}")
-            self.entry_sl_yeu_cau_dat_hang.set(f"{difference}")
+            # Update the dependent entries
+            self.entry_sl_giu_cho.config(state="normal")
+            self.entry_sl_giu_cho.delete(0, tk.END)
+            self.entry_sl_giu_cho.insert(0, f"{min_value}")
+            self.entry_sl_giu_cho.config(state="readonly")
+
+            self.entry_sl_yeu_cau_dat_hang.config(state="normal")
+            self.entry_sl_yeu_cau_dat_hang.delete(0, tk.END)
+            self.entry_sl_yeu_cau_dat_hang.insert(0, f"{difference}")
+            self.entry_sl_yeu_cau_dat_hang.config(state="readonly")
         except ValueError:
             # Handle invalid input gracefully
-            self.entry_sl_giu_cho.set("Error")
-            self.entry_sl_yeu_cau_dat_hang.set("Error")
+            self.entry_sl_giu_cho.config(state="normal")
+            self.entry_sl_giu_cho.delete(0, tk.END)
+            self.entry_sl_giu_cho.insert(0, "Error")
+            self.entry_sl_giu_cho.config(state="readonly")
+
+            self.entry_sl_yeu_cau_dat_hang.config(state="normal")
+            self.entry_sl_yeu_cau_dat_hang.delete(0, tk.END)
+            self.entry_sl_yeu_cau_dat_hang.insert(0, "Error")
+            self.entry_sl_yeu_cau_dat_hang.config(state="readonly")
             

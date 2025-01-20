@@ -29,10 +29,11 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self._f_setup_all_binding()
         
         self.f_add_controller_02_treeview()
+        self.f_add_controller_03_treeview()
     
     def _f_setup_all_binding(self):
-        entry_sl_kha_dung = f_utils_tim_component_with_name(self, "entry_sl_kha_dung")
-        entry_sl_kha_dung.bind("<FocusOut>", lambda event: f_utils_on_entry_change(entry_sl_kha_dung))
+        self.entry_sl_kha_dung = f_utils_tim_component_with_name(self, "entry_sl_kha_dung")
+        self.entry_sl_kha_dung.bind("<FocusOut>", lambda event: f_utils_on_entry_change(self.entry_sl_kha_dung))
     
     def _f_view_thay_doi_gia_tri_cua_base_form(self):
         # Thay đổi thông tin các tab
@@ -99,7 +100,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
     
     def f_add_controller_03_treeview(self):
         # Initialize controller_03
-        entry_sl_kha_dung = self.tab_01_entry_nhu_cau
+        entry_sl_kha_dung = self.entry_sl_kha_dung
         entry_sl_nhu_cau = self.tab_01_entry_nhu_cau
         entry_sl_giu_cho = self.tab_01_entry_sl_giu_cho
         entry_sl_yeu_cau_dat_hang = self.tab_01_entry_sl_YCDH
@@ -250,26 +251,32 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_note_for_slip.pack(side="left", fill="x", expand=True, pady=10)
         
     def _f_view_add_widget_into_frame_inventories_informations_tab_01(self):
-        frame_row_02_of_inventories_frame = self.frame_inventories_informations_tab_01.frame_row_2
+        # create parent_frame
+        parent_frame = self.frame_inventories_informations_tab_01.frame_row_2
         
-        self.label13_nhu_cau = tk.Label(frame_row_02_of_inventories_frame, text="nhu cầu:").pack(side="left")
-        self.tab_01_entry_nhu_cau = tk.Entry(frame_row_02_of_inventories_frame, width=15)
+        self.label13_nhu_cau = tk.Label(parent_frame, text="nhu cầu:").pack(side="left")
+        self.tab_01_entry_nhu_cau = cls_my_number_entry_num_01(parent_frame, width=15, bg="#FFFFFF")
         self.tab_01_entry_nhu_cau.pack(side="left")
         
-        tk.Label(frame_row_02_of_inventories_frame, text="SL giữ chỗ:").pack(side="left")
-        self.tab_01_entry_sl_giu_cho = tk.Entry(frame_row_02_of_inventories_frame, width=15, state="readonly")
+        tk.Label(parent_frame, text="SL giữ chỗ:").pack(side="left")
+        self.tab_01_entry_sl_giu_cho = cls_my_number_entry_num_01(parent_frame, width=15, state="readonly")
         self.tab_01_entry_sl_giu_cho.pack(side="left")
         
-        tk.Label(frame_row_02_of_inventories_frame, text="SL YCĐH:").pack(side="left")
-        self.tab_01_entry_sl_YCDH = tk.Entry(frame_row_02_of_inventories_frame, width=15, state="readonly")
+        tk.Label(parent_frame, text="SL YCĐH:").pack(side="left")
+        self.tab_01_entry_sl_YCDH = cls_my_number_entry_num_01(parent_frame, width=15, state="readonly")
         self.tab_01_entry_sl_YCDH.pack(side="left")
         
-        frame_row_03_of_inventories_frame = tk.Frame(self.frame_inventories_informations_tab_01)
-        frame_row_03_of_inventories_frame.pack(side="bottom", fill="x", expand=True)
+        self._f_view_add_row_03_into_frame_inventories_informations_tab_01()
+    
+    def _f_view_add_row_03_into_frame_inventories_informations_tab_01(self):
+        # create parent_frame
+        parent_frame = tk.Frame(self.frame_inventories_informations_tab_01)
+        parent_frame.pack(side="bottom", fill="x", expand=True)
 
-        tk.Label(frame_row_03_of_inventories_frame, text="Ghi chú mặt hàng:").pack(side="left")
-        self.tab_01_entry_ghi_chu_mat_hang = tk.Entry(frame_row_03_of_inventories_frame)
+        tk.Label(parent_frame, text="Ghi chú mặt hàng:").pack(side="left")
+        self.tab_01_entry_ghi_chu_mat_hang = tk.Entry(parent_frame)
         self.tab_01_entry_ghi_chu_mat_hang.pack(side="left", fill="x", expand=True, padx=(0, 10))
+        
 
     def _f_view_create_widgets_in_tab_01_frame_button_of_treeview(self):
         # Create a sub-frame to organize buttons in the center
