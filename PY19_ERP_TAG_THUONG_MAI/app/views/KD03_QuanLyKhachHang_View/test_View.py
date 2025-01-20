@@ -1,20 +1,15 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
-
 from PIL import Image, ImageTk
-
 import time
 import json
-
 from Components_View import *
 from Components_View import cls_frame_normal
 from Components_View.treeview import cls_Treeview_frame_number_01
-
 from utils import *
+from test_Controller import cls_test_Controller, cls_test_Controller_02_treeview, cls_test_Controller_03_auto_update_number
 
-from test_Controller import cls_test_Controller
-# from openpyxl import load_workbook, Workbook
 
 class cls_test_View(cls_base_form_number_02_ManyTabs):
     def __init__(self):
@@ -32,6 +27,8 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         # Set up all global variants
         self._f_setup_all_global_variants()
         self._f_setup_all_binding()
+        
+        self.f_add_controller_02_treeview()
     
     def _f_setup_all_binding(self):
         entry_sl_kha_dung = f_utils_tim_component_with_name(self, "entry_sl_kha_dung")
@@ -86,9 +83,29 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.label_footer = f_utils_tim_component_label_with_text(self, "Notification")
 
     def f_view_add_MVC_class(self):
-        # Import controller
-        self.controller = cls_test_Controller()
-        self.controller.view = self
+        # Initialize controller_01
+        self.controller_01 = cls_test_Controller()
+        self.controller_01.view = self
+
+    def f_add_controller_02_treeview(self):
+        # Initialize controller_02
+        tree = self.table_of_tab_01
+        entry_ma_hh = self.tab_01_entry_nhu_cau
+        entry_ten_hh = self.tab_01_entry_nhu_cau
+        entry_so_luong = self.tab_01_entry_nhu_cau
+        entry_ghi_chu = self.tab_01_entry_nhu_cau
+        self.controller_02_treeview = cls_test_Controller_02_treeview(tree, entry_ma_hh, entry_ten_hh, entry_so_luong, entry_ghi_chu)
+        self.controller_02_treeview.view = self
+    
+    def f_add_controller_03_treeview(self):
+        # Initialize controller_03
+        entry_sl_kha_dung = self.tab_01_entry_nhu_cau
+        entry_sl_nhu_cau = self.tab_01_entry_nhu_cau
+        entry_sl_giu_cho = self.tab_01_entry_sl_giu_cho
+        entry_sl_yeu_cau_dat_hang = self.tab_01_entry_sl_YCDH
+        self.controller_03_auto_update_number = cls_test_Controller_03_auto_update_number(entry_sl_kha_dung, entry_sl_nhu_cau, entry_sl_giu_cho, entry_sl_yeu_cau_dat_hang)
+        self.controller_03_auto_update_number.view = self
+        
     
     def _f_view_create_all_container_frames_of_window(self):
         # Create tabs
@@ -240,11 +257,11 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_entry_nhu_cau.pack(side="left")
         
         tk.Label(frame_row_02_of_inventories_frame, text="SL giữ chỗ:").pack(side="left")
-        self.tab_01_entry_sl_giu_cho = tk.Entry(frame_row_02_of_inventories_frame, width=15)
+        self.tab_01_entry_sl_giu_cho = tk.Entry(frame_row_02_of_inventories_frame, width=15, state="readonly")
         self.tab_01_entry_sl_giu_cho.pack(side="left")
         
         tk.Label(frame_row_02_of_inventories_frame, text="SL YCĐH:").pack(side="left")
-        self.tab_01_entry_sl_YCDH = tk.Entry(frame_row_02_of_inventories_frame, width=15)
+        self.tab_01_entry_sl_YCDH = tk.Entry(frame_row_02_of_inventories_frame, width=15, state="readonly")
         self.tab_01_entry_sl_YCDH.pack(side="left")
         
         frame_row_03_of_inventories_frame = tk.Frame(self.frame_inventories_informations_tab_01)
@@ -318,6 +335,10 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         tab_01_button_container_02_on_the_left.pack(side="left", expand=True, pady=10)
         
         # Export Data button
+        self.tab_01_button_save_03 = tk.Button(tab_01_button_container_02_on_the_right, text="SAVE 03", command=self.f_tab_01_button_save_03_click)
+        self.tab_01_button_save_03.pack(side="right", padx=10)
+        
+        # Export Data button
         self.tab_01_button_save_02 = tk.Button(tab_01_button_container_02_on_the_right, text="SAVE 02", command=self.f_tab_01_button_save_02_click)
         self.tab_01_button_save_02.pack(side="right", padx=10)
         
@@ -376,7 +397,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         
     def f_tab_01_button_print_02_click(self):
         print("f_tab_01_button_print_02_click")
-        self.controller.f_controller_handle_btn_print_02_click_()
+        self.controller_01.f_controller_handle_btn_print_02_click_()
     
     def f_tab_01_button_import_click(self):
         print("Import config")
@@ -390,7 +411,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
     # Event Handlers of tab number 01
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     def f_tab_01_button_get_click(self):
-        self._f_config_notification(text=self.controller.f_get_data(self.table_of_tab_01), fg="blue")
+        self._f_config_notification(text=self.controller_01.f_get_data(self.table_of_tab_01), fg="blue")
         
     def f_view_tab_01_button_add_click(self):
         # Update the row count
@@ -402,7 +423,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         
         
         # Validate input using the helper function
-        is_valid, error_message = self.controller.f_controller_add_row(id_value, name_value, age_value, table)
+        is_valid, error_message = self.controller_01.f_controller_add_row(id_value, name_value, age_value, table)
         if not is_valid:
             # Show error message
             self._f_config_notification(text=error_message, fg="red")
@@ -416,7 +437,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self._f_view_set_rows_count_of_treeview_01_when_add_new_row()
         
     def _f_view_set_rows_count_of_treeview_01_when_add_new_row(self):
-        row_count = 1 + self.controller.f_controller_get_row_count(self.table_of_tab_01)
+        row_count = 1 + self.controller_01.f_controller_get_row_count(self.table_of_tab_01)
         self.tab_01_entry_id.config(state="normal")  # Enable the Entry widget to update the value
         self.tab_01_entry_id.delete(0, tk.END)  # Clear the existing value
         self.tab_01_entry_id.insert(0, row_count)  # Insert the new value (ID)
@@ -426,13 +447,16 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.label_footer.config(text=text, fg=fg)
     
     def f_tab_01_button_export_click(self):
-        text = self.controller.f_export_data_to_SQL(self.table_of_tab_01)
+        text = self.controller_01.f_export_data_to_SQL(self.table_of_tab_01)
         self._f_config_notification(text=text, fg="blue")
         
     def f_tab_01_button_save_02_click(self):
-        text = self.controller.f_controller_handle_btn_save_02_click_(self.table_of_tab_01)
+        text = self.controller_01.f_controller_handle_btn_save_02_click_(self.table_of_tab_01)
         self._f_config_notification(text=text, fg="blue")
     
+    def f_tab_01_button_save_03_click(self):        
+        text = self.controller_02_treeview.print_data()
+        self._f_config_notification(text=text, fg="blue")
 
     def _f_view_set_up_formats(self):
         self.f_tab_01_button_config_02_click()
@@ -444,11 +468,11 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
             self.treeview_test_of_tag_01.heading(col, text="")  # Remove headings
         
         # Trước khi cấu hình, phải thiết lập cột cho Treeview
-        tab_01_table_column_names = self.controller.f_get_table_config_name_only()
+        tab_01_table_column_names = self.controller_01.f_get_table_config_name_only()
         self.treeview_test_of_tag_01["columns"] = tab_01_table_column_names
         
         # Treeview config
-        list_table_of_tab_01_column_configs, list_table_of_tab_01_column_names, tuple_table_of_tab_01_header_font = self.controller.f_tab_01_button_config_click(self.table_of_tab_01)
+        list_table_of_tab_01_column_configs, list_table_of_tab_01_column_names, tuple_table_of_tab_01_header_font = self.controller_01.f_tab_01_button_config_click(self.table_of_tab_01)
         for config, col in zip(list_table_of_tab_01_column_configs, list_table_of_tab_01_column_names):
             # Configure each column
             self.treeview_test_of_tag_01.heading(col, text=col)  # Set header text
@@ -500,16 +524,16 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
             json.dump(json_serializable_config, json_file, indent=4, ensure_ascii=False)
     
     def f_view_table_of_tab_01_click(self, event):
-        # Call the controller to handle the event
+        # Call the controller_01 to handle the event
         self.current_time = time.time()
-        is_double_click = self.controller.f_handle_event_click_on_table_of_tab_01(self.last_click_time, self.current_time, self.double_click_interval)
+        is_double_click = self.controller_01.f_handle_event_click_on_table_of_tab_01(self.last_click_time, self.current_time, self.double_click_interval)
         # Update last click time only after handling
         self.last_click_time = self.current_time
         # Handle the action for single and double click
         if is_double_click:
-            self.controller.f_tab_01_table_double_click(event)
+            self.controller_01.f_tab_01_table_double_click(event)
         else:
-            id_value, name_value, age_value = self.controller.f_tab_01_table_single_click(event)
+            id_value, name_value, age_value = self.controller_01.f_tab_01_table_single_click(event)
             # Clear and update the Entry widgets if values are returned
             if id_value is not None:
                 self.tab_01_entry_id.config(state="normal")  # Enable the Entry widget to update the value
@@ -526,16 +550,16 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
                 self.tab_01_entry_sl_YCDH.insert(0, age_value)
     
     def f_view_table_of_tab_02_click(self, event):
-        # Call the controller to handle the event
+        # Call the controller_01 to handle the event
         self.current_time = time.time()
-        # is_double_click = self.controller.f_handle_event_click_on_table_of_tab_01(self.last_click_time, self.current_time, self.double_click_interval)
+        # is_double_click = self.controller_01.f_handle_event_click_on_table_of_tab_01(self.last_click_time, self.current_time, self.double_click_interval)
         # # Update last click time only after handling
         # self.last_click_time = self.current_time
         # # Handle the action for single and double click
         # if is_double_click:
-        #     self.controller.f_tab_01_table_double_click(event)
+        #     self.controller_01.f_tab_01_table_double_click(event)
         # else:
-        #     id_value, name_value, age_value = self.controller.f_tab_01_table_single_click(event)
+        #     id_value, name_value, age_value = self.controller_01.f_tab_01_table_single_click(event)
         #     # Clear and update the Entry widgets if values are returned
         #     if id_value is not None:
         #         self.tab_01_entry_id.config(state="normal")  # Enable the Entry widget to update the value

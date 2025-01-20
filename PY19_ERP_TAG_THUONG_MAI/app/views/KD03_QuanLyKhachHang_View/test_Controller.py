@@ -1,11 +1,9 @@
 import time
-from test_Model import cls_test_Model  # Import Model at the top
-# import xlwings as xw
+from test_Model import cls_test_Model
 from Components_View import *   # Tại sao lại phải import Components_View
-# print(Components_View.__file__)
 from utils import *
-# print(utils.__file__)
-# from openpyxl import load_workbook, Workbook
+import traceback
+from tkinter import StringVar
 
 class cls_test_Controller():
     def __init__(self):
@@ -167,4 +165,113 @@ class cls_test_Controller():
         # Get all child items (rows) and count them
         return len(treeview.get_children())    
 
+
+class cls_test_Controller_02_treeview():
+    def __init__(self, tree, entry_ma_kh, entry_ten_kh, entry_so_phieu, entry_ghi_chu_phieu):
+        self.tree = tree
+        self.entry_ma_kh = entry_ma_kh
+        self.entry_ten_kh = entry_ten_kh
+        self.entry_so_phieu = entry_so_phieu
+        self.entry_ghi_chu_phieu = entry_ghi_chu_phieu
+        
+    def add_to_treeview(self):
+        ma_kh = self.entry_ma_kh.get()
+        ten_kh = self.entry_ten_kh.get()
+        so_phieu = self.entry_so_phieu.get()
+        ghi_chu_phieu = self.entry_ghi_chu_phieu.get()
+
+        if ma_kh and ten_kh and so_phieu:
+            self.tree.insert("", "end", values=(
+                self.tree.get_children().__len__() + 1, ma_kh, ten_kh, so_phieu, ghi_chu_phieu
+            ))
+            self.clear_entries()
+
+    # Method to clear entry fields
+    def clear_entries(self):
+        self.entry_ma_kh.delete(0, tk.END)
+        self.entry_ten_kh.delete(0, tk.END)
+        self.entry_so_phieu.delete(0, tk.END)
+        self.entry_ghi_chu_phieu.delete(0, tk.END)
     
+    # Function to print data from the Treeview
+    def print_data(self):
+        try:
+            data = []
+            for child in self.tree.get_children():
+                row = self.tree.item(child, "values")
+                data.append((
+                    self.entry_ma_kh.get(),
+                    self.entry_ten_kh.get(),
+                    self.entry_so_phieu.get(),
+                    row[0],
+                    row[1],
+                    row[2]
+                    # ,
+                    # float(row[3]),
+                    # row[4]
+                ))
+            print(data)
+            return "Data chuẩn bị để gửi đi đã được in!"
+        except Exception as e:
+            error_details = traceback.format_exc()
+            print("Chi tiết lỗi:")
+            print(error_details)
+            return f"Data validation failed. Error details:\n{error_details}"
+        
+class cls_test_Controller_03_auto_update_number():
+    def __init__(self, entry_sl_kha_dung, entry_sl_nhu_cau, entry_sl_giu_cho, entry_sl_yeu_cau_dat_hang):
+        self.entry_sl_kha_dung = entry_sl_kha_dung
+        self.entry_sl_nhu_cau = entry_sl_nhu_cau
+        self.entry_sl_giu_cho = entry_sl_giu_cho
+        self.entry_sl_yeu_cau_dat_hang = entry_sl_yeu_cau_dat_hang
+        
+        # # Variables to store the values of the entries
+        # self.entry_num01_var = StringVar()
+        # self.entry_num02_var = StringVar()
+        # self.entry_num03_var = StringVar()
+        # self.entry_num04_var = StringVar()
+        
+        # # Link updates to changes in the first two entries
+        # self.entry_num01_var.trace("w", lambda *args: self.update_entries(self.entry_num01_var, self.entry_num02_var, self.entry_num03_var, self.entry_num04_var))
+        # self.entry_num02_var.trace("w", lambda *args: self.update_entries(self.entry_num01_var, self.entry_num02_var, self.entry_num03_var, self.entry_num04_var))
+        
+        # Link updates to changes in input variables
+        self.entry_sl_kha_dung.trace("w", lambda *args: self.update_entries())
+        self.entry_sl_nhu_cau.trace("w", lambda *args: self.update_entries())
+        
+    # def update_entries(self, *args):
+    #     try:
+    #         # Retrieve and convert the input values
+    #         num01 = float(self.entry_sl_kha_dung.get()) if self.entry_sl_kha_dung.get() else 0
+    #         num02 = float(self.entry_sl_nhu_cau.get()) if self.entry_sl_nhu_cau.get() else 0
+
+    #         # Calculate the values for the dependent entries
+    #         min_value = min(num01, num02)
+    #         difference = max((num02 - num01), 0)
+
+    #         # Update the dependent entries
+    #         self.entry_sl_giu_cho.set(f"{min_value}")
+    #         self.entry_sl_yeu_cau_dat_hang.set(f"{difference}")
+    #     except ValueError:
+    #         # Handle invalid input gracefully
+    #         self.entry_sl_giu_cho.set("Error")
+    #         self.entry_sl_yeu_cau_dat_hang.set("Error")
+            
+    def update_entries(self):
+        try:
+            # Retrieve and convert input values
+            num_kha_dung = float(self.entry_sl_kha_dung.get()) if self.entry_sl_kha_dung.get() else 0
+            num_nhu_cau = float(self.entry_sl_nhu_cau.get()) if self.entry_sl_nhu_cau.get() else 0
+
+            # Calculate dependent values
+            min_value = min(num_kha_dung, num_nhu_cau)  # Số lượng giữ chỗ
+            difference = max(num_nhu_cau - num_kha_dung, 0)  # Yêu cầu đặt hàng
+
+            # Update output entries
+            self.entry_sl_giu_cho.set(f"{min_value}")
+            self.entry_sl_yeu_cau_dat_hang.set(f"{difference}")
+        except ValueError:
+            # Handle invalid input gracefully
+            self.entry_sl_giu_cho.set("Error")
+            self.entry_sl_yeu_cau_dat_hang.set("Error")
+            

@@ -4,7 +4,7 @@
         "columns",
         "Columns",
         "",
-        "('STT', 'Tên khách hàng', 'Số điện thoại')"
+        "('STT', 'Tên mặt hàng', 'Số lượng')"
     ],
     "displaycolumns": [
         "displaycolumns",
@@ -46,14 +46,14 @@
         "xScrollCommand",
         "ScrollCommand",
         "",
-        "1494566338240set"
+        "2174517887936set"
     ],
     "yscrollcommand": [
         "yscrollcommand",
         "yScrollCommand",
         "ScrollCommand",
         "",
-        "1494566338432set"
+        "2174517953472set"
     ],
     "takefocus": [
         "takefocus",
