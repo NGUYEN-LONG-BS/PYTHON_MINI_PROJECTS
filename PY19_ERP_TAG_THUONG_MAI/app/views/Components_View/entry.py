@@ -89,15 +89,20 @@ class cls_my_number_entry_num_01(tk.Entry):
         if not all(char in valid_chars for char in current_value):
             self.delete(0, tk.END)
             self.insert(0, ''.join(filter(lambda x: x in valid_chars, current_value)))
-
+            
     def f_format_text(self):
-        """Format the entry text as a number with commas and two decimal places."""
+        """Format the entry text as a number with commas.
+        Show two decimal places only if necessary."""
         try:
             current_text = self.get().replace(",", "")
-            if current_text.strip():
-                formatted_text = f"{float(current_text):,.2f}"
+            if current_text.strip():  # Kiểm tra nếu không phải chuỗi rỗng
+                number = float(current_text)
+                if number.is_integer():  # Nếu là số nguyên
+                    formatted_text = f"{int(number):,}"
+                else:  # Nếu là số thập phân
+                    formatted_text = f"{number:,.2f}"
                 self.delete(0, tk.END)
                 self.insert(0, formatted_text)
         except ValueError:
-            # Reset text if invalid
+            # Reset text nếu nhập không hợp lệ
             self.delete(0, tk.END)
