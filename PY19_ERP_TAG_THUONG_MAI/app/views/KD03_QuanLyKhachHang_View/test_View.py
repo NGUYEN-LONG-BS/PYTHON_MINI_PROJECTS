@@ -34,6 +34,8 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
     def _f_setup_all_binding(self):
         self.entry_sl_kha_dung = f_utils_tim_component_with_name(self, "entry_sl_kha_dung")
         self.entry_sl_kha_dung.bind("<FocusOut>", lambda event: f_utils_on_entry_change(self.entry_sl_kha_dung))
+        
+        self.entry_ten_hang = f_utils_tim_component_with_name(self, "entry_sl_ten_hang")
     
     def _f_view_thay_doi_gia_tri_cua_base_form(self):
         # Thay đổi thông tin các tab
@@ -428,13 +430,15 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         # Update the row count
         self._f_view_set_rows_count_of_treeview_01_when_add_new_row()
         id_value = self.tab_01_entry_id.get()
-        name_value = self.tab_01_entry_ghi_chu_mat_hang.get()
-        age_value = self.tab_01_entry_sl_YCDH.get()
+        # ten_hang = self.tab_01_entry_ghi_chu_mat_hang.get()
+        ten_hang = self.entry_ten_hang.get()
+        
+        sl_yeu_cau_dat_hang = float(self.tab_01_entry_sl_YCDH.get().replace(',', '') or 0)
         table = self.table_of_tab_01
         
         
         # Validate input using the helper function
-        is_valid, error_message = self.controller_01.f_controller_add_row(id_value, name_value, age_value, table)
+        is_valid, error_message = self.controller_01.f_controller_add_row(id_value, ten_hang, sl_yeu_cau_dat_hang, table)
         if not is_valid:
             # Show error message
             self._f_config_notification(text=error_message, fg="red")

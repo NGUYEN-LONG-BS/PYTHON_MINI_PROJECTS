@@ -2,6 +2,7 @@ import os
 import json
 import pyodbc
 from datetime import datetime
+from Components_View import *
 
 class cls_test_Model():
     def __init__(self):
@@ -10,9 +11,11 @@ class cls_test_Model():
     
     def f_define_table_configurations_json_file(self):
         # Get the absolute path of the current directory
-        current_dir = os.path.dirname(__file__)  
+        # current_dir = os.path.dirname(__file__)  
         # Define the relative path to the JSON file
-        self.json_file = os.path.join(current_dir, 'test_table_input.JSON')
+        
+        # self.json_file = os.path.join(current_dir, 'test_table_input.JSON')
+        self.json_file = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'TEST_VIEW_01', 'test_table_input.JSON')
         
     def f_load_table_config_from_json(self):
         """Load table and column configurations from JSON"""
