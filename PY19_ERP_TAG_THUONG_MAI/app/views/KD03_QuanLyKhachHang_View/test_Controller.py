@@ -20,15 +20,29 @@ class cls_test_Controller():
         except Exception as e:
             print(f"Error initializing MVC components: {e}")
         
-    def f_check_input(self, id_value, name_value, age_value):    
-        if not id_value or not name_value or not age_value:
-            return False, "All fields are required!"
-
+    def f_check_input(self, id_value, ma_hang, ten_hang, sl_giu_cho, sl_yeu_cau_dat_hang):    
+        # Kiểm tra các trường bắt buộc
+        if not id_value or not ma_hang or not ten_hang:
+            return False, "All fields are required: mã hàng, tên hàng"
+        
+        # Kiểm tra id_value có phải số nguyên hay không
+        if not id_value.isdigit():
+            return False, f"ID value '{id_value}' must be an integer!"
+        
+        # Kiểm tra sl_giu_cho và sl_yeu_cau_dat_hang có phải số hay không
         try:
-            int(id_value)  # Validate ID is an integer
-            int(age_value)  # Validate Age is an integer
+            sl_giu_cho_value = float(sl_giu_cho)
+            sl_yeu_cau_dat_hang_value = float(sl_yeu_cau_dat_hang)
         except ValueError:
-            return False, "ID and Age must be numbers!"
+            return False, f"Số lượng giữ chỗ '{sl_giu_cho}' và số lượng yêu cầu đặt hàng '{sl_yeu_cau_dat_hang}' phải là số."
+        
+        # Kiểm tra sl_giu_cho và sl_yeu_cau_dat_hang không đồng thời bằng không
+        if sl_giu_cho_value == 0 and sl_yeu_cau_dat_hang_value == 0:
+            return False, "Số lượng giữ chỗ và số lượng yêu cầu đặt hàng không được đồng thời bằng 0."
+        
+        # Kiểm tra số lượng giữ chỗ hoặc yêu cầu đặt hàng hợp lệ
+        if sl_giu_cho_value < 0 or sl_yeu_cau_dat_hang_value < 0:
+            return False, "Số lượng giữ chỗ và số lượng yêu cầu đặt hàng không được âm."
         
         return True, ""
 
@@ -59,15 +73,15 @@ class cls_test_Controller():
         return rows
     
     # Function to add a row to the table
-    def f_controller_add_row(self, id_entry, name_entry, age_entry, table):
+    def f_controller_add_row(self, id_value, ma_hang, ten_hang, dvt, sl_giu_cho, sl_yeu_cau_dat_hang, ghi_chu_mat_hang, table):
         
         # Validate input using the helper function
-        is_valid, error_message = self.f_check_input(id_entry, name_entry, age_entry)
+        is_valid, error_message = self.f_check_input(id_value, ma_hang, ten_hang, sl_giu_cho, sl_yeu_cau_dat_hang)
         if not is_valid:
             return is_valid, error_message
         
         # Add row to the treeview
-        table.insert("", "end", values=(id_entry, name_entry, age_entry))
+        table.insert("", "end", values=(id_value, ma_hang, ten_hang, dvt, sl_giu_cho, sl_yeu_cau_dat_hang, ghi_chu_mat_hang))
         error_message ="Row added successfully!"
         
         return is_valid, error_message
@@ -132,13 +146,13 @@ class cls_test_Controller():
             # Fetch the values of the selected row
             row_values = treeview.item(selected_item[0], "values")
             # print("Selected row values:", row_values)
-            if len(row_values) >= 3:
-                return row_values[0], row_values[1], row_values[2]
+            if len(row_values) >= 7:
+                return row_values[0], row_values[1], row_values[2], row_values[3], row_values[4], row_values[5], row_values[6]
             else:
-                return None, None, None
+                return None, None, None, None, None, None, None
         else:
             # print("Warning: No row selected.")
-            return None, None, None
+            return None, None, None, None, None, None, None
     
     def f_tab_01_table_double_click(self, event):
         # Get the Treeview widget from the event

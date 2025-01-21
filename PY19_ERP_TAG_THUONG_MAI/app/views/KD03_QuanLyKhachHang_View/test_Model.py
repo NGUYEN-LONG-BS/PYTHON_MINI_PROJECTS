@@ -10,11 +10,7 @@ class cls_test_Model():
         self.f_define_table_configurations_json_file()
     
     def f_define_table_configurations_json_file(self):
-        # Get the absolute path of the current directory
-        # current_dir = os.path.dirname(__file__)  
-        # Define the relative path to the JSON file
-        
-        # self.json_file = os.path.join(current_dir, 'test_table_input.JSON')
+        # Define the path to the JSON file
         self.json_file = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'TEST_VIEW_01', 'test_table_input.JSON')
         
     def f_load_table_config_from_json(self):

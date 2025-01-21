@@ -49,6 +49,17 @@
                 "show": "headings"
             },
             {
+                "name": "SL giữ chỗ",
+                "width": 120,
+                "min_width": 120,
+                "anchor": "w",
+                "stretch": false,
+                "font": {"family": "Arial", "size": 12, "weight": "normal"},
+                "background_color": "#ffffff",
+                "foreground_color": "#4287f5",
+                "show": "headings"
+            },
+            {
                 "name": "SL YCDH",
                 "width": 120,
                 "min_width": 120,

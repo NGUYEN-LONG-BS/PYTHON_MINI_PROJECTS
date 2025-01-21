@@ -88,6 +88,7 @@ class cls_frame_inventories_information_view(tk.Frame):
             dropdown_width=1200,
             dropdown_height=300,
             width=15,
+            name="entry_ma_hang"
         )
         self.treeview_combobox.pack(side="left", padx=(0, 2), pady=5)
         

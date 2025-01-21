@@ -35,7 +35,9 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.entry_sl_kha_dung = f_utils_tim_component_with_name(self, "entry_sl_kha_dung")
         self.entry_sl_kha_dung.bind("<FocusOut>", lambda event: f_utils_on_entry_change(self.entry_sl_kha_dung))
         
+        self.entry_ma_hang = f_utils_tim_component_with_name(self, "entry_ma_hang")
         self.entry_ten_hang = f_utils_tim_component_with_name(self, "entry_sl_ten_hang")
+        self.entry_dvt = f_utils_tim_component_with_name(self, "entry_dvt")
     
     def _f_view_thay_doi_gia_tri_cua_base_form(self):
         # Thay đổi thông tin các tab
@@ -430,15 +432,18 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         # Update the row count
         self._f_view_set_rows_count_of_treeview_01_when_add_new_row()
         id_value = self.tab_01_entry_id.get()
-        # ten_hang = self.tab_01_entry_ghi_chu_mat_hang.get()
+        ma_hang = self.entry_ma_hang.get()
         ten_hang = self.entry_ten_hang.get()
+        dvt = self.entry_dvt.get()
         
         sl_yeu_cau_dat_hang = float(self.tab_01_entry_sl_YCDH.get().replace(',', '') or 0)
+        sl_giu_cho = float(self.tab_01_entry_sl_giu_cho.get().replace(',', '') or 0)
+        ghi_chu_mat_hang = self.tab_01_entry_ghi_chu_mat_hang.get()
         table = self.table_of_tab_01
         
         
         # Validate input using the helper function
-        is_valid, error_message = self.controller_01.f_controller_add_row(id_value, ten_hang, sl_yeu_cau_dat_hang, table)
+        is_valid, error_message = self.controller_01.f_controller_add_row(id_value, ma_hang, ten_hang, dvt, sl_giu_cho, sl_yeu_cau_dat_hang, ghi_chu_mat_hang, table)
         if not is_valid:
             # Show error message
             self._f_config_notification(text=error_message, fg="red")
@@ -548,7 +553,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         if is_double_click:
             self.controller_01.f_tab_01_table_double_click(event)
         else:
-            id_value, name_value, age_value = self.controller_01.f_tab_01_table_single_click(event)
+            id_value, ma_hang, ten_hang, dvt, sl_giu_cho, sl_dat_hang, ghi_chu_mat_hang = self.controller_01.f_tab_01_table_single_click(event)
             # Clear and update the Entry widgets if values are returned
             if id_value is not None:
                 self.tab_01_entry_id.config(state="normal")  # Enable the Entry widget to update the value
@@ -556,13 +561,53 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
                 self.tab_01_entry_id.insert(0, id_value)
                 self.tab_01_entry_id.config(state="disabled")  # Disable the Entry widget again
 
-            if name_value is not None:
+            if ghi_chu_mat_hang is not None:
                 self.tab_01_entry_ghi_chu_mat_hang.delete(0, tk.END)
-                self.tab_01_entry_ghi_chu_mat_hang.insert(0, name_value)
+                self.tab_01_entry_ghi_chu_mat_hang.insert(0, ghi_chu_mat_hang)
 
-            if age_value is not None:
+            if ma_hang is not None:
+                self.entry_ma_hang.delete(0, tk.END)
+                self.entry_ma_hang.insert(0, ma_hang)
+                
+            if ten_hang is not None:
+                self.entry_ten_hang.delete(0, tk.END)
+                self.entry_ten_hang.insert(0, ten_hang)
+                
+            if dvt is not None:
+                self.entry_dvt.delete(0, tk.END)
+                self.entry_dvt.insert(0, dvt)
+            
+            if sl_giu_cho is not None:
+                self.tab_01_entry_sl_giu_cho.config(state="normal")
+                self.tab_01_entry_sl_giu_cho.delete(0, tk.END)
+                if float(sl_giu_cho).is_integer():  # Nếu là số nguyên
+                    formatted_sl_giu_cho = f"{int(float(sl_giu_cho)):,}"
+                else:  # Nếu là số thập phân
+                    formatted_sl_giu_cho = f"{float(sl_giu_cho):,.2f}"
+                self.tab_01_entry_sl_giu_cho.insert(0, formatted_sl_giu_cho)
+                self.tab_01_entry_sl_giu_cho.config(state="disabled")
+                
+            if sl_dat_hang is not None:
+                self.tab_01_entry_sl_YCDH.config(state="normal")
                 self.tab_01_entry_sl_YCDH.delete(0, tk.END)
-                self.tab_01_entry_sl_YCDH.insert(0, age_value)
+                if float(sl_dat_hang).is_integer():  # Nếu là số nguyên
+                    formatted_sl_dat_hang = f"{int(float(sl_dat_hang)):,}"
+                else:  # Nếu là số thập phân
+                    formatted_sl_dat_hang = f"{float(sl_dat_hang):,.2f}"
+                self.tab_01_entry_sl_YCDH.insert(0, formatted_sl_dat_hang)
+                self.tab_01_entry_sl_YCDH.config(state="disabled")
+            
+            # Update the value of sl_nhu_cau
+            sl_giu_cho = self.tab_01_entry_sl_giu_cho.get().replace(",", "")
+            sl_dat_hang = self.tab_01_entry_sl_YCDH.get().replace(",", "")
+            sl_nhu_cau = float(sl_giu_cho) + float(sl_dat_hang)
+            if sl_nhu_cau.is_integer():  # Nếu là số nguyên
+                formatted_sl_nhu_cau = f"{int(sl_nhu_cau):,}"
+            else:  # Nếu là số thập phân
+                formatted_sl_nhu_cau = f"{sl_nhu_cau:,.2f}"
+            
+            self.tab_01_entry_nhu_cau.delete(0, tk.END)
+            self.tab_01_entry_nhu_cau.insert(0, formatted_sl_nhu_cau)
     
     def f_view_table_of_tab_02_click(self, event):
         # Call the controller_01 to handle the event
