@@ -102,7 +102,7 @@ class cls_frame_inventories_information_view(tk.Frame):
         label_dvt = ttk.Label(self.frame_row_2, text="Đvt:")
         label_dvt.pack(side="left", padx=(10,2), pady=5)
            
-        entry_dvt = cls_my_text_entry_num_01(self.frame_row_2, width=10, name="entry_dvt")
+        entry_dvt = cls_my_text_entry_num_01(self.frame_row_2, width=7, name="entry_dvt")
         entry_dvt.pack(side="left", padx=(0, 2), pady=5)
         self.additional_entries.append(entry_dvt)
 
@@ -110,12 +110,14 @@ class cls_frame_inventories_information_view(tk.Frame):
         label_sl_kha_dung.pack(side="left", padx=(10, 2), pady=5)
 
         # entry_sl_kha_dung = ttk.Entry(self.frame_row_2, width=15, name="entry_sl_kha_dung")
-        entry_sl_kha_dung = cls_my_number_entry_num_01(self.frame_row_2, width=15, name="entry_sl_kha_dung")
+        entry_sl_kha_dung = cls_my_number_entry_num_01(self.frame_row_2, width=10, name="entry_sl_kha_dung")
         entry_sl_kha_dung.pack(side="left", padx=(0, 10), pady=5)
         self.additional_entries.append(entry_sl_kha_dung)
 
         # Link additional Entry widgets to the cls_TreeviewCombobox_inventories
+        # entry_sl_kha_dung.config(state="normal")
         self.treeview_combobox.set_additional_entries(self.additional_entries)
+        # entry_sl_kha_dung.config(state="readonly")
 
     def update_combobox_data(self, data):
         self.treeview_combobox.data = data
@@ -139,6 +141,7 @@ class cls_TreeviewCombobox_inventories(cls_my_text_entry_num_01):
         # Set placeholder text color and the initial text
         self.insert(0, self.placeholder)
         self.config(foreground=self.default_fg_color)
+        self.f_on_leaving(color=COLOR_WHITE)
 
         # Bind events to show and interact with dropdown
         self.bind("<Button-1>", self.f_handle_event_left_click)

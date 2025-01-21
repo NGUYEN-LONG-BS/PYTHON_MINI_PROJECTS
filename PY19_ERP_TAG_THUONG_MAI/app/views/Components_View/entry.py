@@ -32,10 +32,11 @@ class cls_my_text_entry_num_01(tk.Entry):
         # Configure appearance when selecting
         self.config(bg=HIGHLIGHT_COLOR)
         
-    def f_on_leaving(self, event):
+    def f_on_leaving(self, event=None, color=None):
         """Change appearance when the mouse leaves."""        
-        # Configure appearance when selecting
-        self.config(bg=BG_COLOR_0_0)
+        # Use default background color if no color is provided
+        default_color = BG_COLOR_0_0
+        self.config(bg=color if color is not None else default_color)
         
     def f_on_typing(self, event):
         """Change appearance when typing."""
@@ -62,21 +63,29 @@ class cls_my_number_entry_num_01(tk.Entry):
         # Configure appearance when selecting
         self.config(bg=HIGHLIGHT_COLOR)
         
-    def f_on_not_selecting(self, event):
+    def f_on_not_selecting(self, event=None, color=None):
         """Change appearance when not selecting."""        
-        # Configure appearance when selecting
+        # Configure appearance when not selecting
         self.f_format_text()
-        self.config(bg=BG_COLOR_0_0)
+        default_color = BG_COLOR_0_0
+        if color is not None:
+            self.config(bg=color)
+        else:
+            self.config(bg=default_color)
         
     def f_on_entering(self, event):
         """Change appearance when the mouse enters."""        
-        # Configure appearance when selecting
+        # Configure appearance when entering
         self.config(bg=HIGHLIGHT_COLOR)
         
-    def f_on_leaving(self, event):
+    def f_on_leaving(self, event=None, color=None):
         """Change appearance when the mouse leaves."""        
-        # Configure appearance when selecting
-        self.config(bg=BG_COLOR_0_0)
+        # Use default background color if no color is provided
+        default_color = BG_COLOR_0_0
+        if color is not None:
+            self.config(bg=color)
+        else:
+            self.config(bg=default_color)
         
     def f_on_typing(self, event):
         """Change appearance when typing."""

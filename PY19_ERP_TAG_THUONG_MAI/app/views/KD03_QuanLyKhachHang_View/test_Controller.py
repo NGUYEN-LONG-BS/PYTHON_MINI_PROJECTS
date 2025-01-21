@@ -238,23 +238,38 @@ class cls_test_Controller_03_auto_update_number():
     
     def update_entries(self, event=None):
         try:
+            # Loại bỏ dấu phẩy ngăn cách phần ngàn
+            sl_kha_dung = self.entry_sl_kha_dung.get().replace(",", "")
+            sl_nhu_cau = self.entry_sl_nhu_cau.get().replace(",", "")
             # Retrieve and convert the input values
-            num_kha_dung = float(self.entry_sl_kha_dung.get()) if self.entry_sl_kha_dung.get() else 0
-            num_nhu_cau = float(self.entry_sl_nhu_cau.get()) if self.entry_sl_nhu_cau.get() else 0
+            
+            # Retrieve and convert the input values
+            num_kha_dung = float(sl_kha_dung or 0)
+            num_nhu_cau = float(sl_nhu_cau or 0)
 
             # Calculate the values for the dependent entries
             min_value = min(num_kha_dung, num_nhu_cau)
             difference = max((num_nhu_cau - num_kha_dung), 0)
 
+            if min_value.is_integer():  # Nếu là số nguyên
+                formatted_text_01 = f"{int(min_value):,}"
+            else:  # Nếu là số thập phân
+                formatted_text_01 = f"{min_value:,.2f}"
+            
+            if difference.is_integer():  # Nếu là số nguyên
+                formatted_text_02 = f"{int(difference):,}"
+            else:  # Nếu là số thập phân
+                formatted_text_02 = f"{difference:,.2f}"
+
             # Update the dependent entries
             self.entry_sl_giu_cho.config(state="normal")
             self.entry_sl_giu_cho.delete(0, tk.END)
-            self.entry_sl_giu_cho.insert(0, f"{min_value}")
+            self.entry_sl_giu_cho.insert(0, f"{formatted_text_01}")
             self.entry_sl_giu_cho.config(state="readonly")
 
             self.entry_sl_yeu_cau_dat_hang.config(state="normal")
             self.entry_sl_yeu_cau_dat_hang.delete(0, tk.END)
-            self.entry_sl_yeu_cau_dat_hang.insert(0, f"{difference}")
+            self.entry_sl_yeu_cau_dat_hang.insert(0, f"{formatted_text_02}")
             self.entry_sl_yeu_cau_dat_hang.config(state="readonly")
         except ValueError:
             # Handle invalid input gracefully

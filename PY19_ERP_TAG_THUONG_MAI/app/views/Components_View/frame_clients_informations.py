@@ -134,6 +134,7 @@ class cls_TreeviewCombobox(cls_my_text_entry_num_01):
         # Set placeholder text color and the initial text
         self.insert(0, self.placeholder)
         self.config(foreground=self.default_fg_color)
+        self.f_on_leaving(color=COLOR_WHITE)
 
         # Bind events to show and interact with dropdown
         self.bind("<Button-1>", self.f_handle_event_left_click)
