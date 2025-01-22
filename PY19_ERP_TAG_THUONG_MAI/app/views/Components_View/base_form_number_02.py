@@ -15,6 +15,7 @@ class cls_base_form_number_02_ManyTabs(tk.Tk):
         # Set up favicon and window configuration
         self.f_Thiet_lap_Kich_thuoc_Cua_So()
         # Set up reusable components
+        self.f_set_style()
         self.f_Goi_Cac_Thanh_Phan_Tai_Su_Dung()
         self.f_setup_all_events()
     
@@ -74,6 +75,25 @@ class cls_base_form_number_02_ManyTabs(tk.Tk):
     def _close_window_Click(self):
         self.destroy()
         f_utils_open_dashboard_main()
+    
+    def f_set_style(self):
+        # Create a style object
+        style = ttk.Style()
+        style.theme_use("default")  # Use default theme (you can experiment with others)
+
+        # Customize the notebook style
+        style.configure("TNotebook", 
+                        background="#f0f0f0", 
+                        borderwidth=0)
+        style.configure("TNotebook.Tab", 
+                        background="#ffffff", 
+                        foreground="#000000", 
+                        padding=[10, 5],
+                        font=("Arial", 12, "bold"))
+        style.map("TNotebook.Tab", 
+                background=[("selected", "#4caf50")], 
+                foreground=[("selected", "#ffffff")],
+                expand=[("selected", [1, 1, 1, 0])])
     
     def f_add_elements_to_frame_body(self):
         # Create a notebook (tabs)
