@@ -1,21 +1,20 @@
 import tkinter as tk
 from tkinter import ttk
 from entry import *
-# from PIL import Image, ImageTk
+from utils import *
 
-# Model: cls_frame_client_information_model
-class cls_frame_client_information_model:
+# Model: cls_frame_contracts_management_model
+class cls_frame_contracts_management_model:
     def __init__(self):
         # Sample data to simulate the model
-        self.header = ["Mã KH", "Tên KH", "MST", "Địa chỉ"]
+        self.header = ["Số hợp đồng", "Thông tin ngắn"]
         self.data = [
-            ("BH01", "Công ty TNHH Con số", "02641368626", "04 đường Nguyễn Trãi, Cần Thơ, Việt Nam"),
-            ("BH02", "Công ty TNHH Cửa Hàng", "02641368125", "26 đường Nguyễn Duy Hưng, Đà Nẵng, Việt Nam"),
-            ("BH03", "Công ty TNHH Một Thành Viên", "0264151515", "04 đường Lê Lợi, TP. Hồ Chí Minh, Việt Nam"),
-            ("BH04", "Công ty TNHH TTL", "0264136516", "28 đường Trường Chinh, Bình Định, Việt Nam"),
-            ("BH05", "Công ty CP Khổng lồ", "02641361121", "297 đường Phan Bội Châu, Quy Nhơn, Bình Định, Việt Nam"),
+            ("HD07836/NA/2025", "Hợp đồng xây dựng đột xuất PC Thủ đức"),
+            ("IB973649238", "Gói thầu ngầm hoá"),
+            ("IB00093", "Hợp đồng xây lắp"),
+            ("HD07836/HCM/2024", "Hợp đồng liên danh"),
+            ("HD07836/HN/2023", "Hợp đồng MCCB"),
         ]
-        
 
     def get_data(self):
         return self.data
@@ -30,12 +29,10 @@ class cls_frame_client_information_model:
                 filtered_data.append(row)
         return filtered_data
 
-# Controller: cls_frame_client_information_controller
-class cls_frame_client_information_controller:
+# Controller: cls_frame_contracts_management_controller
+class cls_frame_contracts_management_controller:
     def __init__(self):
-        self.model = cls_frame_client_information_model()  # Create an instance of the model
-        # self.view = cls_frame_client_information_view
-        # self.view.controller = self
+        self.model = cls_frame_contracts_management_model()  # Create an instance of the model
 
     def get_data(self):
         return self.model.get_data()
@@ -47,77 +44,62 @@ class cls_frame_client_information_controller:
         filtered_data = self.model.filter_data(query)
         self.view.update_combobox_data(filtered_data)
         
-# View: cls_frame_client_information_view
-class cls_frame_client_information_view(tk.Frame):
+# View: cls_frame_contracts_management_view
+class cls_frame_contracts_management_view(tk.Frame):
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
-        # setup first
+        # first setup 
         self._f_setup_geometry()
-        # setup second
+        # second setup 
         self._f_setup_MVC()
-        # setup third
+        # third setup 
         self._f_create_widgets_all_container_frames()
         
     def _f_setup_geometry(self):
-        self.config(bd=2, relief="groove")
+        # self.config(bd=2, relief="groove")
+        self.config(bd=0, relief="flat")
     
     def _f_create_widgets_all_container_frames(self):
         # row 1
         self.frame_row_1 = tk.Frame(self)
         self.frame_row_1.pack(side="top", fill="x", pady=0)
         self._f_create_widgets_of_frame_row_1()
-        # row 2
-        self.frame_row_2 = tk.Frame(self)
-        self.frame_row_2.pack(side="top", fill="x", pady=0)
-        self._f_create_widgets_of_frame_row_2()
         
     def _f_setup_MVC(self):
-        self.controller = cls_frame_client_information_controller()  # Create an instance of the controller
+        self.controller = cls_frame_contracts_management_controller()  # Create an instance of the controller
 
     def _f_create_widgets_of_frame_row_1(self):
         # Create label and TreeviewCombobox
-        label = ttk.Label(self.frame_row_1, text="Khách hàng:")
-        label.pack(side="left", padx=10, pady=5)
+        label_contract_ID = ttk.Label(self.frame_row_1, text="Số hợp đồng:")
+        label_contract_ID.pack(side="left", padx=(10,2), pady=5)
 
-        # Main cls_TreeviewCombobox_clients
-        self.treeview_combobox = cls_TreeviewCombobox_clients(
+        # Main cls_TreeviewCombobox_contracts
+        self.treeview_combobox = cls_TreeviewCombobox_contracts(
             self.frame_row_1,
             columns=self.controller.get_header(),
             data=self.controller.get_data(),
             dropdown_width=1200,
             dropdown_height=300,
-            width=15,
+            width=20,
+            name="entry_so_hop_dong"
         )
-        self.treeview_combobox.pack(side="left", padx=(5, 2), pady=5)
-
+        self.treeview_combobox.pack(side="left", padx=(0, 2), pady=5)
+        
         # Additional Entry widgets for other column values
         self.additional_entries = []
         
-        entry_client_names = cls_my_text_entry_num_01(self.frame_row_1, width=50)
-        entry_client_names.pack(side="left", fill="x", expand=True, padx=(0, 10), pady=5)
-        self.additional_entries.append(entry_client_names)
-    
-    def _f_create_widgets_of_frame_row_2(self):    
-        entry_client_tax_numbers = cls_my_text_entry_num_01(
-            self.frame_row_2, 
-            width=15
-        )
-        entry_client_tax_numbers.pack(side="left", padx=(10, 2), pady=5)
-        self.additional_entries.append(entry_client_tax_numbers)
+        entry_contract_short_info = cls_my_text_entry_num_01(self.frame_row_1, name="entry_thong_tin_ngan_cua_hop_dong")
+        entry_contract_short_info.pack(side="left", fill="x", expand=True, padx=(0, 10), pady=5)
+        self.additional_entries.append(entry_contract_short_info)
 
-        entry_client_address = cls_my_text_entry_num_01(self.frame_row_2)
-        entry_client_address.pack(side="left", fill="x", expand=True, padx=(0, 10), pady=5)
-        self.additional_entries.append(entry_client_address)
-
-        # Link additional Entry widgets to the cls_TreeviewCombobox_clients
+        # Link additional Entry widgets to the cls_TreeviewCombobox_contracts
         self.treeview_combobox.set_additional_entries(self.additional_entries)
 
     def update_combobox_data(self, data):
         self.treeview_combobox.data = data
         self.treeview_combobox.refresh_data()
 
-
-class cls_TreeviewCombobox_clients(cls_my_text_entry_num_01):
+class cls_TreeviewCombobox_contracts(cls_my_text_entry_num_01):
     def __init__(self, master, columns, data, dropdown_width=800, dropdown_height=600, **kwargs):
         super().__init__(master, **kwargs)
         self.columns = columns
@@ -139,15 +121,7 @@ class cls_TreeviewCombobox_clients(cls_my_text_entry_num_01):
         # Bind events to show and interact with dropdown
         self.bind("<Button-1>", self.f_handle_event_left_click)
         self.bind("<KeyRelease>", self.filter_data)
-        self.master.bind("<Button-1>", self.on_click_outside)  # Bind click event to master frame to hide dropdown
-        
-        parent_widget = self.master.nametowidget(self.master.winfo_parent())
-        parent_widget.bind("<Button-1>", self.on_click_outside)
 
-    def on_click_outside(self, event):
-        print("on_click_outside")
-        self.hide_dropdown()
-    
     def f_handle_event_left_click(self, event):
         self.f_on_click_clear_placeholder(event)
         self.f_show_dropdown(event)
@@ -174,10 +148,13 @@ class cls_TreeviewCombobox_clients(cls_my_text_entry_num_01):
             # Populate Treeview with data
             self.refresh_data()
 
+            # Biến để theo dõi dòng đang được highlight
+            self.current_highlighted = None
+            self.tree.bind("<Motion>", self.highlight_row)
+
             # Bind Treeview selection
             self.tree.bind("<<TreeviewSelect>>", self.on_tree_select)
-            self.tree.bind("leave", self.hide_dropdown)
-
+            self.tree.bind("<Leave>", self.hide_dropdown)
         else:
             self.dropdown.lift()
 
@@ -202,7 +179,7 @@ class cls_TreeviewCombobox_clients(cls_my_text_entry_num_01):
 
         # Insert filtered rows
         for row in self.data:
-            if query in row[0].lower() or query in row[1].lower() or query in row[2].lower():  # Filter by the first or second column or third column
+            if query in row[0].lower() or query in row[1].lower():  # Filter by the first or second column or third column
                 self.tree.insert("", "end", values=row)
 
     def on_tree_select(self, event):
@@ -228,3 +205,22 @@ class cls_TreeviewCombobox_clients(cls_my_text_entry_num_01):
         if self.get() == self.placeholder:
             self.delete(0, tk.END)
             self.config(foreground=self.active_fg_color)
+            
+    def highlight_row(self, event):
+        # Lấy ID của dòng dưới con trỏ chuột
+        row_id = self.tree.identify_row(event.y)
+
+        # Nếu có dòng mới dưới con trỏ, highlight nó
+        if row_id and row_id != self.current_highlighted:
+            # Bỏ highlight dòng trước đó
+            if self.current_highlighted:
+                self.tree.item(self.current_highlighted, tags=())
+            
+            # Gắn highlight cho dòng hiện tại
+            self.tree.item(row_id, tags=("highlighted",))
+            self.tree.tag_configure("highlighted", background=HIGHLIGHT_COLOR)
+            self.current_highlighted = row_id
+        elif not row_id and self.current_highlighted:
+            # Nếu không có dòng nào dưới con trỏ, bỏ highlight
+            self.tree.item(self.current_highlighted, tags=())
+            self.current_highlighted = None

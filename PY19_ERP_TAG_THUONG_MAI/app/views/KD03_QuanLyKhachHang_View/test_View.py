@@ -236,12 +236,14 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.frame_clients_informations_tab_01 = cls_frame_client_information_view(self.Frame_clients_and_inventories_information)
         self.frame_clients_informations_tab_01.config(bd=0, relief="flat")
         self.frame_clients_informations_tab_01.pack(side="left", fill="both", expand=True)
+        self._f_view_add_row_03_into_frame_clients_informations_tab_01()
         
         # Create frame inventories informations
         self.frame_inventories_informations_tab_01 = cls_frame_inventories_information_view(self.Frame_clients_and_inventories_information)
         self.frame_inventories_informations_tab_01.config(bd=0, relief="flat")
         self.frame_inventories_informations_tab_01.pack(side="left", fill="both", expand=True, padx=(10,0))
         self._f_view_add_widget_into_frame_inventories_informations_tab_01()
+        
         
     def _f_view_create_widgets_in_frame_slip_informations(self):
         # Input fields
@@ -290,6 +292,10 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_entry_ghi_chu_mat_hang.f_on_not_selecting(color=COLOR_WHITE)
         self.tab_01_entry_ghi_chu_mat_hang.pack(side="left", fill="x", expand=True, padx=(0, 10))
         
+    def _f_view_add_row_03_into_frame_clients_informations_tab_01(self):
+        # create parent_frame
+        parent_frame = cls_frame_contracts_management_view(self.frame_clients_informations_tab_01)
+        parent_frame.pack(side="bottom", fill="x", expand=True)
 
     def _f_view_create_widgets_in_tab_01_frame_button_of_treeview(self):
         # Create a sub-frame to organize buttons in the center
@@ -441,8 +447,8 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         ten_hang = self.entry_ten_hang.get()
         dvt = self.entry_dvt.get()
         
-        sl_kha_dung = float(self.tab_01_entry_sl_YCDH.get().replace(',', '') or 0)
-        sl_nhu_cau = float(self.tab_01_entry_sl_YCDH.get().replace(',', '') or 0)
+        sl_kha_dung = float(self.entry_sl_kha_dung.get().replace(',', '') or 0)
+        sl_nhu_cau = float(self.tab_01_entry_nhu_cau.get().replace(',', '') or 0)
         sl_giu_cho = float(self.tab_01_entry_sl_giu_cho.get().replace(',', '') or 0)
         sl_yeu_cau_dat_hang = float(self.tab_01_entry_sl_YCDH.get().replace(',', '') or 0)
         ghi_chu_mat_hang = self.tab_01_entry_ghi_chu_mat_hang.get()
