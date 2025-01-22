@@ -251,7 +251,9 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
 
         # Input fields
         tk.Label(self.frame_slip_informations, text="Thông tin thêm:").pack(side="left")
-        self.tab_01_note_for_slip = tk.Entry(self.frame_slip_informations)
+        self.tab_01_note_for_slip = cls_my_text_entry_num_01(self.frame_slip_informations)
+        self.tab_01_note_for_slip.f_on_leaving(color=COLOR_WHITE)
+        self.tab_01_note_for_slip.f_on_not_selecting(color=COLOR_WHITE)
         self.tab_01_note_for_slip.pack(side="left", fill="x", expand=True, pady=10)
         
     def _f_view_add_widget_into_frame_inventories_informations_tab_01(self):

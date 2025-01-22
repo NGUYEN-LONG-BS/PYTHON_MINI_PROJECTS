@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from entry import *
+from utils import *
 
 # Model: cls_frame_inventories_information_model
 class cls_frame_inventories_information_model:
@@ -169,9 +170,12 @@ class cls_TreeviewCombobox_inventories(cls_my_text_entry_num_01):
             # Populate Treeview with data
             self.refresh_data()
 
+            # Biến để theo dõi dòng đang được highlight
+            self.current_highlighted = None
+            self.tree.bind("<Motion>", self.highlight_row)
+
             # Bind Treeview selection
             self.tree.bind("<<TreeviewSelect>>", self.on_tree_select)
-            self.tree.bind("<<TreeviewMotion>>", self.highlight_row)
             self.tree.bind("<Leave>", self.hide_dropdown)
         else:
             self.dropdown.lift()
@@ -225,16 +229,20 @@ class cls_TreeviewCombobox_inventories(cls_my_text_entry_num_01):
             self.config(foreground=self.active_fg_color)
             
     def highlight_row(self, event):
-        # Identify the row under the cursor
+        # Lấy ID của dòng dưới con trỏ chuột
         row_id = self.tree.identify_row(event.y)
-        print(row_id)
-        # Remove highlighting from the previously highlighted row
-        if self.currently_highlighted is not None:
-            self.tree.tag_configure(self.currently_highlighted, background="white")
 
-        # Highlight the new row
-        if row_id:
-            self.tree.tag_configure(row_id, background="lightblue")
-            self.currently_highlighted = row_id
-        else:
-            self.currently_highlighted = None
+        # Nếu có dòng mới dưới con trỏ, highlight nó
+        if row_id and row_id != self.current_highlighted:
+            # Bỏ highlight dòng trước đó
+            if self.current_highlighted:
+                self.tree.item(self.current_highlighted, tags=())
+            
+            # Gắn highlight cho dòng hiện tại
+            self.tree.item(row_id, tags=("highlighted",))
+            self.tree.tag_configure("highlighted", background=HIGHLIGHT_COLOR)
+            self.current_highlighted = row_id
+        elif not row_id and self.current_highlighted:
+            # Nếu không có dòng nào dưới con trỏ, bỏ highlight
+            self.tree.item(self.current_highlighted, tags=())
+            self.current_highlighted = None

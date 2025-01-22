@@ -331,7 +331,8 @@ class cls_menu_top:
     # Define the action fuctions for QLYCDT menu
     def f_QLYCDH_TALA_click(self):
         print("f_QLYCDH_TALA_click selected")
-        self.f_open_KD02QuanLyYeuCauDatHangView()
+        # self.f_open_KD02QuanLyYeuCauDatHangView()
+        self.f_open_testview()
         
     def f_HR01_click(self):
         print("f_HR01_click selected")
@@ -374,6 +375,15 @@ class cls_menu_top:
         from views.KD02_QuanLyYeuCauDatHang_View.KD0201_PhieuYeuCauDatHang_View import cls_KD0201_PhieuYeuCauDatHang_View
         self.parent.destroy()
         new_view = cls_KD0201_PhieuYeuCauDatHang_View()
+        new_view.dashboard = self.parent
+        f_utils_set_window_size_is_4_per_5_screen(new_view)
+        f_utils_set_center_screen(new_view)
+        new_view.focus_force()
+    
+    def f_open_testview(self):
+        from views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
+        self.parent.destroy()
+        new_view = cls_test_View()
         new_view.dashboard = self.parent
         f_utils_set_window_size_is_4_per_5_screen(new_view)
         f_utils_set_center_screen(new_view)
