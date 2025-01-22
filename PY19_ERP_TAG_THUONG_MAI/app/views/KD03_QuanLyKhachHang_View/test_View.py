@@ -332,14 +332,66 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_button_update.pack(side="left", padx=10)
 
     def f_view_tab_01_button_delete_click(self):
-        print("Delete Row tab 01")
+        self.delete_selected()
 
+    # Function to delete the selected row
+    def delete_selected(self):
+        tree = self.treeview_test_of_tag_01
+        selected_item = tree.selection()  # Get selected item
+        if selected_item:  # Check if an item is selected
+            tree.delete(selected_item)  # Delete the selected item
+        else:  # If no item is selected
+            children = tree.get_children()
+            if children:  # Check if there are rows in the Treeview
+                last_item = children[-1]  # Get the last item
+                tree.delete(last_item)  # Delete the last item
+        self.renumber_rows()
+    
+    # Function to re-number the rows
+    def renumber_rows(self):
+        tree = self.treeview_test_of_tag_01
+        for index, item in enumerate(tree.get_children(), start=1):
+            values = tree.item(item, "values")  # Get the current values of the row
+            new_values = (index,) + values[1:]  # Update the first column with the new number
+            tree.item(item, values=new_values)  # Set the updated values
+    
     def f_view_tab_01_button_update_click(self):
-        print("Update Row tab 01")
-        
+        self.update_selected()
+    
+    # Function to update the selected row
+    def update_selected(self):
+        tree = self.treeview_test_of_tag_01
+        selected_item = tree.selection()  # Get the selected item
+        if selected_item:  # Check if an item is selected
+            # Prompt the user for new values
+            new_col_00 = tree.item(selected_item, "values")
+            new_col_01 = self.entry_ma_hang.get()
+            new_col_02 = self.entry_ten_hang.get()
+            new_col_03 = self.entry_dvt.get()
+            new_col_04 = float(self.entry_sl_kha_dung.get().replace(',', '') or 0)
+            new_col_05 = float(self.tab_01_entry_nhu_cau.get().replace(',', '') or 0)
+            new_col_06 = float(self.tab_01_entry_sl_giu_cho.get().replace(',', '') or 0)
+            new_col_07 = float(self.tab_01_entry_sl_YCDH.get().replace(',', '') or 0)
+            new_col_08 = self.tab_01_entry_ghi_chu_mat_hang.get()
+
+            # If the user provides input, update the row
+            if new_col_01 and new_col_02:
+                new_values = (new_col_00[0], new_col_01, new_col_02, new_col_03, new_col_04, new_col_05, new_col_06, new_col_07, new_col_08)
+                tree.item(selected_item, values=new_values)
+        else:
+            error_message = f"No item selected to update."
+            self._f_config_notification(text=error_message, fg="red")
+    
     def f_view_tab_01_button_clear_click(self):
-        print("Clear Rows tab 01")
-        
+        self.clear_all_contents()
+    
+    # Function to clear all rows
+    def clear_all_contents(self):
+        # Clear the Treeview
+        tree = self.treeview_test_of_tag_01
+        for item in tree.get_children():
+            tree.delete(item)
+    
     def _f_view_create_widgets_in_tab_01_frame_treeview(self):
         self.tab_01_frame_treeview = self.tab_01_frame_treeview
         self.table_of_tab_01 = self.tab_01_frame_treeview.treeview_normal
@@ -418,11 +470,9 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.tab_02_button_DELETE.pack(side="left", padx=10)
         
     def f_tab_01_button_print_click(self):
-        print("f_tab_01_button_print_click")
         f_utils_create_print_template()
         
     def f_tab_01_button_print_02_click(self):
-        print("f_tab_01_button_print_02_click")
         self.controller_01.f_controller_handle_btn_print_02_click_()
     
     def f_tab_01_button_import_click(self):
@@ -629,7 +679,6 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
     
     def f_view_table_of_tab_02_click(self, event):
         self.current_time = time.time()
-
     
     def f_tab_02_table_on_click(self, event):
         print("f_tab_02_table_on_click")    

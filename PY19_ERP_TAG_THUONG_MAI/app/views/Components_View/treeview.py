@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from entry import *
 from utils import *
 
 class cls_Treeview_frame_number_01(tk.Frame):
@@ -53,8 +54,6 @@ class cls_Treeview_frame_number_01(tk.Frame):
             # Gắn highlight cho dòng hiện tại
             self.treeview_normal.item(row_id, tags=("highlighted",))
             self.treeview_normal.tag_configure("highlighted", background=HIGHLIGHT_COLOR)
-            # self.treeview_normal.tag_configure("highlighted", background="#f0c6a3")
-            # "#f0c6a3"
             self.current_highlighted = row_id
         elif not row_id and self.current_highlighted:
             # Nếu không có dòng nào dưới con trỏ, bỏ highlight
