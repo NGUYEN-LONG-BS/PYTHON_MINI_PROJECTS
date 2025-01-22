@@ -52,8 +52,8 @@ class cls_Treeview_frame_number_01(tk.Frame):
             
             # Gắn highlight cho dòng hiện tại
             self.treeview_normal.item(row_id, tags=("highlighted",))
-            # self.tree.tag_configure("highlighted", background=HIGHLIGHT_COLOR)
-            self.treeview_normal.tag_configure("highlighted", background="#f0c6a3")
+            self.treeview_normal.tag_configure("highlighted", background=HIGHLIGHT_COLOR)
+            # self.treeview_normal.tag_configure("highlighted", background="#f0c6a3")
             # "#f0c6a3"
             self.current_highlighted = row_id
         elif not row_id and self.current_highlighted:
