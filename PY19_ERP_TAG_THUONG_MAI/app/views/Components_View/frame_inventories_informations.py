@@ -1,7 +1,5 @@
 import tkinter as tk
 from tkinter import ttk
-# from PIL import Image, ImageTk
-# import entry
 from entry import *
 
 # Model: cls_frame_inventories_information_model
@@ -16,7 +14,6 @@ class cls_frame_inventories_information_model:
             ("TM-01A-009", "LA 4000A", "cái", 60),
             ("MT-05A-025", "Nắp chụp LA - màu vàng", "cái", 22),
         ]
-        
 
     def get_data(self):
         return self.data
@@ -35,8 +32,6 @@ class cls_frame_inventories_information_model:
 class cls_frame_inventories_information_controller:
     def __init__(self):
         self.model = cls_frame_inventories_information_model()  # Create an instance of the model
-        # self.view = cls_frame_inventories_information_view
-        # self.view.controller = self
 
     def get_data(self):
         return self.model.get_data()
@@ -52,11 +47,11 @@ class cls_frame_inventories_information_controller:
 class cls_frame_inventories_information_view(tk.Frame):
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
-        # setup first
+        # first setup 
         self._f_setup_geometry()
-        # setup second
+        # second setup 
         self._f_setup_MVC()
-        # setup third
+        # third setup 
         self._f_create_widgets_all_container_frames()
         
     def _f_setup_geometry(self):
@@ -147,15 +142,6 @@ class cls_TreeviewCombobox_inventories(cls_my_text_entry_num_01):
         # Bind events to show and interact with dropdown
         self.bind("<Button-1>", self.f_handle_event_left_click)
         self.bind("<KeyRelease>", self.filter_data)
-        self.master.bind("<Button-1>", self.on_click_outside)  # Bind click event to master frame to hide dropdown
-    
-        parent_widget = self.master.nametowidget(self.master.winfo_parent())
-        parent_widget.bind("<Button-1>", self.on_click_outside)
-        
-        
-    def on_click_outside(self, event):
-        print("on_click_outside")
-        self.hide_dropdown()
 
     def f_handle_event_left_click(self, event):
         self.f_on_click_clear_placeholder(event)
@@ -185,8 +171,8 @@ class cls_TreeviewCombobox_inventories(cls_my_text_entry_num_01):
 
             # Bind Treeview selection
             self.tree.bind("<<TreeviewSelect>>", self.on_tree_select)
-            self.tree.bind("leave", self.hide_dropdown)
-
+            self.tree.bind("<<TreeviewMotion>>", self.highlight_row)
+            self.tree.bind("<Leave>", self.hide_dropdown)
         else:
             self.dropdown.lift()
 
@@ -237,3 +223,18 @@ class cls_TreeviewCombobox_inventories(cls_my_text_entry_num_01):
         if self.get() == self.placeholder:
             self.delete(0, tk.END)
             self.config(foreground=self.active_fg_color)
+            
+    def highlight_row(self, event):
+        # Identify the row under the cursor
+        row_id = self.tree.identify_row(event.y)
+        print(row_id)
+        # Remove highlighting from the previously highlighted row
+        if self.currently_highlighted is not None:
+            self.tree.tag_configure(self.currently_highlighted, background="white")
+
+        # Highlight the new row
+        if row_id:
+            self.tree.tag_configure(row_id, background="lightblue")
+            self.currently_highlighted = row_id
+        else:
+            self.currently_highlighted = None
