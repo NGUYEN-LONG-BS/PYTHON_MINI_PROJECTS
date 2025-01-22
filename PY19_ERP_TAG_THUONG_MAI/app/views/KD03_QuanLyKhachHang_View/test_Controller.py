@@ -73,7 +73,7 @@ class cls_test_Controller():
         return rows
     
     # Function to add a row to the table
-    def f_controller_add_row(self, id_value, ma_hang, ten_hang, dvt, sl_giu_cho, sl_yeu_cau_dat_hang, ghi_chu_mat_hang, table):
+    def f_controller_add_row(self, id_value, ma_hang, ten_hang, dvt, sl_kha_dung, sl_nhu_cau, sl_giu_cho, sl_yeu_cau_dat_hang, ghi_chu_mat_hang, table):
         
         # Validate input using the helper function
         is_valid, error_message = self.f_check_input(id_value, ma_hang, ten_hang, sl_giu_cho, sl_yeu_cau_dat_hang)
@@ -81,7 +81,7 @@ class cls_test_Controller():
             return is_valid, error_message
         
         # Add row to the treeview
-        table.insert("", "end", values=(id_value, ma_hang, ten_hang, dvt, sl_giu_cho, sl_yeu_cau_dat_hang, ghi_chu_mat_hang))
+        table.insert("", "end", values=(id_value, ma_hang, ten_hang, dvt, sl_kha_dung, sl_nhu_cau, sl_giu_cho, sl_yeu_cau_dat_hang, ghi_chu_mat_hang))
         error_message ="Row added successfully!"
         
         return is_valid, error_message
@@ -255,7 +255,6 @@ class cls_test_Controller_03_auto_update_number():
             # Loại bỏ dấu phẩy ngăn cách phần ngàn
             sl_kha_dung = self.entry_sl_kha_dung.get().replace(",", "")
             sl_nhu_cau = self.entry_sl_nhu_cau.get().replace(",", "")
-            # Retrieve and convert the input values
             
             # Retrieve and convert the input values
             num_kha_dung = float(sl_kha_dung or 0)
@@ -297,3 +296,12 @@ class cls_test_Controller_03_auto_update_number():
             self.entry_sl_yeu_cau_dat_hang.insert(0, "Error")
             self.entry_sl_yeu_cau_dat_hang.config(state="readonly")
             
+            
+class cls_test_Controller_04_validate_before_saving():
+    def __init__(self, tree):
+        self.data_sl_kha_dung = []
+        
+            
+    def validate_and_update(self):
+        print("Kiểm tra số lượng khả dụng khớp thì mới cho lưu!")
+        return True

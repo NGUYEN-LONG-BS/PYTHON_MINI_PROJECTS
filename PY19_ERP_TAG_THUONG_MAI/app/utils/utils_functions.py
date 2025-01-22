@@ -490,13 +490,15 @@ def f_utils_on_entry_change(entry_widget):
 
             # Remove any commas and validate as a number
             clean_text = current_text.replace(",", "")
-
+                
             if clean_text.strip() == "":
                 entry_widget.delete(0, tk.END)
                 return
 
-            # Convert the text to a float and format it
-            formatted_text = f"{float(clean_text):,.2f}"
+            if float(clean_text).is_integer():  # Nếu là số nguyên
+                formatted_text = f"{int(clean_text):,}"
+            else:  # Nếu là số thập phân
+                formatted_text = f"{clean_text:,.2f}"
 
             # Update the Entry widget with the formatted text
             entry_widget.delete(0, tk.END)

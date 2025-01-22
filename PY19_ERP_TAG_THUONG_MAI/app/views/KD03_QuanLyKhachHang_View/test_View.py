@@ -33,7 +33,8 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
     
     def _f_setup_all_binding(self):
         self.entry_sl_kha_dung = f_utils_tim_component_with_name(self, "entry_sl_kha_dung")
-        self.entry_sl_kha_dung.bind("<FocusOut>", lambda event: f_utils_on_entry_change(self.entry_sl_kha_dung))
+        # self.entry_sl_kha_dung.bind("<FocusOut>", lambda event: f_utils_on_entry_change(self.entry_sl_kha_dung))
+        self.entry_sl_kha_dung.bind("<FocusOut>", self.f_view_clear_content_when_sl_kha_dung_change)
         
         self.entry_ma_hang = f_utils_tim_component_with_name(self, "entry_ma_hang")
         self.entry_ten_hang = f_utils_tim_component_with_name(self, "entry_sl_ten_hang")
@@ -284,7 +285,9 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         parent_frame.pack(side="bottom", fill="x", expand=True)
 
         tk.Label(parent_frame, text="Ghi chú mặt hàng:").pack(side="left")
-        self.tab_01_entry_ghi_chu_mat_hang = tk.Entry(parent_frame)
+        self.tab_01_entry_ghi_chu_mat_hang = cls_my_text_entry_num_01(parent_frame)
+        self.tab_01_entry_ghi_chu_mat_hang.f_on_leaving(color=COLOR_WHITE)
+        self.tab_01_entry_ghi_chu_mat_hang.f_on_not_selecting(color=COLOR_WHITE)
         self.tab_01_entry_ghi_chu_mat_hang.pack(side="left", fill="x", expand=True, padx=(0, 10))
         
 
@@ -438,14 +441,15 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         ten_hang = self.entry_ten_hang.get()
         dvt = self.entry_dvt.get()
         
-        sl_yeu_cau_dat_hang = float(self.tab_01_entry_sl_YCDH.get().replace(',', '') or 0)
+        sl_kha_dung = float(self.tab_01_entry_sl_YCDH.get().replace(',', '') or 0)
+        sl_nhu_cau = float(self.tab_01_entry_sl_YCDH.get().replace(',', '') or 0)
         sl_giu_cho = float(self.tab_01_entry_sl_giu_cho.get().replace(',', '') or 0)
+        sl_yeu_cau_dat_hang = float(self.tab_01_entry_sl_YCDH.get().replace(',', '') or 0)
         ghi_chu_mat_hang = self.tab_01_entry_ghi_chu_mat_hang.get()
         table = self.table_of_tab_01
         
-        
         # Validate input using the helper function
-        is_valid, error_message = self.controller_01.f_controller_add_row(id_value, ma_hang, ten_hang, dvt, sl_giu_cho, sl_yeu_cau_dat_hang, ghi_chu_mat_hang, table)
+        is_valid, error_message = self.controller_01.f_controller_add_row(id_value, ma_hang, ten_hang, dvt, sl_kha_dung, sl_nhu_cau, sl_giu_cho, sl_yeu_cau_dat_hang, ghi_chu_mat_hang, table)
         if not is_valid:
             # Show error message
             self._f_config_notification(text=error_message, fg="red")
@@ -611,31 +615,15 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
             self.tab_01_entry_nhu_cau.delete(0, tk.END)
             self.tab_01_entry_nhu_cau.insert(0, formatted_sl_nhu_cau)
     
+    def f_view_clear_content_when_sl_kha_dung_change(self, event):
+        f_utils_on_entry_change(self.entry_sl_kha_dung)
+        self.tab_01_entry_nhu_cau.delete(0, tk.END)
+        self.tab_01_entry_sl_giu_cho.delete(0, tk.END)
+        self.tab_01_entry_sl_YCDH.delete(0, tk.END)
+    
     def f_view_table_of_tab_02_click(self, event):
-        # Call the controller_01 to handle the event
         self.current_time = time.time()
-        # is_double_click = self.controller_01.f_handle_event_click_on_table_of_tab_01(self.last_click_time, self.current_time, self.double_click_interval)
-        # # Update last click time only after handling
-        # self.last_click_time = self.current_time
-        # # Handle the action for single and double click
-        # if is_double_click:
-        #     self.controller_01.f_tab_01_table_double_click(event)
-        # else:
-        #     id_value, name_value, age_value = self.controller_01.f_tab_01_table_single_click(event)
-        #     # Clear and update the Entry widgets if values are returned
-        #     if id_value is not None:
-        #         self.tab_01_entry_id.config(state="normal")  # Enable the Entry widget to update the value
-        #         self.tab_01_entry_id.delete(0, tk.END)
-        #         self.tab_01_entry_id.insert(0, id_value)
-        #         self.tab_01_entry_id.config(state="disabled")  # Disable the Entry widget again
 
-        #     if name_value is not None:
-        #         self.tab_01_entry_ghi_chu_mat_hang.delete(0, tk.END)
-        #         self.tab_01_entry_ghi_chu_mat_hang.insert(0, name_value)
-
-        #     if age_value is not None:
-        #         self.tab_01_entry_sl_YCDH.delete(0, tk.END)
-        #         self.tab_01_entry_sl_YCDH.insert(0, age_value)
     
     def f_tab_02_table_on_click(self, event):
         print("f_tab_02_table_on_click")    
