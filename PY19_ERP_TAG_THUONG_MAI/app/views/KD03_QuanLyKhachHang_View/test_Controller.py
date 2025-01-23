@@ -213,15 +213,26 @@ class cls_test_Controller_02_treeview():
             for child in self.tree.get_children():
                 row = self.tree.item(child, "values")
                 data.append((
-                    self.entry_ma_kh.get(),
-                    self.entry_ten_kh.get(),
-                    self.entry_so_phieu.get(),
-                    row[0],
-                    row[1],
-                    row[2]
-                    # ,
-                    # float(row[3]),
-                    # row[4]
+                    "NV01"                      # [ID_NHAN_VIEN]
+                    ,"XOA_SUA"                         # [XOA_SUA]
+                    ,"NGAY_TREN_PHIEU"                         # [NGAY_TREN_PHIEU]
+                    ,self.entry_so_phieu.get()                         # [SO_PHIEU]
+                    ,self.entry_ma_kh.get()
+                    ,self.entry_ten_kh.get()
+                    ,"MST"
+                    ,"DIA_CHI"
+                    ,"SO_HOP_DONG"
+                    ,"THONG_TIN_HOP_DONG"
+                    ,"GHI_CHU_CUA_PHIEU"
+                    ,row[0]
+                    ,row[1]
+                    ,row[2]
+                    ,row[3]
+                    ,float(row[4])
+                    ,float(row[5])
+                    ,float(row[6])
+                    ,float(row[7])
+                    ,row[8]
                 ))
             print(data)
             return "Data chuẩn bị để gửi đi đã được in!"
