@@ -537,7 +537,8 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self._f_config_notification(text=text, fg="blue")
     
     def f_tab_01_button_save_03_click(self):        
-        text = self.controller_02_treeview.print_data()
+        text, data = self.controller_02_treeview.print_data()
+        text = self.controller_02_treeview.f_controller_handle_btn_save_03_click_(self.table_of_tab_01)
         self._f_config_notification(text=text, fg="blue")
 
     def _f_view_set_up_formats(self):

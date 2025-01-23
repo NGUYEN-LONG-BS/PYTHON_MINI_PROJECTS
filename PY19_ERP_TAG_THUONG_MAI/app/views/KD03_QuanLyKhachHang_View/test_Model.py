@@ -411,10 +411,10 @@ class cls_test_Model():
         ]
         return sample_data
     
-    def f_model_get_unique_ma_hang(self, sample_data, number_column):
-        # Trích xuất cột thứ n và loại bỏ trùng lặp
-        unique_ma_hang = list(set(row[number_column] for row in sample_data))
-        return unique_ma_hang
+    # def f_model_get_unique_ma_hang(self, sample_data, number_column):
+    #     # Trích xuất cột thứ n và loại bỏ trùng lặp
+    #     unique_ma_hang = list(set(row[number_column] for row in sample_data))
+    #     return unique_ma_hang
     
     def f_validate_data_format(self, data_array):
         """
@@ -460,3 +460,121 @@ class cls_test_Model():
                 print(e)
 
         return is_valid
+
+
+
+class cls_test_Model_02():
+    def f_validate_data_format(self, data_array):
+        """
+        Validate the format of data before inserting into SQL Server.
+        :param data_array: List of tuples containing the data to validate.
+        :return: True if all data is valid, otherwise False with error messages.
+        """
+        is_valid = True
+        # for idx, row in enumerate(data_array):
+        #     try:
+        #         # Validate each field
+        #         if not isinstance(row[0], str) or len(row[0]) > 10:
+        #             raise ValueError(f"ID_NHAN_VIEN (Row {idx+1}, Value: {row[0]}) must be a string with a maximum length of 10.")
+        #         if not isinstance(row[1], str):
+        #             raise ValueError(f"XOA_SUA (Row {idx+1}, Value: {row[1]}) must be a string.")
+        #         if not isinstance(row[2], str) or len(row[2]) > 50:
+        #             raise ValueError(f"SO_PHIEU (Row {idx+1}, Value: {row[2]}) must be a string with a maximum length of 50.")
+        #         try:
+        #             datetime.strptime(row[3], '%Y-%m-%d')
+        #         except ValueError:
+        #             raise ValueError(f"NGAY_TREN_PHIEU (Row {idx+1}, Value: {row[3]}) must be a valid date in 'YYYY-MM-DD' format.")
+        #         if not isinstance(row[4], str) or len(row[4]) > 50:
+        #             raise ValueError(f"MA_DOI_TUONG (Row {idx+1}, Value: {row[4]}) must be a string with a maximum length of 50.")
+        #         if not isinstance(row[5], str):
+        #             raise ValueError(f"TEN_DOI_TUONG (Row {idx+1}, Value: {row[5]}) must be a string.")
+        #         if not isinstance(row[6], str):
+        #             raise ValueError(f"GHI_CHU_PHIEU (Row {idx+1}, Value: {row[6]}) must be a string.")
+        #         if not isinstance(row[7], int) or row[7] < 1:
+        #             raise ValueError(f"STT_DONG (Row {idx+1}, Value: {row[7]}) must be an integer greater than 0.")
+        #         if not isinstance(row[8], str):
+        #             raise ValueError(f"MA_HANG (Row {idx+1}, Value: {row[8]}) must be a string.")
+        #         if not isinstance(row[9], str):
+        #             raise ValueError(f"TEN_HANG (Row {idx+1}, Value: {row[9]}) must be a string.")
+        #         if not isinstance(row[10], str):
+        #             raise ValueError(f"DVT (Row {idx+1}, Value: {row[10]}) must be a string.")
+        #         if not isinstance(row[11], (int, float)) or row[11] <= 0:
+        #             raise ValueError(f"SO_LUONG (Row {idx+1}, Value: {row[11]}) must be a positive number.")
+        #         if not isinstance(row[12], str):
+        #             raise ValueError(f"GHI_CHU_SP (Row {idx+1}, Value: {row[12]}) must be a string.")
+            
+        #     except ValueError as e:
+        #         is_valid = False
+        #         print(e)
+
+        return is_valid
+    
+    def f_goi_ham_Export_to_TB_KD02_YEU_CAU_DAT_HANG(self, data_array, database_name, table_name):
+        server_name = "14.225.192.238, 1433"  # Địa chỉ IP của SQL Server
+        database_name = database_name
+        login_name = "sa"
+        login_pass = "Ta#9999"
+        table_name = table_name
+
+        print("Chuẩn bị chèn dữ liệu vào SQL Server...")
+        print("Dữ liệu cần chèn:", data_array)
+        # self.f_insert_data_to_sql(server_name, database_name, login_name, login_pass, table_name, data_array)
+        self.f_02_insert_data_to_sql(server_name, database_name, login_name, login_pass, table_name, data_array)
+        
+    def f_02_insert_data_to_sql(self, server_name, database_name, login_name, login_pass, table_name, data_array):
+        """
+        Hàm kết nối SQL Server và chèn dữ liệu từ mảng vào bảng, bỏ qua các cột có giá trị mặc định (ID, NGAY_TAO_PHIEU).
+        
+        :param server_name: Tên hoặc địa chỉ IP của máy chủ SQL Server.
+        :param database_name: Tên cơ sở dữ liệu.
+        :param login_name: Tên người dùng SQL Server.
+        :param login_pass: Mật khẩu SQL Server.
+        :param table_name: Tên bảng trong cơ sở dữ liệu.
+        :param data_array: Mảng chứa dữ liệu cần chèn (list of lists).
+        """
+        # Kết nối đến SQL Server
+        connection_string = f"DRIVER={{SQL Server}};SERVER={server_name};DATABASE={database_name};UID={login_name};PWD={login_pass}"
+        try:
+            conn = pyodbc.connect(connection_string)
+            print("Kết nối thành công đến cơ sở dữ liệu.")
+        except Exception as e:
+            print("Lỗi khi kết nối:", e)
+            return
+
+        cursor = conn.cursor()
+        
+        # Lấy danh sách cột của bảng
+        try:
+            cursor.execute(f"SELECT * FROM {table_name} WHERE 1=0")
+            columns = [column[0] for column in cursor.description]  # Lấy tên cột
+            print("Danh sách cột trong bảng:", columns)
+        except Exception as e:
+            print("Lỗi khi lấy thông tin bảng:", e)
+            return
+
+        # Loại bỏ các cột có giá trị mặc định (ID, NGAY_TAO_PHIEU)
+        columns_to_insert = [col for col in columns if col not in ['ID', 'DATE']]
+        print("Danh sách cột cần chèn:", columns_to_insert)
+        
+        # Kiểm tra số cột trong dữ liệu khớp với số cột cần chèn
+        num_columns_to_insert = len(columns_to_insert)
+        if not all(len(row) == num_columns_to_insert for row in data_array):
+            print("Dữ liệu không khớp số cột cần chèn.")
+            return
+
+        # Chèn dữ liệu
+        try:
+            placeholders = ", ".join(["?" for _ in range(num_columns_to_insert)])  # Tạo chuỗi placeholder "?, ?, ?"
+            query = f"INSERT INTO {table_name} ({', '.join(columns_to_insert)}) VALUES ({placeholders})"
+            
+            for row in data_array:
+                cursor.execute(query, row)
+            
+            conn.commit()
+            print("Dữ liệu đã được chèn thành công.")
+        except Exception as e:
+            print("Lỗi khi chèn dữ liệu:", e)
+        finally:
+            cursor.close()
+            conn.close()
+            print("Kết nối đã được đóng.")

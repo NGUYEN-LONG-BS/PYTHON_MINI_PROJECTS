@@ -580,3 +580,8 @@ def f_utils_set_style(object):
 
         style.map("TFrame", 
                 background=[("active", HIGHLIGHT_COLOR)])  # Optional: Change on hover or active state
+        
+def f_utils_get_unique_column_from_data(sample_data, number_column):
+        # Trích xuất cột thứ n và loại bỏ trùng lặp
+        unique_ma_hang = list(set(row[number_column] for row in sample_data))
+        return unique_ma_hang

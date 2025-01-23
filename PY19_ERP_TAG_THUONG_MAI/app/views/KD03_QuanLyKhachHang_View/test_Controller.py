@@ -1,5 +1,5 @@
 import time
-from test_Model import cls_test_Model
+from test_Model import cls_test_Model, cls_test_Model_02
 from Components_View import *   # Tại sao lại phải import Components_View
 from utils import *
 import traceback
@@ -114,7 +114,7 @@ class cls_test_Controller():
             return "Data exported to SQL Server KD02_YEU_CAU_DAT_HANG!"
         else:
             return "Data validation failed. Please fix the errors."
-        
+
     def f_controller_handle_btn_print_02_click_(self):
         path_template_file = os.path.join(PATH_ASSETS_TEMPLATES_EXCEL, "PRINT_KD0201.xlsx")
         sheet_name = "KD0201_YEU_CAU_DAT_HANG"
@@ -124,7 +124,8 @@ class cls_test_Controller():
         print("")
         
     def f_controller_lay_list_ma_hang(self, data, number_column):
-        print("danh sách mã hàng là:", self.model.f_model_get_unique_ma_hang(data, number_column))
+        # print("danh sách mã hàng là:", self.model.f_model_get_unique_ma_hang(data, number_column))
+        print("danh sách mã hàng là:", f_utils_get_unique_column_from_data(data, number_column))
         
     def f_handle_event_click_on_table_of_tab_01(self, last_click_time, current_time, double_click_interval):
         if current_time - last_click_time < double_click_interval:
@@ -187,6 +188,19 @@ class cls_test_Controller_02_treeview():
         self.entry_so_phieu = entry_so_phieu
         self.entry_ghi_chu_phieu = entry_ghi_chu_phieu
         
+        self.model = None
+        self.f_add_MVC_class()
+    
+    def f_add_MVC_class(self):
+        """Initialize and bind Model and View classes to the controller."""
+        try:
+            # Initialize Model
+            self.model = cls_test_Model_02()  
+            # If model or view need controller reference
+            self.model.controller = self  # Avoid recursion by passing after initialization
+        except Exception as e:
+            print(f"Error initializing MVC components: {e}")
+    
     def add_to_treeview(self):
         ma_kh = self.entry_ma_kh.get()
         ten_kh = self.entry_ten_kh.get()
@@ -206,6 +220,21 @@ class cls_test_Controller_02_treeview():
         self.entry_so_phieu.delete(0, tk.END)
         self.entry_ghi_chu_phieu.delete(0, tk.END)
     
+    def f_controller_handle_btn_save_03_click_(self, table):
+        # Step_01: Get data
+        notification_text, data_array = self.print_data()
+        # Step_02: validate data
+        f_utils_get_unique_column_from_data(data_array, 8)
+        # Step_03: Export data to SQL
+        if self.model.f_validate_data_format(data_array):
+            print("Data is valid. Ready for insertion.")
+            database_name = "TBD_2024"
+            table_name = "[TB_KD02_YEU_CAU_DAT_HANG]"
+            self.model.f_goi_ham_Export_to_TB_KD02_YEU_CAU_DAT_HANG(data_array, database_name, table_name)
+            return "Data exported to SQL Server KD02_YEU_CAU_DAT_HANG!"
+        else:
+            return "Data validation failed. Please fix the errors."
+    
     # Function to print data from the Treeview
     def print_data(self):
         try:
@@ -213,10 +242,10 @@ class cls_test_Controller_02_treeview():
             for child in self.tree.get_children():
                 row = self.tree.item(child, "values")
                 data.append((
-                    "NV01"                      # [ID_NHAN_VIEN]
-                    ,"XOA_SUA"                         # [XOA_SUA]
-                    ,"NGAY_TREN_PHIEU"                         # [NGAY_TREN_PHIEU]
-                    ,self.entry_so_phieu.get()                         # [SO_PHIEU]
+                    "NV01"                          # [ID_NHAN_VIEN]
+                    ,"XOA_SUA"                      # [XOA_SUA]
+                    ,"2025-01-23"              # [NGAY_TREN_PHIEU]
+                    ,self.entry_so_phieu.get()      # [SO_PHIEU]
                     ,self.entry_ma_kh.get()
                     ,self.entry_ten_kh.get()
                     ,"MST"
@@ -235,12 +264,15 @@ class cls_test_Controller_02_treeview():
                     ,row[8]
                 ))
             print(data)
-            return "Data chuẩn bị để gửi đi đã được in!"
+            notification_text = "Data chuẩn bị để gửi đi đã được in!"
+            return notification_text, data
         except Exception as e:
             error_details = traceback.format_exc()
             print("Chi tiết lỗi:")
             print(error_details)
-            return f"Data validation failed. Error details:\n{error_details}"
+            notification_text = f"Data validation failed. Error details:\n{error_details}"
+            data = []
+            return notification_text, data
         
 class cls_test_Controller_03_auto_update_number():
     def __init__(self, entry_sl_kha_dung, entry_sl_nhu_cau, entry_sl_giu_cho, entry_sl_yeu_cau_dat_hang):
