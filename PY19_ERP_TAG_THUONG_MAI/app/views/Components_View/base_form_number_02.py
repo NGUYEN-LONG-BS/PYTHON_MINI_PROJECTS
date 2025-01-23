@@ -83,17 +83,51 @@ class cls_base_form_number_02_ManyTabs(tk.Tk):
 
         # Customize the notebook style
         style.configure("TNotebook", 
-                        background="#f0f0f0", 
+                        # background="#f0f0f0", 
+                        background=BG_COLOR_0_0, 
                         borderwidth=0)
         style.configure("TNotebook.Tab", 
-                        background="#ffffff", 
-                        foreground="#000000", 
+                        # background="#ffffff", 
+                        background=BG_COLOR_0_0, 
+                        foreground=FG_COLOR_01, 
                         padding=[10, 5],
                         font=("Arial", 12, "bold"))
         style.map("TNotebook.Tab", 
-                background=[("selected", "#4caf50")], 
-                foreground=[("selected", "#ffffff")],
+                # background=[("selected", "#4caf50")], 
+                background=[("selected", HIGHLIGHT_COLOR)],
+                foreground=[("selected", FG_COLOR_01)],
                 expand=[("selected", [1, 1, 1, 0])])
+        
+        # Customize the Label style
+        style.configure("TLabel", 
+                        background=BG_COLOR_0_0,  # Background color for labels
+                        foreground=FG_COLOR_01, # Text color
+                        font=("Arial", 10))     # Font style and size
+
+        # Customize the Treeview style
+        style.configure("Treeview", 
+                        background=BG_COLOR_0_0, 
+                        foreground=FG_COLOR_01, 
+                        rowheight=25,          # Row height
+                        fieldbackground=BG_COLOR_0_0, # Background color for the cells
+                        font=("Arial", 10))
+        style.map("Treeview", 
+                background=[("selected", HIGHLIGHT_COLOR)],
+                foreground=[("selected", FG_COLOR_01)])
+
+        # Customize the Treeview heading style
+        style.configure("Treeview.Heading", 
+                        background=BG_COLOR_0_0, 
+                        foreground=FG_COLOR_01, 
+                        font=("Arial", 11, "bold")) # Font for headings
+
+        # Customize the Scrollbar style
+        style.configure("TScrollbar", 
+                        background=BG_COLOR_0_0, 
+                        troughcolor=BG_COLOR_0_2, # Trough (track) color
+                        arrowcolor=FG_COLOR_03) # Arrow color
+        style.map("TScrollbar", 
+                background=[("pressed", HIGHLIGHT_COLOR), ("active", FG_COLOR_03)])
     
     def f_add_elements_to_frame_body(self):
         # Create a notebook (tabs)

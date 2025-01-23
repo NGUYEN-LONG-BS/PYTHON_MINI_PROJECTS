@@ -59,8 +59,13 @@ HIGHLIGHT_COLOR = "#f0c6a3"
 BG_COLOR_0_0 = "#f0f0f0"
 BG_COLOR_0_1 = "#f0f0f5"
 BG_COLOR_0_2 = "#f0f0f9"
-
+BG_COLOR_0_3 = "#e0e0e0"
+BG_COLOR_0_4 = "#e57a17"
 BG_COLOR_1 = "#f0f0f0"
+
+FG_COLOR_01 = "#000000"
+FG_COLOR_02 = "#ffffff"
+FG_COLOR_03 = "#bdbdbf"
 
 
 COLOR_GRAY = "#f0f0f0"

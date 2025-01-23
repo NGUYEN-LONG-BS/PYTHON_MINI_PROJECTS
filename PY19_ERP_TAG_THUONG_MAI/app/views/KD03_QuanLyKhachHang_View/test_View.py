@@ -615,7 +615,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         if is_double_click:
             self.controller_01.f_tab_01_table_double_click(event)
         else:
-            id_value, ma_hang, ten_hang, dvt, sl_giu_cho, sl_dat_hang, ghi_chu_mat_hang = self.controller_01.f_tab_01_table_single_click(event)
+            id_value, ma_hang, ten_hang, dvt, sl_kha_dung, sl_nhu_cau, sl_giu_cho, sl_dat_hang, ghi_chu_mat_hang = self.controller_01.f_tab_01_table_single_click(event)
             # Clear and update the Entry widgets if values are returned
             if id_value is not None:
                 self.tab_01_entry_id.config(state="normal")  # Enable the Entry widget to update the value
@@ -639,6 +639,22 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
                 self.entry_dvt.delete(0, tk.END)
                 self.entry_dvt.insert(0, dvt)
             
+            if sl_kha_dung is not None:
+                self.entry_sl_kha_dung.delete(0, tk.END)
+                if float(sl_kha_dung).is_integer():  # Nếu là số nguyên
+                    formatted_sl_kha_dung = f"{int(float(sl_kha_dung)):,}"
+                else:  # Nếu là số thập phân
+                    formatted_sl_kha_dung = f"{float(sl_kha_dung):,.2f}"
+                self.entry_sl_kha_dung.insert(0, formatted_sl_kha_dung)
+                
+            if sl_nhu_cau is not None:
+                self.tab_01_entry_nhu_cau.delete(0, tk.END)
+                if float(sl_nhu_cau).is_integer():  # Nếu là số nguyên
+                    formatted_sl_nhu_cau = f"{int(float(sl_nhu_cau)):,}"
+                else:  # Nếu là số thập phân
+                    formatted_sl_nhu_cau = f"{float(sl_nhu_cau):,.2f}"
+                self.tab_01_entry_nhu_cau.insert(0, formatted_sl_nhu_cau)
+            
             if sl_giu_cho is not None:
                 self.tab_01_entry_sl_giu_cho.config(state="normal")
                 self.tab_01_entry_sl_giu_cho.delete(0, tk.END)
@@ -659,17 +675,22 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
                 self.tab_01_entry_sl_YCDH.insert(0, formatted_sl_dat_hang)
                 self.tab_01_entry_sl_YCDH.config(state="disabled")
             
-            # Update the value of sl_nhu_cau
-            sl_giu_cho = self.tab_01_entry_sl_giu_cho.get().replace(",", "")
-            sl_dat_hang = self.tab_01_entry_sl_YCDH.get().replace(",", "")
-            sl_nhu_cau = float(sl_giu_cho) + float(sl_dat_hang)
-            if sl_nhu_cau.is_integer():  # Nếu là số nguyên
-                formatted_sl_nhu_cau = f"{int(sl_nhu_cau):,}"
-            else:  # Nếu là số thập phân
-                formatted_sl_nhu_cau = f"{sl_nhu_cau:,.2f}"
+            # # Update the value of sl_nhu_cau
+            # sl_giu_cho = self.tab_01_entry_sl_giu_cho.get().replace(",", "").strip()
+            # sl_dat_hang = self.tab_01_entry_sl_YCDH.get().replace(",", "").strip()
             
-            self.tab_01_entry_nhu_cau.delete(0, tk.END)
-            self.tab_01_entry_nhu_cau.insert(0, formatted_sl_nhu_cau)
+            # # Kiểm tra nếu các giá trị rỗng, đặt giá trị mặc định là 0
+            # sl_giu_cho = float(sl_giu_cho) if sl_giu_cho else 0.0
+            # sl_dat_hang = float(sl_dat_hang) if sl_dat_hang else 0.0
+            
+            # sl_nhu_cau = float(sl_giu_cho) + float(sl_dat_hang)
+            # if sl_nhu_cau.is_integer():  # Nếu là số nguyên
+            #     formatted_sl_nhu_cau = f"{int(sl_nhu_cau):,}"
+            # else:  # Nếu là số thập phân
+            #     formatted_sl_nhu_cau = f"{sl_nhu_cau:,.2f}"
+            
+            # self.tab_01_entry_nhu_cau.delete(0, tk.END)
+            # self.tab_01_entry_nhu_cau.insert(0, formatted_sl_nhu_cau)
     
     def f_view_clear_content_when_sl_kha_dung_change(self, event):
         f_utils_on_entry_change(self.entry_sl_kha_dung)

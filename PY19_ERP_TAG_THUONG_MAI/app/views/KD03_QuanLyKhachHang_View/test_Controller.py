@@ -146,13 +146,13 @@ class cls_test_Controller():
             # Fetch the values of the selected row
             row_values = treeview.item(selected_item[0], "values")
             # print("Selected row values:", row_values)
-            if len(row_values) >= 7:
-                return row_values[0], row_values[1], row_values[2], row_values[3], row_values[4], row_values[5], row_values[6]
+            if len(row_values) >= 9:
+                return row_values[0], row_values[1], row_values[2], row_values[3], row_values[4], row_values[5], row_values[6], row_values[7], row_values[8]
             else:
-                return None, None, None, None, None, None, None
+                return None, None, None, None, None, None, None, None, None
         else:
             # print("Warning: No row selected.")
-            return None, None, None, None, None, None, None
+            return None, None, None, None, None, None, None, None, None
     
     def f_tab_01_table_double_click(self, event):
         # Get the Treeview widget from the event
