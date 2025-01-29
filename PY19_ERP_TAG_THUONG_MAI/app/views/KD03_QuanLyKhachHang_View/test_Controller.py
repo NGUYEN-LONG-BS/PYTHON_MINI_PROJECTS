@@ -234,6 +234,54 @@ class cls_test_Controller_02_treeview():
             return "Data exported to SQL Server KD02_YEU_CAU_DAT_HANG!"
         else:
             return "Data validation failed. Please fix the errors."
+
+    # Function to update the selected row
+    def validate_data_before_updating_row_in_tree_view(self, tree, *args):
+        selected_item = tree.selection()  # Get the selected item
+        if not selected_item:
+            error_message = "No item selected to update."
+            fg="red"
+            return False, error_message, fg
+
+        # Lấy các giá trị theo thứ tự truyền vào
+        stt, new_ma_hang, new_ten_hang, new_dvt, new_sl_kha_dung, new_nhu_cau, new_sl_giu_cho, new_sl_YCDH, new_ghi_chu = args
+
+        # Kiểm tra các giá trị bắt buộc không được rỗng
+        if not new_ma_hang.strip():
+            error_message = "Mã hàng không được để trống."
+            fg="red"
+            return False, error_message, fg
+
+        if not new_ten_hang.strip():
+            error_message = "Tên hàng không được để trống."
+            fg="red"
+            return False, error_message, fg
+            
+        if not str(new_nhu_cau).strip():  # Đảm bảo giá trị số không bị rỗng
+            error_message = "Số lượng nhu cầu không được để trống."
+            fg="red"
+            return False, error_message, fg
+
+    # Function to update the selected row
+    def begin_updating_row_in_tree_view(self, tree, *args):
+        selected_item = tree.selection()  # Get the selected item
+        current_values = tree.item(selected_item, "values")
+        if current_values and args:
+            # Ensure at least one argument is provided (besides tree)
+            new_values = (current_values[0],) + args  # Keep the first column as-is, update the rest
+            tree.item(selected_item, values=new_values)
+        success_message = "Update successfully!"
+        fg="blue"
+        return success_message, fg
+
+    def update_selected_row(self, tree, *args):
+        """
+        Updates the selected row in the given treeview with the provided arguments.
+        :param tree: The Treeview widget where the data is updated.
+        :param args: Variable-length argument list for column values.
+        """
+        self.validate_data_before_updating_row_in_tree_view(tree, *args)
+        self.begin_updating_row_in_tree_view(tree, *args)
     
     # Function to print data from the Treeview
     def print_data(self):
