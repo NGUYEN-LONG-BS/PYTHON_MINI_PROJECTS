@@ -332,28 +332,29 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_button_update.pack(side="left", padx=10)
 
     def f_view_tab_01_button_delete_click(self):
-        self.delete_selected()
+        # self.delete_selected()
+        self.controller_02_treeview.f_controller_02_delete_selected(self.treeview_test_of_tag_01)
 
-    # Function to delete the selected row
-    def delete_selected(self):
-        tree = self.treeview_test_of_tag_01
-        selected_item = tree.selection()  # Get selected item
-        if selected_item:  # Check if an item is selected
-            tree.delete(selected_item)  # Delete the selected item
-        else:  # If no item is selected
-            children = tree.get_children()
-            if children:  # Check if there are rows in the Treeview
-                last_item = children[-1]  # Get the last item
-                tree.delete(last_item)  # Delete the last item
-        self.renumber_rows()
+    # # Function to delete the selected row
+    # def delete_selected(self):
+    #     tree = self.treeview_test_of_tag_01
+    #     selected_item = tree.selection()  # Get selected item
+    #     if selected_item:  # Check if an item is selected
+    #         tree.delete(selected_item)  # Delete the selected item
+    #     else:  # If no item is selected
+    #         children = tree.get_children()
+    #         if children:  # Check if there are rows in the Treeview
+    #             last_item = children[-1]  # Get the last item
+    #             tree.delete(last_item)  # Delete the last item
+    #     self.renumber_rows()
     
-    # Function to re-number the rows
-    def renumber_rows(self):
-        tree = self.treeview_test_of_tag_01
-        for index, item in enumerate(tree.get_children(), start=1):
-            values = tree.item(item, "values")  # Get the current values of the row
-            new_values = (index,) + values[1:]  # Update the first column with the new number
-            tree.item(item, values=new_values)  # Set the updated values
+    # # Function to re-number the rows
+    # def renumber_rows(self):
+    #     tree = self.treeview_test_of_tag_01
+    #     for index, item in enumerate(tree.get_children(), start=1):
+    #         values = tree.item(item, "values")  # Get the current values of the row
+    #         new_values = (index,) + values[1:]  # Update the first column with the new number
+    #         tree.item(item, values=new_values)  # Set the updated values
     
     def f_view_tab_01_button_update_click(self):
         # self.update_selected()

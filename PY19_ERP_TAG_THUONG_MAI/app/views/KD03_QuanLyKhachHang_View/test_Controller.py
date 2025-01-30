@@ -322,6 +322,25 @@ class cls_test_Controller_02_treeview():
             data = []
             return notification_text, data
         
+        # Function to delete the selected row
+    def f_controller_02_delete_selected(self, tree):
+        selected_item = tree.selection()  # Get selected item
+        if selected_item:  # Check if an item is selected
+            tree.delete(selected_item)  # Delete the selected item
+        else:  # If no item is selected
+            children = tree.get_children()
+            if children:  # Check if there are rows in the Treeview
+                last_item = children[-1]  # Get the last item
+                tree.delete(last_item)  # Delete the last item
+        self.f_controller_02_renumber_rows(tree)
+
+    # Function to re-number the rows
+    def f_controller_02_renumber_rows(self, tree):
+        for index, item in enumerate(tree.get_children(), start=1):
+            values = tree.item(item, "values")  # Get the current values of the row
+            new_values = (index,) + values[1:]  # Update the first column with the new number
+            tree.item(item, values=new_values)  # Set the updated values
+        
 class cls_test_Controller_03_auto_update_number():
     def __init__(self, entry_sl_kha_dung, entry_sl_nhu_cau, entry_sl_giu_cho, entry_sl_yeu_cau_dat_hang):
         self.entry_sl_kha_dung = entry_sl_kha_dung
