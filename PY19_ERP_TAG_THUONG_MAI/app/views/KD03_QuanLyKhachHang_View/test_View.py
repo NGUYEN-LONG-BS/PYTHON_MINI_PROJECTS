@@ -112,16 +112,15 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.controller_03_auto_update_number = cls_test_Controller_03_auto_update_number(entry_sl_kha_dung, entry_sl_nhu_cau, entry_sl_giu_cho, entry_sl_yeu_cau_dat_hang)
         self.controller_03_auto_update_number.view = self
         
-    
     def _f_view_create_all_container_frames_of_window(self):
         # Create tabs
         self.tab_01 = self.tab1
         self.tab_02 = self.tab2
         # Settings tab content
-        self._f_view_create_in_tab_01_all_container_frames()
-        self._f_view_create_in_tab_02_all_container_frames()
+        self._f_view_create_all_container_frames_in_tab_01()
+        self._f_view_create_all_container_frames_in_tab_02()
         
-    def _f_view_create_in_tab_01_all_container_frames(self):
+    def _f_view_create_all_container_frames_in_tab_01(self):
         # Frame H2
         self.tab_01_frame_H2 = cls_frame_normal(self.tab_01)
         # self.tab_01_frame_H2.pack(fill="both", expand=True)
@@ -149,7 +148,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_frame_button_02.pack(side="bottom", fill="x")
         self._f_view_create_widgets_in_tab_01_frame_button_02()
 
-    def _f_view_create_in_tab_02_all_container_frames(self):
+    def _f_view_create_all_container_frames_in_tab_02(self):
         # Frame H2
         self.tab_02_frame_H2 = cls_frame_normal(self.tab_02)
         self.tab_02_frame_H2.pack(side="top", fill="x")
@@ -332,80 +331,32 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_button_update.pack(side="left", padx=10)
 
     def f_view_tab_01_button_delete_click(self):
-        # self.delete_selected()
         self.controller_02_treeview.f_controller_02_delete_selected(self.treeview_test_of_tag_01)
-
-    # # Function to delete the selected row
-    # def delete_selected(self):
-    #     tree = self.treeview_test_of_tag_01
-    #     selected_item = tree.selection()  # Get selected item
-    #     if selected_item:  # Check if an item is selected
-    #         tree.delete(selected_item)  # Delete the selected item
-    #     else:  # If no item is selected
-    #         children = tree.get_children()
-    #         if children:  # Check if there are rows in the Treeview
-    #             last_item = children[-1]  # Get the last item
-    #             tree.delete(last_item)  # Delete the last item
-    #     self.renumber_rows()
-    
-    # # Function to re-number the rows
-    # def renumber_rows(self):
-    #     tree = self.treeview_test_of_tag_01
-    #     for index, item in enumerate(tree.get_children(), start=1):
-    #         values = tree.item(item, "values")  # Get the current values of the row
-    #         new_values = (index,) + values[1:]  # Update the first column with the new number
-    #         tree.item(item, values=new_values)  # Set the updated values
     
     def f_view_tab_01_button_update_click(self):
-        # self.update_selected()
-
         tree = self.treeview_test_of_tag_01
         selected_item = tree.selection()
-        new_col_00 = tree.item(selected_item, "values")
-        new_col_01 = self.entry_ma_hang.get()
-        new_col_02 = self.entry_ten_hang.get()
-        new_col_03 = self.entry_dvt.get()
-        new_col_04 = float(self.entry_sl_kha_dung.get().replace(',', '') or 0)
-        new_col_05 = float(self.tab_01_entry_nhu_cau.get().replace(',', '') or 0)
-        new_col_06 = float(self.tab_01_entry_sl_giu_cho.get().replace(',', '') or 0)
-        new_col_07 = float(self.tab_01_entry_sl_YCDH.get().replace(',', '') or 0)
-        new_col_08 = self.tab_01_entry_ghi_chu_mat_hang.get()
+        param_00 = tree.item(selected_item, "values")
+        param_01 = self.entry_ma_hang.get()
+        param_02 = self.entry_ten_hang.get()
+        param_03 = self.entry_dvt.get()
+        param_04 = float(self.entry_sl_kha_dung.get().replace(',', '') or 0)
+        param_05 = float(self.tab_01_entry_nhu_cau.get().replace(',', '') or 0)
+        param_06 = float(self.tab_01_entry_sl_giu_cho.get().replace(',', '') or 0)
+        param_07 = float(self.tab_01_entry_sl_YCDH.get().replace(',', '') or 0)
+        param_08 = self.tab_01_entry_ghi_chu_mat_hang.get()
         self.controller_02_treeview.update_selected_row(
             tree,
-            new_col_00,
-            new_col_01,
-            new_col_02,
-            new_col_03,
-            new_col_04,
-            new_col_05,
-            new_col_06,
-            new_col_07,
-            new_col_08
+            param_00,
+            param_01,
+            param_02,
+            param_03,
+            param_04,
+            param_05,
+            param_06,
+            param_07,
+            param_08
         )
-    
-    # # Function to update the selected row
-    # def update_selected(self):
-    #     tree = self.treeview_test_of_tag_01
-    #     selected_item = tree.selection()  # Get the selected item
-    #     if selected_item:  # Check if an item is selected
-    #         # Prompt the user for new values
-    #         new_col_00 = tree.item(selected_item, "values")
-    #         new_col_01 = self.entry_ma_hang.get()
-    #         new_col_02 = self.entry_ten_hang.get()
-    #         new_col_03 = self.entry_dvt.get()
-    #         new_col_04 = float(self.entry_sl_kha_dung.get().replace(',', '') or 0)
-    #         new_col_05 = float(self.tab_01_entry_nhu_cau.get().replace(',', '') or 0)
-    #         new_col_06 = float(self.tab_01_entry_sl_giu_cho.get().replace(',', '') or 0)
-    #         new_col_07 = float(self.tab_01_entry_sl_YCDH.get().replace(',', '') or 0)
-    #         new_col_08 = self.tab_01_entry_ghi_chu_mat_hang.get()
-
-    #         # If the user provides input, update the row
-    #         if new_col_01 and new_col_02:
-    #             new_values = (new_col_00[0], new_col_01, new_col_02, new_col_03, new_col_04, new_col_05, new_col_06, new_col_07, new_col_08)
-    #             tree.item(selected_item, values=new_values)
-    #     else:
-    #         error_message = f"No item selected to update."
-    #         self._f_config_notification(text=error_message, fg="red")
     
     def f_view_tab_01_button_clear_click(self):
         self.clear_all_contents()
@@ -495,7 +446,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.tab_02_button_DELETE.pack(side="left", padx=10)
         
     def f_tab_01_button_print_click(self):
-        f_utils_create_print_template()
+        self.controller_01.f_controller_handle_btn_print_00_click_()
         
     def f_tab_01_button_print_02_click(self):
         self.controller_01.f_controller_handle_btn_print_02_click_()

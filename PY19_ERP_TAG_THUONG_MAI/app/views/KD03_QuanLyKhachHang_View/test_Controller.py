@@ -114,6 +114,9 @@ class cls_test_Controller():
             return "Data exported to SQL Server KD02_YEU_CAU_DAT_HANG!"
         else:
             return "Data validation failed. Please fix the errors."
+    
+    def f_controller_handle_btn_print_00_click_(self):
+        f_utils_create_print_template()
 
     def f_controller_handle_btn_print_02_click_(self):
         path_template_file = os.path.join(PATH_ASSETS_TEMPLATES_EXCEL, "PRINT_KD0201.xlsx")
