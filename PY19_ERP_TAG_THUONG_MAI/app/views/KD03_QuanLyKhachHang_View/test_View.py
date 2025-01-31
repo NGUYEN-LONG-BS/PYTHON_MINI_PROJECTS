@@ -6,15 +6,15 @@ from Components_View import *
 from Components_View import cls_frame_normal
 from Components_View.treeview import cls_Treeview_frame_number_01
 from utils import *
-from test_Controller import cls_test_Controller, cls_test_Controller_02_treeview, cls_test_Controller_03_auto_update_number
+from test_Controller import cls_test_Controller, cls_test_Controller_02_treeview, cls_test_Controller_03_auto_update_number, cls_test_Controller_05_staticmenthod
 
 class cls_test_View(cls_base_form_number_02_ManyTabs):
     def __init__(self):
         title = "KD02 | QUẢN LÝ YÊU CẦU ĐẶT HÀNG"
         name = "QUẢN LÝ YÊU CẦU ĐẶT HÀNG"
         super().__init__(title_of_form=title, name_of_slip=name)
-        # Create all functions
-        self.f_view_add_MVC_class()
+        # Add controller 01
+        self.f_view_add_controller_01_basic()
         # call reuse components
         self._f_view_thay_doi_gia_tri_cua_base_form()
         self._f_view_create_all_container_frames_of_window()
@@ -24,13 +24,12 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         # Set up all global variants
         self._f_setup_all_global_variants()
         self._f_setup_all_binding()
-        
-        self.f_view_add_controller_02_treeview()
-        self.f_view_add_controller_03_treeview_auto_update_number()
+        # Add controllers
+        self.f_view_add_controller_02_all_logic_of_treeview()
+        self.f_view_add_controller_03_auto_update_entries_amount_of_inventory()
     
     def _f_setup_all_binding(self):
         self.entry_sl_kha_dung = f_utils_tim_component_with_name(self, "entry_sl_kha_dung")
-        # self.entry_sl_kha_dung.bind("<FocusOut>", lambda event: f_utils_on_entry_change(self.entry_sl_kha_dung))
         self.entry_sl_kha_dung.bind("<FocusOut>", self.f_view_clear_content_when_sl_kha_dung_change)
         
         self.entry_ma_hang = f_utils_tim_component_with_name(self, "entry_ma_hang")
@@ -89,12 +88,12 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
     # Adding controller
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
 
-    def f_view_add_MVC_class(self):
+    def f_view_add_controller_01_basic(self):
         # Initialize controller_01
         self.controller_01 = cls_test_Controller()
         self.controller_01.view = self
 
-    def f_view_add_controller_02_treeview(self):
+    def f_view_add_controller_02_all_logic_of_treeview(self):
         # Initialize controller_02
         tree = self.table_of_tab_01
         entry_ma_hh = self.tab_01_entry_nhu_cau
@@ -104,7 +103,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.controller_02_treeview = cls_test_Controller_02_treeview(tree, entry_ma_hh, entry_ten_hh, entry_so_luong, entry_ghi_chu)
         self.controller_02_treeview.view = self
     
-    def f_view_add_controller_03_treeview_auto_update_number(self):
+    def f_view_add_controller_03_auto_update_entries_amount_of_inventory(self):
         # Initialize controller_03
         entry_sl_kha_dung = self.entry_sl_kha_dung
         entry_sl_nhu_cau = self.tab_01_entry_nhu_cau
@@ -535,7 +534,12 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         else:
             # Show success message
             self._f_config_notification(text=error_message, fg="green")
-            self.f_clear_input_fileds_of_tab_01()
+            # self.f_clear_input_fileds_of_tab_01()
+            cls_test_Controller_05_staticmenthod.clear_input_fields(self.tab_01_entry_ghi_chu_mat_hang, 
+                                                                    self.tab_01_entry_nhu_cau,
+                                                                    self.tab_01_entry_sl_giu_cho,
+                                                                    self.tab_01_entry_sl_YCDH
+                                                                    )
         
         # Update the row count
         self._f_view_set_rows_count_of_treeview_01_when_add_new_row()
@@ -710,8 +714,8 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
     def f_tab_02_table_on_click(self, event):
         print("f_tab_02_table_on_click")    
 
-    def f_clear_input_fileds_of_tab_01(self):
-        self.tab_01_entry_id.delete(0, tk.END)
-        self.tab_01_entry_ghi_chu_mat_hang.delete(0, tk.END)
-        self.tab_01_entry_sl_YCDH.delete(0, tk.END)
+    # def f_clear_input_fileds_of_tab_01(self):
+    #     self.tab_01_entry_id.delete(0, tk.END)
+    #     self.tab_01_entry_ghi_chu_mat_hang.delete(0, tk.END)
+    #     self.tab_01_entry_sl_YCDH.delete(0, tk.END)
         

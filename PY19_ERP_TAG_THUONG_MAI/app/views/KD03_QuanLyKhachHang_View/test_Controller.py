@@ -181,6 +181,12 @@ class cls_test_Controller():
     def f_controller_get_row_count(self, treeview):
         # Get all child items (rows) and count them
         return len(treeview.get_children())    
+    
+    
+    def clear_input_fields(entry_id, entry_ghi_chu_mat_hang, entry_sl_YCDH):
+        entry_id.delete(0, tk.END)
+        entry_ghi_chu_mat_hang.delete(0, tk.END)
+        entry_sl_YCDH.delete(0, tk.END)
 
 
 class cls_test_Controller_02_treeview():
@@ -415,3 +421,18 @@ class cls_test_Controller_04_validate_before_saving():
     def validate_and_update(self):
         print("Kiểm tra số lượng khả dụng khớp thì mới cho lưu!")
         return True
+    
+class cls_test_Controller_05_staticmenthod:
+    @staticmethod
+    def clear_input_fields(entry_ghi_chu_mat_hang, entry_sl_nhu_cau, entry_sl_giu_cho, entry_sl_YCDH):
+        
+        entry_ghi_chu_mat_hang.delete(0, tk.END)
+        entry_sl_nhu_cau.delete(0, tk.END)
+
+        entry_sl_giu_cho.config(state='normal')
+        entry_sl_giu_cho.delete(0, tk.END)
+        entry_sl_giu_cho.config(state='disabled')
+
+        entry_sl_YCDH.config(state='normal')
+        entry_sl_YCDH.delete(0, tk.END)
+        entry_sl_YCDH.config(state='disabled')
