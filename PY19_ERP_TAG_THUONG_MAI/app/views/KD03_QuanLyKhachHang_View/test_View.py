@@ -25,8 +25,8 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self._f_setup_all_global_variants()
         self._f_setup_all_binding()
         
-        self.f_add_controller_02_treeview()
-        self.f_add_controller_03_treeview()
+        self.f_view_add_controller_02_treeview()
+        self.f_view_add_controller_03_treeview_auto_update_number()
     
     def _f_setup_all_binding(self):
         self.entry_sl_kha_dung = f_utils_tim_component_with_name(self, "entry_sl_kha_dung")
@@ -85,12 +85,16 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.double_click_interval = 0.3  # 300 ms
         self.label_footer = f_utils_tim_component_label_with_text(self, "Notification")
 
+    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
+    # Adding controller
+    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
+
     def f_view_add_MVC_class(self):
         # Initialize controller_01
         self.controller_01 = cls_test_Controller()
         self.controller_01.view = self
 
-    def f_add_controller_02_treeview(self):
+    def f_view_add_controller_02_treeview(self):
         # Initialize controller_02
         tree = self.table_of_tab_01
         entry_ma_hh = self.tab_01_entry_nhu_cau
@@ -100,7 +104,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.controller_02_treeview = cls_test_Controller_02_treeview(tree, entry_ma_hh, entry_ten_hh, entry_so_luong, entry_ghi_chu)
         self.controller_02_treeview.view = self
     
-    def f_add_controller_03_treeview(self):
+    def f_view_add_controller_03_treeview_auto_update_number(self):
         # Initialize controller_03
         entry_sl_kha_dung = self.entry_sl_kha_dung
         entry_sl_nhu_cau = self.tab_01_entry_nhu_cau
@@ -114,14 +118,14 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.tab_01 = self.tab1
         self.tab_02 = self.tab2
         # Settings tab content
-        self._f_view_create_all_container_frames_in_tab_01()
+        self._f_view_create_widgets_all_container_frames_in_tab_01()
         self._f_view_create_all_container_frames_in_tab_02()
 
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     # Tab_01: create widgets
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
 
-    def _f_view_create_all_container_frames_in_tab_01(self):
+    def _f_view_create_widgets_all_container_frames_in_tab_01(self):
         # Frame H2
         self.tab_01_frame_H2 = cls_frame_normal(self.tab_01)
         # self.tab_01_frame_H2.pack(fill="both", expand=True)
@@ -242,13 +246,13 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.frame_clients_informations_tab_01 = cls_frame_client_information_view(parent_frame)
         self.frame_clients_informations_tab_01.config(bd=0, relief="flat")
         self.frame_clients_informations_tab_01.grid(row=0, column=0, sticky="nsew")
-        self._f_view_add_row_03_into_frame_clients_informations_tab_01()
+        self._f_view_create_widgets_add_row_03_into_frame_clients_informations_tab_01()
         
         # Create frame inventories informations
         self.frame_inventories_informations_tab_01 = cls_frame_inventories_information_view(parent_frame)
         self.frame_inventories_informations_tab_01.config(bd=0, relief="flat")
         self.frame_inventories_informations_tab_01.grid(row=0, column=1, sticky="nsew", padx=(10, 0))
-        self._f_view_add_widget_into_frame_inventories_informations_tab_01()
+        self._f_view_create_widgets_add_widget_into_frame_inventories_informations_tab_01()
             
     def _f_view_create_widgets_in_frame_slip_informations(self):
         # Input fields
@@ -264,7 +268,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_note_for_slip.f_on_not_selecting(color=COLOR_WHITE)
         self.tab_01_note_for_slip.pack(side="left", fill="x", expand=True, pady=10)
         
-    def _f_view_add_widget_into_frame_inventories_informations_tab_01(self):
+    def _f_view_create_widgets_add_widget_into_frame_inventories_informations_tab_01(self):
         # create parent_frame
         parent_frame = self.frame_inventories_informations_tab_01.frame_row_2
         
@@ -284,9 +288,9 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_entry_sl_YCDH.config(state="readonly")
         self.tab_01_entry_sl_YCDH.pack(side="left")
         
-        self._f_view_add_row_03_into_frame_inventories_informations_tab_01()
+        self._f_view_create_widgets_add_row_03_into_frame_inventories_informations_tab_01()
     
-    def _f_view_add_row_03_into_frame_inventories_informations_tab_01(self):
+    def _f_view_create_widgets_add_row_03_into_frame_inventories_informations_tab_01(self):
         # create parent_frame
         parent_frame = tk.Frame(self.frame_inventories_informations_tab_01)
         parent_frame.pack(side="bottom", fill="x", expand=True)
@@ -297,7 +301,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_entry_ghi_chu_mat_hang.f_on_not_selecting(color=COLOR_WHITE)
         self.tab_01_entry_ghi_chu_mat_hang.pack(side="left", fill="x", expand=True, padx=(0, 10))
         
-    def _f_view_add_row_03_into_frame_clients_informations_tab_01(self):
+    def _f_view_create_widgets_add_row_03_into_frame_clients_informations_tab_01(self):
         # create parent_frame
         parent_frame = cls_frame_contracts_management_view(self.frame_clients_informations_tab_01)
         parent_frame.pack(side="bottom", fill="x", expand=True)
@@ -340,6 +344,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.controller_02_treeview.f_controller_02_delete_selected(self.treeview_test_of_tag_01)
     
     def f_view_tab_01_button_update_click(self):
+        # Khai báo các tham số
         tree = self.treeview_test_of_tag_01
         selected_item = tree.selection()
         param_00 = tree.item(selected_item, "values")[0] if tree.item(selected_item, "values") else None
@@ -351,6 +356,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         param_06 = float(self.tab_01_entry_sl_giu_cho.get().replace(',', '') or 0)
         param_07 = float(self.tab_01_entry_sl_YCDH.get().replace(',', '') or 0)
         param_08 = self.tab_01_entry_ghi_chu_mat_hang.get()
+        # Gọi hàm
         self.controller_02_treeview.update_selected_row(
             tree,
             param_00,
