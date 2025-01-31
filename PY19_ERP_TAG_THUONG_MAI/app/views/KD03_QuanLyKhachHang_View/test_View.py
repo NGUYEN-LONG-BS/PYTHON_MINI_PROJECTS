@@ -1,7 +1,5 @@
 import tkinter as tk
 from tkinter import ttk
-from tkinter import messagebox
-from PIL import Image, ImageTk
 import time
 import json
 from Components_View import *
@@ -9,7 +7,6 @@ from Components_View import cls_frame_normal
 from Components_View.treeview import cls_Treeview_frame_number_01
 from utils import *
 from test_Controller import cls_test_Controller, cls_test_Controller_02_treeview, cls_test_Controller_03_auto_update_number
-
 
 class cls_test_View(cls_base_form_number_02_ManyTabs):
     def __init__(self):
@@ -156,14 +153,10 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_frame_button_02.pack(side="bottom", fill="x")
         self._f_view_create_widgets_in_tab_01_frame_button_02()
 
-    
-
     def _f_view_create_widgets_in_tab_01_frame_H2(self):
         # Title H2
         cls_my_label_num_03_title_H2(self.tab_01_frame_H2, text="PHIẾU YÊU CẦU ĐẶT HÀNG").pack(anchor="center")
-    
-    
-        
+     
     def _f_view_create_widgets_in_tab_01_frame_entries(self):
         self.tab_01_container_frame_entries = tk.Frame(self.tab_01_frame_entries)
         self.tab_01_container_frame_entries.pack(side="top", 
@@ -256,8 +249,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.frame_inventories_informations_tab_01.config(bd=0, relief="flat")
         self.frame_inventories_informations_tab_01.grid(row=0, column=1, sticky="nsew", padx=(10, 0))
         self._f_view_add_widget_into_frame_inventories_informations_tab_01()
-        
-        
+            
     def _f_view_create_widgets_in_frame_slip_informations(self):
         # Input fields
         tk.Label(self.frame_slip_informations, text="STT:").pack(side="left")
@@ -319,7 +311,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_button_add = tk.Button(tab_01_button_container_01, text="Add Row", command=self.f_view_tab_01_button_add_click)
         self.tab_01_button_add.pack(side="left", padx=10)
         
-        # Delete update
+        # Update button
         self.tab_01_button_update = tk.Button(tab_01_button_container_01, text="Update Row", command=self.f_view_tab_01_button_update_click)
         self.tab_01_button_update.pack(side="left", padx=10)
         
@@ -350,7 +342,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
     def f_view_tab_01_button_update_click(self):
         tree = self.treeview_test_of_tag_01
         selected_item = tree.selection()
-        param_00 = tree.item(selected_item, "values")
+        param_00 = tree.item(selected_item, "values")[0] if tree.item(selected_item, "values") else None
         param_01 = self.entry_ma_hang.get()
         param_02 = self.entry_ten_hang.get()
         param_03 = self.entry_dvt.get()
@@ -371,16 +363,6 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
             param_07,
             param_08
         )
-    
-    def f_view_tab_01_button_clear_click(self):
-        self.clear_all_contents()
-    
-    # Function to clear all rows
-    def clear_all_contents(self):
-        # Clear the Treeview
-        tree = self.treeview_test_of_tag_01
-        for item in tree.get_children():
-            tree.delete(item)
     
     def _f_view_create_widgets_in_tab_01_frame_treeview(self):
         self.tab_01_frame_treeview = self.tab_01_frame_treeview
@@ -459,25 +441,9 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.tab_02_button_DELETE = tk.Button(tab_02_button_container_02, text="DELETE")
         self.tab_02_button_DELETE.pack(side="left", padx=10)
         
-    def f_tab_01_button_print_click(self):
-        self.controller_01.f_controller_handle_btn_print_00_click_()
-        
-    def f_tab_01_button_print_02_click(self):
-        self.controller_01.f_controller_handle_btn_print_02_click_()
-    
-    def f_tab_01_button_import_click(self):
-        print("Import config")
-        
-    def f_tab_01_button_template_click(self):
-        self._f_config_notification(f_utils_create_template_excel_file(),"black")
-        
-    def f_tab_01_button_get_import_file_click(self):
-        self._f_config_notification(f_utils_open_file(),"black")
-
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     # Tab_02: create widgets
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
-
     def _f_view_create_all_container_frames_in_tab_02(self):
         # Frame H2
         self.tab_02_frame_H2 = cls_frame_normal(self.tab_02)
@@ -507,12 +473,38 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
     def _f_view_create_widgets_in_tab_02_frame_H2(self):
         # Title H2
         cls_my_label_num_03_title_H2(self.tab_02_frame_H2, text="NHẬT KÝ YÊU CẦU ĐẶT HÀNG").pack(anchor="center")
+    
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
-    # Event Handlers of tab number 01
+    # Tab_01: Event Handlers
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
+    def f_view_tab_01_button_clear_click(self):
+        self.clear_all_contents()
+    
+    # Function to clear all rows
+    def clear_all_contents(self):
+        # Clear the Treeview
+        tree = self.treeview_test_of_tag_01
+        for item in tree.get_children():
+            tree.delete(item)
+    
     def f_tab_01_button_get_click(self):
         self._f_config_notification(text=self.controller_01.f_get_data(self.table_of_tab_01), fg="blue")
+
+    def f_tab_01_button_print_click(self):
+        self.controller_01.f_controller_handle_btn_print_00_click_()
         
+    def f_tab_01_button_print_02_click(self):
+        self.controller_01.f_controller_handle_btn_print_02_click_()
+    
+    def f_tab_01_button_import_click(self):
+        print("Import config")
+        
+    def f_tab_01_button_template_click(self):
+        self._f_config_notification(f_utils_create_template_excel_file(),"black")
+        
+    def f_tab_01_button_get_import_file_click(self):
+        self._f_config_notification(f_utils_open_file(),"black")
+
     def f_view_tab_01_button_add_click(self):
         # Update the row count
         self._f_view_set_rows_count_of_treeview_01_when_add_new_row()
@@ -700,23 +692,6 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
                 self.tab_01_entry_sl_YCDH.insert(0, formatted_sl_dat_hang)
                 self.tab_01_entry_sl_YCDH.config(state="disabled")
             
-            # # Update the value of sl_nhu_cau
-            # sl_giu_cho = self.tab_01_entry_sl_giu_cho.get().replace(",", "").strip()
-            # sl_dat_hang = self.tab_01_entry_sl_YCDH.get().replace(",", "").strip()
-            
-            # # Kiểm tra nếu các giá trị rỗng, đặt giá trị mặc định là 0
-            # sl_giu_cho = float(sl_giu_cho) if sl_giu_cho else 0.0
-            # sl_dat_hang = float(sl_dat_hang) if sl_dat_hang else 0.0
-            
-            # sl_nhu_cau = float(sl_giu_cho) + float(sl_dat_hang)
-            # if sl_nhu_cau.is_integer():  # Nếu là số nguyên
-            #     formatted_sl_nhu_cau = f"{int(sl_nhu_cau):,}"
-            # else:  # Nếu là số thập phân
-            #     formatted_sl_nhu_cau = f"{sl_nhu_cau:,.2f}"
-            
-            # self.tab_01_entry_nhu_cau.delete(0, tk.END)
-            # self.tab_01_entry_nhu_cau.insert(0, formatted_sl_nhu_cau)
-    
     def f_view_clear_content_when_sl_kha_dung_change(self, event):
         f_utils_on_entry_change(self.entry_sl_kha_dung)
         self.tab_01_entry_nhu_cau.delete(0, tk.END)
@@ -734,17 +709,3 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_entry_ghi_chu_mat_hang.delete(0, tk.END)
         self.tab_01_entry_sl_YCDH.delete(0, tk.END)
         
-    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
-    # Event Handlers of tab number 02
-    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
-    def f_tab_02_button_get_click(self):
-        print("Get Data tab 02")
-
-    def f_tab_02_button_add_click(self):
-        print("Add Row tab 02")
-        
-    def f_tab_02_button_export_click(self):
-        print("Export Data to SQL tab 02")
-        
-    def f_table_tab_02_click(self, event):
-        print("Table tab 02 click")

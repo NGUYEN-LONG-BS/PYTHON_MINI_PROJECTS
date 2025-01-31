@@ -268,11 +268,8 @@ class cls_test_Controller_02_treeview():
     # Function to update the selected row
     def begin_updating_row_in_tree_view(self, tree, *args):
         selected_item = tree.selection()  # Get the selected item
-        current_values = tree.item(selected_item, "values")
-        if current_values and args:
-            # Ensure at least one argument is provided (besides tree)
-            new_values = (current_values[0],) + args  # Keep the first column as-is, update the rest
-            tree.item(selected_item, values=new_values)
+        tree.item(selected_item, values=args)
+        # notification
         success_message = "Update successfully!"
         fg="blue"
         return success_message, fg
