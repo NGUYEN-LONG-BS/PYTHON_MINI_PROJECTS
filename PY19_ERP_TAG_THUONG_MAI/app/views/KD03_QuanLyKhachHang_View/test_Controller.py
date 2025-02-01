@@ -435,3 +435,11 @@ class cls_test_Controller_05_staticmenthod:
         entry_sl_YCDH.config(state='normal')
         entry_sl_YCDH.delete(0, tk.END)
         entry_sl_YCDH.config(state='disabled')
+
+    @staticmethod
+    def update_entry_id_after_adding_new_row(tree, entry_id):
+        row_count = 1 + len(tree.get_children())    
+        entry_id.config(state="normal")  # Enable the Entry widget to update the value
+        entry_id.delete(0, tk.END)  # Clear the existing value
+        entry_id.insert(0, row_count)  # Insert the new value (ID)
+        entry_id.config(state="disabled")  # Disable the Entry widget again

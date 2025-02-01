@@ -20,7 +20,8 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self._f_view_create_all_container_frames_of_window()
         # set up formats
         self._f_view_set_up_formats()
-        self._f_view_set_rows_count_of_treeview_01_when_add_new_row()
+        # self._f_view_set_rows_count_of_treeview_01_when_add_new_row()
+        cls_test_Controller_05_staticmenthod.update_entry_id_after_adding_new_row(self.table_of_tab_01, self.tab_01_entry_id)
         # Set up all global variants
         self._f_setup_all_global_variants()
         self._f_setup_all_binding()
@@ -533,7 +534,8 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
 
     def f_view_tab_01_button_add_click(self):
         # Update the row count
-        self._f_view_set_rows_count_of_treeview_01_when_add_new_row()
+        # self._f_view_set_rows_count_of_treeview_01_when_add_new_row()
+        cls_test_Controller_05_staticmenthod.update_entry_id_after_adding_new_row(self.table_of_tab_01, self.tab_01_entry_id)
         id_value = self.tab_01_entry_id.get()
         ma_hang = self.entry_ma_hang.get()
         ten_hang = self.entry_ten_hang.get()
@@ -563,7 +565,8 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
                                                                     )
         
         # Update the row count
-        self._f_view_set_rows_count_of_treeview_01_when_add_new_row()
+        # self._f_view_set_rows_count_of_treeview_01_when_add_new_row()
+        cls_test_Controller_05_staticmenthod.update_entry_id_after_adding_new_row(self.table_of_tab_01, self.tab_01_entry_id)
         
     def _f_view_set_rows_count_of_treeview_01_when_add_new_row(self):
         row_count = 1 + self.controller_01.f_controller_get_row_count(self.table_of_tab_01)
