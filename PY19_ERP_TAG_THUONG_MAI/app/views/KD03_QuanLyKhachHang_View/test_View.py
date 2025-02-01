@@ -125,36 +125,41 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
 
     def _f_view_create_widgets_all_container_frames_in_tab_01(self):
+        parent_frame = self.tab_01
+
         # Frame H2
-        self.tab_01_frame_H2 = cls_frame_normal(self.tab_01)
+        self.tab_01_frame_H2 = cls_frame_normal(parent_frame)
         # self.tab_01_frame_H2.pack(fill="both", expand=True)
-        self.tab_01_frame_H2.pack(side="top", fill="x")
+        self.tab_01_frame_H2.grid(row=0, column=0, sticky="ew")
+
         self._f_view_create_widgets_in_tab_01_frame_H2()
 
         # Frame entries
-        self.tab_01_frame_entries = cls_frame_normal(self.tab_01)
-        self.tab_01_frame_entries.pack(side="top", fill="x")
-        # self.tab_01_frame_entries.pack(padx=20, pady=20)
+        self.tab_01_frame_entries = cls_frame_normal(parent_frame)
+        # self.tab_01_frame_entries.pack(side="top", fill="x")
+        self.tab_01_frame_entries.grid(row=1, column=0, sticky="ew")
         self._f_view_create_widgets_in_tab_01_frame_entries()
 
         # Frame button
-        self.tab_01_frame_button_of_treeview = tk.Frame(self.tab_01)
-        self.tab_01_frame_button_of_treeview.pack(side="top", fill="x")
+        self.tab_01_frame_button_of_treeview = tk.Frame(parent_frame)
+        # self.tab_01_frame_button_of_treeview.pack(side="top", fill="x")
+        self.tab_01_frame_button_of_treeview.grid(row=2, column=0, sticky="ew")
         self._f_view_create_widgets_in_tab_01_frame_button_of_treeview()
 
         # Frame treeview
-        self.tab_01_frame_treeview = cls_Treeview_frame_number_01(self.tab_01)
-        self.tab_01_frame_treeview.pack(
-            side="top", 
-            fill="both",
-            expand=True
-            )
+        self.tab_01_frame_treeview = cls_Treeview_frame_number_01(parent_frame)
+        # self.tab_01_frame_treeview.pack(side="top", fill="both", expand=True)
+        self.tab_01_frame_treeview.grid(row=3, column=0, sticky="nsew")
         self._f_view_create_widgets_in_tab_01_frame_treeview()
         
         # Frame button
-        self.tab_01_frame_button_02 = tk.Frame(self.tab_01)
-        self.tab_01_frame_button_02.pack(side="bottom", fill="x")
+        self.tab_01_frame_button_02 = tk.Frame(parent_frame)
+        # self.tab_01_frame_button_02.pack(side="bottom", fill="x")
+        self.tab_01_frame_button_02.grid(row=4, column=0, sticky="ew")
         self._f_view_create_widgets_in_tab_01_frame_button_02()
+
+        parent_frame.grid_rowconfigure(3, weight=1) # cho phép giãn nở
+        parent_frame.grid_columnconfigure(0, weight=1)
 
     def _f_view_create_widgets_in_tab_01_frame_H2(self):
         # Title H2
@@ -396,11 +401,12 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.treeview_test_of_tag_02.bind("<ButtonRelease-1>", self.f_view_table_of_tab_02_click)
     
     def _f_view_create_widgets_in_tab_01_frame_button_02(self):
+        parent_frame = self.tab_01_frame_button_02
         # Create a sub-frame on the right
-        tab_01_button_container_02_on_the_right = tk.Frame(self.tab_01_frame_button_02)
+        tab_01_button_container_02_on_the_right = tk.Frame(parent_frame)
         tab_01_button_container_02_on_the_right.pack(side="right", expand=True, pady=10)
         # Create a sub-frame on the left
-        tab_01_button_container_02_on_the_left = tk.Frame(self.tab_01_frame_button_02)
+        tab_01_button_container_02_on_the_left = tk.Frame(parent_frame)
         tab_01_button_container_02_on_the_left.pack(side="left", expand=True, pady=10)
         
         # Export Data button
@@ -447,18 +453,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_btn_start_import_file = tk.Button(tab_01_button_container_02_on_the_left, text="START IMPORT")
         self.tab_01_btn_start_import_file.pack(side="left", padx=10)
         
-    def _f_view_create_widgets_in_tab_02_frame_button_02(self):
-        # Create a sub-frame to organize buttons in the center
-        tab_02_button_container_02 = tk.Frame(self.tab_02_frame_button_02)
-        tab_02_button_container_02.pack(expand=True, pady=10)
-        
-        # Get Data button
-        self.tab_02_button_edit = tk.Button(tab_02_button_container_02, text="EDIT")
-        self.tab_02_button_edit.pack(side="left", padx=10)
-        
-        # Export Data button
-        self.tab_02_button_DELETE = tk.Button(tab_02_button_container_02, text="DELETE")
-        self.tab_02_button_DELETE.pack(side="left", padx=10)
+    
         
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     # Tab_02: create widgets
@@ -493,6 +488,18 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         # Title H2
         cls_my_label_num_03_title_H2(self.tab_02_frame_H2, text="NHẬT KÝ YÊU CẦU ĐẶT HÀNG").pack(anchor="center")
     
+    def _f_view_create_widgets_in_tab_02_frame_button_02(self):
+        # Create a sub-frame to organize buttons in the center
+        tab_02_button_container_02 = tk.Frame(self.tab_02_frame_button_02)
+        tab_02_button_container_02.pack(expand=True, pady=10)
+        
+        # Get Data button
+        self.tab_02_button_edit = tk.Button(tab_02_button_container_02, text="EDIT")
+        self.tab_02_button_edit.pack(side="left", padx=10)
+        
+        # Export Data button
+        self.tab_02_button_DELETE = tk.Button(tab_02_button_container_02, text="DELETE")
+        self.tab_02_button_DELETE.pack(side="left", padx=10)
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     # Tab_01: Event Handlers
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================

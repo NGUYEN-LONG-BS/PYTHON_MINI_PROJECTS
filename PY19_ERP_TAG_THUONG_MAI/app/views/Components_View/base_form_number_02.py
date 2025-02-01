@@ -76,75 +76,12 @@ class cls_base_form_number_02_ManyTabs(tk.Tk):
         self.destroy()
         f_utils_open_dashboard_main()
     
-    # def f_set_style(self):
-        
-        
-    #     # Create a style object
-    #     style = ttk.Style()
-    #     # Use default theme (you can experiment with others)
-    #     # style.theme_use("default")
-    #     style.theme_use("clam")
-
-    #     # Customize the notebook style
-    #     style.configure("TNotebook", 
-    #                     background=BG_COLOR_0_0, 
-    #                     borderwidth=0
-    #                     )
-    #     style.configure("TNotebook.Tab",
-    #                     background=BG_COLOR_0_0,
-    #                     foreground=FG_COLOR_01,
-    #                     padding=[10, 5],
-    #                     font=("Arial", 12, "bold"))
-    #     style.map("TNotebook.Tab", 
-    #             background=[("selected", HIGHLIGHT_COLOR)],
-    #             foreground=[("selected", FG_COLOR_01)],
-    #             padding=[("selected", [10, 5])],                                # Maintain padding without expanding borders
-    #             expand=[("selected", [0, 0, 0, 0])])                            # No border expansion when selected
-        
-    #     # Customize the Label style
-    #     style.configure("TLabel", 
-    #                     background=BG_COLOR_0_0,  # Background color for labels
-    #                     foreground=FG_COLOR_01, # Text color
-    #                     font=("Arial", 10))     # Font style and size
-
-    #     # Customize the Treeview style
-    #     style.configure("Treeview", 
-    #                     background=BG_COLOR_0_0, 
-    #                     foreground=FG_COLOR_01, 
-    #                     rowheight=25,          # Row height
-    #                     fieldbackground=BG_COLOR_0_0, # Background color for the cells
-    #                     font=("Arial", 10))
-    #     style.map("Treeview", 
-    #             background=[("selected", HIGHLIGHT_COLOR)],
-    #             foreground=[("selected", FG_COLOR_01)])
-
-    #     # Customize the Treeview heading style
-    #     style.configure("Treeview.Heading", 
-    #                     background=BG_COLOR_0_0, 
-    #                     foreground=FG_COLOR_01, 
-    #                     font=("Arial", 11, "bold")) # Font for headings
-
-    #     # Customize the Scrollbar style
-    #     style.configure("TScrollbar", 
-    #                     background=BG_COLOR_0_0, 
-    #                     troughcolor=BG_COLOR_0_2, # Trough (track) color
-    #                     arrowcolor=FG_COLOR_03) # Arrow color
-    #     style.map("TScrollbar", 
-    #             background=[("pressed", HIGHLIGHT_COLOR), ("active", FG_COLOR_03)])
-        
-    #     # Customize the Frame style
-    #     style.configure("TFrame", 
-    #                     background=BG_COLOR_0_0,  # Background color for frames
-    #                     borderwidth=2,           # Border width
-    #                     relief="flat")           # Relief style (flat, raised, sunken, etc.)
-
-    #     style.map("TFrame", 
-    #             background=[("active", HIGHLIGHT_COLOR)])  # Optional: Change on hover or active state
-    
     def f_add_elements_to_frame_body(self):
+        parent_frame = self.Frame_Body
         # Create a notebook (tabs)
-        self.notebook = ttk.Notebook(self.Frame_Body)
+        self.notebook = ttk.Notebook(parent_frame)
         self.notebook.pack(fill="both", expand=True)
+        # self.notebook.pack(fill="x", expand=True)
 
         # Create tabs
         self.tab1 = ttk.Frame(self.notebook)
