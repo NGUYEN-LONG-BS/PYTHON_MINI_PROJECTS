@@ -416,7 +416,6 @@ class cls_test_Controller_03_auto_update_number():
 class cls_test_Controller_04_validate_before_saving():
     def __init__(self, tree):
         self.data_sl_kha_dung = []
-        
             
     def validate_and_update(self):
         print("Kiểm tra số lượng khả dụng khớp thì mới cho lưu!")

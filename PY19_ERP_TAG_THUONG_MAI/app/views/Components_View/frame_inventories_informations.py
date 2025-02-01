@@ -51,7 +51,7 @@ class cls_frame_inventories_information_view(tk.Frame):
         # first setup 
         self._f_setup_geometry()
         # second setup 
-        self._f_setup_MVC()
+        self._f_add_controller_01()
         # third setup 
         self._f_create_widgets_all_container_frames()
         
@@ -68,7 +68,7 @@ class cls_frame_inventories_information_view(tk.Frame):
         self.frame_row_2.pack(side="top", fill="x", pady=0)
         self._f_create_widgets_of_frame_row_2()
         
-    def _f_setup_MVC(self):
+    def _f_add_controller_01(self):
         self.controller = cls_frame_inventories_information_controller()  # Create an instance of the controller
 
     def _f_create_widgets_of_frame_row_1(self):
@@ -96,25 +96,32 @@ class cls_frame_inventories_information_view(tk.Frame):
         self.additional_entries.append(entry_inventory_names)
     
     def _f_create_widgets_of_frame_row_2(self):
-        label_dvt = ttk.Label(self.frame_row_2, text="Đvt:")
-        label_dvt.pack(side="left", padx=(10,2), pady=5)
+        parent_frame = self.frame_row_2
+
+        label_dvt = ttk.Label(parent_frame, text="Đvt:")
+        # label_dvt.pack(side="left", padx=(10,2), pady=5)
+        label_dvt.grid(row=0, column=0, padx=(10, 2), pady=5, sticky="w")
            
-        entry_dvt = cls_my_text_entry_num_01(self.frame_row_2, width=7, name="entry_dvt")
-        entry_dvt.pack(side="left", padx=(0, 2), pady=5)
+        entry_dvt = cls_my_text_entry_num_01(parent_frame, width=7, name="entry_dvt")
+        # entry_dvt.pack(side="left", padx=(0, 2), pady=5)
+        entry_dvt.grid(row=0, column=1, padx=(0, 2), pady=5, sticky="w")
         self.additional_entries.append(entry_dvt)
 
-        label_sl_kha_dung = ttk.Label(self.frame_row_2, text="SL khả dụng:")
-        label_sl_kha_dung.pack(side="left", padx=(10, 2), pady=5)
+        label_sl_kha_dung = ttk.Label(parent_frame, text="SL khả dụng:")
+        # label_sl_kha_dung.pack(side="left", padx=(10, 2), pady=5)
+        label_sl_kha_dung.grid(row=0, column=2, padx=(10, 2), pady=5, sticky="w")
 
-        # entry_sl_kha_dung = ttk.Entry(self.frame_row_2, width=15, name="entry_sl_kha_dung")
-        entry_sl_kha_dung = cls_my_number_entry_num_01(self.frame_row_2, width=10, name="entry_sl_kha_dung")
-        entry_sl_kha_dung.pack(side="left", padx=(0, 10), pady=5)
+        entry_sl_kha_dung = cls_my_number_entry_num_01(parent_frame, width=10, name="entry_sl_kha_dung")
+        # entry_sl_kha_dung.pack(side="left", padx=(0, 10), pady=5)
+        entry_sl_kha_dung.grid(row=0, column=3, padx=(0, 10), pady=5, sticky="w")
         self.additional_entries.append(entry_sl_kha_dung)
 
+        # Configure column weights for proper resizing
+        parent_frame.columnconfigure(1, weight=1)  # Allow entry_dvt to expand
+        parent_frame.columnconfigure(3, weight=1)  # Allow entry_sl_kha_dung to expand
+
         # Link additional Entry widgets to the cls_TreeviewCombobox_inventories
-        # entry_sl_kha_dung.config(state="normal")
         self.treeview_combobox.set_additional_entries(self.additional_entries)
-        # entry_sl_kha_dung.config(state="readonly")
 
     def update_combobox_data(self, data):
         self.treeview_combobox.data = data

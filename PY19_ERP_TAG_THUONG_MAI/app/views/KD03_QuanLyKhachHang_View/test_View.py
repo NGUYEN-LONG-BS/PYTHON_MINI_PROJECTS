@@ -271,21 +271,35 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         # create parent_frame
         parent_frame = self.frame_inventories_informations_tab_01.frame_row_2
         
-        self.label13_nhu_cau = tk.Label(parent_frame, text="nhu cầu:").pack(side="left")
+        self.label13_nhu_cau = tk.Label(parent_frame, text="nhu cầu:")
+        # self.label13_nhu_cau.pack(side="left")
+        self.label13_nhu_cau.grid(row=0, column=4, padx=(10, 2), pady=5, sticky="w")
         self.tab_01_entry_nhu_cau = cls_my_number_entry_num_01(parent_frame, width=10)
         self.tab_01_entry_nhu_cau.f_on_leaving(color=COLOR_WHITE)
         self.tab_01_entry_nhu_cau.f_on_not_selecting(color=COLOR_WHITE)
-        self.tab_01_entry_nhu_cau.pack(side="left")
+        # self.tab_01_entry_nhu_cau.pack(side="left")
+        self.tab_01_entry_nhu_cau.grid(row=0, column=5, padx=(0, 10), pady=5, sticky="w")
         
-        tk.Label(parent_frame, text="SL giữ chỗ:").pack(side="left")
+        self.label_sl_giu_cho = tk.Label(parent_frame, text="SL giữ chỗ:")
+        # self.label_sl_giu_cho.pack(side="left")
+        self.label_sl_giu_cho.grid(row=0, column=6, padx=(10, 2), pady=5, sticky="w")
         self.tab_01_entry_sl_giu_cho = cls_my_number_entry_num_01(parent_frame, width=10)
         self.tab_01_entry_sl_giu_cho.config(state="readonly")
-        self.tab_01_entry_sl_giu_cho.pack(side="left")
+        # self.tab_01_entry_sl_giu_cho.pack(side="left")
+        self.tab_01_entry_sl_giu_cho.grid(row=0, column=7, padx=(0, 10), pady=5, sticky="w")
         
-        tk.Label(parent_frame, text="SL YCĐH:").pack(side="left")
+        self.label_sl_YCDH = tk.Label(parent_frame, text="SL YCĐH:")
+        # self.label_sl_YCDH.pack(side="left")
+        self.label_sl_YCDH.grid(row=0, column=8, padx=(10, 2), pady=5, sticky="w")
         self.tab_01_entry_sl_YCDH = cls_my_number_entry_num_01(parent_frame, width=10)
         self.tab_01_entry_sl_YCDH.config(state="readonly")
-        self.tab_01_entry_sl_YCDH.pack(side="left")
+        # self.tab_01_entry_sl_YCDH.pack(side="left")
+        self.tab_01_entry_sl_YCDH.grid(row=0, column=9, padx=(0, 10), pady=5, sticky="w")
+
+        # Configure column weights for proper resizing
+        parent_frame.columnconfigure(5, weight=1)  # Allow tab_01_entry_nhu_cau to expand
+        parent_frame.columnconfigure(7, weight=1)  # Allow tab_01_entry_sl_giu_cho to expand
+        parent_frame.columnconfigure(9, weight=1)  # Allow tab_01_entry_sl_YCDH to expand
         
         self._f_view_create_widgets_add_row_03_into_frame_inventories_informations_tab_01()
     
