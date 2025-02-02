@@ -411,11 +411,6 @@ class cls_test_Model():
         ]
         return sample_data
     
-    # def f_model_get_unique_ma_hang(self, sample_data, number_column):
-    #     # Trích xuất cột thứ n và loại bỏ trùng lặp
-    #     unique_ma_hang = list(set(row[number_column] for row in sample_data))
-    #     return unique_ma_hang
-    
     def f_validate_data_format(self, data_array):
         """
         Validate the format of data before inserting into SQL Server.
@@ -460,8 +455,6 @@ class cls_test_Model():
                 print(e)
 
         return is_valid
-
-
 
 class cls_test_Model_02():
     def f_validate_data_format(self, data_array):
@@ -578,3 +571,65 @@ class cls_test_Model_02():
             cursor.close()
             conn.close()
             print("Kết nối đã được đóng.")
+
+class cls_test_Model_05_staticmenthod_get_data_from_SQL:
+    @staticmethod
+    def get_data_from_SQL(server_name, database_name, login_name, login_pass, table_name, data_array):
+        """
+        Hàm kết nối SQL Server và lấy dữ liệu.
+        
+        :param server_name: Tên hoặc địa chỉ IP của máy chủ SQL Server.
+        :param database_name: Tên cơ sở dữ liệu.
+        :param login_name: Tên người dùng SQL Server.
+        :param login_pass: Mật khẩu SQL Server.
+        :param table_name: Tên bảng trong cơ sở dữ liệu.
+        """
+        # Kết nối đến SQL Server
+        connection_string = f"DRIVER={{SQL Server}};SERVER={server_name};DATABASE={database_name};UID={login_name};PWD={login_pass}"
+        try:
+            conn = pyodbc.connect(connection_string)
+            print("Kết nối thành công đến cơ sở dữ liệu.")
+        except Exception as e:
+            print("Lỗi khi kết nối:", e)
+            return
+        
+        cursor = conn.cursor()
+        
+        # Lấy danh sách cột của bảng
+        try:
+            cursor.execute(f"SELECT * FROM {table_name} WHERE 1=0")
+            columns = [column[0] for column in cursor.description]  # Lấy tên cột
+            print("Danh sách cột trong bảng:", columns)
+        except Exception as e:
+            print("Lỗi khi lấy thông tin bảng:", e)
+            return
+
+        # Kiểm tra số cột trong bảng khớp với số cột trong dữ liệu
+        num_columns = len(columns)
+        if not all(len(row) == num_columns for row in data_array):
+            print("Dữ liệu không khớp số cột của bảng.")
+            return
+
+        # Chèn dữ liệu
+        try:
+            placeholders = ", ".join(["?" for _ in range(num_columns)])  # Tạo chuỗi placeholder "?, ?, ?"
+            query = f"INSERT INTO {table_name} ({', '.join(columns)}) VALUES ({placeholders})"
+            
+            for row in data_array:
+                cursor.execute(query, row)
+            
+            conn.commit()
+            print("Dữ liệu đã được chèn thành công.")
+        except Exception as e:
+            print("Lỗi khi chèn dữ liệu:", e)
+        finally:
+            cursor.close()
+            conn.close()
+            print("Kết nối đã được đóng.")
+
+class cls_test_Model_06_staticmenthod_get_config_of_table_YCDH_log:
+    @staticmethod
+    def f_define_table_configurations_json_file():
+        # Define the path to the JSON file
+        table_config_json_path = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'TEST_VIEW_01', 'test_table_log.JSON')
+        return table_config_json_path
