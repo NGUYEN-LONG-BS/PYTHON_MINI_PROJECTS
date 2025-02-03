@@ -1,5 +1,5 @@
 import time
-from test_Model import cls_test_Model, cls_test_Model_02
+from test_Model import cls_test_Model, cls_test_Model_02, cls_test_Model_06_staticmenthod_get_config_of_table_YCDH_log_from_json
 from Components_View import *   # Tại sao lại phải import Components_View
 from utils import *
 import traceback
@@ -297,9 +297,9 @@ class cls_test_Controller_02_treeview():
                 row = self.tree.item(child, "values")
                 data.append((
                     "NV01"                          # [ID_NHAN_VIEN]
-                    ,"XOA_SUA"                      # [XOA_SUA]
-                    ,"2025-01-23"              # [NGAY_TREN_PHIEU]
-                    ,self.entry_so_phieu.get()      # [SO_PHIEU]
+                    ,""                             # [XOA_SUA]
+                    ,"2025-01-23"                   # [NGAY_TREN_PHIEU]
+                    ,self.entry_so_phieu.get()
                     ,self.entry_ma_kh.get()
                     ,self.entry_ten_kh.get()
                     ,"MST"
@@ -443,3 +443,60 @@ class cls_test_Controller_05_staticmenthod:
         entry_id.delete(0, tk.END)  # Clear the existing value
         entry_id.insert(0, row_count)  # Insert the new value (ID)
         entry_id.config(state="disabled")  # Disable the Entry widget again
+        
+class cls_test_Controller_06_treeview_tab_02():
+    def __init__(self):
+        # super().__init__()
+        self.model = None
+        self.f_add_MVC_class()
+        
+    def f_add_MVC_class(self):
+        """Initialize and bind Model and View classes to the controller."""
+        try:
+            # Initialize Model
+            self.model = cls_test_Model_06_staticmenthod_get_config_of_table_YCDH_log_from_json()  
+            # If model or view need controller reference
+            self.model.controller = self  # Avoid recursion by passing after initialization
+        except Exception as e:
+            print(f"Error initializing MVC components: {e}")
+    
+    def f_get_table_config(self):
+        return self.model.f_load_table_config_from_json()
+
+    def f_get_table_config_name_only(self):
+        return self.model.f_load_table_config_from_json_name_only()
+
+    def f_tab_01_button_config_click(self, treeview_widget):
+        var_01, var_02, var_03 = self.model.f_extract_from_json_columns_config()
+        return var_01, var_02, var_03
+    
+    def f_tab_01_table_single_click(self, event):
+        treeview = event.widget
+        # Get the selected row ID
+        selected_item = treeview.selection()
+        if selected_item:
+            # Fetch the values of the selected row
+            row_values = treeview.item(selected_item[0], "values")
+            # print("Selected row values:", row_values)
+            if len(row_values) >= 9:
+                return row_values[0], row_values[1], row_values[2], row_values[3], row_values[4], row_values[5], row_values[6], row_values[7], row_values[8]
+            else:
+                return None, None, None, None, None, None, None, None, None
+        else:
+            # print("Warning: No row selected.")
+            return None, None, None, None, None, None, None, None, None
+    
+    def f_tab_01_table_double_click(self, event):
+        # Get the Treeview widget from the event
+        treeview = event.widget
+        # Get the selected row ID
+        selected_item = treeview.selection()
+        if selected_item:
+            # Fetch the values of the selected row
+            row_values = treeview.item(selected_item[0], "values")
+            # Print the first and third values, if they exist
+            if len(row_values) >= 3:
+                print("First value:", row_values[0])
+                print("Third value:", row_values[2])
+            else:
+                print("Insufficient data in row!")

@@ -627,9 +627,152 @@ class cls_test_Model_05_staticmenthod_get_data_from_SQL:
             conn.close()
             print("Kết nối đã được đóng.")
 
-class cls_test_Model_06_staticmenthod_get_config_of_table_YCDH_log:
-    @staticmethod
-    def f_define_table_configurations_json_file():
+class cls_test_Model_06_staticmenthod_get_config_of_table_YCDH_log_from_json():
+    def __init__(self):
+        self.f_define_table_configurations_json_file()
+    
+    def f_define_table_configurations_json_file(self):
         # Define the path to the JSON file
-        table_config_json_path = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'TEST_VIEW_01', 'test_table_log.JSON')
-        return table_config_json_path
+        self.json_file = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'TEST_VIEW_01', 'test_table_log.JSON')
+        # return table_config_json_path
+    
+    def f_load_table_config_from_json(self):
+        """Load table and column configurations from JSON"""
+        try:
+            with open(self.json_file, 'r', encoding='utf-8') as file:
+                self.data_to_config_table = json.load(file)  # Load the JSON data
+            column_names = self.f_extract_from_json_column_names(self.data_to_config_table)
+            column_width = self.f_extract_from_json_column_width(self.data_to_config_table)
+            column_min_width = self.f_extract_from_json_column_min_width(self.data_to_config_table)
+            column_anchor = self.f_extract_from_json_column_anchor(self.data_to_config_table)
+            column_stretch = self.f_extract_from_json_column_stretch(self.data_to_config_table)
+            
+            # print("Extracted column names:", column_names)
+            # print("Extracted column width:", column_width)
+            return column_names, column_width, column_min_width, column_anchor, column_stretch
+
+        except FileNotFoundError:
+            print(f"Error: The file '{self.json_file}' was not found.")
+        except json.JSONDecodeError:
+            print("Error: The JSON file is not properly formatted.")
+        except Exception as e:
+            print(f"An error occurred: {e}")
+
+    def f_load_table_config_from_json_name_only(self):
+        """Load table and column configurations from JSON"""
+        try:
+            with open(self.json_file, 'r', encoding='utf-8') as file:
+                self.data_to_config_table = json.load(file)  # Load the JSON data
+            column_names = self.f_extract_from_json_column_names(self.data_to_config_table)
+            return column_names
+
+        except FileNotFoundError:
+            print(f"Error: The file '{self.json_file}' was not found.")
+        except json.JSONDecodeError:
+            print("Error: The JSON file is not properly formatted.")
+        except Exception as e:
+            print(f"An error occurred: {e}")
+
+    def f_extract_from_json_columns_config(self):
+        # Extract column configurations from the JSON
+        columns_config = self.data_to_config_table["table"]["columns"]
+        column_names = [col["name"] for col in columns_config]
+        header_font_config = self.data_to_config_table["table"]["headings"]
+        header_font_tuple = (header_font_config['family'], header_font_config['size'], header_font_config['weight'])
+        return columns_config, column_names, header_font_tuple
+    
+    def f_extract_from_json_column_names(self, data):
+        try:
+            if "columns" in data["table"]:
+                columns_names = data["table"]["columns"]
+                column_names = [column.get("name", "Unknown") for column in columns_names]
+                return column_names
+            else:
+                print("Warning: 'columns names' key not found in JSON.")
+                return []
+        except KeyError:
+            print("Error: Key 'table' is missing from JSON.")
+            return []
+        except TypeError:
+            print("Error: Invalid data structure for 'columns'.")
+            return []
+    
+    def f_extract_from_json_column_width(self, data):
+        try:
+            if "columns" in data["table"]:
+                columns_width = data["table"]["columns"]
+                column_width = [column.get("width", 100) for column in columns_width]  # Default width is 100
+                return column_width
+            else:
+                print("Warning: 'columns width' key not found in JSON.")
+                return []
+        except KeyError:    
+            print("Error: Key 'table' is missing from JSON.")
+            return []
+        except TypeError:
+            print("Error: Invalid data structure for 'columns'.")
+            return []
+    
+    def f_extract_from_json_column_min_width(self, data):
+        try:
+            if "columns" in data["table"]:
+                columns_min_width = data["table"]["columns"]
+                column_min_width = [column.get("width", 50) for column in columns_min_width]  # Default min_width is 50
+                return column_min_width
+            else:
+                print("Warning: 'columns min_width' key not found in JSON.")
+                return []
+        except KeyError:    
+            print("Error: Key 'table' is missing from JSON.")
+            return []
+        except TypeError:
+            print("Error: Invalid data structure for 'columns'.")
+            return []
+    
+    def f_extract_from_json_column_anchor(self, data):
+        try:
+            if "columns" in data["table"]:
+                columns_anchor = data["table"]["columns"]
+                column_anchor = [column.get("anchor", "w") for column in columns_anchor]  # Default width is w
+                return column_anchor
+            else:
+                print("Warning: 'columns anchor' key not found in JSON.")
+                return []
+        except KeyError:    
+            print("Error: Key 'table' is missing from JSON.")
+            return []
+        except TypeError:
+            print("Error: Invalid data structure for 'columns'.")
+            return []
+
+    def f_extract_from_json_column_stretch(self, data):
+        try:
+            if "columns" in data["table"]:
+                columns_stretch = data["table"]["columns"]
+                column_stretch = [column.get("stretch", "True") for column in columns_stretch]  # Default width is True
+                return column_stretch
+            else:
+                print("Warning: 'columns stretch' key not found in JSON.")
+                return []
+        except KeyError:    
+            print("Error: Key 'table' is missing from JSON.")
+            return []
+        except TypeError:
+            print("Error: Invalid data structure for 'columns'.")
+            return []
+    
+    def f_extract_from_json_column_font(self, data):
+        try:
+            if "columns" in data["table"]:
+                columns_font = data["table"]["columns"]
+                column_font = [column.get("font", {"family": "Arial", "size": 12, "weight": "normal"}) for column in columns_font]  # Default width is {"family": "Arial", "size": 12, "weight": "normal"}
+                return column_font
+            else:
+                print("Warning: 'columns_font' key not found in JSON.")
+                return []
+        except KeyError:    
+            print("Error: Key 'table' is missing from JSON.")
+            return []
+        except TypeError:
+            print("Error: Invalid data structure for 'columns'.")
+            return []

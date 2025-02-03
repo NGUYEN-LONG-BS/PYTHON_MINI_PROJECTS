@@ -7,6 +7,7 @@ from Components_View import cls_frame_normal
 from Components_View.treeview import cls_Treeview_frame_number_01
 from utils import *
 from test_Controller import cls_test_Controller, cls_test_Controller_02_treeview, cls_test_Controller_03_auto_update_number, cls_test_Controller_05_staticmenthod
+from test_Controller import cls_test_Controller_06_treeview_tab_02
 
 class cls_test_View(cls_base_form_number_02_ManyTabs):
     def __init__(self):
@@ -15,12 +16,13 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         super().__init__(title_of_form=title, name_of_slip=name)
         # Add controller 01
         self.f_view_add_controller_01_basic()
+        self.f_view_add_controller_04_treeview_of_tab_02()
         # call reuse components
         self._f_view_thay_doi_gia_tri_cua_base_form()
         self._f_view_create_all_container_frames_of_window()
         # set up formats
-        self._f_view_set_up_formats()
-        # self._f_view_set_rows_count_of_treeview_01_when_add_new_row()
+        self._f_view_set_up_formats_of_tab_01()
+        self._f_view_set_up_formats_of_tab_02()
         cls_test_Controller_05_staticmenthod.update_entry_id_after_adding_new_row(self.table_of_tab_01, self.tab_01_entry_id)
         # Set up all global variants
         self._f_setup_all_global_variants()
@@ -88,7 +90,6 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     # Adding controller
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
-
     def f_view_add_controller_01_basic(self):
         # Initialize controller_01
         self.controller_01 = cls_test_Controller()
@@ -113,6 +114,11 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.controller_03_auto_update_number = cls_test_Controller_03_auto_update_number(entry_sl_kha_dung, entry_sl_nhu_cau, entry_sl_giu_cho, entry_sl_yeu_cau_dat_hang)
         self.controller_03_auto_update_number.view = self
         
+    def f_view_add_controller_04_treeview_of_tab_02(self):
+        # Initialize controller_01
+        self.controller_04 = cls_test_Controller_06_treeview_tab_02()
+        self.controller_04.view = self
+    
     def _f_view_create_all_container_frames_of_window(self):
         # Create tabs
         self.tab_01 = self.tab1
@@ -130,32 +136,27 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
 
         # Frame H2
         self.tab_01_frame_H2 = cls_frame_normal(parent_frame)
-        # self.tab_01_frame_H2.pack(fill="both", expand=True)
         self.tab_01_frame_H2.grid(row=0, column=0, sticky="ew")
 
         self._f_view_create_widgets_in_tab_01_frame_H2()
 
         # Frame entries
         self.tab_01_frame_entries = cls_frame_normal(parent_frame)
-        # self.tab_01_frame_entries.pack(side="top", fill="x")
         self.tab_01_frame_entries.grid(row=1, column=0, sticky="ew")
         self._f_view_create_widgets_in_tab_01_frame_entries()
 
         # Frame button
         self.tab_01_frame_button_of_treeview = tk.Frame(parent_frame)
-        # self.tab_01_frame_button_of_treeview.pack(side="top", fill="x")
         self.tab_01_frame_button_of_treeview.grid(row=2, column=0, sticky="ew")
         self._f_view_create_widgets_in_tab_01_frame_button_of_treeview()
 
         # Frame treeview
         self.tab_01_frame_treeview = cls_Treeview_frame_number_01(parent_frame)
-        # self.tab_01_frame_treeview.pack(side="top", fill="both", expand=True)
         self.tab_01_frame_treeview.grid(row=3, column=0, sticky="nsew")
         self._f_view_create_widgets_in_tab_01_frame_treeview()
         
         # Frame button
         self.tab_01_frame_button_02 = tk.Frame(parent_frame)
-        # self.tab_01_frame_button_02.pack(side="bottom", fill="x")
         self.tab_01_frame_button_02.grid(row=4, column=0, sticky="ew")
         self._f_view_create_widgets_in_tab_01_frame_button_02()
 
@@ -169,16 +170,14 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
     def _f_view_create_widgets_in_tab_01_frame_entries(self):
         self.tab_01_container_frame_entries = tk.Frame(self.tab_01_frame_entries)
         self.tab_01_container_frame_entries.pack(side="top", 
-                                                 fill="x", 
-                                                #  expand=True
+                                                 fill="x"
                                                  )
         self._f_view_create_widgets_in_tab_01_container_frame_entries()
 
     def _f_view_create_widgets_in_tab_02_frame_entries(self):
         self.frame_entries_of_tab_02 = tk.Frame(self.tab_02_frame_entries)
         self.frame_entries_of_tab_02.pack(side="top", 
-                                          fill="x", 
-                                        #   expand=True
+                                          fill="x"
                                           )
         self._f_view_create_widgets_in_frame_entries_of_tab_02()
         
@@ -186,16 +185,14 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         # Create container for date and number of slip
         self.Frame_container_date_and_number = tk.Frame(self.tab_01_container_frame_entries)
         self.Frame_container_date_and_number.pack(side="top", 
-                                                  fill="x", 
-                                                #   expand=True
+                                                  fill="x"
                                                   )
         self._f_view_create_widgets_in_frame_date_and_number()
 
         # Create container for client and inventories
         self.Frame_clients_and_inventories_information = tk.Frame(self.tab_01_container_frame_entries)
         self.Frame_clients_and_inventories_information.pack(side="top",
-                                                            fill="x", 
-                                                            # expand=True, 
+                                                            fill="x",  
                                                             pady=(5,0)
                                                             )
         self._f_view_create_widgets_in_frame_clients_and_inventories()
@@ -204,7 +201,6 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.frame_slip_informations = tk.Frame(self.tab_01_container_frame_entries)
         self.frame_slip_informations.pack(side="top", 
                                           fill="x", 
-                                        #   expand=True, 
                                           pady=(5,0)
                                           )
         self._f_view_create_widgets_in_frame_slip_informations()
@@ -346,18 +342,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_button_clear = tk.Button(tab_01_button_container_01, text="Clear Rows", command=self.f_view_tab_01_button_clear_click)
         self.tab_01_button_clear.pack(side="left", padx=10)
 
-    def _f_view_create_widgets_in_tab_02_frame_button_01(self):
-        # Create a sub-frame to organize buttons in the center
-        tab_02_button_container_01 = tk.Frame(self.tab_02_frame_button_01)
-        tab_02_button_container_01.pack(expand=True, pady=10)
-        
-        # Add button
-        self.tab_01_button_add = tk.Button(tab_02_button_container_01, text="Filter")
-        self.tab_01_button_add.pack(side="left", padx=10)
-        
-        # Delete update
-        self.tab_01_button_update = tk.Button(tab_02_button_container_01, text="Reset")
-        self.tab_01_button_update.pack(side="left", padx=10)
+    
 
     def f_view_tab_01_button_delete_click(self):
         self.controller_02_treeview.f_controller_02_delete_selected(self.treeview_test_of_tag_01)
@@ -453,7 +438,69 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         # star import button
         self.tab_01_btn_start_import_file = tk.Button(tab_01_button_container_02_on_the_left, text="START IMPORT")
         self.tab_01_btn_start_import_file.pack(side="left", padx=10)
+    
+    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
+    # Tab_01: Event Handlers
+    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
+    def f_view_tab_01_button_clear_click(self):
+        self.clear_all_contents()
+    
+    # Function to clear all rows
+    def clear_all_contents(self):
+        # Clear the Treeview
+        tree = self.treeview_test_of_tag_01
+        for item in tree.get_children():
+            tree.delete(item)
+    
+    def f_tab_01_button_get_click(self):
+        self._f_config_notification(text=self.controller_01.f_get_data(self.table_of_tab_01), fg="blue")
+
+    def f_tab_01_button_print_click(self):
+        self.controller_01.f_controller_handle_btn_print_00_click_()
         
+    def f_tab_01_button_print_02_click(self):
+        self.controller_01.f_controller_handle_btn_print_02_click_()
+    
+    def f_tab_01_button_import_click(self):
+        print("Import config")
+        
+    def f_tab_01_button_template_click(self):
+        self._f_config_notification(f_utils_create_template_excel_file(),"black")
+        
+    def f_tab_01_button_get_import_file_click(self):
+        self._f_config_notification(f_utils_open_file(),"black")
+
+    def f_view_tab_01_button_add_click(self):
+        # Update the row count
+        cls_test_Controller_05_staticmenthod.update_entry_id_after_adding_new_row(self.table_of_tab_01, self.tab_01_entry_id)
+        id_value = self.tab_01_entry_id.get()
+        ma_hang = self.entry_ma_hang.get()
+        ten_hang = self.entry_ten_hang.get()
+        dvt = self.entry_dvt.get()
+        
+        sl_kha_dung = float(self.entry_sl_kha_dung.get().replace(',', '') or 0)
+        sl_nhu_cau = float(self.tab_01_entry_nhu_cau.get().replace(',', '') or 0)
+        sl_giu_cho = float(self.tab_01_entry_sl_giu_cho.get().replace(',', '') or 0)
+        sl_yeu_cau_dat_hang = float(self.tab_01_entry_sl_YCDH.get().replace(',', '') or 0)
+        ghi_chu_mat_hang = self.tab_01_entry_ghi_chu_mat_hang.get()
+        table = self.table_of_tab_01
+        
+        # Validate input using the helper function
+        is_valid, error_message = self.controller_01.f_controller_add_row(id_value, ma_hang, ten_hang, dvt, sl_kha_dung, sl_nhu_cau, sl_giu_cho, sl_yeu_cau_dat_hang, ghi_chu_mat_hang, table)
+        if not is_valid:
+            # Show error message
+            self._f_config_notification(text=error_message, fg="red")
+            # return
+        else:
+            # Show success message
+            self._f_config_notification(text=error_message, fg="green")
+            cls_test_Controller_05_staticmenthod.clear_input_fields(self.tab_01_entry_ghi_chu_mat_hang, 
+                                                                    self.tab_01_entry_nhu_cau,
+                                                                    self.tab_01_entry_sl_giu_cho,
+                                                                    self.tab_01_entry_sl_YCDH
+                                                                    )
+        # Update the row count
+        cls_test_Controller_05_staticmenthod.update_entry_id_after_adding_new_row(self.table_of_tab_01, self.tab_01_entry_id)
     
         
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
@@ -496,78 +543,44 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         
         # Get Data button
         self.tab_02_button_edit = tk.Button(tab_02_button_container_02, text="EDIT")
+        self.tab_02_button_edit.config(command=self.f_tab_02_button_edit_click)
         self.tab_02_button_edit.pack(side="left", padx=10)
         
         # Export Data button
         self.tab_02_button_DELETE = tk.Button(tab_02_button_container_02, text="DELETE")
+        self.tab_02_button_DELETE.config(command=self.f_tab_02_button_delete_click)
         self.tab_02_button_DELETE.pack(side="left", padx=10)
+        
+    def _f_view_create_widgets_in_tab_02_frame_button_01(self):
+        # Create a sub-frame to organize buttons in the center
+        tab_02_button_container_01 = tk.Frame(self.tab_02_frame_button_01)
+        tab_02_button_container_01.pack(expand=True, pady=10)
+        
+        # Add button
+        self.tab_02_button_add = tk.Button(tab_02_button_container_01, text="Filter")
+        self.tab_02_button_add.config(command=self.f_tab_02_button_filter_click)
+        self.tab_02_button_add.pack(side="left", padx=10)
+        
+        # Delete update
+        self.tab_02_button_clear = tk.Button(tab_02_button_container_01, text="Clear")
+        self.tab_02_button_clear.config(command=self.f_tab_02_button_clear_click)
+        self.tab_02_button_clear.pack(side="left", padx=10)
+    
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
-    # Tab_01: Event Handlers
+    # Tab_02: Event Handlers
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
-    def f_view_tab_01_button_clear_click(self):
-        self.clear_all_contents()
+    def f_tab_02_button_filter_click(self):
+        print("Filter click")
     
-    # Function to clear all rows
-    def clear_all_contents(self):
-        # Clear the Treeview
-        tree = self.treeview_test_of_tag_01
-        for item in tree.get_children():
-            tree.delete(item)
+    def f_tab_02_button_clear_click(self):
+        print("Clear click")
+        
+    def f_tab_02_button_edit_click(self):
+        print("Edit click")
     
-    def f_tab_01_button_get_click(self):
-        self._f_config_notification(text=self.controller_01.f_get_data(self.table_of_tab_01), fg="blue")
-
-    def f_tab_01_button_print_click(self):
-        self.controller_01.f_controller_handle_btn_print_00_click_()
-        
-    def f_tab_01_button_print_02_click(self):
-        self.controller_01.f_controller_handle_btn_print_02_click_()
+    def f_tab_02_button_delete_click(self):
+        print("Delete click")
     
-    def f_tab_01_button_import_click(self):
-        print("Import config")
-        
-    def f_tab_01_button_template_click(self):
-        self._f_config_notification(f_utils_create_template_excel_file(),"black")
-        
-    def f_tab_01_button_get_import_file_click(self):
-        self._f_config_notification(f_utils_open_file(),"black")
-
-    def f_view_tab_01_button_add_click(self):
-        # Update the row count
-        # self._f_view_set_rows_count_of_treeview_01_when_add_new_row()
-        cls_test_Controller_05_staticmenthod.update_entry_id_after_adding_new_row(self.table_of_tab_01, self.tab_01_entry_id)
-        id_value = self.tab_01_entry_id.get()
-        ma_hang = self.entry_ma_hang.get()
-        ten_hang = self.entry_ten_hang.get()
-        dvt = self.entry_dvt.get()
-        
-        sl_kha_dung = float(self.entry_sl_kha_dung.get().replace(',', '') or 0)
-        sl_nhu_cau = float(self.tab_01_entry_nhu_cau.get().replace(',', '') or 0)
-        sl_giu_cho = float(self.tab_01_entry_sl_giu_cho.get().replace(',', '') or 0)
-        sl_yeu_cau_dat_hang = float(self.tab_01_entry_sl_YCDH.get().replace(',', '') or 0)
-        ghi_chu_mat_hang = self.tab_01_entry_ghi_chu_mat_hang.get()
-        table = self.table_of_tab_01
-        
-        # Validate input using the helper function
-        is_valid, error_message = self.controller_01.f_controller_add_row(id_value, ma_hang, ten_hang, dvt, sl_kha_dung, sl_nhu_cau, sl_giu_cho, sl_yeu_cau_dat_hang, ghi_chu_mat_hang, table)
-        if not is_valid:
-            # Show error message
-            self._f_config_notification(text=error_message, fg="red")
-            # return
-        else:
-            # Show success message
-            self._f_config_notification(text=error_message, fg="green")
-            # self.f_clear_input_fileds_of_tab_01()
-            cls_test_Controller_05_staticmenthod.clear_input_fields(self.tab_01_entry_ghi_chu_mat_hang, 
-                                                                    self.tab_01_entry_nhu_cau,
-                                                                    self.tab_01_entry_sl_giu_cho,
-                                                                    self.tab_01_entry_sl_YCDH
-                                                                    )
-        
-        # Update the row count
-        # self._f_view_set_rows_count_of_treeview_01_when_add_new_row()
-        cls_test_Controller_05_staticmenthod.update_entry_id_after_adding_new_row(self.table_of_tab_01, self.tab_01_entry_id)
-        
     def _f_view_set_rows_count_of_treeview_01_when_add_new_row(self):
         row_count = 1 + self.controller_01.f_controller_get_row_count(self.table_of_tab_01)
         self.tab_01_entry_id.config(state="normal")  # Enable the Entry widget to update the value
@@ -591,10 +604,13 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         text = self.controller_02_treeview.f_controller_handle_btn_save_03_click_(self.table_of_tab_01)
         self._f_config_notification(text=text, fg="blue")
 
-    def _f_view_set_up_formats(self):
-        self.f_tab_01_button_config_02_click()
+    def _f_view_set_up_formats_of_tab_01(self):
+        self.f_view_set_format_of_treeview_of_tab_01()
         
-    def f_tab_01_button_config_02_click(self):
+    def _f_view_set_up_formats_of_tab_02(self):
+        self.f_view_set_format_of_treeview_of_tab_02()
+        
+    def f_view_set_format_of_treeview_of_tab_01(self):
         # Clear the existing columns
         self.treeview_test_of_tag_01.delete(*self.treeview_test_of_tag_01.get_children())
         for col in self.treeview_test_of_tag_01["columns"]:
@@ -616,9 +632,9 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
                 anchor=config["anchor"],
                 stretch=config["stretch"]
             )
-            # Set the header font style
-            style = ttk.Style()
-            style.configure("Treeview.Heading", font=tuple_table_of_tab_01_header_font)
+            # # Set the header font style
+            # style = ttk.Style()
+            # style.configure("Treeview.Heading", font=tuple_table_of_tab_01_header_font)
             
             # Apply the background and font settings
             # Apply row styles if needed
@@ -629,7 +645,43 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
                     background=config["background_color"],
                     foreground=config["foreground_color"]
                     )
-    
+
+    def f_view_set_format_of_treeview_of_tab_02(self):
+        # Clear the existing columns
+        self.treeview_test_of_tag_02.delete(*self.treeview_test_of_tag_02.get_children())
+        for col in self.treeview_test_of_tag_02["columns"]:
+            self.treeview_test_of_tag_02.heading(col, text="")  # Remove headings
+        
+        # Trước khi cấu hình, phải thiết lập cột cho Treeview
+        column_names = self.controller_04.f_get_table_config_name_only()
+        self.treeview_test_of_tag_02["columns"] = column_names
+        
+        # Treeview config
+        column_configs, column_names, header_font = self.controller_04.f_tab_01_button_config_click(self.table_of_tab_01)
+        for config, col in zip(column_configs, column_names):
+            # Configure each column
+            self.treeview_test_of_tag_02.heading(col, text=col)  # Set header text
+            self.treeview_test_of_tag_02.column(
+                col,
+                width=config["width"],
+                minwidth=config["min_width"],
+                anchor=config["anchor"],
+                stretch=config["stretch"]
+            )
+            # # Set the header font style
+            # style = ttk.Style()
+            # style.configure("Treeview.Heading", font=header_font)
+            
+            # Apply the background and font settings
+            # Apply row styles if needed
+            for row in self.treeview_test_of_tag_02.get_children():
+                self.treeview_test_of_tag_02.item(row, tags=(row,))
+                self.treeview_test_of_tag_02.tag_configure(
+                    row,
+                    background=config["background_color"],
+                    foreground=config["foreground_color"]
+                    )
+
     def f_button_print_config_click(self):
         self.f_print_table_of_tab_01_config()
         

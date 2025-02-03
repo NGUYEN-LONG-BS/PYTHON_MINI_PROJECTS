@@ -39,8 +39,8 @@
             },
             {
                 "name": "Mã hợp đồng",
-                "width": 100,
-                "min_width": 100,
+                "width": 120,
+                "min_width": 120,
                 "anchor": "w",
                 "stretch": true,
                 "font": {"family": "Verdana", "size": 12, "weight": "normal"},
@@ -127,8 +127,8 @@
             },
             {
                 "name": "Ghi chú sản phẩm",
-                "width": 300,
-                "min_width": 200,
+                "width": 400,
+                "min_width": 300,
                 "anchor": "w",
                 "stretch": true,
                 "font": {"family": "Verdana", "size": 12, "weight": "normal"},
