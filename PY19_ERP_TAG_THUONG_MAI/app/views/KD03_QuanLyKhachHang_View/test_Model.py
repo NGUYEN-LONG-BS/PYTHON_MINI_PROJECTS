@@ -597,7 +597,9 @@ class cls_test_Model_05_staticmenthod_get_data_from_SQL:
         
         # Lấy danh sách cột của bảng
         try:
-            cursor.execute(f"SELECT * FROM {table_name} WHERE 1=0")
+            # cursor.execute(f"SELECT * FROM {table_name} WHERE 1=0")
+            cursor.execute(f"SELECT * FROM [TBD_2024].[dbo].[TB_KD02_YEU_CAU_DAT_HANG]")
+            
             columns = [column[0] for column in cursor.description]  # Lấy tên cột
             print("Danh sách cột trong bảng:", columns)
         except Exception as e:
@@ -610,15 +612,9 @@ class cls_test_Model_05_staticmenthod_get_data_from_SQL:
             print("Dữ liệu không khớp số cột của bảng.")
             return
 
-        # Chèn dữ liệu
+        # Thêm dữ liệu vào bảng nhật ký
         try:
-            placeholders = ", ".join(["?" for _ in range(num_columns)])  # Tạo chuỗi placeholder "?, ?, ?"
-            query = f"INSERT INTO {table_name} ({', '.join(columns)}) VALUES ({placeholders})"
-            
-            for row in data_array:
-                cursor.execute(query, row)
-            
-            conn.commit()
+            # in dữ liệu vào bảng nhật ký
             print("Dữ liệu đã được chèn thành công.")
         except Exception as e:
             print("Lỗi khi chèn dữ liệu:", e)
