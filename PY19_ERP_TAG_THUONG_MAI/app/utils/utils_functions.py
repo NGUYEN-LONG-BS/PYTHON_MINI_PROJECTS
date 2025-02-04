@@ -640,3 +640,52 @@ def f_utils_fetch_data_from_database(query):
         
         # return df
         return rows
+
+# ========================================================================================================================================================================
+# Utils SQL Model, Controller
+# ========================================================================================================================================================================
+
+class SQLModel:
+    @staticmethod
+    def fetch_data(server_name, database_name, login_name, login_pass, table_name):
+        """
+        Kết nối đến SQL Server và lấy dữ liệu từ bảng.
+        """
+        connection_string = (
+            f"DRIVER={{SQL Server}};"
+            f"SERVER={server_name};"
+            f"DATABASE={database_name};"
+            f"UID={login_name};"
+            f"PWD={login_pass}"
+        )
+        try:
+            conn = pyodbc.connect(connection_string)
+            cursor = conn.cursor()
+            # query = f"SELECT * FROM {table_name}"
+            query = f"[Proc_TB_KD02_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250204_110h38]'','',''"
+            cursor.execute(query)
+            columns = [column[0] for column in cursor.description]
+            data = cursor.fetchall()
+            cursor.close()
+            conn.close()
+            return columns, data
+        except Exception as e:
+            print("Lỗi khi lấy dữ liệu:", e)
+            return [], []
+        
+class SQLController:
+    def __init__(self, view, server_name, database_name, login_name, login_pass, table_name):
+        self.view = view
+        self.server_name = server_name
+        self.database_name = database_name
+        self.login_name = login_name
+        self.login_pass = login_pass
+        self.table_name = table_name
+        self.load_data()
+
+    def load_data(self):
+        columns, data = SQLModel.fetch_data(
+            self.server_name, self.database_name, self.login_name, self.login_pass, self.table_name
+        )
+        self.view.update_treeview(columns, data)
+        

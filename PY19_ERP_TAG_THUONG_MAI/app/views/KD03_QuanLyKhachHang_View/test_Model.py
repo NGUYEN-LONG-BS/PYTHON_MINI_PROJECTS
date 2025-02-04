@@ -772,3 +772,4 @@ class cls_test_Model_06_staticmenthod_get_config_of_table_YCDH_log_from_json():
         except TypeError:
             print("Error: Invalid data structure for 'columns'.")
             return []
+        
