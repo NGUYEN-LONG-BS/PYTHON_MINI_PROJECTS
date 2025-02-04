@@ -1,5 +1,8 @@
 import time
-from test_Model import cls_test_Model, cls_test_Model_02, cls_test_Model_06_staticmenthod_get_config_of_table_YCDH_log_from_json
+from test_Model import cls_test_Model
+from test_Model import cls_test_Model_02
+from test_Model import cls_test_Model_06_staticmenthod_get_config_of_table_YCDH_log_from_json
+from test_Model import SQLModel
 from Components_View import *   # Tại sao lại phải import Components_View
 from utils import *
 import traceback
@@ -502,3 +505,29 @@ class cls_test_Controller_06_treeview_tab_02():
                 print("Insufficient data in row!")
                 
 
+        
+class SQLController:
+    def __init__(self, view, server_name, database_name, login_name, login_pass, table_name):
+        self.view = view
+        self.server_name = server_name
+        self.database_name = database_name
+        self.login_name = login_name
+        self.login_pass = login_pass
+        self.table_name = table_name
+        # self.query = f"SELECT * FROM {table_name}"
+        self.query = f"[Proc_TB_KD02_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250204_110h38]'','',''"
+        # print("query:", self.query)
+        self.load_data()
+
+
+    def load_data(self):
+        data = SQLModel.fetch_data(
+            self.server_name, 
+            self.database_name, 
+            self.login_name, 
+            self.login_pass,
+            self.query
+        )
+        self.view.update_treeview_test_of_tag_02(data)
+        
+        

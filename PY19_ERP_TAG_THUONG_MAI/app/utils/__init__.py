@@ -20,5 +20,6 @@ from .utils_functions import f_utils_access_widget_by_path
 from .utils_functions import f_utils_set_style
 from .utils_functions import f_utils_get_unique_column_from_data
 from .utils_functions import f_utils_create_a_connection_string_to_SQL_Server
+from .utils_functions import f_utils_fetch_data_from_database
 
 from .utils_set_print_template import f_utils_create_print_template

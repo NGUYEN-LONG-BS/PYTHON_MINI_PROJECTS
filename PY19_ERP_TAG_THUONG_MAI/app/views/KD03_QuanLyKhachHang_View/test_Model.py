@@ -3,6 +3,7 @@ import json
 import pyodbc
 from datetime import datetime
 from Components_View import *
+from utils import *
 
 class cls_test_Model():
     def __init__(self):
@@ -772,4 +773,40 @@ class cls_test_Model_06_staticmenthod_get_config_of_table_YCDH_log_from_json():
         except TypeError:
             print("Error: Invalid data structure for 'columns'.")
             return []
+        
+class SQLModel:
+    @staticmethod
+    def fetch_data(server_name, database_name, login_name, login_pass, query):
+        """
+        Kết nối đến SQL Server và lấy dữ liệu từ bảng.
+        """
+        # connection_string = (
+        #     f"DRIVER={{SQL Server}};"
+        #     f"SERVER={server_name};"
+        #     f"DATABASE={database_name};"
+        #     f"UID={login_name};"
+        #     f"PWD={login_pass}"
+        # )
+        # try:
+        #     conn = pyodbc.connect(connection_string)
+        #     cursor = conn.cursor()
+        #     # query = f"SELECT * FROM {table_name}"
+        #     # query = f"[Proc_TB_KD02_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250204_110h38]'','',''"
+        #     cursor.execute(query)
+        #     columns = [column[0] for column in cursor.description]
+        #     data = cursor.fetchall()
+        #     cursor.close()
+        #     conn.close()
+        #     return data
+        # except Exception as e:
+        #     print("Lỗi khi lấy dữ liệu:", e)
+        #     return []
+        
+        try:
+            data = f_utils_fetch_data_from_database(query)
+            return data
+        except Exception as e:
+            print("Lỗi khi lấy dữ liệu:", e)
+            return []
+        
         

@@ -8,6 +8,7 @@ from Components_View.treeview import cls_Treeview_frame_number_01
 from utils import *
 from test_Controller import cls_test_Controller, cls_test_Controller_02_treeview, cls_test_Controller_03_auto_update_number, cls_test_Controller_05_staticmenthod
 from test_Controller import cls_test_Controller_06_treeview_tab_02
+from test_Controller import SQLController
 
 class cls_test_View(cls_base_form_number_02_ManyTabs):
     def __init__(self):
@@ -571,6 +572,22 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     def f_tab_02_button_filter_click(self):
         print("Filter click")
+        
+        controller = SQLController(
+            self,
+            server_name="14.225.192.238, 1433",
+            database_name="TBD_2024",
+            login_name="sa",
+            login_pass="Ta#9999",
+            table_name="[TB_KD02_YEU_CAU_DAT_HANG]"
+        )
+    
+    def update_treeview_test_of_tag_02(self, data):
+        tree = self.treeview_test_of_tag_02
+        for item in tree.get_children():
+            tree.delete(item)
+        for idx, row in enumerate(data):
+            tree.insert("", "end", text=str(idx+1), values=row)
     
     def f_tab_02_button_clear_click(self):
         print("Clear click")
@@ -794,4 +811,13 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
     #     self.tab_01_entry_id.delete(0, tk.END)
     #     self.tab_01_entry_ghi_chu_mat_hang.delete(0, tk.END)
     #     self.tab_01_entry_sl_YCDH.delete(0, tk.END)
-        
+    
+
+# class SQLView:
+#     def __init__(self, root):
+#         self.root = root
+#         self.root.title("Hiển thị dữ liệu từ SQL Server")
+#         self.tree = ttk.Treeview(root)
+#         self.tree.pack(expand=True, fill="both")
+
+    
