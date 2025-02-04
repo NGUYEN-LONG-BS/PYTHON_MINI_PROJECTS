@@ -24,6 +24,8 @@ import pyodbc
 import json
 from cryptography.fernet import Fernet
 
+import pandas as pd
+
 
 def f_utils_setup_logo(parent_frame):
     # Define function when click
@@ -631,17 +633,37 @@ def f_utils_create_a_connection_string_to_SQL_Server():
     # print(f'PWD={config["DB_PASSWORD"]};')
     return conn
 
+# Định dạng số theo yêu cầu
+def f_utils_format_number(value):
+    """ 
+    Định dạng số theo chuẩn:
+    - Số nguyên: 123,123
+    - Số thực: 123,123.00
+    - Các kiểu dữ liệu khác giữ nguyên
+    """
+    if isinstance(value, int):
+        return f"{value:,}"
+    elif isinstance(value, float):
+        return f"{value:,.2f}"
+    else:
+        return value  # Trả về nguyên giá trị nếu không phải số
+
 def f_utils_fetch_data_from_database(query):
     # print(query)
     conn = f_utils_create_a_connection_string_to_SQL_Server()
     cursor = conn.cursor()
-    # query = "[BAN_KINH_DOANH].[dbo].[Proc_TB_QUAN_LY_GOI_THAU_SELECT_241130_11h09] 'NV01'"  # Thay thế với câu lệnh SQL của bạn
     cursor.execute(query)
     rows = cursor.fetchall()
-
     # Đóng kết nối
     conn.close()
     
+    # # Định dạng dữ liệu
+    # formatted_rows = [[f_utils_format_number(cell) for cell in row] for row in rows]
+
+    # # Trả về DataFrame
+    # df = pd.DataFrame(formatted_rows)
+    
+    # return df
     # return df
     return rows
 

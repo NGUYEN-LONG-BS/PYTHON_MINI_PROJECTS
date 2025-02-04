@@ -571,23 +571,8 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
     # Tab_02: Event Handlers
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     def f_tab_02_button_filter_click(self):
-        print("Filter click")
-        
-        controller = SQLController(
-            self,
-            server_name="14.225.192.238, 1433",
-            database_name="TBD_2024",
-            login_name="sa",
-            login_pass="Ta#9999",
-            table_name="[TB_KD02_YEU_CAU_DAT_HANG]"
-        )
-    
-    def update_treeview_test_of_tag_02(self, data):
-        tree = self.treeview_test_of_tag_02
-        for item in tree.get_children():
-            tree.delete(item)
-        for idx, row in enumerate(data):
-            tree.insert("", "end", text=str(idx+1), values=row)
+        print("f_tab_02_button_filter_click")
+        SQLController.load_data(self.treeview_test_of_tag_02)
     
     def f_tab_02_button_clear_click(self):
         print("Clear click")
@@ -617,8 +602,16 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self._f_config_notification(text=text, fg="blue")
     
     def f_tab_01_button_save_03_click(self):        
-        text, data = self.controller_02_treeview.print_data()
-        text = self.controller_02_treeview.f_controller_handle_btn_save_03_click_(self.table_of_tab_01)
+        # text, data = self.controller_02_treeview.print_data()
+        # text = self.controller_02_treeview.f_controller_handle_btn_save_03_click_(self.table_of_tab_01)
+        # self._f_config_notification(text=text, fg="blue")
+        
+        tree = self.table_of_tab_01
+        entry_so_phieu = "2025-01-23"  
+        entry_ma_kh = self.entry_ma_hang
+        entry_ten_kh = self.entry_ma_hang
+        text, data = SQLController.get_data_to_import_to_SQL(tree, entry_so_phieu, entry_ma_kh, entry_ten_kh)
+        text = SQLController.f_controller_handle_btn_save_03_click_(tree, entry_so_phieu, entry_ma_kh, entry_ten_kh)
         self._f_config_notification(text=text, fg="blue")
 
     def _f_view_set_up_formats_of_tab_01(self):

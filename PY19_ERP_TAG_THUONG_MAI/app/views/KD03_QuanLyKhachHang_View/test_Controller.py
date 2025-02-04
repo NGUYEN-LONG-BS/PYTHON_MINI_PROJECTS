@@ -302,7 +302,7 @@ class cls_test_Controller_02_treeview():
                     "NV01"                          # [ID_NHAN_VIEN]
                     ,""                             # [XOA_SUA]
                     ,"2025-01-23"                   # [NGAY_TREN_PHIEU]
-                    ,self.entry_so_phieu.get()
+                    ,self.entry_so_phieu.get()      # [SO_PHIEU]
                     ,self.entry_ma_kh.get()
                     ,self.entry_ten_kh.get()
                     ,"MST"
@@ -507,27 +507,73 @@ class cls_test_Controller_06_treeview_tab_02():
 
         
 class SQLController:
-    def __init__(self, view, server_name, database_name, login_name, login_pass, table_name):
-        self.view = view
-        self.server_name = server_name
-        self.database_name = database_name
-        self.login_name = login_name
-        self.login_pass = login_pass
-        self.table_name = table_name
-        # self.query = f"SELECT * FROM {table_name}"
-        self.query = f"[Proc_TB_KD02_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250204_110h38]'','',''"
-        # print("query:", self.query)
-        self.load_data()
-
-
-    def load_data(self):
-        data = SQLModel.fetch_data(
-            self.server_name, 
-            self.database_name, 
-            self.login_name, 
-            self.login_pass,
-            self.query
-        )
-        self.view.update_treeview_test_of_tag_02(data)
+    
+    @staticmethod
+    def load_data(tree):
+        query = f"[Proc_TB_KD02_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250204_110h38]'','',''"
+        data = SQLModel.fetch_data(query)
+        # update_treeview_test_of_tag_02(data)
         
+        # tree = self.treeview_test_of_tag_02
+        for item in tree.get_children():
+            tree.delete(item)
+        for row in data:
+            tree.insert("", "end", values=(row[0], row[1], row[2], row[3], row[4],
+                                           row[5], row[6], row[7], row[8], row[9],
+                                           row[10], row[11], row[12], row[13], row[14]))
         
+    # Function to print data from the Treeview
+    @staticmethod
+    def get_data_to_import_to_SQL(tree, entry_so_phieu, entry_ma_kh, entry_ten_kh):
+        try:
+            data = []
+            for child in tree.get_children():
+                row = tree.item(child, "values")
+                data.append((
+                    "NV01"                          # [ID_NHAN_VIEN]
+                    ,""                             # [XOA_SUA]
+                    ,"2025-01-23"                   # [NGAY_TREN_PHIEU]
+                    ,entry_so_phieu.get()           # [SO_PHIEU]
+                    ,entry_ma_kh.get()
+                    ,entry_ten_kh.get()
+                    ,"MST"
+                    ,"DIA_CHI"
+                    ,"SO_HOP_DONG"
+                    ,"THONG_TIN_HOP_DONG"
+                    ,"GHI_CHU_CUA_PHIEU"
+                    ,row[0]
+                    ,row[1]
+                    ,row[2]
+                    ,row[3]
+                    ,float(row[4])
+                    ,float(row[5])
+                    ,float(row[6])
+                    ,float(row[7])
+                    ,row[8]
+                ))
+            print(data)
+            notification_text = "Data chuẩn bị để gửi đi đã được in!"
+            return notification_text, data
+        except Exception as e:
+            error_details = traceback.format_exc()
+            print("Chi tiết lỗi:")
+            print(error_details)
+            notification_text = f"Data validation failed. Error details:\n{error_details}"
+            data = []
+            return notification_text, data
+    
+    @staticmethod
+    def f_controller_handle_btn_save_03_click_(tree, entry_so_phieu, entry_ma_kh, entry_ten_kh):
+        # Step_01: Get data
+        notification_text, data_array = SQLController.get_data_to_import_to_SQL(tree, entry_so_phieu, entry_ma_kh, entry_ten_kh)
+        # Step_02: validate data
+        f_utils_get_unique_column_from_data(data_array, 8)
+        # Step_03: Export data to SQL
+        if SQLModel.f_validate_data_format(data_array):
+            print("Data is valid. Ready for insertion.")
+            database_name = "TBD_2024"
+            table_name = "[TB_KD02_YEU_CAU_DAT_HANG]"
+            SQLModel.f_goi_ham_Export_to_TB_KD02_YEU_CAU_DAT_HANG(data_array, database_name, table_name)
+            return "Data exported to SQL Server KD02_YEU_CAU_DAT_HANG!"
+        else:
+            return "Data validation failed. Please fix the errors."
