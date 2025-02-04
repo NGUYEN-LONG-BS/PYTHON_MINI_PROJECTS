@@ -24,6 +24,9 @@ PATH_PRINT_TEMPLATES = os.path.join(PATH_ASSETS_TEMPLATES, "print_templates.xlsx
 
 PATH_ASSETS_TEMPLATES_JSON = os.path.join(PATH_ASSETS_TEMPLATES, "json")
 
+PATH_CONFIG_JSON = os.path.join(PATH_ROOT, "config/config.json")
+PATH_CONFIG_KEY = os.path.join(PATH_ROOT, "config/encryption_key.key")
+
 def f_define_PATH_DEFAUL():
     paths_to_check = [
         r"C:\\Users\\ADMIN\\Desktop",

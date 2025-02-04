@@ -20,6 +20,10 @@ import xlwings as xw
 
 from define import *
 
+import pyodbc
+import json
+from cryptography.fernet import Fernet
+
 
 def f_utils_setup_logo(parent_frame):
     # Define function when click
@@ -585,3 +589,41 @@ def f_utils_get_unique_column_from_data(sample_data, number_column):
         # Trích xuất cột thứ n và loại bỏ trùng lặp
         unique_ma_hang = list(set(row[number_column] for row in sample_data))
         return unique_ma_hang
+    
+# ========================================================================================================================================================================
+# Lấy thông tin từ file config.json
+# ========================================================================================================================================================================
+# Đọc encryption_key từ file
+def load_encryption_key(file_path):
+    with open(file_path, 'rb') as file:
+        return file.read().strip()
+
+# Function to load and decrypt configuration
+def load_config(file_path, encryption_key):
+    with open(file_path, 'r') as file:
+        encrypted_config = json.load(file)
+    
+    cipher_suite = Fernet(encryption_key)
+    
+    decrypted_config = {
+        key: cipher_suite.decrypt(value.encode()).decode()
+        for key, value in encrypted_config.items()
+    }
+    return decrypted_config
+
+def f_utils_create_a_connection():
+    
+    encryption_key = load_encryption_key(PATH_CONFIG_KEY)
+    config = load_config(PATH_CONFIG_JSON, encryption_key)
+    
+    # SQL-Server connection string with Server Authentication
+    conn = pyodbc.connect(
+        f'DRIVER={{SQL Server}};'
+        f'SERVER={config["DB_HOST"]};'
+        f'DATABASE={config["DB_NAME"]};'
+        f'UID={config["DB_USER"]};'
+        f'PWD={config["DB_PASSWORD"]};'
+        'PORT=1433'
+    )
+    
+    return conn
