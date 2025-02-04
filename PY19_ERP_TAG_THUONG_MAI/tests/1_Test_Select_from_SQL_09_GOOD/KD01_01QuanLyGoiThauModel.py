@@ -4,6 +4,7 @@ import json
 import pyodbc
 import pandas as pd
 
+
 class Model:
     def __init__(self):
         """Define the JSON file"""

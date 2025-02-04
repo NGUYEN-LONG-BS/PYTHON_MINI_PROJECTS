@@ -2,6 +2,7 @@ import os
 import json
 import pyodbc
 import pandas as pd
+from utils import *
 
 def create_new_folder(base_path, folder_name):
     """
@@ -82,18 +83,8 @@ class Model:
 
     
     def fetch_data_from_db(self):
-        """Lấy dữ liệu từ SQL Server"""
-        # Kết nối và truy vấn SQL Server ở đây
-        # server = '103.90.227.154'  # Replace with your server name
-        server = '14.225.192.238'  # Replace with your server name
-        database = 'BAN_KINH_DOANH'  # Replace with your database name
-        username = 'sa'  # Replace with your SQL Server username
-        password = 'Ta#9999'  # Replace with your password
-
-        # SQL-Server connection string with Server Authentication
-        conn = pyodbc.connect(
-            f'DRIVER={{SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password};PORT=1433'
-        )
+        conn = f_utils_create_a_connection_string_to_SQL_Server()
+        
         cursor = conn.cursor()
         query = "[BAN_KINH_DOANH].[dbo].[Proc_TB_QUAN_LY_GOI_THAU_SELECT_241130_11h09] 'NV01'"  # Thay thế với câu lệnh SQL của bạn
         cursor.execute(query)

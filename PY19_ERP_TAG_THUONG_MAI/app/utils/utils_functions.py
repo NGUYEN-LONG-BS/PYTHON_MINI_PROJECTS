@@ -611,7 +611,7 @@ def load_config(file_path, encryption_key):
     }
     return decrypted_config
 
-def f_utils_create_a_connection():
+def f_utils_create_a_connection_string_to_SQL_Server():
     
     encryption_key = load_encryption_key(PATH_CONFIG_KEY)
     config = load_config(PATH_CONFIG_JSON, encryption_key)
