@@ -602,17 +602,17 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self._f_config_notification(text=text, fg="blue")
     
     def f_tab_01_button_save_03_click(self):        
-        text, data = self.controller_02_treeview.print_data()
-        text = self.controller_02_treeview.f_controller_handle_btn_save_03_click_(self.table_of_tab_01)
-        self._f_config_notification(text=text, fg="blue")
-        
-        # tree = self.table_of_tab_01
-        # entry_so_phieu = "2025-01-23"  
-        # entry_ma_kh = self.entry_ma_hang
-        # entry_ten_kh = self.entry_ma_hang
-        # text, data = SQLController.get_data_to_import_to_SQL(tree, entry_so_phieu, entry_ma_kh, entry_ten_kh)
-        # text = SQLController.f_controller_handle_btn_save_03_click_(tree, entry_so_phieu, entry_ma_kh, entry_ten_kh)
+        # text, data = self.controller_02_treeview.print_data()
+        # text = self.controller_02_treeview.f_controller_handle_btn_save_03_click_(self.table_of_tab_01)
         # self._f_config_notification(text=text, fg="blue")
+        
+        tree = self.table_of_tab_01
+        entry_so_phieu = self.entry_ma_hang
+        entry_ma_kh = self.entry_ma_hang
+        entry_ten_kh = self.entry_ma_hang
+        text, data = SQLController.get_data_to_import_to_SQL(tree, entry_so_phieu, entry_ma_kh, entry_ten_kh)
+        text = SQLController.f_controller_handle_btn_save_03_click_(tree, entry_so_phieu, entry_ma_kh, entry_ten_kh)
+        self._f_config_notification(text=text, fg="blue")
 
     def _f_view_set_up_formats_of_tab_01(self):
         self.f_view_set_format_of_treeview_of_tab_01()
