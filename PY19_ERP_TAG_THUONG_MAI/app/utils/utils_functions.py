@@ -627,3 +627,16 @@ def f_utils_create_a_connection_string_to_SQL_Server():
     )
     
     return conn
+
+def f_utils_fetch_data_from_database(query):
+        conn = f_utils_create_a_connection_string_to_SQL_Server()
+        cursor = conn.cursor()
+        # query = "[BAN_KINH_DOANH].[dbo].[Proc_TB_QUAN_LY_GOI_THAU_SELECT_241130_11h09] 'NV01'"  # Thay thế với câu lệnh SQL của bạn
+        cursor.execute(query)
+        rows = cursor.fetchall()
+
+        # Đóng kết nối
+        conn.close()
+        
+        # return df
+        return rows

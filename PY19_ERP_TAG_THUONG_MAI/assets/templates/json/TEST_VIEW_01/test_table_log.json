@@ -16,6 +16,17 @@
                 "show": "headings"
             },
             {
+                "name": "Số phiếu",
+                "width": 100,
+                "min_width": 100,
+                "anchor": "w",
+                "stretch": true,
+                "font": {"family": "Verdana", "size": 12, "weight": "normal"},
+                "background_color": "#ffffff",
+                "foreground_color": "#000000",
+                "show": "headings"
+            },
+            {
                 "name": "Mã KH",
                 "width": 100,
                 "min_width": 100,
@@ -38,9 +49,31 @@
                 "show": "headings"
             },
             {
-                "name": "Mã hợp đồng",
+                "name": "Số hợp đồng",
                 "width": 120,
                 "min_width": 120,
+                "anchor": "w",
+                "stretch": true,
+                "font": {"family": "Verdana", "size": 12, "weight": "normal"},
+                "background_color": "#ffffff",
+                "foreground_color": "#000000",
+                "show": "headings"
+            },
+            {
+                "name": "Ghi chú phiếu",
+                "width": 120,
+                "min_width": 120,
+                "anchor": "w",
+                "stretch": true,
+                "font": {"family": "Verdana", "size": 12, "weight": "normal"},
+                "background_color": "#ffffff",
+                "foreground_color": "#000000",
+                "show": "headings"
+            },
+            {
+                "name": "STT dòng",
+                "width": 100,
+                "min_width": 100,
                 "anchor": "w",
                 "stretch": true,
                 "font": {"family": "Verdana", "size": 12, "weight": "normal"},

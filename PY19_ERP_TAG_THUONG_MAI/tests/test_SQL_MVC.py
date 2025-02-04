@@ -18,7 +18,8 @@ class SQLModel:
         try:
             conn = pyodbc.connect(connection_string)
             cursor = conn.cursor()
-            query = f"SELECT * FROM {table_name}"
+            # query = f"SELECT * FROM {table_name}"
+            query = f"[Proc_TB_KD02_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250204_110h38]'','',''"
             cursor.execute(query)
             columns = [column[0] for column in cursor.description]
             data = cursor.fetchall()
