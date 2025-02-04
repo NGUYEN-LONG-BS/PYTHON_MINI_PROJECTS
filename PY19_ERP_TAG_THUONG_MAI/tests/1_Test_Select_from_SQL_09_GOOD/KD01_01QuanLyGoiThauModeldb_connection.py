@@ -2,7 +2,8 @@ import pyodbc
 
 def create_connection():
     
-    server = '103.90.227.154'  # Replace with your server name
+    # server = '103.90.227.154'  # Replace with your server name
+    server = '14.225.192.238'  # Replace with your server name
     database = 'BAN_KINH_DOANH'  # Replace with your database name
     username = 'sa'  # Replace with your SQL Server username
     password = 'Ta#9999'  # Replace with your password
