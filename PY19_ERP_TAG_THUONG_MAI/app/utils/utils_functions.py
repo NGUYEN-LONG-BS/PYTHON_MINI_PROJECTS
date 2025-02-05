@@ -25,7 +25,7 @@ import json
 from cryptography.fernet import Fernet
 
 import pandas as pd
-
+from datetime import datetime
 
 def f_utils_setup_logo(parent_frame):
     # Define function when click
@@ -591,7 +591,14 @@ def f_utils_get_unique_column_from_data(sample_data, number_column):
         # Trích xuất cột thứ n và loại bỏ trùng lặp
         unique_ma_hang = list(set(row[number_column] for row in sample_data))
         return unique_ma_hang
-    
+
+def f_utils_get_formatted_today_YYYY_MM_DD():
+    # Get today's date
+    today = datetime.today()
+    # Format the date to 'YYYY-MM-DD'
+    formatted_date = today.strftime('%Y-%m-%d')
+    return formatted_date
+
 # ========================================================================================================================================================================
 # Lấy thông tin từ file config.json
 # ========================================================================================================================================================================

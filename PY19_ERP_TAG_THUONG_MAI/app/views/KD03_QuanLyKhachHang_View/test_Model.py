@@ -276,7 +276,7 @@ class cls_test_Model():
         table_name = "ID_INFO"
 
         print("Chuẩn bị chèn dữ liệu vào SQL Server...")
-        print("Dữ liệu cần chèn:", data_array)
+        print("Dữ liệu cần chèn test model:", data_array)
         # Dữ liệu cần chèn (mỗi danh sách bên trong là một dòng dữ liệu)
         # data_array = [
         #     ["1", "Alice", 25],
@@ -298,7 +298,7 @@ class cls_test_Model():
         table_name = table_name
 
         print("Chuẩn bị chèn dữ liệu vào SQL Server...")
-        print("Dữ liệu cần chèn:", data_array)
+        print("Dữ liệu cần chèn test model 02 :", data_array)
         # self.f_insert_data_to_sql(server_name, database_name, login_name, login_pass, table_name, data_array)
         self.f_02_insert_data_to_sql(server_name, database_name, login_name, login_pass, table_name, data_array)
         
@@ -511,7 +511,7 @@ class cls_test_Model_02():
         table_name = table_name
 
         print("Chuẩn bị chèn dữ liệu vào SQL Server...")
-        print("Dữ liệu cần chèn:", data_array)
+        print("Dữ liệu cần chèn cls_test_model_02:", data_array)
         # self.f_insert_data_to_sql(server_name, database_name, login_name, login_pass, table_name, data_array)
         self.f_02_insert_data_to_sql(server_name, database_name, login_name, login_pass, table_name, data_array)
         
@@ -853,7 +853,7 @@ class SQLModel:
         table_name = table_name
 
         print("Chuẩn bị chèn dữ liệu vào SQL Server...")
-        print("Dữ liệu cần chèn:", data_array)
+        print("Dữ liệu cần chèn SQLModel:", data_array)
         # self.f_insert_data_to_sql(server_name, database_name, login_name, login_pass, table_name, data_array)
         SQLModel.f_02_insert_data_to_sql(server_name, database_name, login_name, login_pass, table_name, data_array)
     

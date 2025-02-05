@@ -607,7 +607,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         # self._f_config_notification(text=text, fg="blue")
         
         tree = self.table_of_tab_01
-        entry_so_phieu = "2025-01-23"  
+        entry_so_phieu = self.entry_ma_hang
         entry_ma_kh = self.entry_ma_hang
         entry_ten_kh = self.entry_ma_hang
         text, data = SQLController.get_data_to_import_to_SQL(tree, entry_so_phieu, entry_ma_kh, entry_ten_kh)

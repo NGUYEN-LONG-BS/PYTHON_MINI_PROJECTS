@@ -530,10 +530,10 @@ class SQLController:
             for child in tree.get_children():
                 row = tree.item(child, "values")
                 data.append((
-                    "NV01"                          # [ID_NHAN_VIEN]
-                    ,""                             # [XOA_SUA]
-                    ,"2025-01-23"                   # [NGAY_TREN_PHIEU]
-                    ,entry_so_phieu.get()           # [SO_PHIEU]
+                    "NV01"                                          # [ID_NHAN_VIEN]
+                    ,""                                             # [XOA_SUA]
+                    ,f_utils_get_formatted_today_YYYY_MM_DD()       # [NGAY_TREN_PHIEU]
+                    ,entry_so_phieu.get()                           # [SO_PHIEU]
                     ,entry_ma_kh.get()
                     ,entry_ten_kh.get()
                     ,"MST"
