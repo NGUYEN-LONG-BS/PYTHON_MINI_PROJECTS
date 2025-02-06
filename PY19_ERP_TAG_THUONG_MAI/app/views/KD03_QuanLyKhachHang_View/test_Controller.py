@@ -533,15 +533,15 @@ class SQLController:
                     "NV01"                                          # [ID_NHAN_VIEN]
                     ,""                                             # [XOA_SUA]
                     ,f_utils_get_formatted_today_YYYY_MM_DD()       # [NGAY_TREN_PHIEU]
-                    ,entry_so_phieu.get()                           # [SO_PHIEU]
+                    ,f_utils_get_formatted_today_YYYY_MM_DD()                          # [SO_PHIEU]
                     ,entry_ma_kh.get()
                     ,entry_ten_kh.get()
                     ,"MST"
-                    ,"DIA_CHI"
+                    ,23
                     ,"SO_HOP_DONG"
                     ,"THONG_TIN_HOP_DONG"
                     ,"GHI_CHU_CUA_PHIEU"
-                    ,row[0]
+                    ,float(row[0])
                     ,row[1]
                     ,row[2]
                     ,row[3]
@@ -551,7 +551,7 @@ class SQLController:
                     ,float(row[7])
                     ,row[8]
                 ))
-            print(data)
+            print("get_data_to_import_to_SQL", data)
             notification_text = "Data chuẩn bị để gửi đi đã được in!"
             return notification_text, data
         except Exception as e:

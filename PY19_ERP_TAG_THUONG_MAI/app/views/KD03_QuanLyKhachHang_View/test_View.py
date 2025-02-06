@@ -611,6 +611,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         entry_ma_kh = self.entry_ma_hang
         entry_ten_kh = self.entry_ma_hang
         text, data = SQLController.get_data_to_import_to_SQL(tree, entry_so_phieu, entry_ma_kh, entry_ten_kh)
+        print("data là:", data)
         text = SQLController.f_controller_handle_btn_save_03_click_(tree, entry_so_phieu, entry_ma_kh, entry_ten_kh)
         self._f_config_notification(text=text, fg="blue")
 
