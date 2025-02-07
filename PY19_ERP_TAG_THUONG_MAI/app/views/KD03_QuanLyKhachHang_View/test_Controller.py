@@ -577,3 +577,77 @@ class SQLController:
             return "Data exported to SQL Server KD02_YEU_CAU_DAT_HANG!"
         else:
             return "Data validation failed. Please fix the errors."
+
+class Model_get_data_from_SQL:
+    
+    @staticmethod
+    def get_data_with_query(query):
+        print("query")
+        data = SQLModel.fetch_data(query)
+        print("data", data)
+        return data
+
+class Controller_SQL_to_excel:
+    
+    @staticmethod
+    def export_log_to_excel(treeview):
+        # lấy danh sách số phiếu từ treeview
+        danh_sach_so_phieu = f_utils_get_unique_column_from_treeview(treeview, 1)
+        
+        # Chuyển danh sách số phiếu thành chuỗi SQL
+        so_phieu_str = ', '.join([f"'{x}'" if isinstance(x, str) else str(x) for x in danh_sach_so_phieu])
+        
+        # Tạo câu query SQL với danh sách số phiếu
+        query = f"""
+        SELECT 
+            ROW_NUMBER() OVER(ORDER BY [SO_PHIEU]) as RowNumber,
+            [SO_PHIEU],
+            [NGAY_TREN_PHIEU],
+            [MA_DOI_TUONG],
+            [TEN_DOI_TUONG],
+            [MA_SO_THUE],
+            [DIA_CHI],
+            [SO_HOP_DONG],
+            [THONG_TIN_HOP_DONG],
+            [GHI_CHU_PHIEU],
+            [STT_DONG],
+            [MA_HANG],
+            [TEN_HANG],
+            [DVT],
+            [SO_LUONG_KHA_DUNG],
+            [SO_LUONG_NHU_CAU],
+            [SO_LUONG_GIU_CHO],
+            [SO_LUONG_YEU_CAU_DAT_HANG],
+            [GHI_CHU_SP]
+        FROM [TBD_2024].[dbo].[TB_KD02_YEU_CAU_DAT_HANG]
+        WHERE [SO_PHIEU] IN ({so_phieu_str})
+        """
+        print("query", query)
+        
+        # Truyền câu query vào model để lấy dữ liệu từ SQL (Giả sử hàm này trả về DataFrame)
+        df = Model_get_data_from_SQL.get_data_with_query(query)
+        
+        # # Kiểm tra nếu có dữ liệu trả về
+        # if df is not None and not df.empty:
+        #     # Khởi tạo một workbook mới
+        #     wb = Workbook()
+        #     ws = wb.active
+        #     ws.title = "Exported Data"
+            
+        #     # Ghi header vào worksheet
+        #     headers = df.columns.tolist()
+        #     ws.append(headers)
+            
+        #     # Ghi dữ liệu vào worksheet
+        #     for row in df.itertuples(index=False, name=None):
+        #         ws.append(row)
+            
+        #     # Lưu file Excel vào ổ đĩa
+        #     file_path = 'exported_log.xlsx'
+        #     wb.save(file_path)
+        #     print(f"Data exported successfully to {file_path}")
+        # else:
+        #     print("No data found for the selected SO_PHIEU.")
+        
+
+        

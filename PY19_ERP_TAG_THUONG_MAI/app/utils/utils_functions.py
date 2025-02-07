@@ -592,11 +592,22 @@ def f_utils_get_unique_column_from_data(sample_data, number_column):
         unique_ma_hang = list(set(row[number_column] for row in sample_data))
         return unique_ma_hang
 
-def f_utils_get_formatted_today_YYYY_MM_DD():
+def f_utils_get_unique_column_from_treeview(treeview, number_column):
+        # Extract unique values from the specified column in the Treeview
+        unique_values = set()
+        
+        # Iterate through all items in the Treeview
+        for item in treeview.get_children():
+            value = treeview.item(item)['values'][number_column]
+            unique_values.add(value)
+        
+        return list(unique_values)
+
+def f_utils_get_formatted_today_YYYY_MM_DD(format_string='%Y-%m-%d'):
     # Get today's date
     today = datetime.today()
     # Format the date to 'YYYY-MM-DD'
-    formatted_date = today.strftime('%Y-%m-%d')
+    formatted_date = today.strftime(format_string)
     return formatted_date
 
 # ========================================================================================================================================================================

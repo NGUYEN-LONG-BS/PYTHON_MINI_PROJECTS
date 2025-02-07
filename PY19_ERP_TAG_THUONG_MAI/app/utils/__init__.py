@@ -19,6 +19,7 @@ from .utils_functions import f_utils_on_entry_change
 from .utils_functions import f_utils_access_widget_by_path
 from .utils_functions import f_utils_set_style
 from .utils_functions import f_utils_get_unique_column_from_data
+from .utils_functions import f_utils_get_unique_column_from_treeview
 from .utils_functions import f_utils_get_formatted_today_YYYY_MM_DD
 from .utils_functions import f_utils_create_a_connection_string_to_SQL_Server
 from .utils_functions import f_utils_fetch_data_from_database

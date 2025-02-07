@@ -1,5 +1,6 @@
 import tkinter as tk
 from .label import *
+from .entry import *
 from utils import *
 from utils.define import *
 
@@ -158,11 +159,7 @@ class cls_Frame_date_and_number_of_slip(tk.Frame):
     def __init__(self, parent, *args, **kwargs):
         super().__init__(parent, *args, **kwargs)
         # Configure initial appearance
-        # self.config(bg=BG_COLOR_0_0, width=200, height=200, bd=1, relief="groove")
         self.config(bg=BG_COLOR_0_0)
-        # Create a shadow frame as a child of the parent
-        # self.shadow = tk.Frame(parent, bg=BG_COLOR_0_0, bd=0)
-        # self.shadow.lower()  # Ensure shadow is below the main frame
 
         # Create grid layout inside the frame
         self.grid_rowconfigure(0, weight=1)
@@ -175,18 +172,18 @@ class cls_Frame_date_and_number_of_slip(tk.Frame):
         self.create_widgets()
 
     def create_widgets(self):
-        # Row Label and Entry
-        # self.sub_frame = tk.Frame(self).grid(row=0, column=0, padx=10, pady=10, sticky="ew")
-        # tk.Label(self, text="Chứng từ:", bg=BG_COLOR_0_0).grid(row=0, column=0, padx=10, pady=10, sticky="ew")
+        # Get today's date in dd/mm/yyyy format
+        today = f_utils_get_formatted_today_YYYY_MM_DD("%d/%m/%Y")
 
         # Date Label and Entry
         tk.Label(self, text="Ngày:", bg=BG_COLOR_0_0).pack(side="left")
-        self.date_entry = tk.Entry(self)
+        self.date_entry = cls_my_date_time_entry_num_01(self, name="date_entry")
+        self.date_entry.insert(0, today)
         self.date_entry.pack(side="left")
 
         # Number of Slips Label and Entry
         tk.Label(self, text="Số chứng từ:", bg=BG_COLOR_0_0).pack(side="left")
-        self.slips_entry = tk.Entry(self)
+        self.slips_entry = cls_my_text_entry_num_01(self, name="slips_entry")
         self.slips_entry.pack(side="left")
         
 class cls_Frame_client_information(tk.Frame):

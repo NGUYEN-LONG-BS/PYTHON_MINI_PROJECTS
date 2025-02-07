@@ -9,6 +9,7 @@ from utils import *
 from test_Controller import cls_test_Controller, cls_test_Controller_02_treeview, cls_test_Controller_03_auto_update_number, cls_test_Controller_05_staticmenthod
 from test_Controller import cls_test_Controller_06_treeview_tab_02
 from test_Controller import SQLController
+from test_Controller import Controller_SQL_to_excel
 
 class cls_test_View(cls_base_form_number_02_ManyTabs):
     def __init__(self):
@@ -543,6 +544,11 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         tab_02_button_container_02.pack(expand=True, pady=10)
         
         # Get Data button
+        self.tab_02_button_export_excel = tk.Button(tab_02_button_container_02, text="Export Excel")
+        self.tab_02_button_export_excel.config(command=self.f_tab_02_button_export_excel_click)
+        self.tab_02_button_export_excel.pack(side="left", padx=10)
+        
+        # Get Data button
         self.tab_02_button_edit = tk.Button(tab_02_button_container_02, text="EDIT")
         self.tab_02_button_edit.config(command=self.f_tab_02_button_edit_click)
         self.tab_02_button_edit.pack(side="left", padx=10)
@@ -577,6 +583,10 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
     def f_tab_02_button_clear_click(self):
         print("Clear click")
         
+    def f_tab_02_button_export_excel_click(self):
+        print("Export excel click")
+        Controller_SQL_to_excel.export_log_to_excel(self.treeview_test_of_tag_02)
+        
     def f_tab_02_button_edit_click(self):
         print("Edit click")
     
@@ -602,6 +612,8 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self._f_config_notification(text=text, fg="blue")
     
     def f_tab_01_button_save_03_click(self):        
+        # Phiên bản cũ, cần làm sạch rồi mới xoá
+        # ====>
         # text, data = self.controller_02_treeview.print_data()
         # text = self.controller_02_treeview.f_controller_handle_btn_save_03_click_(self.table_of_tab_01)
         # self._f_config_notification(text=text, fg="blue")
@@ -643,9 +655,9 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
                 anchor=config["anchor"],
                 stretch=config["stretch"]
             )
-            # # Set the header font style
-            # style = ttk.Style()
-            # style.configure("Treeview.Heading", font=tuple_table_of_tab_01_header_font)
+            # Set the header font style
+            style = ttk.Style()
+            style.configure("Treeview.Heading", font=tuple_table_of_tab_01_header_font)
             
             # Apply the background and font settings
             # Apply row styles if needed
