@@ -903,3 +903,10 @@ class SQLModel:
                 print(e)
 
         return is_valid
+    
+class Model_get_data_from_SQL:
+    
+    @staticmethod
+    def get_data_with_query(query):
+        data = SQLModel.fetch_data(query)
+        return data

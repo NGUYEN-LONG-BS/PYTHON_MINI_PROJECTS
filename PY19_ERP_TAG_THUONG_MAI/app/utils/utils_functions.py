@@ -2,30 +2,26 @@ import os
 import sys
 import time
 import inspect
-
 import tkinter as tk
 from tkinter import ttk
 from tkinter import font
 from tkinter import filedialog, messagebox
-
-from PIL import Image, ImageTk
-
 import openpyxl
 from openpyxl import Workbook
 from openpyxl.styles import Font, Alignment
 from openpyxl.styles import Font, Alignment, PatternFill
 from openpyxl import load_workbook
-
 import xlwings as xw
-
 from define import *
-
 import pyodbc
 import json
 from cryptography.fernet import Fernet
-
-import pandas as pd
+# import datetime
 from datetime import datetime
+from decimal import Decimal
+from PIL import Image, ImageTk
+import pandas as pd
+
 
 def f_utils_setup_logo(parent_frame):
     # Define function when click
@@ -384,6 +380,13 @@ def f_utils_copy_sheet_to_new_workbook(file_path, sheet_name):
         # Ensure the Excel application started by this code is closed
         if not app.books:  # If no books are left open, quit the app
             app.quit()
+            
+def f_utils_open_an_excel_with_path(file_path):
+    try:
+        # Mở file Excel bằng ứng dụng mặc định
+        os.startfile(file_path)
+    except Exception as e:
+        return f"Error: {e}"
 
 def f_utils_delete_extend_row_and_column(file_path, sheet_name, start_column, end_column, start_row, last_row):
     """
@@ -609,6 +612,87 @@ def f_utils_get_formatted_today_YYYY_MM_DD(format_string='%Y-%m-%d'):
     # Format the date to 'YYYY-MM-DD'
     formatted_date = today.strftime(format_string)
     return formatted_date
+
+def f_utils_export_data_to_excel(data_header, data):
+    
+    # Check the type and shape of the data
+    print(f"Type of data: {type(data)}")
+    print(f"Type of first element in data: {type(data[0])}")
+    
+    for i, row in enumerate(data):
+        print(f"Row {i+1}: {type(row)}, Length: {len(row)}")
+    
+    # Check if the number of columns in data_header matches the number of elements in each row of data
+    if all(len(row) == len(data_header) for row in data):
+        print("Data and headers are consistent.")
+    else:
+        print("Error: The number of columns in the header does not match the number of columns in the data.")
+        return
+    
+    print("data_header: ", data_header)
+    print("data_body: ", data)
+    
+    file_path = os.path.join(PATH_DEFAUL, "exported_data.xlsx")
+    
+    # Thử đưa dữ liệu mới vào thủ công
+    # Dữ liệu
+    data_header = ['STT', 'Số phiếu', 'Ngày trên phiếu', 'Mã đối tượng', 'Tên đối tượng', 'Mã số thuế', 'Địa chỉ', 'Số hợp đồng', 'Thông tin hợp đồng', 'Ghi chú phiếu', 'STT dòng', 'Mã hàng', 'Tên hàng', 
+                'ĐVT', 'Số lượng khả dụng', 'Số lượng nhu cầu', 'Số lượng giữ chỗ', 'Số lượng yêu cầu đặt hàng', 'Ghi chú sản phẩm']
+
+    data_body = [
+        (1, '127', datetime(2025, 1, 23, 0, 0), '127', '127', 'MST', 'DIA_CHI', 'SO_HOP_DONG', 'THONG_TIN_HOP_DONG', 'GHI_CHU_CUA_PHIEU', 1, 'HH-01B-001', 'MBC 120AM', 'cái', Decimal('50.00'), Decimal('95.00'), Decimal('50.00'), Decimal('45.00'), 'loại hai'),
+        (2, '127', datetime(2025, 1, 23, 0, 0), '127', '127', 'MST', 'DIA_CHI', 'SO_HOP_DONG', 'THONG_TIN_HOP_DONG', 'GHI_CHU_CUA_PHIEU', 2, 'MT-05A-025', 'Nắp chụp LA - màu vàng', 'cái', Decimal('22.00'), Decimal('127.00'), Decimal('22.00'), Decimal('105.00'), 'loại nhựa'),
+        (3, '2025-02-06', datetime(2025, 2, 6, 0, 0), 'HH-01B-001', 'HH-01B-001', 'MST', '23', 'SO_HOP_DONG', 'THONG_TIN_HOP_DONG', 'GHI_CHU_CUA_PHIEU', 1, 'HH-01B-001', 'MBC 120AM', 'cái', Decimal('50.00'), Decimal('2.00'), Decimal('2.00'), Decimal('0.00'), ''),
+        (4, '2025-02-07', datetime(2025, 2, 7, 0, 0), 'HH-01B-001', 'HH-01B-001', 'MST', '23', 'SO_HOP_DONG', 'THONG_TIN_HOP_DONG', 'GHI_CHU_CUA_PHIEU', 1, 'HH-01B-001', 'MBC 120AM', 'cái', Decimal('50.00'), Decimal('16.00'), Decimal('16.00'), Decimal('0.00'), 'ngày mới'),
+        (5, '2025-02-07', datetime(2025, 2, 7, 0, 0), 'TM-01A-009', 'TM-01A-009', 'MST', '23', 'SO_HOP_DONG', 'THONG_TIN_HOP_DONG', 'GHI_CHU_CUA_PHIEU', 1, 'HH-01B-001', 'MBC 120AM', 'cái', Decimal('50.00'), Decimal('613.00'), Decimal('50.00'), Decimal('563.00'), 'nhìn nhận'),
+        (6, '2025-02-07', datetime(2025, 2, 7, 0, 0), 'TM-01A-009', 'TM-01A-009', 'MST', '23', 'SO_HOP_DONG', 'THONG_TIN_HOP_DONG', 'GHI_CHU_CUA_PHIEU', 2, 'TM-01A-009', 'LA 4000A', 'cái', Decimal('60.00'), Decimal('610.00'), Decimal('60.00'), Decimal('550.00'), ''),
+        (7, '612', datetime(2025, 1, 23, 0, 0), '612', '612', 'MST', 'DIA_CHI', 'SO_HOP_DONG', 'THONG_TIN_HOP_DONG', 'GHI_CHU_CUA_PHIEU', 1, 'TM-01A-009', 'LA 4000A', 'cái', Decimal('60.00'), Decimal('612.00'), Decimal('60.00'), Decimal('552.00'), ''),
+        (8, '98', datetime(2025, 1, 23, 0, 0), '98', '98', 'MST', 'DIA_CHI', 'SO_HOP_DONG', 'THONG_TIN_HOP_DONG', 'GHI_CHU_CUA_PHIEU', 1, 'HH-01B-001', 'MBC 120AM', 'cái', Decimal('50.00'), Decimal('98.00'), Decimal('50.00'), Decimal('48.00'), 'mccb loại 1')
+    ]
+    
+    data = data_body
+    # Check if the data is not empty
+    if data:
+        # Ensure the data is a list of tuples with 19 elements each
+        print(f"Shape of data: {len(data)} rows, {len(data[0]) if data else 0} columns")
+        print("First row of data:", data[0])
+        
+        # Creating the DataFrame
+        df = pd.DataFrame(data, columns=data_header)  # Force data to be a list
+        
+        # Print DataFrame for debugging
+        print(df.head())
+        print(df.info())
+        
+        # Convert Decimal and datetime types to Excel-compatible formats
+        for column in df.columns:
+            if df[column].dtype == 'object':
+                # Handle Decimal and datetime conversion
+                df[column] = df[column].apply(lambda x: float(x) if isinstance(x, Decimal) 
+                                              else str(x) if isinstance(x, datetime) 
+                                              else x)
+        
+        # Create a new workbook
+        wb = Workbook()
+        ws = wb.active
+        ws.title = "Exported Data"
+        
+        # Write header to the worksheet
+        headers = df.columns.tolist()
+        ws.append(headers)
+        
+        # Write data rows to the worksheet
+        for row in df.itertuples(index=False, name=None):
+            ws.append(row)
+        
+        # Save the Excel file to disk
+        wb.save(file_path)
+        print(f"Data exported successfully to {file_path}")
+        # Open the workbook
+        f_utils_open_an_excel_with_path(file_path)
+        print("Excel file opened for user.")
+    else:
+        print("No data available to export.")
 
 # ========================================================================================================================================================================
 # Lấy thông tin từ file config.json

@@ -3,6 +3,7 @@ from test_Model import cls_test_Model
 from test_Model import cls_test_Model_02
 from test_Model import cls_test_Model_06_staticmenthod_get_config_of_table_YCDH_log_from_json
 from test_Model import SQLModel
+from test_Model import Model_get_data_from_SQL
 from Components_View import *   # Tại sao lại phải import Components_View
 from utils import *
 import traceback
@@ -578,14 +579,7 @@ class SQLController:
         else:
             return "Data validation failed. Please fix the errors."
 
-class Model_get_data_from_SQL:
-    
-    @staticmethod
-    def get_data_with_query(query):
-        print("query")
-        data = SQLModel.fetch_data(query)
-        print("data", data)
-        return data
+
 
 class Controller_SQL_to_excel:
     
@@ -593,9 +587,11 @@ class Controller_SQL_to_excel:
     def export_log_to_excel(treeview):
         # lấy danh sách số phiếu từ treeview
         danh_sach_so_phieu = f_utils_get_unique_column_from_treeview(treeview, 1)
+        # print("danh_sach_so_phieu", danh_sach_so_phieu)
         
-        # Chuyển danh sách số phiếu thành chuỗi SQL
-        so_phieu_str = ', '.join([f"'{x}'" if isinstance(x, str) else str(x) for x in danh_sach_so_phieu])
+        # Chuyển danh sách số phiếu thành chuỗi SQL, đảm bảo các giá trị dạng chuỗi được bao trong dấu nháy đơn
+        so_phieu_str = ', '.join([f"'{str(x)}'" for x in danh_sach_so_phieu])
+        # print("so_phieu_str", so_phieu_str)
         
         # Tạo câu query SQL với danh sách số phiếu
         query = f"""
@@ -622,32 +618,38 @@ class Controller_SQL_to_excel:
         FROM [TBD_2024].[dbo].[TB_KD02_YEU_CAU_DAT_HANG]
         WHERE [SO_PHIEU] IN ({so_phieu_str})
         """
-        print("query", query)
+        # print("query", query)
+        
+        # Tạo header cho file Excel
+        header = ["STT", 
+                  "Số phiếu", 
+                  "Ngày trên phiếu", 
+                  "Mã đối tượng", 
+                  "Tên đối tượng", 
+                  "Mã số thuế", 
+                  "Địa chỉ", 
+                  "Số hợp đồng", 
+                  "Thông tin hợp đồng", 
+                  "Ghi chú phiếu", 
+                  "STT dòng", 
+                  "Mã hàng", 
+                  "Tên hàng", 
+                  "ĐVT", 
+                  "Số lượng khả dụng", 
+                  "Số lượng nhu cầu", 
+                  "Số lượng giữ chỗ", 
+                  "Số lượng yêu cầu đặt hàng", 
+                  "Ghi chú sản phẩm"] 
         
         # Truyền câu query vào model để lấy dữ liệu từ SQL (Giả sử hàm này trả về DataFrame)
         df = Model_get_data_from_SQL.get_data_with_query(query)
         
-        # # Kiểm tra nếu có dữ liệu trả về
-        # if df is not None and not df.empty:
-        #     # Khởi tạo một workbook mới
-        #     wb = Workbook()
-        #     ws = wb.active
-        #     ws.title = "Exported Data"
-            
-        #     # Ghi header vào worksheet
-        #     headers = df.columns.tolist()
-        #     ws.append(headers)
-            
-        #     # Ghi dữ liệu vào worksheet
-        #     for row in df.itertuples(index=False, name=None):
-        #         ws.append(row)
-            
-        #     # Lưu file Excel vào ổ đĩa
-        #     file_path = 'exported_log.xlsx'
-        #     wb.save(file_path)
-        #     print(f"Data exported successfully to {file_path}")
-        # else:
-        #     print("No data found for the selected SO_PHIEU.")
+        # Kiểm tra nếu có dữ liệu trả về
+        if isinstance(df, list) and df:
+            f_utils_export_data_to_excel(header, df)
+            print(f"Data exported successfully")
+        else:
+            print("No data found for the selected SO_PHIEU.")
         
 
         
