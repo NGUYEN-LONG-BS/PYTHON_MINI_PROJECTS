@@ -751,23 +751,35 @@ def f_utils_format_number(value):
         return value  # Trả về nguyên giá trị nếu không phải số
 
 def f_utils_fetch_data_from_database(query):
-    # print(query)
     conn = f_utils_create_a_connection_string_to_SQL_Server()
     cursor = conn.cursor()
     cursor.execute(query)
     rows = cursor.fetchall()
     # Đóng kết nối
-    conn.close()
-    
-    # # Định dạng dữ liệu
-    # formatted_rows = [[f_utils_format_number(cell) for cell in row] for row in rows]
-
-    # # Trả về DataFrame
-    # df = pd.DataFrame(formatted_rows)
-    
-    # return df
-    # return df
+    if cursor:
+        cursor.close()
+    if conn:
+        conn.close()
     return rows
+
+def f_utils_sent_query_to_SQL(query):
+    conn = f_utils_create_a_connection_string_to_SQL_Server()
+    if conn:
+        try:
+            cursor = conn.cursor()
+            cursor.execute(query)
+            # For non-SELECT queries, commit the transaction
+            conn.commit()
+            print("Thành công", "Dữ liệu đã được cập nhật thành công!")
+        except Exception as e:
+            print("Lỗi", f"Có lỗi xảy ra khi cập nhật dữ liệu: {e}")
+        finally:
+            # Đóng kết nối
+            if cursor:
+                cursor.close()
+            if conn:
+                conn.close()
+
 
 
         

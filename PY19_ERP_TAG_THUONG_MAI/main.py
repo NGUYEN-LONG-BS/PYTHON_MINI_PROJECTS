@@ -87,3 +87,6 @@ if __name__ == "__main__":
     # Khởi tạo đối tượng của class App và chạy ứng dụng
     app = cls_App()
     app.run()
+
+
+    

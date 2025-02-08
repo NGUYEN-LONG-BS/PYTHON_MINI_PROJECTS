@@ -768,6 +768,13 @@ class SQLModel:
         except Exception as e:
             print("Lỗi khi lấy dữ liệu:", e)
             return []
+        
+    @staticmethod
+    def sent_SQL_query(query):
+        try:
+            f_utils_fetch_data_from_database(query)
+        except Exception as e:
+            print("Error senting query:", e)
     
     @staticmethod
     def f_02_insert_data_to_sql(server_name, database_name, login_name, login_pass, table_name, data_array):

@@ -506,6 +506,36 @@ class cls_test_Controller_06_treeview_tab_02():
                 print("Insufficient data in row!")
                 
 
+class Controller_delete_row_in_SQL:
+    def update_deleted(so_phieu):
+        database_name = "TBD_2024"
+        query = f"EXEC [{database_name}].[dbo].[Proc_TB_KD02_YEU_CAU_DAT_HANG_UPDATE_DELETED_250208_23h29] '{so_phieu}'"
+        print(query)
+        SQLModel.sent_SQL_query(query)
+        print(so_phieu)
+
+    @staticmethod
+    def handle_event_btn_delete_click(tree):
+        # Get the selected items
+        selected_items = tree.selection()
+        
+        # Check if more than one row is selected
+        if len(selected_items) > 1:
+            return f"Selection Error", "Please select only one row."
+        
+        # Check if no row is selected
+        if not selected_items:
+            return f"Selection Error", "No row selected."
+            
+        # Get the selected row
+        for item in selected_items:
+            row_values = tree.item(item, 'values')
+            if len(row_values) > 1:  # Ensure the row has at least 2 columns
+                so_phieu = row_values[1]
+                Controller_delete_row_in_SQL.update_deleted(so_phieu)
+                return f"{so_phieu}, Slip deleted."
+
+
         
 class SQLController:
     

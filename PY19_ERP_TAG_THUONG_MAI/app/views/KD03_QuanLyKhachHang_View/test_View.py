@@ -11,6 +11,7 @@ from test_Controller import cls_test_Controller_06_treeview_tab_02
 from test_Controller import SQLController
 from test_Controller import Controller_SQL_to_excel
 from test_Controller import Controller_get_the_latest_number_of_slip
+from test_Controller import Controller_delete_row_in_SQL
 
 class cls_test_View(cls_base_form_number_02_ManyTabs):
     def __init__(self):
@@ -612,7 +613,8 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         print("Edit click")
     
     def f_tab_02_button_delete_click(self):
-        print("Delete click")
+        text = Controller_delete_row_in_SQL.handle_event_btn_delete_click(self.treeview_test_of_tag_02)
+        self._f_config_notification(text=text, fg="blue")
     
     def _f_view_set_rows_count_of_treeview_01_when_add_new_row(self):
         row_count = 1 + self.controller_01.f_controller_get_row_count(self.table_of_tab_01)

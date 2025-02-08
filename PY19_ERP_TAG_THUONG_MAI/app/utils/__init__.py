@@ -24,6 +24,7 @@ from .utils_functions import f_utils_get_formatted_today_YYYY_MM_DD
 from .utils_functions import f_utils_export_data_to_excel
 from .utils_functions import f_utils_create_a_connection_string_to_SQL_Server
 from .utils_functions import f_utils_fetch_data_from_database
+from .utils_functions import f_utils_sent_query_to_SQL
 from .utils_functions import f_utils_open_an_excel_with_path
 
 from .utils_set_print_template import f_utils_create_print_template
