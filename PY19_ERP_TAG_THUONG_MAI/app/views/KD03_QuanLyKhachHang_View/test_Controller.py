@@ -525,7 +525,8 @@ class SQLController:
         
     # Function to print data from the Treeview
     @staticmethod
-    def get_data_to_import_to_SQL(tree, entry_so_phieu, entry_ma_kh, entry_ten_kh):
+    def get_data_to_import_to_SQL(*args):
+        tree, entry_so_phieu, entry_ma_kh, entry_ten_kh = args
         try:
             data = []
             for child in tree.get_children():
@@ -535,7 +536,7 @@ class SQLController:
                     ,""                                             # [XOA_SUA]
                     ,f_utils_get_formatted_today_YYYY_MM_DD()       # [NGAY_TREN_PHIEU]
                     ,f_utils_get_formatted_today_YYYY_MM_DD()                          # [SO_PHIEU]
-                    ,entry_ma_kh.get()
+                    ,entry_so_phieu.get()
                     ,entry_ten_kh.get()
                     ,"MST"
                     ,23
