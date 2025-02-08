@@ -10,6 +10,7 @@ from test_Controller import cls_test_Controller, cls_test_Controller_02_treeview
 from test_Controller import cls_test_Controller_06_treeview_tab_02
 from test_Controller import SQLController
 from test_Controller import Controller_SQL_to_excel
+from test_Controller import Controller_get_the_latest_number_of_slip
 
 class cls_test_View(cls_base_form_number_02_ManyTabs):
     def __init__(self):
@@ -40,6 +41,21 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.entry_ma_hang = f_utils_tim_component_with_name(self, "entry_ma_hang")
         self.entry_ten_hang = f_utils_tim_component_with_name(self, "entry_sl_ten_hang")
         self.entry_dvt = f_utils_tim_component_with_name(self, "entry_dvt")
+        
+        self.entry_so_phieu = f_utils_tim_component_with_name(self, "slips_entry")
+        
+        self.btn_refresh_number_of_slip = f_utils_tim_component_with_name(self, "refresh_number_of_slip_button")
+        self.btn_refresh_number_of_slip.config(command=self.f_tab_01_button_get_number_of_slip_click)
+        
+    def _f_cap_nhat_so_phieu_moi_nhat(self):
+        ma_thanh_vien = "TB"
+        loai_phieu = "YCDH"
+        so_phieu = Controller_get_the_latest_number_of_slip.handle_button_get_number_of_slip_click()
+        
+        # Create the connection string
+        connection_number_of_slip = f"{ma_thanh_vien}-{loai_phieu}-{so_phieu + 1}"
+        self.entry_so_phieu.delete(0, tk.END)
+        self.entry_so_phieu.insert(0, connection_number_of_slip)
     
     def _f_view_thay_doi_gia_tri_cua_base_form(self):
         # Thay đổi thông tin các tab
@@ -398,15 +414,15 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         tab_01_button_container_02_on_the_left.pack(side="left", expand=True, pady=10)
         
         # Export Data button
-        self.tab_01_button_save_03 = tk.Button(tab_01_button_container_02_on_the_right, text="SAVE 03", command=self.f_tab_01_button_save_03_click)
+        self.tab_01_button_save_03 = tk.Button(tab_01_button_container_02_on_the_right, text="SAVE", command=self.f_tab_01_button_save_03_click)
         self.tab_01_button_save_03.pack(side="right", padx=10)
         
         # Export Data button
-        self.tab_01_button_save_02 = tk.Button(tab_01_button_container_02_on_the_right, text="SAVE 02", command=self.f_tab_01_button_save_02_click)
+        self.tab_01_button_save_02 = tk.Button(tab_01_button_container_02_on_the_right, text="SAVE 02 test", command=self.f_tab_01_button_save_02_click)
         self.tab_01_button_save_02.pack(side="right", padx=10)
         
         # Export Data button
-        self.tab_01_button_export = tk.Button(tab_01_button_container_02_on_the_right, text="SAVE", command=self.f_tab_01_button_export_click)
+        self.tab_01_button_export = tk.Button(tab_01_button_container_02_on_the_right, text="SAVE 01 test", command=self.f_tab_01_button_export_click)
         self.tab_01_button_export.pack(side="right", padx=10)
         
         # Get Data button
@@ -462,6 +478,9 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         
     def f_tab_01_button_print_02_click(self):
         self.controller_01.f_controller_handle_btn_print_02_click_()
+        
+    def f_tab_01_button_get_number_of_slip_click(self):
+        self._f_cap_nhat_so_phieu_moi_nhat()
     
     def f_tab_01_button_import_click(self):
         print("Import config")

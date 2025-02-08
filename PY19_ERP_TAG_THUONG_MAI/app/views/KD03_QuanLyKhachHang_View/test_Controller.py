@@ -652,4 +652,39 @@ class Controller_SQL_to_excel:
             print("No data found for the selected SO_PHIEU.")
         
 
+class Controller_get_the_latest_number_of_slip:
+    
+    @staticmethod
+    def get_list_number_of_slip(database_name, table_name):
         
+        # Tạo câu query SQL với danh sách số phiếu
+        query = f"""
+        SELECT DISTINCT
+            [SO_PHIEU]
+        FROM [{database_name}].[dbo].[{table_name}]
+        WHERE [XOA_SUA] = ''
+        """
+        # print("query", query)
+        
+        # lấy danh sách số phiếu từ SQL
+        danh_sach_so_phieu = Model_get_data_from_SQL.get_data_with_query(query)
+        # print("danh_sach_so_phieu", danh_sach_so_phieu)
+        
+        return danh_sach_so_phieu
+        
+    def extract_numbers_from_data_SQL_num_01(data):
+        data_01 = data
+        data_02 = tuple(int(item[0].split('-')[-1]) for item in data_01)
+        data_final = max(data_02)
+        return data_final
+        
+    @staticmethod
+    def handle_button_get_number_of_slip_click():
+        database_name, table_name = "TBD_2024", "TB_KD02_YEU_CAU_DAT_HANG"
+        # Lấy danh sách số phiếu từ SQL
+        data_01 = Controller_get_the_latest_number_of_slip.get_list_number_of_slip(database_name, table_name)
+        # Lấy số phiếu cuối cùng
+        data_02 = Controller_get_the_latest_number_of_slip.extract_numbers_from_data_SQL_num_01(data_01)
+        # print("data", data_02)
+        
+        return data_02

@@ -3,6 +3,7 @@ from .label import *
 from .entry import *
 from utils import *
 from utils.define import *
+from PIL import Image, ImageTk  # For handling images
 
 class cls_ToolTip:
     """Custom tooltip class."""
@@ -176,15 +177,29 @@ class cls_Frame_date_and_number_of_slip(tk.Frame):
         today = f_utils_get_formatted_today_YYYY_MM_DD("%d/%m/%Y")
 
         # Date Label and Entry
-        tk.Label(self, text="Ngày:", bg=BG_COLOR_0_0).pack(side="left")
+        tk.Label(self, text="Ngày:", bg=BG_COLOR_0_0).pack(side="left", padx=(0, 2))
         self.date_entry = cls_my_date_time_entry_num_01(self, name="date_entry")
         self.date_entry.insert(0, today)
         self.date_entry.pack(side="left")
 
         # Number of Slips Label and Entry
-        tk.Label(self, text="Số chứng từ:", bg=BG_COLOR_0_0).pack(side="left")
+        tk.Label(self, text="Số chứng từ:", bg=BG_COLOR_0_0).pack(side="left", padx=(5, 2))
         self.slips_entry = cls_my_text_entry_num_01(self, name="slips_entry")
         self.slips_entry.pack(side="left")
+        
+        # Load 48x48 icon
+        icon_path = os.path.join(PATH_ASSETS_ICONS, "refresh_icon.png")
+        icon_image = Image.open(icon_path)
+        icon_image = icon_image.resize((20, 20))  # change the size here
+        icon_photo = ImageTk.PhotoImage(icon_image)
+        self.icon_photo = icon_photo
+        
+        # Small Refresh Button with Icon
+        refresh_button = tk.Button(self,
+                                   image=self.icon_photo, 
+                                   borderwidth=0, 
+                                   name="refresh_number_of_slip_button")
+        refresh_button.pack(side="left", padx=(2, 0))
         
 class cls_Frame_client_information(tk.Frame):
     def __init__(self, parent, *args, **kwargs):
