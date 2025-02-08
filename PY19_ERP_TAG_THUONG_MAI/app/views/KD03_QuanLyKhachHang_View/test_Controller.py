@@ -531,7 +531,9 @@ class SQLController:
             Xoa_Sua,
             entry_so_phieu, 
             entry_ma_kh, 
-            entry_ten_kh, 
+            entry_ten_kh,
+            entry_ma_hang, 
+            entry_ten_hang,
             tree
         ) = args
         try:
@@ -542,15 +544,15 @@ class SQLController:
                     ID_nhan_vien
                     ,Xoa_Sua
                     ,f_utils_get_formatted_today_YYYY_MM_DD()
-                    ,f_utils_get_formatted_today_YYYY_MM_DD()
                     ,entry_so_phieu.get()
+                    ,entry_ma_kh.get()
                     ,entry_ten_kh.get()
                     ,"MST"
-                    ,23
+                    ,"DIA CHI"
                     ,"SO_HOP_DONG"
                     ,"THONG_TIN_HOP_DONG"
                     ,"GHI_CHU_CUA_PHIEU"
-                    ,float(row[0])
+                    ,int(row[0])
                     ,row[1]
                     ,row[2]
                     ,row[3]
@@ -577,7 +579,9 @@ class SQLController:
             Xoa_Sua,
             entry_so_phieu, 
             entry_ma_kh, 
-            entry_ten_kh, 
+            entry_ten_kh,
+            entry_ma_hang, 
+            entry_ten_hang,
             tree
         ) = args
         # Step_01: Get data
@@ -586,6 +590,8 @@ class SQLController:
                                                                                 entry_so_phieu, 
                                                                                 entry_ma_kh, 
                                                                                 entry_ten_kh,
+                                                                                entry_ma_hang, 
+                                                                                entry_ten_hang,
                                                                                 tree
                                                                                 )
         # Step_02: validate data

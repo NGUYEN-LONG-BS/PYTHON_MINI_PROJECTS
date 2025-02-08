@@ -644,13 +644,17 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         entry_so_phieu = self.entry_so_phieu
         entry_ma_kh = self.entry_ma_hang
         entry_ten_kh = self.entry_ten_hang
+        entry_ma_hang = self.entry_ma_hang
+        entry_ten_hang = self.entry_ten_hang
         tree = self.table_of_tab_01
-        # text, data = SQLController.get_data_to_import_to_SQL(tree, entry_so_phieu, entry_ma_kh, entry_ten_kh)
+        # Handel event click
         text = SQLController.f_controller_handle_btn_save_03_click_(ID_nhan_vien,
                                                                     Xoa_Sua,
                                                                     entry_so_phieu, 
                                                                     entry_ma_kh, 
                                                                     entry_ten_kh,
+                                                                    entry_ma_hang, 
+                                                                    entry_ten_hang,
                                                                     tree
                                                                     )
         self._f_config_notification(text=text, fg="blue")
