@@ -526,16 +526,23 @@ class SQLController:
     # Function to print data from the Treeview
     @staticmethod
     def get_data_to_import_to_SQL(*args):
-        tree, entry_so_phieu, entry_ma_kh, entry_ten_kh = args
+        (
+            ID_nhan_vien,
+            Xoa_Sua,
+            entry_so_phieu, 
+            entry_ma_kh, 
+            entry_ten_kh, 
+            tree
+        ) = args
         try:
             data = []
             for child in tree.get_children():
                 row = tree.item(child, "values")
                 data.append((
-                    "NV01"                                          # [ID_NHAN_VIEN]
-                    ,""                                             # [XOA_SUA]
-                    ,f_utils_get_formatted_today_YYYY_MM_DD()       # [NGAY_TREN_PHIEU]
-                    ,f_utils_get_formatted_today_YYYY_MM_DD()                          # [SO_PHIEU]
+                    ID_nhan_vien
+                    ,Xoa_Sua
+                    ,f_utils_get_formatted_today_YYYY_MM_DD()
+                    ,f_utils_get_formatted_today_YYYY_MM_DD()
                     ,entry_so_phieu.get()
                     ,entry_ten_kh.get()
                     ,"MST"
@@ -553,8 +560,7 @@ class SQLController:
                     ,float(row[7])
                     ,row[8]
                 ))
-            print("get_data_to_import_to_SQL", data)
-            notification_text = "Data chuẩn bị để gửi đi đã được in!"
+            notification_text = "Data exported"
             return notification_text, data
         except Exception as e:
             error_details = traceback.format_exc()
@@ -565,22 +571,34 @@ class SQLController:
             return notification_text, data
     
     @staticmethod
-    def f_controller_handle_btn_save_03_click_(tree, entry_so_phieu, entry_ma_kh, entry_ten_kh):
+    def f_controller_handle_btn_save_03_click_(*args):
+        (
+            ID_nhan_vien,
+            Xoa_Sua,
+            entry_so_phieu, 
+            entry_ma_kh, 
+            entry_ten_kh, 
+            tree
+        ) = args
         # Step_01: Get data
-        notification_text, data_array = SQLController.get_data_to_import_to_SQL(tree, entry_so_phieu, entry_ma_kh, entry_ten_kh)
+        notification_text, data_array = SQLController.get_data_to_import_to_SQL(ID_nhan_vien,
+                                                                                Xoa_Sua,
+                                                                                entry_so_phieu, 
+                                                                                entry_ma_kh, 
+                                                                                entry_ten_kh,
+                                                                                tree
+                                                                                )
         # Step_02: validate data
         f_utils_get_unique_column_from_data(data_array, 8)
         # Step_03: Export data to SQL
         if SQLModel.f_validate_data_format(data_array):
-            print("Data is valid. Ready for insertion.")
+            # If data is valid
             database_name = "TBD_2024"
             table_name = "[TB_KD02_YEU_CAU_DAT_HANG]"
             SQLModel.f_goi_ham_Export_to_TB_KD02_YEU_CAU_DAT_HANG(data_array, database_name, table_name)
-            return "Data exported to SQL Server KD02_YEU_CAU_DAT_HANG!"
+            return "Data exported"
         else:
-            return "Data validation failed. Please fix the errors."
-
-
+            return notification_text
 
 class Controller_SQL_to_excel:
     

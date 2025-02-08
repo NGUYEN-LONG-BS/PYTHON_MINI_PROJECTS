@@ -274,20 +274,7 @@ class cls_test_Model():
         login_name = "sa"
         login_pass = "Ta#9999"
         table_name = "ID_INFO"
-
-        print("Chuẩn bị chèn dữ liệu vào SQL Server...")
-        print("Dữ liệu cần chèn test model:", data_array)
-        # Dữ liệu cần chèn (mỗi danh sách bên trong là một dòng dữ liệu)
-        # data_array = [
-        #     ["1", "Alice", 25],
-        #     ["2", "Bob", 30],
-        #     ["3", "Charlie", 35]
-        # ]
-        
-        # data_array = [
-        #     ["1", "Alice nè", 25]
-        # ]
-        
+        # Insert data to SQL
         self.f_insert_data_to_sql(server_name, database_name, login_name, login_pass, table_name, data_array)
         
     def f_goi_ham_Export_to_TB_KD02_YEU_CAU_DAT_HANG(self, data_array, database_name, table_name):
@@ -296,10 +283,7 @@ class cls_test_Model():
         login_name = "sa"
         login_pass = "Ta#9999"
         table_name = table_name
-
-        print("Chuẩn bị chèn dữ liệu vào SQL Server...")
-        print("Dữ liệu cần chèn test model 02 :", data_array)
-        # self.f_insert_data_to_sql(server_name, database_name, login_name, login_pass, table_name, data_array)
+        # Insert data to SQL
         self.f_02_insert_data_to_sql(server_name, database_name, login_name, login_pass, table_name, data_array)
         
     def f_model_get_items_to_combobox_01(self):
@@ -852,9 +836,6 @@ class SQLModel:
         login_pass = "Ta#9999"
         table_name = table_name
 
-        print("Chuẩn bị chèn dữ liệu vào SQL Server...")
-        print("Dữ liệu cần chèn SQLModel:", data_array)
-        # self.f_insert_data_to_sql(server_name, database_name, login_name, login_pass, table_name, data_array)
         SQLModel.f_02_insert_data_to_sql(server_name, database_name, login_name, login_pass, table_name, data_array)
     
     

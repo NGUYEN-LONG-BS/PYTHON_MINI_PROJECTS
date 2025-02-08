@@ -528,28 +528,30 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
     # Tab_02: create widgets
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     def _f_view_create_all_container_frames_in_tab_02(self):
+        parent_frame = self.tab_02
+
         # Frame H2
-        self.tab_02_frame_H2 = cls_frame_normal(self.tab_02)
+        self.tab_02_frame_H2 = cls_frame_normal(parent_frame)
         self.tab_02_frame_H2.pack(side="top", fill="x")
         self._f_view_create_widgets_in_tab_02_frame_H2()
 
         # Frame entries
-        self.tab_02_frame_entries = cls_frame_normal(self.tab_02)
+        self.tab_02_frame_entries = cls_frame_normal(parent_frame)
         self.tab_02_frame_entries.pack(side="top", fill="x")
         self._f_view_create_widgets_in_tab_02_frame_entries()
 
         # Frame button
-        self.tab_02_frame_button_01 = tk.Frame(self.tab_02)
+        self.tab_02_frame_button_01 = tk.Frame(parent_frame)
         self.tab_02_frame_button_01.pack(side="top", fill="x")
         self._f_view_create_widgets_in_tab_02_frame_button_01()
         
         # Frame treeview
-        self.tab_02_frame_treeview = cls_Treeview_frame_number_01(self.tab_02)
+        self.tab_02_frame_treeview = cls_Treeview_frame_number_01(parent_frame)
         self.tab_02_frame_treeview.pack(side="top", fill="both", expand=True)
         self._f_view_create_widgets_in_tab_02_frame_treeview()
         
         # Frame button
-        self.tab_02_frame_button_02 = tk.Frame(self.tab_02)
+        self.tab_02_frame_button_02 = tk.Frame(parent_frame)
         self.tab_02_frame_button_02.pack(side="bottom", fill="x")
         self._f_view_create_widgets_in_tab_02_frame_button_02()
 
@@ -637,13 +639,20 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         # text = self.controller_02_treeview.f_controller_handle_btn_save_03_click_(self.table_of_tab_01)
         # self._f_config_notification(text=text, fg="blue")
         
-        tree = self.table_of_tab_01
+        ID_nhan_vien = "NV01"
+        Xoa_Sua = ""
         entry_so_phieu = self.entry_so_phieu
         entry_ma_kh = self.entry_ma_hang
-        entry_ten_kh = self.entry_ma_hang
-        text, data = SQLController.get_data_to_import_to_SQL(tree, entry_so_phieu, entry_ma_kh, entry_ten_kh)
-        print("data là:", data)
-        text = SQLController.f_controller_handle_btn_save_03_click_(tree, entry_so_phieu, entry_ma_kh, entry_ten_kh)
+        entry_ten_kh = self.entry_ten_hang
+        tree = self.table_of_tab_01
+        # text, data = SQLController.get_data_to_import_to_SQL(tree, entry_so_phieu, entry_ma_kh, entry_ten_kh)
+        text = SQLController.f_controller_handle_btn_save_03_click_(ID_nhan_vien,
+                                                                    Xoa_Sua,
+                                                                    entry_so_phieu, 
+                                                                    entry_ma_kh, 
+                                                                    entry_ten_kh,
+                                                                    tree
+                                                                    )
         self._f_config_notification(text=text, fg="blue")
 
     def _f_view_set_up_formats_of_tab_01(self):
