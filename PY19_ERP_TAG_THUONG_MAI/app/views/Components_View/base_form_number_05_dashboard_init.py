@@ -87,12 +87,12 @@ class cls_base_form_number_05_DashBoard_init(tk.Tk):
 
         # Danh sách hình ảnh và nội dung cho mỗi card
         cards_data = [
-            {"image": PATH_CARD_BAN_KINH_DOANH, "text": "KINH DOANH", "click_event": self.f_open_dashboard_Kinh_Doanh},
-            {"image": PATH_CARD_BAN_VAT_TU, "text": "VẬT TƯ", "click_event": self.f_open_dashboard_vat_tu},
-            {"image": PATH_CARD_BAN_KY_THUAT, "text": "KỸ THUẬT", "click_event": self.f_open_dashboard_ky_thuat},
-            {"image": PATH_CARD_KHO, "text": "KHO", "click_event": self.f_open_dashboard_kho},
-            {"image": PATH_CARD_BAN_TAI_CHINH, "text": "TÀI CHÍNH", "click_event": self.f_open_dashboard_tai_chinh},
-            {"image": PATH_CARD_BAN_NHAN_SU, "text": "NHÂN SỰ", "click_event": self.f_open_dashboard_nhan_su},
+            {"image": PATH_CARD_BAN_KINH_DOANH, "text": "BP KINH DOANH", "click_event": self.f_open_dashboard_Kinh_Doanh},
+            {"image": PATH_CARD_BAN_VAT_TU, "text": "BP VẬT TƯ", "click_event": self.f_open_dashboard_vat_tu},
+            {"image": PATH_CARD_BAN_KY_THUAT, "text": "BP KỸ THUẬT", "click_event": self.f_open_dashboard_ky_thuat},
+            {"image": PATH_CARD_KHO, "text": "BP KHO", "click_event": self.f_open_dashboard_kho},
+            {"image": PATH_CARD_BAN_TAI_CHINH, "text": "BP TÀI CHÍNH", "click_event": self.f_open_dashboard_tai_chinh},
+            {"image": PATH_CARD_BAN_NHAN_SU, "text": "BP NHÂN SỰ", "click_event": self.f_open_dashboard_nhan_su},
         ]
 
         # Kích thước card và padding
@@ -125,6 +125,10 @@ class cls_base_form_number_05_DashBoard_init(tk.Tk):
             )
             card.grid(row=row, column=col, padx=10, pady=10, sticky="nsew")
 
+            # Thêm label chứa text vào card
+            text_label = tk.Label(card, text=card_data["text"], bg=BG_COLOR_0_0, font=("Arial", 12))
+            text_label.pack()
+
             # Thêm label chứa hình ảnh vào card
             image_label = tk.Label(
                 card, 
@@ -135,10 +139,6 @@ class cls_base_form_number_05_DashBoard_init(tk.Tk):
                 )
             image_label.image = images[index]  # Lưu tham chiếu để tránh ảnh bị thu hồi
             image_label.pack(fill=tk.BOTH, expand=True)
-            
-            # Thêm label chứa text vào card
-            text_label = tk.Label(card, text=card_data["text"], bg=BG_COLOR_0_0, font=("Arial", 12))
-            text_label.pack()
 
             # Bind click event to print card name
             text_label.bind("<Button-1>", card_data["click_event"])

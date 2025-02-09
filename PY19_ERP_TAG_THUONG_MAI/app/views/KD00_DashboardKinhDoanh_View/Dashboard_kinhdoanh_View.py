@@ -82,17 +82,26 @@ class cls_Dashboard_kinhdoanh_View(cls_base_form_number_02_ManyTabs):
 
         # Danh sách hình ảnh và nội dung cho mỗi card
         cards_data = [
-            {"text": "DANH SÁCH KHÁCH HÀNG","name_of_card": "card_frame_yeu_cau_dat_hang"},
-            {"text": "DANH SÁCH HÀNG HOÁ","name_of_card": "card_frame_2"},
-            {"text": "QUẢN LÝ GÓI THẦU","name_of_card": "card_frame_3"},
-            {"text": "QUẢN LÝ CÔNG NỢ","name_of_card": "card_frame_4"},
-            {"text": "QUẢN LÝ YÊU CẦU ĐẶT HÀNG","name_of_card": "card_frame_5"},
-            {"text": "QUẢN LÝ GIAO NHẬN","name_of_card": "card_frame_danh_sach_khach_hang"},
+            {"image": PATH_CARD_KD_QUAN_LY_KHACH_HANG,"text": "DANH SÁCH KHÁCH HÀNG", "click_event": self.f_card_01_click,"name_of_card": "card_frame_danh_sach_khach_hang"},
+            {"image": PATH_CARD_KD_02,"text": "DANH SÁCH HÀNG HOÁ", "click_event": self.f_card_02_click,"name_of_card": "card_frame_2"},
+            {"image": PATH_CARD_KD_03,"text": "QUẢN LÝ GÓI THẦU", "click_event": self.f_card_03_click,"name_of_card": "card_frame_3"},
+            {"image": PATH_CARD_KD_04,"text": "QUẢN LÝ CÔNG NỢ", "click_event": self.f_card_04_click,"name_of_card": "card_frame_4"},
+            {"image": PATH_CARD_KD_05,"text": "QUẢN LÝ YÊU CẦU ĐẶT HÀNG", "click_event": self.f_card_05_yeu_cau_dat_hang_click,"name_of_card": "card_frame_yeu_cau_dat_hang"},
+            {"image": PATH_CARD_KD_06,"text": "BÁO CÁO", "click_event": self.f_card_06_click,"name_of_card": "card_frame_6"},
         ]
 
         # Kích thước card và padding
         card_width = 300
         card_height = 300
+        image_padding = 10  # Padding xung quanh hình ảnh
+
+        # Load và resize ảnh
+        images = []
+        for card_data in cards_data:
+            img = Image.open(card_data["image"])
+            img = img.resize((card_width - 2 * image_padding, card_height - 2 * image_padding))  # Điều chỉnh kích thước ảnh phù hợp với card
+            img_tk = ImageTk.PhotoImage(img)
+            images.append(img_tk)  # Lưu ảnh để tránh bị thu hồi
 
         # Thêm card vào parent_frame
         for index, card_data in enumerate(cards_data):
@@ -107,7 +116,8 @@ class cls_Dashboard_kinhdoanh_View(cls_base_form_number_02_ManyTabs):
                 height=card_height,
                 highlightbackground="gray",
                 highlightthickness=1,
-                name=card_data["name_of_card"]
+                name=card_data["name_of_card"],
+                cursor="hand2"
             )
             card.grid(row=row, column=col, padx=10, pady=10, sticky="nsew")
             
@@ -115,10 +125,43 @@ class cls_Dashboard_kinhdoanh_View(cls_base_form_number_02_ManyTabs):
             text_label = tk.Label(card, text=card_data["text"], bg=BG_COLOR_0_0, font=("Arial", 12))
             text_label.pack()
 
+            # Thêm label chứa hình ảnh vào card
+            image_label = tk.Label(
+                card, 
+                image=images[index], 
+                bg=BG_COLOR_0_0, 
+                # bg=COLOR_GREEN, 
+                cursor="hand2" 
+                )
+            image_label.image = images[index]  # Lưu tham chiếu để tránh ảnh bị thu hồi
+            image_label.pack(fill=tk.BOTH, expand=True)
+
             # Bind click event to print card name
-            # text_label.bind("<Button-1>", card_data["click_event"])
-            # card.bind("<Button-1>", card_data["click_event"])
+            text_label.bind("<Button-1>", card_data["click_event"])
+            image_label.bind("<Button-1>", card_data["click_event"])
+            card.bind("<Button-1>", card_data["click_event"])
     
+    def f_card_01_click(self, event):
+        print("f_card_01_click")
+    def f_card_02_click(self, event):
+        print("f_card_02_click")
+    def f_card_03_click(self, event):
+        print("f_card_03_click")
+    def f_card_04_click(self, event):
+        print("f_card_04_click")
+    
+    def f_card_05_yeu_cau_dat_hang_click(self, event):
+        from views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
+        self.destroy()
+        new_view = cls_test_View()
+        # new_view.dashboard = self.parent
+        f_utils_set_window_size_is_4_per_5_screen(new_view)
+        f_utils_set_center_screen(new_view)
+        new_view.focus_force()
+
+    def f_card_06_click(self, event):
+        print("f_card_06_click")
+
     def _f_add_elements_to_card_QL_KHACHANG(self):
         try:
             parent_frame = self.tab_01.nametowidget("card_frame_yeu_cau_dat_hang")
@@ -126,11 +169,11 @@ class cls_Dashboard_kinhdoanh_View(cls_base_form_number_02_ManyTabs):
             print("Error: Frame 'card_frame_yeu_cau_dat_hang' not found!")
             return
 
-        frame_01 = tk.Frame(parent_frame)
-        frame_01.pack(fill="x", expand=True, padx=10, pady=10)
+        # frame_01 = tk.Frame(parent_frame)
+        # frame_01.pack(fill="x", expand=True, padx=10, pady=10)
 
-        BTN_01 = tk.Button(frame_01, text="Nhật ký yêu cầu đặt hàng", font=("Arial", 12), command=self.f_view_tab_01_button_NhatKyYeuCauDatHang_click)
-        BTN_01.pack(side="left", padx=10, pady=5)
+        # BTN_01 = tk.Button(frame_01, text="Nhật ký yêu cầu đặt hàng", font=("Arial", 12), command=self.f_view_tab_01_button_NhatKyYeuCauDatHang_click)
+        # BTN_01.pack(side="left", padx=10, pady=5)
     
     def _f_view_create_in_tab_02_all_container_frames(self):
         parent_frame = self.tab_02
@@ -173,12 +216,4 @@ class cls_Dashboard_kinhdoanh_View(cls_base_form_number_02_ManyTabs):
         canvas_widget.pack(fill=tk.BOTH, expand=True)
 
         
-    def f_view_tab_01_button_NhatKyYeuCauDatHang_click(self):
-        print("f_view_tab_01_button_NhatKyYeuCauDatHang_click")
-        from views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
-        self.destroy()
-        new_view = cls_test_View()
-        # new_view.dashboard = self.parent
-        f_utils_set_window_size_is_4_per_5_screen(new_view)
-        f_utils_set_center_screen(new_view)
-        new_view.focus_force()
+    

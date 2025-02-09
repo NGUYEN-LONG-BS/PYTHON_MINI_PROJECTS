@@ -16,6 +16,13 @@ PATH_CARD_BAN_TAI_CHINH = os.path.join(PATH_ROOT, "assets/img/TAI_CHINH.png")
 PATH_CARD_BAN_KY_THUAT = os.path.join(PATH_ROOT, "assets/img/KY_THUAT.png")
 PATH_CARD_BAN_NHAN_SU = os.path.join(PATH_ROOT, "assets/img/NHAN_SU.png")
 
+PATH_CARD_KD_QUAN_LY_KHACH_HANG = os.path.join(PATH_ROOT, "assets/img/KD_DS_KHACH_HANG.png")
+PATH_CARD_KD_02 = os.path.join(PATH_ROOT, "assets/img/KD_DS_HANG_HOA.png")
+PATH_CARD_KD_03 = os.path.join(PATH_ROOT, "assets/img/KD_QUAN_LY_GOI_THAU.png")
+PATH_CARD_KD_04 = os.path.join(PATH_ROOT, "assets/img/KD_QUAN_LY_CONG_NO.png")
+PATH_CARD_KD_05 = os.path.join(PATH_ROOT, "assets/img/KD_YEU_CAU_DAT_HANG.png")
+PATH_CARD_KD_06 = os.path.join(PATH_ROOT, "assets/img/KD_REPORT.png")
+
 PATH_ICON_HIDE = os.path.join(PATH_ASSETS_ICONS, "icon-closed-eye-50.png")
 PATH_ICON_UNHIDE = os.path.join(PATH_ASSETS_ICONS, "icon-opening-eye-26.png")
 
