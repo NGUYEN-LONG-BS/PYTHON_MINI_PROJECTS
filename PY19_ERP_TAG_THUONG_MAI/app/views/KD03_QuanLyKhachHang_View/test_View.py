@@ -618,10 +618,10 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
     
     def _f_view_set_rows_count_of_treeview_01_when_add_new_row(self):
         row_count = 1 + self.controller_01.f_controller_get_row_count(self.table_of_tab_01)
-        self.tab_01_entry_id.config(state="normal")  # Enable the Entry widget to update the value
-        self.tab_01_entry_id.delete(0, tk.END)  # Clear the existing value
-        self.tab_01_entry_id.insert(0, row_count)  # Insert the new value (ID)
-        self.tab_01_entry_id.config(state="disabled")  # Disable the Entry widget again
+        self.tab_01_entry_id.config(state="normal")
+        self.tab_01_entry_id.delete(0, tk.END)
+        self.tab_01_entry_id.insert(0, row_count)
+        self.tab_01_entry_id.config(state="disabled")
     
     def _f_config_notification(self, text="", fg="black"):
         self.label_footer.config(text=text, fg=fg)
