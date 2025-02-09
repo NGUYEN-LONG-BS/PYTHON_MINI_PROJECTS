@@ -772,7 +772,7 @@ class SQLModel:
     @staticmethod
     def sent_SQL_query(query):
         try:
-            f_utils_fetch_data_from_database(query)
+            f_utils_sent_query_to_SQL(query)
         except Exception as e:
             print("Error senting query:", e)
     
@@ -803,14 +803,14 @@ class SQLModel:
         try:
             cursor.execute(f"SELECT * FROM {table_name} WHERE 1=0")
             columns = [column[0] for column in cursor.description]  # Lấy tên cột
-            print("Danh sách cột trong bảng:", columns)
+            # print("Danh sách cột trong bảng:", columns)
         except Exception as e:
             print("Lỗi khi lấy thông tin bảng:", e)
             return
 
         # Loại bỏ các cột có giá trị mặc định (ID, NGAY_TAO_PHIEU)
         columns_to_insert = [col for col in columns if col not in ['ID', 'DATE']]
-        print("Danh sách cột cần chèn:", columns_to_insert)
+        # print("Danh sách cột cần chèn:", columns_to_insert)
         
         # Kiểm tra số cột trong dữ liệu khớp với số cột cần chèn
         num_columns_to_insert = len(columns_to_insert)

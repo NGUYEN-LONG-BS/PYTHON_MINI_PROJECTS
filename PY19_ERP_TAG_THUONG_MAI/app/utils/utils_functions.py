@@ -729,11 +729,32 @@ def f_utils_create_a_connection_string_to_SQL_Server():
         f'PWD={config["DB_PASSWORD"]};'
         'PORT=1433'
     )
-    # print(f'SERVER={config["DB_HOST"]};')
-    # print(f'DATABASE={config["DB_NAME"]};')
-    # print(f'UID={config["DB_USER"]};')
-    # print(f'PWD={config["DB_PASSWORD"]};')
     return conn
+
+def f_utils_get_DB_HOST():
+    # Get config and encryption-key
+    encryption_key = load_encryption_key(PATH_CONFIG_KEY)
+    config = load_config(PATH_CONFIG_JSON, encryption_key)
+    # Get database_name
+    database_host = config["DB_HOST"]
+    return database_host
+
+def f_utils_get_DB_NAME():
+    # Get config and encryption-key
+    encryption_key = load_encryption_key(PATH_CONFIG_KEY)
+    config = load_config(PATH_CONFIG_JSON, encryption_key)
+    # Get database_name
+    database_name = config["DB_NAME"]
+    return database_name
+
+def f_utils_get_DB_USER_AND_DB_PASSWORD():
+    # Get config and encryption-key
+    encryption_key = load_encryption_key(PATH_CONFIG_KEY)
+    config = load_config(PATH_CONFIG_JSON, encryption_key)
+    # Get database_name
+    DB_USER = config["DB_USER"]
+    DB_PASSWORD = config["DB_PASSWORD"]
+    return DB_USER, DB_PASSWORD
 
 # Định dạng số theo yêu cầu
 def f_utils_format_number(value):
@@ -770,7 +791,7 @@ def f_utils_sent_query_to_SQL(query):
             cursor.execute(query)
             # For non-SELECT queries, commit the transaction
             conn.commit()
-            print("Thành công", "Dữ liệu đã được cập nhật thành công!")
+            # print("Thành công", "Dữ liệu đã được cập nhật thành công!")
         except Exception as e:
             print("Lỗi", f"Có lỗi xảy ra khi cập nhật dữ liệu: {e}")
         finally:

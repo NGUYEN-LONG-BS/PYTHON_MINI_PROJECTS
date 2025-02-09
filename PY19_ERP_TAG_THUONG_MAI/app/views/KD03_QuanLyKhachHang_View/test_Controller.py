@@ -508,11 +508,11 @@ class cls_test_Controller_06_treeview_tab_02():
 
 class Controller_delete_row_in_SQL:
     def update_deleted(so_phieu):
-        database_name = "TBD_2024"
+        # Create query
+        database_name = f_utils_get_DB_NAME()
         query = f"EXEC [{database_name}].[dbo].[Proc_TB_KD02_YEU_CAU_DAT_HANG_UPDATE_DELETED_250208_23h29] '{so_phieu}'"
-        print(query)
+        # Sent SQL query
         SQLModel.sent_SQL_query(query)
-        print(so_phieu)
 
     @staticmethod
     def handle_event_btn_delete_click(tree):
