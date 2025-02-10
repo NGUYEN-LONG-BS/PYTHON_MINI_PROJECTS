@@ -58,6 +58,9 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.entry_mst = f_utils_tim_component_with_name(self, "entry_mst")
         self.entry_dia_chi = f_utils_tim_component_with_name(self, "entry_dia_chi")
         
+        self.entry_so_hop_dong = f_utils_tim_component_with_name(self, "entry_so_hop_dong")
+        self.entry_thong_tin_hop_dong = f_utils_tim_component_with_name(self, "entry_thong_tin_ngan_cua_hop_dong")
+        
         
     def _f_cap_nhat_so_phieu_moi_nhat(self):
         ma_thanh_vien = "TB"
@@ -290,7 +293,8 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
     def _f_view_create_widgets_in_frame_slip_informations(self):
         # Input fields
         tk.Label(self.frame_slip_informations, text="STT:").pack(side="left")
-        self.tab_01_entry_id = tk.Entry(self.frame_slip_informations)
+        self.tab_01_entry_id = tk.Entry(self.frame_slip_informations,
+                                        width=10)
         self.tab_01_entry_id.pack(side="left")
         self.tab_01_entry_id.config(state="disabled")  # This makes the entry non-editable
 
@@ -674,12 +678,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self._f_config_notification(text=text, fg="blue")
     
     def f_tab_01_button_save_03_click(self):        
-        # Phiên bản cũ, cần làm sạch rồi mới xoá
-        # ====>
-        # text, data = self.controller_02_treeview.print_data()
-        # text = self.controller_02_treeview.f_controller_handle_btn_save_03_click_(self.table_of_tab_01)
-        # self._f_config_notification(text=text, fg="blue")
-        
+        # Khai báo các tham số
         ID_nhan_vien = "NV01"
         Xoa_Sua = ""
         entry_so_phieu = self.entry_so_phieu
@@ -687,22 +686,36 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         entry_ten_kh = self.entry_ten_khach_hang
         entry_mst = self.entry_mst
         entry_dia_chi = self.entry_dia_chi
+        entry_so_hop_dong = self.entry_so_hop_dong
+        entry_thong_tin_hop_dong = self.entry_thong_tin_hop_dong
+        entry_ghi_chu_cua_phieu = self.tab_01_note_for_slip
+        tree = self.table_of_tab_01
+        
         entry_ma_hang = self.entry_ma_hang
         entry_ten_hang = self.entry_ten_hang
-        tree = self.table_of_tab_01
+
         # Handel event click
         text = SQLController.f_controller_handle_btn_save_03_click_(ID_nhan_vien,
                                                                     Xoa_Sua,
                                                                     entry_so_phieu, 
                                                                     entry_ma_kh, 
                                                                     entry_ten_kh,
-                                                                    entry_ma_hang, 
-                                                                    entry_ten_hang,
                                                                     entry_mst,
                                                                     entry_dia_chi,
+                                                                    entry_so_hop_dong,
+                                                                    entry_thong_tin_hop_dong,
+                                                                    entry_ghi_chu_cua_phieu,
+                                                                    entry_ma_hang,
+                                                                    entry_ten_hang,
                                                                     tree
                                                                     )
         self._f_config_notification(text=text, fg="blue")
+        
+        # Phiên bản cũ, cần làm sạch rồi mới xoá
+        # ====>
+        # text, data = self.controller_02_treeview.print_data()
+        # text = self.controller_02_treeview.f_controller_handle_btn_save_03_click_(self.table_of_tab_01)
+        # self._f_config_notification(text=text, fg="blue")
 
     def _f_view_set_up_formats_of_tab_01(self):
         self.f_view_set_format_of_treeview_of_tab_01()

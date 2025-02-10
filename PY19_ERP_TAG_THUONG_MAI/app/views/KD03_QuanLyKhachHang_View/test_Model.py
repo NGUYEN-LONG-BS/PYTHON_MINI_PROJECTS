@@ -225,7 +225,7 @@ class cls_test_Model():
         connection_string = f"DRIVER={{SQL Server}};SERVER={server_name};DATABASE={database_name};UID={login_name};PWD={login_pass}"
         try:
             conn = pyodbc.connect(connection_string)
-            print("Kết nối thành công đến cơ sở dữ liệu.")
+            # print("Kết nối thành công đến cơ sở dữ liệu.")
         except Exception as e:
             print("Lỗi khi kết nối:", e)
             return
@@ -514,7 +514,7 @@ class cls_test_Model_02():
         connection_string = f"DRIVER={{SQL Server}};SERVER={server_name};DATABASE={database_name};UID={login_name};PWD={login_pass}"
         try:
             conn = pyodbc.connect(connection_string)
-            print("Kết nối thành công đến cơ sở dữ liệu.")
+            # print("Kết nối thành công đến cơ sở dữ liệu.")
         except Exception as e:
             print("Lỗi khi kết nối:", e)
             return
@@ -549,7 +549,7 @@ class cls_test_Model_02():
                 cursor.execute(query, row)
             
             conn.commit()
-            print("Dữ liệu đã được chèn thành công.")
+            # print("Dữ liệu đã được chèn thành công.")
         except Exception as e:
             print("Lỗi khi chèn dữ liệu:", e)
         finally:
@@ -573,7 +573,7 @@ class cls_test_Model_05_staticmenthod_get_data_from_SQL:
         connection_string = f"DRIVER={{SQL Server}};SERVER={server_name};DATABASE={database_name};UID={login_name};PWD={login_pass}"
         try:
             conn = pyodbc.connect(connection_string)
-            print("Kết nối thành công đến cơ sở dữ liệu.")
+            # print("Kết nối thành công đến cơ sở dữ liệu.")
         except Exception as e:
             print("Lỗi khi kết nối:", e)
             return
@@ -792,7 +792,7 @@ class SQLModel:
         connection_string = f"DRIVER={{SQL Server}};SERVER={server_name};DATABASE={database_name};UID={login_name};PWD={login_pass}"
         try:
             conn = pyodbc.connect(connection_string)
-            print("Kết nối thành công đến cơ sở dữ liệu.")
+            # print("Kết nối thành công đến cơ sở dữ liệu.")
         except Exception as e:
             print("Lỗi khi kết nối:", e)
             return
@@ -827,7 +827,7 @@ class SQLModel:
                 cursor.execute(query, row)
             
             conn.commit()
-            print("Dữ liệu đã được chèn thành công.")
+            # print("Dữ liệu đã được chèn thành công.")
         except Exception as e:
             print("Lỗi khi chèn dữ liệu:", e)
         finally:

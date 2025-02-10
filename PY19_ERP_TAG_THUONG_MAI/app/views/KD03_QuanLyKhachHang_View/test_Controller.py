@@ -563,12 +563,21 @@ class SQLController:
             entry_so_phieu, 
             entry_ma_kh, 
             entry_ten_kh,
-            entry_ma_hang, 
-            entry_ten_hang,
             entry_mst,
             entry_dia_chi,
+            entry_so_hop_dong,
+            entry_thong_tin_hop_dong,
+            entry_ghi_chu_cua_phieu,
+            entry_ma_hang,
+            entry_ten_hang,
             tree
         ) = args
+        
+        # # print tên hàm và hàm cha
+        # print("Tên hàm đang chạy là:", f_utils_get_current_function_name())
+        # print("Hàm cha gọi nó là:", f_utils_get_caller_function_name())
+        
+        # Tạo một list chứa dữ liệu để export
         try:
             data = []
             for child in tree.get_children():
@@ -582,9 +591,9 @@ class SQLController:
                     ,entry_ten_kh.get()
                     ,entry_mst.get()
                     ,entry_dia_chi.get()
-                    ,"SO_HOP_DONG"
-                    ,"THONG_TIN_HOP_DONG"
-                    ,"GHI_CHU_CUA_PHIEU"
+                    ,entry_so_hop_dong.get()
+                    ,entry_thong_tin_hop_dong.get()
+                    ,entry_ghi_chu_cua_phieu.get()
                     ,int(row[0])
                     ,row[1]
                     ,row[2]
@@ -613,10 +622,13 @@ class SQLController:
             entry_so_phieu, 
             entry_ma_kh, 
             entry_ten_kh,
-            entry_ma_hang, 
-            entry_ten_hang,
             entry_mst,
             entry_dia_chi,
+            entry_so_hop_dong,
+            entry_thong_tin_hop_dong,
+            entry_ghi_chu_cua_phieu,
+            entry_ma_hang,
+            entry_ten_hang,
             tree
         ) = args
         # Step_01: Get data
@@ -625,10 +637,13 @@ class SQLController:
                                                                                 entry_so_phieu, 
                                                                                 entry_ma_kh, 
                                                                                 entry_ten_kh,
-                                                                                entry_ma_hang, 
-                                                                                entry_ten_hang,
                                                                                 entry_mst,
                                                                                 entry_dia_chi,
+                                                                                entry_so_hop_dong,
+                                                                                entry_thong_tin_hop_dong,
+                                                                                entry_ghi_chu_cua_phieu,
+                                                                                entry_ma_hang,
+                                                                                entry_ten_hang,
                                                                                 tree
                                                                                 )
         # Step_02: validate data

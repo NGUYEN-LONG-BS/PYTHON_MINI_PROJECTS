@@ -29,5 +29,7 @@ from .utils_functions import f_utils_get_DB_USER_AND_DB_PASSWORD
 from .utils_functions import f_utils_fetch_data_from_database
 from .utils_functions import f_utils_sent_query_to_SQL
 from .utils_functions import f_utils_open_an_excel_with_path
+from .utils_functions import f_utils_get_current_function_name
+from .utils_functions import f_utils_get_caller_function_name
 
 from .utils_set_print_template import f_utils_create_print_template

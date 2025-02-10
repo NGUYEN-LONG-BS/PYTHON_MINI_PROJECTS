@@ -802,5 +802,13 @@ def f_utils_sent_query_to_SQL(query):
                 conn.close()
 
 
+# ========================================================================================================================================================================
+# inspect function name
+# ========================================================================================================================================================================
+# return current function name
+def f_utils_get_current_function_name():
+    return inspect.currentframe().f_back.f_code.co_name
 
-        
+# return caller function name
+def f_utils_get_caller_function_name():
+    return inspect.currentframe().f_back.f_back.f_code.co_name
