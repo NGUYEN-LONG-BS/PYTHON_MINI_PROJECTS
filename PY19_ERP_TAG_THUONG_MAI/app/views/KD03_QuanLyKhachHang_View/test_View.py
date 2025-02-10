@@ -10,8 +10,8 @@ from test_Controller import cls_test_Controller, cls_test_Controller_02_treeview
 from test_Controller import cls_test_Controller_06_treeview_tab_02
 from test_Controller import SQLController
 from test_Controller import Controller_SQL_to_excel
-from test_Controller import Controller_get_the_latest_number_of_slip
 from test_Controller import Controller_delete_row_in_SQL
+from test_Controller import Controller_handel_all_events
 
 class cls_test_View(cls_base_form_number_02_ManyTabs):
     def __init__(self):
@@ -38,41 +38,48 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.f_set_up_when_initializing()
         
     def f_set_up_when_initializing(self):
-        self._f_cap_nhat_so_phieu_moi_nhat()
+        Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(self.entry_so_phieu)
     
     def _f_setup_all_binding(self):
-        self.entry_sl_kha_dung = f_utils_tim_component_with_name(self, "entry_sl_kha_dung")
+        # Find in tab_01
+        tab_01_frame = self.tab_01
+        self.entry_sl_kha_dung = f_utils_tim_component_with_name(tab_01_frame, "entry_sl_kha_dung")
         self.entry_sl_kha_dung.bind("<FocusOut>", self.f_view_clear_content_when_sl_kha_dung_change)
         
-        self.entry_ma_hang = f_utils_tim_component_with_name(self, "entry_ma_hang")
-        self.entry_ten_hang = f_utils_tim_component_with_name(self, "entry_sl_ten_hang")
-        self.entry_dvt = f_utils_tim_component_with_name(self, "entry_dvt")
+        self.entry_ma_hang_tab_01 = f_utils_tim_component_with_name(tab_01_frame, "entry_ma_hang")
+        self.entry_ten_hang_tab_01 = f_utils_tim_component_with_name(tab_01_frame, "entry_sl_ten_hang")
+        self.entry_dvt = f_utils_tim_component_with_name(tab_01_frame, "entry_dvt")
         
-        self.entry_so_phieu = f_utils_tim_component_with_name(self, "slips_entry")
+        self.entry_so_phieu = f_utils_tim_component_with_name(tab_01_frame, "slips_entry")
         
-        self.btn_refresh_number_of_slip = f_utils_tim_component_with_name(self, "refresh_number_of_slip_button")
+        self.btn_refresh_number_of_slip = f_utils_tim_component_with_name(tab_01_frame, "refresh_number_of_slip_button")
         self.btn_refresh_number_of_slip.config(command=self.f_tab_01_button_get_number_of_slip_click)
         
-        self.entry_ma_khach_hang = f_utils_tim_component_with_name(self, "entry_ma_khach_hang")
-        self.entry_ten_khach_hang = f_utils_tim_component_with_name(self, "entry_ten_khach_hang")
-        self.entry_mst = f_utils_tim_component_with_name(self, "entry_mst")
-        self.entry_dia_chi = f_utils_tim_component_with_name(self, "entry_dia_chi")
+        self.entry_ma_khach_hang_tab_01 = f_utils_tim_component_with_name(tab_01_frame, "entry_ma_khach_hang")
+        self.entry_ten_khach_hang_tab_01 = f_utils_tim_component_with_name(tab_01_frame, "entry_ten_khach_hang")
+        self.entry_mst = f_utils_tim_component_with_name(tab_01_frame, "entry_mst")
+        self.entry_dia_chi = f_utils_tim_component_with_name(tab_01_frame, "entry_dia_chi")
         
-        self.entry_so_hop_dong = f_utils_tim_component_with_name(self, "entry_so_hop_dong")
-        self.entry_thong_tin_hop_dong = f_utils_tim_component_with_name(self, "entry_thong_tin_ngan_cua_hop_dong")
+        self.entry_so_hop_dong = f_utils_tim_component_with_name(tab_01_frame, "entry_so_hop_dong")
+        self.entry_thong_tin_hop_dong = f_utils_tim_component_with_name(tab_01_frame, "entry_thong_tin_ngan_cua_hop_dong")
+        
+        # Find in tab_02
+        tab_02_frame = self.tab_02
+        self.entry_ma_khach_hang_tab_02 = f_utils_tim_component_with_name(tab_02_frame, "entry_ma_khach_hang")
+        self.entry_ten_khach_hang_tab_02 = f_utils_tim_component_with_name(tab_02_frame, "entry_ten_khach_hang")
         
         
-    def _f_cap_nhat_so_phieu_moi_nhat(self):
-        ma_thanh_vien = "TB"
-        loai_phieu = "YCDH"
-        so_phieu = Controller_get_the_latest_number_of_slip.handle_button_get_number_of_slip_click()
+    # def _f_cap_nhat_so_phieu_moi_nhat(self):
+    #     ma_thanh_vien = "TB"
+    #     loai_phieu = "YCDH"
+    #     so_phieu = Controller_get_the_latest_number_of_slip.handle_button_get_number_of_slip_click()
         
-        # Create the connection string
-        connection_number_of_slip = f"{ma_thanh_vien}-{loai_phieu}-{so_phieu + 1}"
-        self.entry_so_phieu.config(state="normal")
-        self.entry_so_phieu.delete(0, tk.END)
-        self.entry_so_phieu.insert(0, connection_number_of_slip)
-        self.entry_so_phieu.config(state="readonly")
+    #     # Create the connection string
+    #     connection_number_of_slip = f"{ma_thanh_vien}-{loai_phieu}-{so_phieu + 1}"
+    #     self.entry_so_phieu.config(state="normal")
+    #     self.entry_so_phieu.delete(0, tk.END)
+    #     self.entry_so_phieu.insert(0, connection_number_of_slip)
+    #     self.entry_so_phieu.config(state="readonly")
     
     def _f_view_thay_doi_gia_tri_cua_base_form(self):
         # Thay đổi thông tin các tab
@@ -388,8 +395,8 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         tree = self.treeview_test_of_tag_01
         selected_item = tree.selection()
         param_00 = tree.item(selected_item, "values")[0] if tree.item(selected_item, "values") else None
-        param_01 = self.entry_ma_hang.get()
-        param_02 = self.entry_ten_hang.get()
+        param_01 = self.entry_ma_hang_tab_01.get()
+        param_02 = self.entry_ten_hang_tab_01.get()
         param_03 = self.entry_dvt.get()
         param_04 = float(self.entry_sl_kha_dung.get().replace(',', '') or 0)
         param_05 = float(self.tab_01_entry_nhu_cau.get().replace(',', '') or 0)
@@ -433,98 +440,92 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         
         # BTN test
         self.tab_01_button_save_02 = tk.Button(tab_01_button_container_02_on_the_right, 
-                                               text="testSAVE 02", 
+                                               text="Test save 02", 
                                                background=COLOR_BACKGROUND_NUM_02_DARK_GRAY, 
                                                command=self.f_tab_01_button_save_02_click)
         self.tab_01_button_save_02.pack(side="right", padx=10)
         
         # BTN test
         self.tab_01_button_export = tk.Button(tab_01_button_container_02_on_the_right, 
-                                              text="test SAVE 01", 
+                                              text="Test save 01", 
                                               background=COLOR_BACKGROUND_NUM_02_DARK_GRAY, 
                                               command=self.f_tab_01_button_export_click)
         self.tab_01_button_export.pack(side="right", padx=10)
         
-        # BTN test
-        self.tab_01_button_get = tk.Button(tab_01_button_container_02_on_the_right, 
-                                           text="test Print Data Array", 
-                                           background=COLOR_BACKGROUND_NUM_02_DARK_GRAY, 
-                                           command=self.f_tab_01_button_get_click)
-        self.tab_01_button_get.pack(side="right", padx=10)
+        # # BTN test
+        # self.tab_01_button_get = tk.Button(tab_01_button_container_02_on_the_right, 
+        #                                    text="Test Print Data Array", 
+        #                                    background=COLOR_BACKGROUND_NUM_02_DARK_GRAY, 
+        #                                    command=self.f_tab_01_button_get_click)
+        # self.tab_01_button_get.pack(side="right", padx=10)
         
         # BTN test
         self.tab_01_print_config = tk.Button(tab_01_button_container_02_on_the_right, 
-                                             text="test in cấu hình của bảng", 
+                                             text="Test in cấu hình của bảng", 
                                              background=COLOR_BACKGROUND_NUM_02_DARK_GRAY, 
                                              command=self.f_button_print_config_click)
         self.tab_01_print_config.pack(side="right", padx=10)
         
         # BTN test
         self.tab_01_config_num_02 = tk.Button(tab_01_button_container_02_on_the_right, 
-                                              text="test Print", 
+                                              text="Test print form print từ code", 
                                               background=COLOR_BACKGROUND_NUM_02_DARK_GRAY, 
-                                              command=self.f_tab_01_button_print_click)
+                                              command=self.f_tab_01_button_print_form_tu_tao_tu_code_click)
         self.tab_01_config_num_02.pack(side="right", padx=10)
         
         # BTN save
         self.tab_01_button_save_03 = tk.Button(tab_01_button_container_02_on_the_right, 
-                                               text="SAVE", 
+                                               text="Save", 
                                                command=self.f_tab_01_button_save_03_click)
         self.tab_01_button_save_03.pack(side="right", padx=10)
         
         # BTN print
         self.tab_01_button_print_02 = tk.Button(tab_01_button_container_02_on_the_right, 
                                                 text="Print", 
-                                                command=self.f_tab_01_button_print_02_click)
+                                                command=self.f_tab_01_button_print_click)
         self.tab_01_button_print_02.pack(side="right", padx=10)
         
         # temp button
         self.tab_01_btn_template = tk.Button(tab_01_button_container_02_on_the_left, 
-                                             text="TEMPLATE", 
+                                             text="Template", 
                                              command=self.f_tab_01_button_template_click)
         self.tab_01_btn_template.pack(side="left", padx=10)
         
         # get file button
         self.tab_01_btn_get_import_file = tk.Button(tab_01_button_container_02_on_the_left, 
-                                                    text="GET FILE", 
+                                                    text="Get file", 
                                                     command=self.f_tab_01_button_get_import_file_click)
         self.tab_01_btn_get_import_file.pack(side="left", padx=10)
         
         # import button
         self.tab_01_btn_import = tk.Button(tab_01_button_container_02_on_the_left, 
-                                           text="Import Excel", 
+                                           text="Import excel", 
                                            command=self.f_tab_01_button_import_click)
         self.tab_01_btn_import.pack(side="left", padx=10)
         
         # star import button
         self.tab_01_btn_start_import_file = tk.Button(tab_01_button_container_02_on_the_left, 
-                                                      text="START IMPORT")
+                                                      text="Start import")
         self.tab_01_btn_start_import_file.pack(side="left", padx=10)
     
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     # Tab_01: Event Handlers
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     def f_view_tab_01_button_clear_click(self):
-        self.clear_all_contents()
-    
-    # Function to clear all rows
-    def clear_all_contents(self):
-        # Clear the Treeview
-        tree = self.treeview_test_of_tag_01
-        for item in tree.get_children():
-            tree.delete(item)
-    
-    def f_tab_01_button_get_click(self):
-        self._f_config_notification(text=self.controller_01.f_get_data(self.table_of_tab_01), fg="blue")
+        notification_text = Controller_handel_all_events.f_handle_tab_01_button_clear_click(self.treeview_test_of_tag_01)
+        self._f_config_notification(notification_text, fg="blue")
 
+    def f_tab_01_button_print_form_tu_tao_tu_code_click(self):
+        notification_text = Controller_handel_all_events.f_handle_btn_print_form_tu_tao_tu_code_click_()
+        self._f_config_notification(notification_text, fg="blue")
+        
     def f_tab_01_button_print_click(self):
-        self.controller_01.f_controller_handle_btn_print_00_click_()
+        notification_text = Controller_handel_all_events.f_handle_btn_print_click()
+        self._f_config_notification(notification_text, fg="blue")
         
-    def f_tab_01_button_print_02_click(self):
-        self.controller_01.f_controller_handle_btn_print_02_click_()
-        
-    def f_tab_01_button_get_number_of_slip_click(self):
-        self._f_cap_nhat_so_phieu_moi_nhat()
+    def f_tab_01_button_get_number_of_slip_click(self):        
+        notification_text = Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(self.entry_so_phieu)
+        self._f_config_notification(notification_text, fg="blue")
     
     def f_tab_01_button_import_click(self):
         print("Import config")
@@ -539,8 +540,8 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         # Update the row count
         cls_test_Controller_05_staticmenthod.update_entry_id_after_adding_new_row(self.table_of_tab_01, self.tab_01_entry_id)
         id_value = self.tab_01_entry_id.get()
-        ma_hang = self.entry_ma_hang.get()
-        ten_hang = self.entry_ten_hang.get()
+        ma_hang = self.entry_ma_hang_tab_01.get()
+        ten_hang = self.entry_ten_hang_tab_01.get()
         dvt = self.entry_dvt.get()
         
         sl_kha_dung = float(self.entry_sl_kha_dung.get().replace(',', '') or 0)
@@ -682,8 +683,8 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         ID_nhan_vien = "NV01"
         Xoa_Sua = ""
         entry_so_phieu = self.entry_so_phieu
-        entry_ma_kh = self.entry_ma_khach_hang
-        entry_ten_kh = self.entry_ten_khach_hang
+        entry_ma_kh = self.entry_ma_khach_hang_tab_01
+        entry_ten_kh = self.entry_ten_khach_hang_tab_01
         entry_mst = self.entry_mst
         entry_dia_chi = self.entry_dia_chi
         entry_so_hop_dong = self.entry_so_hop_dong
@@ -691,8 +692,8 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         entry_ghi_chu_cua_phieu = self.tab_01_note_for_slip
         tree = self.table_of_tab_01
         
-        entry_ma_hang = self.entry_ma_hang
-        entry_ten_hang = self.entry_ten_hang
+        entry_ma_hang = self.entry_ma_hang_tab_01
+        entry_ten_hang = self.entry_ten_hang_tab_01
 
         # Handel event click
         text = SQLController.f_controller_handle_btn_save_03_click_(ID_nhan_vien,
@@ -844,12 +845,12 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
                 self.tab_01_entry_ghi_chu_mat_hang.insert(0, ghi_chu_mat_hang)
 
             if ma_hang is not None:
-                self.entry_ma_hang.delete(0, tk.END)
-                self.entry_ma_hang.insert(0, ma_hang)
+                self.entry_ma_hang_tab_01.delete(0, tk.END)
+                self.entry_ma_hang_tab_01.insert(0, ma_hang)
                 
             if ten_hang is not None:
-                self.entry_ten_hang.delete(0, tk.END)
-                self.entry_ten_hang.insert(0, ten_hang)
+                self.entry_ten_hang_tab_01.delete(0, tk.END)
+                self.entry_ten_hang_tab_01.insert(0, ten_hang)
                 
             if dvt is not None:
                 self.entry_dvt.delete(0, tk.END)

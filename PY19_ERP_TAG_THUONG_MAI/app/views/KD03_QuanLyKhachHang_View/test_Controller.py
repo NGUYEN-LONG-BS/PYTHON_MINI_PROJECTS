@@ -9,6 +9,41 @@ from utils import *
 import traceback
 from datetime import datetime
 
+class Controller_action_after_event:
+    @staticmethod
+    def clear_all_contents_in_treeview(treeview):
+        for item in treeview.get_children():
+            treeview.delete(item)
+    
+    @staticmethod
+    def f_get_data_from_treeview(treeview):
+        """
+        Retrieve all rows from the table and print them to the console.
+        Args:
+            table: The Treeview widget containing the data.
+            result_label: The Label widget to display messages.
+        """
+        rows = []
+        for child in treeview.get_children():
+            rows.append(treeview.item(child)["values"])
+        return rows
+    
+    @staticmethod
+    def f_get_the_latest_number_of_slip(entry_so_phieu):
+        # Get the latest number of slip
+        ma_thanh_vien = "TB"
+        loai_phieu = "YCDH"
+        so_phieu = Controller_get_the_latest_number_of_slip.handle_button_get_number_of_slip_click()
+        
+        # Create the connection string
+        connection_number_of_slip = f"{ma_thanh_vien}-{loai_phieu}-{so_phieu + 1}"
+        
+        # Config the entry_so_phieu
+        entry_so_phieu.config(state="normal")
+        entry_so_phieu.delete(0, tk.END)
+        entry_so_phieu.insert(0, connection_number_of_slip)
+        entry_so_phieu.config(state="readonly")
+
 class cls_test_Controller():
     def __init__(self):
         # super().__init__()
@@ -51,18 +86,18 @@ class cls_test_Controller():
         
         return True, ""
 
-    def f_get_data(self, table):
-        """
-        Retrieve all rows from the table and print them to the console.
-        Args:
-            table: The Treeview widget containing the data.
-            result_label: The Label widget to display messages.
-        """
-        rows = []
-        for child in table.get_children():
-            rows.append(table.item(child)["values"])
-        print("Current data array:", rows)
-        return "Data printed to console!"
+    # def f_get_data(self, table):
+    #     """
+    #     Retrieve all rows from the table and print them to the console.
+    #     Args:
+    #         table: The Treeview widget containing the data.
+    #         result_label: The Label widget to display messages.
+    #     """
+    #     rows = []
+    #     for child in table.get_children():
+    #         rows.append(table.item(child)["values"])
+    #     # print("Current data array:", rows)
+    #     return "Data printed to console!"
     
     def f_get_data_from_table(self, table):
         """
@@ -74,7 +109,7 @@ class cls_test_Controller():
         rows = []
         for child in table.get_children():
             rows.append(table.item(child)["values"])
-        print("Current data array:", rows)
+        # print("Current data array:", rows)
         return rows
     
     # Function to add a row to the table
@@ -120,13 +155,13 @@ class cls_test_Controller():
         else:
             return "Data validation failed. Please fix the errors."
     
-    def f_controller_handle_btn_print_00_click_(self):
-        f_utils_create_print_template()
+    # def f_controller_handle_btn_print_00_click_(self):
+    #     f_utils_create_print_template()
 
-    def f_controller_handle_btn_print_02_click_(self):
-        path_template_file = os.path.join(PATH_ASSETS_TEMPLATES_EXCEL, "PRINT_KD0201.xlsx")
-        sheet_name = "KD0201_YEU_CAU_DAT_HANG"
-        f_utils_open_print_template(path_template_file, sheet_name)
+    # def f_controller_handle_btn_print_02_click_(self):
+    #     path_template_file = os.path.join(PATH_ASSETS_TEMPLATES_EXCEL, "PRINT_KD0201.xlsx")
+    #     sheet_name = "KD0201_YEU_CAU_DAT_HANG"
+    #     f_utils_open_print_template(path_template_file, sheet_name)
         
     def f_controller_get_all_info_of_slip(self):
         print("")
@@ -192,7 +227,6 @@ class cls_test_Controller():
         entry_id.delete(0, tk.END)
         entry_ghi_chu_mat_hang.delete(0, tk.END)
         entry_sl_YCDH.delete(0, tk.END)
-
 
 class cls_test_Controller_02_treeview():
     def __init__(self, tree, entry_ma_kh, entry_ten_kh, entry_so_phieu, entry_ghi_chu_phieu):
@@ -417,7 +451,6 @@ class cls_test_Controller_03_auto_update_number():
             self.entry_sl_yeu_cau_dat_hang.insert(0, "Error")
             self.entry_sl_yeu_cau_dat_hang.config(state="readonly")
             
-            
 class cls_test_Controller_04_validate_before_saving():
     def __init__(self, tree):
         self.data_sl_kha_dung = []
@@ -506,7 +539,6 @@ class cls_test_Controller_06_treeview_tab_02():
             else:
                 print("Insufficient data in row!")
                 
-
 class Controller_delete_row_in_SQL:
     def update_deleted(so_phieu):
         # Create query
@@ -535,9 +567,7 @@ class Controller_delete_row_in_SQL:
                 so_phieu = row_values[1]
                 Controller_delete_row_in_SQL.update_deleted(so_phieu)
                 return f"{so_phieu}, Slip deleted."
-
-
-        
+ 
 class SQLController:
     
     @staticmethod
@@ -728,7 +758,6 @@ class Controller_SQL_to_excel:
         else:
             print("No data found for the selected SO_PHIEU.")
         
-
 class Controller_get_the_latest_number_of_slip:
     
     @staticmethod
@@ -769,3 +798,47 @@ class Controller_get_the_latest_number_of_slip:
         # print("data", data_02)
         
         return data_02
+
+
+
+class Controller_handel_all_events:
+    @staticmethod
+    def f_handle_tab_01_button_clear_click(treeview):
+        try:
+            Controller_action_after_event.clear_all_contents_in_treeview(treeview)
+            return "Clear all rows in treeview!"
+        except Exception as e:
+            return f"Error: {e}"
+        
+    @staticmethod
+    def f_handle_tab_01_button_get_click(treeview):
+        try:
+            Controller_action_after_event.f_get_data_from_treeview(treeview)
+            return "Got data from treeview!"
+        except Exception as e:
+            return f"Error: {e}"
+    
+    @staticmethod
+    def f_handle_btn_print_form_tu_tao_tu_code_click_():
+        try:
+            f_utils_create_print_template()
+            return "Print template created successfully!"
+        except Exception as e:
+            return f"Error: {e}"
+
+    @staticmethod
+    def f_handle_btn_print_click():
+        try:
+            path_template_file = os.path.join(PATH_ASSETS_TEMPLATES_EXCEL, "PRINT_KD0201.xlsx")
+            sheet_name = "KD0201_YEU_CAU_DAT_HANG"
+            f_utils_open_print_template(path_template_file, sheet_name)
+            return "Print template opened successfully!"
+        except Exception as e:
+            return f"Error: {e}"
+        
+    def f_handle_event_get_the_latest_number_of_slip(entry_so_phieu):
+        try:
+            Controller_action_after_event.f_get_the_latest_number_of_slip(entry_so_phieu)
+            return "Have gotten the latest number of slip!"
+        except Exception as e:
+            return f"Error: {e}"
