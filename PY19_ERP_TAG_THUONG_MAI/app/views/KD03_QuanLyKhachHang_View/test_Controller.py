@@ -565,6 +565,8 @@ class SQLController:
             entry_ten_kh,
             entry_ma_hang, 
             entry_ten_hang,
+            entry_mst,
+            entry_dia_chi,
             tree
         ) = args
         try:
@@ -578,8 +580,8 @@ class SQLController:
                     ,entry_so_phieu.get()
                     ,entry_ma_kh.get()
                     ,entry_ten_kh.get()
-                    ,"MST"
-                    ,"DIA CHI"
+                    ,entry_mst.get()
+                    ,entry_dia_chi.get()
                     ,"SO_HOP_DONG"
                     ,"THONG_TIN_HOP_DONG"
                     ,"GHI_CHU_CUA_PHIEU"
@@ -613,6 +615,8 @@ class SQLController:
             entry_ten_kh,
             entry_ma_hang, 
             entry_ten_hang,
+            entry_mst,
+            entry_dia_chi,
             tree
         ) = args
         # Step_01: Get data
@@ -623,6 +627,8 @@ class SQLController:
                                                                                 entry_ten_kh,
                                                                                 entry_ma_hang, 
                                                                                 entry_ten_hang,
+                                                                                entry_mst,
+                                                                                entry_dia_chi,
                                                                                 tree
                                                                                 )
         # Step_02: validate data

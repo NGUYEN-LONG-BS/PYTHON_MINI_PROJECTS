@@ -179,7 +179,9 @@ class cls_Frame_date_and_number_of_slip(tk.Frame):
         # Date Label and Entry
         tk.Label(self, text="Ngày:", bg=BG_COLOR_0_0).pack(side="left", padx=(0, 2))
         self.date_entry = cls_my_date_time_entry_num_01(self, name="date_entry")
+        self.date_entry.config(state="normal")
         self.date_entry.insert(0, today)
+        self.date_entry.config(state="readonly")
         self.date_entry.pack(side="left")
 
         # Number of Slips Label and Entry

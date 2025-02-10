@@ -87,25 +87,29 @@ class cls_frame_client_information_view(tk.Frame):
             dropdown_width=1200,
             dropdown_height=300,
             width=15,
+            name="entry_ma_khach_hang"
         )
         self.treeview_combobox.pack(side="left", padx=(5, 2), pady=5)
 
         # Additional Entry widgets for other column values
         self.additional_entries = []
         
-        entry_client_names = cls_my_text_entry_num_01(self.frame_row_1, width=50)
+        entry_client_names = cls_my_text_entry_num_01(self.frame_row_1, width=50,
+                                                      name="entry_ten_khach_hang")
         entry_client_names.pack(side="left", fill="x", expand=True, padx=(0, 10), pady=5)
         self.additional_entries.append(entry_client_names)
     
     def _f_create_widgets_of_frame_row_2(self):    
         entry_client_tax_numbers = cls_my_text_entry_num_01(
             self.frame_row_2, 
-            width=15
+            width=15,
+            name="entry_mst"
         )
         entry_client_tax_numbers.pack(side="left", padx=(10, 2), pady=5)
         self.additional_entries.append(entry_client_tax_numbers)
 
-        entry_client_address = cls_my_text_entry_num_01(self.frame_row_2)
+        entry_client_address = cls_my_text_entry_num_01(self.frame_row_2,
+                                                        name="entry_dia_chi")
         entry_client_address.pack(side="left", fill="x", expand=True, padx=(0, 10), pady=5)
         self.additional_entries.append(entry_client_address)
 

@@ -171,7 +171,7 @@ class cls_test_Model():
         connection_string = f"DRIVER={{SQL Server}};SERVER={server_name};DATABASE={database_name};UID={login_name};PWD={login_pass}"
         try:
             conn = pyodbc.connect(connection_string)
-            print("Kết nối thành công đến cơ sở dữ liệu.")
+            # print("Kết nối thành công đến cơ sở dữ liệu.")
         except Exception as e:
             print("Lỗi khi kết nối:", e)
             return
@@ -202,13 +202,13 @@ class cls_test_Model():
                 cursor.execute(query, row)
             
             conn.commit()
-            print("Dữ liệu đã được chèn thành công.")
+            # print("Dữ liệu đã được chèn thành công.")
         except Exception as e:
             print("Lỗi khi chèn dữ liệu:", e)
         finally:
             cursor.close()
             conn.close()
-            print("Kết nối đã được đóng.")
+            # print("Kết nối đã được đóng.")
 
     def f_02_insert_data_to_sql(self, server_name, database_name, login_name, login_pass, table_name, data_array):
         """
