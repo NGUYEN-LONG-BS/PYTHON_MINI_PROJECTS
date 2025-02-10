@@ -7,6 +7,7 @@ from test_Model import Model_get_data_from_SQL
 from Components_View import *   # Tại sao lại phải import Components_View
 from utils import *
 import traceback
+from datetime import datetime
 
 class cls_test_Controller():
     def __init__(self):
@@ -730,7 +731,11 @@ class Controller_get_the_latest_number_of_slip:
     def extract_numbers_from_data_SQL_num_01(data):
         data_01 = data
         data_02 = tuple(int(item[0].split('-')[-1]) for item in data_01)
-        data_final = max(data_02)
+        if not data_02:
+            current_year = str(datetime.now().year)[-2:]  # Lấy 2 số cuối của năm hiện tại
+            data_final = int(f'{current_year}0000')
+        else:
+            data_final = max(data_02)
         return data_final
         
     @staticmethod

@@ -197,9 +197,9 @@ class cls_Frame_date_and_number_of_slip(tk.Frame):
         # Small Refresh Button with Icon
         refresh_button = tk.Button(self,
                                    image=self.icon_photo, 
-                                   borderwidth=0, 
+                                   borderwidth=0.5,
                                    name="refresh_number_of_slip_button")
-        refresh_button.pack(side="left", padx=(2, 0))
+        refresh_button.pack(side="left", padx=(5, 0))
         
 class cls_Frame_client_information(tk.Frame):
     def __init__(self, parent, *args, **kwargs):
