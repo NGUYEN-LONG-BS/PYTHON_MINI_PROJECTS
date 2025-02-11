@@ -290,3 +290,4 @@ class cls_TreeviewCombobox_inventories(cls_my_text_entry_num_01):
             # Nếu không có dòng nào dưới con trỏ, bỏ highlight
             self.tree.item(self.current_highlighted, tags=())
             self.current_highlighted = None
+        

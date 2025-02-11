@@ -905,7 +905,7 @@ class SQLModel:
                 if not isinstance(row[column], str):
                     raise ValueError(f"Data validation: DVT (Row {idx+1}, Value: {row[column]}) must be a string.")
                 column = 15
-                if not isinstance(row[column], (int, float)) or row[column] <= 0:
+                if not isinstance(row[column], (int, float)) or row[column] < 0:
                     raise ValueError(f"Data validation: SO_LUONG_KHA_DUNG (Row {idx+1}, Value: {row[column]}) must be a positive number.")
                 column = 16
                 if not isinstance(row[column], (int, float)) or row[column] <= 0:
@@ -914,7 +914,7 @@ class SQLModel:
                 if not isinstance(row[column], (int, float)) or row[column] <= 0:
                     raise ValueError(f"Data validation: SO_LUONG_GIU_CHO (Row {idx+1}, Value: {row[column]}) must be a positive number.")
                 column = 18
-                if not isinstance(row[column], (int, float)) or row[column] <= 0:
+                if not isinstance(row[column], (int, float)) or row[column] < 0:
                     raise ValueError(f"Data validation: SO_LUONG_YCDH (Row {idx+1}, Value: {row[column]}) must be a positive number.")
                 column = 19
                 if not isinstance(row[column], str):

@@ -877,8 +877,8 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
     def f_tab_02_button_clear_click(self):
         self.filter_entry_slip_number.delete(0, tk.END)
         self.filter_entry_contract_number.delete(0, tk.END)
-        self.ngay_filter_bat_dau.delete(0, tk.END)
-        self.ngay_filter_ket_thuc.delete(0, tk.END)
+        # self.ngay_filter_bat_dau.delete(0, tk.END)
+        # self.ngay_filter_ket_thuc.delete(0, tk.END)
         self.entry_ma_khach_hang_tab_02.delete(0, tk.END)
         self.entry_ten_khach_hang_tab_02.delete(0, tk.END)
         self.entry_ma_hang_tab_02.delete(0, tk.END)

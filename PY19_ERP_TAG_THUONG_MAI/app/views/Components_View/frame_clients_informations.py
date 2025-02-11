@@ -14,6 +14,16 @@ class cls_frame_client_information_model:
             ("BH03", "Công ty TNHH Một Thành Viên", "0264151515", "04 đường Lê Lợi, TP. Hồ Chí Minh, Việt Nam"),
             ("BH04", "Công ty TNHH TTL", "0264136516", "28 đường Trường Chinh, Bình Định, Việt Nam"),
             ("BH05", "Công ty CP Khổng lồ", "02641361121", "297 đường Phan Bội Châu, Quy Nhơn, Bình Định, Việt Nam"),
+            ("BH06", "Công ty TNHH Nhà Kính Đẹp", "02641368626", "04 đường Nguyễn Trãi, Cần Thơ, Việt Nam"),
+            ("BH07", "Công ty TNHH Trí Hiếu", "02641368125", "26 đường Nguyễn Duy Hưng, Đà Nẵng, Việt Nam"),
+            ("BH08", "Công ty TNHH Một Thành Viên Ngại Nùng Chi", "0264151515", "04 đường Lê Lợi, TP. Hồ Chí Minh, Việt Nam"),
+            ("BH09", "Công ty TNHH Nhận Thức Việt", "0264136516", "28 đường Trường Chinh, Bình Định, Việt Nam"),
+            ("BH10", "Công ty CP Chat GPT", "02641361121", "297 đường Phan Bội Châu, Quy Nhơn, Bình Định, Việt Nam"),
+            ("BH11", "Công ty TNHH Con Trí Tuệ", "02641368626", "04 đường Nguyễn Trãi, Cần Thơ, Việt Nam"),
+            ("BH12", "Công ty TNHH Cửa Hàng Vũ Phong", "02641368125", "26 đường Nguyễn Duy Hưng, Đà Nẵng, Việt Nam"),
+            ("BH13", "Công ty TNHH Một Thành Viên Nhất Nhất", "0264151515", "04 đường Lê Lợi, TP. Hồ Chí Minh, Việt Nam"),
+            ("BH14", "Công ty TNHH Cổ Phần TTL", "0264136516", "28 đường Trường Chinh, Bình Định, Việt Nam"),
+            ("BH15", "Công ty CP TNHH Khổng lồ", "02641361121", "297 đường Phan Bội Châu, Quy Nhơn, Bình Định, Việt Nam"),
         ]
         
 
@@ -178,9 +188,14 @@ class cls_TreeviewCombobox_clients(cls_my_text_entry_num_01):
             # Populate Treeview with data
             self.refresh_data()
 
+            # Biến để theo dõi dòng đang được highlight
+            self.current_highlighted = None
+            self.tree.bind("<Motion>", self.highlight_row)
+            
             # Bind Treeview selection
             self.tree.bind("<<TreeviewSelect>>", self.on_tree_select)
-            self.tree.bind("leave", self.hide_dropdown)
+            # self.tree.bind("leave", self.hide_dropdown)
+            self.tree.bind("<Leave>", self.hide_dropdown)
 
         else:
             self.dropdown.lift()
@@ -232,3 +247,22 @@ class cls_TreeviewCombobox_clients(cls_my_text_entry_num_01):
         if self.get() == self.placeholder:
             self.delete(0, tk.END)
             self.config(foreground=self.active_fg_color)
+            
+    def highlight_row(self, event):
+        # Lấy ID của dòng dưới con trỏ chuột
+        row_id = self.tree.identify_row(event.y)
+
+        # Nếu có dòng mới dưới con trỏ, highlight nó
+        if row_id and row_id != self.current_highlighted:
+            # Bỏ highlight dòng trước đó
+            if self.current_highlighted:
+                self.tree.item(self.current_highlighted, tags=())
+            
+            # Gắn highlight cho dòng hiện tại
+            self.tree.item(row_id, tags=("highlighted",))
+            self.tree.tag_configure("highlighted", background=HIGHLIGHT_COLOR)
+            self.current_highlighted = row_id
+        elif not row_id and self.current_highlighted:
+            # Nếu không có dòng nào dưới con trỏ, bỏ highlight
+            self.tree.item(self.current_highlighted, tags=())
+            self.current_highlighted = None
