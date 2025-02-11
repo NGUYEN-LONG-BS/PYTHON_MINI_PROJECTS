@@ -8,16 +8,43 @@ class cls_frame_inventories_information_model:
     def __init__(self):
         # Sample data to simulate the model
         self.header = ["Mã hàng", "Tên hàng", "Đvt", "SL khả dụng"]
+        self.width_of_columns = (100, 300, 80, 120)
+        self.width_of_dropdown = 700
+        self.height_of_dropdown = 300
         self.data = [
             ("HH-01A-039", "Dây chì", "sợi", 15),
             ("HH-02A-010", "Tủ điện trung thế", "cái", 26),
             ("HH-01B-001", "MBC 120AM", "cái", 50),
             ("TM-01A-009", "LA 4000A", "cái", 60),
             ("MT-05A-025", "Nắp chụp LA - màu vàng", "cái", 22),
+            ("HH-36A-038", "Dây chì", "sợi", 32),
+            ("HH-14A-011", "Tủ điện trung thế xi mạ", "cái", 24),
+            ("HH-16B-021", "MBC 150AM", "cái", 125),
+            ("TM-19A-109", "LA 4250A", "cái", 120),
+            ("MT-24A-125", "Nắp chụp LA - màu xanh", "cái", 162),
+            ("HH-01A-059", "Dây chì", "sợi", 15),
+            ("HH-02A-012", "Tủ điện trung thế", "cái", 26),
+            ("HH-01B-031", "MBC 120AM", "cái", 50),
+            ("TM-01A-209", "LA 4000A", "cái", 60),
+            ("MT-05A-225", "Nắp chụp LA - màu vàng", "cái", 22),
+            ("HH-36A-069", "Dây chì", "sợi", 32),
+            ("HH-14A-013", "Tủ điện trung thế xi mạ", "cái", 24),
+            ("HH-16B-041", "MBC 150AM", "cái", 125),
+            ("TM-19A-309", "LA 4250A", "cái", 120),
+            ("MT-24A-325", "Nắp chụp LA - màu xanh", "cái", 162)
         ]
 
     def get_data(self):
         return self.data
+    
+    def get_column_width(self):
+        return self.width_of_columns
+
+    def get_width_of_dropdown(self):
+        return self.width_of_dropdown
+    
+    def get_height_of_dropdown(self):
+        return self.height_of_dropdown
     
     def get_header(self):
         return self.header
@@ -36,6 +63,15 @@ class cls_frame_inventories_information_controller:
 
     def get_data(self):
         return self.model.get_data()
+    
+    def get_width_of_dropdown(self):
+        return self.model.width_of_dropdown
+    
+    def get_height_of_dropdown(self):
+        return self.model.height_of_dropdown
+    
+    def get_column_width(self):
+        return self.model.get_column_width()
     
     def get_header(self):
         return self.model.get_header()
@@ -81,8 +117,9 @@ class cls_frame_inventories_information_view(tk.Frame):
             self.frame_row_1,
             columns=self.controller.get_header(),
             data=self.controller.get_data(),
-            dropdown_width=1200,
-            dropdown_height=300,
+            dropdown_width=self.controller.get_width_of_dropdown(),
+            dropdown_height=self.controller.get_height_of_dropdown(),
+            column_width=self.controller.get_column_width(),
             width=15,
             name="entry_ma_hang"
         )
@@ -125,12 +162,13 @@ class cls_frame_inventories_information_view(tk.Frame):
 
 
 class cls_TreeviewCombobox_inventories(cls_my_text_entry_num_01):
-    def __init__(self, master, columns, data, dropdown_width=800, dropdown_height=600, **kwargs):
+    def __init__(self, master, columns, data, dropdown_width=800, dropdown_height=600, column_width=(100, 300, 80, 120), **kwargs):
         super().__init__(master, **kwargs)
         self.columns = columns
         self.data = data
         self.dropdown_width = dropdown_width
         self.dropdown_height = dropdown_height
+        self.column_width = column_width
         self.dropdown = None
         
         # Placeholder setup
@@ -160,9 +198,12 @@ class cls_TreeviewCombobox_inventories(cls_my_text_entry_num_01):
 
             # Create a Treeview in the dropdown
             self.tree = ttk.Treeview(self.dropdown, columns=self.columns, show="headings")
-            for col in self.columns:
+
+            column_widths = self.column_width
+            
+            for idx, col in enumerate(self.columns):
                 self.tree.heading(col, text=col)
-                self.tree.column(col, width=120, anchor="w")
+                self.tree.column(col, width=column_widths[idx], anchor="w")  # Set width based on the column index
             self.tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
             # Add a scrollbar
