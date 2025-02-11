@@ -64,7 +64,7 @@ class cls_frame_inventories_information_view(tk.Frame):
         self.frame_row_1.pack(side="top", fill="x", pady=0)
         self._f_create_widgets_of_frame_row_1()
         # row 2
-        self.frame_row_2 = tk.Frame(self)
+        self.frame_row_2 = tk.Frame(self, name="frame_row_2_of_inventories_info")
         self.frame_row_2.pack(side="top", fill="x", pady=0)
         self._f_create_widgets_of_frame_row_2()
         
@@ -91,7 +91,7 @@ class cls_frame_inventories_information_view(tk.Frame):
         # Additional Entry widgets for other column values
         self.additional_entries = []
         
-        entry_inventory_names = cls_my_text_entry_num_01(self.frame_row_1, name="entry_sl_ten_hang")
+        entry_inventory_names = cls_my_text_entry_num_01(self.frame_row_1, name="entry_ten_hang")
         entry_inventory_names.pack(side="left", fill="x", expand=True, padx=(0, 10), pady=5)
         self.additional_entries.append(entry_inventory_names)
     

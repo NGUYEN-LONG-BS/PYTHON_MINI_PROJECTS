@@ -2,6 +2,7 @@ from .combobox import *
 from .frame_clients_informations import *
 from .frame_contracts_management import *
 from .frame_inventories_informations import *
+from .frame_from_date_to_date import *
 from .frame import *
 from .label import *
 from .treeview import *

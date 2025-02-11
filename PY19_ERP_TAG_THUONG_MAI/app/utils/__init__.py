@@ -1,3 +1,5 @@
+
+from .define import *
 from .setup_sys_path import f_utils_setup_sys_path
 
 from .utils_functions import f_utils_setup_logo
