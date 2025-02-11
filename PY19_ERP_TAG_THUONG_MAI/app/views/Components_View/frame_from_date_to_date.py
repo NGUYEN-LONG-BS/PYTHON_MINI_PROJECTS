@@ -49,6 +49,10 @@ class cls_frame_DateSelector_view(tk.Frame):
 
     def create_buttons(self):
         # Button (This week)
+        clear_button = cls_my_button_num_02(self.frames[0], text="Clear", command=lambda: self.clear_entries(*self.clear_all()))
+        clear_button.grid(row=0, column=3, padx=2, pady=0)
+        
+        # Button (This week)
         this_week_button = cls_my_button_num_02(self.frames[1], text="This week", command=lambda: self.clear_entries(*self.this_week()))
         this_week_button.grid(row=0, column=0, padx=2, pady=0)
 
@@ -88,6 +92,10 @@ class cls_frame_DateSelector_view(tk.Frame):
     def today_date(self):
         return datetime.today().strftime('%d-%m-%Y')
 
+    # Function to get the start and end date for the current week
+    def clear_all(self):
+        return '', ''
+    
     # Function to get the start and end date for the current week
     def this_week(self):
         today = datetime.today()

@@ -773,13 +773,6 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         parent_frame.grid_rowconfigure(3, weight=1) # cho phép giãn nở
         parent_frame.grid_columnconfigure(0, weight=1)
 
-    # def _f_view_create_widgets_in_tab_02_frame_filter_entries(self):
-    #     self.frame_entries_of_tab_02 = tk.Frame(self.tab_02_frame_filter_entries)
-    #     self.frame_entries_of_tab_02.pack(side="top", 
-    #                                       fill="x"
-    #                                       )
-    #     self._f_view_create_widgets_in_frame_entries_of_tab_02()
-
     def _f_view_create_widgets_in_tab_02_frame_H2(self):
         # Title H2
         cls_my_label_num_03_title_H2(self.tab_02_frame_H2, text="NHẬT KÝ YÊU CẦU ĐẶT HÀNG").pack(anchor="center")
@@ -800,10 +793,24 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.tab_02_button_clear.pack(side="left", padx=10)
     
     def f_view_create_widgets_in_tab_02_frame_filter_entries(self):
+        parent_frame_00 = tk.Frame(self.tab_02_frame_filter_entries)
+        parent_frame_00.grid(row=0, column=0, sticky="nsew")
         parent_frame_01 = tk.Frame(self.tab_02_frame_filter_entries)
-        parent_frame_01.grid(row=0, column=0, sticky="ew")
+        parent_frame_01.grid(row=0, column=1, sticky="nsew")
         parent_frame_02 = tk.Frame(self.tab_02_frame_filter_entries)
-        parent_frame_02.grid(row=0, column=1, sticky="ew")
+        parent_frame_02.grid(row=0, column=2, sticky="nsew")
+        
+        # parent_frame_00.config(bd=1,relief="groove")
+        # parent_frame_01.config(bd=1,relief="groove")
+        # parent_frame_02.config(bd=1,relief="groove")
+        
+        # Create Number of slip and contract number
+        tk.Label(parent_frame_00, text="Số phiếu").grid(row=0, column= 0, padx=(10, 0), pady=(10, 0), sticky="w")
+        self.filter_entry_slip_number = cls_my_text_entry_num_01(parent_frame_00)
+        self.filter_entry_slip_number.grid(row=0, column= 1, padx=(2, 10), pady=(10, 0), sticky="ew")
+        tk.Label(parent_frame_00, text="Số hợp đồng").grid(row=1, column= 0, padx=(10, 0), pady=(15, 10), sticky="w")
+        self.filter_entry_contract_number = cls_my_text_entry_num_01(parent_frame_00)
+        self.filter_entry_contract_number.grid(row=1, column= 1, padx=(2, 10), pady=(15, 10), sticky="ew")
         
         # Create frame inventories informations
         self.frame_seclect_date_tab_02 = cls_frame_DateSelector_view(parent_frame_01)
@@ -818,10 +825,10 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         # Create frame inventories informations
         self.frame_inventories_informations_tab_02 = cls_frame_inventories_information_view(parent_frame_02)
         self.frame_inventories_informations_tab_02.config(bd=0, relief="flat")
-        self.frame_inventories_informations_tab_02.grid(row=1, column=0, sticky="ew")
+        self.frame_inventories_informations_tab_02.grid(row=1, column=0, pady=(10, 0), sticky="ew")
     
         # Allow stretching
-        self.tab_02_frame_filter_entries.columnconfigure(1, weight=1)   # Stretch the column to fill the width
+        self.tab_02_frame_filter_entries.columnconfigure(2, weight=1)   # Stretch the column to fill the width
         parent_frame_02.columnconfigure(0, weight=1)                    # Stretch parent_frame_02
     
     def _f_view_create_widgets_in_tab_02_frame_button_02(self):
@@ -907,10 +914,5 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
     def f_tab_02_table_on_click(self, event):
         print("f_tab_02_table_on_click")    
 
-    # def _f_view_create_widgets_in_frame_entries_of_tab_02(self):
-    #     # Create container for filter
-    #     self.Frame_container_filter_entries = tk.Frame(self.frame_entries_of_tab_02)
-    #     self.Frame_container_filter_entries.pack(side="top", fill="x", expand=True)
-    #     self._f_view_create_widgets_in_tab_02_frame_filter_entries()
 
     
