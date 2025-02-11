@@ -35,12 +35,12 @@ class cls_frame_DateSelector_view(tk.Frame):
         self.label.grid(row=0, column=0, padx=(2, 2), pady=0)
 
         # Entry 1 (from this date)
-        self.entry_01 = cls_my_date_time_entry_num_01(self.frames[0], width=20)
+        self.entry_01 = cls_my_date_time_entry_num_01(self.frames[0], width=20, name="start_date_entry")
         self.entry_01.insert(0, self.first_day_of_month())
         self.entry_01.grid(row=0, column=1, padx=(0, 2), pady=0, sticky="ew")
 
         # Entry 2 (to this date)
-        self.entry_02 = cls_my_date_time_entry_num_01(self.frames[0], width=20)
+        self.entry_02 = cls_my_date_time_entry_num_01(self.frames[0], width=20, name="end_date_entry")
         self.entry_02.insert(0, self.today_date())
         self.entry_02.grid(row=0, column=2, padx=(0, 0), pady=0, sticky="ew")
 

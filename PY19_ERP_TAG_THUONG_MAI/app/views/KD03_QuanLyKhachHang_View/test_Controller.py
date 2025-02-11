@@ -571,10 +571,8 @@ class Controller_delete_row_in_SQL:
 class SQLController:
     
     @staticmethod
-    def load_data(tree):
-        query = f"[Proc_TB_KD02_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250204_110h38]'','',''"
+    def load_data(tree, query):
         data = SQLModel.fetch_data(query)
-        # update_treeview_test_of_tag_02(data)
         
         # tree = self.treeview_test_of_tag_02
         for item in tree.get_children():
@@ -840,5 +838,58 @@ class Controller_handel_all_events:
         try:
             Controller_action_after_event.f_get_the_latest_number_of_slip(entry_so_phieu)
             return "Have gotten the latest number of slip!"
+        except Exception as e:
+            return f"Error: {e}"
+        
+    def f_handle_event_tab_02_button_filter_slip(treeview, *args):
+        # Get the arguments
+        (
+            so_phieu, 
+            so_hop_dong,
+            ngay_bat_dau,
+            ngay_ket_thuc,
+            ma_doi_tuong,
+            ma_hang
+        )= args
+        
+        # Reformat the value
+        formated_ngay_bat_dau = f_utils_change_format_date_from_ddmmyyyy_to_yyyymmdd(ngay_bat_dau)
+        formated_ngay_ket_thuc = f_utils_change_format_date_from_ddmmyyyy_to_yyyymmdd(ngay_ket_thuc)
+        if ma_doi_tuong == 'search here':
+            ma_doi_tuong = ''
+        if ma_hang == 'search here':
+            ma_hang = ''
+        
+        # Create value and fetch data
+        try:
+            query = f"""
+                    EXEC [dbo].[Proc_TB_KD02_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250211_14hh45] 
+                        @SO_PHIEU = '{so_phieu}', 
+                        @SO_HOP_DONG = '{so_hop_dong}',
+                        @START_DATE = '{formated_ngay_bat_dau}', 
+                        @END_DATE = '{formated_ngay_ket_thuc}',
+                        @MA_DOI_TUONG = '{ma_doi_tuong}',
+                        @MA_HANG = '{ma_hang}';
+                    """
+            # print(query)
+            SQLController.load_data(treeview, query)
+            return "Data selected!"
+        except Exception as e:
+            return f"Error: {e}"
+        
+    def f_handle_event_tab_02_button_clear_slip(treeview):
+        try:
+            # query = f"[Proc_TB_KD02_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250204_110h38]'','',''"
+            query = f"""
+                    EXEC [dbo].[Proc_TB_KD02_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250211_14hh45] 
+                        @SO_PHIEU = NULL, 
+                        @SO_HOP_DONG = NULL,
+                        @START_DATE = NULL, 
+                        @END_DATE = NULL,
+                        @MA_DOI_TUONG = NULL,
+                        @MA_HANG = NULL;
+                    """
+            SQLController.load_data(treeview, query)
+            return "Clear all filters!"
         except Exception as e:
             return f"Error: {e}"

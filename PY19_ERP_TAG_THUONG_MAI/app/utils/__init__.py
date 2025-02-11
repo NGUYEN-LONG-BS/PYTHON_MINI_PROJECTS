@@ -23,6 +23,7 @@ from .utils_functions import f_utils_set_style
 from .utils_functions import f_utils_get_unique_column_from_data
 from .utils_functions import f_utils_get_unique_column_from_treeview
 from .utils_functions import f_utils_get_formatted_today_YYYY_MM_DD
+from .utils_functions import f_utils_change_format_date_from_ddmmyyyy_to_yyyymmdd
 from .utils_functions import f_utils_export_data_to_excel
 from .utils_functions import f_utils_create_a_connection_string_to_SQL_Server
 from .utils_functions import f_utils_get_DB_HOST

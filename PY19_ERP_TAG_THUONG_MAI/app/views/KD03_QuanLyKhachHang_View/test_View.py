@@ -74,6 +74,12 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.frame_row_2_of_inventories_info = f_utils_tim_component_with_name(tab_02_frame, "frame_row_2_of_inventories_info")
         self.frame_row_2_of_inventories_info.pack_forget()
         
+        self.entry_ma_hang_tab_02 = f_utils_tim_component_with_name(tab_02_frame, "entry_ma_hang")
+        self.entry_ten_hang_tab_02 = f_utils_tim_component_with_name(tab_02_frame, "entry_ten_hang")
+        
+        self.ngay_filter_bat_dau = f_utils_tim_component_with_name(tab_02_frame, "start_date_entry")
+        self.ngay_filter_ket_thuc = f_utils_tim_component_with_name(tab_02_frame, "end_date_entry")
+        
     def f_view_clear_content_when_sl_kha_dung_change(self, event):
         f_utils_on_entry_change(self.entry_sl_kha_dung)
         self.tab_01_entry_nhu_cau.delete(0, tk.END)
@@ -852,11 +858,34 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.tab_02_button_DELETE.pack(side="left", padx=10)
     
     def f_tab_02_button_filter_click(self):
-        print("f_tab_02_button_filter_click")
-        SQLController.load_data(self.treeview_test_of_tag_02)
+        so_phieu = self.filter_entry_slip_number.get()
+        so_hop_dong = self.filter_entry_contract_number.get()
+        ngay_bat_dau = self.ngay_filter_bat_dau.get()
+        ngay_ket_thuc = self.ngay_filter_ket_thuc.get()
+        ma_doi_tuong = self.entry_ma_khach_hang_tab_02.get()
+        ma_hang = self.entry_ma_hang_tab_02.get()
+        notification_text = Controller_handel_all_events.f_handle_event_tab_02_button_filter_slip(self.treeview_test_of_tag_02,
+                                                                                                    so_phieu, 
+                                                                                                    so_hop_dong,
+                                                                                                    ngay_bat_dau,
+                                                                                                    ngay_ket_thuc,
+                                                                                                    ma_doi_tuong,
+                                                                                                    ma_hang
+                                                                                                    )
+        self._f_config_notification(notification_text, fg="blue")
     
     def f_tab_02_button_clear_click(self):
-        print("Clear click")
+        self.filter_entry_slip_number.delete(0, tk.END)
+        self.filter_entry_contract_number.delete(0, tk.END)
+        self.ngay_filter_bat_dau.delete(0, tk.END)
+        self.ngay_filter_ket_thuc.delete(0, tk.END)
+        self.entry_ma_khach_hang_tab_02.delete(0, tk.END)
+        self.entry_ten_khach_hang_tab_02.delete(0, tk.END)
+        self.entry_ma_hang_tab_02.delete(0, tk.END)
+        self.entry_ten_hang_tab_02.delete(0, tk.END)
+        notification_text = Controller_handel_all_events.f_handle_event_tab_02_button_clear_slip(self.treeview_test_of_tag_02)
+        self._f_config_notification(notification_text, fg="blue")
+        # SQLController.load_data(self.treeview_test_of_tag_02)
         
     def f_tab_02_button_export_excel_click(self):
         print("Export excel click")

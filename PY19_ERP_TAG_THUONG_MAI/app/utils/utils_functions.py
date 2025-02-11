@@ -613,6 +613,15 @@ def f_utils_get_formatted_today_YYYY_MM_DD(format_string='%Y-%m-%d'):
     formatted_date = today.strftime(format_string)
     return formatted_date
 
+def f_utils_change_format_date_from_ddmmyyyy_to_yyyymmdd(date_string):
+    # Check if the input string is None or empty
+    if not date_string:
+        return ''  # Return empty string if input is null or empty
+    # Split the string into day, month, and year
+    day, month, year = date_string.split('-')
+    # Reformat and return the date as yyyy-mm-dd
+    return f"{year}-{month}-{day}"
+
 def f_utils_export_data_to_excel(data_header, data):
     
     # Check the type and shape of the data
@@ -812,3 +821,5 @@ def f_utils_get_current_function_name():
 # return caller function name
 def f_utils_get_caller_function_name():
     return inspect.currentframe().f_back.f_back.f_code.co_name
+
+
