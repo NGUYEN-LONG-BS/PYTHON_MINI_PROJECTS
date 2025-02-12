@@ -17,7 +17,7 @@ class cls_frame_inventories_information_model:
             ("HH-01B-001", "MBC 120AM", "cái", 50),
             ("TM-01A-009", "LA 4000A", "cái", 60),
             ("MT-05A-025", "Nắp chụp LA - màu vàng", "cái", 22),
-            ("HH-36A-038", "Dây chì", "sợi", 32),
+            ("HH-36A-038", "Dây chì", "sợi", 0),
             ("HH-14A-011", "Tủ điện trung thế xi mạ", "cái", 24),
             ("HH-16B-021", "MBC 150AM", "cái", 125),
             ("TM-19A-109", "LA 4250A", "cái", 120),
