@@ -21,6 +21,7 @@ from datetime import datetime
 from decimal import Decimal
 from PIL import Image, ImageTk
 import pandas as pd
+import re
 
 
 def f_utils_setup_logo(parent_frame):
@@ -617,8 +618,15 @@ def f_utils_change_format_date_from_ddmmyyyy_to_yyyymmdd(date_string):
     # Check if the input string is None or empty
     if not date_string:
         return ''  # Return empty string if input is null or empty
-    # Split the string into day, month, and year
-    day, month, year = date_string.split('-')
+    
+    # Use regex to extract day, month, and year regardless of separator (-, /, .)
+    match = re.match(r"(\d{2})[\-/.](\d{2})[\-/.](\d{4})", date_string)
+    
+    if not match:
+        return ''  # Return empty string if format is incorrect
+    
+    day, month, year = match.groups()
+    
     # Reformat and return the date as yyyy-mm-dd
     return f"{year}-{month}-{day}"
 

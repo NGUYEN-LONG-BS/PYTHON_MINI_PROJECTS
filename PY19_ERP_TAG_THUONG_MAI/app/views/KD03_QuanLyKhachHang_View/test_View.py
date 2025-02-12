@@ -6,7 +6,9 @@ from Components_View import *
 from Components_View import cls_frame_normal
 from Components_View.treeview import cls_Treeview_frame_number_01
 from utils import *
-from test_Controller import cls_test_Controller, cls_test_Controller_02_treeview, cls_test_Controller_03_auto_update_number, cls_test_Controller_05_staticmenthod
+from test_Controller import cls_test_Controller
+from test_Controller import cls_test_Controller_02_treeview
+from test_Controller import cls_test_Controller_03_auto_update_number 
 from test_Controller import cls_test_Controller_06_treeview_tab_02
 from test_Controller import SQLController
 from test_Controller import Controller_SQL_to_excel
@@ -27,7 +29,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         # set up formats
         self._f_view_set_up_formats_of_tab_01()
         self._f_view_set_up_formats_of_tab_02()
-        cls_test_Controller_05_staticmenthod.update_entry_id_after_adding_new_row(self.table_of_tab_01, self.tab_01_entry_id)
+        Controller_handel_all_events.update_entry_id_when_initializing(self.table_of_tab_01, self.tab_01_entry_id)
         # Set up all global variants
         self._f_setup_all_global_variants()
         self._f_setup_all_binding()
@@ -580,36 +582,19 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self._f_config_notification(f_utils_open_file(),"black")
 
     def f_view_tab_01_button_add_click(self):
-        # Update the row count
-        cls_test_Controller_05_staticmenthod.update_entry_id_after_adding_new_row(self.table_of_tab_01, self.tab_01_entry_id)
-        id_value = self.tab_01_entry_id.get()
-        ma_hang = self.entry_ma_hang_tab_01.get()
-        ten_hang = self.entry_ten_hang_tab_01.get()
-        dvt = self.entry_dvt.get()
-        
-        sl_kha_dung = float(self.entry_sl_kha_dung.get().replace(',', '') or 0)
-        sl_nhu_cau = float(self.tab_01_entry_nhu_cau.get().replace(',', '') or 0)
-        sl_giu_cho = float(self.tab_01_entry_sl_giu_cho.get().replace(',', '') or 0)
-        sl_yeu_cau_dat_hang = float(self.tab_01_entry_sl_YCDH.get().replace(',', '') or 0)
-        ghi_chu_mat_hang = self.tab_01_entry_ghi_chu_mat_hang.get()
-        table = self.table_of_tab_01
-        
-        # Validate input using the helper function
-        is_valid, error_message = self.controller_01.f_controller_add_row(id_value, ma_hang, ten_hang, dvt, sl_kha_dung, sl_nhu_cau, sl_giu_cho, sl_yeu_cau_dat_hang, ghi_chu_mat_hang, table)
-        if not is_valid:
-            # Show error message
-            self._f_config_notification(text=error_message, fg="red")
-            # return
-        else:
-            # Show success message
-            self._f_config_notification(text=error_message, fg="green")
-            cls_test_Controller_05_staticmenthod.clear_input_fields(self.tab_01_entry_ghi_chu_mat_hang, 
-                                                                    self.tab_01_entry_nhu_cau,
-                                                                    self.tab_01_entry_sl_giu_cho,
-                                                                    self.tab_01_entry_sl_YCDH
-                                                                    )
-        # Update the row count
-        cls_test_Controller_05_staticmenthod.update_entry_id_after_adding_new_row(self.table_of_tab_01, self.tab_01_entry_id)
+        notification_text, text_color = Controller_handel_all_events.f_handle_event_tab_01_button_add_row_click(
+            self.table_of_tab_01, 
+            self.tab_01_entry_id, 
+            self.entry_ma_hang_tab_01, 
+            self.entry_ten_hang_tab_01, 
+            self.entry_dvt, 
+            self.entry_sl_kha_dung, 
+            self.tab_01_entry_nhu_cau, 
+            self.tab_01_entry_sl_giu_cho, 
+            self.tab_01_entry_sl_YCDH, 
+            self.tab_01_entry_ghi_chu_mat_hang
+            )
+        self._f_config_notification(notification_text, fg=text_color)
     
     def f_view_tab_01_button_delete_click(self):
         self.controller_02_treeview.f_controller_02_delete_selected(self.treeview_test_of_tag_01)

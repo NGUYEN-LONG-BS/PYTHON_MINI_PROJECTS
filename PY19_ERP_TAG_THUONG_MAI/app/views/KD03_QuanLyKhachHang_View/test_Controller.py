@@ -10,12 +10,10 @@ import traceback
 from datetime import datetime
 
 class Controller_action_after_event:
-    @staticmethod
     def clear_all_contents_in_treeview(treeview):
         for item in treeview.get_children():
             treeview.delete(item)
     
-    @staticmethod
     def f_get_data_from_treeview(treeview):
         """
         Retrieve all rows from the table and print them to the console.
@@ -28,7 +26,6 @@ class Controller_action_after_event:
             rows.append(treeview.item(child)["values"])
         return rows
     
-    @staticmethod
     def f_get_the_latest_number_of_slip(entry_so_phieu):
         # Get the latest number of slip
         ma_thanh_vien = "TB"
@@ -43,24 +40,8 @@ class Controller_action_after_event:
         entry_so_phieu.delete(0, tk.END)
         entry_so_phieu.insert(0, connection_number_of_slip)
         entry_so_phieu.config(state="readonly")
-
-class cls_test_Controller():
-    def __init__(self):
-        # super().__init__()
-        self.model = None
-        self.f_add_MVC_class()
         
-    def f_add_MVC_class(self):
-        """Initialize and bind Model and View classes to the controller."""
-        try:
-            # Initialize Model
-            self.model = cls_test_Model()  
-            # If model or view need controller reference
-            self.model.controller = self  # Avoid recursion by passing after initialization
-        except Exception as e:
-            print(f"Error initializing MVC components: {e}")
-        
-    def f_check_input(self, id_value, ma_hang, ten_hang, sl_giu_cho, sl_yeu_cau_dat_hang):    
+    def f_check_input_of_treeview(id_value, ma_hang, ten_hang, sl_giu_cho, sl_yeu_cau_dat_hang):    
         # Kiểm tra các trường bắt buộc
         if not id_value or not ma_hang or not ten_hang:
             return False, "All fields are required: mã hàng, tên hàng"
@@ -85,19 +66,53 @@ class cls_test_Controller():
             return False, "Số lượng giữ chỗ và số lượng yêu cầu đặt hàng không được âm."
         
         return True, ""
+    
+    def f_add_row_into_treeview(id_value, ma_hang, ten_hang, dvt, sl_kha_dung, sl_nhu_cau, sl_giu_cho, sl_yeu_cau_dat_hang, ghi_chu_mat_hang, my_treeview):
+        
+        # Validate input using the helper function
+        is_valid, error_message = Controller_action_after_event.f_check_input_of_treeview(id_value, ma_hang, ten_hang, sl_giu_cho, sl_yeu_cau_dat_hang)
+        if not is_valid:
+            return error_message
+        
+        # Add row to the treeview
+        my_treeview.insert("", "end", values=(id_value, ma_hang, ten_hang, dvt, sl_kha_dung, sl_nhu_cau, sl_giu_cho, sl_yeu_cau_dat_hang, ghi_chu_mat_hang))
+        return ""
+    
+    def clear_input_fields(entry_ghi_chu_mat_hang, entry_sl_nhu_cau, entry_sl_giu_cho, entry_sl_YCDH):
+        
+        entry_ghi_chu_mat_hang.delete(0, tk.END)
+        entry_sl_nhu_cau.delete(0, tk.END)
 
-    # def f_get_data(self, table):
-    #     """
-    #     Retrieve all rows from the table and print them to the console.
-    #     Args:
-    #         table: The Treeview widget containing the data.
-    #         result_label: The Label widget to display messages.
-    #     """
-    #     rows = []
-    #     for child in table.get_children():
-    #         rows.append(table.item(child)["values"])
-    #     # print("Current data array:", rows)
-    #     return "Data printed to console!"
+        entry_sl_giu_cho.config(state='normal')
+        entry_sl_giu_cho.delete(0, tk.END)
+        entry_sl_giu_cho.config(state='disabled')
+
+        entry_sl_YCDH.config(state='normal')
+        entry_sl_YCDH.delete(0, tk.END)
+        entry_sl_YCDH.config(state='disabled')
+
+    def update_entry_id_after_adding_new_row(tree, entry_id):
+        row_count = 1 + len(tree.get_children())    
+        entry_id.config(state="normal")  # Enable the Entry widget to update the value
+        entry_id.delete(0, tk.END)  # Clear the existing value
+        entry_id.insert(0, row_count)  # Insert the new value (ID)
+        entry_id.config(state="disabled")  # Disable the Entry widget again
+
+class cls_test_Controller():
+    def __init__(self):
+        # super().__init__()
+        self.model = None
+        self.f_add_MVC_class()
+        
+    def f_add_MVC_class(self):
+        """Initialize and bind Model and View classes to the controller."""
+        try:
+            # Initialize Model
+            self.model = cls_test_Model()  
+            # If model or view need controller reference
+            self.model.controller = self  # Avoid recursion by passing after initialization
+        except Exception as e:
+            print(f"Error initializing MVC components: {e}")
     
     def f_get_data_from_table(self, table):
         """
@@ -111,20 +126,6 @@ class cls_test_Controller():
             rows.append(table.item(child)["values"])
         # print("Current data array:", rows)
         return rows
-    
-    # Function to add a row to the table
-    def f_controller_add_row(self, id_value, ma_hang, ten_hang, dvt, sl_kha_dung, sl_nhu_cau, sl_giu_cho, sl_yeu_cau_dat_hang, ghi_chu_mat_hang, table):
-        
-        # Validate input using the helper function
-        is_valid, error_message = self.f_check_input(id_value, ma_hang, ten_hang, sl_giu_cho, sl_yeu_cau_dat_hang)
-        if not is_valid:
-            return is_valid, error_message
-        
-        # Add row to the treeview
-        table.insert("", "end", values=(id_value, ma_hang, ten_hang, dvt, sl_kha_dung, sl_nhu_cau, sl_giu_cho, sl_yeu_cau_dat_hang, ghi_chu_mat_hang))
-        error_message ="Row added successfully!"
-        
-        return is_valid, error_message
     
     def f_get_table_config(self):
         return self.model.f_load_table_config_from_json()
@@ -154,14 +155,6 @@ class cls_test_Controller():
             return "Data exported to SQL Server KD02_YEU_CAU_DAT_HANG!"
         else:
             return "Data validation failed. Please fix the errors."
-    
-    # def f_controller_handle_btn_print_00_click_(self):
-    #     f_utils_create_print_template()
-
-    # def f_controller_handle_btn_print_02_click_(self):
-    #     path_template_file = os.path.join(PATH_ASSETS_TEMPLATES_EXCEL, "PRINT_KD0201.xlsx")
-    #     sheet_name = "KD0201_YEU_CAU_DAT_HANG"
-    #     f_utils_open_print_template(path_template_file, sheet_name)
         
     def f_controller_get_all_info_of_slip(self):
         print("")
@@ -175,7 +168,6 @@ class cls_test_Controller():
             return True  # Double click detected
         else:
             return False  # Single click detected
-    
     
     def f_tab_01_button_config_click(self, treeview_widget):
         var_01, var_02, var_03 = self.model.f_extract_from_json_columns_config()
@@ -459,29 +451,6 @@ class cls_test_Controller_04_validate_before_saving():
         print("Kiểm tra số lượng khả dụng khớp thì mới cho lưu!")
         return True
     
-class cls_test_Controller_05_staticmenthod:
-    @staticmethod
-    def clear_input_fields(entry_ghi_chu_mat_hang, entry_sl_nhu_cau, entry_sl_giu_cho, entry_sl_YCDH):
-        
-        entry_ghi_chu_mat_hang.delete(0, tk.END)
-        entry_sl_nhu_cau.delete(0, tk.END)
-
-        entry_sl_giu_cho.config(state='normal')
-        entry_sl_giu_cho.delete(0, tk.END)
-        entry_sl_giu_cho.config(state='disabled')
-
-        entry_sl_YCDH.config(state='normal')
-        entry_sl_YCDH.delete(0, tk.END)
-        entry_sl_YCDH.config(state='disabled')
-
-    @staticmethod
-    def update_entry_id_after_adding_new_row(tree, entry_id):
-        row_count = 1 + len(tree.get_children())    
-        entry_id.config(state="normal")  # Enable the Entry widget to update the value
-        entry_id.delete(0, tk.END)  # Clear the existing value
-        entry_id.insert(0, row_count)  # Insert the new value (ID)
-        entry_id.config(state="disabled")  # Disable the Entry widget again
-        
 class cls_test_Controller_06_treeview_tab_02():
     def __init__(self):
         # super().__init__()
@@ -569,8 +538,6 @@ class Controller_delete_row_in_SQL:
                 return f"{so_phieu}, Slip deleted."
  
 class SQLController:
-    
-    @staticmethod
     def load_data(tree, query):
         data = SQLModel.fetch_data(query)
         
@@ -583,7 +550,6 @@ class SQLController:
                                            row[10], row[11], row[12], row[13], row[14]))
         
     # Function to print data from the Treeview
-    @staticmethod
     def get_data_to_import_to_SQL(*args):
         (
             ID_nhan_vien,
@@ -642,7 +608,6 @@ class SQLController:
             data = []
             return notification_text, data
     
-    @staticmethod
     def f_controller_handle_btn_save_03_click_(*args):
         (
             ID_nhan_vien,
@@ -800,23 +765,20 @@ class Controller_get_the_latest_number_of_slip:
 
 
 class Controller_handel_all_events:
-    @staticmethod
-    def f_handle_tab_01_button_clear_click(treeview):
+    def f_handle_tab_01_button_clear_click(my_treeview):
         try:
-            Controller_action_after_event.clear_all_contents_in_treeview(treeview)
+            Controller_action_after_event.clear_all_contents_in_treeview(my_treeview)
             return "Clear all rows in treeview!"
         except Exception as e:
             return f"Error: {e}"
         
-    @staticmethod
-    def f_handle_tab_01_button_get_click(treeview):
+    def f_handle_tab_01_button_get_click(my_treeview):
         try:
-            Controller_action_after_event.f_get_data_from_treeview(treeview)
+            Controller_action_after_event.f_get_data_from_treeview(my_treeview)
             return "Got data from treeview!"
         except Exception as e:
             return f"Error: {e}"
     
-    @staticmethod
     def f_handle_btn_print_form_tu_tao_tu_code_click_():
         try:
             f_utils_create_print_template()
@@ -824,7 +786,6 @@ class Controller_handel_all_events:
         except Exception as e:
             return f"Error: {e}"
 
-    @staticmethod
     def f_handle_btn_print_click():
         try:
             path_template_file = os.path.join(PATH_ASSETS_TEMPLATES_EXCEL, "PRINT_KD0201.xlsx")
@@ -841,27 +802,85 @@ class Controller_handel_all_events:
         except Exception as e:
             return f"Error: {e}"
         
-    def f_handle_event_tab_02_button_filter_slip(treeview, *args):
-        # Get the arguments
-        (
-            so_phieu, 
-            so_hop_dong,
-            ngay_bat_dau,
-            ngay_ket_thuc,
-            ma_doi_tuong,
-            ma_hang
-        )= args
-        
-        # Reformat the value
-        formated_ngay_bat_dau = f_utils_change_format_date_from_ddmmyyyy_to_yyyymmdd(ngay_bat_dau)
-        formated_ngay_ket_thuc = f_utils_change_format_date_from_ddmmyyyy_to_yyyymmdd(ngay_ket_thuc)
-        if ma_doi_tuong == 'search here':
-            ma_doi_tuong = ''
-        if ma_hang == 'search here':
-            ma_hang = ''
-        
-        # Create value and fetch data
+    def f_handle_event_tab_01_button_add_row_click(*args):
         try:
+            # Get the arguments
+            (
+                my_treeview, 
+                entry_id,
+                entry_ma_hang, 
+                entry_ten_hang, 
+                entry_dvt, 
+                entry_sl_kha_dung, 
+                entry_sl_nhu_cau, 
+                entry_sl_giu_cho, 
+                entry_sl_yeu_cau_dat_hang, 
+                entry_ghi_chu_mat_hang
+            )= args
+            
+            # Get values from elements
+            id_value = entry_id.get()
+            ma_hang_value = entry_ma_hang.get()
+            ten_hang_value = entry_ten_hang.get()
+            dvt_value = entry_dvt.get()
+            sl_kha_dung_value = float(entry_sl_kha_dung.get().replace(',', '') or 0)
+            sl_nhu_cau_value = float(entry_sl_nhu_cau.get().replace(',', '') or 0)
+            sl_giu_cho_value = float(entry_sl_giu_cho.get().replace(',', '') or 0)
+            sl_yeu_cau_dat_hang_value = float(entry_sl_yeu_cau_dat_hang.get().replace(',', '') or 0)
+            ghi_chu_mat_hang_value = entry_ghi_chu_mat_hang.get()
+            
+            # Start controller
+            Controller_action_after_event.update_entry_id_after_adding_new_row(my_treeview, entry_id)
+            error_message = Controller_action_after_event.f_add_row_into_treeview(id_value, 
+                                                                                ma_hang_value, 
+                                                                                ten_hang_value, 
+                                                                                dvt_value, 
+                                                                                sl_kha_dung_value, 
+                                                                                sl_nhu_cau_value, 
+                                                                                sl_giu_cho_value, 
+                                                                                sl_yeu_cau_dat_hang_value, 
+                                                                                ghi_chu_mat_hang_value, 
+                                                                                my_treeview
+                                                                                )
+            Controller_action_after_event.clear_input_fields(entry_ghi_chu_mat_hang, 
+                                                                    entry_sl_nhu_cau,
+                                                                    entry_sl_giu_cho,
+                                                                    entry_sl_yeu_cau_dat_hang
+                                                                    )
+            # Thông báo cho người dùng
+            if error_message != '':
+                fg="red"
+                return error_message, fg
+            
+            fg="green"
+            return "Successfull", fg
+        except Exception as e:
+            # Correct entry ID because adding fail
+            Controller_action_after_event.update_entry_id_after_adding_new_row(my_treeview, entry_id)
+            fg="red"
+            return f"Error: {e}", fg
+        
+    def f_handle_event_tab_02_button_filter_slip(my_treeview, *args):
+        try:
+            # Get the arguments
+            (
+                so_phieu, 
+                so_hop_dong,
+                ngay_bat_dau,
+                ngay_ket_thuc,
+                ma_doi_tuong,
+                ma_hang
+            )= args
+            
+            # Reformat the value
+            formated_ngay_bat_dau = f_utils_change_format_date_from_ddmmyyyy_to_yyyymmdd(ngay_bat_dau)
+            formated_ngay_ket_thuc = f_utils_change_format_date_from_ddmmyyyy_to_yyyymmdd(ngay_ket_thuc)
+            if ma_doi_tuong == 'search here':
+                ma_doi_tuong = ''
+            if ma_hang == 'search here':
+                ma_hang = ''
+        
+            # Create value and fetch data
             query = f"""
                     EXEC [dbo].[Proc_TB_KD02_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250211_14hh45] 
                         @SO_PHIEU = '{so_phieu}', 
@@ -872,12 +891,12 @@ class Controller_handel_all_events:
                         @MA_HANG = '{ma_hang}';
                     """
             # print(query)
-            SQLController.load_data(treeview, query)
+            SQLController.load_data(my_treeview, query)
             return "Data selected!"
         except Exception as e:
             return f"Error: {e}"
         
-    def f_handle_event_tab_02_button_clear_slip(treeview):
+    def f_handle_event_tab_02_button_clear_slip(my_treeview):
         try:
             # query = f"[Proc_TB_KD02_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250204_110h38]'','',''"
             query = f"""
@@ -889,7 +908,13 @@ class Controller_handel_all_events:
                         @MA_DOI_TUONG = NULL,
                         @MA_HANG = NULL;
                     """
-            SQLController.load_data(treeview, query)
+            SQLController.load_data(my_treeview, query)
             return "Clear all filters!"
         except Exception as e:
             return f"Error: {e}"
+        
+    def update_entry_id_when_initializing(my_treeview, entry_id):
+        Controller_action_after_event.update_entry_id_after_adding_new_row(my_treeview, entry_id)
+        
+        
+        
