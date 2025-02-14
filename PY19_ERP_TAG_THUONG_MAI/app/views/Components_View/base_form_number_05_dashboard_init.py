@@ -87,12 +87,12 @@ class cls_base_form_number_05_DashBoard_init(tk.Tk):
 
         # Danh sách hình ảnh và nội dung cho mỗi card
         cards_data = [
-            {"image": PATH_CARD_BAN_KINH_DOANH, "text": "BP KINH DOANH", "click_event": self.f_open_dashboard_Kinh_Doanh},
-            {"image": PATH_CARD_BAN_VAT_TU, "text": "BP VẬT TƯ", "click_event": self.f_open_dashboard_vat_tu},
-            {"image": PATH_CARD_BAN_KY_THUAT, "text": "BP KỸ THUẬT", "click_event": self.f_open_dashboard_ky_thuat},
-            {"image": PATH_CARD_KHO, "text": "BP KHO", "click_event": self.f_open_dashboard_kho},
-            {"image": PATH_CARD_BAN_TAI_CHINH, "text": "BP TÀI CHÍNH", "click_event": self.f_open_dashboard_tai_chinh},
-            {"image": PATH_CARD_BAN_NHAN_SU, "text": "BP NHÂN SỰ", "click_event": self.f_open_dashboard_nhan_su},
+            {"image": PATH_CARD_BAN_KINH_DOANH, "text": "BP KINH DOANH", "click_event": self.f_open_dashboard_Kinh_Doanh, "visitable": True},
+            {"image": PATH_CARD_BAN_VAT_TU, "text": "BP VẬT TƯ", "click_event": self.f_open_dashboard_vat_tu, "visitable": True},
+            {"image": PATH_CARD_BAN_KY_THUAT, "text": "BP KỸ THUẬT", "click_event": self.f_open_dashboard_ky_thuat, "visitable": True},
+            {"image": PATH_CARD_KHO, "text": "BP KHO", "click_event": self.f_open_dashboard_kho, "visitable": True},
+            {"image": PATH_CARD_BAN_TAI_CHINH, "text": "BP TÀI CHÍNH", "click_event": self.f_open_dashboard_tai_chinh, "visitable": True},
+            {"image": PATH_CARD_BAN_NHAN_SU, "text": "BP NHÂN SỰ", "click_event": self.f_open_dashboard_nhan_su, "visitable": True},
         ]
 
         # Kích thước card và padding
@@ -108,10 +108,15 @@ class cls_base_form_number_05_DashBoard_init(tk.Tk):
             img_tk = ImageTk.PhotoImage(img)
             images.append(img_tk)  # Lưu ảnh để tránh bị thu hồi
 
-        # Thêm card vào frame_body
+        # Thêm card vào parent_frame nếu visitable là True
+        visible_index = 0
         for index, card_data in enumerate(cards_data):
-            row = index // columns
-            col = index % columns
+            if not card_data["visitable"]:
+                continue  # Skip if visitable is False
+            
+            row = visible_index // columns
+            col = visible_index % columns
+            visible_index += 1
 
             # Tạo một frame cho từng "card"
             card = tk.Frame(
@@ -150,7 +155,8 @@ class cls_base_form_number_05_DashBoard_init(tk.Tk):
         f_utils_open_dashboard_kinh_doanh()
         
     def f_open_dashboard_vat_tu(self, event):
-        print("f_open_dashboard_vat_tu")
+        self.destroy()
+        f_utils_open_dashboard_vat_tu()
     
     def f_open_dashboard_kho(self, event):
         print("f_open_dashboard_kho")

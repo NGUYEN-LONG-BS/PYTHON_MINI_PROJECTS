@@ -140,6 +140,13 @@ def f_utils_open_dashboard_kinh_doanh():
     f_utils_set_center_screen(new_view)
     new_view.focus_force()
     
+def f_utils_open_dashboard_vat_tu():
+    from views.VT00_DashboardVatTu_View.Dashboard_VatTu_View import cls_Dashboard_Vat_Tu_View
+    new_view = cls_Dashboard_Vat_Tu_View()
+    f_utils_set_window_size_is_4_per_5_screen(new_view)
+    f_utils_set_center_screen(new_view)
+    new_view.focus_force()
+
 def f_utils_show_fading_popup(message):
     # Tạo cửa sổ popup
     popup = tk.Toplevel()

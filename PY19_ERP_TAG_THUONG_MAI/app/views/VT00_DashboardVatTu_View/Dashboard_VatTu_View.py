@@ -8,10 +8,10 @@ from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 import numpy as np
 
-class cls_Dashboard_kinhdoanh_View(cls_base_form_number_02_ManyTabs):
+class cls_Dashboard_Vat_Tu_View(cls_base_form_number_02_ManyTabs):
     def __init__(self):
-        title = "KD00 - DashboardKinhDoanhView"
-        name_of_slip = "BỘ PHẬN KINH DOANH"
+        title = "VT00 - Dashboard Vật Tư"
+        name_of_slip = "BỘ PHẬN VẬT TƯ"
         super().__init__(title_of_form=title, name_of_slip=name_of_slip)
         # call reuse components
         self._f_view_thay_doi_gia_tri_cua_base_form()
@@ -82,12 +82,12 @@ class cls_Dashboard_kinhdoanh_View(cls_base_form_number_02_ManyTabs):
 
         # Danh sách hình ảnh và nội dung cho mỗi card
         cards_data = [
-            {"image": PATH_CARD_KD_QUAN_LY_KHACH_HANG,"text": "DANH SÁCH KHÁCH HÀNG", "click_event": self.f_card_01_click,"name_of_card": "card_frame_danh_sach_khach_hang", "visitable": False},
-            {"image": PATH_CARD_KD_02,"text": "DANH SÁCH HÀNG HOÁ", "click_event": self.f_card_02_danh_sach_hang_hoa_click,"name_of_card": "card_frame_2", "visitable": True},
-            {"image": PATH_CARD_KD_03,"text": "QUẢN LÝ GÓI THẦU", "click_event": self.f_card_03_click,"name_of_card": "card_frame_3", "visitable": False},
+            {"image": PATH_CARD_KD_QUAN_LY_KHACH_HANG,"text": "DANH SÁCH NHÀ CUNG CẤP", "click_event": self.f_card_01_click,"name_of_card": "card_frame_danh_sach_khach_hang", "visitable": True},
+            {"image": PATH_CARD_KD_02,"text": "QUẢN LÝ KHO", "click_event": self.f_card_02_danh_sach_hang_hoa_click,"name_of_card": "card_frame_2", "visitable": True},
+            {"image": PATH_CARD_KD_03,"text": "QUẢN LÝ ĐƠN ĐẶT HÀNG", "click_event": self.f_card_03_click,"name_of_card": "card_frame_3", "visitable": True},
             {"image": PATH_CARD_KD_04,"text": "QUẢN LÝ CÔNG NỢ", "click_event": self.f_card_04_click,"name_of_card": "card_frame_4", "visitable": False},
-            {"image": PATH_CARD_KD_05,"text": "QUẢN LÝ YÊU CẦU ĐẶT HÀNG", "click_event": self.f_card_05_yeu_cau_dat_hang_click,"name_of_card": "card_frame_yeu_cau_dat_hang", "visitable": True},
-            {"image": PATH_CARD_KD_06,"text": "BÁO CÁO", "click_event": self.f_card_06_click,"name_of_card": "card_frame_6", "visitable": True},
+            {"image": PATH_CARD_KD_05,"text": "QUẢN LÝ YÊU CẦU ĐẶT HÀNG", "click_event": self.f_card_05_yeu_cau_dat_hang_click,"name_of_card": "card_frame_yeu_cau_dat_hang", "visitable": False},
+            {"image": PATH_CARD_KD_06,"text": "BÁO CÁO", "click_event": self.f_card_06_click,"name_of_card": "card_frame_6", "visitable": False},
         ]
 
         # Kích thước card và padding
