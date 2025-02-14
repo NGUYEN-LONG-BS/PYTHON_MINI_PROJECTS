@@ -290,9 +290,9 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         parent_frame.grid_rowconfigure(0, weight=1)
 
         # Create frame clients informations
-        self.frame_clients_informations_tab_01 = cls_frame_client_information_view(parent_frame)
-        self.frame_clients_informations_tab_01.config(bd=0, relief="flat")
-        self.frame_clients_informations_tab_01.grid(row=0, column=0, sticky="nsew")
+        self.tab_01_frame_suppliers_information = cls_frame_suppliers_information_view(parent_frame)
+        self.tab_01_frame_suppliers_information.config(bd=0, relief="flat")
+        self.tab_01_frame_suppliers_information.grid(row=0, column=0, sticky="nsew")
         self._f_view_create_widgets_add_row_03_into_frame_clients_informations_tab_01()
         
         # Create frame inventories informations
@@ -365,7 +365,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         
     def _f_view_create_widgets_add_row_03_into_frame_clients_informations_tab_01(self):
         # create parent_frame
-        parent_frame = cls_frame_contracts_management_view(self.frame_clients_informations_tab_01)
+        parent_frame = cls_frame_contracts_management_view(self.tab_01_frame_suppliers_information)
         parent_frame.pack(side="bottom", fill="x", expand=True)
 
     def _f_view_create_widgets_in_tab_01_frame_button_of_treeview(self):
