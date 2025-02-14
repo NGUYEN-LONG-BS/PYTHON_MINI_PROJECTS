@@ -13,7 +13,7 @@ from test_Controller import cls_test_Controller_06_treeview_tab_02
 from test_Controller import SQLController
 from test_Controller import Controller_SQL_to_excel
 from test_Controller import Controller_delete_row_in_SQL
-from test_Controller import Controller_handel_all_events
+from .test_Controller import Controller_handel_all_events
 
 class cls_test_View(cls_base_form_number_02_ManyTabs):
     def __init__(self):
@@ -583,6 +583,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         
     def f_tab_01_button_get_number_of_slip_click(self):        
         notification_text = Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(self.entry_so_phieu)
+        print("debug")
         self._f_config_notification(notification_text, fg="blue")
     
     def f_tab_01_button_import_click(self):

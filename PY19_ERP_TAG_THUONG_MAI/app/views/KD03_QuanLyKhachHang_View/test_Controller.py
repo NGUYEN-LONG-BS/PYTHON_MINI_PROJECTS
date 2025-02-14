@@ -796,6 +796,7 @@ class Controller_handel_all_events:
             return f"Error: {e}"
         
     def f_handle_event_get_the_latest_number_of_slip(entry_so_phieu):
+        print("hàm cũ")
         try:
             Controller_action_after_event.f_get_the_latest_number_of_slip(entry_so_phieu)
             return "Have gotten the latest number of slip!"

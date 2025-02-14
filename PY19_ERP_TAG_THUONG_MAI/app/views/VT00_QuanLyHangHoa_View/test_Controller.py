@@ -29,11 +29,15 @@ class Controller_action_after_event:
     def f_get_the_latest_number_of_slip(entry_so_phieu):
         # Get the latest number of slip
         ma_thanh_vien = "TB"
-        loai_phieu = "YCDH"
+        loai_phieu = "PNK"
         so_phieu = Controller_get_the_latest_number_of_slip.handle_button_get_number_of_slip_click()
+        print(ma_thanh_vien)
+        print(loai_phieu)
+        print(so_phieu)
         
         # Create the connection string
         connection_number_of_slip = f"{ma_thanh_vien}-{loai_phieu}-{so_phieu + 1}"
+        print(connection_number_of_slip)
         
         # Config the entry_so_phieu
         entry_so_phieu.config(state="normal")
@@ -758,7 +762,7 @@ class Controller_get_the_latest_number_of_slip:
         data_01 = Controller_get_the_latest_number_of_slip.get_list_number_of_slip(database_name, table_name)
         # Lấy số phiếu cuối cùng
         data_02 = Controller_get_the_latest_number_of_slip.extract_numbers_from_data_SQL_num_01(data_01)
-        # print("data", data_02)
+        print("data", data_02)
         
         return data_02
 
@@ -796,8 +800,10 @@ class Controller_handel_all_events:
             return f"Error: {e}"
         
     def f_handle_event_get_the_latest_number_of_slip(entry_so_phieu):
+        print("step1")
         try:
             Controller_action_after_event.f_get_the_latest_number_of_slip(entry_so_phieu)
+            print("Have gotten the latest number of slip!")
             return "Have gotten the latest number of slip!"
         except Exception as e:
             return f"Error: {e}"
