@@ -32,7 +32,6 @@ import re
 class utils_controller_get_the_latest_number_of_slip:
     
     def get_list_number_of_slip(database_name, table_name, slip_column_name):
-        
         # Tạo câu query SQL với danh sách số phiếu
         query = f"""
         SELECT DISTINCT
