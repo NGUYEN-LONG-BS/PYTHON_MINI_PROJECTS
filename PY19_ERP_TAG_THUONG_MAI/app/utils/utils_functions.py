@@ -97,8 +97,9 @@ def f_utils_set_window_size_is_4_per_5_screen(root, width=0, height=0):
         screen_height = root.winfo_screenheight()
         
         # Calculate 4/5 of screen dimensions
-        height = int(screen_height * 4 / 5)
-        width = int(screen_width * 4 / 5)
+        ratio = 1
+        height = int(screen_height * ratio)
+        width = int(screen_width * ratio)
     
     # Set the window size
     root.geometry(f"{width}x{height}")
