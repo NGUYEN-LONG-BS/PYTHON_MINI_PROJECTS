@@ -13,7 +13,7 @@ class cls_user_info(tk.Tk):
         # Setup window
         self.title("Thông tin người dùng - Userinfo")
         # Thiết lập kích thước cửa sổ
-        f_utils_set_window_size_is_4_per_5_screen(self, 0, 0)
+        f_utils_set_window_size_of_new_view(self, maximize=True)
         f_utils_set_center_screen(self)
         
         self.f_create_element()

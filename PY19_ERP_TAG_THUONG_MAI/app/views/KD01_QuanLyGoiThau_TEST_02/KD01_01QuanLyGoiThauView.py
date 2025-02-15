@@ -11,7 +11,7 @@ class cls_View(tk.Tk):
         # self.root = root
         self.title("KD01_01QuanLyGoiThauView")
         # Thiết lập kích thước cửa sổ
-        f_utils_set_window_size_is_4_per_5_screen(self, 0, 0)
+        f_utils_set_window_size_of_new_view(self, maximize=True)
         f_utils_set_center_screen(self)
 
         

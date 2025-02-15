@@ -376,7 +376,7 @@ class cls_menu_top:
         self.parent.destroy()
         new_view = cls_KD0201_PhieuYeuCauDatHang_View()
         new_view.dashboard = self.parent
-        f_utils_set_window_size_is_4_per_5_screen(new_view)
+        f_utils_set_window_size_of_new_view(new_view, maximize=True)
         f_utils_set_center_screen(new_view)
         new_view.focus_force()
     
@@ -385,7 +385,7 @@ class cls_menu_top:
         self.parent.destroy()
         new_view = cls_test_View()
         new_view.dashboard = self.parent
-        f_utils_set_window_size_is_4_per_5_screen(new_view)
+        f_utils_set_window_size_of_new_view(new_view, maximize=True)
         f_utils_set_center_screen(new_view)
         new_view.focus_force()
     
@@ -394,7 +394,7 @@ class cls_menu_top:
         self.parent.destroy()
         new_view = cls_hr01_view()
         new_view.dashboard = self.parent
-        f_utils_set_window_size_is_4_per_5_screen(new_view)
+        f_utils_set_window_size_of_new_view(new_view, maximize=True)
         f_utils_set_center_screen(new_view)
         new_view.focus_force()
     
@@ -403,7 +403,7 @@ class cls_menu_top:
         self.parent.destroy()
         new_view = cls_KD0301_CRUDP_KhachHang_View()
         new_view.dashboard = self.parent
-        f_utils_set_window_size_is_4_per_5_screen(new_view)
+        f_utils_set_window_size_of_new_view(new_view, maximize=True)
         f_utils_set_center_screen(new_view)
         new_view.focus_force()
     
@@ -412,7 +412,7 @@ class cls_menu_top:
         self.parent.destroy()
         new_view = cls_View()
         new_view.dashboard = self.parent
-        f_utils_set_window_size_is_4_per_5_screen(new_view)
+        f_utils_set_window_size_of_new_view(new_view, maximize=True)
         f_utils_set_center_screen(new_view)
         new_view.focus_force()
         
@@ -422,7 +422,7 @@ class cls_menu_top:
         self.parent.destroy()
         new_view = cls_KD01QuanLyGoiThauView()
         new_view.dashboard = self.parent
-        f_utils_set_window_size_is_4_per_5_screen(new_view)
+        f_utils_set_window_size_of_new_view(new_view, maximize=True)
         f_utils_set_center_screen(new_view)
         new_view.focus_force()
         
@@ -432,7 +432,7 @@ class cls_menu_top:
         self.parent.destroy()
         new_view = cls_KD0101_QuanLyGoiThau_View()
         new_view.dashboard = self.parent
-        f_utils_set_window_size_is_4_per_5_screen(new_view)
+        f_utils_set_window_size_of_new_view(new_view, maximize=True)
         f_utils_set_center_screen(new_view)
         new_view.focus_force()
         
@@ -441,7 +441,7 @@ class cls_menu_top:
         self.parent.destroy()
         new_view = cls_test_View()
         # new_view.dashboard = self.parent
-        f_utils_set_window_size_is_4_per_5_screen(new_view)
+        f_utils_set_window_size_of_new_view(new_view, maximize=True)
         f_utils_set_center_screen(new_view)
         new_view.focus_force()
         
@@ -450,7 +450,7 @@ class cls_menu_top:
         self.parent.destroy()
         new_view = cls_VT0101_DonDatHang_View()
         # new_view.dashboard = self.parent
-        f_utils_set_window_size_is_4_per_5_screen(new_view)
+        f_utils_set_window_size_of_new_view(new_view, maximize=True)
         f_utils_set_center_screen(new_view)
         new_view.focus_force()
         
@@ -460,7 +460,7 @@ class cls_menu_top:
         self.parent.destroy()
         new_view = cls_VT0102_DonDatHang_TM_View()
         # new_view.dashboard = self.parent
-        f_utils_set_window_size_is_4_per_5_screen(new_view)
+        f_utils_set_window_size_of_new_view(new_view, maximize=True)
         f_utils_set_center_screen(new_view)
         new_view.focus_force()
         
@@ -470,7 +470,7 @@ class cls_menu_top:
         self.parent.destroy()
         new_view = cls_user_info()
         # new_view.dashboard = self.parent
-        f_utils_set_window_size_is_4_per_5_screen(new_view)
+        f_utils_set_window_size_of_new_view(new_view, maximize=True)
         f_utils_set_center_screen(new_view)
         new_view.focus_force()
         

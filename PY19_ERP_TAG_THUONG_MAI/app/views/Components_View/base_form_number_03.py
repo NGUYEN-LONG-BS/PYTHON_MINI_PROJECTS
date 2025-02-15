@@ -26,7 +26,7 @@ class cls_base_form_number_03_DashBoard(tk.Tk):
     
     def f_Thiet_lap_Kich_thuoc_Cua_So(self):
         """Configures window size and position."""
-        f_utils_set_window_size_is_4_per_5_screen(self, 0, 0)
+        f_utils_set_window_size_of_new_view(self, maximize=True)
         f_utils_set_center_screen(self)
         try:
             f_utils_setup_fav_icon(self)

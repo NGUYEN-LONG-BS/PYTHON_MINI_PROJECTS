@@ -23,7 +23,7 @@ class cls_KD01QuanLyGoiThauView(tk.Tk):
         self.title("QUẢN LÝ GÓI THẦU - KD01QuanLyGoiThauView")
         
         # Thiết lập kích thước cửa sổ
-        f_utils_set_window_size_is_4_per_5_screen(self, 0, 0)
+        f_utils_set_window_size_of_new_view(self, maximize=True)
         f_utils_set_center_screen(self)
 
         # Gọi các thành phần tái sử dụng

@@ -6,9 +6,6 @@ class cls_Register_View(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("AD0002 - Register")
-        # f_utils_set_window_size_is_4_per_5_screen(self, 400, 500)
-        # f_utils_set_center_screen(self)
-        # f_utils_setup_fav_icon(self)
         
         # Configure a grid layout
         self.configure(bg="#f9f9f9")
