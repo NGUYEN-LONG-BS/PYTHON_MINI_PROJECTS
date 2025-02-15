@@ -84,9 +84,13 @@ class cls_base_form_number_02_ManyTabs(tk.Tk):
         # self.notebook.pack(fill="x", expand=True)
 
         # Create tabs
-        self.tab1 = ttk.Frame(self.notebook)
-        self.tab2 = ttk.Frame(self.notebook)
-        self.tab3 = ttk.Frame(self.notebook)
+        # self.tab1 = ttk.Frame(self.notebook)
+        # self.tab2 = ttk.Frame(self.notebook)
+        # self.tab3 = ttk.Frame(self.notebook)
+        
+        self.tab1 = ttk.Frame(self.notebook, name="tab_01")
+        self.tab2 = ttk.Frame(self.notebook, name="tab_02")
+        self.tab3 = ttk.Frame(self.notebook, name="tab_03")
 
         # Add tabs to notebook
         self.notebook.add(self.tab1, text="Tab-00")

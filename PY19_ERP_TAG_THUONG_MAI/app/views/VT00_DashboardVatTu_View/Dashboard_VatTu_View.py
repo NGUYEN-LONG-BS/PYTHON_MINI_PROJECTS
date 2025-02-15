@@ -173,19 +173,6 @@ class cls_Dashboard_Vat_Tu_View(cls_base_form_number_02_ManyTabs):
 
     def f_card_06_click(self, event):
         print("f_card_06_click")
-
-    # def _f_add_elements_to_card_QL_KHACHANG(self):
-    #     try:
-    #         parent_frame = self.tab_01.nametowidget("card_frame_yeu_cau_dat_hang")
-    #     except KeyError:
-    #         print("Error: Frame 'card_frame_yeu_cau_dat_hang' not found!")
-    #         return
-
-        # frame_01 = tk.Frame(parent_frame)
-        # frame_01.pack(fill="x", expand=True, padx=10, pady=10)
-
-        # BTN_01 = tk.Button(frame_01, text="Nhật ký yêu cầu đặt hàng", font=("Arial", 12), command=self.f_view_tab_01_button_NhatKyYeuCauDatHang_click)
-        # BTN_01.pack(side="left", padx=10, pady=5)
     
     def _f_view_create_in_tab_02_all_container_frames(self):
         parent_frame = self.tab_02

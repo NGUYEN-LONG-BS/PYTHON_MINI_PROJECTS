@@ -114,5 +114,5 @@ class utils_controller_set_size_of_windown_250215_10h24:
                 pass
             
             if root.winfo_width() < 900 or root.winfo_height() < 500:
-                root.geometry("900x500")
+                root.geometry("1600x800")
             

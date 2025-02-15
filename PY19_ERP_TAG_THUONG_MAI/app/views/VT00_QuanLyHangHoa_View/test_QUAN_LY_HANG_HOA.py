@@ -107,21 +107,20 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
             print("Error: notebook not found!")
             return
 
-        
         # Change the text of the second tabs
         notebook.tab(0, text="NHẬP KHO")
         notebook.tab(1, text="XUẤT KHO")
         notebook.tab(2, text="TẠO MỚI MÃ HÀNG")
         
         # Tab: Nhật ký nhập kho
-        frame_NHAT_KY_NHAP_KHO = ttk.Frame(notebook)
-        notebook.add(frame_NHAT_KY_NHAP_KHO, text="NHẬT KÝ NHẬP KHO")
+        self.frame_NHAT_KY_NHAP_KHO = ttk.Frame(notebook, name="tab_04")
+        notebook.add(self.frame_NHAT_KY_NHAP_KHO, text="NHẬT KÝ NHẬP KHO")
         # Tab: Nhật ký xuất kho
-        frame_NHAT_KY_XUAT_KHO = ttk.Frame(notebook)
-        notebook.add(frame_NHAT_KY_XUAT_KHO, text="NHẬT KÝ XUẤT KHO")
+        self.frame_NHAT_KY_XUAT_KHO = ttk.Frame(notebook, name="tab_05")
+        notebook.add(self.frame_NHAT_KY_XUAT_KHO, text="NHẬT KÝ XUẤT KHO")
         # Tab: Báo cáo tồn kho
-        frame_BAO_CAO_TON_KHO = ttk.Frame(notebook)
-        notebook.add(frame_BAO_CAO_TON_KHO, text="BÁO CÁO TỒN KHO")
+        self.frame_BAO_CAO_TON_KHO = ttk.Frame(notebook, name="tab_06")
+        notebook.add(self.frame_BAO_CAO_TON_KHO, text="BÁO CÁO TỒN KHO")
         # notebook.tab(3, text="BÁO CÁO TỒN KHO")
         
         # # Delete the third tab
@@ -485,28 +484,28 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
                                                text="Test save 02", 
                                                background=COLOR_BACKGROUND_NUM_02_DARK_GRAY, 
                                                command=self.f_tab_01_button_save_02_click)
-        self.tab_01_button_save_02.pack(side="right", padx=10)
+        # self.tab_01_button_save_02.pack(side="right", padx=10)
         
         # BTN test
         self.tab_01_button_export = tk.Button(tab_01_button_container_02_on_the_right, 
                                               text="Test save 01", 
                                               background=COLOR_BACKGROUND_NUM_02_DARK_GRAY, 
                                               command=self.f_tab_01_button_export_click)
-        self.tab_01_button_export.pack(side="right", padx=10)
+        # self.tab_01_button_export.pack(side="right", padx=10)
         
         # BTN test
         self.tab_01_print_config = tk.Button(tab_01_button_container_02_on_the_right, 
                                              text="Test in cấu hình của bảng", 
                                              background=COLOR_BACKGROUND_NUM_02_DARK_GRAY, 
                                              command=self.f_button_print_config_click)
-        self.tab_01_print_config.pack(side="right", padx=10)
+        # self.tab_01_print_config.pack(side="right", padx=10)
         
         # BTN test
         self.tab_01_config_num_02 = tk.Button(tab_01_button_container_02_on_the_right, 
                                               text="Test print form print từ code", 
                                               background=COLOR_BACKGROUND_NUM_02_DARK_GRAY, 
                                               command=self.f_tab_01_button_print_form_tu_tao_tu_code_click)
-        self.tab_01_config_num_02.pack(side="right", padx=10)
+        # self.tab_01_config_num_02.pack(side="right", padx=10)
         
         # BTN save
         self.tab_01_button_save_03 = tk.Button(tab_01_button_container_02_on_the_right, 
