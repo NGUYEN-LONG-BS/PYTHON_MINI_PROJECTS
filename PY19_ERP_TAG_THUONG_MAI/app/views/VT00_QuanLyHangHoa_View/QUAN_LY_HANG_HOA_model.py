@@ -12,7 +12,7 @@ class cls_test_Model():
     
     def f_define_table_configurations_json_file(self):
         # Define the path to the JSON file
-        self.json_file = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'TEST_VIEW_01', 'test_table_input.JSON')
+        self.json_file = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'VT_QUAN_LY_HANG_HOA', 'PNK_table_input.JSON')
         
     def f_load_table_config_from_json(self):
         """Load table and column configurations from JSON"""
@@ -614,7 +614,7 @@ class cls_test_Model_06_staticmenthod_get_config_of_table_YCDH_log_from_json():
     
     def f_define_table_configurations_json_file(self):
         # Define the path to the JSON file
-        self.json_file = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'TEST_VIEW_01', 'test_table_log.JSON')
+        self.json_file = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'VT_QUAN_LY_HANG_HOA', 'PNK_table_log.JSON')
         # return table_config_json_path
     
     def f_load_table_config_from_json(self):

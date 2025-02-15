@@ -6,14 +6,14 @@ from Components_View import *
 from Components_View import cls_frame_normal
 from Components_View.treeview import cls_Treeview_frame_number_01
 from utils import *
-from test_Controller import cls_test_Controller
-from test_Controller import cls_test_Controller_02_treeview
-from test_Controller import cls_test_Controller_03_auto_update_number 
-from test_Controller import cls_test_Controller_06_treeview_tab_02
-from test_Controller import SQLController
-from test_Controller import Controller_SQL_to_excel
-from test_Controller import Controller_delete_row_in_SQL
-from .test_Controller import Controller_handel_all_events
+from .QUAN_LY_HANG_HOA_controller import cls_test_Controller
+from .QUAN_LY_HANG_HOA_controller import cls_test_Controller_02_treeview
+from .QUAN_LY_HANG_HOA_controller import cls_test_Controller_03_auto_update_number 
+from .QUAN_LY_HANG_HOA_controller import cls_test_Controller_06_treeview_tab_04
+from .QUAN_LY_HANG_HOA_controller import SQLController
+from .QUAN_LY_HANG_HOA_controller import Controller_SQL_to_excel
+from .QUAN_LY_HANG_HOA_controller import Controller_delete_row_in_SQL
+from .QUAN_LY_HANG_HOA_controller import Controller_handel_all_events
 
 class cls_test_View(cls_base_form_number_02_ManyTabs):
     def __init__(self):
@@ -22,13 +22,13 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         super().__init__(title_of_form=title, name_of_slip=name)
         # Add controller 01
         self.f_view_add_controller_01_basic()
-        self.f_view_add_controller_04_treeview_of_tab_02()
+        self.f_view_add_controller_04_treeview_of_tab_04()
         # call reuse components
-        self._f_view_thay_doi_gia_tri_cua_base_form()
-        self._f_view_create_all_container_frames_of_window()
+        self.f_view_thay_doi_gia_tri_cua_base_form()
+        self.f_view_create_all_container_frames_of_window()
         # set up formats
-        self._f_view_set_up_formats_of_tab_01()
-        self._f_view_set_up_formats_of_tab_02()
+        self.f_view_set_up_formats_of_tab_01()
+        self.f_view_set_up_formats_of_tab_04()
         Controller_handel_all_events.update_entry_id_when_initializing(self.table_of_tab_01, self.tab_01_entry_id)
         # Set up all global variants
         self._f_setup_all_global_variants()
@@ -44,7 +44,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
     
     def _f_setup_all_binding(self):
         # Find in tab_01
-        tab_01_frame = self.tab_01
+        tab_01_frame = self.tab_01_PHIEU_NHAP_KHO
         self.entry_sl_kha_dung = f_utils_tim_component_with_name(tab_01_frame, "entry_sl_kha_dung")
         self.entry_sl_kha_dung.bind("<FocusOut>", self.f_view_clear_content_when_sl_kha_dung_change)
         
@@ -65,30 +65,30 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.entry_so_hop_dong = f_utils_tim_component_with_name(tab_01_frame, "entry_so_hop_dong")
         self.entry_thong_tin_hop_dong = f_utils_tim_component_with_name(tab_01_frame, "entry_thong_tin_ngan_cua_hop_dong")
         
-        # Find in tab_02
-        tab_02_frame = self.tab_02
-        self.entry_ma_khach_hang_tab_02 = f_utils_tim_component_with_name(tab_02_frame, "entry_ma_khach_hang")
-        self.entry_ten_khach_hang_tab_02 = f_utils_tim_component_with_name(tab_02_frame, "entry_ten_khach_hang")
-        self.entry_mst_tab_02 = f_utils_tim_component_with_name(tab_02_frame, "entry_mst")
-        self.entry_mst_tab_02.pack_forget()
-        self.entry_dia_chi_tab_02 = f_utils_tim_component_with_name(tab_02_frame, "entry_dia_chi")
-        self.entry_dia_chi_tab_02.pack_forget()
-        self.frame_row_2_of_inventories_info = f_utils_tim_component_with_name(tab_02_frame, "frame_row_2_of_inventories_info")
+        # Find in tab_04
+        tab_04_frame = self.tab_04_NHAT_KY_NHAP_KHO
+        self.tab_04_entry_ma_khach_hang = f_utils_tim_component_with_name(tab_04_frame, "entry_ma_khach_hang")
+        self.tab_04_entry_ten_khach_hang = f_utils_tim_component_with_name(tab_04_frame, "entry_ten_khach_hang")
+        self.entry_mst_tab_04 = f_utils_tim_component_with_name(tab_04_frame, "entry_mst")
+        self.entry_mst_tab_04.pack_forget()
+        self.entry_dia_chi_tab_04 = f_utils_tim_component_with_name(tab_04_frame, "entry_dia_chi")
+        self.entry_dia_chi_tab_04.pack_forget()
+        self.frame_row_2_of_inventories_info = f_utils_tim_component_with_name(tab_04_frame, "frame_row_2_of_inventories_info")
         self.frame_row_2_of_inventories_info.pack_forget()
         
-        self.entry_ma_hang_tab_02 = f_utils_tim_component_with_name(tab_02_frame, "entry_ma_hang")
-        self.entry_ten_hang_tab_02 = f_utils_tim_component_with_name(tab_02_frame, "entry_ten_hang")
+        self.tab_04_entry_ma_hang = f_utils_tim_component_with_name(tab_04_frame, "entry_ma_hang")
+        self.tab_04_entry_ten_hang = f_utils_tim_component_with_name(tab_04_frame, "entry_ten_hang")
         
-        self.ngay_filter_bat_dau = f_utils_tim_component_with_name(tab_02_frame, "start_date_entry")
-        self.ngay_filter_ket_thuc = f_utils_tim_component_with_name(tab_02_frame, "end_date_entry")
+        self.ngay_filter_bat_dau = f_utils_tim_component_with_name(tab_04_frame, "start_date_entry")
+        self.ngay_filter_ket_thuc = f_utils_tim_component_with_name(tab_04_frame, "end_date_entry")
         
     def f_view_clear_content_when_sl_kha_dung_change(self, event):
         f_utils_on_entry_change(self.entry_sl_kha_dung)
-        self.tab_01_entry_nhu_cau.delete(0, tk.END)
+        self.tab_01_entry_sl_thuc_nhap.delete(0, tk.END)
         self.tab_01_entry_sl_giu_cho.delete(0, tk.END)
         self.tab_01_entry_sl_YCDH.delete(0, tk.END)
     
-    def _f_view_thay_doi_gia_tri_cua_base_form(self):
+    def f_view_thay_doi_gia_tri_cua_base_form(self):
         # Thay đổi thông tin các tab
         notebook = None
         def find_notebook(widget):
@@ -113,14 +113,14 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         notebook.tab(2, text="TẠO MỚI MÃ HÀNG")
         
         # Tab: Nhật ký nhập kho
-        self.frame_NHAT_KY_NHAP_KHO = ttk.Frame(notebook, name="tab_04")
-        notebook.add(self.frame_NHAT_KY_NHAP_KHO, text="NHẬT KÝ NHẬP KHO")
+        self.tab_04_NHAT_KY_NHAP_KHO = ttk.Frame(notebook, name="tab_04")
+        notebook.add(self.tab_04_NHAT_KY_NHAP_KHO, text="NHẬT KÝ NHẬP KHO")
         # Tab: Nhật ký xuất kho
-        self.frame_NHAT_KY_XUAT_KHO = ttk.Frame(notebook, name="tab_05")
-        notebook.add(self.frame_NHAT_KY_XUAT_KHO, text="NHẬT KÝ XUẤT KHO")
+        self.self_tab05_frame_NHAT_KY_XUAT_KHO = ttk.Frame(notebook, name="tab_05")
+        notebook.add(self.self_tab05_frame_NHAT_KY_XUAT_KHO, text="NHẬT KÝ XUẤT KHO")
         # Tab: Báo cáo tồn kho
-        self.frame_BAO_CAO_TON_KHO = ttk.Frame(notebook, name="tab_06")
-        notebook.add(self.frame_BAO_CAO_TON_KHO, text="BÁO CÁO TỒN KHO")
+        self.tab_06_frame_BAO_CAO_TON_KHO = ttk.Frame(notebook, name="tab_06")
+        notebook.add(self.tab_06_frame_BAO_CAO_TON_KHO, text="BÁO CÁO TỒN KHO")
         # notebook.tab(3, text="BÁO CÁO TỒN KHO")
         
         # # Delete the third tab
@@ -141,7 +141,17 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
                         grandchild.destroy()
                         break
         return notebook
+    
+    def f_view_create_all_container_frames_of_window(self):
+        # Create tabs
+        self.tab_01_PHIEU_NHAP_KHO = self.tab1
+        self.tab_02_PHIEU_XUAT_KHO = self.tab2
+        self.tab_03_PHIEU_TAO_MOI_MA_HANG = self.tab3
         
+        # Settings tab content
+        self.f_view_create_all_container_frames_in_tab_01()
+        self.f_view_create_all_container_frames_in_tab_04()
+     
     def _f_setup_all_global_variants(self):    
         # Timer interval (in milliseconds)
         self.last_click_time = 0
@@ -166,34 +176,28 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
     def f_view_add_controller_02_all_logic_of_treeview(self):
         # Initialize controller_02
         tree = self.table_of_tab_01
-        entry_ma_hh = self.tab_01_entry_nhu_cau
-        entry_ten_hh = self.tab_01_entry_nhu_cau
-        entry_so_luong = self.tab_01_entry_nhu_cau
-        entry_ghi_chu = self.tab_01_entry_nhu_cau
+        entry_ma_hh = self.tab_01_entry_sl_thuc_nhap
+        entry_ten_hh = self.tab_01_entry_sl_thuc_nhap
+        entry_so_luong = self.tab_01_entry_sl_thuc_nhap
+        entry_ghi_chu = self.tab_01_entry_sl_thuc_nhap
         self.controller_02_treeview = cls_test_Controller_02_treeview(tree, entry_ma_hh, entry_ten_hh, entry_so_luong, entry_ghi_chu)
         self.controller_02_treeview.view = self
     
     def f_view_add_controller_03_auto_update_entries_amount_of_inventory(self):
         # Initialize controller_03
         entry_sl_kha_dung = self.entry_sl_kha_dung
-        entry_sl_nhu_cau = self.tab_01_entry_nhu_cau
+        entry_sl_nhu_cau = self.tab_01_entry_sl_thuc_nhap
         entry_sl_giu_cho = self.tab_01_entry_sl_giu_cho
         entry_sl_yeu_cau_dat_hang = self.tab_01_entry_sl_YCDH
         self.controller_03_auto_update_number = cls_test_Controller_03_auto_update_number(entry_sl_kha_dung, entry_sl_nhu_cau, entry_sl_giu_cho, entry_sl_yeu_cau_dat_hang)
         self.controller_03_auto_update_number.view = self
         
-    def f_view_add_controller_04_treeview_of_tab_02(self):
+    def f_view_add_controller_04_treeview_of_tab_04(self):
         # Initialize controller_01
-        self.controller_04 = cls_test_Controller_06_treeview_tab_02()
+        self.controller_04 = cls_test_Controller_06_treeview_tab_04()
         self.controller_04.view = self
     
-    def _f_view_create_all_container_frames_of_window(self):
-        # Create tabs
-        self.tab_01 = self.tab1
-        self.tab_02 = self.tab2
-        # Settings tab content
-        self._f_view_create_widgets_all_container_frames_in_tab_01()
-        self._f_view_create_all_container_frames_in_tab_02()
+    
 
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
@@ -206,81 +210,78 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
     # Tab_01: create widgets
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
 
-    def _f_view_create_widgets_all_container_frames_in_tab_01(self):
-        parent_frame = self.tab_01
+    def f_view_create_all_container_frames_in_tab_01(self):
+        parent_frame = self.tab_01_PHIEU_NHAP_KHO
 
         # Frame H2
         self.tab_01_frame_H2 = cls_frame_normal(parent_frame)
         self.tab_01_frame_H2.grid(row=0, column=0, sticky="ew")
 
-        self._f_view_create_widgets_in_tab_01_frame_H2()
+        self.f_view_create_widgets_in_tab_01_frame_H2()
 
         # Frame entries
         self.tab_01_frame_entries = cls_frame_normal(parent_frame)
         self.tab_01_frame_entries.grid(row=1, column=0, sticky="ew")
-        self._f_view_create_widgets_in_tab_01_frame_entries()
+        self.f_view_create_widgets_in_tab_01_frame_entries()
 
         # Frame button
         self.tab_01_frame_button_of_treeview = tk.Frame(parent_frame)
         self.tab_01_frame_button_of_treeview.grid(row=2, column=0, sticky="ew")
-        self._f_view_create_widgets_in_tab_01_frame_button_of_treeview()
+        self.f_view_create_widgets_in_tab_01_frame_button_of_treeview()
 
         # Frame treeview
         self.tab_01_frame_treeview = cls_Treeview_frame_number_01(parent_frame)
         self.tab_01_frame_treeview.grid(row=3, column=0, sticky="nsew")
-        self._f_view_create_widgets_in_tab_01_frame_treeview()
+        self.f_view_create_widgets_in_tab_01_frame_treeview()
         
         # Frame button
         self.tab_01_frame_button_02 = tk.Frame(parent_frame)
         self.tab_01_frame_button_02.grid(row=4, column=0, sticky="ew")
-        self._f_view_create_widgets_in_tab_01_frame_button_02()
+        self.f_view_create_widgets_in_tab_01_frame_button_02()
 
         parent_frame.grid_rowconfigure(3, weight=1) # cho phép giãn nở
         parent_frame.grid_columnconfigure(0, weight=1)
 
-    def _f_view_create_widgets_in_tab_01_frame_H2(self):
+    def f_view_create_widgets_in_tab_01_frame_H2(self):
         # Title H2
         cls_my_label_num_03_title_H2(self.tab_01_frame_H2, text="PHIẾU NHẬP KHO").pack(anchor="center")
      
-    def _f_view_create_widgets_in_tab_01_frame_entries(self):
+    def f_view_create_widgets_in_tab_01_frame_entries(self):
         self.tab_01_container_frame_entries = tk.Frame(self.tab_01_frame_entries)
         self.tab_01_container_frame_entries.pack(side="top", 
                                                  fill="x"
                                                  )
-        self._f_view_create_widgets_in_tab_01_container_frame_entries()
-    
-    def _f_view_create_widgets_in_frame_date_and_number(self):
-        # Create frame date and number of slip 
-        self.frame_date_and_number = cls_Frame_date_and_number_of_slip(self.Frame_container_date_and_number)
-        self.frame_date_and_number.pack(anchor="center")
-    
-    def _f_view_create_widgets_in_tab_01_container_frame_entries(self):
+
+        parent_frame = self.tab_01_container_frame_entries
         # Create container for date and number of slip
-        self.Frame_container_date_and_number = tk.Frame(self.tab_01_container_frame_entries)
+        self.Frame_container_date_and_number = tk.Frame(parent_frame)
         self.Frame_container_date_and_number.pack(side="top", 
                                                   fill="x"
                                                   )
-        self._f_view_create_widgets_in_frame_date_and_number()
+        self.f_view_create_widgets_in_frame_date_and_number()
 
         # Create container for client and inventories
-        self.Frame_clients_and_inventories_information = tk.Frame(self.tab_01_container_frame_entries)
+        self.Frame_clients_and_inventories_information = tk.Frame(parent_frame)
         self.Frame_clients_and_inventories_information.pack(side="top",
                                                             fill="x",  
                                                             pady=(5,0)
                                                             )
-        self._f_view_create_widgets_in_frame_clients_and_inventories()
+        self.f_view_create_widgets_in_frame_clients_and_inventories()
 
         # Create frame inventories informations
-        self.frame_slip_informations = tk.Frame(self.tab_01_container_frame_entries)
+        self.frame_slip_informations = tk.Frame(parent_frame)
         self.frame_slip_informations.pack(side="top", 
                                           fill="x", 
                                           pady=(5,0)
                                           )
-        self._f_view_create_widgets_in_frame_slip_informations()
-
+        self.f_view_create_widgets_in_frame_slip_informations()
     
+    def f_view_create_widgets_in_frame_date_and_number(self):
+        # Create frame date and number of slip 
+        self.frame_date_and_number = cls_Frame_date_and_number_of_slip(self.Frame_container_date_and_number)
+        self.frame_date_and_number.pack(anchor="center")
 
-    def _f_view_create_widgets_in_frame_clients_and_inventories(self):
+    def f_view_create_widgets_in_frame_clients_and_inventories(self):
         parent_frame = self.Frame_clients_and_inventories_information
 
         # Configure grid layout for parent frame
@@ -292,15 +293,15 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_frame_suppliers_information = cls_frame_suppliers_information_view(parent_frame)
         self.tab_01_frame_suppliers_information.config(bd=0, relief="flat")
         self.tab_01_frame_suppliers_information.grid(row=0, column=0, sticky="nsew")
-        self._f_view_create_widgets_add_row_03_into_frame_clients_informations_tab_01()
+        self.f_view_create_widgets_add_row_03_into_frame_clients_informations_tab_01()
         
         # Create frame inventories informations
         self.frame_inventories_informations_tab_01 = cls_frame_inventories_information_view(parent_frame)
         self.frame_inventories_informations_tab_01.config(bd=0, relief="flat")
         self.frame_inventories_informations_tab_01.grid(row=0, column=1, sticky="nsew", padx=(10, 0))
-        self._f_view_create_widgets_add_widget_into_frame_inventories_informations_tab_01()
+        self.f_view_create_widgets_add_widget_into_frame_inventories_informations_tab_01()
             
-    def _f_view_create_widgets_in_frame_slip_informations(self):
+    def f_view_create_widgets_in_frame_slip_informations(self):
         # Input fields
         tk.Label(self.frame_slip_informations, text="STT:").pack(side="left")
         self.tab_01_entry_id = tk.Entry(self.frame_slip_informations,
@@ -315,43 +316,34 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_note_for_slip.f_on_not_selecting(color=COLOR_WHITE)
         self.tab_01_note_for_slip.pack(side="left", fill="x", expand=True, pady=10)
         
-    def _f_view_create_widgets_add_widget_into_frame_inventories_informations_tab_01(self):
+    def f_view_create_widgets_add_widget_into_frame_inventories_informations_tab_01(self):
         # create parent_frame
         parent_frame = self.frame_inventories_informations_tab_01.frame_row_2
         
-        self.label13_nhu_cau = tk.Label(parent_frame, text="nhu cầu:")
-        # self.label13_nhu_cau.pack(side="left")
-        self.label13_nhu_cau.grid(row=0, column=4, padx=(10, 2), pady=5, sticky="w")
-        self.tab_01_entry_nhu_cau = cls_my_number_entry_num_01(parent_frame, width=10)
-        self.tab_01_entry_nhu_cau.f_on_leaving(color=COLOR_WHITE)
-        self.tab_01_entry_nhu_cau.f_on_not_selecting(color=COLOR_WHITE)
-        # self.tab_01_entry_nhu_cau.pack(side="left")
-        self.tab_01_entry_nhu_cau.grid(row=0, column=5, padx=(0, 10), pady=5, sticky="w")
+        self.tab_01_label_sl_thuc_nhap = tk.Label(parent_frame, text="SL thực nhập:")
+        self.tab_01_label_sl_thuc_nhap.grid(row=0, column=4, padx=(10, 2), pady=5, sticky="w")
+        self.tab_01_entry_sl_thuc_nhap = cls_my_number_entry_num_01(parent_frame, width=10)
+        self.tab_01_entry_sl_thuc_nhap.f_on_leaving(color=COLOR_WHITE)
+        self.tab_01_entry_sl_thuc_nhap.f_on_not_selecting(color=COLOR_WHITE)
+        self.tab_01_entry_sl_thuc_nhap.grid(row=0, column=5, padx=(0, 10), pady=5, sticky="w")
         
-        self.label_sl_giu_cho = tk.Label(parent_frame, text="SL giữ chỗ:")
-        # self.label_sl_giu_cho.pack(side="left")
-        self.label_sl_giu_cho.grid(row=0, column=6, padx=(10, 2), pady=5, sticky="w")
-        self.tab_01_entry_sl_giu_cho = cls_my_number_entry_num_01(parent_frame, width=10)
-        self.tab_01_entry_sl_giu_cho.config(state="readonly")
-        # self.tab_01_entry_sl_giu_cho.pack(side="left")
-        self.tab_01_entry_sl_giu_cho.grid(row=0, column=7, padx=(0, 10), pady=5, sticky="w")
-        
-        self.label_sl_YCDH = tk.Label(parent_frame, text="SL YCĐH:")
-        # self.label_sl_YCDH.pack(side="left")
-        self.label_sl_YCDH.grid(row=0, column=8, padx=(10, 2), pady=5, sticky="w")
-        self.tab_01_entry_sl_YCDH = cls_my_number_entry_num_01(parent_frame, width=10)
-        self.tab_01_entry_sl_YCDH.config(state="readonly")
-        # self.tab_01_entry_sl_YCDH.pack(side="left")
-        self.tab_01_entry_sl_YCDH.grid(row=0, column=9, padx=(0, 10), pady=5, sticky="w")
+        # Create a combobox with the options 'Kho A' and 'Kho B'
+        values = ["Kho A", "Kho B"]
+        self.tab_01_kho_nhap = tk.Label(parent_frame, text="Mã kho:")
+        self.tab_01_kho_nhap.grid(row=0, column=6, padx=(10, 2), pady=5, sticky="w")
+        self.tab_01_combobox_ma_kho = cls_my_combobox_num_01(parent_frame, values=values)
+        self.tab_01_combobox_ma_kho.grid(row=0, column=7, padx=(0, 10), pady=5, sticky="w")
+        # Set the default value to the first item in the list
+        self.tab_01_combobox_ma_kho.set(values[0])
 
         # Configure column weights for proper resizing
         parent_frame.columnconfigure(5, weight=1)  # Allow tab_01_entry_nhu_cau to expand
         parent_frame.columnconfigure(7, weight=1)  # Allow tab_01_entry_sl_giu_cho to expand
         parent_frame.columnconfigure(9, weight=1)  # Allow tab_01_entry_sl_YCDH to expand
         
-        self._f_view_create_widgets_add_row_03_into_frame_inventories_informations_tab_01()
+        self.f_view_create_widgets_add_row_03_into_frame_inventories_informations_tab_01()
     
-    def _f_view_create_widgets_add_row_03_into_frame_inventories_informations_tab_01(self):
+    def f_view_create_widgets_add_row_03_into_frame_inventories_informations_tab_01(self):
         # create parent_frame
         parent_frame = tk.Frame(self.frame_inventories_informations_tab_01)
         parent_frame.pack(side="bottom", fill="x", expand=True)
@@ -362,12 +354,12 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_entry_ghi_chu_mat_hang.f_on_not_selecting(color=COLOR_WHITE)
         self.tab_01_entry_ghi_chu_mat_hang.pack(side="left", fill="x", expand=True, padx=(0, 10))
         
-    def _f_view_create_widgets_add_row_03_into_frame_clients_informations_tab_01(self):
+    def f_view_create_widgets_add_row_03_into_frame_clients_informations_tab_01(self):
         # create parent_frame
         parent_frame = cls_frame_contracts_management_view(self.tab_01_frame_suppliers_information)
         parent_frame.pack(side="bottom", fill="x", expand=True)
 
-    def _f_view_create_widgets_in_tab_01_frame_button_of_treeview(self):
+    def f_view_create_widgets_in_tab_01_frame_button_of_treeview(self):
         # Create a sub-frame to organize buttons in the center
         tab_01_button_container_01 = tk.Frame(self.tab_01_frame_button_of_treeview)
         tab_01_button_container_01.pack(expand=True, pady=10)
@@ -388,7 +380,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_button_clear = tk.Button(tab_01_button_container_01, text="Clear Rows", command=self.f_view_tab_01_button_clear_click)
         self.tab_01_button_clear.pack(side="left", padx=10)
     
-    def _f_view_create_widgets_in_tab_01_frame_treeview(self):
+    def f_view_create_widgets_in_tab_01_frame_treeview(self):
         self.tab_01_frame_treeview = self.tab_01_frame_treeview
         self.table_of_tab_01 = self.tab_01_frame_treeview.treeview_normal
         self.treeview_test_of_tag_01 = self.tab_01_frame_treeview.treeview_normal
@@ -437,12 +429,12 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
                 self.entry_sl_kha_dung.insert(0, formatted_sl_kha_dung)
                 
             if sl_nhu_cau is not None:
-                self.tab_01_entry_nhu_cau.delete(0, tk.END)
+                self.tab_01_entry_sl_thuc_nhap.delete(0, tk.END)
                 if float(sl_nhu_cau).is_integer():  # Nếu là số nguyên
                     formatted_sl_nhu_cau = f"{int(float(sl_nhu_cau)):,}"
                 else:  # Nếu là số thập phân
                     formatted_sl_nhu_cau = f"{float(sl_nhu_cau):,.2f}"
-                self.tab_01_entry_nhu_cau.insert(0, formatted_sl_nhu_cau)
+                self.tab_01_entry_sl_thuc_nhap.insert(0, formatted_sl_nhu_cau)
             
             if sl_giu_cho is not None:
                 self.tab_01_entry_sl_giu_cho.config(state="normal")
@@ -464,13 +456,13 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
                 self.tab_01_entry_sl_YCDH.insert(0, formatted_sl_dat_hang)
                 self.tab_01_entry_sl_YCDH.config(state="disabled")
         
-    def _f_view_create_widgets_in_tab_02_frame_treeview(self):
-        self.tab_02_frame_treeview = self.tab_02_frame_treeview
-        self.table_of_tab_02 = self.tab_02_frame_treeview.treeview_normal
-        self.treeview_test_of_tag_02 = self.tab_02_frame_treeview.treeview_normal
-        self.treeview_test_of_tag_02.bind("<ButtonRelease-1>", self.f_view_table_of_tab_02_click)
+    def f_view_create_widgets_in_tab_04_frame_treeview(self):
+        self.tab_04_frame_treeview = self.tab_04_frame_treeview
+        self.treeview_of_tab_04 = self.tab_04_frame_treeview.treeview_normal
+        self.tab_04_treeview = self.tab_04_frame_treeview.treeview_normal
+        self.tab_04_treeview.bind("<ButtonRelease-1>", self.f_view_table_of_tab_04_click)
     
-    def _f_view_create_widgets_in_tab_01_frame_button_02(self):
+    def f_view_create_widgets_in_tab_01_frame_button_02(self):
         parent_frame = self.tab_01_frame_button_02
         # Create a sub-frame on the right
         tab_01_button_container_02_on_the_right = tk.Frame(parent_frame)
@@ -602,7 +594,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
             self.entry_ten_hang_tab_01, 
             self.entry_dvt, 
             self.entry_sl_kha_dung, 
-            self.tab_01_entry_nhu_cau, 
+            self.tab_01_entry_sl_thuc_nhap, 
             self.tab_01_entry_sl_giu_cho, 
             self.tab_01_entry_sl_YCDH, 
             self.tab_01_entry_ghi_chu_mat_hang
@@ -621,7 +613,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         param_02 = self.entry_ten_hang_tab_01.get()
         param_03 = self.entry_dvt.get()
         param_04 = float(self.entry_sl_kha_dung.get().replace(',', '') or 0)
-        param_05 = float(self.tab_01_entry_nhu_cau.get().replace(',', '') or 0)
+        param_05 = float(self.tab_01_entry_sl_thuc_nhap.get().replace(',', '') or 0)
         param_06 = float(self.tab_01_entry_sl_giu_cho.get().replace(',', '') or 0)
         param_07 = float(self.tab_01_entry_sl_YCDH.get().replace(',', '') or 0)
         param_08 = self.tab_01_entry_ghi_chu_mat_hang.get()
@@ -675,7 +667,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
                     foreground=config["foreground_color"]
                     )
     
-    def _f_view_set_rows_count_of_treeview_01_when_add_new_row(self):
+    def f_view_set_rows_count_of_treeview_01_when_add_new_row(self):
         row_count = 1 + self.controller_01.f_controller_get_row_count(self.table_of_tab_01)
         self.tab_01_entry_id.config(state="normal")
         self.tab_01_entry_id.delete(0, tk.END)
@@ -733,7 +725,7 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         # text = self.controller_02_treeview.f_controller_handle_btn_save_03_click_(self.table_of_tab_01)
         # self._f_config_notification(text=text, fg="blue")
 
-    def _f_view_set_up_formats_of_tab_01(self):
+    def f_view_set_up_formats_of_tab_01(self):
         self.f_view_set_format_of_treeview_of_tab_01()
     
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
@@ -744,64 +736,64 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
-    # Tab_02: create widgets
+    # Tab_04: create widgets
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
-    def _f_view_create_all_container_frames_in_tab_02(self):
-        parent_frame = self.tab_02
+    def f_view_create_all_container_frames_in_tab_04(self):
+        parent_frame = self.tab_04_NHAT_KY_NHAP_KHO
 
         # Frame H2
-        self.tab_02_frame_H2 = cls_frame_normal(parent_frame)
-        self.tab_02_frame_H2.grid(row=0, column=0, sticky="ew")
-        self._f_view_create_widgets_in_tab_02_frame_H2()
+        self.tab_04_frame_H2 = cls_frame_normal(parent_frame)
+        self.tab_04_frame_H2.grid(row=0, column=0, sticky="ew")
+        self.f_view_create_widgets_in_tab_04_frame_H2()
 
         # Frame entries
-        self.tab_02_frame_filter_entries = cls_frame_normal(parent_frame)
-        self.tab_02_frame_filter_entries.grid(row=1, column=0, sticky="ew")
-        self.f_view_create_widgets_in_tab_02_frame_filter_entries()
+        self.tab_04_frame_filter_entries = cls_frame_normal(parent_frame)
+        self.tab_04_frame_filter_entries.grid(row=1, column=0, sticky="ew")
+        self.f_view_create_widgets_in_tab_04_frame_filter_entries()
 
         # Frame button
-        self.tab_02_frame_button_01 = tk.Frame(parent_frame)
-        self.tab_02_frame_button_01.grid(row=2, column=0, sticky="ew")
-        self._f_view_create_widgets_in_tab_02_frame_button_01()
+        self.tab_04_frame_button_01 = tk.Frame(parent_frame)
+        self.tab_04_frame_button_01.grid(row=2, column=0, sticky="ew")
+        self.f_view_create_widgets_in_tab_04_frame_button_01()
         
         # Frame treeview
-        self.tab_02_frame_treeview = cls_Treeview_frame_number_01(parent_frame)
-        self.tab_02_frame_treeview.grid(row=3, column=0, sticky="nsew")
-        self._f_view_create_widgets_in_tab_02_frame_treeview()
+        self.tab_04_frame_treeview = cls_Treeview_frame_number_01(parent_frame)
+        self.tab_04_frame_treeview.grid(row=3, column=0, sticky="nsew")
+        self.f_view_create_widgets_in_tab_04_frame_treeview()
         
         # Frame button
-        self.tab_02_frame_button_02 = tk.Frame(parent_frame)
-        self.tab_02_frame_button_02.grid(row=4, column=0, sticky="ew")
-        self._f_view_create_widgets_in_tab_02_frame_button_02()
+        self.tab_04_frame_button_02 = tk.Frame(parent_frame)
+        self.tab_04_frame_button_02.grid(row=4, column=0, sticky="ew")
+        self.f_view_create_widgets_in_tab_04_frame_button_02()
         
         parent_frame.grid_rowconfigure(3, weight=1) # cho phép giãn nở
         parent_frame.grid_columnconfigure(0, weight=1)
 
-    def _f_view_create_widgets_in_tab_02_frame_H2(self):
+    def f_view_create_widgets_in_tab_04_frame_H2(self):
         # Title H2
-        cls_my_label_num_03_title_H2(self.tab_02_frame_H2, text="NHẬT KÝ NHẬP KHO").pack(anchor="center")
+        cls_my_label_num_03_title_H2(self.tab_04_frame_H2, text="NHẬT KÝ NHẬP KHO").pack(anchor="center")
      
-    def _f_view_create_widgets_in_tab_02_frame_button_01(self):
+    def f_view_create_widgets_in_tab_04_frame_button_01(self):
         # Create a sub-frame to organize buttons in the center
-        tab_02_button_container_01 = tk.Frame(self.tab_02_frame_button_01)
-        tab_02_button_container_01.pack(expand=True, pady=10)
+        tab_04_button_container_01 = tk.Frame(self.tab_04_frame_button_01)
+        tab_04_button_container_01.pack(expand=True, pady=10)
         
         # Add button
-        self.tab_02_button_add = tk.Button(tab_02_button_container_01, text="Filter")
-        self.tab_02_button_add.config(command=self.f_tab_02_button_filter_click)
-        self.tab_02_button_add.pack(side="left", padx=10)
+        self.tab_04_button_add = tk.Button(tab_04_button_container_01, text="Filter")
+        self.tab_04_button_add.config(command=self.f_tab_04_button_filter_click)
+        self.tab_04_button_add.pack(side="left", padx=10)
         
         # Delete update
-        self.tab_02_button_clear = tk.Button(tab_02_button_container_01, text="Clear")
-        self.tab_02_button_clear.config(command=self.f_tab_02_button_clear_click)
-        self.tab_02_button_clear.pack(side="left", padx=10)
+        self.tab_04_button_clear = tk.Button(tab_04_button_container_01, text="Clear")
+        self.tab_04_button_clear.config(command=self.f_tab_04_button_clear_click)
+        self.tab_04_button_clear.pack(side="left", padx=10)
     
-    def f_view_create_widgets_in_tab_02_frame_filter_entries(self):
-        parent_frame_00 = tk.Frame(self.tab_02_frame_filter_entries)
+    def f_view_create_widgets_in_tab_04_frame_filter_entries(self):
+        parent_frame_00 = tk.Frame(self.tab_04_frame_filter_entries)
         parent_frame_00.grid(row=0, column=0, sticky="nsew")
-        parent_frame_01 = tk.Frame(self.tab_02_frame_filter_entries)
+        parent_frame_01 = tk.Frame(self.tab_04_frame_filter_entries)
         parent_frame_01.grid(row=0, column=1, sticky="nsew")
-        parent_frame_02 = tk.Frame(self.tab_02_frame_filter_entries)
+        parent_frame_02 = tk.Frame(self.tab_04_frame_filter_entries)
         parent_frame_02.grid(row=0, column=2, sticky="nsew")
         
         # parent_frame_00.config(bd=1,relief="groove")
@@ -817,52 +809,52 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self.filter_entry_contract_number.grid(row=1, column= 1, padx=(2, 10), pady=(15, 10), sticky="ew")
         
         # Create frame inventories informations
-        self.frame_seclect_date_tab_02 = cls_frame_DateSelector_view(parent_frame_01)
-        self.frame_seclect_date_tab_02.config(bd=0, relief="flat")
-        self.frame_seclect_date_tab_02.grid(row=0, column=0, sticky="ew")
+        self.tab_04_frame_seclect_date = cls_frame_DateSelector_view(parent_frame_01)
+        self.tab_04_frame_seclect_date.config(bd=0, relief="flat")
+        self.tab_04_frame_seclect_date.grid(row=0, column=0, sticky="ew")
         
         # Create frame clients informations
-        self.frame_clients_informations_tab_02 = cls_frame_client_information_view(parent_frame_02)
-        self.frame_clients_informations_tab_02.config(bd=0, relief="flat")
-        self.frame_clients_informations_tab_02.grid(row=0, column=0, sticky="ew")
+        self.tab_04_frame_clients_informations = cls_frame_client_information_view(parent_frame_02)
+        self.tab_04_frame_clients_informations.config(bd=0, relief="flat")
+        self.tab_04_frame_clients_informations.grid(row=0, column=0, sticky="ew")
         
         # Create frame inventories informations
-        self.frame_inventories_informations_tab_02 = cls_frame_inventories_information_view(parent_frame_02)
-        self.frame_inventories_informations_tab_02.config(bd=0, relief="flat")
-        self.frame_inventories_informations_tab_02.grid(row=1, column=0, pady=(10, 0), sticky="ew")
+        self.tab_04_frame_inventories_information = cls_frame_inventories_information_view(parent_frame_02)
+        self.tab_04_frame_inventories_information.config(bd=0, relief="flat")
+        self.tab_04_frame_inventories_information.grid(row=1, column=0, pady=(10, 0), sticky="ew")
     
         # Allow stretching
-        self.tab_02_frame_filter_entries.columnconfigure(2, weight=1)   # Stretch the column to fill the width
+        self.tab_04_frame_filter_entries.columnconfigure(2, weight=1)   # Stretch the column to fill the width
         parent_frame_02.columnconfigure(0, weight=1)                    # Stretch parent_frame_02
     
-    def _f_view_create_widgets_in_tab_02_frame_button_02(self):
+    def f_view_create_widgets_in_tab_04_frame_button_02(self):
         # Create a sub-frame to organize buttons in the center
-        tab_02_button_container_02 = tk.Frame(self.tab_02_frame_button_02)
-        tab_02_button_container_02.pack(expand=True, pady=10)
+        tab_04_button_container_02 = tk.Frame(self.tab_04_frame_button_02)
+        tab_04_button_container_02.pack(expand=True, pady=10)
         
         # Get Data button
-        self.tab_02_button_export_excel = tk.Button(tab_02_button_container_02, text="Export Excel")
-        self.tab_02_button_export_excel.config(command=self.f_tab_02_button_export_excel_click)
-        self.tab_02_button_export_excel.pack(side="left", padx=10)
+        self.tab_04_button_export_excel = tk.Button(tab_04_button_container_02, text="Export Excel")
+        self.tab_04_button_export_excel.config(command=self.f_tab_04_button_export_excel_click)
+        self.tab_04_button_export_excel.pack(side="left", padx=10)
         
         # Get Data button
-        self.tab_02_button_edit = tk.Button(tab_02_button_container_02, text="EDIT")
-        self.tab_02_button_edit.config(command=self.f_tab_02_button_edit_click)
-        self.tab_02_button_edit.pack(side="left", padx=10)
+        self.tab_04_button_edit = tk.Button(tab_04_button_container_02, text="EDIT")
+        self.tab_04_button_edit.config(command=self.f_tab_04_button_edit_click)
+        self.tab_04_button_edit.pack(side="left", padx=10)
         
         # Export Data button
-        self.tab_02_button_DELETE = tk.Button(tab_02_button_container_02, text="DELETE")
-        self.tab_02_button_DELETE.config(command=self.f_tab_02_button_delete_click)
-        self.tab_02_button_DELETE.pack(side="left", padx=10)
+        self.tab_04_button_DELETE = tk.Button(tab_04_button_container_02, text="DELETE")
+        self.tab_04_button_DELETE.config(command=self.f_tab_04_button_delete_click)
+        self.tab_04_button_DELETE.pack(side="left", padx=10)
     
-    def f_tab_02_button_filter_click(self):
+    def f_tab_04_button_filter_click(self):
         so_phieu = self.filter_entry_slip_number.get()
         so_hop_dong = self.filter_entry_contract_number.get()
         ngay_bat_dau = self.ngay_filter_bat_dau.get()
         ngay_ket_thuc = self.ngay_filter_ket_thuc.get()
-        ma_doi_tuong = self.entry_ma_khach_hang_tab_02.get()
-        ma_hang = self.entry_ma_hang_tab_02.get()
-        notification_text = Controller_handel_all_events.f_handle_event_tab_02_button_filter_slip(self.treeview_test_of_tag_02,
+        ma_doi_tuong = self.tab_04_entry_ma_khach_hang.get()
+        ma_hang = self.tab_04_entry_ma_hang.get()
+        notification_text = Controller_handel_all_events.f_handle_event_tab_04_button_filter_slip(self.tab_04_treeview,
                                                                                                     so_phieu, 
                                                                                                     so_hop_dong,
                                                                                                     ngay_bat_dau,
@@ -872,49 +864,49 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
                                                                                                     )
         self._f_config_notification(notification_text, fg="blue")
     
-    def f_tab_02_button_clear_click(self):
+    def f_tab_04_button_clear_click(self):
         self.filter_entry_slip_number.delete(0, tk.END)
         self.filter_entry_contract_number.delete(0, tk.END)
         # self.ngay_filter_bat_dau.delete(0, tk.END)
         # self.ngay_filter_ket_thuc.delete(0, tk.END)
-        self.entry_ma_khach_hang_tab_02.delete(0, tk.END)
-        self.entry_ten_khach_hang_tab_02.delete(0, tk.END)
-        self.entry_ma_hang_tab_02.delete(0, tk.END)
-        self.entry_ten_hang_tab_02.delete(0, tk.END)
-        notification_text = Controller_handel_all_events.f_handle_event_tab_02_button_clear_slip(self.treeview_test_of_tag_02)
+        self.tab_04_entry_ma_khach_hang.delete(0, tk.END)
+        self.tab_04_entry_ten_khach_hang.delete(0, tk.END)
+        self.tab_04_entry_ma_hang.delete(0, tk.END)
+        self.tab_04_entry_ten_hang.delete(0, tk.END)
+        notification_text = Controller_handel_all_events.f_handle_event_tab_04_button_clear_slip(self.tab_04_treeview)
         self._f_config_notification(notification_text, fg="blue")
-        # SQLController.load_data(self.treeview_test_of_tag_02)
+        # SQLController.load_data(self.tab_04_treeview)
         
-    def f_tab_02_button_export_excel_click(self):
+    def f_tab_04_button_export_excel_click(self):
         print("Export excel click")
-        Controller_SQL_to_excel.export_log_to_excel(self.treeview_test_of_tag_02)
+        Controller_SQL_to_excel.export_log_to_excel(self.tab_04_treeview)
         
-    def f_tab_02_button_edit_click(self):
+    def f_tab_04_button_edit_click(self):
         print("Edit click")
     
-    def f_tab_02_button_delete_click(self):
-        text = Controller_delete_row_in_SQL.handle_event_btn_delete_click(self.treeview_test_of_tag_02)
+    def f_tab_04_button_delete_click(self):
+        text = Controller_delete_row_in_SQL.handle_event_btn_delete_click(self.tab_04_treeview)
         self._f_config_notification(text=text, fg="blue")
         
-    def _f_view_set_up_formats_of_tab_02(self):
-        self.f_view_set_format_of_treeview_of_tab_02()
+    def f_view_set_up_formats_of_tab_04(self):
+        self.f_view_set_format_of_treeview_of_tab_04()
 
-    def f_view_set_format_of_treeview_of_tab_02(self):
+    def f_view_set_format_of_treeview_of_tab_04(self):
         # Clear the existing columns
-        self.treeview_test_of_tag_02.delete(*self.treeview_test_of_tag_02.get_children())
-        for col in self.treeview_test_of_tag_02["columns"]:
-            self.treeview_test_of_tag_02.heading(col, text="")  # Remove headings
+        self.tab_04_treeview.delete(*self.tab_04_treeview.get_children())
+        for col in self.tab_04_treeview["columns"]:
+            self.tab_04_treeview.heading(col, text="")  # Remove headings
         
         # Trước khi cấu hình, phải thiết lập cột cho Treeview
         column_names = self.controller_04.f_get_table_config_name_only()
-        self.treeview_test_of_tag_02["columns"] = column_names
+        self.tab_04_treeview["columns"] = column_names
         
         # Treeview config
         column_configs, column_names, header_font = self.controller_04.f_tab_01_button_config_click(self.table_of_tab_01)
         for config, col in zip(column_configs, column_names):
             # Configure each column
-            self.treeview_test_of_tag_02.heading(col, text=col)  # Set header text
-            self.treeview_test_of_tag_02.column(
+            self.tab_04_treeview.heading(col, text=col)  # Set header text
+            self.tab_04_treeview.column(
                 col,
                 width=config["width"],
                 minwidth=config["min_width"],
@@ -927,19 +919,19 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
             
             # Apply the background and font settings
             # Apply row styles if needed
-            for row in self.treeview_test_of_tag_02.get_children():
-                self.treeview_test_of_tag_02.item(row, tags=(row,))
-                self.treeview_test_of_tag_02.tag_configure(
+            for row in self.tab_04_treeview.get_children():
+                self.tab_04_treeview.item(row, tags=(row,))
+                self.tab_04_treeview.tag_configure(
                     row,
                     background=config["background_color"],
                     foreground=config["foreground_color"]
                     )
     
-    def f_view_table_of_tab_02_click(self, event):
+    def f_view_table_of_tab_04_click(self, event):
         self.current_time = time.time()
     
-    def f_tab_02_table_on_click(self, event):
-        print("f_tab_02_table_on_click")    
+    def f_tab_04_table_on_click(self, event):
+        print("f_tab_04_table_on_click")    
 
 
     

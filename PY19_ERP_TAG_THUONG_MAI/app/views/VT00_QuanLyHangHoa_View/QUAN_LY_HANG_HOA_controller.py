@@ -1,9 +1,9 @@
 import time
-from test_Model import cls_test_Model
-from test_Model import cls_test_Model_02
-from test_Model import cls_test_Model_06_staticmenthod_get_config_of_table_YCDH_log_from_json
-from test_Model import SQLModel
-from test_Model import Model_get_data_from_SQL
+from views.VT00_QuanLyHangHoa_View.QUAN_LY_HANG_HOA_model import cls_test_Model
+from views.VT00_QuanLyHangHoa_View.QUAN_LY_HANG_HOA_model import cls_test_Model_02
+from views.VT00_QuanLyHangHoa_View.QUAN_LY_HANG_HOA_model import cls_test_Model_06_staticmenthod_get_config_of_table_YCDH_log_from_json
+from views.VT00_QuanLyHangHoa_View.QUAN_LY_HANG_HOA_model import SQLModel
+from views.VT00_QuanLyHangHoa_View.QUAN_LY_HANG_HOA_model import Model_get_data_from_SQL
 from Components_View import *   # Tại sao lại phải import Components_View
 from utils import *
 import traceback
@@ -451,7 +451,7 @@ class cls_test_Controller_04_validate_before_saving():
         print("Kiểm tra số lượng khả dụng khớp thì mới cho lưu!")
         return True
     
-class cls_test_Controller_06_treeview_tab_02():
+class cls_test_Controller_06_treeview_tab_04():
     def __init__(self):
         # super().__init__()
         self.model = None
@@ -859,7 +859,7 @@ class Controller_handel_all_events:
             fg="red"
             return f"Error: {e}", fg
         
-    def f_handle_event_tab_02_button_filter_slip(my_treeview, *args):
+    def f_handle_event_tab_04_button_filter_slip(my_treeview, *args):
         try:
             # Get the arguments
             (
@@ -895,7 +895,7 @@ class Controller_handel_all_events:
         except Exception as e:
             return f"Error: {e}"
         
-    def f_handle_event_tab_02_button_clear_slip(my_treeview):
+    def f_handle_event_tab_04_button_clear_slip(my_treeview):
         try:
             # query = f"[Proc_TB_KD02_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250204_110h38]'','',''"
             query = f"""
