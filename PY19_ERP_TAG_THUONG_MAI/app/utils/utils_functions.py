@@ -22,7 +22,7 @@ from decimal import Decimal
 from PIL import Image, ImageTk
 import pandas as pd
 import re
-
+from .utils_controllers import *
 
 def f_utils_setup_logo(parent_frame):
     # Define function when click
@@ -89,40 +89,6 @@ def set_window_size(root, width=1600, height=900):
     
     root.geometry(f'{width}x{height}+{position_right}+{position_top}')
 
-def f_utils_set_window_size_of_new_view(root, width=0, height=0, maximize=False):
-    # """Set the window size to 4/5 of the screen size."""
-    # if width == 0 or height == 0:
-    #     # Get screen dimensions
-    #     screen_width = root.winfo_screenwidth()
-    #     screen_height = root.winfo_screenheight()
-        
-    #     # Calculate 4/5 of screen dimensions
-    #     ratio = 1
-    #     height = int(screen_height * ratio)
-    #     width = int(screen_width * ratio)
-    
-    # # Set the window size
-    # root.geometry(f"{width}x{height}")
-    
-    """Set the window size to 4/5 of the screen size or maximize it."""
-    if maximize:
-        root.state('zoomed')  # Maximizes the window (Windows)
-        # root.attributes('-fullscreen', True)  # Uncomment for fullscreen mode
-        return
-
-    if width == 0 or height == 0:
-        # Get screen dimensions
-        screen_width = root.winfo_screenwidth()
-        screen_height = root.winfo_screenheight()
-        
-        # Calculate 4/5 of screen dimensions
-        ratio = 4 / 5
-        height = int(screen_height * ratio)
-        width = int(screen_width * ratio)
-    
-    # Set the window size
-    root.geometry(f"{width}x{height}")
-
 def f_utils_set_center_screen(root):
     # Lấy kích thước của cửa sổ
     root.update_idletasks()  # Cập nhật các thay đổi về kích thước
@@ -149,21 +115,21 @@ def f_utils_set_menu_font(widget, size=14, font_is="Arial"):
 def f_utils_open_dashboard_main():
     from views.AD01_Dashboard_View.Dashboard_View import cls_Dashboard_View
     new_view = cls_Dashboard_View()
-    f_utils_set_window_size_of_new_view(new_view, maximize=True)
+    utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
     f_utils_set_center_screen(new_view)
     new_view.focus_force()
     
 def f_utils_open_dashboard_kinh_doanh():
     from views.KD00_DashboardKinhDoanh_View.Dashboard_kinhdoanh_View import cls_Dashboard_kinhdoanh_View
     new_view = cls_Dashboard_kinhdoanh_View()
-    f_utils_set_window_size_of_new_view(new_view, maximize=True)
+    utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
     f_utils_set_center_screen(new_view)
     new_view.focus_force()
     
 def f_utils_open_dashboard_vat_tu():
     from views.VT00_DashboardVatTu_View.Dashboard_VatTu_View import cls_Dashboard_Vat_Tu_View
     new_view = cls_Dashboard_Vat_Tu_View()
-    f_utils_set_window_size_of_new_view(new_view, maximize=True)
+    utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
     f_utils_set_center_screen(new_view)
     new_view.focus_force()
 
@@ -176,7 +142,7 @@ def f_utils_show_fading_popup(message):
     # Ẩn thanh tiêu đề (title bar)
     popup.overrideredirect(True)
     # Căn giữa màn hình
-    f_utils_set_window_size_of_new_view(popup, 150, 50, maximize=False)
+    utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(popup, 150, 50, maximize=False)
     f_utils_set_center_screen(popup)
     
     # Add frame

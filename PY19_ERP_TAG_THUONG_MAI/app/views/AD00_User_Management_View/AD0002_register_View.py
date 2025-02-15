@@ -5,7 +5,7 @@ class cls_Register_View(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("AD0002 - Register")
-        f_utils_set_window_size_of_new_view(self, 400, 500, maximize=False)
+        utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(self, 400, 500, maximize=False)
         f_utils_set_center_screen(self)
         f_utils_setup_fav_icon(self)
 

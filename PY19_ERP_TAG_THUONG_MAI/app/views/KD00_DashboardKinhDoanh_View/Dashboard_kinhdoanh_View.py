@@ -153,7 +153,7 @@ class cls_Dashboard_kinhdoanh_View(cls_base_form_number_02_ManyTabs):
         self.destroy()
         new_view = cls_test_View()
         # new_view.dashboard = self.parent
-        f_utils_set_window_size_of_new_view(new_view, maximize=True)
+        utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
         f_utils_set_center_screen(new_view)
         new_view.focus_force()
         
@@ -167,7 +167,7 @@ class cls_Dashboard_kinhdoanh_View(cls_base_form_number_02_ManyTabs):
         self.destroy()
         new_view = cls_test_View()
         # new_view.dashboard = self.parent
-        f_utils_set_window_size_of_new_view(new_view, maximize=True)
+        utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
         f_utils_set_center_screen(new_view)
         new_view.focus_force()
 

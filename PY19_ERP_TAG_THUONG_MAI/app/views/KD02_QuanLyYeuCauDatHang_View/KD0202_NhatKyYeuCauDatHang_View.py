@@ -18,7 +18,7 @@ class cls_KD0201_NhatKyYeuCauDatHang_View(tk.Tk):
         cls_menu_top(self)
         # =======================================================================================================================
         # Thiết lập kích thước cửa sổ
-        f_utils_set_window_size_of_new_view(self, maximize=True)
+        utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(self, maximize=True)
         f_utils_set_center_screen(self)
         
         # Lấy kích thước của cửa sổ

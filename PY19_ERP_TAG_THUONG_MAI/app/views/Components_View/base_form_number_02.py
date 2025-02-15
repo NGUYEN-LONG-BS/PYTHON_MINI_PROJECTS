@@ -26,7 +26,7 @@ class cls_base_form_number_02_ManyTabs(tk.Tk):
         
     def f_Thiet_lap_Kich_thuoc_Cua_So(self):
         """Configures window size and position."""
-        f_utils_set_window_size_of_new_view(self, maximize=True)
+        utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(self, maximize=True)
         f_utils_set_center_screen(self)
         try:
             f_utils_setup_fav_icon(self)

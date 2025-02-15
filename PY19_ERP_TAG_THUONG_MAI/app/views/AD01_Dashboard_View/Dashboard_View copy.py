@@ -20,7 +20,7 @@ class cls_Dashboard_View(tk.Tk):
 
     def _initialize_window_size(self):
         """Thiết lập kích thước cửa sổ và căn giữa nó."""
-        f_utils_set_window_size_of_new_view(self, maximize=True)
+        utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(self, maximize=True)
         f_utils_set_center_screen(self)
 
     def f_render_dashboard(self):

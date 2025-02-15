@@ -24,7 +24,7 @@ class cls_KD0101_QuanLyGoiThau_View(tk.Tk):
         self.title("KD0101 - QUẢN LÝ GÓI THẦU_241218_10h00")
         
         # Thiết lập kích thước cửa sổ
-        f_utils_set_window_size_of_new_view(self, maximize=True)
+        utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(self, maximize=True)
         f_utils_set_center_screen(self)
         f_utils_setup_fav_icon(self)
         

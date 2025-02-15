@@ -7,7 +7,7 @@ from .utils_functions import f_utils_setup_fav_icon
 from .utils_functions import f_utils_set_menu_font
 from .utils_functions import f_utils_show_fading_popup
 from .utils_functions import f_utils_set_center_screen
-from .utils_functions import f_utils_set_window_size_of_new_view
+# from .utils_functions import f_utils_set_window_size_of_new_view
 from .utils_functions import f_utils_find_my_function_path
 from .utils_functions import f_utils_open_dashboard_main
 from .utils_functions import f_utils_open_dashboard_kinh_doanh
@@ -37,3 +37,5 @@ from .utils_functions import f_utils_get_current_function_name
 from .utils_functions import f_utils_get_caller_function_name
 
 from .utils_set_print_template import f_utils_create_print_template
+
+from .utils_controllers import *

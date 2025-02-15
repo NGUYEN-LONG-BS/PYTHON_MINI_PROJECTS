@@ -19,7 +19,7 @@ class cls_Login_View(tk.Tk):
         self.controller = cls_Login_Controller(model, self)
         
         self.title("AD0001 - Login Form")
-        f_utils_set_window_size_of_new_view(self, 400, 550, maximize=False)
+        utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(self, 400, 550, maximize=False)
         f_utils_set_center_screen(self)
         f_utils_setup_fav_icon(self)
         self.resizable(False, False)
