@@ -915,5 +915,6 @@ class Controller_handel_all_events:
     def update_entry_id_when_initializing(my_treeview, entry_id):
         Controller_action_after_event.update_entry_id_after_adding_new_row(my_treeview, entry_id)
         
-        
+    def f_get_table_config_name_only():
+        return self.model.f_load_table_config_from_json_name_only()
         

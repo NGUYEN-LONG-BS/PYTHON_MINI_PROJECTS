@@ -925,6 +925,8 @@ class SQLModel:
                 print(e)
 
         return is_valid
+
+
     
 class Model_get_data_from_SQL:
     

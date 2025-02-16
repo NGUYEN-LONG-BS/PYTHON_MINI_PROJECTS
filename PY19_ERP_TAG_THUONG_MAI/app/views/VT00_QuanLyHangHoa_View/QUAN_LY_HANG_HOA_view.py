@@ -6,13 +6,13 @@ from Components_View import *
 from Components_View import cls_frame_normal
 from Components_View.treeview import cls_Treeview_frame_number_01
 from utils import *
-from .QUAN_LY_HANG_HOA_controller import cls_test_Controller
-from .QUAN_LY_HANG_HOA_controller import cls_test_Controller_02_treeview
-from .QUAN_LY_HANG_HOA_controller import cls_test_Controller_03_auto_update_number 
-from .QUAN_LY_HANG_HOA_controller import cls_test_Controller_06_treeview_tab_04
-from .QUAN_LY_HANG_HOA_controller import SQLController
-from .QUAN_LY_HANG_HOA_controller import Controller_SQL_to_excel
-from .QUAN_LY_HANG_HOA_controller import Controller_delete_row_in_SQL
+# from .QUAN_LY_HANG_HOA_controller import cls_test_Controller
+# from .QUAN_LY_HANG_HOA_controller import cls_test_Controller_02_treeview
+# from .QUAN_LY_HANG_HOA_controller import cls_test_Controller_03_auto_update_number 
+# from .QUAN_LY_HANG_HOA_controller import cls_test_Controller_06_treeview_tab_04
+# from .QUAN_LY_HANG_HOA_controller import SQLController
+# from .QUAN_LY_HANG_HOA_controller import Controller_SQL_to_excel
+# from .QUAN_LY_HANG_HOA_controller import Controller_delete_row_in_SQL
 from .QUAN_LY_HANG_HOA_controller import Controller_handel_all_events
 
 class cls_test_View(cls_base_form_number_02_ManyTabs):
@@ -21,8 +21,8 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         name = "QUẢN LÝ DANH MỤC HÀNG HOÁ"
         super().__init__(title_of_form=title, name_of_slip=name)
         # Add controller 01
-        self.f_view_add_controller_01_basic()
-        self.f_view_add_controller_04_treeview_of_tab_04()
+        # self.f_view_add_controller_01_basic()
+        # self.f_view_add_controller_04_treeview_of_tab_04()
         # call reuse components
         self.f_view_thay_doi_gia_tri_cua_base_form()
         self.f_view_create_all_container_frames_of_window()
@@ -34,8 +34,8 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         self._f_setup_all_global_variants()
         self._f_setup_all_binding()
         # Add controllers
-        self.f_view_add_controller_02_all_logic_of_treeview()
-        self.f_view_add_controller_03_auto_update_entries_amount_of_inventory()
+        # self.f_view_add_controller_02_all_logic_of_treeview()
+        # self.f_view_add_controller_03_auto_update_entries_amount_of_inventory()
         # Set up when initializing
         self.f_set_up_when_initializing()
         
@@ -168,34 +168,27 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     # Adding controller
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
-    def f_view_add_controller_01_basic(self):
-        # Initialize controller_01
-        self.controller_01 = cls_test_Controller()
-        self.controller_01.view = self
+    # def f_view_add_controller_01_basic(self):
+    #     # Initialize controller_01
+    #     self.controller_01 = cls_test_Controller()
+    #     self.controller_01.view = self
 
-    def f_view_add_controller_02_all_logic_of_treeview(self):
-        # Initialize controller_02
-        tree = self.table_of_tab_01
-        entry_ma_hh = self.tab_01_entry_sl_thuc_nhap
-        entry_ten_hh = self.tab_01_entry_sl_thuc_nhap
-        entry_so_luong = self.tab_01_entry_sl_thuc_nhap
-        entry_ghi_chu = self.tab_01_entry_sl_thuc_nhap
-        self.controller_02_treeview = cls_test_Controller_02_treeview(tree, entry_ma_hh, entry_ten_hh, entry_so_luong, entry_ghi_chu)
-        self.controller_02_treeview.view = self
+    # def f_view_add_controller_02_all_logic_of_treeview(self):
+    #     # Initialize controller_02
+    #     tree = self.table_of_tab_01
+    #     entry_ma_hh = self.tab_01_entry_sl_thuc_nhap
+    #     entry_ten_hh = self.tab_01_entry_sl_thuc_nhap
+    #     entry_so_luong = self.tab_01_entry_sl_thuc_nhap
+    #     entry_ghi_chu = self.tab_01_entry_sl_thuc_nhap
+    #     self.controller_02_treeview = cls_test_Controller_02_treeview(tree, entry_ma_hh, entry_ten_hh, entry_so_luong, entry_ghi_chu)
+    #     self.controller_02_treeview.view = self
     
-    def f_view_add_controller_03_auto_update_entries_amount_of_inventory(self):
-        # Initialize controller_03
-        entry_sl_kha_dung = self.entry_sl_kha_dung
-        entry_sl_nhu_cau = self.tab_01_entry_sl_thuc_nhap
-        entry_sl_giu_cho = self.tab_01_entry_sl_giu_cho
-        entry_sl_yeu_cau_dat_hang = self.tab_01_entry_sl_YCDH
-        self.controller_03_auto_update_number = cls_test_Controller_03_auto_update_number(entry_sl_kha_dung, entry_sl_nhu_cau, entry_sl_giu_cho, entry_sl_yeu_cau_dat_hang)
-        self.controller_03_auto_update_number.view = self
+
         
-    def f_view_add_controller_04_treeview_of_tab_04(self):
-        # Initialize controller_01
-        self.controller_04 = cls_test_Controller_06_treeview_tab_04()
-        self.controller_04.view = self
+    # def f_view_add_controller_04_treeview_of_tab_04(self):
+    #     # Initialize controller_01
+    #     self.controller_04 = cls_test_Controller_06_treeview_tab_04()
+    #     self.controller_04.view = self
     
     
 
@@ -694,36 +687,36 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         entry_ten_kh = self.entry_ten_khach_hang_tab_01
         entry_mst = self.entry_mst_tab_01
         entry_dia_chi = self.entry_dia_chi_tab_01
-        entry_so_hop_dong = self.entry_so_hop_dong
-        entry_thong_tin_hop_dong = self.entry_thong_tin_hop_dong
-        entry_ghi_chu_cua_phieu = self.tab_01_note_for_slip
-        tree = self.table_of_tab_01
+    #     entry_so_hop_dong = self.entry_so_hop_dong
+    #     entry_thong_tin_hop_dong = self.entry_thong_tin_hop_dong
+    #     entry_ghi_chu_cua_phieu = self.tab_01_note_for_slip
+    #     tree = self.table_of_tab_01
         
-        entry_ma_hang = self.entry_ma_hang_tab_01
-        entry_ten_hang = self.entry_ten_hang_tab_01
+    #     entry_ma_hang = self.entry_ma_hang_tab_01
+    #     entry_ten_hang = self.entry_ten_hang_tab_01
 
-        # Handel event click
-        text = SQLController.f_controller_handle_btn_save_03_click_(ID_nhan_vien,
-                                                                    Xoa_Sua,
-                                                                    entry_so_phieu, 
-                                                                    entry_ma_kh, 
-                                                                    entry_ten_kh,
-                                                                    entry_mst,
-                                                                    entry_dia_chi,
-                                                                    entry_so_hop_dong,
-                                                                    entry_thong_tin_hop_dong,
-                                                                    entry_ghi_chu_cua_phieu,
-                                                                    entry_ma_hang,
-                                                                    entry_ten_hang,
-                                                                    tree
-                                                                    )
-        self._f_config_notification(text=text, fg="blue")
+    #     # Handel event click
+    #     text = SQLController.f_controller_handle_btn_save_03_click_(ID_nhan_vien,
+    #                                                                 Xoa_Sua,
+    #                                                                 entry_so_phieu, 
+    #                                                                 entry_ma_kh, 
+    #                                                                 entry_ten_kh,
+    #                                                                 entry_mst,
+    #                                                                 entry_dia_chi,
+    #                                                                 entry_so_hop_dong,
+    #                                                                 entry_thong_tin_hop_dong,
+    #                                                                 entry_ghi_chu_cua_phieu,
+    #                                                                 entry_ma_hang,
+    #                                                                 entry_ten_hang,
+    #                                                                 tree
+    #                                                                 )
+    #     self._f_config_notification(text=text, fg="blue")
         
-        # Phiên bản cũ, cần làm sạch rồi mới xoá
-        # ====>
-        # text, data = self.controller_02_treeview.print_data()
-        # text = self.controller_02_treeview.f_controller_handle_btn_save_03_click_(self.table_of_tab_01)
-        # self._f_config_notification(text=text, fg="blue")
+    #     # Phiên bản cũ, cần làm sạch rồi mới xoá
+    #     # ====>
+    #     # text, data = self.controller_02_treeview.print_data()
+    #     # text = self.controller_02_treeview.f_controller_handle_btn_save_03_click_(self.table_of_tab_01)
+    #     # self._f_config_notification(text=text, fg="blue")
 
     def f_view_set_up_formats_of_tab_01(self):
         self.f_view_set_format_of_treeview_of_tab_01()
@@ -879,53 +872,54 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         
     def f_tab_04_button_export_excel_click(self):
         print("Export excel click")
-        Controller_SQL_to_excel.export_log_to_excel(self.tab_04_treeview)
+        # Controller_SQL_to_excel.export_log_to_excel(self.tab_04_treeview)
         
     def f_tab_04_button_edit_click(self):
         print("Edit click")
     
     def f_tab_04_button_delete_click(self):
-        text = Controller_delete_row_in_SQL.handle_event_btn_delete_click(self.tab_04_treeview)
+        # text = Controller_delete_row_in_SQL.handle_event_btn_delete_click(self.tab_04_treeview)
+        text = ""
         self._f_config_notification(text=text, fg="blue")
         
-    def f_view_set_up_formats_of_tab_04(self):
-        self.f_view_set_format_of_treeview_of_tab_04()
+    # def f_view_set_up_formats_of_tab_04(self):
+    #     self.f_view_set_format_of_treeview_of_tab_04()
 
-    def f_view_set_format_of_treeview_of_tab_04(self):
-        # Clear the existing columns
-        self.tab_04_treeview.delete(*self.tab_04_treeview.get_children())
-        for col in self.tab_04_treeview["columns"]:
-            self.tab_04_treeview.heading(col, text="")  # Remove headings
+    # def f_view_set_format_of_treeview_of_tab_04(self):
+    #     # Clear the existing columns
+    #     self.tab_04_treeview.delete(*self.tab_04_treeview.get_children())
+    #     for col in self.tab_04_treeview["columns"]:
+    #         self.tab_04_treeview.heading(col, text="")  # Remove headings
         
-        # Trước khi cấu hình, phải thiết lập cột cho Treeview
-        column_names = self.controller_04.f_get_table_config_name_only()
-        self.tab_04_treeview["columns"] = column_names
+    #     # Trước khi cấu hình, phải thiết lập cột cho Treeview
+    #     column_names = self.controller_04.f_get_table_config_name_only()
+    #     self.tab_04_treeview["columns"] = column_names
         
-        # Treeview config
-        column_configs, column_names, header_font = self.controller_04.f_tab_01_button_config_click(self.table_of_tab_01)
-        for config, col in zip(column_configs, column_names):
-            # Configure each column
-            self.tab_04_treeview.heading(col, text=col)  # Set header text
-            self.tab_04_treeview.column(
-                col,
-                width=config["width"],
-                minwidth=config["min_width"],
-                anchor=config["anchor"],
-                stretch=config["stretch"]
-            )
-            # # Set the header font style
-            # style = ttk.Style()
-            # style.configure("Treeview.Heading", font=header_font)
+    #     # Treeview config
+    #     column_configs, column_names, header_font = self.controller_04.f_tab_01_button_config_click(self.table_of_tab_01)
+    #     for config, col in zip(column_configs, column_names):
+    #         # Configure each column
+    #         self.tab_04_treeview.heading(col, text=col)  # Set header text
+    #         self.tab_04_treeview.column(
+    #             col,
+    #             width=config["width"],
+    #             minwidth=config["min_width"],
+    #             anchor=config["anchor"],
+    #             stretch=config["stretch"]
+    #         )
+    #         # # Set the header font style
+    #         # style = ttk.Style()
+    #         # style.configure("Treeview.Heading", font=header_font)
             
-            # Apply the background and font settings
-            # Apply row styles if needed
-            for row in self.tab_04_treeview.get_children():
-                self.tab_04_treeview.item(row, tags=(row,))
-                self.tab_04_treeview.tag_configure(
-                    row,
-                    background=config["background_color"],
-                    foreground=config["foreground_color"]
-                    )
+    #         # Apply the background and font settings
+    #         # Apply row styles if needed
+    #         for row in self.tab_04_treeview.get_children():
+    #             self.tab_04_treeview.item(row, tags=(row,))
+    #             self.tab_04_treeview.tag_configure(
+    #                 row,
+    #                 background=config["background_color"],
+    #                 foreground=config["foreground_color"]
+    #                 )
     
     def f_view_table_of_tab_04_click(self, event):
         self.current_time = time.time()
