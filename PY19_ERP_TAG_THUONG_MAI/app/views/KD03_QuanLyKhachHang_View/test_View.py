@@ -3,7 +3,6 @@ from tkinter import ttk
 import time
 import json
 from Components_View import *
-from Components_View import cls_frame_normal
 from Components_View.treeview import cls_Treeview_frame_number_01
 from utils import *
 from test_Controller import cls_test_Controller
@@ -198,13 +197,13 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         parent_frame = self.tab_01
 
         # Frame H2
-        self.tab_01_frame_H2 = cls_frame_normal(parent_frame)
+        self.tab_01_frame_H2 = tk.Frame(parent_frame)
         self.tab_01_frame_H2.grid(row=0, column=0, sticky="ew")
 
         self._f_view_create_widgets_in_tab_01_frame_H2()
 
         # Frame entries
-        self.tab_01_frame_entries = cls_frame_normal(parent_frame)
+        self.tab_01_frame_entries = tk.Frame(parent_frame)
         self.tab_01_frame_entries.grid(row=1, column=0, sticky="ew")
         self._f_view_create_widgets_in_tab_01_frame_entries()
 
@@ -737,12 +736,12 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         parent_frame = self.tab_02
 
         # Frame H2
-        self.tab_02_frame_H2 = cls_frame_normal(parent_frame)
+        self.tab_02_frame_H2 = tk.Frame(parent_frame)
         self.tab_02_frame_H2.grid(row=0, column=0, sticky="ew")
         self._f_view_create_widgets_in_tab_02_frame_H2()
 
         # Frame entries
-        self.tab_02_frame_filter_entries = cls_frame_normal(parent_frame)
+        self.tab_02_frame_filter_entries = tk.Frame(parent_frame)
         self.tab_02_frame_filter_entries.grid(row=1, column=0, sticky="ew")
         self.f_view_create_widgets_in_tab_02_frame_filter_entries()
 

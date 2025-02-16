@@ -48,7 +48,9 @@ def f_utils_setup_logo(parent_frame):
         parent_frame.logo_image_dark = logo_image_dark_tk
         
         # Create the tk.Label and display the image
-        logo_label = tk.Label(parent_frame, image=logo_image_light_tk)
+        logo_label = tk.Label(parent_frame, 
+                              image=logo_image_light_tk,
+                              cursor="hand2")
         logo_label.pack(fill="both", expand=True) # Using pack to add it to the parent_frame
         logo_label.bind("<Button-1>", on_logo_click)  # Button-1 is left mouse click
     except FileNotFoundError:

@@ -48,45 +48,14 @@ class cls_frame_while_design(tk.Frame):
     def hide_tooltip(self, event):
         self.tooltip.hide_tip()
 
-class cls_frame_normal(tk.Frame):
-    def __init__(self, master=None, *args, **kwargs):
-        super().__init__(master, *args, **kwargs)
-        self.f_set_style()
+# class cls_frame_normal(tk.Frame):
+#     def __init__(self, master=None, *args, **kwargs):
+#         super().__init__(master, *args, **kwargs)
+#         self.f_set_style()
         
-    def f_set_style(self):
-        self.configure(bd=0, relief="flat")
-        # self.configure(bd=1, relief="solid")  # dùng khi phân tích khung
-        
-class cls_Frame_Element_number_01(tk.Frame):
-    def __init__(self, parent, *args, **kwargs):
-        super().__init__(parent, *args, **kwargs)
-
-        # Configure initial appearance
-        self.config(bg=BG_COLOR_0_0)
-        
-        # Create a shadow frame as a child of the parent
-        self.shadow = tk.Frame(parent, bg=BG_COLOR_0_0, bd=0)
-        self.shadow.lower()  # Ensure shadow is below the main frame
-
-        # Bind mouse events to the frame
-        self.bind("<Enter>", self.f_on_enter_02)
-        self.bind("<Leave>", self.f_on_leave_02)
-        
-    def f_on_enter_02(self, event):
-        """Change appearance when the mouse enters the frame."""
-        # Add a shadow effect
-        self.shadow.place(in_=self, x=-0.5, y=-0.5, relwidth=1.01, relheight=1.02)
-        self.shadow.config(bg=COLOR_HIGHLIGHT_BORDER_OF_LOGO)
-        # # Change the cursor to pointer (hand icon)
-        # event.widget.config(cursor="hand2")
-
-    def f_on_leave_02(self, event):
-        """Revert appearance when the mouse leaves the frame."""
-        # remove the shadow effect
-        self.shadow.place_forget()
-        self.shadow.config(bg=BG_COLOR_0_0)
-        # # change the cursor back to normal
-        # event.widget.config(cursor="")
+#     def f_set_style(self):
+#         self.configure(bd=0, relief="flat")
+#         # self.configure(bd=1, relief="solid")  # dùng khi phân tích khung
 
 class cls_Frame_Main(tk.Frame):
     def __init__(self, parent, *args, **kwargs):
@@ -110,7 +79,7 @@ class cls_Frame_Header(cls_Frame_Main):
         self.configure(bd=0, relief='flat')
         
     def f_setup_Logo(self):
-        Frame_logo = cls_Frame_Element_number_01(self, width=240, height=100)
+        Frame_logo = tk.Frame(self, width=240, height=100)
         Frame_logo.pack(side='left', padx=10, pady=5)
         f_utils_setup_logo(Frame_logo)
         
