@@ -26,10 +26,8 @@ class Controller_action_after_event:
             rows.append(treeview.item(child)["values"])
         return rows
     
-    def f_get_the_latest_number_of_slip(entry_so_phieu):
+    def f_get_the_latest_number_of_slip(entry_so_phieu, ma_thanh_vien, loai_phieu):
         # Get the latest number of slip
-        ma_thanh_vien = "TB"
-        loai_phieu = "YCDH"
         so_phieu = Controller_get_the_latest_number_of_slip.handle_button_get_number_of_slip_click()
         
         # Create the connection string
@@ -796,9 +794,10 @@ class Controller_handel_all_events:
             return f"Error: {e}"
         
     def f_handle_event_get_the_latest_number_of_slip(entry_so_phieu):
-        print("hàm cũ")
+        ma_thanh_vien = "TB"
+        loai_phieu = "YCDH"
         try:
-            Controller_action_after_event.f_get_the_latest_number_of_slip(entry_so_phieu)
+            Controller_action_after_event.f_get_the_latest_number_of_slip(entry_so_phieu, ma_thanh_vien, loai_phieu)
             return "Have gotten the latest number of slip!"
         except Exception as e:
             return f"Error: {e}"
