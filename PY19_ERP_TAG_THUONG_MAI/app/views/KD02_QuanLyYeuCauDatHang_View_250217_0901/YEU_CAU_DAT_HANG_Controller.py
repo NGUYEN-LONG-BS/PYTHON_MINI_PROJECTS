@@ -1,7 +1,7 @@
 import time
 from .YEU_CAU_DAT_HANG_Model import cls_YEU_CAU_DAT_HANG_Model
 from .YEU_CAU_DAT_HANG_Model import cls_YEU_CAU_DAT_HANG_Model_02
-from .YEU_CAU_DAT_HANG_Model import cls_YEU_CAU_DAT_HANG_Model_06_staticmenthod_get_config_of_table_YCDH_log_from_json
+# from .YEU_CAU_DAT_HANG_Model import cls_YEU_CAU_DAT_HANG_Model_06_staticmenthod_get_config_of_table_YCDH_log_from_json
 from .YEU_CAU_DAT_HANG_Model import SQLModel
 from .YEU_CAU_DAT_HANG_Model import Model_get_data_from_SQL
 from Components_View import *   # Tại sao lại phải import Components_View
@@ -461,27 +461,27 @@ class cls_test_Controller_06_treeview_tab_02():
     def __init__(self):
         # super().__init__()
         self.model = None
-        self.f_add_MVC_class()
+        # self.f_add_MVC_class()
         
-    def f_add_MVC_class(self):
-        """Initialize and bind Model and View classes to the controller."""
-        try:
-            # Initialize Model
-            self.model = cls_YEU_CAU_DAT_HANG_Model_06_staticmenthod_get_config_of_table_YCDH_log_from_json()  
-            # If model or view need controller reference
-            self.model.controller = self  # Avoid recursion by passing after initialization
-        except Exception as e:
-            print(f"Error initializing MVC components: {e}")
+    # def f_add_MVC_class(self):
+    #     """Initialize and bind Model and View classes to the controller."""
+    #     try:
+    #         # Initialize Model
+    #         self.model = cls_YEU_CAU_DAT_HANG_Model_06_staticmenthod_get_config_of_table_YCDH_log_from_json()  
+    #         # If model or view need controller reference
+    #         self.model.controller = self  # Avoid recursion by passing after initialization
+    #     except Exception as e:
+    #         print(f"Error initializing MVC components: {e}")
     
-    def f_get_table_config(self):
-        return self.model.f_load_table_config_from_json()
+    # def f_get_table_config(self):
+    #     return self.model.f_load_table_config_from_json()
 
-    def f_get_table_config_name_only(self):
-        return self.model.f_load_table_config_from_json_name_only()
+    # def f_get_table_config_name_only(self):
+    #     return self.model.f_load_table_config_from_json_name_only()
 
-    def f_tab_01_button_config_click(self, treeview_widget):
-        var_01, var_02, var_03 = self.model.f_extract_from_json_columns_config()
-        return var_01, var_02, var_03
+    # def f_tab_01_button_config_click(self, treeview_widget):
+    #     var_01, var_02, var_03 = self.model.f_extract_from_json_columns_config()
+    #     return var_01, var_02, var_03
     
     def f_tab_01_table_single_click(self, event):
         treeview = event.widget
