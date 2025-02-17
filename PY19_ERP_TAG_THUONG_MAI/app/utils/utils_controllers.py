@@ -180,4 +180,4 @@ class utils_controller_TreeviewConfigurator_250217_13h20:
         style = ttk.Style()
         style.configure("Treeview.Heading", font=header_font)
 
-        print("Treeview đã được cấu hình thành công từ JSON.")
+        # print("Treeview đã được cấu hình thành công từ JSON.")

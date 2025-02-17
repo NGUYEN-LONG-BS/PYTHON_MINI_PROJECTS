@@ -30,7 +30,6 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self._f_view_set_up_formats_of_tab_02()
         Controller_handel_all_events.update_entry_id_when_initializing(self.table_of_tab_01, self.tab_01_entry_id)
         # Set up all global variants
-        self._f_setup_all_global_variants()
         self._f_setup_all_binding()
         # Add controllers
         self.f_view_add_controller_02_all_logic_of_treeview()
@@ -81,6 +80,8 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.ngay_filter_bat_dau = f_utils_tim_component_with_name(tab_02_frame, "start_date_entry")
         self.ngay_filter_ket_thuc = f_utils_tim_component_with_name(tab_02_frame, "end_date_entry")
         
+        self.label_footer = f_utils_tim_component_label_with_text(self, "Notification")
+        
     def f_view_clear_content_when_sl_kha_dung_change(self, event):
         f_utils_on_entry_change(self.entry_sl_kha_dung)
         self.tab_01_entry_nhu_cau.delete(0, tk.END)
@@ -129,12 +130,6 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
                         break
         return notebook
         
-    def _f_setup_all_global_variants(self):    
-        # Timer interval (in milliseconds)
-        self.last_click_time = 0
-        self.double_click_interval = 0.3  # 300 ms
-        self.label_footer = f_utils_tim_component_label_with_text(self, "Notification")
-
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
@@ -377,74 +372,19 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.treeview_test_of_tag_01.bind("<ButtonRelease-1>", self.f_view_table_of_tab_01_click)
         
     def f_view_table_of_tab_01_click(self, event):
-        # Call the controller_01 to handle the event
-        self.current_time = time.time()
-        is_double_click = self.controller_01.f_handle_event_click_on_table_of_tab_01(self.last_click_time, self.current_time, self.double_click_interval)
-        # Update last click time only after handling
-        self.last_click_time = self.current_time
-        # Handle the action for single and double click
-        if is_double_click:
-            self.controller_01.f_tab_01_table_double_click(event)
-        else:
-            id_value, ma_hang, ten_hang, dvt, sl_kha_dung, sl_nhu_cau, sl_giu_cho, sl_dat_hang, ghi_chu_mat_hang = self.controller_01.f_tab_01_table_single_click(event)
-            # Clear and update the Entry widgets if values are returned
-            if id_value is not None:
-                self.tab_01_entry_id.config(state="normal")  # Enable the Entry widget to update the value
-                self.tab_01_entry_id.delete(0, tk.END)
-                self.tab_01_entry_id.insert(0, id_value)
-                self.tab_01_entry_id.config(state="disabled")  # Disable the Entry widget again
-
-            if ghi_chu_mat_hang is not None:
-                self.tab_01_entry_ghi_chu_mat_hang.delete(0, tk.END)
-                self.tab_01_entry_ghi_chu_mat_hang.insert(0, ghi_chu_mat_hang)
-
-            if ma_hang is not None:
-                self.entry_ma_hang_tab_01.delete(0, tk.END)
-                self.entry_ma_hang_tab_01.insert(0, ma_hang)
-                
-            if ten_hang is not None:
-                self.entry_ten_hang_tab_01.delete(0, tk.END)
-                self.entry_ten_hang_tab_01.insert(0, ten_hang)
-                
-            if dvt is not None:
-                self.entry_dvt.delete(0, tk.END)
-                self.entry_dvt.insert(0, dvt)
-            
-            if sl_kha_dung is not None:
-                self.entry_sl_kha_dung.delete(0, tk.END)
-                if float(sl_kha_dung).is_integer():  # Nếu là số nguyên
-                    formatted_sl_kha_dung = f"{int(float(sl_kha_dung)):,}"
-                else:  # Nếu là số thập phân
-                    formatted_sl_kha_dung = f"{float(sl_kha_dung):,.2f}"
-                self.entry_sl_kha_dung.insert(0, formatted_sl_kha_dung)
-                
-            if sl_nhu_cau is not None:
-                self.tab_01_entry_nhu_cau.delete(0, tk.END)
-                if float(sl_nhu_cau).is_integer():  # Nếu là số nguyên
-                    formatted_sl_nhu_cau = f"{int(float(sl_nhu_cau)):,}"
-                else:  # Nếu là số thập phân
-                    formatted_sl_nhu_cau = f"{float(sl_nhu_cau):,.2f}"
-                self.tab_01_entry_nhu_cau.insert(0, formatted_sl_nhu_cau)
-            
-            if sl_giu_cho is not None:
-                self.tab_01_entry_sl_giu_cho.config(state="normal")
-                self.tab_01_entry_sl_giu_cho.delete(0, tk.END)
-                if float(sl_giu_cho).is_integer():  # Nếu là số nguyên
-                    formatted_sl_giu_cho = f"{int(float(sl_giu_cho)):,}"
-                else:  # Nếu là số thập phân
-                    formatted_sl_giu_cho = f"{float(sl_giu_cho):,.2f}"
-                self.tab_01_entry_sl_giu_cho.insert(0, formatted_sl_giu_cho)
-                self.tab_01_entry_sl_giu_cho.config(state="disabled")
-                
-            if sl_dat_hang is not None:
-                self.tab_01_entry_sl_YCDH.config(state="normal")
-                self.tab_01_entry_sl_YCDH.delete(0, tk.END)
-                if float(sl_dat_hang).is_integer():  # Nếu là số nguyên
-                    formatted_sl_dat_hang = f"{int(float(sl_dat_hang)):,}"
-                else:  # Nếu là số thập phân
-                    formatted_sl_dat_hang = f"{float(sl_dat_hang):,.2f}"
-                self.tab_01_entry_sl_YCDH.insert(0, formatted_sl_dat_hang)
-                self.tab_01_entry_sl_YCDH.config(state="disabled")
+        Controller_handel_all_events.f_handle_event_treeview_of_tab_01_click(
+            event, 
+            self.table_of_tab_01,
+            self.tab_01_entry_id,
+            self.entry_ma_hang_tab_01,
+            self.entry_ten_hang_tab_01,
+            self.entry_dvt,
+            self.entry_sl_kha_dung,
+            self.tab_01_entry_nhu_cau,
+            self.tab_01_entry_sl_giu_cho,
+            self.tab_01_entry_sl_YCDH,
+            self.tab_01_entry_ghi_chu_mat_hang)
+        
         
     def _f_view_create_widgets_in_tab_02_frame_treeview(self):
         self.tab_02_frame_treeview = self.tab_02_frame_treeview
