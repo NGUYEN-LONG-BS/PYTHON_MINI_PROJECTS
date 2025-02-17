@@ -142,3 +142,40 @@ class utils_controller_set_size_of_windown_250215_10h24:
     #         if root.winfo_width() < 1000 or root.winfo_height() < 750:
     #             root.geometry("1000x750")
             
+class utils_controller_treeview_set_config_250217_11h01:
+    def set_config_of_treeview(my_treeview, config_json_path):
+        # Clear the existing columns
+        my_treeview.delete(*my_treeview.get_children())
+        for col in my_treeview["columns"]:
+            my_treeview.heading(col, text="")  # Remove headings
+        
+        # Trước khi cấu hình, phải thiết lập cột cho Treeview
+        tab_01_table_column_names = utils_model_get_config_of_treeview_from_json_file_250217_10h19.f_load_table_config_from_json_name_only(config_json_path)
+        my_treeview["columns"] = tab_01_table_column_names
+        
+        data_to_config_table = utils_model_get_config_of_treeview_from_json_file_250217_10h19.f_get_data_to_config_table_from_json(config_json_path)
+        # Treeview config
+        list_table_of_tab_01_column_configs, list_table_of_tab_01_column_names, tuple_table_of_tab_01_header_font = utils_model_get_config_of_treeview_from_json_file_250217_10h19.f_extract_from_json_columns_config(data_to_config_table)
+        for config, col in zip(list_table_of_tab_01_column_configs, list_table_of_tab_01_column_names):
+            # Configure each column
+            my_treeview.heading(col, text=col)  # Set header text
+            my_treeview.column(
+                col,
+                width=config["width"],
+                minwidth=config["min_width"],
+                anchor=config["anchor"],
+                stretch=config["stretch"]
+            )
+            # Set the header font style
+            style = ttk.Style()
+            style.configure("Treeview.Heading", font=tuple_table_of_tab_01_header_font)
+            
+            # Apply the background and font settings
+            # Apply row styles if needed
+            for row in my_treeview.get_children():
+                my_treeview.item(row, tags=(row,))
+                my_treeview.tag_configure(
+                    row,
+                    background=config["background_color"],
+                    foreground=config["foreground_color"]
+                    )

@@ -95,6 +95,14 @@ class Controller_action_after_event:
         entry_id.delete(0, tk.END)  # Clear the existing value
         entry_id.insert(0, row_count)  # Insert the new value (ID)
         entry_id.config(state="disabled")  # Disable the Entry widget again
+        
+    def set_format_of_treeview_of_tab_01(my_treeview):
+        config_json_path = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'KD_YEU_CAU_DAT_HANG', 'treeview_tab_01_YCDH_input.json')
+        utils_controller_treeview_set_config_250217_11h01.set_config_of_treeview(my_treeview, config_json_path)
+        
+    def set_format_of_treeview_of_tab_02(my_treeview):
+        config_json_path = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'KD_YEU_CAU_DAT_HANG', 'treeview_tab_02_YCDH_log.json')
+        utils_controller_treeview_set_config_250217_11h01.set_config_of_treeview(my_treeview, config_json_path)
 
 class cls_test_Controller():
     def __init__(self):
@@ -760,8 +768,6 @@ class Controller_get_the_latest_number_of_slip:
         
         return data_02
 
-
-
 class Controller_handel_all_events:
     def f_handle_tab_01_button_clear_click(my_treeview):
         try:
@@ -916,5 +922,10 @@ class Controller_handel_all_events:
     def update_entry_id_when_initializing(my_treeview, entry_id):
         Controller_action_after_event.update_entry_id_after_adding_new_row(my_treeview, entry_id)
         
+    def f_handle_event_initializing_format_of_treeview_of_tab_01(my_treeview):
+        Controller_action_after_event.set_format_of_treeview_of_tab_01(my_treeview)
+    
+    def f_handle_event_initializing_format_of_treeview_of_tab_02(my_treeview):
+        Controller_action_after_event.set_format_of_treeview_of_tab_02(my_treeview)
         
         

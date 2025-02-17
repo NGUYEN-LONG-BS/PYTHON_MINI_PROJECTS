@@ -626,40 +626,8 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         )
     
     def f_view_set_format_of_treeview_of_tab_01(self):
-        # Clear the existing columns
-        self.treeview_test_of_tag_01.delete(*self.treeview_test_of_tag_01.get_children())
-        for col in self.treeview_test_of_tag_01["columns"]:
-            self.treeview_test_of_tag_01.heading(col, text="")  # Remove headings
-        
-        # Trước khi cấu hình, phải thiết lập cột cho Treeview
-        tab_01_table_column_names = self.controller_01.f_get_table_config_name_only()
-        self.treeview_test_of_tag_01["columns"] = tab_01_table_column_names
-        
-        # Treeview config
-        list_table_of_tab_01_column_configs, list_table_of_tab_01_column_names, tuple_table_of_tab_01_header_font = self.controller_01.f_tab_01_button_config_click(self.table_of_tab_01)
-        for config, col in zip(list_table_of_tab_01_column_configs, list_table_of_tab_01_column_names):
-            # Configure each column
-            self.treeview_test_of_tag_01.heading(col, text=col)  # Set header text
-            self.treeview_test_of_tag_01.column(
-                col,
-                width=config["width"],
-                minwidth=config["min_width"],
-                anchor=config["anchor"],
-                stretch=config["stretch"]
-            )
-            # Set the header font style
-            style = ttk.Style()
-            style.configure("Treeview.Heading", font=tuple_table_of_tab_01_header_font)
-            
-            # Apply the background and font settings
-            # Apply row styles if needed
-            for row in self.treeview_test_of_tag_01.get_children():
-                self.treeview_test_of_tag_01.item(row, tags=(row,))
-                self.treeview_test_of_tag_01.tag_configure(
-                    row,
-                    background=config["background_color"],
-                    foreground=config["foreground_color"]
-                    )
+        my_treeview = self.treeview_test_of_tag_01
+        Controller_handel_all_events.f_handle_event_initializing_format_of_treeview_of_tab_01(my_treeview)
     
     def _f_view_set_rows_count_of_treeview_01_when_add_new_row(self):
         row_count = 1 + self.controller_01.f_controller_get_row_count(self.table_of_tab_01)
@@ -886,40 +854,8 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.f_view_set_format_of_treeview_of_tab_02()
 
     def f_view_set_format_of_treeview_of_tab_02(self):
-        # Clear the existing columns
-        self.treeview_test_of_tag_02.delete(*self.treeview_test_of_tag_02.get_children())
-        for col in self.treeview_test_of_tag_02["columns"]:
-            self.treeview_test_of_tag_02.heading(col, text="")  # Remove headings
-        
-        # Trước khi cấu hình, phải thiết lập cột cho Treeview
-        column_names = self.controller_04.f_get_table_config_name_only()
-        self.treeview_test_of_tag_02["columns"] = column_names
-        
-        # Treeview config
-        column_configs, column_names, header_font = self.controller_04.f_tab_01_button_config_click(self.table_of_tab_01)
-        for config, col in zip(column_configs, column_names):
-            # Configure each column
-            self.treeview_test_of_tag_02.heading(col, text=col)  # Set header text
-            self.treeview_test_of_tag_02.column(
-                col,
-                width=config["width"],
-                minwidth=config["min_width"],
-                anchor=config["anchor"],
-                stretch=config["stretch"]
-            )
-            # # Set the header font style
-            # style = ttk.Style()
-            # style.configure("Treeview.Heading", font=header_font)
-            
-            # Apply the background and font settings
-            # Apply row styles if needed
-            for row in self.treeview_test_of_tag_02.get_children():
-                self.treeview_test_of_tag_02.item(row, tags=(row,))
-                self.treeview_test_of_tag_02.tag_configure(
-                    row,
-                    background=config["background_color"],
-                    foreground=config["foreground_color"]
-                    )
+        my_treeview = self.treeview_test_of_tag_02
+        Controller_handel_all_events.f_handle_event_initializing_format_of_treeview_of_tab_02(my_treeview)
     
     def f_view_table_of_tab_02_click(self, event):
         self.current_time = time.time()
