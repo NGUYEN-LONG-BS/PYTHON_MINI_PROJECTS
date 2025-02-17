@@ -4,10 +4,10 @@ from .utils_controllers import utils_controller_action_after_event_250216_14h57
 from .utils_controllers import utils_controller_logic_of_view_250216_14h57
 from .utils_controllers import utils_controller_get_the_latest_number_of_slip
 from .utils_controllers import utils_controller_set_size_of_windown_250215_10h24
-from .utils_controllers import utils_controller_treeview_set_config_250217_11h01
+from .utils_controllers import utils_controller_TreeviewConfigurator_250217_13h20
 
-from .utils_models import utils_model_get_config_of_treeview_from_json_file_250217_10h19
 from .utils_models import utils_model_get_data_from_SQL
+from .utils_models import utils_model_TreeviewConfigLoader_250217_13h20
 
 
 

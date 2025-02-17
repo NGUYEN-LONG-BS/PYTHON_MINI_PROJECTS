@@ -98,11 +98,12 @@ class Controller_action_after_event:
         
     def set_format_of_treeview_of_tab_01(my_treeview):
         config_json_path = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'KD_YEU_CAU_DAT_HANG', 'treeview_tab_01_YCDH_input.json')
-        utils_controller_treeview_set_config_250217_11h01.set_config_of_treeview(my_treeview, config_json_path)
+        utils_controller_TreeviewConfigurator_250217_13h20.apply_treeview_config(my_treeview, config_json_path)
         
     def set_format_of_treeview_of_tab_02(my_treeview):
+        """Thiết lập cấu hình Treeview cho tab 02"""
         config_json_path = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'KD_YEU_CAU_DAT_HANG', 'treeview_tab_02_YCDH_log.json')
-        utils_controller_treeview_set_config_250217_11h01.set_config_of_treeview(my_treeview, config_json_path)
+        utils_controller_TreeviewConfigurator_250217_13h20.apply_treeview_config(my_treeview, config_json_path)
 
 class cls_test_Controller():
     def __init__(self):
@@ -456,63 +457,6 @@ class cls_test_Controller_04_validate_before_saving():
     def validate_and_update(self):
         print("Kiểm tra số lượng khả dụng khớp thì mới cho lưu!")
         return True
-    
-class cls_test_Controller_06_treeview_tab_02():
-    def __init__(self):
-        # super().__init__()
-        self.model = None
-        # self.f_add_MVC_class()
-        
-    # def f_add_MVC_class(self):
-    #     """Initialize and bind Model and View classes to the controller."""
-    #     try:
-    #         # Initialize Model
-    #         self.model = cls_YEU_CAU_DAT_HANG_Model_06_staticmenthod_get_config_of_table_YCDH_log_from_json()  
-    #         # If model or view need controller reference
-    #         self.model.controller = self  # Avoid recursion by passing after initialization
-    #     except Exception as e:
-    #         print(f"Error initializing MVC components: {e}")
-    
-    # def f_get_table_config(self):
-    #     return self.model.f_load_table_config_from_json()
-
-    # def f_get_table_config_name_only(self):
-    #     return self.model.f_load_table_config_from_json_name_only()
-
-    # def f_tab_01_button_config_click(self, treeview_widget):
-    #     var_01, var_02, var_03 = self.model.f_extract_from_json_columns_config()
-    #     return var_01, var_02, var_03
-    
-    def f_tab_01_table_single_click(self, event):
-        treeview = event.widget
-        # Get the selected row ID
-        selected_item = treeview.selection()
-        if selected_item:
-            # Fetch the values of the selected row
-            row_values = treeview.item(selected_item[0], "values")
-            # print("Selected row values:", row_values)
-            if len(row_values) >= 9:
-                return row_values[0], row_values[1], row_values[2], row_values[3], row_values[4], row_values[5], row_values[6], row_values[7], row_values[8]
-            else:
-                return None, None, None, None, None, None, None, None, None
-        else:
-            # print("Warning: No row selected.")
-            return None, None, None, None, None, None, None, None, None
-    
-    def f_tab_01_table_double_click(self, event):
-        # Get the Treeview widget from the event
-        treeview = event.widget
-        # Get the selected row ID
-        selected_item = treeview.selection()
-        if selected_item:
-            # Fetch the values of the selected row
-            row_values = treeview.item(selected_item[0], "values")
-            # Print the first and third values, if they exist
-            if len(row_values) >= 3:
-                print("First value:", row_values[0])
-                print("Third value:", row_values[2])
-            else:
-                print("Insufficient data in row!")
                 
 class Controller_delete_row_in_SQL:
     def update_deleted(so_phieu):

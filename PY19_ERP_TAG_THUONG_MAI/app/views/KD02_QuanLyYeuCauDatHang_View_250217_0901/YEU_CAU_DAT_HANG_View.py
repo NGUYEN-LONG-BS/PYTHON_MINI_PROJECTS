@@ -8,7 +8,7 @@ from utils import *
 from .YEU_CAU_DAT_HANG_Controller import cls_test_Controller
 from .YEU_CAU_DAT_HANG_Controller import cls_test_Controller_02_treeview
 from .YEU_CAU_DAT_HANG_Controller import cls_test_Controller_03_auto_update_number 
-from .YEU_CAU_DAT_HANG_Controller import cls_test_Controller_06_treeview_tab_02
+
 from .YEU_CAU_DAT_HANG_Controller import SQLController
 from .YEU_CAU_DAT_HANG_Controller import Controller_SQL_to_excel
 from .YEU_CAU_DAT_HANG_Controller import Controller_delete_row_in_SQL
@@ -21,7 +21,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         super().__init__(title_of_form=title, name_of_slip=name)
         # Add controller 01
         self.f_view_add_controller_01_basic()
-        self.f_view_add_controller_04_treeview_of_tab_02()
+
         # call reuse components
         self._f_view_thay_doi_gia_tri_cua_base_form()
         self._f_view_create_all_container_frames_of_window()
@@ -168,11 +168,6 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         entry_sl_yeu_cau_dat_hang = self.tab_01_entry_sl_YCDH
         self.controller_03_auto_update_number = cls_test_Controller_03_auto_update_number(entry_sl_kha_dung, entry_sl_nhu_cau, entry_sl_giu_cho, entry_sl_yeu_cau_dat_hang)
         self.controller_03_auto_update_number.view = self
-        
-    def f_view_add_controller_04_treeview_of_tab_02(self):
-        # Initialize controller_01
-        self.controller_04 = cls_test_Controller_06_treeview_tab_02()
-        self.controller_04.view = self
     
     def _f_view_create_all_container_frames_of_window(self):
         # Create tabs

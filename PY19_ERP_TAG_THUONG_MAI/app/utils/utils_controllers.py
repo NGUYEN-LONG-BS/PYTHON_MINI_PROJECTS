@@ -142,40 +142,42 @@ class utils_controller_set_size_of_windown_250215_10h24:
     #         if root.winfo_width() < 1000 or root.winfo_height() < 750:
     #             root.geometry("1000x750")
             
-class utils_controller_treeview_set_config_250217_11h01:
-    def set_config_of_treeview(my_treeview, config_json_path):
-        # Clear the existing columns
+class utils_controller_TreeviewConfigurator_250217_13h20:
+    """Class để áp dụng cấu hình cho Treeview"""
+
+    @staticmethod
+    def apply_treeview_config(my_treeview, config_json_path):
+        """Cấu hình Treeview dựa trên JSON"""
+        
+        # Xóa các cột hiện tại
         my_treeview.delete(*my_treeview.get_children())
         for col in my_treeview["columns"]:
-            my_treeview.heading(col, text="")  # Remove headings
+            my_treeview.heading(col, text="")  # Xóa tiêu đề
+
+        # Load dữ liệu từ JSON
+        data = utils_model_TreeviewConfigLoader_250217_13h20.load_json(config_json_path)
+        if not data:
+            return
         
-        # Trước khi cấu hình, phải thiết lập cột cho Treeview
-        tab_01_table_column_names = utils_model_get_config_of_treeview_from_json_file_250217_10h19.f_load_table_config_from_json_name_only(config_json_path)
-        my_treeview["columns"] = tab_01_table_column_names
-        
-        data_to_config_table = utils_model_get_config_of_treeview_from_json_file_250217_10h19.f_get_data_to_config_table_from_json(config_json_path)
-        # Treeview config
-        list_table_of_tab_01_column_configs, list_table_of_tab_01_column_names, tuple_table_of_tab_01_header_font = utils_model_get_config_of_treeview_from_json_file_250217_10h19.f_extract_from_json_columns_config(data_to_config_table)
-        for config, col in zip(list_table_of_tab_01_column_configs, list_table_of_tab_01_column_names):
-            # Configure each column
-            my_treeview.heading(col, text=col)  # Set header text
+        columns_config, column_names = utils_model_TreeviewConfigLoader_250217_13h20.get_column_config(data)
+        my_treeview["columns"] = column_names
+
+        # Lấy cấu hình font header
+        header_font = utils_model_TreeviewConfigLoader_250217_13h20.get_header_font(data)
+
+        # Cấu hình cột
+        for config, col in zip(columns_config, column_names):
+            my_treeview.heading(col, text=col)
             my_treeview.column(
                 col,
-                width=config["width"],
-                minwidth=config["min_width"],
-                anchor=config["anchor"],
-                stretch=config["stretch"]
+                width=config.get("width", 100),
+                minwidth=config.get("min_width", 50),
+                anchor=config.get("anchor", "w"),
+                stretch=config.get("stretch", True)
             )
-            # Set the header font style
-            style = ttk.Style()
-            style.configure("Treeview.Heading", font=tuple_table_of_tab_01_header_font)
-            
-            # Apply the background and font settings
-            # Apply row styles if needed
-            for row in my_treeview.get_children():
-                my_treeview.item(row, tags=(row,))
-                my_treeview.tag_configure(
-                    row,
-                    background=config["background_color"],
-                    foreground=config["foreground_color"]
-                    )
+
+        # Cấu hình font tiêu đề
+        style = ttk.Style()
+        style.configure("Treeview.Heading", font=header_font)
+
+        print("Treeview đã được cấu hình thành công từ JSON.")
