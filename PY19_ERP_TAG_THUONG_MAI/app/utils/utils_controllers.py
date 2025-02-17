@@ -181,3 +181,21 @@ class utils_controller_TreeviewConfigurator_250217_13h20:
         style.configure("Treeview.Heading", font=header_font)
 
         # print("Treeview đã được cấu hình thành công từ JSON.")
+
+class utils_controller_TreeviewHandler_click_250217_22h34:
+
+    def treeview_single_click(my_Treeview):
+        selected_item = my_Treeview.selection()
+        if selected_item:
+            row_values = my_Treeview.item(selected_item[0], "values")
+            result_tuple = tuple(row_values) if row_values else None
+            # print(result_tuple)
+            return result_tuple
+        return None
+
+    def treeview_double_click(my_Treeview, column_return):
+        selected_item = my_Treeview.selection()
+        if selected_item:
+            row_values = my_Treeview.item(selected_item[0], "values")
+            return row_values[column_return] if len(row_values) > column_return else None
+        return None

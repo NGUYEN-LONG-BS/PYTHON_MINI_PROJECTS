@@ -366,13 +366,18 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_button_clear.pack(side="left", padx=10)
     
     def _f_view_create_widgets_in_tab_01_frame_treeview(self):
-        self.tab_01_frame_treeview = self.tab_01_frame_treeview
         self.table_of_tab_01 = self.tab_01_frame_treeview.treeview_normal
-        self.treeview_test_of_tag_01 = self.tab_01_frame_treeview.treeview_normal
-        self.treeview_test_of_tag_01.bind("<ButtonRelease-1>", self.f_view_table_of_tab_01_click)
-        
-    def f_view_table_of_tab_01_click(self, event):
-        Controller_handel_all_events.f_handle_event_treeview_of_tab_01_click(
+        # Gán sự kiện
+        self.table_of_tab_01.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_01_single_click)  # Single click
+        self.table_of_tab_01.bind("<Double-1>", self.f_view_treeview_of_tab_01_double_click)  # Double click
+
+    def f_view_treeview_of_tab_01_double_click(self, event):
+        Controller_handel_all_events.f_handle_event_treeview_of_tab_01_double_click(
+            event,
+            self.table_of_tab_01)
+
+    def f_view_treeview_of_tab_01_single_click(self, event):
+        Controller_handel_all_events.f_handle_event_treeview_of_tab_01_single_click(
             event, 
             self.table_of_tab_01,
             self.tab_01_entry_id,
@@ -491,7 +496,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
             json.dump(json_serializable_config, json_file, indent=4, ensure_ascii=False)
     
     def f_view_tab_01_button_clear_click(self):
-        notification_text = Controller_handel_all_events.f_handle_tab_01_button_clear_click(self.treeview_test_of_tag_01)
+        notification_text = Controller_handel_all_events.f_handle_tab_01_button_clear_click(self.table_of_tab_01)
         self._f_config_notification(notification_text, fg="blue")
 
     def f_tab_01_button_print_form_tu_tao_tu_code_click(self):
@@ -531,11 +536,11 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self._f_config_notification(notification_text, fg=text_color)
     
     def f_view_tab_01_button_delete_click(self):
-        self.controller_02_treeview.f_controller_02_delete_selected(self.treeview_test_of_tag_01)
+        self.controller_02_treeview.f_controller_02_delete_selected(self.table_of_tab_01)
     
     def f_view_tab_01_button_update_click(self):
         # Khai báo các tham số
-        tree = self.treeview_test_of_tag_01
+        tree = self.table_of_tab_01
         selected_item = tree.selection()
         param_00 = tree.item(selected_item, "values")[0] if tree.item(selected_item, "values") else None
         param_01 = self.entry_ma_hang_tab_01.get()
@@ -561,7 +566,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         )
     
     def f_view_set_format_of_treeview_of_tab_01(self):
-        my_treeview = self.treeview_test_of_tag_01
+        my_treeview = self.table_of_tab_01
         Controller_handel_all_events.f_handle_event_initializing_format_of_treeview_of_tab_01(my_treeview)
     
     def _f_view_set_rows_count_of_treeview_01_when_add_new_row(self):
