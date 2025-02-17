@@ -163,9 +163,10 @@ class cls_Dashboard_kinhdoanh_View(cls_base_form_number_02_ManyTabs):
         print("f_card_04_click")
     
     def f_card_05_yeu_cau_dat_hang_click(self, event):
-        from views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
+        # from views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
+        from views.KD02_QuanLyYeuCauDatHang_View_250217_0901.YEU_CAU_DAT_HANG_View import cls_YEU_CAU_DAT_HANG_View
         self.destroy()
-        new_view = cls_test_View()
+        new_view = cls_YEU_CAU_DAT_HANG_View()
         # new_view.dashboard = self.parent
         utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
         f_utils_set_center_screen(new_view)

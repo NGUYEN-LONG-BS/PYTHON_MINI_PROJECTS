@@ -79,6 +79,8 @@ class cls_menu_top:
             # menu_KinhDoanh level 0
             menu_KinhDoanh = tk.Menu(top_menu, tearoff=0)
             top_menu.add_cascade(label="Kinh doanh", menu=menu_KinhDoanh)
+            menu_KinhDoanh.add_command(label="BP kinh doanh", command=self.f_Kinh_Doanh_Home_main_click)
+            menu_KinhDoanh.add_separator()
             
             # menu_KinhDoanh level 1
             menu_KinhDoanh_QuanLyGoiThau = tk.Menu(menu_KinhDoanh, tearoff=0)
@@ -102,8 +104,8 @@ class cls_menu_top:
             menu_KinhDoanh_QuanLyGoiThau.add_command(label="KD0105 |Nhật ký giao hàng", command=self.f_do_nothing_click)
             
             # menu_KinhDoanh level 2: menu_KinhDoanh_QuanLyYeuCauDatHang
-            menu_KinhDoanh_QuanLyYeuCauDatHang.add_command(label="KD0201 |Tạo mới YCĐH", command=self.f_QLYCDH_TALA_click)
-            menu_KinhDoanh_QuanLyYeuCauDatHang.add_command(label="KD0202 |Nhật ký YCĐH", command=self.f_do_nothing_click)
+            menu_KinhDoanh_QuanLyYeuCauDatHang.add_command(label="KD0201 |Tạo mới YCĐH", command=self.f_tao_moi_YCDH_click)
+            menu_KinhDoanh_QuanLyYeuCauDatHang.add_command(label="KD0202 |Nhật ký YCĐH", command=self.f_nhat_ky_YCDH_click)
             menu_KinhDoanh_QuanLyYeuCauDatHang.add_separator()
             menu_KinhDoanh_QuanLyYeuCauDatHang_BaoCaoYCDH = tk.Menu(menu_KinhDoanh_QuanLyYeuCauDatHang, tearoff=0)
             menu_KinhDoanh_QuanLyYeuCauDatHang.add_cascade(label="Báo cáo YCDH", menu=menu_KinhDoanh_QuanLyYeuCauDatHang_BaoCaoYCDH)
@@ -293,9 +295,10 @@ class cls_menu_top:
         menu_TEST.add_command(label="Các gói thầu đã lập", command=self.f_QLGT_GoiThauDaLap_click)
         menu_TEST.add_command(label="Tạo mới gói thầu", command=self.f_QLGT_TaoMoi_click)
         menu_TEST.add_command(label="Các gói thầu đã lập", command=self.f_QLGT_GoiThauDaLap_click)
-    
-        menu_TEST.add_command(label="KD0201 |Phiếu Yêu cầu đặt hàng", command=self.f_QLYCDH_TALA_click)
-        menu_TEST.add_command(label="KD0202 |Nhật ký yêu cầu đặt hàng", command=self.f_QLYCDH_TM_click)
+
+        menu_TEST.add_separator()
+        menu_TEST.add_command(label="Test |Phiếu Yêu cầu đặt hàng", command=self.f_test_tao_moi_YCDH_TALA_click)
+        menu_TEST.add_command(label="Test |Nhật ký yêu cầu đặt hàng", command=self.f_test_nhat_ky_YCDH_TALA_click)
         
         menu_TEST.add_separator()
         menu_TEST.add_command(label="KD0101 |Quản lý gói thầu", command=self.f_KD0101_QuanLyGoiThau_click)
@@ -310,6 +313,10 @@ class cls_menu_top:
     def f_Home_main_click(self):
         print("f_Home_main_click selected")
         self.f_open_DashBoard()
+        
+    # Define the action fuctions for Kinhd doanh home menu
+    def f_Kinh_Doanh_Home_main_click(self):
+        self.f_open_Kinh_Doanh_DashBoard()
     
     # Define the action fuctions for QLGT menu
     def f_QLGT_TaoMoi_click(self):
@@ -329,9 +336,13 @@ class cls_menu_top:
         self.f_open_KD01_01QuanLyGoiThauView()
     
     # Define the action fuctions for QLYCDT menu
-    def f_QLYCDH_TALA_click(self):
-        print("f_QLYCDH_TALA_click selected")
-        # self.f_open_KD02QuanLyYeuCauDatHangView()
+    def f_tao_moi_YCDH_click(self):
+        self.f_open_tao_moi_YEU_CAU_DAT_HANG_View()
+    
+    def f_nhat_ky_YCDH_click(self):
+        self.f_open_nhat_ky_YEU_CAU_DAT_HANG_View()
+        
+    def f_test_tao_moi_YCDH_TALA_click(self):
         self.f_open_testview()
         
     def f_HR01_click(self):
@@ -342,8 +353,8 @@ class cls_menu_top:
         print("f_KD_QuanLyKhachHang_click selected")
         self.f_open_KD0301_CRUDP_KhachHang_View()
         
-    def f_QLYCDH_TM_click(self):
-        print("f_QLYCDH_TM_click selected")
+    def f_test_nhat_ky_YCDH_TALA_click(self):
+        self.f_open_tab_02_of_testview()
     
     def f_Help_About_click(self):
         print("f_Help_About_click selected")
@@ -379,6 +390,31 @@ class cls_menu_top:
         utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
         f_utils_set_center_screen(new_view)
         new_view.focus_force()
+
+    def f_open_tao_moi_YEU_CAU_DAT_HANG_View(self):
+        from views.KD02_QuanLyYeuCauDatHang_View_250217_0901.YEU_CAU_DAT_HANG_View import cls_YEU_CAU_DAT_HANG_View
+        self.parent.destroy()
+        new_view = cls_YEU_CAU_DAT_HANG_View()
+        new_view.dashboard = self.parent
+        utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
+        f_utils_set_center_screen(new_view)
+        new_view.focus_force()
+    
+    def f_open_nhat_ky_YEU_CAU_DAT_HANG_View(self):
+        from views.KD02_QuanLyYeuCauDatHang_View_250217_0901.YEU_CAU_DAT_HANG_View import cls_YEU_CAU_DAT_HANG_View
+        self.parent.destroy()
+        new_view = cls_YEU_CAU_DAT_HANG_View()
+        new_view.dashboard = self.parent
+        utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
+        f_utils_set_center_screen(new_view)
+        new_view.focus_force()
+        # Activate tab02
+        try:
+            tab_02 = f_utils_tim_component_with_name(new_view, "tab_02")
+            new_view.notebook.select(tab_02)  # Ensure `notebook` exists in `new_view`
+        except AttributeError:
+            my_current_function = f_utils_get_current_function_name()
+            print(f"Error at function: {my_current_function}")
     
     def f_open_testview(self):
         from views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
@@ -389,6 +425,22 @@ class cls_menu_top:
         f_utils_set_center_screen(new_view)
         new_view.focus_force()
     
+    def f_open_tab_02_of_testview(self):
+        from views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
+        self.parent.destroy()
+        new_view = cls_test_View()
+        new_view.dashboard = self.parent
+        utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
+        f_utils_set_center_screen(new_view)
+        new_view.focus_force()
+        # Activate tab02
+        try:
+            tab_02 = f_utils_tim_component_with_name(new_view, "tab_02")
+            new_view.notebook.select(tab_02)  # Ensure `notebook` exists in `new_view`
+        except AttributeError:
+            my_current_function = f_utils_get_current_function_name()
+            print(f"Error at function: {my_current_function}")
+            
     def f_open_HR01(self):
         from views.HR01_FORM_VIEW.set_margins import cls_hr01_view
         self.parent.destroy()
@@ -478,6 +530,10 @@ class cls_menu_top:
     def f_open_DashBoard(self):
         self.parent.destroy()
         f_utils_open_dashboard_main()
+        
+    def f_open_Kinh_Doanh_DashBoard(self):
+        self.parent.destroy()
+        f_utils_open_dashboard_kinh_doanh()
         
     def f_destroy_current_window(self):
         self.parent.destroy()
