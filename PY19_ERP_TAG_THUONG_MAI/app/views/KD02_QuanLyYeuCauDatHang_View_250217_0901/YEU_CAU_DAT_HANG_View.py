@@ -431,16 +431,16 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         #                                       command=self.f_tab_01_button_print_form_tu_tao_tu_code_click)
         # self.tab_01_config_num_02.pack(side="right", padx=10)
         
-        # BTN test
-        self.tab_01_button_stest_new_function = tk.Button(tab_01_button_container_02_on_the_right, 
-                                               text="test", 
-                                               command=self.f_tab_01_button_test_click)
-        self.tab_01_button_stest_new_function.pack(side="right", padx=10)
+        # # BTN test
+        # self.tab_01_button_stest_new_function = tk.Button(tab_01_button_container_02_on_the_right, 
+        #                                        text="test", 
+        #                                        command=self.f_tab_01_button_test_click)
+        # self.tab_01_button_stest_new_function.pack(side="right", padx=10)
         
         # BTN save
         self.tab_01_button_save_03 = tk.Button(tab_01_button_container_02_on_the_right, 
                                                text="Save", 
-                                               command=self.f_tab_01_button_save_03_click)
+                                               command=self.f_tab_01_button_save_click)
         self.tab_01_button_save_03.pack(side="right", padx=10)
         
         # BTN print
@@ -524,7 +524,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self._f_config_notification(f_utils_open_file(),"black")
 
     def f_view_tab_01_button_add_click(self):
-        Controller_handel_all_events.f_handle_event_tab_01_button_add_row_click(
+        text = Controller_handel_all_events.f_handle_event_tab_01_button_add_row_click(
             self.table_of_tab_01, 
             self.tab_01_entry_id, 
             self.entry_ma_hang_tab_01, 
@@ -590,10 +590,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         text = self.controller_01.f_controller_handle_btn_save_02_click_(self.table_of_tab_01)
         self._f_config_notification(text=text, fg="blue")
     
-    def f_tab_01_button_test_click(self):
-        Controller_handel_all_events.f_handle_event_tab_01_button_test_click(self.table_of_tab_01)
-    
-    def f_tab_01_button_save_03_click(self):        
+    def f_tab_01_button_save_click(self):        
         # # Khai báo các tham số
         # ID_nhan_vien = "NV01"
         # Xoa_Sua = ""

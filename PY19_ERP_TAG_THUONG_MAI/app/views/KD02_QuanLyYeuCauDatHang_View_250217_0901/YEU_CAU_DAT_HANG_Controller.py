@@ -1,3 +1,4 @@
+from tkinter import messagebox
 import time
 from .YEU_CAU_DAT_HANG_Model import cls_YEU_CAU_DAT_HANG_Model
 from .YEU_CAU_DAT_HANG_Model import cls_YEU_CAU_DAT_HANG_Model_02
@@ -11,6 +12,11 @@ from datetime import datetime
 from collections import defaultdict
 
 class Controller_action_after_event:
+    
+    def f_Check_duplicate_slip_number(entry_so_phieu):
+        database_name = "[TBD_2024].[dbo].[TB_KD02_YEU_CAU_DAT_HANG]"
+        column_name = "[SO_PHIEU]"
+        return f_utils_check_duplicate(entry_so_phieu, database_name=database_name, column_name=column_name)
     
     def f_add_new_row(*args):
         try:
@@ -114,10 +120,23 @@ class Controller_action_after_event:
             tree
         ) = args
         
-        # Step 2: get ID_nhan_vien và Xoa_sua
+        # Step 2.1: get ID_nhan_vien và Xoa_sua
         ID_nhan_vien = "NV01"
         Xoa_Sua = ""
         
+        SQLController.f_controller_handle_btn_save_03_click_(
+            ID_nhan_vien,
+            Xoa_Sua,
+            entry_so_phieu, 
+            entry_ma_kh, 
+            entry_ten_kh,
+            entry_mst,
+            entry_dia_chi,
+            entry_so_hop_dong,
+            entry_thong_tin_hop_dong,
+            entry_ghi_chu_cua_phieu,
+            tree
+        )
         # Step 3: validate data
         
         # Step 4: sent data to sql
@@ -770,8 +789,6 @@ class SQLController:
             entry_so_hop_dong,
             entry_thong_tin_hop_dong,
             entry_ghi_chu_cua_phieu,
-            entry_ma_hang,
-            entry_ten_hang,
             tree
         ) = args
         
@@ -828,8 +845,6 @@ class SQLController:
             entry_so_hop_dong,
             entry_thong_tin_hop_dong,
             entry_ghi_chu_cua_phieu,
-            entry_ma_hang,
-            entry_ten_hang,
             tree
         ) = args
         # Step_01: Get data
@@ -843,8 +858,6 @@ class SQLController:
                                                                                 entry_so_hop_dong,
                                                                                 entry_thong_tin_hop_dong,
                                                                                 entry_ghi_chu_cua_phieu,
-                                                                                entry_ma_hang,
-                                                                                entry_ten_hang,
                                                                                 tree
                                                                                 )
         # Step_02: validate data
@@ -973,29 +986,41 @@ class Controller_get_the_latest_number_of_slip:
 class Controller_handel_all_events:
     
     def f_handle_event_tab_01_btn_save_click(*args):
-        (
-            entry_so_phieu, 
-            entry_ma_kh, 
-            entry_ten_kh,
-            entry_mst,
-            entry_dia_chi,
-            entry_so_hop_dong,
-            entry_thong_tin_hop_dong,
-            entry_ghi_chu_cua_phieu,
-            tree
-        ) = args
-        
-        Controller_action_after_event.f_save_data_to_sql(
-            entry_so_phieu, 
-            entry_ma_kh, 
-            entry_ten_kh,
-            entry_mst,
-            entry_dia_chi,
-            entry_so_hop_dong,
-            entry_thong_tin_hop_dong,
-            entry_ghi_chu_cua_phieu,
-            tree
-            )
+        try:
+            # Get the values from argument
+            (
+                entry_so_phieu, 
+                entry_ma_kh, 
+                entry_ten_kh,
+                entry_mst,
+                entry_dia_chi,
+                entry_so_hop_dong,
+                entry_thong_tin_hop_dong,
+                entry_ghi_chu_cua_phieu,
+                tree
+            ) = args
+            
+            kiem_tra_trung_so_phieu = Controller_action_after_event.f_Check_duplicate_slip_number(entry_so_phieu)
+            if kiem_tra_trung_so_phieu == False:    # có trùng phiếu
+                # Step 2.2: Lấy số phiếu mới
+                Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(entry_so_phieu)
+                messagebox.showinfo("Thông báo", "Số phiếu đã tồn tại, đã tự động lấy số phiếu mới. Vui lòng thực hiện lưu lại!")
+                return "Duplicate slip number detected and corrected!"
+            
+            Controller_action_after_event.f_save_data_to_sql(
+                entry_so_phieu, 
+                entry_ma_kh, 
+                entry_ten_kh,
+                entry_mst,
+                entry_dia_chi,
+                entry_so_hop_dong,
+                entry_thong_tin_hop_dong,
+                entry_ghi_chu_cua_phieu,
+                tree
+                )
+            return "Save successfully!"
+        except Exception as e:
+            return f"Error: {e}"
     
     def f_handle_tab_01_button_clear_click(my_treeview):
         try:
@@ -1037,32 +1062,35 @@ class Controller_handel_all_events:
             return f"Error: {e}"
         
     def f_handle_event_tab_01_button_add_row_click(*args):
-        # Get the arguments
-        (
-            my_treeview, 
-            entry_id,
-            entry_ma_hang, 
-            entry_ten_hang, 
-            entry_dvt, 
-            entry_sl_kha_dung, 
-            entry_sl_nhu_cau, 
-            entry_sl_giu_cho, 
-            entry_sl_yeu_cau_dat_hang, 
-            entry_ghi_chu_mat_hang
-        )= args
-        Controller_action_after_event.f_add_new_row_and_renew_the_tree_view(
-            my_treeview, 
-            entry_id,
-            entry_ma_hang, 
-            entry_ten_hang, 
-            entry_dvt, 
-            entry_sl_kha_dung, 
-            entry_sl_nhu_cau, 
-            entry_sl_giu_cho, 
-            entry_sl_yeu_cau_dat_hang, 
-            entry_ghi_chu_mat_hang
-        )
-        
+        try:
+            # Get the arguments
+            (
+                my_treeview, 
+                entry_id,
+                entry_ma_hang, 
+                entry_ten_hang, 
+                entry_dvt, 
+                entry_sl_kha_dung, 
+                entry_sl_nhu_cau, 
+                entry_sl_giu_cho, 
+                entry_sl_yeu_cau_dat_hang, 
+                entry_ghi_chu_mat_hang
+            )= args
+            Controller_action_after_event.f_add_new_row_and_renew_the_tree_view(
+                my_treeview, 
+                entry_id,
+                entry_ma_hang, 
+                entry_ten_hang, 
+                entry_dvt, 
+                entry_sl_kha_dung, 
+                entry_sl_nhu_cau, 
+                entry_sl_giu_cho, 
+                entry_sl_yeu_cau_dat_hang, 
+                entry_ghi_chu_mat_hang
+            )
+            return "successfully!"
+        except Exception as e:
+            return f"Error: {e}"
         
     def f_handle_event_tab_02_button_filter_slip(my_treeview, *args):
         try:
@@ -1156,5 +1184,3 @@ class Controller_handel_all_events:
         entry_sl_YCDH,
         entry_ghi_chu_mat_hang)
         
-    def f_handle_event_tab_01_button_test_click(my_treeview):
-        Controller_action_after_event.Kiem_tra_lai_data_trong_treeview(my_treeview)
