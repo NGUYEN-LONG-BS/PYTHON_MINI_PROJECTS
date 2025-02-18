@@ -23,7 +23,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         # set up formats
         self._f_view_set_up_formats_of_tab_01()
         self._f_view_set_up_formats_of_tab_02()
-        Controller_handel_all_events.update_entry_id_when_initializing(self.table_of_tab_01, self.tab_01_entry_id)
+        
         # Set up all global variants
         self._f_setup_all_binding()
         # Add controllers
@@ -32,7 +32,9 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.f_set_up_when_initializing()
         
     def f_set_up_when_initializing(self):
+        Controller_handel_all_events.update_entry_id_when_initializing(self.table_of_tab_01, self.tab_01_entry_id)
         Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(self.entry_so_phieu)
+        self.f_tab_02_button_filter_click()
     
     def _f_setup_all_binding(self):
         # Find in tab_01
