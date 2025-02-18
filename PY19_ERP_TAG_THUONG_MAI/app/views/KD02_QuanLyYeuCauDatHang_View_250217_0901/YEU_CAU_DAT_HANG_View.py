@@ -537,9 +537,8 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
             self.tab_01_entry_ghi_chu_mat_hang
             )
         
-    
     def f_view_tab_01_button_delete_click(self):
-        self.controller_02_treeview.f_controller_02_delete_selected(self.table_of_tab_01)
+        Controller_handel_all_events.f_handle_event_tab_01_btn_delete_click(self.table_of_tab_01)
     
     def f_view_tab_01_button_update_click(self):
         # Khai báo các tham số
