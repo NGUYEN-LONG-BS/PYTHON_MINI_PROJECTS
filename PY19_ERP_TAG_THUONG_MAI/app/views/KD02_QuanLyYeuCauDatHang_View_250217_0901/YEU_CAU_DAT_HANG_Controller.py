@@ -8,8 +8,122 @@ from Components_View import *   # Tại sao lại phải import Components_View
 from utils import *
 import traceback
 from datetime import datetime
+from collections import defaultdict
 
 class Controller_action_after_event:
+    
+    def f_add_new_row(*args):
+        try:
+            # Get the arguments
+            (
+                my_treeview, 
+                entry_id,
+                entry_ma_hang, 
+                entry_ten_hang, 
+                entry_dvt, 
+                entry_sl_kha_dung, 
+                entry_sl_nhu_cau, 
+                entry_sl_giu_cho, 
+                entry_sl_yeu_cau_dat_hang, 
+                entry_ghi_chu_mat_hang
+            )= args
+            
+            # Get values from elements
+            id_value = entry_id.get()
+            ma_hang_value = entry_ma_hang.get()
+            ten_hang_value = entry_ten_hang.get()
+            dvt_value = entry_dvt.get()
+            sl_kha_dung_value = float(entry_sl_kha_dung.get().replace(',', '') or 0)
+            sl_nhu_cau_value = float(entry_sl_nhu_cau.get().replace(',', '') or 0)
+            sl_giu_cho_value = float(entry_sl_giu_cho.get().replace(',', '') or 0)
+            sl_yeu_cau_dat_hang_value = float(entry_sl_yeu_cau_dat_hang.get().replace(',', '') or 0)
+            ghi_chu_mat_hang_value = entry_ghi_chu_mat_hang.get()
+            
+            # Start controller
+            Controller_action_after_event.update_entry_id_after_adding_new_row(my_treeview, entry_id)
+            error_message = Controller_action_after_event.f_add_row_into_treeview(id_value, 
+                                                                                ma_hang_value, 
+                                                                                ten_hang_value, 
+                                                                                dvt_value, 
+                                                                                sl_kha_dung_value, 
+                                                                                sl_nhu_cau_value, 
+                                                                                sl_giu_cho_value, 
+                                                                                sl_yeu_cau_dat_hang_value, 
+                                                                                ghi_chu_mat_hang_value, 
+                                                                                my_treeview
+                                                                                )
+            Controller_action_after_event.clear_input_fields(entry_ghi_chu_mat_hang, 
+                                                                    entry_sl_nhu_cau,
+                                                                    entry_sl_giu_cho,
+                                                                    entry_sl_yeu_cau_dat_hang
+                                                                    )
+            # Thông báo cho người dùng
+            if error_message != '':
+                fg="red"
+                return error_message, fg
+            
+            fg="green"
+            return "Successfull", fg
+        except Exception as e:
+            # Correct entry ID because adding fail
+            Controller_action_after_event.update_entry_id_after_adding_new_row(my_treeview, entry_id)
+            fg="red"
+            return f"Error: {e}", fg
+        
+    def f_add_new_row_and_renew_the_tree_view(*args):
+        # Step 1: get the arguments
+        (
+            my_treeview, 
+            entry_id,
+            entry_ma_hang, 
+            entry_ten_hang, 
+            entry_dvt, 
+            entry_sl_kha_dung, 
+            entry_sl_nhu_cau, 
+            entry_sl_giu_cho, 
+            entry_sl_yeu_cau_dat_hang, 
+            entry_ghi_chu_mat_hang
+        )= args
+        # Step 2: add new row
+        Controller_action_after_event.f_add_new_row(my_treeview, 
+            entry_id,
+            entry_ma_hang, 
+            entry_ten_hang, 
+            entry_dvt, 
+            entry_sl_kha_dung, 
+            entry_sl_nhu_cau, 
+            entry_sl_giu_cho, 
+            entry_sl_yeu_cau_dat_hang, 
+            entry_ghi_chu_mat_hang
+            )
+        # Step 3: renew the treeview
+        Controller_action_after_event.Kiem_tra_lai_data_trong_treeview(my_treeview)
+        
+    
+    def f_save_data_to_sql(*args):
+        # Step 1: get value from args
+        (
+            entry_so_phieu, 
+            entry_ma_kh, 
+            entry_ten_kh,
+            entry_mst,
+            entry_dia_chi,
+            entry_so_hop_dong,
+            entry_thong_tin_hop_dong,
+            entry_ghi_chu_cua_phieu,
+            tree
+        ) = args
+        
+        # Step 2: get ID_nhan_vien và Xoa_sua
+        ID_nhan_vien = "NV01"
+        Xoa_Sua = ""
+        
+        # Step 3: validate data
+        
+        # Step 4: sent data to sql
+        
+        # Step 5: Return notification
+    
     def clear_all_contents_in_treeview(treeview):
         for item in treeview.get_children():
             treeview.delete(item)
@@ -105,43 +219,47 @@ class Controller_action_after_event:
         config_json_path = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'KD_YEU_CAU_DAT_HANG', 'treeview_tab_02_YCDH_log.json')
         utils_controller_TreeviewConfigurator_250217_13h20.apply_treeview_config(my_treeview, config_json_path)
     
-    def treeview_of_tab_01_double_click(event,treeview_of_tab_01):
-        result_value = utils_controller_TreeviewHandler_click_250217_22h34.treeview_double_click(treeview_of_tab_01, column_return=1)
+    def treeview_of_tab_01_double_click(my_treeview):
+        result_value = utils_controller_TreeviewHandler_click_250217_22h34.treeview_double_click(my_treeview, column_return=1)
         if result_value:
-            print(result_value)
+            return result_value
+        
+    def treeview_of_tab_02_double_click(my_treeview):
+        result_value = utils_controller_TreeviewHandler_click_250217_22h34.treeview_double_click(my_treeview, column_return=1)
+        if result_value:
+            return result_value
 
     def treeview_of_tab_01_single_click(
-        event, 
-        table_of_tab_01,
-        tab_01_entry_id,
-        entry_ma_hang_tab_01,
-        entry_ten_hang_tab_01,
+        my_treeview,
+        entry_id,
+        entry_ma_hang,
+        entry_ten_hang,
         entry_dvt,
         entry_sl_kha_dung,
-        tab_01_entry_nhu_cau,
-        tab_01_entry_sl_giu_cho,
-        tab_01_entry_sl_YCDH,
-        tab_01_entry_ghi_chu_mat_hang):
+        entry_sl_nhu_cau,
+        entry_sl_giu_cho,
+        entry_sl_YCDH,
+        entry_ghi_chu_mat_hang):
         
-        result_tuple = utils_controller_TreeviewHandler_click_250217_22h34.treeview_single_click(table_of_tab_01)
+        result_tuple = utils_controller_TreeviewHandler_click_250217_22h34.treeview_single_click(my_treeview)
         if not result_tuple:
             return
         id_value, ma_hang, ten_hang, dvt, sl_kha_dung, sl_nhu_cau, sl_giu_cho, sl_dat_hang, ghi_chu_mat_hang = result_tuple
         
         # Clear and update the Entry widgets if values are returned
         if id_value is not None:
-            tab_01_entry_id.config(state="normal")  # Enable the Entry widget to update the value
-            tab_01_entry_id.delete(0, tk.END)
-            tab_01_entry_id.insert(0, id_value)
-            tab_01_entry_id.config(state="disabled")  # Disable the Entry widget again
+            entry_id.config(state="normal")  # Enable the Entry widget to update the value
+            entry_id.delete(0, tk.END)
+            entry_id.insert(0, id_value)
+            entry_id.config(state="disabled")  # Disable the Entry widget again
 
         if ma_hang is not None:
-            entry_ma_hang_tab_01.delete(0, tk.END)
-            entry_ma_hang_tab_01.insert(0, ma_hang)
+            entry_ma_hang.delete(0, tk.END)
+            entry_ma_hang.insert(0, ma_hang)
             
         if ten_hang is not None:
-            entry_ten_hang_tab_01.delete(0, tk.END)
-            entry_ten_hang_tab_01.insert(0, ten_hang)
+            entry_ten_hang.delete(0, tk.END)
+            entry_ten_hang.insert(0, ten_hang)
             
         if dvt is not None:
             entry_dvt.delete(0, tk.END)
@@ -156,36 +274,98 @@ class Controller_action_after_event:
             entry_sl_kha_dung.insert(0, formatted_sl_kha_dung)
             
         if sl_nhu_cau is not None:
-            tab_01_entry_nhu_cau.delete(0, tk.END)
+            entry_sl_nhu_cau.delete(0, tk.END)
             if float(sl_nhu_cau).is_integer():  # Nếu là số nguyên
                 formatted_sl_nhu_cau = f"{int(float(sl_nhu_cau)):,}"
             else:  # Nếu là số thập phân
                 formatted_sl_nhu_cau = f"{float(sl_nhu_cau):,.2f}"
-            tab_01_entry_nhu_cau.insert(0, formatted_sl_nhu_cau)
+            entry_sl_nhu_cau.insert(0, formatted_sl_nhu_cau)
         
         if sl_giu_cho is not None:
-            tab_01_entry_sl_giu_cho.config(state="normal")
-            tab_01_entry_sl_giu_cho.delete(0, tk.END)
+            entry_sl_giu_cho.config(state="normal")
+            entry_sl_giu_cho.delete(0, tk.END)
             if float(sl_giu_cho).is_integer():  # Nếu là số nguyên
                 formatted_sl_giu_cho = f"{int(float(sl_giu_cho)):,}"
             else:  # Nếu là số thập phân
                 formatted_sl_giu_cho = f"{float(sl_giu_cho):,.2f}"
-            tab_01_entry_sl_giu_cho.insert(0, formatted_sl_giu_cho)
-            tab_01_entry_sl_giu_cho.config(state="disabled")
+            entry_sl_giu_cho.insert(0, formatted_sl_giu_cho)
+            entry_sl_giu_cho.config(state="disabled")
             
         if sl_dat_hang is not None:
-            tab_01_entry_sl_YCDH.config(state="normal")
-            tab_01_entry_sl_YCDH.delete(0, tk.END)
+            entry_sl_YCDH.config(state="normal")
+            entry_sl_YCDH.delete(0, tk.END)
             if float(sl_dat_hang).is_integer():  # Nếu là số nguyên
                 formatted_sl_dat_hang = f"{int(float(sl_dat_hang)):,}"
             else:  # Nếu là số thập phân
                 formatted_sl_dat_hang = f"{float(sl_dat_hang):,.2f}"
-            tab_01_entry_sl_YCDH.insert(0, formatted_sl_dat_hang)
-            tab_01_entry_sl_YCDH.config(state="disabled")
+            entry_sl_YCDH.insert(0, formatted_sl_dat_hang)
+            entry_sl_YCDH.config(state="disabled")
             
         if ghi_chu_mat_hang is not None:
-            tab_01_entry_ghi_chu_mat_hang.delete(0, tk.END)
-            tab_01_entry_ghi_chu_mat_hang.insert(0, ghi_chu_mat_hang)
+            entry_ghi_chu_mat_hang.delete(0, tk.END)
+            entry_ghi_chu_mat_hang.insert(0, ghi_chu_mat_hang)
+            
+    def Kiem_tra_lai_data_trong_treeview(my_treeview):
+        # step 1: Lấy data trong treeview
+        
+        # step 2: 
+        # Gom lại các cột có trùng mã hàng - cột số 2
+        # Cột số 4 giữ lại một dòng duy nhất
+        # Cộng tổng các giá trị của các dòng có trùng mã hàng - cột số 5, 6, 7
+        # Cột nào có ghi chú thì giữ lại một dòng duy nhất: cột số 8
+        
+        # step 3: Đánh lại số thứ tự - cột số 01
+        
+        # step 3: Cập nhật lại data lên treeview
+        
+        # Lấy dữ liệu từ Treeview
+        rows = []
+        for item in my_treeview.get_children():
+            row_data = my_treeview.item(item, "values")
+            rows.append(row_data)
+
+        # Nếu không có dữ liệu thì thoát
+        if not rows:
+            return
+
+        # Gom nhóm theo mã hàng (cột số 2)
+        grouped_data = defaultdict(lambda: [None, "", "", "", 0, 0, 0, 0, set()])  # Dùng set() để lưu nhiều ghi chú
+
+        for row in rows:
+            ma_hang = row[1]  # Cột số 2 - Mã hàng
+            if ma_hang not in grouped_data:
+                grouped_data[ma_hang][0] = len(grouped_data) + 1  # STT mới
+                grouped_data[ma_hang][1] = ma_hang  # Mã hàng
+                grouped_data[ma_hang][2] = row[2]  # Tên hàng
+                grouped_data[ma_hang][3] = row[3]  # Đơn vị tính (Đvt)
+                grouped_data[ma_hang][4] = float(row[4]) if row[4] else 0  # SL khả dụng
+
+            # Cộng tổng SL nhu cầu
+            grouped_data[ma_hang][5] += float(row[5]) if row[5] else 0
+
+            # Lưu lại ghi chú (nếu có)
+            if row[8].strip():
+                grouped_data[ma_hang][8].add(row[8].strip())  # Dùng set để tránh trùng lặp ghi chú
+
+        # Tính toán SL giữ chỗ và SL YCDH
+        for ma_hang, values in grouped_data.items():
+            sl_kha_dung = values[4]
+            sl_nhu_cau = values[5]
+            values[6] = min(sl_kha_dung, sl_nhu_cau)  # SL giữ chỗ
+            values[7] = max(sl_nhu_cau - sl_kha_dung, 0)  # SL YCDH
+
+            # Gộp tất cả ghi chú thành một chuỗi, cách nhau bởi "; "
+            values[8] = "; ".join(values[8])
+
+        # Xóa dữ liệu cũ trong Treeview
+        for item in my_treeview.get_children():
+            my_treeview.delete(item)
+
+        # Cập nhật dữ liệu mới vào Treeview
+        for i, (key, values) in enumerate(grouped_data.items(), start=1):
+            values[0] = i  # Cập nhật lại số thứ tự
+            my_treeview.insert("", "end", values=values)
+        
 
 class cls_test_Controller():
     def __init__(self):
@@ -791,6 +971,32 @@ class Controller_get_the_latest_number_of_slip:
         return data_02
 
 class Controller_handel_all_events:
+    
+    def f_handle_event_tab_01_btn_save_click(*args):
+        (
+            entry_so_phieu, 
+            entry_ma_kh, 
+            entry_ten_kh,
+            entry_mst,
+            entry_dia_chi,
+            entry_so_hop_dong,
+            entry_thong_tin_hop_dong,
+            entry_ghi_chu_cua_phieu,
+            tree
+        ) = args
+        
+        Controller_action_after_event.f_save_data_to_sql(
+            entry_so_phieu, 
+            entry_ma_kh, 
+            entry_ten_kh,
+            entry_mst,
+            entry_dia_chi,
+            entry_so_hop_dong,
+            entry_thong_tin_hop_dong,
+            entry_ghi_chu_cua_phieu,
+            tree
+            )
+    
     def f_handle_tab_01_button_clear_click(my_treeview):
         try:
             Controller_action_after_event.clear_all_contents_in_treeview(my_treeview)
@@ -831,62 +1037,32 @@ class Controller_handel_all_events:
             return f"Error: {e}"
         
     def f_handle_event_tab_01_button_add_row_click(*args):
-        try:
-            # Get the arguments
-            (
-                my_treeview, 
-                entry_id,
-                entry_ma_hang, 
-                entry_ten_hang, 
-                entry_dvt, 
-                entry_sl_kha_dung, 
-                entry_sl_nhu_cau, 
-                entry_sl_giu_cho, 
-                entry_sl_yeu_cau_dat_hang, 
-                entry_ghi_chu_mat_hang
-            )= args
-            
-            # Get values from elements
-            id_value = entry_id.get()
-            ma_hang_value = entry_ma_hang.get()
-            ten_hang_value = entry_ten_hang.get()
-            dvt_value = entry_dvt.get()
-            sl_kha_dung_value = float(entry_sl_kha_dung.get().replace(',', '') or 0)
-            sl_nhu_cau_value = float(entry_sl_nhu_cau.get().replace(',', '') or 0)
-            sl_giu_cho_value = float(entry_sl_giu_cho.get().replace(',', '') or 0)
-            sl_yeu_cau_dat_hang_value = float(entry_sl_yeu_cau_dat_hang.get().replace(',', '') or 0)
-            ghi_chu_mat_hang_value = entry_ghi_chu_mat_hang.get()
-            
-            # Start controller
-            Controller_action_after_event.update_entry_id_after_adding_new_row(my_treeview, entry_id)
-            error_message = Controller_action_after_event.f_add_row_into_treeview(id_value, 
-                                                                                ma_hang_value, 
-                                                                                ten_hang_value, 
-                                                                                dvt_value, 
-                                                                                sl_kha_dung_value, 
-                                                                                sl_nhu_cau_value, 
-                                                                                sl_giu_cho_value, 
-                                                                                sl_yeu_cau_dat_hang_value, 
-                                                                                ghi_chu_mat_hang_value, 
-                                                                                my_treeview
-                                                                                )
-            Controller_action_after_event.clear_input_fields(entry_ghi_chu_mat_hang, 
-                                                                    entry_sl_nhu_cau,
-                                                                    entry_sl_giu_cho,
-                                                                    entry_sl_yeu_cau_dat_hang
-                                                                    )
-            # Thông báo cho người dùng
-            if error_message != '':
-                fg="red"
-                return error_message, fg
-            
-            fg="green"
-            return "Successfull", fg
-        except Exception as e:
-            # Correct entry ID because adding fail
-            Controller_action_after_event.update_entry_id_after_adding_new_row(my_treeview, entry_id)
-            fg="red"
-            return f"Error: {e}", fg
+        # Get the arguments
+        (
+            my_treeview, 
+            entry_id,
+            entry_ma_hang, 
+            entry_ten_hang, 
+            entry_dvt, 
+            entry_sl_kha_dung, 
+            entry_sl_nhu_cau, 
+            entry_sl_giu_cho, 
+            entry_sl_yeu_cau_dat_hang, 
+            entry_ghi_chu_mat_hang
+        )= args
+        Controller_action_after_event.f_add_new_row_and_renew_the_tree_view(
+            my_treeview, 
+            entry_id,
+            entry_ma_hang, 
+            entry_ten_hang, 
+            entry_dvt, 
+            entry_sl_kha_dung, 
+            entry_sl_nhu_cau, 
+            entry_sl_giu_cho, 
+            entry_sl_yeu_cau_dat_hang, 
+            entry_ghi_chu_mat_hang
+        )
+        
         
     def f_handle_event_tab_02_button_filter_slip(my_treeview, *args):
         try:
@@ -950,36 +1126,35 @@ class Controller_handel_all_events:
     def f_handle_event_initializing_format_of_treeview_of_tab_02(my_treeview):
         Controller_action_after_event.set_format_of_treeview_of_tab_02(my_treeview)
 
-    def f_handle_event_treeview_of_tab_01_double_click(
-            event,
-            treeview_of_tab_01):
-        Controller_action_after_event.treeview_of_tab_01_double_click(
-            event,
-            treeview_of_tab_01)
+    def f_handle_event_treeview_of_tab_01_double_click(my_treeview):
+        Controller_action_after_event.treeview_of_tab_01_double_click(my_treeview)
+        
+    def f_handle_event_treeview_of_tab_02_double_click(my_treeview):
+        Controller_action_after_event.treeview_of_tab_02_double_click(my_treeview)
 
     def f_handle_event_treeview_of_tab_01_single_click(
-            event, 
-            treeview_of_tab_01,
-            tab_01_entry_id,
-            entry_ma_hang_tab_01,
-            entry_ten_hang_tab_01,
+            my_treeview,
+            entry_id,
+            entry_ma_hang,
+            entry_ten_hang,
             entry_dvt,
             entry_sl_kha_dung,
-            tab_01_entry_nhu_cau,
-            tab_01_entry_sl_giu_cho,
-            tab_01_entry_sl_YCDH,
-            tab_01_entry_ghi_chu_mat_hang):
+            entry_sl_nhu_cau,
+            entry_sl_giu_cho,
+            entry_sl_YCDH,
+            entry_ghi_chu_mat_hang):
         
         Controller_action_after_event.treeview_of_tab_01_single_click(
-        event, 
-        treeview_of_tab_01,
-        tab_01_entry_id,
-        entry_ma_hang_tab_01,
-        entry_ten_hang_tab_01,
+        my_treeview,
+        entry_id,
+        entry_ma_hang,
+        entry_ten_hang,
         entry_dvt,
         entry_sl_kha_dung,
-        tab_01_entry_nhu_cau,
-        tab_01_entry_sl_giu_cho,
-        tab_01_entry_sl_YCDH,
-        tab_01_entry_ghi_chu_mat_hang)
+        entry_sl_nhu_cau,
+        entry_sl_giu_cho,
+        entry_sl_YCDH,
+        entry_ghi_chu_mat_hang)
         
+    def f_handle_event_tab_01_button_test_click(my_treeview):
+        Controller_action_after_event.Kiem_tra_lai_data_trong_treeview(my_treeview)
