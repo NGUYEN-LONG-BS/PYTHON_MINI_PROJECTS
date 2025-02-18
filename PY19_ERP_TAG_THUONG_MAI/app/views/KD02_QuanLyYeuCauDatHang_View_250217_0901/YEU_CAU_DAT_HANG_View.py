@@ -6,7 +6,6 @@ from Components_View import *
 from Components_View.treeview import cls_Treeview_frame_number_01
 from utils import *
 from .YEU_CAU_DAT_HANG_Controller import cls_test_Controller
-from .YEU_CAU_DAT_HANG_Controller import cls_test_Controller_02_treeview
 from .YEU_CAU_DAT_HANG_Controller import cls_test_Controller_03_auto_update_number 
 
 from .YEU_CAU_DAT_HANG_Controller import SQLController
@@ -32,7 +31,6 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         # Set up all global variants
         self._f_setup_all_binding()
         # Add controllers
-        self.f_view_add_controller_02_all_logic_of_treeview()
         self.f_view_add_controller_03_auto_update_entries_amount_of_inventory()
         # Set up when initializing
         self.f_set_up_when_initializing()
@@ -144,16 +142,6 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         # Initialize controller_01
         self.controller_01 = cls_test_Controller()
         self.controller_01.view = self
-
-    def f_view_add_controller_02_all_logic_of_treeview(self):
-        # Initialize controller_02
-        tree = self.table_of_tab_01
-        entry_ma_hh = self.tab_01_entry_nhu_cau
-        entry_ten_hh = self.tab_01_entry_nhu_cau
-        entry_so_luong = self.tab_01_entry_nhu_cau
-        entry_ghi_chu = self.tab_01_entry_nhu_cau
-        self.controller_02_treeview = cls_test_Controller_02_treeview(tree, entry_ma_hh, entry_ten_hh, entry_so_luong, entry_ghi_chu)
-        self.controller_02_treeview.view = self
     
     def f_view_add_controller_03_auto_update_entries_amount_of_inventory(self):
         # Initialize controller_03
@@ -404,34 +392,6 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         tab_01_button_container_02_on_the_left.pack(side="left", expand=True, pady=10)
         
         # # BTN test
-        # self.tab_01_button_save_02 = tk.Button(tab_01_button_container_02_on_the_right, 
-        #                                        text="Test save 02", 
-        #                                        background=COLOR_BACKGROUND_NUM_02_DARK_GRAY, 
-        #                                        command=self.f_tab_01_button_save_02_click)
-        # self.tab_01_button_save_02.pack(side="right", padx=10)
-        
-        # # BTN test
-        # self.tab_01_button_export = tk.Button(tab_01_button_container_02_on_the_right, 
-        #                                       text="Test save 01", 
-        #                                       background=COLOR_BACKGROUND_NUM_02_DARK_GRAY, 
-        #                                       command=self.f_tab_01_button_export_click)
-        # self.tab_01_button_export.pack(side="right", padx=10)
-        
-        # # BTN test
-        # self.tab_01_print_config = tk.Button(tab_01_button_container_02_on_the_right, 
-        #                                      text="Test in cấu hình của bảng", 
-        #                                      background=COLOR_BACKGROUND_NUM_02_DARK_GRAY, 
-        #                                      command=self.f_button_print_config_click)
-        # self.tab_01_print_config.pack(side="right", padx=10)
-        
-        # # BTN test
-        # self.tab_01_config_num_02 = tk.Button(tab_01_button_container_02_on_the_right, 
-        #                                       text="Test print form print từ code", 
-        #                                       background=COLOR_BACKGROUND_NUM_02_DARK_GRAY, 
-        #                                       command=self.f_tab_01_button_print_form_tu_tao_tu_code_click)
-        # self.tab_01_config_num_02.pack(side="right", padx=10)
-        
-        # # BTN test
         # self.tab_01_button_stest_new_function = tk.Button(tab_01_button_container_02_on_the_right, 
         #                                        text="test", 
         #                                        command=self.f_tab_01_button_test_click)
@@ -541,30 +501,16 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         Controller_handel_all_events.f_handle_event_tab_01_btn_delete_click(self.table_of_tab_01)
     
     def f_view_tab_01_button_update_click(self):
-        # Khai báo các tham số
-        tree = self.table_of_tab_01
-        selected_item = tree.selection()
-        param_00 = tree.item(selected_item, "values")[0] if tree.item(selected_item, "values") else None
-        param_01 = self.entry_ma_hang_tab_01.get()
-        param_02 = self.entry_ten_hang_tab_01.get()
-        param_03 = self.entry_dvt.get()
-        param_04 = float(self.entry_sl_kha_dung.get().replace(',', '') or 0)
-        param_05 = float(self.tab_01_entry_nhu_cau.get().replace(',', '') or 0)
-        param_06 = float(self.tab_01_entry_sl_giu_cho.get().replace(',', '') or 0)
-        param_07 = float(self.tab_01_entry_sl_YCDH.get().replace(',', '') or 0)
-        param_08 = self.tab_01_entry_ghi_chu_mat_hang.get()
-        # Gọi hàm
-        self.controller_02_treeview.update_selected_row(
-            tree,
-            param_00,
-            param_01,
-            param_02,
-            param_03,
-            param_04,
-            param_05,
-            param_06,
-            param_07,
-            param_08
+        Controller_handel_all_events.f_handle_event_update_selected_row_click(
+        self.table_of_tab_01,
+        self.entry_ma_hang_tab_01,
+        self.entry_ten_hang_tab_01,
+        self.entry_dvt,
+        self.entry_sl_kha_dung,
+        self.tab_01_entry_nhu_cau,
+        self.tab_01_entry_sl_giu_cho,
+        self.tab_01_entry_sl_YCDH,
+        self.tab_01_entry_ghi_chu_mat_hang
         )
     
     def f_view_set_format_of_treeview_of_tab_01(self):
@@ -589,48 +535,8 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         text = self.controller_01.f_controller_handle_btn_save_02_click_(self.table_of_tab_01)
         self._f_config_notification(text=text, fg="blue")
     
-    def f_tab_01_button_save_click(self):        
-        # # Khai báo các tham số
-        # ID_nhan_vien = "NV01"
-        # Xoa_Sua = ""
-        # entry_so_phieu = self.entry_so_phieu
-        # entry_ma_kh = self.entry_ma_khach_hang_tab_01
-        # entry_ten_kh = self.entry_ten_khach_hang_tab_01
-        # entry_mst = self.entry_mst_tab_01
-        # entry_dia_chi = self.entry_dia_chi_tab_01
-        # entry_so_hop_dong = self.entry_so_hop_dong
-        # entry_thong_tin_hop_dong = self.entry_thong_tin_hop_dong
-        # entry_ghi_chu_cua_phieu = self.tab_01_note_for_slip
-        # tree = self.table_of_tab_01
-        
-        # entry_ma_hang = self.entry_ma_hang_tab_01
-        # entry_ten_hang = self.entry_ten_hang_tab_01
-
-        # # Handel event click
-        # text = SQLController.f_controller_handle_btn_save_03_click_(ID_nhan_vien,
-        #                                                             Xoa_Sua,
-        #                                                             entry_so_phieu, 
-        #                                                             entry_ma_kh, 
-        #                                                             entry_ten_kh,
-        #                                                             entry_mst,
-        #                                                             entry_dia_chi,
-        #                                                             entry_so_hop_dong,
-        #                                                             entry_thong_tin_hop_dong,
-        #                                                             entry_ghi_chu_cua_phieu,
-        #                                                             entry_ma_hang,
-        #                                                             entry_ten_hang,
-        #                                                             tree
-        #                                                             )
-        # self._f_config_notification(text=text, fg="blue")
-        
-        # Phiên bản cũ, cần làm sạch rồi mới xoá
-        # ====>
-        # text, data = self.controller_02_treeview.print_data()
-        # text = self.controller_02_treeview.f_controller_handle_btn_save_03_click_(self.table_of_tab_01)
-        # self._f_config_notification(text=text, fg="blue")
-        
+    def f_tab_01_button_save_click(self):
         # Khai báo các tham số
-        
         entry_so_phieu = self.entry_so_phieu
         entry_ma_kh = self.entry_ma_khach_hang_tab_01
         entry_ten_kh = self.entry_ten_khach_hang_tab_01

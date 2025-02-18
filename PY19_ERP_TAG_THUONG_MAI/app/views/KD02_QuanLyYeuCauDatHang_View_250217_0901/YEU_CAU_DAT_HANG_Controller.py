@@ -1,8 +1,8 @@
 from tkinter import messagebox
 import time
 from .YEU_CAU_DAT_HANG_Model import cls_YEU_CAU_DAT_HANG_Model
-from .YEU_CAU_DAT_HANG_Model import cls_YEU_CAU_DAT_HANG_Model_02
-# from .YEU_CAU_DAT_HANG_Model import cls_YEU_CAU_DAT_HANG_Model_06_staticmenthod_get_config_of_table_YCDH_log_from_json
+# from .YEU_CAU_DAT_HANG_Model import cls_YEU_CAU_DAT_HANG_Model_02
+
 from .YEU_CAU_DAT_HANG_Model import SQLModel
 from .YEU_CAU_DAT_HANG_Model import Model_get_data_from_SQL
 from Components_View import *   # Tại sao lại phải import Components_View
@@ -12,6 +12,62 @@ from datetime import datetime
 from collections import defaultdict
 
 class Controller_action_after_event:
+    
+    # Function to update the selected row
+    def validate_data_before_updating_row_in_tree_view(my_treeview, *args):
+        # Lấy các giá trị theo thứ tự truyền vào
+        (
+            stt, 
+            new_ma_hang, 
+            new_ten_hang, 
+            new_dvt, 
+            new_sl_kha_dung, 
+            new_nhu_cau, 
+            new_sl_giu_cho, 
+            new_sl_YCDH, 
+            new_ghi_chu
+         ) = args
+        
+        selected_item = my_treeview.selection()  # Get the selected item
+        if not selected_item:
+            error_message = "No item selected to update."
+            fg="red"
+            return False, error_message, fg
+
+        # Kiểm tra các giá trị bắt buộc không được rỗng
+        if not new_ma_hang.strip():
+            error_message = "Mã hàng không được để trống."
+            fg="red"
+            return False, error_message, fg
+
+        if not new_ten_hang.strip():
+            error_message = "Tên hàng không được để trống."
+            fg="red"
+            return False, error_message, fg
+            
+        if not str(new_nhu_cau).strip():  # Đảm bảo giá trị số không bị rỗng
+            error_message = "Số lượng nhu cầu không được để trống."
+            fg="red"
+            return False, error_message, fg
+
+    # Function to update the selected row
+    def begin_updating_row_in_tree_view(tree, *args):
+        selected_item = tree.selection()  # Get the selected item
+        tree.item(selected_item, values=args)
+        # notification
+        success_message = "Update successfully!"
+        fg="blue"
+        return success_message, fg
+
+    def update_selected_row(my_treeview, *args):
+        """
+        Updates the selected row in the given treeview with the provided arguments.
+        :param tree: The Treeview widget where the data is updated.
+        :param args: Variable-length argument list for column values.
+        """
+        Controller_action_after_event.validate_data_before_updating_row_in_tree_view(my_treeview, *args)
+        Controller_action_after_event.begin_updating_row_in_tree_view(my_treeview, *args)
+        Controller_action_after_event.Kiem_tra_lai_data_trong_treeview(my_treeview)
     
     def f_delete_one_row_in_treeview(my_treeview):
         selected_item = my_treeview.selection()  # Get selected item
@@ -520,164 +576,6 @@ class cls_test_Controller():
         entry_id.delete(0, tk.END)
         entry_ghi_chu_mat_hang.delete(0, tk.END)
         entry_sl_YCDH.delete(0, tk.END)
-
-class cls_test_Controller_02_treeview():
-    def __init__(self, tree, entry_ma_kh, entry_ten_kh, entry_so_phieu, entry_ghi_chu_phieu):
-        self.tree = tree
-        self.entry_ma_kh = entry_ma_kh
-        self.entry_ten_kh = entry_ten_kh
-        self.entry_so_phieu = entry_so_phieu
-        self.entry_ghi_chu_phieu = entry_ghi_chu_phieu
-        
-        self.model = None
-        self.f_add_MVC_class()
-    
-    def f_add_MVC_class(self):
-        """Initialize and bind Model and View classes to the controller."""
-        try:
-            # Initialize Model
-            self.model = cls_YEU_CAU_DAT_HANG_Model_02()  
-            # If model or view need controller reference
-            self.model.controller = self  # Avoid recursion by passing after initialization
-        except Exception as e:
-            print(f"Error initializing MVC components: {e}")
-    
-    # def add_to_treeview(self):
-    #     ma_kh = self.entry_ma_kh.get()
-    #     ten_kh = self.entry_ten_kh.get()
-    #     so_phieu = self.entry_so_phieu.get()
-    #     ghi_chu_phieu = self.entry_ghi_chu_phieu.get()
-
-    #     if ma_kh and ten_kh and so_phieu:
-    #         self.tree.insert("", "end", values=(
-    #             self.tree.get_children().__len__() + 1, ma_kh, ten_kh, so_phieu, ghi_chu_phieu
-    #         ))
-    #         self.clear_entries()
-
-    # # Method to clear entry fields
-    # def clear_entries(self):
-    #     self.entry_ma_kh.delete(0, tk.END)
-    #     self.entry_ten_kh.delete(0, tk.END)
-    #     self.entry_so_phieu.delete(0, tk.END)
-    #     self.entry_ghi_chu_phieu.delete(0, tk.END)
-    
-    # def f_controller_handle_btn_save_03_click_(self, table):
-    #     # Step_01: Get data
-    #     notification_text, data_array = self.print_data()
-    #     # Step_02: validate data
-    #     f_utils_get_unique_column_from_data(data_array, 8)
-    #     # Step_03: Export data to SQL
-    #     if self.model.f_validate_data_format(data_array):
-    #         print("Data is valid. Ready for insertion.")
-    #         database_name = "TBD_2024"
-    #         table_name = "[TB_KD02_YEU_CAU_DAT_HANG]"
-    #         self.model.f_goi_ham_Export_to_TB_KD02_YEU_CAU_DAT_HANG(data_array, database_name, table_name)
-    #         return "Data exported to SQL Server KD02_YEU_CAU_DAT_HANG!"
-    #     else:
-    #         return "Data validation failed. Please fix the errors."
-
-    # Function to update the selected row
-    # def validate_data_before_updating_row_in_tree_view(self, tree, *args):
-    #     selected_item = tree.selection()  # Get the selected item
-    #     if not selected_item:
-    #         error_message = "No item selected to update."
-    #         fg="red"
-    #         return False, error_message, fg
-
-    #     # Lấy các giá trị theo thứ tự truyền vào
-    #     stt, new_ma_hang, new_ten_hang, new_dvt, new_sl_kha_dung, new_nhu_cau, new_sl_giu_cho, new_sl_YCDH, new_ghi_chu = args
-
-    #     # Kiểm tra các giá trị bắt buộc không được rỗng
-    #     if not new_ma_hang.strip():
-    #         error_message = "Mã hàng không được để trống."
-    #         fg="red"
-    #         return False, error_message, fg
-
-    #     if not new_ten_hang.strip():
-    #         error_message = "Tên hàng không được để trống."
-    #         fg="red"
-    #         return False, error_message, fg
-            
-    #     if not str(new_nhu_cau).strip():  # Đảm bảo giá trị số không bị rỗng
-    #         error_message = "Số lượng nhu cầu không được để trống."
-    #         fg="red"
-    #         return False, error_message, fg
-
-    # Function to update the selected row
-    # def begin_updating_row_in_tree_view(self, tree, *args):
-    #     selected_item = tree.selection()  # Get the selected item
-    #     tree.item(selected_item, values=args)
-    #     # notification
-    #     success_message = "Update successfully!"
-    #     fg="blue"
-    #     return success_message, fg
-
-    # def update_selected_row(self, tree, *args):
-    #     """
-    #     Updates the selected row in the given treeview with the provided arguments.
-    #     :param tree: The Treeview widget where the data is updated.
-    #     :param args: Variable-length argument list for column values.
-    #     """
-    #     self.validate_data_before_updating_row_in_tree_view(tree, *args)
-    #     self.begin_updating_row_in_tree_view(tree, *args)
-    
-    # Function to print data from the Treeview
-    # def print_data(self):
-    #     try:
-    #         data = []
-    #         for child in self.tree.get_children():
-    #             row = self.tree.item(child, "values")
-    #             data.append((
-    #                 "NV01"                          # [ID_NHAN_VIEN]
-    #                 ,""                             # [XOA_SUA]
-    #                 ,"2025-01-23"                   # [NGAY_TREN_PHIEU]
-    #                 ,self.entry_so_phieu.get()      # [SO_PHIEU]
-    #                 ,self.entry_ma_kh.get()
-    #                 ,self.entry_ten_kh.get()
-    #                 ,"MST"
-    #                 ,"DIA_CHI"
-    #                 ,"SO_HOP_DONG"
-    #                 ,"THONG_TIN_HOP_DONG"
-    #                 ,"GHI_CHU_CUA_PHIEU"
-    #                 ,row[0]
-    #                 ,row[1]
-    #                 ,row[2]
-    #                 ,row[3]
-    #                 ,float(row[4])
-    #                 ,float(row[5])
-    #                 ,float(row[6])
-    #                 ,float(row[7])
-    #                 ,row[8]
-    #             ))
-    #         print(data)
-    #         notification_text = "Data chuẩn bị để gửi đi đã được in!"
-    #         return notification_text, data
-    #     except Exception as e:
-    #         error_details = traceback.format_exc()
-    #         print("Chi tiết lỗi:")
-    #         print(error_details)
-    #         notification_text = f"Data validation failed. Error details:\n{error_details}"
-    #         data = []
-    #         return notification_text, data
-        
-        # Function to delete the selected row
-    def f_controller_02_delete_selected(self, tree):
-        selected_item = tree.selection()  # Get selected item
-        if selected_item:  # Check if an item is selected
-            tree.delete(selected_item)  # Delete the selected item
-        else:  # If no item is selected
-            children = tree.get_children()
-            if children:  # Check if there are rows in the Treeview
-                last_item = children[-1]  # Get the last item
-                tree.delete(last_item)  # Delete the last item
-        self.f_controller_02_renumber_rows(tree)
-
-    # Function to re-number the rows
-    def f_controller_02_renumber_rows(self, tree):
-        for index, item in enumerate(tree.get_children(), start=1):
-            values = tree.item(item, "values")  # Get the current values of the row
-            new_values = (index,) + values[1:]  # Update the first column with the new number
-            tree.item(item, values=new_values)  # Set the updated values
         
 class cls_test_Controller_03_auto_update_number():
     def __init__(self, entry_sl_kha_dung, entry_sl_nhu_cau, entry_sl_giu_cho, entry_sl_yeu_cau_dat_hang):
@@ -1001,6 +899,42 @@ class Controller_get_the_latest_number_of_slip:
         return data_02
 
 class Controller_handel_all_events:
+    
+    def f_handle_event_update_selected_row_click(*args):
+        (
+        my_treeview,
+        entry_ma_hang_tab_01,
+        entry_ten_hang_tab_01,
+        entry_dvt,
+        entry_sl_kha_dung,
+        tab_01_entry_nhu_cau,
+        tab_01_entry_sl_giu_cho,
+        tab_01_entry_sl_YCDH,
+        tab_01_entry_ghi_chu_mat_hang
+        )= args
+        
+        selected_item = my_treeview.selection()
+        value_col_00 = my_treeview.item(selected_item, "values")[0] if my_treeview.item(selected_item, "values") else None
+        value_col_01 = entry_ma_hang_tab_01.get()
+        value_col_02 = entry_ten_hang_tab_01.get()
+        value_col_03 = entry_dvt.get()
+        value_col_04 = float(entry_sl_kha_dung.get().replace(',', '') or 0)
+        value_col_05 = float(tab_01_entry_nhu_cau.get().replace(',', '') or 0)
+        value_col_06 = float(tab_01_entry_sl_giu_cho.get().replace(',', '') or 0)
+        value_col_07 = float(tab_01_entry_sl_YCDH.get().replace(',', '') or 0)
+        value_col_08 = tab_01_entry_ghi_chu_mat_hang.get()
+        
+        Controller_action_after_event.update_selected_row(
+        my_treeview,
+        value_col_00,
+        value_col_01,
+        value_col_02,
+        value_col_03,
+        value_col_04,
+        value_col_05,
+        value_col_06,
+        value_col_07,
+        value_col_08)
     
     def f_handle_event_tab_01_btn_delete_click(my_treeview):
         try:
