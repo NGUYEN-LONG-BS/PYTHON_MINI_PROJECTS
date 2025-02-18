@@ -5,9 +5,8 @@ import json
 from Components_View import *
 from Components_View.treeview import cls_Treeview_frame_number_01
 from utils import *
-from .YEU_CAU_DAT_HANG_Controller import cls_test_Controller
-from .YEU_CAU_DAT_HANG_Controller import cls_test_Controller_03_auto_update_number 
-
+# from .YEU_CAU_DAT_HANG_Controller import cls_test_Controller
+from .YEU_CAU_DAT_HANG_Controller import Controller_auto_update_sl_giu_cho_va_sl_ycdh 
 from .YEU_CAU_DAT_HANG_Controller import SQLController
 from .YEU_CAU_DAT_HANG_Controller import Controller_SQL_to_excel
 from .YEU_CAU_DAT_HANG_Controller import Controller_delete_row_in_SQL
@@ -19,7 +18,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         name = "QUẢN LÝ YÊU CẦU ĐẶT HÀNG"
         super().__init__(title_of_form=title, name_of_slip=name)
         # Add controller 01
-        self.f_view_add_controller_01_basic()
+        # self.f_view_add_controller_01_basic()
 
         # call reuse components
         self._f_view_thay_doi_gia_tri_cua_base_form()
@@ -80,11 +79,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         
         self.label_footer = f_utils_tim_component_label_with_text(self, "Notification")
         
-    def f_view_clear_content_when_sl_kha_dung_change(self, event):
-        f_utils_on_entry_change(self.entry_sl_kha_dung)
-        self.tab_01_entry_nhu_cau.delete(0, tk.END)
-        self.tab_01_entry_sl_giu_cho.delete(0, tk.END)
-        self.tab_01_entry_sl_YCDH.delete(0, tk.END)
+    
     
     def _f_view_thay_doi_gia_tri_cua_base_form(self):
         # Thay đổi thông tin các tab
@@ -138,18 +133,18 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     # Adding controller
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
-    def f_view_add_controller_01_basic(self):
-        # Initialize controller_01
-        self.controller_01 = cls_test_Controller()
-        self.controller_01.view = self
+    # def f_view_add_controller_01_basic(self):
+    #     # Initialize controller_01
+    #     self.controller_01 = cls_test_Controller()
+    #     self.controller_01.view = self
     
     def f_view_add_controller_03_auto_update_entries_amount_of_inventory(self):
-        # Initialize controller_03
-        entry_sl_kha_dung = self.entry_sl_kha_dung
-        entry_sl_nhu_cau = self.tab_01_entry_nhu_cau
-        entry_sl_giu_cho = self.tab_01_entry_sl_giu_cho
-        entry_sl_yeu_cau_dat_hang = self.tab_01_entry_sl_YCDH
-        self.controller_03_auto_update_number = cls_test_Controller_03_auto_update_number(entry_sl_kha_dung, entry_sl_nhu_cau, entry_sl_giu_cho, entry_sl_yeu_cau_dat_hang)
+        # Initialize controller
+        self.controller_03_auto_update_number = Controller_auto_update_sl_giu_cho_va_sl_ycdh(
+            self.entry_sl_kha_dung, 
+            self.tab_01_entry_nhu_cau, 
+            self.tab_01_entry_sl_giu_cho, 
+            self.tab_01_entry_sl_YCDH)
         self.controller_03_auto_update_number.view = self
     
     def _f_view_create_all_container_frames_of_window(self):
@@ -517,23 +512,23 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         my_treeview = self.table_of_tab_01
         Controller_handel_all_events.f_handle_event_initializing_format_of_treeview_of_tab_01(my_treeview)
     
-    def _f_view_set_rows_count_of_treeview_01_when_add_new_row(self):
-        row_count = 1 + self.controller_01.f_controller_get_row_count(self.table_of_tab_01)
-        self.tab_01_entry_id.config(state="normal")
-        self.tab_01_entry_id.delete(0, tk.END)
-        self.tab_01_entry_id.insert(0, row_count)
-        self.tab_01_entry_id.config(state="disabled")
+    # def _f_view_set_rows_count_of_treeview_01_when_add_new_row(self):
+    #     row_count = 1 + self.controller_01.f_controller_get_row_count(self.table_of_tab_01)
+    #     self.tab_01_entry_id.config(state="normal")
+    #     self.tab_01_entry_id.delete(0, tk.END)
+    #     self.tab_01_entry_id.insert(0, row_count)
+    #     self.tab_01_entry_id.config(state="disabled")
     
     def _f_config_notification(self, text="", fg="black"):
         self.label_footer.config(text=text, fg=fg)
     
-    def f_tab_01_button_export_click(self):
-        text = self.controller_01.f_export_data_to_SQL(self.table_of_tab_01)
-        self._f_config_notification(text=text, fg="blue")
+    # def f_tab_01_button_export_click(self):
+    #     text = self.controller_01.f_export_data_to_SQL(self.table_of_tab_01)
+    #     self._f_config_notification(text=text, fg="blue")
         
-    def f_tab_01_button_save_02_click(self):
-        text = self.controller_01.f_controller_handle_btn_save_02_click_(self.table_of_tab_01)
-        self._f_config_notification(text=text, fg="blue")
+    # def f_tab_01_button_save_02_click(self):
+    #     text = self.controller_01.f_controller_handle_btn_save_02_click_(self.table_of_tab_01)
+    #     self._f_config_notification(text=text, fg="blue")
     
     def f_tab_01_button_save_click(self):
         # Khai báo các tham số
@@ -714,7 +709,6 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         # SQLController.load_data(self.treeview_test_of_tag_02)
         
     def f_tab_02_button_export_excel_click(self):
-        print("Export excel click")
         Controller_SQL_to_excel.export_log_to_excel(self.treeview_test_of_tag_02)
         
     def f_tab_02_button_edit_click(self):
@@ -739,3 +733,13 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
 
 
     
+    
+    
+    
+    
+    
+    def f_view_clear_content_when_sl_kha_dung_change(self, event):
+        f_utils_on_entry_change(self.entry_sl_kha_dung)
+        self.tab_01_entry_nhu_cau.delete(0, tk.END)
+        self.tab_01_entry_sl_giu_cho.delete(0, tk.END)
+        self.tab_01_entry_sl_YCDH.delete(0, tk.END)
