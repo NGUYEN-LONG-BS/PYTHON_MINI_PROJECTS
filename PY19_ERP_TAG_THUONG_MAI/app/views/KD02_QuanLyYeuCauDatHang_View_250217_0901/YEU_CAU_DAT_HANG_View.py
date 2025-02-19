@@ -33,7 +33,14 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         
     def f_set_up_when_initializing(self):
         Controller_handel_all_events.update_entry_id_when_initializing(self.table_of_tab_01, self.tab_01_entry_id)
-        Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(self.entry_so_phieu)
+        ma_thanh_vien = "TB"
+        loai_phieu = "YCDH"
+        database_name = "[TBD_2024]"
+        table_name = "[TB_KD02_YEU_CAU_DAT_HANG]"
+        column_name = "[SO_PHIEU]"
+        Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(
+            self.entry_so_phieu,
+            ma_thanh_vien, loai_phieu, database_name, table_name, column_name)
         self.f_tab_02_button_filter_click()
     
     def _f_setup_all_binding(self):

@@ -293,9 +293,14 @@ def f_utils_find_string_in_row_of_excel(file_path, sheet_name, target_string, ro
         return None  # String not found
     
     except FileNotFoundError:
+        my_current_function = f_utils_get_current_function_name()
+        print(f"Error at function: {my_current_function}")
         raise FileNotFoundError(f"The file '{file_path}' does not exist.")
     except Exception as e:
+        my_current_function = f_utils_get_current_function_name()
+        print(f"Error at function: {my_current_function}")
         raise Exception(f"An error occurred: {str(e)}")
+        
 
 def f_utils_find_string_in_column_of_excel(file_path, sheet_name, target_string, column_number=1, case_sensitive=True, return_as_index=True):
     """
@@ -338,8 +343,12 @@ def f_utils_find_string_in_column_of_excel(file_path, sheet_name, target_string,
         return None  # String not found
     
     except FileNotFoundError:
+        my_current_function = f_utils_get_current_function_name()
+        print(f"Error at function: {my_current_function}")
         raise FileNotFoundError(f"The file '{file_path}' does not exist.")
     except Exception as e:
+        my_current_function = f_utils_get_current_function_name()
+        print(f"Error at function: {my_current_function}")
         raise Exception(f"An error occurred: {str(e)}")
 
 def f_utils_copy_sheet_to_new_workbook(file_path, sheet_name):
@@ -377,6 +386,8 @@ def f_utils_copy_sheet_to_new_workbook(file_path, sheet_name):
         wb.close()
     except Exception as e:
         print(f"Error: {e}")
+        my_current_function = f_utils_get_current_function_name()
+        print(f"Error at function: {my_current_function}")
     finally:
         # Ensure the Excel application started by this code is closed
         if not app.books:  # If no books are left open, quit the app
@@ -387,6 +398,8 @@ def f_utils_open_an_excel_with_path(file_path):
         # Mở file Excel bằng ứng dụng mặc định
         os.startfile(file_path)
     except Exception as e:
+        my_current_function = f_utils_get_current_function_name()
+        print(f"Error at function: {my_current_function}")
         return f"Error: {e}"
 
 def f_utils_delete_extend_row_and_column(file_path, sheet_name, start_column, end_column, start_row, last_row):
@@ -434,6 +447,8 @@ def f_utils_delete_extend_row_and_column(file_path, sheet_name, start_column, en
     except FileNotFoundError:
         raise FileNotFoundError(f"The file '{file_path}' does not exist.")
     except Exception as e:
+        my_current_function = f_utils_get_current_function_name()
+        print(f"Error at function: {my_current_function}")
         raise Exception(f"An error occurred: {str(e)}")
 
 def f_utils_copy_all_cells_and_paste_value(file_path, sheet_name):
@@ -467,6 +482,8 @@ def f_utils_copy_all_cells_and_paste_value(file_path, sheet_name):
     except FileNotFoundError:
         raise FileNotFoundError(f"The file '{file_path}' does not exist.")
     except Exception as e:
+        my_current_function = f_utils_get_current_function_name()
+        print(f"Error at function: {my_current_function}")
         raise Exception(f"An error occurred: {str(e)}")
 
 def f_utils_open_print_template(file_path, sheet_name):
@@ -810,6 +827,8 @@ def f_utils_sent_query_to_SQL(query):
             conn.commit()
             # print("Thành công", "Dữ liệu đã được cập nhật thành công!")
         except Exception as e:
+            my_current_function = f_utils_get_current_function_name()
+            print(f"Error at function: {my_current_function}")
             print("Lỗi", f"Có lỗi xảy ra khi cập nhật dữ liệu: {e}")
         finally:
             # Đóng kết nối
@@ -831,7 +850,7 @@ def f_utils_get_caller_function_name():
     return inspect.currentframe().f_back.f_back.f_code.co_name
 
 
-def f_utils_check_duplicate(entry_so_phieu, database_name, column_name):
+def f_utils_check_duplicate(entry_so_phieu, database_name, table_name, column_name):
     so_phieu = entry_so_phieu.get().strip()
     
     if not so_phieu:
@@ -843,7 +862,7 @@ def f_utils_check_duplicate(entry_so_phieu, database_name, column_name):
         cursor = conn.cursor()
 
         # Truy vấn kiểm tra sự tồn tại của số phiếu
-        query = f"SELECT COUNT(*) FROM {database_name} WHERE {column_name} = ?"
+        query = f"SELECT COUNT(*) FROM {database_name}.[dbo].{table_name} WHERE {column_name} = ?"
         cursor.execute(query, (so_phieu,))
         result = cursor.fetchone()[0]
 
@@ -864,5 +883,7 @@ def f_utils_check_duplicate(entry_so_phieu, database_name, column_name):
         
     except Exception as e:
         print("Lỗi", f"Có lỗi xảy ra khi cập nhật dữ liệu: {e}")
+        my_current_function = f_utils_get_current_function_name()
+        print(f"Error at function: {my_current_function}")
 
 

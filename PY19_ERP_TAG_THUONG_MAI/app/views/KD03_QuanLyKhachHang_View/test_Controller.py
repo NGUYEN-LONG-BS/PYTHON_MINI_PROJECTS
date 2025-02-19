@@ -565,10 +565,6 @@ class SQLController:
             tree
         ) = args
         
-        # # print tên hàm và hàm cha
-        # print("Tên hàm đang chạy là:", f_utils_get_current_function_name())
-        # print("Hàm cha gọi nó là:", f_utils_get_caller_function_name())
-        
         # Tạo một list chứa dữ liệu để export
         try:
             data = []

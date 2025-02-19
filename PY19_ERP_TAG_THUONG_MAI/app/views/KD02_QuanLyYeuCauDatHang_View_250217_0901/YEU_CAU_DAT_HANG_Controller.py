@@ -88,18 +88,16 @@ class Controller_action_after_event:
             new_values = (index,) + values[1:]  # Update the first column with the new number
             my_treeview.item(item, values=new_values)  # Set the updated values
     
-    def f_Check_duplicate_and_auto_update_slip_number(entry_so_phieu):
-        kiem_tra_trung_so_phieu = Controller_action_after_event.f_Check_duplicate_slip_number(entry_so_phieu)
+    def f_Check_duplicate_and_auto_update_slip_number(entry_so_phieu, ma_thanh_vien, loai_phieu, database_name, table_name, column_name):
+        kiem_tra_trung_so_phieu = Controller_action_after_event.f_Check_duplicate_slip_number(entry_so_phieu, database_name, table_name, column_name)
         if kiem_tra_trung_so_phieu == False:    # có trùng phiếu
             # Step 2.2: Lấy số phiếu mới
-            Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(entry_so_phieu)
+            Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(entry_so_phieu, ma_thanh_vien, loai_phieu, database_name, table_name, column_name)
             messagebox.showinfo("Thông báo", "Số phiếu đã tồn tại, đã tự động lấy số phiếu mới. Vui lòng thực hiện lưu lại!")
             return True
     
-    def f_Check_duplicate_slip_number(entry_so_phieu):
-        database_name = "[TBD_2024].[dbo].[TB_KD02_YEU_CAU_DAT_HANG]"
-        column_name = "[SO_PHIEU]"
-        return f_utils_check_duplicate(entry_so_phieu, database_name=database_name, column_name=column_name)
+    def f_Check_duplicate_slip_number(entry_so_phieu, database_name, table_name, column_name):
+        return f_utils_check_duplicate(entry_so_phieu, database_name, table_name, column_name)
     
     def f_add_new_row(*args):
         try:
@@ -242,13 +240,11 @@ class Controller_action_after_event:
             rows.append(treeview.item(child)["values"])
         return rows
     
-    def f_get_the_latest_number_of_slip(entry_so_phieu, ma_thanh_vien, loai_phieu):
+    def f_get_the_latest_number_of_slip(entry_so_phieu, ma_thanh_vien, loai_phieu, database_name, table_name, column_name):
         # Get the latest number of slip
-        so_phieu = Controller_get_the_latest_number_of_slip.handle_button_get_number_of_slip_click()
-        
+        so_phieu = Controller_get_the_latest_number_of_slip.handle_button_get_number_of_slip_click(database_name, table_name, column_name)
         # Create the connection string
         connection_number_of_slip = f"{ma_thanh_vien}-{loai_phieu}-{so_phieu + 1}"
-        
         # Config the entry_so_phieu
         entry_so_phieu.config(state="normal")
         entry_so_phieu.delete(0, tk.END)
@@ -717,10 +713,6 @@ class SQLController:
             tree
         ) = args
         
-        # # print tên hàm và hàm cha
-        # print("Tên hàm đang chạy là:", f_utils_get_current_function_name())
-        # print("Hàm cha gọi nó là:", f_utils_get_caller_function_name())
-        
         value_ma_khach_hang = "" if entry_ma_kh.get() == "search here" else entry_ma_kh.get()
         value_so_hop_dong = "" if entry_so_hop_dong.get() == "search here" else entry_so_hop_dong.get()
         # Tạo một list chứa dữ liệu để export
@@ -871,21 +863,26 @@ class Controller_SQL_to_excel:
         
 class Controller_get_the_latest_number_of_slip:
     
-    @staticmethod
-    def get_list_number_of_slip(database_name, table_name):
+    def handle_button_get_number_of_slip_click(database_name, table_name, column_name):
+        # Lấy danh sách số phiếu từ SQL
+        data_01 = Controller_get_the_latest_number_of_slip.get_list_number_of_slip(database_name, table_name, column_name)
+        # Lấy số phiếu cuối cùng
+        data_02 = Controller_get_the_latest_number_of_slip.extract_numbers_from_data_SQL_num_01(data_01)
+        return data_02
+    
+    def get_list_number_of_slip(database_name, table_name, column_name):
         
         # Tạo câu query SQL với danh sách số phiếu
         query = f"""
         SELECT DISTINCT
-            [SO_PHIEU]
-        FROM [{database_name}].[dbo].[{table_name}]
+            {column_name}
+        FROM {database_name}.[dbo].{table_name}
         WHERE [XOA_SUA] = ''
         """
         # print("query", query)
         
         # lấy danh sách số phiếu từ SQL
         danh_sach_so_phieu = Model_get_data_from_SQL.get_data_with_query(query)
-        # print("danh_sach_so_phieu", danh_sach_so_phieu)
         
         return danh_sach_so_phieu
         
@@ -898,17 +895,6 @@ class Controller_get_the_latest_number_of_slip:
         else:
             data_final = max(data_02)
         return data_final
-        
-    @staticmethod
-    def handle_button_get_number_of_slip_click():
-        database_name, table_name = "TBD_2024", "TB_KD02_YEU_CAU_DAT_HANG"
-        # Lấy danh sách số phiếu từ SQL
-        data_01 = Controller_get_the_latest_number_of_slip.get_list_number_of_slip(database_name, table_name)
-        # Lấy số phiếu cuối cùng
-        data_02 = Controller_get_the_latest_number_of_slip.extract_numbers_from_data_SQL_num_01(data_01)
-        # print("data", data_02)
-        
-        return data_02
 
 class Controller_handel_all_events:
     
@@ -987,11 +973,9 @@ class Controller_handel_all_events:
         except Exception as e:
             return f"Error: {e}"
         
-    def f_handle_event_get_the_latest_number_of_slip(entry_so_phieu):
-        ma_thanh_vien = "TB"
-        loai_phieu = "YCDH"
+    def f_handle_event_get_the_latest_number_of_slip(entry_so_phieu, ma_thanh_vien, loai_phieu, database_name, table_name, column_name):
         try:
-            Controller_action_after_event.f_get_the_latest_number_of_slip(entry_so_phieu, ma_thanh_vien, loai_phieu)
+            Controller_action_after_event.f_get_the_latest_number_of_slip(entry_so_phieu, ma_thanh_vien, loai_phieu, database_name, table_name, column_name)
             return "Have gotten the latest number of slip!"
         except Exception as e:
             return f"Error: {e}"
@@ -1131,7 +1115,13 @@ class Controller_handel_all_events:
             entry_ghi_chu_cua_phieu,
             tree
         ) = args
-        Controller_handel_all_event_tab_01_btn_save_click.f_handle_event_tab_01_btn_save_click(
+        
+        ma_thanh_vien = "TB"
+        loai_phieu = "YCDH"
+        database_name = "[TBD_2024]"
+        table_name = "[TB_KD02_YEU_CAU_DAT_HANG]"
+        column_name = "[SO_PHIEU]"
+        Controller_event_tab_01_btn_save_click.f_handle_event_tab_01_btn_save_click(
             entry_so_phieu, 
             entry_ma_kh, 
             entry_ten_kh,
@@ -1142,18 +1132,34 @@ class Controller_handel_all_events:
             entry_ghi_chu_cua_phieu,
             tree)
         
-class Controller_handel_all_event_tab_01_btn_save_click:
-    def f_handle_event_tab_01_btn_save_click(*args):
+class Controller_event_tab_01_btn_save_click:
+    def f_handle_event_tab_01_btn_save_click(ma_thanh_vien, loai_phieu, database_name, table_name, column_name, *args):
         # Step get data and validate data
-        print(args)
-        
-        # If True: save data to SQL
-        
+        (
+            entry_so_phieu, 
+            entry_ma_kh, 
+            entry_ten_kh,
+            entry_mst,
+            entry_dia_chi,
+            entry_so_hop_dong,
+            entry_thong_tin_hop_dong,
+            entry_ghi_chu_cua_phieu,
+            tree
+        ) = args
+        validate = Controller_event_tab_01_btn_save_click.validate_data(
+            ma_thanh_vien, 
+            loai_phieu, 
+            database_name, 
+            table_name, 
+            column_name,
+            entry_so_phieu
+        )
         # If False: error notification
-        
-        try:
-            # Get the values from argument
-            (
+        if validate == False:
+            return "Validate fail!"
+        # If True: save data to SQL
+        else:
+            Controller_action_after_event.f_save_data_to_sql(
                 entry_so_phieu, 
                 entry_ma_kh, 
                 entry_ten_kh,
@@ -1163,22 +1169,23 @@ class Controller_handel_all_event_tab_01_btn_save_click:
                 entry_thong_tin_hop_dong,
                 entry_ghi_chu_cua_phieu,
                 tree
-            ) = args
+                )
+            return "Save successfully!"
 
-            if Controller_action_after_event.f_Check_duplicate_and_auto_update_slip_number(entry_so_phieu) == True:
-                return "Duplicate slip number detected and corrected!"
-            else:
-                Controller_action_after_event.f_save_data_to_sql(
-                    entry_so_phieu, 
-                    entry_ma_kh, 
-                    entry_ten_kh,
-                    entry_mst,
-                    entry_dia_chi,
-                    entry_so_hop_dong,
-                    entry_thong_tin_hop_dong,
-                    entry_ghi_chu_cua_phieu,
-                    tree
-                    )
-                return "Save successfully!"
-        except Exception as e:
-            return f"Error: {e}"
+    def validate_data(ma_thanh_vien, loai_phieu, database_name, table_name, column_name, *args):
+        # Step get data and validate data
+        (
+            entry_so_phieu
+        ) = args
+        
+        # Check duplicate slip number
+        if Controller_action_after_event.f_Check_duplicate_and_auto_update_slip_number(
+            entry_so_phieu, 
+            ma_thanh_vien, 
+            loai_phieu, 
+            database_name, 
+            table_name,
+            column_name) == True:
+            return False
+        
+        return True
