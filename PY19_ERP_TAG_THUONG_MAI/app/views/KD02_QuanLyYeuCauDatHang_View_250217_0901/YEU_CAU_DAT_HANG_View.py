@@ -16,20 +16,23 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         title = "KD02 | QUẢN LÝ YÊU CẦU ĐẶT HÀNG"
         name = "QUẢN LÝ YÊU CẦU ĐẶT HÀNG"
         super().__init__(title_of_form=title, name_of_slip=name)
-
+        
         # call reuse components
-        self._f_view_thay_doi_gia_tri_cua_base_form()
-        self._f_view_create_all_container_frames_of_window()
+        self.f_view_thay_doi_gia_tri_cua_base_form()
+        self.f_view_create_all_container_frames_of_window()
         # set up formats
-        self._f_view_set_up_formats_of_tab_01()
-        self._f_view_set_up_formats_of_tab_02()
+        self.f_view_set_up_formats_of_tab_01()
+        self.f_view_set_up_formats_of_tab_02()
         
         # Set up all global variants
-        self._f_setup_all_binding()
+        self.f_setup_all_binding()
         # Add controllers
         self.f_create_controller_auto_update_3_entries_sl_nhu_cau_sl_giu_cho_sl_ycdh()
         # Set up when initializing
         self.f_set_up_when_initializing()
+        
+        # Crating controller
+        self.f_controller_handle_all_events()
         
     def f_set_up_when_initializing(self):
         Controller_handel_all_events.update_entry_id_when_initializing(self.table_of_tab_01, self.tab_01_entry_id)
@@ -43,14 +46,14 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
             ma_thanh_vien, loai_phieu, database_name, table_name, column_name)
         self.f_tab_02_button_filter_click()
     
-    def _f_setup_all_binding(self):
+    def f_setup_all_binding(self):
         # Find in tab_01
-        tab_01_frame = self.tab_01
-        self.entry_sl_kha_dung = f_utils_tim_component_with_name(tab_01_frame, "entry_sl_kha_dung")
+        tab_01_frame = self.tab1
+        self.tab_01_entry_sl_kha_dung = f_utils_tim_component_with_name(tab_01_frame, "entry_sl_kha_dung")
         
-        self.entry_ma_hang_tab_01 = f_utils_tim_component_with_name(tab_01_frame, "entry_ma_hang")
-        self.entry_ten_hang_tab_01 = f_utils_tim_component_with_name(tab_01_frame, "entry_ten_hang")
-        self.entry_dvt = f_utils_tim_component_with_name(tab_01_frame, "entry_dvt")
+        self.tab_01_entry_ma_hang = f_utils_tim_component_with_name(tab_01_frame, "entry_ma_hang")
+        self.tab_01_entry_ten_hang = f_utils_tim_component_with_name(tab_01_frame, "entry_ten_hang")
+        self.tab_01_entry_dvt = f_utils_tim_component_with_name(tab_01_frame, "entry_dvt")
         
         self.entry_so_phieu = f_utils_tim_component_with_name(tab_01_frame, "slips_entry")
         
@@ -66,7 +69,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.entry_thong_tin_hop_dong = f_utils_tim_component_with_name(tab_01_frame, "entry_thong_tin_ngan_cua_hop_dong")
         
         # Find in tab_02
-        tab_02_frame = self.tab_02
+        tab_02_frame = self.tab2
         self.entry_ma_khach_hang_tab_02 = f_utils_tim_component_with_name(tab_02_frame, "entry_ma_khach_hang")
         self.entry_ten_khach_hang_tab_02 = f_utils_tim_component_with_name(tab_02_frame, "entry_ten_khach_hang")
         self.entry_mst_tab_02 = f_utils_tim_component_with_name(tab_02_frame, "entry_mst")
@@ -83,8 +86,21 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.ngay_filter_ket_thuc = f_utils_tim_component_with_name(tab_02_frame, "end_date_entry")
         
         self.label_footer = f_utils_tim_component_label_with_text(self, "Notification")
-        
-    def _f_view_thay_doi_gia_tri_cua_base_form(self):
+    
+    def f_controller_handle_all_events(self):
+        self.comtroller_handle_all_events = Controller_handel_all_events(
+        self.table_of_tab_01,
+        self.tab_01_entry_ma_hang,
+        self.tab_01_entry_ten_hang,
+        self.tab_01_entry_dvt,
+        self.tab_01_entry_sl_kha_dung,
+        self.tab_01_entry_nhu_cau,
+        self.tab_01_entry_sl_giu_cho,
+        self.tab_01_entry_sl_YCDH,
+        self.tab_01_entry_ghi_chu_mat_hang
+        )
+    
+    def f_view_thay_doi_gia_tri_cua_base_form(self):
         # Thay đổi thông tin các tab
         notebook = None
         def find_notebook(widget):
@@ -140,18 +156,15 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
     def f_create_controller_auto_update_3_entries_sl_nhu_cau_sl_giu_cho_sl_ycdh(self):
         # Initialize controller
         self.controller_03_auto_update_number = Controller_auto_update_sl_giu_cho_va_sl_ycdh(
-            self.entry_sl_kha_dung, 
+            self.tab_01_entry_sl_kha_dung, 
             self.tab_01_entry_nhu_cau, 
             self.tab_01_entry_sl_giu_cho, 
             self.tab_01_entry_sl_YCDH)
         self.controller_03_auto_update_number.view = self
     
-    def _f_view_create_all_container_frames_of_window(self):
-        # Create tabs
-        self.tab_01 = self.tab1
-        self.tab_02 = self.tab2
+    def f_view_create_all_container_frames_of_window(self):
         # Settings tab content
-        self._f_view_create_widgets_all_container_frames_in_tab_01()
+        self.f_view_create_widgets_all_container_frames_in_tab_01()
         self._f_view_create_all_container_frames_in_tab_02()
 
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
@@ -165,8 +178,8 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
     # Tab_01: create widgets
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
 
-    def _f_view_create_widgets_all_container_frames_in_tab_01(self):
-        parent_frame = self.tab_01
+    def f_view_create_widgets_all_container_frames_in_tab_01(self):
+        parent_frame = self.tab1
 
         # Frame H2
         self.tab_01_frame_H2 = tk.Frame(parent_frame)
@@ -358,10 +371,10 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         Controller_handel_all_events.f_handle_event_treeview_of_tab_01_single_click(
             self.table_of_tab_01,
             self.tab_01_entry_id,
-            self.entry_ma_hang_tab_01,
-            self.entry_ten_hang_tab_01,
-            self.entry_dvt,
-            self.entry_sl_kha_dung,
+            self.tab_01_entry_ma_hang,
+            self.tab_01_entry_ten_hang,
+            self.tab_01_entry_dvt,
+            self.tab_01_entry_sl_kha_dung,
             self.tab_01_entry_nhu_cau,
             self.tab_01_entry_sl_giu_cho,
             self.tab_01_entry_sl_YCDH,
@@ -478,10 +491,10 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         text = Controller_handel_all_events.f_handle_event_tab_01_button_add_row_click(
             self.table_of_tab_01, 
             self.tab_01_entry_id, 
-            self.entry_ma_hang_tab_01, 
-            self.entry_ten_hang_tab_01, 
-            self.entry_dvt, 
-            self.entry_sl_kha_dung, 
+            self.tab_01_entry_ma_hang, 
+            self.tab_01_entry_ten_hang, 
+            self.tab_01_entry_dvt, 
+            self.tab_01_entry_sl_kha_dung, 
             self.tab_01_entry_nhu_cau, 
             self.tab_01_entry_sl_giu_cho, 
             self.tab_01_entry_sl_YCDH, 
@@ -494,10 +507,10 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
     def f_view_tab_01_button_update_click(self):
         Controller_handel_all_events.f_handle_event_update_selected_row_click(
         self.table_of_tab_01,
-        self.entry_ma_hang_tab_01,
-        self.entry_ten_hang_tab_01,
-        self.entry_dvt,
-        self.entry_sl_kha_dung,
+        self.tab_01_entry_ma_hang,
+        self.tab_01_entry_ten_hang,
+        self.tab_01_entry_dvt,
+        self.tab_01_entry_sl_kha_dung,
         self.tab_01_entry_nhu_cau,
         self.tab_01_entry_sl_giu_cho,
         self.tab_01_entry_sl_YCDH,
@@ -525,7 +538,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
                                                                     )
         self._f_config_notification(text=text, fg="blue")
 
-    def _f_view_set_up_formats_of_tab_01(self):
+    def f_view_set_up_formats_of_tab_01(self):
         self.f_view_set_format_of_treeview_of_tab_01()
     
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
@@ -540,7 +553,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     
     def _f_view_create_all_container_frames_in_tab_02(self):
-        parent_frame = self.tab_02
+        parent_frame = self.tab2
 
         # Frame H2
         self.tab_02_frame_H2 = tk.Frame(parent_frame)
@@ -683,7 +696,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         text = Controller_delete_row_in_SQL.handle_event_btn_delete_click(self.treeview_test_of_tag_02)
         self._f_config_notification(text=text, fg="blue")
         
-    def _f_view_set_up_formats_of_tab_02(self):
+    def f_view_set_up_formats_of_tab_02(self):
         self.f_view_set_format_of_treeview_of_tab_02()
 
     def f_view_set_format_of_treeview_of_tab_02(self):

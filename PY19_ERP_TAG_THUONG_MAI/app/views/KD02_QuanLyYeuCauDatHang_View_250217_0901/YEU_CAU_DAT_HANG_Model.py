@@ -205,6 +205,8 @@ class cls_YEU_CAU_DAT_HANG_Model():
             # print("Dữ liệu đã được chèn thành công.")
         except Exception as e:
             print("Lỗi khi chèn dữ liệu:", e)
+            my_current_function = f_utils_get_current_function_name()
+            print(f"Error at function: {my_current_function}")
         finally:
             cursor.close()
             conn.close()
@@ -567,6 +569,8 @@ class cls_YEU_CAU_DAT_HANG_Model_05_staticmenthod_get_data_from_SQL:
             print("Dữ liệu đã được chèn thành công.")
         except Exception as e:
             print("Lỗi khi chèn dữ liệu:", e)
+            my_current_function = f_utils_get_current_function_name()
+            print(f"Error at function: {my_current_function}")
         finally:
             cursor.close()
             conn.close()
@@ -644,6 +648,8 @@ class SQLModel:
             # print("Dữ liệu đã được chèn thành công.")
         except Exception as e:
             print("Lỗi khi chèn dữ liệu:", e)
+            my_current_function = f_utils_get_current_function_name()
+            print(f"Error at function: {my_current_function}")
         finally:
             cursor.close()
             conn.close()
@@ -725,7 +731,7 @@ class SQLModel:
                 if not isinstance(row[column], (int, float)) or row[column] <= 0:
                     raise ValueError(f"Data validation: SO_LUONG_NHU_CAU (Row {idx+1}, Value: {row[column]}) must be a positive number.")
                 column = 17
-                if not isinstance(row[column], (int, float)) or row[column] <= 0:
+                if not isinstance(row[column], (int, float)) or row[column] < 0:
                     raise ValueError(f"Data validation: SO_LUONG_GIU_CHO (Row {idx+1}, Value: {row[column]}) must be a positive number.")
                 column = 18
                 if not isinstance(row[column], (int, float)) or row[column] < 0:

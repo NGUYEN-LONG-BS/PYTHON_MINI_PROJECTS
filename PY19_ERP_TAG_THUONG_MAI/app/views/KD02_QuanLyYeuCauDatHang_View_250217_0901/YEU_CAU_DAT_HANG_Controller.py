@@ -898,6 +898,26 @@ class Controller_get_the_latest_number_of_slip:
 
 class Controller_handel_all_events:
     
+    def __init__(self, my_treeview=None, 
+                 entry_ma_hang_tab_01=None, 
+                 entry_ten_hang_tab_01=None, 
+                 entry_dvt=None, 
+                 entry_sl_kha_dung=None, 
+                 tab_01_entry_nhu_cau=None, 
+                 tab_01_entry_sl_giu_cho=None, 
+                 tab_01_entry_sl_YCDH=None, 
+                 tab_01_entry_ghi_chu_mat_hang=None):
+        # Khởi tạo các giá trị mặc định hoặc giá trị do người dùng truyền vào
+        self.my_treeview = my_treeview
+        self.entry_ma_hang_tab_01 = entry_ma_hang_tab_01
+        self.entry_ten_hang_tab_01 = entry_ten_hang_tab_01
+        self.entry_dvt = entry_dvt
+        self.entry_sl_kha_dung = entry_sl_kha_dung
+        self.tab_01_entry_nhu_cau = tab_01_entry_nhu_cau
+        self.tab_01_entry_sl_giu_cho = tab_01_entry_sl_giu_cho
+        self.tab_01_entry_sl_YCDH = tab_01_entry_sl_YCDH
+        self.tab_01_entry_ghi_chu_mat_hang = tab_01_entry_ghi_chu_mat_hang
+    
     def f_handle_event_update_selected_row_click(*args):
         (
         my_treeview,
@@ -1122,6 +1142,12 @@ class Controller_handel_all_events:
         table_name = "[TB_KD02_YEU_CAU_DAT_HANG]"
         column_name = "[SO_PHIEU]"
         Controller_event_tab_01_btn_save_click.f_handle_event_tab_01_btn_save_click(
+            ma_thanh_vien,
+            loai_phieu,
+            database_name,
+            table_name,
+            column_name,
+        
             entry_so_phieu, 
             entry_ma_kh, 
             entry_ten_kh,
@@ -1172,12 +1198,7 @@ class Controller_event_tab_01_btn_save_click:
                 )
             return "Save successfully!"
 
-    def validate_data(ma_thanh_vien, loai_phieu, database_name, table_name, column_name, *args):
-        # Step get data and validate data
-        (
-            entry_so_phieu
-        ) = args
-        
+    def validate_data(ma_thanh_vien, loai_phieu, database_name, table_name, column_name, entry_so_phieu):
         # Check duplicate slip number
         if Controller_action_after_event.f_Check_duplicate_and_auto_update_slip_number(
             entry_so_phieu, 
