@@ -11,6 +11,8 @@ import traceback
 from datetime import datetime
 from collections import defaultdict
 
+
+
 class Controller_action_after_event:
     
     # Function to update the selected row
@@ -85,6 +87,14 @@ class Controller_action_after_event:
             values = my_treeview.item(item, "values")  # Get the current values of the row
             new_values = (index,) + values[1:]  # Update the first column with the new number
             my_treeview.item(item, values=new_values)  # Set the updated values
+    
+    def f_Check_duplicate_and_auto_update_slip_number(entry_so_phieu):
+        kiem_tra_trung_so_phieu = Controller_action_after_event.f_Check_duplicate_slip_number(entry_so_phieu)
+        if kiem_tra_trung_so_phieu == False:    # có trùng phiếu
+            # Step 2.2: Lấy số phiếu mới
+            Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(entry_so_phieu)
+            messagebox.showinfo("Thông báo", "Số phiếu đã tồn tại, đã tự động lấy số phiếu mới. Vui lòng thực hiện lưu lại!")
+            return True
     
     def f_Check_duplicate_slip_number(entry_so_phieu):
         database_name = "[TBD_2024].[dbo].[TB_KD02_YEU_CAU_DAT_HANG]"
@@ -711,6 +721,8 @@ class SQLController:
         # print("Tên hàm đang chạy là:", f_utils_get_current_function_name())
         # print("Hàm cha gọi nó là:", f_utils_get_caller_function_name())
         
+        value_ma_khach_hang = "" if entry_ma_kh.get() == "search here" else entry_ma_kh.get()
+        value_so_hop_dong = "" if entry_so_hop_dong.get() == "search here" else entry_so_hop_dong.get()
         # Tạo một list chứa dữ liệu để export
         try:
             data = []
@@ -721,11 +733,11 @@ class SQLController:
                     ,Xoa_Sua
                     ,f_utils_get_formatted_today_YYYY_MM_DD()
                     ,entry_so_phieu.get()
-                    ,entry_ma_kh.get()
+                    ,value_ma_khach_hang
                     ,entry_ten_kh.get()
                     ,entry_mst.get()
                     ,entry_dia_chi.get()
-                    ,entry_so_hop_dong.get()
+                    ,value_so_hop_dong
                     ,entry_thong_tin_hop_dong.get()
                     ,entry_ghi_chu_cua_phieu.get()
                     ,int(row[0])
@@ -943,42 +955,7 @@ class Controller_handel_all_events:
         except Exception as e:
             return f"Error: {e}"
     
-    def f_handle_event_tab_01_btn_save_click(*args):
-        try:
-            # Get the values from argument
-            (
-                entry_so_phieu, 
-                entry_ma_kh, 
-                entry_ten_kh,
-                entry_mst,
-                entry_dia_chi,
-                entry_so_hop_dong,
-                entry_thong_tin_hop_dong,
-                entry_ghi_chu_cua_phieu,
-                tree
-            ) = args
-            
-            kiem_tra_trung_so_phieu = Controller_action_after_event.f_Check_duplicate_slip_number(entry_so_phieu)
-            if kiem_tra_trung_so_phieu == False:    # có trùng phiếu
-                # Step 2.2: Lấy số phiếu mới
-                Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(entry_so_phieu)
-                messagebox.showinfo("Thông báo", "Số phiếu đã tồn tại, đã tự động lấy số phiếu mới. Vui lòng thực hiện lưu lại!")
-                return "Duplicate slip number detected and corrected!"
-            
-            Controller_action_after_event.f_save_data_to_sql(
-                entry_so_phieu, 
-                entry_ma_kh, 
-                entry_ten_kh,
-                entry_mst,
-                entry_dia_chi,
-                entry_so_hop_dong,
-                entry_thong_tin_hop_dong,
-                entry_ghi_chu_cua_phieu,
-                tree
-                )
-            return "Save successfully!"
-        except Exception as e:
-            return f"Error: {e}"
+    
     
     def f_handle_tab_01_button_clear_click(my_treeview):
         try:
@@ -1142,3 +1119,66 @@ class Controller_handel_all_events:
         entry_sl_YCDH,
         entry_ghi_chu_mat_hang)
         
+    def f_handle_event_tab_01_btn_save_click(*args):
+        (
+            entry_so_phieu, 
+            entry_ma_kh, 
+            entry_ten_kh,
+            entry_mst,
+            entry_dia_chi,
+            entry_so_hop_dong,
+            entry_thong_tin_hop_dong,
+            entry_ghi_chu_cua_phieu,
+            tree
+        ) = args
+        Controller_handel_all_event_tab_01_btn_save_click.f_handle_event_tab_01_btn_save_click(
+            entry_so_phieu, 
+            entry_ma_kh, 
+            entry_ten_kh,
+            entry_mst,
+            entry_dia_chi,
+            entry_so_hop_dong,
+            entry_thong_tin_hop_dong,
+            entry_ghi_chu_cua_phieu,
+            tree)
+        
+class Controller_handel_all_event_tab_01_btn_save_click:
+    def f_handle_event_tab_01_btn_save_click(*args):
+        # Step get data and validate data
+        print(args)
+        
+        # If True: save data to SQL
+        
+        # If False: error notification
+        
+        try:
+            # Get the values from argument
+            (
+                entry_so_phieu, 
+                entry_ma_kh, 
+                entry_ten_kh,
+                entry_mst,
+                entry_dia_chi,
+                entry_so_hop_dong,
+                entry_thong_tin_hop_dong,
+                entry_ghi_chu_cua_phieu,
+                tree
+            ) = args
+
+            if Controller_action_after_event.f_Check_duplicate_and_auto_update_slip_number(entry_so_phieu) == True:
+                return "Duplicate slip number detected and corrected!"
+            else:
+                Controller_action_after_event.f_save_data_to_sql(
+                    entry_so_phieu, 
+                    entry_ma_kh, 
+                    entry_ten_kh,
+                    entry_mst,
+                    entry_dia_chi,
+                    entry_so_hop_dong,
+                    entry_thong_tin_hop_dong,
+                    entry_ghi_chu_cua_phieu,
+                    tree
+                    )
+                return "Save successfully!"
+        except Exception as e:
+            return f"Error: {e}"

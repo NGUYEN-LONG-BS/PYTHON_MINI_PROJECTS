@@ -505,28 +505,16 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.label_footer.config(text=text, fg=fg)
     
     def f_tab_01_button_save_click(self):
-        # Khai báo các tham số
-        entry_so_phieu = self.entry_so_phieu
-        entry_ma_kh = self.entry_ma_khach_hang_tab_01
-        entry_ten_kh = self.entry_ten_khach_hang_tab_01
-        entry_mst = self.entry_mst_tab_01
-        entry_dia_chi = self.entry_dia_chi_tab_01
-        entry_so_hop_dong = self.entry_so_hop_dong
-        entry_thong_tin_hop_dong = self.entry_thong_tin_hop_dong
-        entry_ghi_chu_cua_phieu = self.tab_01_note_for_slip
-        tree = self.table_of_tab_01
-
-        # Handel event click
         text = Controller_handel_all_events.f_handle_event_tab_01_btn_save_click(
-                                                                    entry_so_phieu, 
-                                                                    entry_ma_kh, 
-                                                                    entry_ten_kh,
-                                                                    entry_mst,
-                                                                    entry_dia_chi,
-                                                                    entry_so_hop_dong,
-                                                                    entry_thong_tin_hop_dong,
-                                                                    entry_ghi_chu_cua_phieu,
-                                                                    tree
+                                                                    self.entry_so_phieu, 
+                                                                    self.entry_ma_khach_hang_tab_01, 
+                                                                    self.entry_ten_khach_hang_tab_01,
+                                                                    self.entry_mst_tab_01,
+                                                                    self.entry_dia_chi_tab_01,
+                                                                    self.entry_so_hop_dong,
+                                                                    self.entry_thong_tin_hop_dong,
+                                                                    self.tab_01_note_for_slip,
+                                                                    self.table_of_tab_01
                                                                     )
         self._f_config_notification(text=text, fg="blue")
 

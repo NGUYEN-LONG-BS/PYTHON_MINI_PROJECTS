@@ -7,7 +7,7 @@ import traceback
 class AIChatApp(tk.Tk):
     def __init__(self, root):
         self.root = root
-        self.root.title("AI00 |TRỢ LÝ AI-CHATBOT")
+        self.root.title("AI00 |AI-AGENT")
         self.root.geometry("500x700")
         self.f_thiet_lap_fav_icon()
         # Cấu hình OpenAI API
