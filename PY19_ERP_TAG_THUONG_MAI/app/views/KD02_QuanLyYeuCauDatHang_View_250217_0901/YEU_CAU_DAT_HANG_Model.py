@@ -613,6 +613,8 @@ class SQLModel:
             # print("Kết nối thành công đến cơ sở dữ liệu.")
         except Exception as e:
             print("Lỗi khi kết nối:", e)
+            my_current_function = f_utils_get_current_function_name()
+            print(f"Error at function: {my_current_function}")
             return
 
         cursor = conn.cursor()

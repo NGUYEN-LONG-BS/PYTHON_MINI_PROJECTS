@@ -12,6 +12,27 @@ from datetime import datetime
 from collections import defaultdict
 
 
+class controller_get_information_of_module:
+        
+    def load_ma_thanh_vien():
+        ma_thanh_vien = "TB"
+        return ma_thanh_vien
+    
+    def load_loai_phieu():
+        loai_phieu = "YCDH"
+        return loai_phieu
+    
+    def load_database_name():
+        database_name = "TBD_2024"
+        return database_name
+    
+    def load_table_name():
+        table_name = "TB_KD02_YEU_CAU_DAT_HANG"
+        return table_name
+    
+    def load_column_name_so_phieu():
+        column_name = "SO_PHIEU"
+        return column_name
 
 class Controller_action_after_event:
     
@@ -88,11 +109,11 @@ class Controller_action_after_event:
             new_values = (index,) + values[1:]  # Update the first column with the new number
             my_treeview.item(item, values=new_values)  # Set the updated values
     
-    def f_Check_duplicate_and_auto_update_slip_number(entry_so_phieu, ma_thanh_vien, loai_phieu, database_name, table_name, column_name):
+    def f_Check_duplicate_and_auto_update_slip_number(entry_so_phieu, database_name, table_name, column_name):
         kiem_tra_trung_so_phieu = Controller_action_after_event.f_Check_duplicate_slip_number(entry_so_phieu, database_name, table_name, column_name)
         if kiem_tra_trung_so_phieu == False:    # có trùng phiếu
             # Step 2.2: Lấy số phiếu mới
-            Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(entry_so_phieu, ma_thanh_vien, loai_phieu, database_name, table_name, column_name)
+            Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(entry_so_phieu)
             messagebox.showinfo("Thông báo", "Số phiếu đã tồn tại, đã tự động lấy số phiếu mới. Vui lòng thực hiện lưu lại!")
             return True
     
@@ -464,124 +485,6 @@ class Controller_action_after_event:
             values[0] = i  # Cập nhật lại số thứ tự
             my_treeview.insert("", "end", values=values)
         
-# class cls_test_Controller():
-#     def __init__(self):
-#         # super().__init__()
-#         self.model = None
-#         self.f_add_MVC_class()
-        
-#     def f_add_MVC_class(self):
-#         """Initialize and bind Model and View classes to the controller."""
-#         try:
-#             # Initialize Model
-#             self.model = cls_YEU_CAU_DAT_HANG_Model()  
-#             # If model or view need controller reference
-#             self.model.controller = self  # Avoid recursion by passing after initialization
-#         except Exception as e:
-#             print(f"Error initializing MVC components: {e}")
-    
-    # def f_get_data_from_table(self, table):
-    #     """
-    #     Retrieve all rows from the table and print them to the console.
-    #     Args:
-    #         table: The Treeview widget containing the data.
-    #         result_label: The Label widget to display messages.
-    #     """
-    #     rows = []
-    #     for child in table.get_children():
-    #         rows.append(table.item(child)["values"])
-    #     # print("Current data array:", rows)
-    #     return rows
-    
-    # def f_get_table_config(self):
-    #     return self.model.f_load_table_config_from_json()
-
-    # def f_get_table_config_name_only(self):
-    #     return self.model.f_load_table_config_from_json_name_only()
-
-    # def f_get_scrollbar_config(self):
-    #     return {
-    #         "vertical": {"enabled": True, "command": "yscrollcommand"},
-    #         "horizontal": {"enabled": True, "command": "xscrollcommand"},
-    #     }
-
-    # def f_export_data_to_SQL(self, table):
-    #     data_array = self.f_get_data_from_table(table)
-    #     self.model.f_goi_ham_Export_to_SQL(data_array)
-    #     return "Data exported to SQL Server!"
-    
-    # def f_controller_handle_btn_save_02_click_(self, table):
-    #     data_array = self.model.f_model_data_to_SQL_TB_KD02_YEU_CAU_DAT_HANG_ver_02_only_necessary_colmuns()
-    #     self.f_controller_lay_list_ma_hang(data_array, 8)
-    #     if self.model.f_validate_data_format(data_array):
-    #         print("Data is valid. Ready for insertion.")
-    #         database_name = "TEST_NE_TU_TD"
-    #         table_name = "[TB_KD02_YEU_CAU_DAT_HANG]"
-    #         self.model.f_goi_ham_Export_to_TB_KD02_YEU_CAU_DAT_HANG(data_array, database_name, table_name)
-    #         return "Data exported to SQL Server KD02_YEU_CAU_DAT_HANG!"
-    #     else:
-    #         return "Data validation failed. Please fix the errors."
-        
-    # def f_controller_get_all_info_of_slip(self):
-    #     print("")
-        
-    # def f_controller_lay_list_ma_hang(self, data, number_column):
-    #     # print("danh sách mã hàng là:", self.model.f_model_get_unique_ma_hang(data, number_column))
-    #     print("danh sách mã hàng là:", f_utils_get_unique_column_from_data(data, number_column))
-        
-    # def f_handle_event_click_on_table_of_tab_01(self, last_click_time, current_time, double_click_interval):
-    #     if current_time - last_click_time < double_click_interval:
-    #         return True  # Double click detected
-    #     else:
-    #         return False  # Single click detected
-    
-    # def f_tab_01_button_config_click(self, treeview_widget):
-    #     var_01, var_02, var_03 = self.model.f_extract_from_json_columns_config()
-    #     return var_01, var_02, var_03
-        
-    
-    # def f_tab_01_table_single_click(self, event):
-    #     treeview = event.widget
-    #     # Get the selected row ID
-    #     selected_item = treeview.selection()
-    #     if selected_item:
-    #         # Fetch the values of the selected row
-    #         row_values = treeview.item(selected_item[0], "values")
-    #         # print("Selected row values:", row_values)
-    #         if len(row_values) >= 9:
-    #             return row_values[0], row_values[1], row_values[2], row_values[3], row_values[4], row_values[5], row_values[6], row_values[7], row_values[8]
-    #         else:
-    #             return None, None, None, None, None, None, None, None, None
-    #     else:
-    #         # print("Warning: No row selected.")
-    #         return None, None, None, None, None, None, None, None, None
-    
-    # def f_tab_01_table_double_click(self, event):
-    #     # Get the Treeview widget from the event
-    #     treeview = event.widget
-    #     # Get the selected row ID
-    #     selected_item = treeview.selection()
-    #     if selected_item:
-    #         # Fetch the values of the selected row
-    #         row_values = treeview.item(selected_item[0], "values")
-    #         # Get the key of row
-    #         return row_values[1]
-    
-    # def f_controller_show_get_items_of_combobox_01(self):
-    #     # Fetch data from the model
-    #     items_of_combobox_01 = self.model.f_model_get_items_to_combobox_01()
-    #     return items_of_combobox_01
-    
-    # def f_controller_get_row_count(self, treeview):
-    #     # Get all child items (rows) and count them
-    #     return len(treeview.get_children())    
-    
-    
-    # def clear_input_fields(entry_id, entry_ghi_chu_mat_hang, entry_sl_YCDH):
-    #     entry_id.delete(0, tk.END)
-    #     entry_ghi_chu_mat_hang.delete(0, tk.END)
-    #     entry_sl_YCDH.delete(0, tk.END)
-        
 class Controller_auto_update_sl_giu_cho_va_sl_ycdh():
     def __init__(self, *args):
         # Get arguments
@@ -784,8 +687,8 @@ class SQLController:
         # Step_03: Export data to SQL
         if SQLModel.f_validate_data_format(data_array):
             # If data is valid
-            database_name = "TBD_2024"
-            table_name = "[TB_KD02_YEU_CAU_DAT_HANG]"
+            database_name = controller_get_information_of_module.load_database_name()
+            table_name = controller_get_information_of_module.load_table_name()
             SQLModel.f_goi_ham_Export_to_TB_KD02_YEU_CAU_DAT_HANG(data_array, database_name, table_name)
             return "Data exported"
         else:
@@ -898,26 +801,6 @@ class Controller_get_the_latest_number_of_slip:
 
 class Controller_handel_all_events:
     
-    def __init__(self, my_treeview=None, 
-                 entry_ma_hang_tab_01=None, 
-                 entry_ten_hang_tab_01=None, 
-                 entry_dvt=None, 
-                 entry_sl_kha_dung=None, 
-                 tab_01_entry_nhu_cau=None, 
-                 tab_01_entry_sl_giu_cho=None, 
-                 tab_01_entry_sl_YCDH=None, 
-                 tab_01_entry_ghi_chu_mat_hang=None):
-        # Khởi tạo các giá trị mặc định hoặc giá trị do người dùng truyền vào
-        self.my_treeview = my_treeview
-        self.entry_ma_hang_tab_01 = entry_ma_hang_tab_01
-        self.entry_ten_hang_tab_01 = entry_ten_hang_tab_01
-        self.entry_dvt = entry_dvt
-        self.entry_sl_kha_dung = entry_sl_kha_dung
-        self.tab_01_entry_nhu_cau = tab_01_entry_nhu_cau
-        self.tab_01_entry_sl_giu_cho = tab_01_entry_sl_giu_cho
-        self.tab_01_entry_sl_YCDH = tab_01_entry_sl_YCDH
-        self.tab_01_entry_ghi_chu_mat_hang = tab_01_entry_ghi_chu_mat_hang
-    
     def f_handle_event_update_selected_row_click(*args):
         (
         my_treeview,
@@ -992,10 +875,21 @@ class Controller_handel_all_events:
             return "Print template opened successfully!"
         except Exception as e:
             return f"Error: {e}"
-        
-    def f_handle_event_get_the_latest_number_of_slip(entry_so_phieu, ma_thanh_vien, loai_phieu, database_name, table_name, column_name):
+    
+    # def f_handle_event_get_the_latest_number_of_slip(entry_so_phieu, ma_thanh_vien, loai_phieu, database_name, table_name, column_name):
+    def f_handle_event_get_the_latest_number_of_slip(tab_01_entry_so_phieu):
+        ma_thanh_vien = controller_get_information_of_module.load_ma_thanh_vien()
+        loai_phieu = controller_get_information_of_module.load_loai_phieu()
+        database_name = controller_get_information_of_module.load_database_name()
+        table_name = controller_get_information_of_module.load_table_name() 
+        column_name = controller_get_information_of_module.load_column_name_so_phieu()
         try:
-            Controller_action_after_event.f_get_the_latest_number_of_slip(entry_so_phieu, ma_thanh_vien, loai_phieu, database_name, table_name, column_name)
+            Controller_action_after_event.f_get_the_latest_number_of_slip(tab_01_entry_so_phieu, 
+                                                                          ma_thanh_vien, 
+                                                                          loai_phieu, 
+                                                                          database_name, 
+                                                                          table_name, 
+                                                                          column_name)
             return "Have gotten the latest number of slip!"
         except Exception as e:
             return f"Error: {e}"
@@ -1069,7 +963,6 @@ class Controller_handel_all_events:
         
     def f_handle_event_tab_02_button_clear_slip(my_treeview):
         try:
-            # query = f"[Proc_TB_KD02_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250204_110h38]'','',''"
             query = f"""
                     EXEC [dbo].[Proc_TB_KD02_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250211_14hh45] 
                         @SO_PHIEU = NULL, 
@@ -1136,14 +1029,12 @@ class Controller_handel_all_events:
             tree
         ) = args
         
-        ma_thanh_vien = "TB"
-        loai_phieu = "YCDH"
-        database_name = "[TBD_2024]"
-        table_name = "[TB_KD02_YEU_CAU_DAT_HANG]"
-        column_name = "[SO_PHIEU]"
+        # ma_thanh_vien = controller_get_information_of_module.load_ma_thanh_vien()
+        # loai_phieu = controller_get_information_of_module.load_loai_phieu()
+        database_name = controller_get_information_of_module.load_database_name()
+        table_name = controller_get_information_of_module.load_table_name()
+        column_name = controller_get_information_of_module.load_column_name_so_phieu()
         Controller_event_tab_01_btn_save_click.f_handle_event_tab_01_btn_save_click(
-            ma_thanh_vien,
-            loai_phieu,
             database_name,
             table_name,
             column_name,
@@ -1159,7 +1050,7 @@ class Controller_handel_all_events:
             tree)
         
 class Controller_event_tab_01_btn_save_click:
-    def f_handle_event_tab_01_btn_save_click(ma_thanh_vien, loai_phieu, database_name, table_name, column_name, *args):
+    def f_handle_event_tab_01_btn_save_click(database_name, table_name, column_name, *args):
         # Step get data and validate data
         (
             entry_so_phieu, 
@@ -1172,9 +1063,7 @@ class Controller_event_tab_01_btn_save_click:
             entry_ghi_chu_cua_phieu,
             tree
         ) = args
-        validate = Controller_event_tab_01_btn_save_click.validate_data(
-            ma_thanh_vien, 
-            loai_phieu, 
+        validate = Controller_event_tab_01_btn_save_click.validate_data( 
             database_name, 
             table_name, 
             column_name,
@@ -1198,12 +1087,10 @@ class Controller_event_tab_01_btn_save_click:
                 )
             return "Save successfully!"
 
-    def validate_data(ma_thanh_vien, loai_phieu, database_name, table_name, column_name, entry_so_phieu):
+    def validate_data(database_name, table_name, column_name, entry_so_phieu):
         # Check duplicate slip number
         if Controller_action_after_event.f_Check_duplicate_and_auto_update_slip_number(
-            entry_so_phieu, 
-            ma_thanh_vien, 
-            loai_phieu, 
+            entry_so_phieu,
             database_name, 
             table_name,
             column_name) == True:

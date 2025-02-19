@@ -31,19 +31,12 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         # Set up when initializing
         self.f_set_up_when_initializing()
         
-        # Crating controller
-        self.f_controller_handle_all_events()
-        
     def f_set_up_when_initializing(self):
-        Controller_handel_all_events.update_entry_id_when_initializing(self.table_of_tab_01, self.tab_01_entry_id)
-        ma_thanh_vien = "TB"
-        loai_phieu = "YCDH"
-        database_name = "[TBD_2024]"
-        table_name = "[TB_KD02_YEU_CAU_DAT_HANG]"
-        column_name = "[SO_PHIEU]"
-        Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(
-            self.entry_so_phieu,
-            ma_thanh_vien, loai_phieu, database_name, table_name, column_name)
+        # Update entry id
+        Controller_handel_all_events.update_entry_id_when_initializing(self.tab_01_treeview_YCDH, self.tab_01_entry_id)
+        # Update entry slip number
+        Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(self.tab_01_entry_so_phieu)
+        # Load data to tab 2: treeview YCDH log
         self.f_tab_02_button_filter_click()
     
     def f_setup_all_binding(self):
@@ -55,7 +48,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_entry_ten_hang = f_utils_tim_component_with_name(tab_01_frame, "entry_ten_hang")
         self.tab_01_entry_dvt = f_utils_tim_component_with_name(tab_01_frame, "entry_dvt")
         
-        self.entry_so_phieu = f_utils_tim_component_with_name(tab_01_frame, "slips_entry")
+        self.tab_01_entry_so_phieu = f_utils_tim_component_with_name(tab_01_frame, "slips_entry")
         
         self.btn_refresh_number_of_slip = f_utils_tim_component_with_name(tab_01_frame, "refresh_number_of_slip_button")
         self.btn_refresh_number_of_slip.config(command=self.f_tab_01_button_get_number_of_slip_click)
@@ -86,19 +79,6 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.ngay_filter_ket_thuc = f_utils_tim_component_with_name(tab_02_frame, "end_date_entry")
         
         self.label_footer = f_utils_tim_component_label_with_text(self, "Notification")
-    
-    def f_controller_handle_all_events(self):
-        self.comtroller_handle_all_events = Controller_handel_all_events(
-        self.table_of_tab_01,
-        self.tab_01_entry_ma_hang,
-        self.tab_01_entry_ten_hang,
-        self.tab_01_entry_dvt,
-        self.tab_01_entry_sl_kha_dung,
-        self.tab_01_entry_nhu_cau,
-        self.tab_01_entry_sl_giu_cho,
-        self.tab_01_entry_sl_YCDH,
-        self.tab_01_entry_ghi_chu_mat_hang
-        )
     
     def f_view_thay_doi_gia_tri_cua_base_form(self):
         # Thay đổi thông tin các tab
@@ -359,17 +339,17 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_button_clear.pack(side="left", padx=10)
     
     def _f_view_create_widgets_in_tab_01_frame_treeview(self):
-        self.table_of_tab_01 = self.tab_01_frame_treeview.treeview_normal
+        self.tab_01_treeview_YCDH = self.tab_01_frame_treeview.treeview_normal
         # Gán sự kiện
-        self.table_of_tab_01.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_01_single_click)  # Single click
-        self.table_of_tab_01.bind("<Double-1>", self.f_view_treeview_of_tab_01_double_click)  # Double click
+        self.tab_01_treeview_YCDH.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_01_single_click)  # Single click
+        self.tab_01_treeview_YCDH.bind("<Double-1>", self.f_view_treeview_of_tab_01_double_click)  # Double click
 
     def f_view_treeview_of_tab_01_double_click(self, event):
-        Controller_handel_all_events.f_handle_event_treeview_of_tab_01_double_click(self.table_of_tab_01)
+        Controller_handel_all_events.f_handle_event_treeview_of_tab_01_double_click(self.tab_01_treeview_YCDH)
 
     def f_view_treeview_of_tab_01_single_click(self, event):
         Controller_handel_all_events.f_handle_event_treeview_of_tab_01_single_click(
-            self.table_of_tab_01,
+            self.tab_01_treeview_YCDH,
             self.tab_01_entry_id,
             self.tab_01_entry_ma_hang,
             self.tab_01_entry_ten_hang,
@@ -441,7 +421,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         
     def f_print_table_of_tab_01_config(self):
         # Get the Treeview configuration
-        config = self.table_of_tab_01.config()
+        config = self.tab_01_treeview_YCDH.config()
 
         # Convert Tcl objects to JSON-serializable Python objects
         json_serializable_config = {}
@@ -463,7 +443,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
             json.dump(json_serializable_config, json_file, indent=4, ensure_ascii=False)
     
     def f_view_tab_01_button_clear_click(self):
-        notification_text = Controller_handel_all_events.f_handle_tab_01_button_clear_click(self.table_of_tab_01)
+        notification_text = Controller_handel_all_events.f_handle_tab_01_button_clear_click(self.tab_01_treeview_YCDH)
         self._f_config_notification(notification_text, fg="blue")
 
     def f_tab_01_button_print_form_tu_tao_tu_code_click(self):
@@ -475,7 +455,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self._f_config_notification(notification_text, fg="blue")
         
     def f_tab_01_button_get_number_of_slip_click(self):        
-        notification_text = Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(self.entry_so_phieu)
+        notification_text = Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(self.tab_01_entry_so_phieu)
         self._f_config_notification(notification_text, fg="blue")
     
     def f_tab_01_button_import_click(self):
@@ -489,7 +469,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
 
     def f_view_tab_01_button_add_click(self):
         text = Controller_handel_all_events.f_handle_event_tab_01_button_add_row_click(
-            self.table_of_tab_01, 
+            self.tab_01_treeview_YCDH, 
             self.tab_01_entry_id, 
             self.tab_01_entry_ma_hang, 
             self.tab_01_entry_ten_hang, 
@@ -502,11 +482,11 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
             )
         
     def f_view_tab_01_button_delete_click(self):
-        Controller_handel_all_events.f_handle_event_tab_01_btn_delete_click(self.table_of_tab_01)
+        Controller_handel_all_events.f_handle_event_tab_01_btn_delete_click(self.tab_01_treeview_YCDH)
     
     def f_view_tab_01_button_update_click(self):
         Controller_handel_all_events.f_handle_event_update_selected_row_click(
-        self.table_of_tab_01,
+        self.tab_01_treeview_YCDH,
         self.tab_01_entry_ma_hang,
         self.tab_01_entry_ten_hang,
         self.tab_01_entry_dvt,
@@ -518,7 +498,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         )
     
     def f_view_set_format_of_treeview_of_tab_01(self):
-        my_treeview = self.table_of_tab_01
+        my_treeview = self.tab_01_treeview_YCDH
         Controller_handel_all_events.f_handle_event_initializing_format_of_treeview_of_tab_01(my_treeview)
     
     def _f_config_notification(self, text="", fg="black"):
@@ -526,7 +506,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
     
     def f_tab_01_button_save_click(self):
         text = Controller_handel_all_events.f_handle_event_tab_01_btn_save_click(
-                                                                    self.entry_so_phieu, 
+                                                                    self.tab_01_entry_so_phieu, 
                                                                     self.entry_ma_khach_hang_tab_01, 
                                                                     self.entry_ten_khach_hang_tab_01,
                                                                     self.entry_mst_tab_01,
@@ -534,7 +514,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
                                                                     self.entry_so_hop_dong,
                                                                     self.entry_thong_tin_hop_dong,
                                                                     self.tab_01_note_for_slip,
-                                                                    self.table_of_tab_01
+                                                                    self.tab_01_treeview_YCDH
                                                                     )
         self._f_config_notification(text=text, fg="blue")
 
