@@ -121,6 +121,11 @@ def f_utils_open_dashboard_main():
     f_utils_set_center_screen(new_view)
     new_view.focus_force()
     
+def f_utils_open_AI_chatbot():
+    from views.AI00_MY_AI_ASSITANT.chat_view import AIChatApp
+    new_window = tk.Toplevel()
+    AIChatApp(new_window)
+    
 def f_utils_open_dashboard_kinh_doanh():
     from views.KD00_DashboardKinhDoanh_View.Dashboard_kinhdoanh_View import cls_Dashboard_kinhdoanh_View
     new_view = cls_Dashboard_kinhdoanh_View()

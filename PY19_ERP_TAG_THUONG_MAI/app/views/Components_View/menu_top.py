@@ -29,6 +29,7 @@ class cls_menu_top:
         self.f_create_menu_nhansu(top_menu)
         self.f_create_menu_admin(top_menu)
         self.f_create_menu_Help(top_menu)
+        self.f_create_menue_AI_chatbot(top_menu)
         self.f_create_menu_Test(top_menu)
         self.f_create_menu_Exit(top_menu)
         self.f_create_menu_Signout(top_menu)
@@ -287,6 +288,10 @@ class cls_menu_top:
         # Set font-size
         f_utils_set_menu_font(menu_HELP)
     
+    def f_create_menue_AI_chatbot(self, top_menu):
+        # Create a "AI-Chatbot" menu
+        top_menu.add_command(label="AI-Chatbot", command=self.f_AI_Chatbot_click)
+    
     def f_create_menu_Test(self, top_menu):
         # Create a "Test" menu
         menu_TEST = tk.Menu(top_menu, tearoff=0)
@@ -313,6 +318,10 @@ class cls_menu_top:
     def f_Home_main_click(self):
         print("f_Home_main_click selected")
         self.f_open_DashBoard()
+    
+    # Define the action fuctions for AI-chatbot menu
+    def f_AI_Chatbot_click(self):
+        self.f_open_AI_chatbot()
         
     # Define the action fuctions for Kinhd doanh home menu
     def f_Kinh_Doanh_Home_main_click(self):
@@ -530,6 +539,9 @@ class cls_menu_top:
     def f_open_DashBoard(self):
         self.parent.destroy()
         f_utils_open_dashboard_main()
+        
+    def f_open_AI_chatbot(self):
+        f_utils_open_AI_chatbot()
         
     def f_open_Kinh_Doanh_DashBoard(self):
         self.parent.destroy()
