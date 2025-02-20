@@ -722,6 +722,20 @@ class Controller_get_the_latest_number_of_slip:
 
 class Controller_handel_all_events:
     
+    def handle_event_tab_02_button_edit_click(entry_notification, my_treeview):
+        # Get the selected items
+        selected_items = my_treeview.selection()
+        
+        # Check if more than one row is selected
+        if len(selected_items) > 1:
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Selection Error, Please select only one row.", "blue")
+            return
+        
+        # Check if no row is selected
+        if not selected_items:
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Selection Error, No row selected.", "blue")
+            return 
+    
     def handle_event_btn_delete_click(entry_notification, my_treeview):
         # Get the selected items
         selected_items = my_treeview.selection()
@@ -947,17 +961,24 @@ class Controller_handel_all_events:
         except Exception as e:
             return f"Error: {e}"
         
-    def f_handle_event_tab_02_button_filter_slip(my_treeview, *args):
+    def f_handle_event_tab_02_button_filter_slip(entry_notification, my_treeview, *args):
         try:
             # Get the arguments
             (
-                so_phieu, 
-                so_hop_dong,
-                ngay_bat_dau,
-                ngay_ket_thuc,
-                ma_doi_tuong,
-                ma_hang
+                entry_so_phieu, 
+                entry_so_hop_dong,
+                entry_ngay_bat_dau,
+                entry_ngay_ket_thuc,
+                entry_ma_doi_tuong,
+                entry_ma_hang
             )= args
+            
+            so_phieu = entry_so_phieu.get()
+            so_hop_dong = entry_so_hop_dong.get()
+            ngay_bat_dau = entry_ngay_bat_dau.get()
+            ngay_ket_thuc = entry_ngay_ket_thuc.get()
+            ma_doi_tuong = entry_ma_doi_tuong.get()
+            ma_hang = entry_ma_hang.get()
             
             # Reformat the value
             formated_ngay_bat_dau = f_utils_change_format_date_from_ddmmyyyy_to_yyyymmdd(ngay_bat_dau)
@@ -979,9 +1000,11 @@ class Controller_handel_all_events:
                     """
             # print(query)
             SQLController.load_data(my_treeview, query)
-            return "Data selected!"
+            
+            # Notification
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Data loaded!", "blue")
         except Exception as e:
-            return f"Error: {e}"
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Error: {e}", "blue")
         
     def f_handle_event_tab_02_button_clear_slip(
             entry_notification, 

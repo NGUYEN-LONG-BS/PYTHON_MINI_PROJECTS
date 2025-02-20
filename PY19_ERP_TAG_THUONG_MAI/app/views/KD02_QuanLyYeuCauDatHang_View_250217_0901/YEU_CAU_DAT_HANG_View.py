@@ -592,20 +592,15 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.tab_02_button_DELETE.pack(side="left", padx=10)
     
     def f_tab_02_button_filter_click(self):
-        so_phieu = self.tab_02_entry_filter_slip_number.get()
-        so_hop_dong = self.tab_02_entry_filter_contract_number.get()
-        ngay_bat_dau = self.tab_02_ngay_filter_bat_dau.get()
-        ngay_ket_thuc = self.tab_02_ngay_filter_ket_thuc.get()
-        ma_doi_tuong = self.tab_02_entry_ma_khach_hang.get()
-        ma_hang = self.tab_02_entry_ma_hang.get()
         Controller_handel_all_events.f_handle_event_tab_02_button_filter_slip(
+            self.tab_01_label_footer_notification,
             self.tab_02_treeview_log_of_YCDH,
-            so_phieu, 
-            so_hop_dong,
-            ngay_bat_dau,
-            ngay_ket_thuc,
-            ma_doi_tuong,
-            ma_hang
+            self.tab_02_entry_filter_slip_number, 
+            self.tab_02_entry_filter_contract_number,
+            self.tab_02_ngay_filter_bat_dau,
+            self.tab_02_ngay_filter_ket_thuc,
+            self.tab_02_entry_ma_khach_hang,
+            self.tab_02_entry_ma_hang
             )
     
     def f_tab_02_button_clear_click(self):
@@ -627,7 +622,10 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         )
         
     def f_tab_02_button_edit_click(self):
-        print("Edit click")
+        Controller_handel_all_events.handle_event_tab_02_button_edit_click(
+            self.tab_01_label_footer_notification, 
+            self.tab_02_treeview_log_of_YCDH
+        )
     
     def f_tab_02_button_delete_click(self):
         Controller_handel_all_events.handle_event_btn_delete_click(
