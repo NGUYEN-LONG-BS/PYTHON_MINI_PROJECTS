@@ -545,122 +545,122 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
         if not notification_text and not fg:
             notification_text = "..."
             fg = "blue"
-        utils_controller_logic_of_view_250216_14h57.f_config_notification(self.label_footer, notification_text, fg=fg)
+        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
 
     def f_tab_01_button_print_form_tu_tao_tu_code_click(self):
         if not notification_text and not fg:
             notification_text = "..."
             fg = "blue"
         
-        utils_controller_logic_of_view_250216_14h57.f_config_notification(self.label_footer, notification_text, fg=fg)
+        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
         
     def f_tab_01_button_print_click(self):
         if not notification_text and not fg:
             notification_text = "..."
             fg = "blue"
-        utils_controller_logic_of_view_250216_14h57.f_config_notification(self.label_footer, notification_text, fg=fg)
+        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
         
     def f_tab_01_button_get_number_of_slip_click(self):        
         if not notification_text and not fg:
             notification_text = "..."
             fg = "blue"
-        utils_controller_logic_of_view_250216_14h57.f_config_notification(self.label_footer, notification_text, fg=fg)
+        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
     
     def f_tab_01_button_import_click(self):
         if not notification_text and not fg:
             notification_text = "..."
             fg = "blue"
-        utils_controller_logic_of_view_250216_14h57.f_config_notification(self.label_footer, notification_text, fg=fg)
+        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
         
     def f_tab_01_button_template_click(self):
         if not notification_text and not fg:
             notification_text = "..."
             fg = "blue"
-        utils_controller_logic_of_view_250216_14h57.f_config_notification(self.label_footer, notification_text, fg=fg)
+        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
         
     def f_tab_01_button_get_import_file_click(self):
         if not notification_text and not fg:
             notification_text = "..."
             fg = "blue"
-        utils_controller_logic_of_view_250216_14h57.f_config_notification(self.label_footer, notification_text, fg=fg)
+        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
 
     def f_view_tab_01_button_add_click(self):
         if not notification_text and not fg:
             notification_text = "..."
             fg = "blue"
-        utils_controller_logic_of_view_250216_14h57.f_config_notification(self.label_footer, notification_text, fg=fg)
+        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
     
     def f_view_tab_01_button_delete_click(self):
         if not notification_text and not fg:
             notification_text = "..."
             fg = "blue"
-        utils_controller_logic_of_view_250216_14h57.f_config_notification(self.label_footer, notification_text, fg=fg)
+        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
     
     def f_view_tab_01_button_update_click(self):
         if not notification_text and not fg:
             notification_text = "..."
             fg = "blue"
-        utils_controller_logic_of_view_250216_14h57.f_config_notification(self.label_footer, notification_text, fg=fg)
+        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
     
     def f_tab_01_button_export_click(self):
         if not notification_text and not fg:
             notification_text = "..."
             fg = "blue"
-        utils_controller_logic_of_view_250216_14h57.f_config_notification(self.label_footer, notification_text, fg=fg)
+        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
         
     def f_tab_01_button_save_02_click(self):
         if not notification_text and not fg:
             notification_text = "..."
             fg = "blue"
-        utils_controller_logic_of_view_250216_14h57.f_config_notification(self.label_footer, notification_text, fg=fg)
+        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
     
     def f_tab_01_button_save_03_click(self):        
         if not notification_text and not fg:
             notification_text = "..."
             fg = "blue"
-        utils_controller_logic_of_view_250216_14h57.f_config_notification(self.label_footer, notification_text, fg=fg)
+        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
 
     def f_tab_04_button_filter_click(self):
         if not notification_text and not fg:
             notification_text = "..."
             fg = "blue"
-        utils_controller_logic_of_view_250216_14h57.f_config_notification(self.label_footer, notification_text, fg=fg)
+        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
     
     def f_tab_04_button_clear_click(self):
         if not notification_text and not fg:
             notification_text = "..."
             fg = "blue"
-        utils_controller_logic_of_view_250216_14h57.f_config_notification(self.label_footer, notification_text, fg=fg)
+        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
         
     def f_tab_04_button_export_excel_click(self):
         if not notification_text and not fg:
             notification_text = "..."
             fg = "blue"
-        utils_controller_logic_of_view_250216_14h57.f_config_notification(self.label_footer, notification_text, fg=fg)
+        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
         
     def f_tab_04_button_edit_click(self):
         if not notification_text and not fg:
             notification_text = "..."
             fg = "blue"
-        utils_controller_logic_of_view_250216_14h57.f_config_notification(self.label_footer, notification_text, fg=fg)
+        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
     
     def f_tab_04_button_delete_click(self):
         if not notification_text and not fg:
             notification_text = "..."
             fg = "blue"
-        utils_controller_logic_of_view_250216_14h57.f_config_notification(self.label_footer, notification_text, fg=fg)
+        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
         
     def f_view_table_of_tab_04_click(self, event):
         if not notification_text and not fg:
             notification_text = "..."
             fg = "blue"
-        utils_controller_logic_of_view_250216_14h57.f_config_notification(self.label_footer, notification_text, fg=fg)
+        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
     
     def f_tab_04_table_on_click(self, event):
         if not notification_text and not fg:
             notification_text = "..."
             fg = "blue"
-        utils_controller_logic_of_view_250216_14h57.f_config_notification(self.label_footer, notification_text, fg=fg)
+        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
 
 
     

@@ -577,7 +577,7 @@ class cls_YEU_CAU_DAT_HANG_Model_05_staticmenthod_get_data_from_SQL:
             print("Kết nối đã được đóng.")
 
 class SQLModel:
-    @staticmethod
+
     def fetch_data(query):
         try:
             data = f_utils_fetch_data_from_database(query)
@@ -587,14 +587,12 @@ class SQLModel:
             print("Lỗi khi lấy dữ liệu:", e)
             return []
         
-    @staticmethod
     def sent_SQL_query(query):
         try:
             f_utils_sent_query_to_SQL(query)
         except Exception as e:
             print("Error senting query:", e)
     
-    @staticmethod
     def f_02_insert_data_to_sql(server_name, database_name, login_name, login_pass, table_name, data_array):
         """
         Hàm kết nối SQL Server và chèn dữ liệu từ mảng vào bảng, bỏ qua các cột có giá trị mặc định (ID, NGAY_TAO_PHIEU).
@@ -657,7 +655,6 @@ class SQLModel:
             conn.close()
             print("Kết nối đã được đóng.")
     
-    @staticmethod
     def f_goi_ham_Export_to_TB_KD02_YEU_CAU_DAT_HANG(data_array, database_name, table_name):
         server_name = "14.225.192.238, 1433"  # Địa chỉ IP của SQL Server
         database_name = database_name
@@ -667,8 +664,6 @@ class SQLModel:
 
         SQLModel.f_02_insert_data_to_sql(server_name, database_name, login_name, login_pass, table_name, data_array)
     
-    
-    @staticmethod
     def f_validate_data_format(data_array):
         """
         Validate the format of data before inserting into SQL Server.
@@ -749,8 +744,6 @@ class SQLModel:
         return is_valid
     
 class Model_get_data_from_SQL:
-    
-    @staticmethod
     def get_data_with_query(query):
         data = SQLModel.fetch_data(query)
         return data

@@ -1,14 +1,9 @@
 import tkinter as tk
 from tkinter import ttk
-import time
-import json
 from Components_View import *
 from Components_View.treeview import cls_Treeview_frame_number_01
 from utils import *
-from .YEU_CAU_DAT_HANG_Controller import Controller_auto_update_sl_giu_cho_va_sl_ycdh 
-from .YEU_CAU_DAT_HANG_Controller import SQLController
-from .YEU_CAU_DAT_HANG_Controller import Controller_SQL_to_excel
-from .YEU_CAU_DAT_HANG_Controller import Controller_delete_row_in_SQL
+from .YEU_CAU_DAT_HANG_Controller import Controller_auto_update_sl_giu_cho_va_sl_ycdh
 from .YEU_CAU_DAT_HANG_Controller import Controller_handel_all_events
 
 class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
@@ -25,11 +20,12 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.f_view_set_up_formats_of_tab_02()
         
         # Set up all global variants
-        self.f_setup_all_binding()
+        self.f_define_all_elements()
         # Add controllers
         self.f_create_controller_auto_update_3_entries_sl_nhu_cau_sl_giu_cho_sl_ycdh()
         # Set up when initializing
         self.f_set_up_when_initializing()
+        self.f_set_command_for_elements()
         
     def f_set_up_when_initializing(self):
         # Update entry id
@@ -39,29 +35,45 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         # Load data to tab 2: treeview YCDH log
         self.f_tab_02_button_filter_click()
     
-    def f_setup_all_binding(self):
+    def f_set_command_for_elements(self):
+        # config command for elements
+        self.tab_01_btn_refresh_number_of_slip.config(command=self.f_tab_01_button_get_number_of_slip_click)
+        self.tab_01_button_add.config(command=self.f_view_tab_01_button_add_click)
+        self.tab_01_button_update.config(command=self.f_view_tab_01_button_update_click)
+        self.tab_01_button_delete.config(command=self.f_view_tab_01_button_delete_click)
+        self.tab_01_button_clear.config(command=self.f_view_tab_01_button_clear_click)
+        self.tab_01_button_save_03.config(command=self.f_tab_01_button_save_click)
+        self.tab_01_button_print_02.config(command=self.f_tab_01_button_print_click)
+        self.tab_01_btn_template.config(command=self.f_tab_01_button_template_click)
+        self.tab_01_btn_get_import_file.config(command=self.f_tab_01_button_get_import_file_click)
+        self.tab_01_btn_import.config(command=self.f_tab_01_button_import_click)
+        
+        self.tab_02_button_add.config(command=self.f_tab_02_button_filter_click)
+        self.tab_02_button_clear.config(command=self.f_tab_02_button_clear_click)
+        self.tab_02_button_export_excel.config(command=self.f_tab_02_button_export_excel_click)
+        self.tab_02_button_edit.config(command=self.f_tab_02_button_edit_click)
+        self.tab_02_button_DELETE.config(command=self.f_tab_02_button_delete_click)
+        
+        # Gán sự kiện
+        self.tab_01_treeview_YCDH.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_01_single_click)  # Single click
+        self.tab_01_treeview_YCDH.bind("<Double-1>", self.f_view_treeview_of_tab_01_double_click)  # Double click
+        
+    def f_define_all_elements(self):
         # Find in tab_01
         tab_01_frame = self.tab1
         self.tab_01_entry_sl_kha_dung = f_utils_tim_component_with_name(tab_01_frame, "entry_sl_kha_dung")
-        
         self.tab_01_entry_ma_hang = f_utils_tim_component_with_name(tab_01_frame, "entry_ma_hang")
         self.tab_01_entry_ten_hang = f_utils_tim_component_with_name(tab_01_frame, "entry_ten_hang")
         self.tab_01_entry_dvt = f_utils_tim_component_with_name(tab_01_frame, "entry_dvt")
-        
         self.tab_01_entry_so_phieu = f_utils_tim_component_with_name(tab_01_frame, "slips_entry")
-        
         self.tab_01_btn_refresh_number_of_slip = f_utils_tim_component_with_name(tab_01_frame, "refresh_number_of_slip_button")
-        self.tab_01_btn_refresh_number_of_slip.config(command=self.f_tab_01_button_get_number_of_slip_click)
-        
         self.tab_01_entry_ma_khach_hang = f_utils_tim_component_with_name(tab_01_frame, "entry_ma_khach_hang")
         self.tab_01_entry_ten_khach_hang = f_utils_tim_component_with_name(tab_01_frame, "entry_ten_khach_hang")
         self.tab_01_entry_mst = f_utils_tim_component_with_name(tab_01_frame, "entry_mst")
         self.tab_01_entry_dia_chi = f_utils_tim_component_with_name(tab_01_frame, "entry_dia_chi")
-        
         self._tab_01_entry_so_hop_dong = f_utils_tim_component_with_name(tab_01_frame, "entry_so_hop_dong")
         self.tab_01_entry_thong_tin_hop_dong = f_utils_tim_component_with_name(tab_01_frame, "entry_thong_tin_ngan_cua_hop_dong")
-        
-        self.tab_01_label_footer = f_utils_tim_component_label_with_text(self, "Notification")
+        self.tab_01_label_footer_notification = f_utils_tim_component_label_with_text(self, "Notification")
         
         # Find in tab_02
         tab_02_frame = self.tab2
@@ -73,10 +85,8 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.tab_02_entry_dia_chi.pack_forget()
         self._tab_02_frame_row_2_of_inventories_info = f_utils_tim_component_with_name(tab_02_frame, "frame_row_2_of_inventories_info")
         self._tab_02_frame_row_2_of_inventories_info.pack_forget()
-        
         self.tab_02_entry_ma_hang = f_utils_tim_component_with_name(tab_02_frame, "entry_ma_hang")
         self.tab_02_entry_ten_hang = f_utils_tim_component_with_name(tab_02_frame, "entry_ten_hang")
-        
         self.tab_02_ngay_filter_bat_dau = f_utils_tim_component_with_name(tab_02_frame, "start_date_entry")
         self.tab_02_ngay_filter_ket_thuc = f_utils_tim_component_with_name(tab_02_frame, "end_date_entry")
     
@@ -323,26 +333,23 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         tab_01_button_container_01.pack(expand=True, pady=10)
         
         # Add button
-        self.tab_01_button_add = tk.Button(tab_01_button_container_01, text="Add Row", command=self.f_view_tab_01_button_add_click)
+        self.tab_01_button_add = tk.Button(tab_01_button_container_01, text="Add Row")
         self.tab_01_button_add.pack(side="left", padx=10)
         
         # Update button
-        self.tab_01_button_update = tk.Button(tab_01_button_container_01, text="Update Row", command=self.f_view_tab_01_button_update_click)
+        self.tab_01_button_update = tk.Button(tab_01_button_container_01, text="Update Row")
         self.tab_01_button_update.pack(side="left", padx=10)
         
         # Delete button
-        self.tab_01_button_delete = tk.Button(tab_01_button_container_01, text="Delete Row", command=self.f_view_tab_01_button_delete_click)
+        self.tab_01_button_delete = tk.Button(tab_01_button_container_01, text="Delete Row")
         self.tab_01_button_delete.pack(side="left", padx=10)
         
         # Clear button
-        self.tab_01_button_clear = tk.Button(tab_01_button_container_01, text="Clear Rows", command=self.f_view_tab_01_button_clear_click)
+        self.tab_01_button_clear = tk.Button(tab_01_button_container_01, text="Clear Rows")
         self.tab_01_button_clear.pack(side="left", padx=10)
     
     def _f_view_create_widgets_in_tab_01_frame_treeview(self):
         self.tab_01_treeview_YCDH = self.tab_01_frame_treeview.treeview_normal
-        # Gán sự kiện
-        self.tab_01_treeview_YCDH.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_01_single_click)  # Single click
-        self.tab_01_treeview_YCDH.bind("<Double-1>", self.f_view_treeview_of_tab_01_double_click)  # Double click
 
     def f_view_treeview_of_tab_01_double_click(self, event):
         Controller_handel_all_events.f_handle_event_treeview_of_tab_01_double_click(self.tab_01_treeview_YCDH)
@@ -362,7 +369,6 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         
     def _f_view_create_widgets_in_tab_02_frame_treeview(self):
         self.tab_02_treeview_log_of_YCDH = self.tab_02_frame_treeview.treeview_normal
-        self.tab_02_treeview_log_of_YCDH.bind("<ButtonRelease-1>", self.f_view_table_of_tab_02_click)
     
     def _f_view_create_widgets_in_tab_01_frame_button_02(self):
         parent_frame = self.tab_01_frame_button_02
@@ -380,93 +386,53 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         # self.tab_01_button_stest_new_function.pack(side="right", padx=10)
         
         # BTN save
-        self.tab_01_button_save_03 = tk.Button(tab_01_button_container_02_on_the_right, 
-                                               text="Save", 
-                                               command=self.f_tab_01_button_save_click)
+        self.tab_01_button_save_03 = tk.Button(tab_01_button_container_02_on_the_right, text="Save")
         self.tab_01_button_save_03.pack(side="right", padx=10)
         
         # BTN print
-        self.tab_01_button_print_02 = tk.Button(tab_01_button_container_02_on_the_right, 
-                                                text="Print", 
-                                                command=self.f_tab_01_button_print_click)
+        self.tab_01_button_print_02 = tk.Button(tab_01_button_container_02_on_the_right, text="Print")
         self.tab_01_button_print_02.pack(side="right", padx=10)
         
         # temp button
-        self.tab_01_btn_template = tk.Button(tab_01_button_container_02_on_the_left, 
-                                             text="Template", 
-                                             command=self.f_tab_01_button_template_click)
+        self.tab_01_btn_template = tk.Button(tab_01_button_container_02_on_the_left, text="Template")
         self.tab_01_btn_template.pack(side="left", padx=10)
         
         # get file button
-        self.tab_01_btn_get_import_file = tk.Button(tab_01_button_container_02_on_the_left, 
-                                                    text="Get file", 
-                                                    command=self.f_tab_01_button_get_import_file_click)
+        self.tab_01_btn_get_import_file = tk.Button(tab_01_button_container_02_on_the_left, text="Get file")
         self.tab_01_btn_get_import_file.pack(side="left", padx=10)
         
         # import button
-        self.tab_01_btn_import = tk.Button(tab_01_button_container_02_on_the_left, 
-                                           text="Import excel", 
-                                           command=self.f_tab_01_button_import_click)
+        self.tab_01_btn_import = tk.Button(tab_01_button_container_02_on_the_left, text="Import excel")
         self.tab_01_btn_import.pack(side="left", padx=10)
         
         # star import button
         self.tab_01_btn_start_import_file = tk.Button(tab_01_button_container_02_on_the_left, 
                                                       text="Start import")
         self.tab_01_btn_start_import_file.pack(side="left", padx=10)
-
-    def f_button_print_config_click(self):
-        self.f_print_table_of_tab_01_config()
-        
-    def f_print_table_of_tab_01_config(self):
-        # Get the Treeview configuration
-        config = self.tab_01_treeview_YCDH.config()
-
-        # Convert Tcl objects to JSON-serializable Python objects
-        json_serializable_config = {}
-        for key, value in config.items():
-            # Attempt to convert each value
-            try:
-                if isinstance(value, (list, tuple)):
-                    # Recursively convert list or tuple
-                    json_serializable_config[key] = [str(item) for item in value]
-                else:
-                    # Convert single value to string
-                    json_serializable_config[key] = str(value)
-            except Exception as e:
-                # Handle unconvertible values (optional)
-                json_serializable_config[key] = f"Error converting: {e}"
-
-        # Save the configuration to a JSON file
-        with open("treeview_config.json", "w" ,encoding='utf-8') as json_file:
-            json.dump(json_serializable_config, json_file, indent=4, ensure_ascii=False)
     
     def f_view_tab_01_button_clear_click(self):
-        notification_text = Controller_handel_all_events.f_handle_tab_01_button_clear_click(self.tab_01_treeview_YCDH)
-        self._f_config_notification(notification_text, fg="blue")
+        Controller_handel_all_events.f_handle_tab_01_button_clear_click(self.tab_01_label_footer_notification, self.tab_01_treeview_YCDH)
 
     def f_tab_01_button_print_form_tu_tao_tu_code_click(self):
-        notification_text = Controller_handel_all_events.f_handle_btn_print_form_tu_tao_tu_code_click_()
-        self._f_config_notification(notification_text, fg="blue")
+        Controller_handel_all_events.f_handle_btn_print_form_tu_tao_tu_code_click_()
         
     def f_tab_01_button_print_click(self):
-        notification_text = Controller_handel_all_events.f_handle_btn_print_click()
-        self._f_config_notification(notification_text, fg="blue")
+        Controller_handel_all_events.f_handle_btn_print_click()
         
     def f_tab_01_button_get_number_of_slip_click(self):        
-        notification_text = Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(self.tab_01_entry_so_phieu)
-        self._f_config_notification(notification_text, fg="blue")
+        Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(self.tab_01_entry_so_phieu)
     
     def f_tab_01_button_import_click(self):
         print("Import config")
         
     def f_tab_01_button_template_click(self):
-        self._f_config_notification(f_utils_create_template_excel_file(),"black")
+        Controller_handel_all_events.f_handle_event_tab_01_button_template_click(self.tab_01_label_footer_notification)
         
     def f_tab_01_button_get_import_file_click(self):
-        self._f_config_notification(f_utils_open_file(),"black")
+        Controller_handel_all_events.f_handle_event_tab_01_button_get_import_file_click(self.tab_01_label_footer_notification)
 
     def f_view_tab_01_button_add_click(self):
-        text = Controller_handel_all_events.f_handle_event_tab_01_button_add_row_click(
+        Controller_handel_all_events.f_handle_event_tab_01_button_add_row_click(
             self.tab_01_treeview_YCDH, 
             self.tab_01_entry_id, 
             self.tab_01_entry_ma_hang, 
@@ -496,25 +462,20 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         )
     
     def f_view_set_format_of_treeview_of_tab_01(self):
-        my_treeview = self.tab_01_treeview_YCDH
-        Controller_handel_all_events.f_handle_event_initializing_format_of_treeview_of_tab_01(my_treeview)
-    
-    def _f_config_notification(self, text="", fg="black"):
-        self.tab_01_label_footer.config(text=text, fg=fg)
+        Controller_handel_all_events.f_handle_event_initializing_format_of_treeview_of_tab_01(self.tab_01_treeview_YCDH)
     
     def f_tab_01_button_save_click(self):
-        text = Controller_handel_all_events.f_handle_event_tab_01_btn_save_click(
-                                                                    self.tab_01_entry_so_phieu, 
-                                                                    self.tab_01_entry_ma_khach_hang, 
-                                                                    self.tab_01_entry_ten_khach_hang,
-                                                                    self.tab_01_entry_mst,
-                                                                    self.tab_01_entry_dia_chi,
-                                                                    self._tab_01_entry_so_hop_dong,
-                                                                    self.tab_01_entry_thong_tin_hop_dong,
-                                                                    self.tab_01_note_for_slip,
-                                                                    self.tab_01_treeview_YCDH
-                                                                    )
-        self._f_config_notification(text=text, fg="blue")
+        Controller_handel_all_events.f_handle_event_tab_01_btn_save_click(
+            self.tab_01_entry_so_phieu, 
+            self.tab_01_entry_ma_khach_hang, 
+            self.tab_01_entry_ten_khach_hang,
+            self.tab_01_entry_mst,
+            self.tab_01_entry_dia_chi,
+            self._tab_01_entry_so_hop_dong,
+            self.tab_01_entry_thong_tin_hop_dong,
+            self.tab_01_note_for_slip,
+            self.tab_01_treeview_YCDH
+        )
 
     def f_view_set_up_formats_of_tab_01(self):
         self.f_view_set_format_of_treeview_of_tab_01()
@@ -572,12 +533,10 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         
         # Add button
         self.tab_02_button_add = tk.Button(tab_02_button_container_01, text="Filter")
-        self.tab_02_button_add.config(command=self.f_tab_02_button_filter_click)
         self.tab_02_button_add.pack(side="left", padx=10)
         
         # Delete update
         self.tab_02_button_clear = tk.Button(tab_02_button_container_01, text="Clear")
-        self.tab_02_button_clear.config(command=self.f_tab_02_button_clear_click)
         self.tab_02_button_clear.pack(side="left", padx=10)
     
     def f_view_create_widgets_in_tab_02_frame_filter_entries(self):
@@ -622,17 +581,14 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         
         # Get Data button
         self.tab_02_button_export_excel = tk.Button(tab_02_button_container_02, text="Export Excel")
-        self.tab_02_button_export_excel.config(command=self.f_tab_02_button_export_excel_click)
         self.tab_02_button_export_excel.pack(side="left", padx=10)
         
         # Get Data button
         self.tab_02_button_edit = tk.Button(tab_02_button_container_02, text="EDIT")
-        self.tab_02_button_edit.config(command=self.f_tab_02_button_edit_click)
         self.tab_02_button_edit.pack(side="left", padx=10)
         
         # Export Data button
         self.tab_02_button_DELETE = tk.Button(tab_02_button_container_02, text="DELETE")
-        self.tab_02_button_DELETE.config(command=self.f_tab_02_button_delete_click)
         self.tab_02_button_DELETE.pack(side="left", padx=10)
     
     def f_tab_02_button_filter_click(self):
@@ -642,47 +598,43 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         ngay_ket_thuc = self.tab_02_ngay_filter_ket_thuc.get()
         ma_doi_tuong = self.tab_02_entry_ma_khach_hang.get()
         ma_hang = self.tab_02_entry_ma_hang.get()
-        notification_text = Controller_handel_all_events.f_handle_event_tab_02_button_filter_slip(self.tab_02_treeview_log_of_YCDH,
-                                                                                                    so_phieu, 
-                                                                                                    so_hop_dong,
-                                                                                                    ngay_bat_dau,
-                                                                                                    ngay_ket_thuc,
-                                                                                                    ma_doi_tuong,
-                                                                                                    ma_hang
-                                                                                                    )
-        self._f_config_notification(notification_text, fg="blue")
+        Controller_handel_all_events.f_handle_event_tab_02_button_filter_slip(
+            self.tab_02_treeview_log_of_YCDH,
+            so_phieu, 
+            so_hop_dong,
+            ngay_bat_dau,
+            ngay_ket_thuc,
+            ma_doi_tuong,
+            ma_hang
+            )
     
     def f_tab_02_button_clear_click(self):
-        self.tab_02_entry_filter_slip_number.delete(0, tk.END)
-        self.tab_02_entry_filter_contract_number.delete(0, tk.END)
-        # self.tab_02_ngay_filter_bat_dau.delete(0, tk.END)
-        # self.tab_02_ngay_filter_ket_thuc.delete(0, tk.END)
-        self.tab_02_entry_ma_khach_hang.delete(0, tk.END)
-        self.tab_02_entry_ten_khach_hang.delete(0, tk.END)
-        self.tab_02_entry_ma_hang.delete(0, tk.END)
-        self.tab_02_entry_ten_hang.delete(0, tk.END)
-        notification_text = Controller_handel_all_events.f_handle_event_tab_02_button_clear_slip(self.tab_02_treeview_log_of_YCDH)
-        self._f_config_notification(notification_text, fg="blue")
+        Controller_handel_all_events.f_handle_event_tab_02_button_clear_slip(
+            self.tab_01_label_footer_notification, 
+            self.tab_02_treeview_log_of_YCDH,
+            self.tab_02_entry_filter_slip_number,
+            self.tab_02_entry_filter_contract_number,
+            self.tab_02_entry_ma_khach_hang,
+            self.tab_02_entry_ten_khach_hang,
+            self.tab_02_entry_ma_hang,
+            self.tab_02_entry_ten_hang
+        )
         
     def f_tab_02_button_export_excel_click(self):
-        Controller_SQL_to_excel.export_log_to_excel(self.tab_02_treeview_log_of_YCDH)
+        Controller_handel_all_events.f_handle_event_tab_02_button_export_excel_click(
+            self.tab_01_label_footer_notification,
+            self.tab_02_treeview_log_of_YCDH
+        )
         
     def f_tab_02_button_edit_click(self):
         print("Edit click")
     
     def f_tab_02_button_delete_click(self):
-        text = Controller_delete_row_in_SQL.handle_event_btn_delete_click(self.tab_02_treeview_log_of_YCDH)
-        self._f_config_notification(text=text, fg="blue")
+        Controller_handel_all_events.handle_event_btn_delete_click(
+            self.tab_01_label_footer_notification, 
+            self.tab_02_treeview_log_of_YCDH
+        )
         
     def f_view_set_up_formats_of_tab_02(self):
-        self.f_view_set_format_of_treeview_of_tab_02()
-
-    def f_view_set_format_of_treeview_of_tab_02(self):
-        my_treeview = self.tab_02_treeview_log_of_YCDH
-        Controller_handel_all_events.f_handle_event_initializing_format_of_treeview_of_tab_02(my_treeview)
-    
-    def f_view_table_of_tab_02_click(self, event):
-        self.current_time = time.time()
-    
-    def f_tab_02_table_on_click(self, event):
-        print("f_tab_02_table_on_click")    
+        Controller_handel_all_events.f_handle_event_initializing_format_of_treeview_of_tab_02(self.tab_02_treeview_log_of_YCDH)
+  

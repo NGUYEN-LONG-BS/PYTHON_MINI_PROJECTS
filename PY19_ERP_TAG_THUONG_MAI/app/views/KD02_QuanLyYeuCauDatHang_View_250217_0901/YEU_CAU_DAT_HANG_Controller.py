@@ -566,27 +566,6 @@ class Controller_delete_row_in_SQL:
         query = f"EXEC [{database_name}].[dbo].[Proc_TB_KD02_YEU_CAU_DAT_HANG_UPDATE_DELETED_250208_23h29] '{so_phieu}'"
         # Sent SQL query
         SQLModel.sent_SQL_query(query)
-
-    @staticmethod
-    def handle_event_btn_delete_click(tree):
-        # Get the selected items
-        selected_items = tree.selection()
-        
-        # Check if more than one row is selected
-        if len(selected_items) > 1:
-            return f"Selection Error", "Please select only one row."
-        
-        # Check if no row is selected
-        if not selected_items:
-            return f"Selection Error", "No row selected."
-            
-        # Get the selected row
-        for item in selected_items:
-            row_values = tree.item(item, 'values')
-            if len(row_values) > 1:  # Ensure the row has at least 2 columns
-                so_phieu = row_values[1]
-                Controller_delete_row_in_SQL.update_deleted(so_phieu)
-                return f"{so_phieu}, Slip deleted."
  
 class SQLController:
     def load_data(tree, query):
@@ -694,72 +673,14 @@ class SQLController:
         else:
             return notification_text
 
-class Controller_SQL_to_excel:
-    
-    @staticmethod
-    def export_log_to_excel(treeview):
-        # lấy danh sách số phiếu từ treeview
-        danh_sach_so_phieu = f_utils_get_unique_column_from_treeview(treeview, 1)
-        # print("danh_sach_so_phieu", danh_sach_so_phieu)
-        
-        # Chuyển danh sách số phiếu thành chuỗi SQL, đảm bảo các giá trị dạng chuỗi được bao trong dấu nháy đơn
-        so_phieu_str = ', '.join([f"'{str(x)}'" for x in danh_sach_so_phieu])
-        # print("so_phieu_str", so_phieu_str)
-        
-        # Tạo câu query SQL với danh sách số phiếu
-        query = f"""
-        SELECT 
-            ROW_NUMBER() OVER(ORDER BY [SO_PHIEU]) as RowNumber,
-            [SO_PHIEU],
-            [NGAY_TREN_PHIEU],
-            [MA_DOI_TUONG],
-            [TEN_DOI_TUONG],
-            [MA_SO_THUE],
-            [DIA_CHI],
-            [SO_HOP_DONG],
-            [THONG_TIN_HOP_DONG],
-            [GHI_CHU_PHIEU],
-            [STT_DONG],
-            [MA_HANG],
-            [TEN_HANG],
-            [DVT],
-            [SO_LUONG_KHA_DUNG],
-            [SO_LUONG_NHU_CAU],
-            [SO_LUONG_GIU_CHO],
-            [SO_LUONG_YEU_CAU_DAT_HANG],
-            [GHI_CHU_SP]
-        FROM [TBD_2024].[dbo].[TB_KD02_YEU_CAU_DAT_HANG]
-        WHERE [SO_PHIEU] IN ({so_phieu_str})
-        """
-        # print("query", query)
-        
-        # Tạo header cho file Excel
-        header = ["STT", 
-                  "Số phiếu", 
-                  "Ngày trên phiếu", 
-                  "Mã đối tượng", 
-                  "Tên đối tượng", 
-                  "Mã số thuế", 
-                  "Địa chỉ", 
-                  "Số hợp đồng", 
-                  "Thông tin hợp đồng", 
-                  "Ghi chú phiếu", 
-                  "STT dòng", 
-                  "Mã hàng", 
-                  "Tên hàng", 
-                  "ĐVT", 
-                  "Số lượng khả dụng", 
-                  "Số lượng nhu cầu", 
-                  "Số lượng giữ chỗ", 
-                  "Số lượng yêu cầu đặt hàng", 
-                  "Ghi chú sản phẩm"] 
-        
+class utils_controller_SQL_to_excel:
+    def export_log_to_excel(query, my_excel_header):
         # Truyền câu query vào model để lấy dữ liệu từ SQL (Giả sử hàm này trả về DataFrame)
         df = Model_get_data_from_SQL.get_data_with_query(query)
         
         # Kiểm tra nếu có dữ liệu trả về
         if isinstance(df, list) and df:
-            f_utils_export_data_to_excel(header, df)
+            f_utils_export_data_to_excel(my_excel_header, df)
             print(f"Data exported successfully")
         else:
             print("No data found for the selected SO_PHIEU.")
@@ -800,6 +721,109 @@ class Controller_get_the_latest_number_of_slip:
         return data_final
 
 class Controller_handel_all_events:
+    
+    def handle_event_btn_delete_click(entry_notification, my_treeview):
+        # Get the selected items
+        selected_items = my_treeview.selection()
+        
+        # Check if more than one row is selected
+        if len(selected_items) > 1:
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Selection Error, Please select only one row.", "blue")
+            return
+        
+        # Check if no row is selected
+        if not selected_items:
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Selection Error, No row selected.", "blue")
+            return 
+            
+        # Get the selected row
+        for item in selected_items:
+            row_values = my_treeview.item(item, 'values')
+            if len(row_values) > 1:  # Ensure the row has at least 2 columns
+                so_phieu = row_values[1]
+                Controller_delete_row_in_SQL.update_deleted(so_phieu)
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"{so_phieu}, Slip deleted.", "blue")
+                return 
+    
+    def f_handle_event_tab_02_button_export_excel_click(entry_notification, my_treeview):
+        try:
+            # Export log to Excel
+            # lấy danh sách số phiếu từ treeview
+            danh_sach_so_phieu = f_utils_get_unique_column_from_treeview(my_treeview, 1)
+            # print("danh_sach_so_phieu", danh_sach_so_phieu)
+            
+            # Chuyển danh sách số phiếu thành chuỗi SQL, đảm bảo các giá trị dạng chuỗi được bao trong dấu nháy đơn
+            so_phieu_str = ', '.join([f"'{str(x)}'" for x in danh_sach_so_phieu])
+            # print("so_phieu_str", so_phieu_str)
+            
+            # Tạo câu query SQL với danh sách số phiếu
+            query = f"""
+            SELECT 
+                ROW_NUMBER() OVER(ORDER BY [SO_PHIEU]) as RowNumber,
+                [SO_PHIEU],
+                [NGAY_TREN_PHIEU],
+                [MA_DOI_TUONG],
+                [TEN_DOI_TUONG],
+                [MA_SO_THUE],
+                [DIA_CHI],
+                [SO_HOP_DONG],
+                [THONG_TIN_HOP_DONG],
+                [GHI_CHU_PHIEU],
+                [STT_DONG],
+                [MA_HANG],
+                [TEN_HANG],
+                [DVT],
+                [SO_LUONG_KHA_DUNG],
+                [SO_LUONG_NHU_CAU],
+                [SO_LUONG_GIU_CHO],
+                [SO_LUONG_YEU_CAU_DAT_HANG],
+                [GHI_CHU_SP]
+            FROM [TBD_2024].[dbo].[TB_KD02_YEU_CAU_DAT_HANG]
+            WHERE [SO_PHIEU] IN ({so_phieu_str})
+            """
+            # print("query", query)
+            
+            # Tạo header cho file Excel
+            header = ["STT", 
+                    "Số phiếu", 
+                    "Ngày trên phiếu", 
+                    "Mã đối tượng", 
+                    "Tên đối tượng", 
+                    "Mã số thuế", 
+                    "Địa chỉ", 
+                    "Số hợp đồng", 
+                    "Thông tin hợp đồng", 
+                    "Ghi chú phiếu", 
+                    "STT dòng", 
+                    "Mã hàng", 
+                    "Tên hàng", 
+                    "ĐVT", 
+                    "Số lượng khả dụng", 
+                    "Số lượng nhu cầu", 
+                    "Số lượng giữ chỗ", 
+                    "Số lượng yêu cầu đặt hàng", 
+                    "Ghi chú sản phẩm"] 
+            
+            utils_controller_SQL_to_excel.export_log_to_excel(query, header)
+            
+            # Notification
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Export excel successfully!", "blue")
+        except Exception as e:
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Error: {e}", "blue")
+    
+    def f_handle_event_tab_01_button_template_click(entry_notification):
+        try:
+            text = f_utils_create_template_excel_file()
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, text, "blue")
+        except Exception as e:
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Error: {e}", "blue")
+        
+    def f_handle_event_tab_01_button_get_import_file_click(entry_notification):
+        try:
+            text = f_utils_open_file()
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, text, "blue")
+        except Exception as e:
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Error: {e}", "blue")
     
     def f_handle_event_update_selected_row_click(*args):
         (
@@ -844,14 +868,12 @@ class Controller_handel_all_events:
         except Exception as e:
             return f"Error: {e}"
     
-    
-    
-    def f_handle_tab_01_button_clear_click(my_treeview):
+    def f_handle_tab_01_button_clear_click(entry_notification, my_treeview):
         try:
             Controller_action_after_event.clear_all_contents_in_treeview(my_treeview)
-            return "Clear all rows in treeview!"
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Clear all rows in treeview!", "blue")
         except Exception as e:
-            return f"Error: {e}"
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Error: {e}", "blue")
         
     def f_handle_tab_01_button_get_click(my_treeview):
         try:
@@ -961,8 +983,26 @@ class Controller_handel_all_events:
         except Exception as e:
             return f"Error: {e}"
         
-    def f_handle_event_tab_02_button_clear_slip(my_treeview):
+    def f_handle_event_tab_02_button_clear_slip(
+            entry_notification, 
+            my_treeview,
+            tab_02_entry_filter_slip_number,
+            tab_02_entry_filter_contract_number,
+            tab_02_entry_ma_khach_hang,
+            tab_02_entry_ten_khach_hang,
+            tab_02_entry_ma_hang,
+            tab_02_entry_ten_hang):
+        
         try:
+            # clear all entries
+            tab_02_entry_filter_slip_number.delete(0, tk.END)
+            tab_02_entry_filter_contract_number.delete(0, tk.END)
+            tab_02_entry_ma_khach_hang.delete(0, tk.END)
+            tab_02_entry_ten_khach_hang.delete(0, tk.END)
+            tab_02_entry_ma_hang.delete(0, tk.END)
+            tab_02_entry_ten_hang.delete(0, tk.END)
+            
+            # refresh data in treeview
             query = f"""
                     EXEC [dbo].[Proc_TB_KD02_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250211_14hh45] 
                         @SO_PHIEU = NULL, 
@@ -973,9 +1013,9 @@ class Controller_handel_all_events:
                         @MA_HANG = NULL;
                     """
             SQLController.load_data(my_treeview, query)
-            return "Clear all filters!"
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Clear all filter!", "blue")
         except Exception as e:
-            return f"Error: {e}"
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Error: {e}", "blue")
         
     def update_entry_id_when_initializing(my_treeview, entry_id):
         Controller_action_after_event.update_entry_id_after_adding_new_row(my_treeview, entry_id)

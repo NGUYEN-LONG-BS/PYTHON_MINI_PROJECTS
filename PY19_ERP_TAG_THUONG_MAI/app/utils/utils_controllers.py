@@ -51,7 +51,7 @@ class utils_controller_action_after_event_250216_14h57:
         entry_id.insert(0, row_count)  # Insert the new value (ID)
         entry_id.config(state="disabled")  # Disable the Entry widget again
 
-class utils_controller_logic_of_view_250216_14h57:
+class utils_controller_config_notification_250220_10h05:
     def f_config_notification(element_label, text="...", fg="blue"):
             element_label.config(text=text, fg=fg)
 
