@@ -26,13 +26,22 @@ class controller_get_information_of_module:
         database_name = "TBD_2024"
         return database_name
     
-    def load_table_name():
+    def load_table_name_TB_KD02_YEU_CAU_DAT_HANG():
         table_name = "TB_KD02_YEU_CAU_DAT_HANG"
+        return table_name
+    
+    def load_table_name_TB_AD00_DANH_SACH_KHACH_HANG():
+        table_name = "TB_AD00_DANH_SACH_KHACH_HANG"
         return table_name
     
     def load_column_name_so_phieu():
         column_name = "SO_PHIEU"
         return column_name
+    
+    def load_column_name_ma_khach_hang():
+        column_name = "MA_DOI_TUONG"
+        return column_name
+    
 
 class Controller_action_after_event:
     
@@ -117,16 +126,16 @@ class Controller_action_after_event:
             return True
     
     def f_Check_exist_ma_khach_hang(entry_ma_khach_hang, database_name, table_name, column_name):
-        kiem_tra_trung_so_phieu = Controller_action_after_event.f_Check_duplicate_value(entry_ma_khach_hang, database_name, table_name, column_name)
-        if kiem_tra_trung_so_phieu == False:    # có trùng phiếu
-            messagebox.showinfo("Thông báo", "Mã khách hàng chưa tồn tại. Vui lòng khởi tạo mã khách hàng và thử lại!")
-            return True
+        kiem_tra_trung_so_phieu = Controller_action_after_event.f_Check_exist_value(entry_ma_khach_hang, database_name, table_name, column_name)
+        if kiem_tra_trung_so_phieu == False:    # Chưa có mã khách hàng
+            return False
+        return True
     
     def f_Check_duplicate_value(entry_so_phieu, database_name, table_name, column_name):
         return f_utils_check_duplicate(entry_so_phieu, database_name, table_name, column_name)
     
     def f_Check_exist_value(entry_to_check, database_name, table_name, column_name):
-        return f_utils_check_duplicate(entry_to_check, database_name, table_name, column_name)
+        return f_utils_check_exist(entry_to_check, database_name, table_name, column_name)
     
     def f_add_new_row(*args):
         try:
@@ -675,7 +684,7 @@ class SQLController:
         if SQLModel.f_validate_data_format(data_array):
             # If data is valid
             database_name = controller_get_information_of_module.load_database_name()
-            table_name = controller_get_information_of_module.load_table_name()
+            table_name = controller_get_information_of_module.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
             SQLModel.f_goi_ham_Export_to_TB_KD02_YEU_CAU_DAT_HANG(data_array, database_name, table_name)
             return "Data exported"
         else:
@@ -925,7 +934,7 @@ class Controller_handel_all_events:
         ma_thanh_vien = controller_get_information_of_module.load_ma_thanh_vien()
         loai_phieu = controller_get_information_of_module.load_loai_phieu()
         database_name = controller_get_information_of_module.load_database_name()
-        table_name = controller_get_information_of_module.load_table_name() 
+        table_name = controller_get_information_of_module.load_table_name_TB_KD02_YEU_CAU_DAT_HANG() 
         column_name = controller_get_information_of_module.load_column_name_so_phieu()
         try:
             Controller_action_after_event.f_get_the_latest_number_of_slip(tab_01_entry_so_phieu, 
@@ -1104,7 +1113,7 @@ class Controller_handel_all_events:
             
             # call controller to handle event
             database_name = controller_get_information_of_module.load_database_name()
-            table_name = controller_get_information_of_module.load_table_name()
+            table_name = controller_get_information_of_module.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
             column_name = controller_get_information_of_module.load_column_name_so_phieu()
             flag = Controller_event_tab_01_btn_save_click.f_handle_event_tab_01_btn_save_click(
                 database_name,
@@ -1190,13 +1199,16 @@ class Controller_event_tab_01_btn_save_click:
             print(f_utils_get_current_function_name())
             return False
         
-        # Check duplicate slip number
-        if Controller_action_after_event.f_Check_duplicate_and_auto_update_slip_number(
-            entry_so_phieu,
+        # Check exist client id
+        database_name = controller_get_information_of_module.load_database_name()
+        table_name = controller_get_information_of_module.load_table_name_TB_AD00_DANH_SACH_KHACH_HANG()
+        column_name = controller_get_information_of_module.load_column_name_ma_khach_hang()
+        if Controller_action_after_event.f_Check_exist_ma_khach_hang(
+            entry_ma_khach_hang,
             database_name, 
             table_name,
             column_name) == True:
-            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số phiếu bị trùng, vui lòng thử lại!", "red")
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Mã khách hàng chưa tồn tại!", "red")
             print(f_utils_get_current_function_name())
             return False
         

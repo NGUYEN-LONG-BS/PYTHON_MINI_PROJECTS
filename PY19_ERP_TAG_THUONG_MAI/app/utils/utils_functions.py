@@ -898,11 +898,12 @@ def f_utils_check_exist(entry_to_check, database_name, table_name, column_name):
         cursor = conn.cursor()
 
         # Truy vấn kiểm tra sự tồn tại của số phiếu
-        query = f"SELECT COUNT(*) FROM {database_name}.[dbo].{table_name} WHERE {column_name} = ?"
+        query = f"SELECT CASE WHEN EXISTS(SELECT 1 FROM {database_name}.[dbo].{table_name} WHERE {column_name} = ?) THEN 1 ELSE 0 END"
+        print(query)
         cursor.execute(query, (value_to_check,))
         result = cursor.fetchone()[0]
 
-        if result > 0:
+        if result:
             # Đóng kết nối
             if cursor:
                 cursor.close()
@@ -910,6 +911,7 @@ def f_utils_check_exist(entry_to_check, database_name, table_name, column_name):
                 conn.close()
             return False
         else:
+            messagebox.showinfo("Thông báo", f"Giá trị {value_to_check} chưa tồn tại. Vui lòng khởi tạo và thử lại!")
             # Đóng kết nối
             if cursor:
                 cursor.close()
