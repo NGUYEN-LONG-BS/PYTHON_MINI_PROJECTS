@@ -850,11 +850,11 @@ def f_utils_get_caller_function_name():
     return inspect.currentframe().f_back.f_back.f_code.co_name
 
 
-def f_utils_check_duplicate(entry_so_phieu, database_name, table_name, column_name):
-    so_phieu = entry_so_phieu.get().strip()
+def f_utils_check_duplicate(entry_to_check, database_name, table_name, column_name):
+    value_to_check = entry_to_check.get().strip()
     
-    if not so_phieu:
-        messagebox.showwarning("Lỗi", "Vui lòng nhập số phiếu!")
+    if not value_to_check:
+        messagebox.showwarning("Lỗi", "Vui lòng nhập giá trị cần kiểm tra!")
         return False
 
     try:
@@ -863,7 +863,7 @@ def f_utils_check_duplicate(entry_so_phieu, database_name, table_name, column_na
 
         # Truy vấn kiểm tra sự tồn tại của số phiếu
         query = f"SELECT COUNT(*) FROM {database_name}.[dbo].{table_name} WHERE {column_name} = ?"
-        cursor.execute(query, (so_phieu,))
+        cursor.execute(query, (value_to_check,))
         result = cursor.fetchone()[0]
 
         if result > 0:
@@ -886,4 +886,39 @@ def f_utils_check_duplicate(entry_so_phieu, database_name, table_name, column_na
         my_current_function = f_utils_get_current_function_name()
         print(f"Error at function: {my_current_function}")
 
+def f_utils_check_exist(entry_to_check, database_name, table_name, column_name):
+    value_to_check = entry_to_check.get().strip()
+    
+    if not value_to_check:
+        messagebox.showwarning("Lỗi", "Vui lòng nhập giá trị cần kiểm tra!")
+        return False
+
+    try:
+        conn = f_utils_create_a_connection_string_to_SQL_Server()
+        cursor = conn.cursor()
+
+        # Truy vấn kiểm tra sự tồn tại của số phiếu
+        query = f"SELECT COUNT(*) FROM {database_name}.[dbo].{table_name} WHERE {column_name} = ?"
+        cursor.execute(query, (value_to_check,))
+        result = cursor.fetchone()[0]
+
+        if result > 0:
+            # Đóng kết nối
+            if cursor:
+                cursor.close()
+            if conn:
+                conn.close()
+            return False
+        else:
+            # Đóng kết nối
+            if cursor:
+                cursor.close()
+            if conn:
+                conn.close()
+            return True
+        
+    except Exception as e:
+        print("Lỗi", f"Có lỗi xảy ra khi cập nhật dữ liệu: {e}")
+        my_current_function = f_utils_get_current_function_name()
+        print(f"Error at function: {my_current_function}")
 

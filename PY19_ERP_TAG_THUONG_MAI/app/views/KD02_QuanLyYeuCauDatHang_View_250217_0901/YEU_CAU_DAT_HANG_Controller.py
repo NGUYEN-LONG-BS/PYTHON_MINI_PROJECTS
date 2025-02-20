@@ -110,15 +110,23 @@ class Controller_action_after_event:
             my_treeview.item(item, values=new_values)  # Set the updated values
     
     def f_Check_duplicate_and_auto_update_slip_number(entry_so_phieu, database_name, table_name, column_name):
-        kiem_tra_trung_so_phieu = Controller_action_after_event.f_Check_duplicate_slip_number(entry_so_phieu, database_name, table_name, column_name)
+        kiem_tra_trung_so_phieu = Controller_action_after_event.f_Check_duplicate_value(entry_so_phieu, database_name, table_name, column_name)
         if kiem_tra_trung_so_phieu == False:    # có trùng phiếu
-            # Step 2.2: Lấy số phiếu mới
             Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(entry_so_phieu)
             messagebox.showinfo("Thông báo", "Số phiếu đã tồn tại, đã tự động lấy số phiếu mới. Vui lòng thực hiện lưu lại!")
             return True
     
-    def f_Check_duplicate_slip_number(entry_so_phieu, database_name, table_name, column_name):
+    def f_Check_exist_ma_khach_hang(entry_ma_khach_hang, database_name, table_name, column_name):
+        kiem_tra_trung_so_phieu = Controller_action_after_event.f_Check_duplicate_value(entry_ma_khach_hang, database_name, table_name, column_name)
+        if kiem_tra_trung_so_phieu == False:    # có trùng phiếu
+            messagebox.showinfo("Thông báo", "Mã khách hàng chưa tồn tại. Vui lòng khởi tạo mã khách hàng và thử lại!")
+            return True
+    
+    def f_Check_duplicate_value(entry_so_phieu, database_name, table_name, column_name):
         return f_utils_check_duplicate(entry_so_phieu, database_name, table_name, column_name)
+    
+    def f_Check_exist_value(entry_to_check, database_name, table_name, column_name):
+        return f_utils_check_duplicate(entry_to_check, database_name, table_name, column_name)
     
     def f_add_new_row(*args):
         try:
@@ -1080,42 +1088,48 @@ class Controller_handel_all_events:
         entry_ghi_chu_mat_hang)
         
     def f_handle_event_tab_01_btn_save_click(*args):
-        (
-            entry_so_phieu, 
-            entry_ma_kh, 
-            entry_ten_kh,
-            entry_mst,
-            entry_dia_chi,
-            entry_so_hop_dong,
-            entry_thong_tin_hop_dong,
-            entry_ghi_chu_cua_phieu,
-            tree
-        ) = args
-        
-        # ma_thanh_vien = controller_get_information_of_module.load_ma_thanh_vien()
-        # loai_phieu = controller_get_information_of_module.load_loai_phieu()
-        database_name = controller_get_information_of_module.load_database_name()
-        table_name = controller_get_information_of_module.load_table_name()
-        column_name = controller_get_information_of_module.load_column_name_so_phieu()
-        Controller_event_tab_01_btn_save_click.f_handle_event_tab_01_btn_save_click(
-            database_name,
-            table_name,
-            column_name,
-        
-            entry_so_phieu, 
-            entry_ma_kh, 
-            entry_ten_kh,
-            entry_mst,
-            entry_dia_chi,
-            entry_so_hop_dong,
-            entry_thong_tin_hop_dong,
-            entry_ghi_chu_cua_phieu,
-            tree)
+        try:
+            (
+                entry_notification,
+                entry_so_phieu, 
+                entry_ma_kh, 
+                entry_ten_kh,
+                entry_mst,
+                entry_dia_chi,
+                entry_so_hop_dong,
+                entry_thong_tin_hop_dong,
+                entry_ghi_chu_cua_phieu,
+                tree
+            ) = args
+            
+            # call controller to handle event
+            database_name = controller_get_information_of_module.load_database_name()
+            table_name = controller_get_information_of_module.load_table_name()
+            column_name = controller_get_information_of_module.load_column_name_so_phieu()
+            flag = Controller_event_tab_01_btn_save_click.f_handle_event_tab_01_btn_save_click(
+                database_name,
+                table_name,
+                column_name,
+                entry_notification,
+                entry_so_phieu, 
+                entry_ma_kh, 
+                entry_ten_kh,
+                entry_mst,
+                entry_dia_chi,
+                entry_so_hop_dong,
+                entry_thong_tin_hop_dong,
+                entry_ghi_chu_cua_phieu,
+                tree)
+        # Notification
+            if flag == True:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Data saved successfully!", "blue")
+        except Exception as e:
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Error: {e}", "blue")
         
 class Controller_event_tab_01_btn_save_click:
     def f_handle_event_tab_01_btn_save_click(database_name, table_name, column_name, *args):
         # Step get data and validate data
-        (
+        (   entry_notification,
             entry_so_phieu, 
             entry_ma_kh, 
             entry_ten_kh,
@@ -1130,11 +1144,15 @@ class Controller_event_tab_01_btn_save_click:
             database_name, 
             table_name, 
             column_name,
-            entry_so_phieu
+            entry_notification,
+            entry_so_phieu,
+            entry_ma_kh,
+            tree
         )
         # If False: error notification
         if validate == False:
-            return "Validate fail!"
+            print(f_utils_get_current_function_name())
+            return False
         # If True: save data to SQL
         else:
             Controller_action_after_event.f_save_data_to_sql(
@@ -1148,15 +1166,39 @@ class Controller_event_tab_01_btn_save_click:
                 entry_ghi_chu_cua_phieu,
                 tree
                 )
-            return "Save successfully!"
+            return True
 
-    def validate_data(database_name, table_name, column_name, entry_so_phieu):
+    def validate_data(database_name, table_name, column_name, entry_notification, entry_so_phieu, entry_ma_khach_hang, my_treeview):
+        # Check if the client id is empty
+        if entry_ma_khach_hang.get() == "" or entry_ma_khach_hang.get() == "search here":
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Mã khách hàng không được để trống!", "red")
+            print(f_utils_get_current_function_name())
+            return False
+        
+        if len(my_treeview.get_children()) == 0:
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Bảng không có dữ liệu", "red")
+            print(f_utils_get_current_function_name())
+            return False
+        
         # Check duplicate slip number
         if Controller_action_after_event.f_Check_duplicate_and_auto_update_slip_number(
             entry_so_phieu,
             database_name, 
             table_name,
             column_name) == True:
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số phiếu bị trùng, vui lòng thử lại!", "red")
+            print(f_utils_get_current_function_name())
             return False
         
+        # Check duplicate slip number
+        if Controller_action_after_event.f_Check_duplicate_and_auto_update_slip_number(
+            entry_so_phieu,
+            database_name, 
+            table_name,
+            column_name) == True:
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số phiếu bị trùng, vui lòng thử lại!", "red")
+            print(f_utils_get_current_function_name())
+            return False
+        
+        # pass the validation
         return True
