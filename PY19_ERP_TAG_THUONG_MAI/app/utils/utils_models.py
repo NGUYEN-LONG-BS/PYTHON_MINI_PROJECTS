@@ -2,12 +2,12 @@ import os
 import json
 import pyodbc
 from datetime import datetime
-from utils import *
+# from utils import *
+from .utils_functions import *
 
 class utils_model_TreeviewConfigLoader_250217_13h20:
     """Class để load cấu hình Treeview từ JSON"""
 
-    @staticmethod
     def load_json(config_json_path):
         """Đọc dữ liệu từ file JSON"""
         try:
@@ -24,7 +24,6 @@ class utils_model_TreeviewConfigLoader_250217_13h20:
             print("Error at function: ", f_utils_get_current_function_name())
         return None
 
-    @staticmethod
     def get_column_config(data):
         """Lấy cấu hình cột từ JSON"""
         try:
@@ -35,7 +34,6 @@ class utils_model_TreeviewConfigLoader_250217_13h20:
             print("Error: Thiếu key 'table' hoặc 'columns' trong JSON.")
             return [], []
 
-    @staticmethod
     def get_header_font(data):
         """Lấy cấu hình font của tiêu đề"""
         try:
@@ -45,7 +43,6 @@ class utils_model_TreeviewConfigLoader_250217_13h20:
             print("Warning: Không tìm thấy cấu hình font. Dùng mặc định.")
             return ("Arial", 12, "normal")
 
-    @staticmethod
     def extract_column_attribute(data, attribute, default_value):
         """Trích xuất thuộc tính của cột"""
         try:
@@ -58,18 +55,24 @@ class utils_model_TreeviewConfigLoader_250217_13h20:
 class utils_model_get_data_from_SQL:
     
     def get_data_with_query(query):
-        print("Query 1.9: ", query)
-        data = utils_model_get_data_from_SQL.fetch_data(query)
-        return data
-    
-    def fetch_data(query):
         try:
-            print("Query 02: ", query)
-            # print("Error at function: ", f_utils_get_current_function_name())
-            data = f_utils_fetch_data_from_database(query)
-            # print(data)
+            data = utils_model_get_data_from_SQL.fetch_data(query)
+            if not data:
+                return []
             return data
         except Exception as e:
             print(f"Error: {e}")
-            # print("Error at function: ", f_utils_get_current_function_name())
+            print("Error at function: ", f_utils_get_current_function_name())
+            return []
+    
+    def fetch_data(query):
+        try:
+            data = f_utils_fetch_data_from_database(query)
+            if data:
+                return data
+            else:
+                return []
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
             return []

@@ -1,33 +1,33 @@
 
 from .utils_models import *
 from utils import *
-import traceback
+# import traceback
 from datetime import datetime
 
-import os
-import sys
-import time
-import inspect
+# import os
+# import sys
+# import time
+# import inspect
 import tkinter as tk
 from tkinter import ttk
-from tkinter import font
-from tkinter import filedialog, messagebox
-import openpyxl
-from openpyxl import Workbook
-from openpyxl.styles import Font, Alignment
-from openpyxl.styles import Font, Alignment, PatternFill
+# from tkinter import font
+# from tkinter import filedialog, messagebox
+# import openpyxl
+# from openpyxl import Workbook
+# from openpyxl.styles import Font, Alignment
+# from openpyxl.styles import Font, Alignment, PatternFill
 from openpyxl import load_workbook
-import xlwings as xw
+# import xlwings as xw
 from define import *
-import pyodbc
-import json
-from cryptography.fernet import Fernet
+# import pyodbc
+# import json
+# from cryptography.fernet import Fernet
 # import datetime
 from datetime import datetime
-from decimal import Decimal
-from PIL import Image, ImageTk
-import pandas as pd
-import re
+# from decimal import Decimal
+# from PIL import Image, ImageTk
+# import pandas as pd
+# import re
 
 class utils_controller_action_after_event_250216_14h57:
     
@@ -99,10 +99,11 @@ class utils_controller_get_the_header_of_table_in_SQL_250221_11h01:
             FROM [{database_name}].INFORMATION_SCHEMA.COLUMNS
             WHERE TABLE_NAME = '{table_name}' AND TABLE_SCHEMA = 'dbo'
             """
-            print("query 01", query)
             # lấy danh sách tên cột từ SQL
             column_headers = utils_model_get_data_from_SQL.get_data_with_query(query)
-            print("column_headers", column_headers)
+            if not column_headers:
+                return None
+            
             return column_headers
         except Exception as e:
             print(f"Error: {e}")

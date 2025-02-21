@@ -810,13 +810,10 @@ def f_utils_format_number(value):
 
 def f_utils_fetch_data_from_database(query):
     try:
-        print("query 2.9: ",query)
         conn = f_utils_create_a_connection_string_to_SQL_Server()
         cursor = conn.cursor()
         cursor.execute(query)
         rows = cursor.fetchall()
-        print("query 03: ",query)
-        print(rows)
         # Đóng kết nối
         if cursor:
             cursor.close()

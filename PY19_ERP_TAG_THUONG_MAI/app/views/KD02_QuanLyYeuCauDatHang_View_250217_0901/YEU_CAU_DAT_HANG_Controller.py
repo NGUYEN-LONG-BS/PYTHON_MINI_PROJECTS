@@ -1025,12 +1025,11 @@ class Controller_handel_all_events:
             database_name = controller_get_information_of_module.load_database_name()
             table_name = controller_get_information_of_module.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
             
-            print("database_name", database_name)
-            print("table_name", table_name)
-            
             column_names = utils_controller_get_the_header_of_table_in_SQL_250221_11h01.get_column_names(database_name, table_name)
             
-            print("column_names", column_names)
+            if not column_names:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Error: No data found!", "red")
+                return False
             
             flag, text = f_utils_create_template_excel_file(column_names)
             if flag == False:
@@ -1038,7 +1037,6 @@ class Controller_handel_all_events:
             else:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, text, "blue")
         except Exception as e:
-            print("vào đây nè")
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
         
