@@ -43,21 +43,25 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
     def f_set_command_for_elements(self):
         # config command for elements
         self.tab_01_btn_refresh_number_of_slip.config(command=self.f_tab_01_button_get_number_of_slip_click)
+        
         self.tab_01_button_add.config(command=self.f_view_tab_01_button_add_click)
         self.tab_01_button_update.config(command=self.f_view_tab_01_button_update_click)
         self.tab_01_button_delete.config(command=self.f_view_tab_01_button_delete_click)
         self.tab_01_button_clear.config(command=self.f_view_tab_01_button_clear_click)
-        self.tab_01_button_save_03.config(command=self.f_tab_01_button_save_click)
-        self.tab_01_button_print_02.config(command=self.f_tab_01_button_print_click)
+        
+        self.tab_01_button_save.config(command=self.f_tab_01_button_save_click)
+        self.tab_01_button_print.config(command=self.f_tab_01_button_print_click)
+        
         self.tab_01_btn_template.config(command=self.f_tab_01_button_template_click)
         self.tab_01_btn_get_import_file.config(command=self.f_tab_01_button_get_import_file_click)
         self.tab_01_btn_import.config(command=self.f_tab_01_button_import_click)
         
-        self.tab_02_button_add.config(command=self.f_tab_02_button_filter_click)
-        self.tab_02_button_clear.config(command=self.f_tab_02_button_clear_click)
+        self.tab_02_button_filter.config(command=self.f_tab_02_button_filter_click)
+        self.tab_02_button_clear_filter.config(command=self.f_tab_02_button_clear_click)
         self.tab_02_button_export_excel.config(command=self.f_tab_02_button_export_excel_click)
-        self.tab_02_button_edit.config(command=self.f_tab_02_button_edit_click)
-        self.tab_02_button_DELETE.config(command=self.f_tab_02_button_delete_click)
+        
+        self.tab_02_button_edit_slip.config(command=self.f_tab_02_button_edit_click)
+        self.tab_02_button_delete_slip.config(command=self.f_tab_02_button_delete_click)
         
         # Gán sự kiện
         self.tab_01_treeview_YCDH.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_01_single_click)  # Single click
@@ -380,12 +384,12 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         # self.tab_01_button_stest_new_function.pack(side="right", padx=10)
         
         # BTN save
-        self.tab_01_button_save_03 = tk.Button(tab_01_button_container_02_on_the_right, text="Save")
-        self.tab_01_button_save_03.pack(side="right", padx=10)
+        self.tab_01_button_save = tk.Button(tab_01_button_container_02_on_the_right, text="Save")
+        self.tab_01_button_save.pack(side="right", padx=10)
         
         # BTN print
-        self.tab_01_button_print_02 = tk.Button(tab_01_button_container_02_on_the_right, text="Print")
-        self.tab_01_button_print_02.pack(side="right", padx=10)
+        self.tab_01_button_print = tk.Button(tab_01_button_container_02_on_the_right, text="Print")
+        self.tab_01_button_print.pack(side="right", padx=10)
         
         # temp button
         self.tab_01_btn_template = tk.Button(tab_01_button_container_02_on_the_left, text="Template")
@@ -456,12 +460,12 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         tab_02_button_container_01.pack(expand=True, pady=10)
         
         # Add button
-        self.tab_02_button_add = tk.Button(tab_02_button_container_01, text="Filter")
-        self.tab_02_button_add.pack(side="left", padx=10)
+        self.tab_02_button_filter = tk.Button(tab_02_button_container_01, text="Filter")
+        self.tab_02_button_filter.pack(side="left", padx=10)
         
         # Delete update
-        self.tab_02_button_clear = tk.Button(tab_02_button_container_01, text="Clear")
-        self.tab_02_button_clear.pack(side="left", padx=10)
+        self.tab_02_button_clear_filter = tk.Button(tab_02_button_container_01, text="Clear")
+        self.tab_02_button_clear_filter.pack(side="left", padx=10)
     
     def f_view_create_widgets_in_tab_02_frame_filter_entries(self):
         parent_frame_00 = tk.Frame(self.tab_02_frame_filter_entries)
@@ -508,12 +512,12 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.tab_02_button_export_excel.pack(side="left", padx=10)
         
         # Get Data button
-        self.tab_02_button_edit = tk.Button(tab_02_button_container_02, text="EDIT")
-        self.tab_02_button_edit.pack(side="left", padx=10)
+        self.tab_02_button_edit_slip = tk.Button(tab_02_button_container_02, text="EDIT")
+        self.tab_02_button_edit_slip.pack(side="left", padx=10)
         
         # Export Data button
-        self.tab_02_button_DELETE = tk.Button(tab_02_button_container_02, text="DELETE")
-        self.tab_02_button_DELETE.pack(side="left", padx=10)
+        self.tab_02_button_delete_slip = tk.Button(tab_02_button_container_02, text="DELETE")
+        self.tab_02_button_delete_slip.pack(side="left", padx=10)
     
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
@@ -527,10 +531,12 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     
     def f_view_tab_01_button_clear_click(self):
-        Controller_handel_all_events.f_handle_tab_01_button_clear_click(self.tab_01_label_footer_notification, self.tab_01_treeview_YCDH)
+        Controller_handel_all_events.f_handle_tab_01_button_clear_click(
+            self.tab_01_label_footer_notification, 
+            self.tab_01_treeview_YCDH)
 
-    def f_tab_01_button_print_form_tu_tao_tu_code_click(self):
-        Controller_handel_all_events.f_handle_btn_print_form_tu_tao_tu_code_click_()
+    # def f_tab_01_button_print_form_tu_tao_tu_code_click(self):
+    #     Controller_handel_all_events.f_handle_btn_print_form_tu_tao_tu_code_click_()
         
     def f_tab_01_button_print_click(self):
         Controller_handel_all_events.f_handle_btn_print_click()
@@ -563,10 +569,13 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
             )
         
     def f_view_tab_01_button_delete_click(self):
-        Controller_handel_all_events.f_handle_event_tab_01_btn_delete_click(self.tab_01_treeview_YCDH)
+        Controller_handel_all_events.f_handle_event_tab_01_btn_delete_click(
+            self.tab_01_label_footer_notification,
+            self.tab_01_treeview_YCDH)
     
     def f_view_tab_01_button_update_click(self):
         Controller_handel_all_events.f_handle_event_update_selected_row_click(
+        self.tab_01_label_footer_notification,
         self.tab_01_treeview_YCDH,
         self.tab_01_entry_ma_hang,
         self.tab_01_entry_ten_hang,

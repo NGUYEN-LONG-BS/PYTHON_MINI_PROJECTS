@@ -882,6 +882,7 @@ def f_utils_check_duplicate(entry_to_check, database_name, table_name, column_na
     except Exception as e:
         print(f"Error: {e}")
         print("Error at function: ", f_utils_get_current_function_name())
+        return False
 
 def f_utils_check_exist(entry_to_check, database_name, table_name, column_name):
     value_to_check = entry_to_check.get().strip()
@@ -918,4 +919,4 @@ def f_utils_check_exist(entry_to_check, database_name, table_name, column_name):
     except Exception as e:
         print(f"Error: {e}")
         print("Error at function: ", f_utils_get_current_function_name())
-
+        return False

@@ -46,90 +46,193 @@ class controller_get_information_of_module:
 class Controller_action_after_event:
     
     # Function to update the selected row
-    def validate_data_before_updating_row_in_tree_view(my_treeview, *args):
-        # Lấy các giá trị theo thứ tự truyền vào
-        (
-            stt, 
-            new_ma_hang, 
-            new_ten_hang, 
-            new_dvt, 
-            new_sl_kha_dung, 
-            new_nhu_cau, 
-            new_sl_giu_cho, 
-            new_sl_YCDH, 
-            new_ghi_chu
-         ) = args
-        
-        selected_item = my_treeview.selection()  # Get the selected item
-        if not selected_item:
-            error_message = "No item selected to update."
-            fg="red"
-            return False, error_message, fg
-
-        # Kiểm tra các giá trị bắt buộc không được rỗng
-        if not new_ma_hang.strip():
-            error_message = "Mã hàng không được để trống."
-            fg="red"
-            return False, error_message, fg
-
-        if not new_ten_hang.strip():
-            error_message = "Tên hàng không được để trống."
-            fg="red"
-            return False, error_message, fg
+    def validate_data_before_updating_row_in_tree_view(*args):
+        try:
+            # Lấy các giá trị theo thứ tự truyền vào
+            (
+                entry_notification,
+                my_treeview,
+                entry_ma_hang_tab_01,
+                entry_ten_hang_tab_01,
+                tab_01_entry_nhu_cau
+                )= args
             
-        if not str(new_nhu_cau).strip():  # Đảm bảo giá trị số không bị rỗng
-            error_message = "Số lượng nhu cầu không được để trống."
-            fg="red"
-            return False, error_message, fg
+            selected_item = my_treeview.selection()
+            new_ma_hang = entry_ma_hang_tab_01.get()
+            new_ten_hang = entry_ten_hang_tab_01.get()
+            new_nhu_cau = float(tab_01_entry_nhu_cau.get().replace(',', '') or 0)
+            
+            selected_item = my_treeview.selection()  # Get the selected item
+            if not selected_item:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Chưa chọn dòng cần cập nhật.", "red")
+                return False
+
+            # Kiểm tra các giá trị bắt buộc không được rỗng
+            if not new_ma_hang.strip():
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Mã hàng không được để trống.", "red")
+                return False
+
+            if not new_ten_hang.strip():
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Tên hàng không được để trống.", "red")
+                return False
+                
+            if not str(new_nhu_cau).strip():
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số lượng nhu cầu không được để trống.", "red")
+                return False
+        
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
 
     # Function to update the selected row
-    def begin_updating_row_in_tree_view(tree, *args):
-        selected_item = tree.selection()  # Get the selected item
-        tree.item(selected_item, values=args)
-        # notification
-        success_message = "Update successfully!"
-        fg="blue"
-        return success_message, fg
+    def begin_updating_row_in_tree_view(*args):
+        try:
+            (
+                entry_notification,
+                my_treeview,
+                entry_ma_hang_tab_01,
+                entry_ten_hang_tab_01,
+                entry_dvt,
+                entry_sl_kha_dung,
+                tab_01_entry_nhu_cau,
+                tab_01_entry_sl_giu_cho,
+                tab_01_entry_sl_YCDH,
+                tab_01_entry_ghi_chu_mat_hang
+                )= args
+            
+            selected_item = my_treeview.selection()
+            value_col_00 = my_treeview.item(selected_item, "values")[0] if my_treeview.item(selected_item, "values") else None
+            value_col_01 = entry_ma_hang_tab_01.get()
+            value_col_02 = entry_ten_hang_tab_01.get()
+            value_col_03 = entry_dvt.get()
+            value_col_04 = float(entry_sl_kha_dung.get().replace(',', '') or 0)
+            value_col_05 = float(tab_01_entry_nhu_cau.get().replace(',', '') or 0)
+            value_col_06 = float(tab_01_entry_sl_giu_cho.get().replace(',', '') or 0)
+            value_col_07 = float(tab_01_entry_sl_YCDH.get().replace(',', '') or 0)
+            value_col_08 = tab_01_entry_ghi_chu_mat_hang.get()
+            
+            value_to_update = (value_col_00, value_col_01, value_col_02, value_col_03, value_col_04, value_col_05, value_col_06, value_col_07, value_col_08)
+            
+            selected_item = my_treeview.selection()  # Get the selected item
+            
+            try:
+                my_treeview.item(selected_item, values=value_to_update)  # Update the selected item
+            except Exception as e:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Cập nhật dòng bị lỗi!", "red")
+                return False
+            
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
 
-    def update_selected_row(my_treeview, *args):
-        """
-        Updates the selected row in the given treeview with the provided arguments.
-        :param tree: The Treeview widget where the data is updated.
-        :param args: Variable-length argument list for column values.
-        """
-        Controller_action_after_event.validate_data_before_updating_row_in_tree_view(my_treeview, *args)
-        Controller_action_after_event.begin_updating_row_in_tree_view(my_treeview, *args)
-        Controller_action_after_event.Kiem_tra_lai_data_trong_treeview(my_treeview)
+    def update_selected_row(*args):
+        try:
+            (
+                entry_notification,
+                my_treeview,
+                entry_ma_hang_tab_01,
+                entry_ten_hang_tab_01,
+                entry_dvt,
+                entry_sl_kha_dung,
+                tab_01_entry_nhu_cau,
+                tab_01_entry_sl_giu_cho,
+                tab_01_entry_sl_YCDH,
+                tab_01_entry_ghi_chu_mat_hang
+                )= args
+            
+            flag = Controller_action_after_event.validate_data_before_updating_row_in_tree_view(entry_notification,
+                my_treeview,
+                entry_ma_hang_tab_01,
+                entry_ten_hang_tab_01,
+                tab_01_entry_nhu_cau)
+            if flag == False:
+                return False
+            
+            flag = Controller_action_after_event.begin_updating_row_in_tree_view(
+                entry_notification,
+                my_treeview,
+                entry_ma_hang_tab_01,
+                entry_ten_hang_tab_01,
+                entry_dvt,
+                entry_sl_kha_dung,
+                tab_01_entry_nhu_cau,
+                tab_01_entry_sl_giu_cho,
+                tab_01_entry_sl_YCDH,
+                tab_01_entry_ghi_chu_mat_hang)
+            if flag == False:
+                return False
+            
+            flag = Controller_action_after_event.Kiem_tra_lai_data_trong_treeview(entry_notification, my_treeview)
+            if flag == False:
+                return False
+            else:
+                return True
+        
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
     
     def f_delete_one_row_in_treeview(my_treeview):
-        selected_item = my_treeview.selection()  # Get selected item
-        if selected_item:  # Check if an item is selected
-            my_treeview.delete(selected_item)  # Delete the selected item
-        else:  # If no item is selected
-            children = my_treeview.get_children()
-            if children:  # Check if there are rows in the Treeview
-                last_item = children[-1]  # Get the last item
-                my_treeview.delete(last_item)  # Delete the last item
-        Controller_action_after_event.f_controller_02_renumber_rows(my_treeview)
+        try:
+            selected_item = my_treeview.selection()  # Get selected item
+            if selected_item:  # Check if an item is selected
+                my_treeview.delete(selected_item)  # Delete the selected item
+            else:  # If no item is selected
+                children = my_treeview.get_children()
+                if children:  # Check if there are rows in the Treeview
+                    last_item = children[-1]  # Get the last item
+                    my_treeview.delete(last_item)  # Delete the last item
+            
+            flag = Controller_action_after_event.f_controller_02_renumber_rows(my_treeview)
+            if flag == False:
+                return False
+            
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
     
     def f_controller_02_renumber_rows(my_treeview):
-        for index, item in enumerate(my_treeview.get_children(), start=1):
-            values = my_treeview.item(item, "values")  # Get the current values of the row
-            new_values = (index,) + values[1:]  # Update the first column with the new number
-            my_treeview.item(item, values=new_values)  # Set the updated values
+        try:
+            for index, item in enumerate(my_treeview.get_children(), start=1):
+                values = my_treeview.item(item, "values")  # Get the current values of the row
+                new_values = (index,) + values[1:]  # Update the first column with the new number
+                my_treeview.item(item, values=new_values)  # Set the updated values
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
     
     def f_Check_duplicate_and_auto_update_slip_number(entry_so_phieu, database_name, table_name, column_name):
-        kiem_tra_trung_so_phieu = Controller_action_after_event.f_Check_duplicate_value(entry_so_phieu, database_name, table_name, column_name)
-        if kiem_tra_trung_so_phieu == False:    # có trùng phiếu
-            Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(entry_so_phieu)
-            messagebox.showinfo("Thông báo", "Số phiếu đã tồn tại, đã tự động lấy số phiếu mới. Vui lòng thực hiện lưu lại!")
-            return True
+        try:
+            kiem_tra_trung_so_phieu = Controller_action_after_event.f_Check_duplicate_value(entry_so_phieu, database_name, table_name, column_name)
+            if kiem_tra_trung_so_phieu == False:    # có trùng phiếu
+                Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(entry_so_phieu)
+                messagebox.showinfo("Thông báo", "Số phiếu đã tồn tại, đã tự động lấy số phiếu mới. Vui lòng thực hiện lưu lại!")
+                return True
+        
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
     
     def f_Check_exist_ma_khach_hang(entry_ma_khach_hang, database_name, table_name, column_name):
-        kiem_tra_trung_so_phieu = Controller_action_after_event.f_Check_exist_value(entry_ma_khach_hang, database_name, table_name, column_name)
-        if kiem_tra_trung_so_phieu == False:    # Chưa có mã khách hàng
+        try:
+            kiem_tra_trung_so_phieu = Controller_action_after_event.f_Check_exist_value(entry_ma_khach_hang, database_name, table_name, column_name)
+            if kiem_tra_trung_so_phieu == False:    # Chưa có mã khách hàng
+                return False
+            return True
+        
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
             return False
-        return True
     
     def f_Check_duplicate_value(entry_so_phieu, database_name, table_name, column_name):
         return f_utils_check_duplicate(entry_so_phieu, database_name, table_name, column_name)
@@ -166,7 +269,7 @@ class Controller_action_after_event:
             ghi_chu_mat_hang_value = entry_ghi_chu_mat_hang.get()
             
             # Start controller
-            Controller_action_after_event.f_add_row_into_treeview(
+            flag = Controller_action_after_event.f_add_row_into_treeview(
                 entry_notification,
                 id_value, 
                 ma_hang_value, 
@@ -179,18 +282,29 @@ class Controller_action_after_event:
                 ghi_chu_mat_hang_value, 
                 my_treeview
                 )
-            Controller_action_after_event.update_entry_id_after_adding_new_row(my_treeview, entry_id)
-            Controller_action_after_event.clear_input_fields(
+            if flag == False:
+                return False
+            
+            flag = Controller_action_after_event.update_entry_id_after_adding_new_row(my_treeview, entry_id)
+            if flag == False:
+                return False
+            
+            flag = Controller_action_after_event.clear_input_fields(
                 entry_ghi_chu_mat_hang, 
                 entry_sl_nhu_cau,
                 entry_sl_giu_cho,
                 entry_sl_yeu_cau_dat_hang
                 )
+            if flag == False:
+                return False
+            
+            return True
         except Exception as e:
             # Correct entry ID because adding fail
             Controller_action_after_event.update_entry_id_after_adding_new_row(my_treeview, entry_id)
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
+            return False
         
     def f_add_new_row_and_renew_the_tree_view(*args):
         try:
@@ -209,7 +323,7 @@ class Controller_action_after_event:
                 entry_ghi_chu_mat_hang
             )= args
             # Step 2: add new row
-            Controller_action_after_event.f_add_new_row(
+            flag = Controller_action_after_event.f_add_new_row(
                 entry_notification,
                 my_treeview, 
                 entry_id,
@@ -222,10 +336,15 @@ class Controller_action_after_event:
                 entry_sl_yeu_cau_dat_hang, 
                 entry_ghi_chu_mat_hang
                 )
+            if flag == False:
+                return False
             # Step 3: renew the treeview
-            Controller_action_after_event.Kiem_tra_lai_data_trong_treeview(
+            flag = Controller_action_after_event.Kiem_tra_lai_data_trong_treeview(
                 entry_notification,
                 my_treeview)
+            if flag == False:
+                return False
+            
             return True
         except Exception as e:
             print(f"Error: {e}")
@@ -270,20 +389,25 @@ class Controller_action_after_event:
         # Step 5: Return notification
     
     def clear_all_contents_in_treeview(treeview):
-        for item in treeview.get_children():
-            treeview.delete(item)
+        try:
+            for item in treeview.get_children():
+                treeview.delete(item)
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
     
-    def f_get_data_from_treeview(treeview):
-        """
-        Retrieve all rows from the table and print them to the console.
-        Args:
-            table: The Treeview widget containing the data.
-            result_label: The Label widget to display messages.
-        """
-        rows = []
-        for child in treeview.get_children():
-            rows.append(treeview.item(child)["values"])
-        return rows
+    # def f_get_data_from_treeview(treeview):
+    #     try:
+    #         rows = []
+    #         for child in treeview.get_children():
+    #             rows.append(treeview.item(child)["values"])
+    #         return rows
+    #     except Exception as e:
+    #         print(f"Error: {e}")
+    #         print("Error at function: ", f_utils_get_current_function_name())
+    #         return []
     
     def f_get_the_latest_number_of_slip(entry_so_phieu, ma_thanh_vien, loai_phieu, database_name, table_name, column_name):
         # Get the latest number of slip
@@ -297,35 +421,40 @@ class Controller_action_after_event:
         entry_so_phieu.config(state="readonly")
         
     def f_check_input_of_treeview(entry_notification, id_value, ma_hang, ten_hang, sl_giu_cho, sl_yeu_cau_dat_hang):    
-        # Kiểm tra các trường bắt buộc
-        if not id_value or not ma_hang or not ten_hang:
-            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "All fields are required: mã hàng, tên hàng", "red")
-            return False
-        
-        # Kiểm tra id_value có phải số nguyên hay không
-        if not id_value.isdigit():
-            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"ID value '{id_value}' must be an integer!", "red")
-            return False
-        
-        # Kiểm tra sl_giu_cho và sl_yeu_cau_dat_hang có phải số hay không
         try:
-            sl_giu_cho_value = float(sl_giu_cho)
-            sl_yeu_cau_dat_hang_value = float(sl_yeu_cau_dat_hang)
-        except ValueError:
-            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Số lượng giữ chỗ '{sl_giu_cho}' và số lượng yêu cầu đặt hàng '{sl_yeu_cau_dat_hang}' phải là số.", "red")
+            # Kiểm tra các trường bắt buộc
+            if not id_value or not ma_hang or not ten_hang:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "All fields are required: mã hàng, tên hàng", "red")
+                return False
+            
+            # Kiểm tra id_value có phải số nguyên hay không
+            if not id_value.isdigit():
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"ID value '{id_value}' must be an integer!", "red")
+                return False
+            
+            # Kiểm tra sl_giu_cho và sl_yeu_cau_dat_hang có phải số hay không
+            try:
+                sl_giu_cho_value = float(sl_giu_cho)
+                sl_yeu_cau_dat_hang_value = float(sl_yeu_cau_dat_hang)
+            except ValueError:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Số lượng giữ chỗ '{sl_giu_cho}' và số lượng yêu cầu đặt hàng '{sl_yeu_cau_dat_hang}' phải là số.", "red")
+                return False
+            
+            # Kiểm tra sl_giu_cho và sl_yeu_cau_dat_hang không đồng thời bằng không
+            if sl_giu_cho_value == 0 and sl_yeu_cau_dat_hang_value == 0:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số lượng giữ chỗ và số lượng yêu cầu đặt hàng không được đồng thời bằng 0.", "red")
+                return False
+            
+            # Kiểm tra số lượng giữ chỗ hoặc yêu cầu đặt hàng hợp lệ
+            if sl_giu_cho_value < 0 or sl_yeu_cau_dat_hang_value < 0:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số lượng giữ chỗ và số lượng yêu cầu đặt hàng không được âm.", "red")
+                return False
+            
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
             return False
-        
-        # Kiểm tra sl_giu_cho và sl_yeu_cau_dat_hang không đồng thời bằng không
-        if sl_giu_cho_value == 0 and sl_yeu_cau_dat_hang_value == 0:
-            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số lượng giữ chỗ và số lượng yêu cầu đặt hàng không được đồng thời bằng 0.", "red")
-            return False
-        
-        # Kiểm tra số lượng giữ chỗ hoặc yêu cầu đặt hàng hợp lệ
-        if sl_giu_cho_value < 0 or sl_yeu_cau_dat_hang_value < 0:
-            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số lượng giữ chỗ và số lượng yêu cầu đặt hàng không được âm.", "red")
-            return False
-        
-        return True
     
     def f_add_row_into_treeview(entry_notification, 
                                 id_value, 
@@ -347,34 +476,47 @@ class Controller_action_after_event:
                                                                            sl_giu_cho, 
                                                                            sl_yeu_cau_dat_hang)
             if flag == False:
-                return
+                return False
             
             # Add row to the treeview
             my_treeview.insert("", "end", values=(id_value, ma_hang, ten_hang, dvt, sl_kha_dung, sl_nhu_cau, sl_giu_cho, sl_yeu_cau_dat_hang, ghi_chu_mat_hang))
-        # Notification
+            return True
+        
         except Exception as e:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
+            return False
     
     def clear_input_fields(entry_ghi_chu_mat_hang, entry_sl_nhu_cau, entry_sl_giu_cho, entry_sl_YCDH):
-        
-        entry_ghi_chu_mat_hang.delete(0, tk.END)
-        entry_sl_nhu_cau.delete(0, tk.END)
+        try:
+            entry_ghi_chu_mat_hang.delete(0, tk.END)
+            entry_sl_nhu_cau.delete(0, tk.END)
 
-        entry_sl_giu_cho.config(state='normal')
-        entry_sl_giu_cho.delete(0, tk.END)
-        entry_sl_giu_cho.config(state='disabled')
+            entry_sl_giu_cho.config(state='normal')
+            entry_sl_giu_cho.delete(0, tk.END)
+            entry_sl_giu_cho.config(state='disabled')
 
-        entry_sl_YCDH.config(state='normal')
-        entry_sl_YCDH.delete(0, tk.END)
-        entry_sl_YCDH.config(state='disabled')
+            entry_sl_YCDH.config(state='normal')
+            entry_sl_YCDH.delete(0, tk.END)
+            entry_sl_YCDH.config(state='disabled')
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
 
     def update_entry_id_after_adding_new_row(tree, entry_id):
-        row_count = 1 + len(tree.get_children())    
-        entry_id.config(state="normal")  # Enable the Entry widget to update the value
-        entry_id.delete(0, tk.END)  # Clear the existing value
-        entry_id.insert(0, row_count)  # Insert the new value (ID)
-        entry_id.config(state="disabled")  # Disable the Entry widget again
+        try:
+            row_count = 1 + len(tree.get_children())    
+            entry_id.config(state="normal")  # Enable the Entry widget to update the value
+            entry_id.delete(0, tk.END)  # Clear the existing value
+            entry_id.insert(0, row_count)  # Insert the new value (ID)
+            entry_id.config(state="disabled")  # Disable the Entry widget again
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
         
     def set_format_of_treeview_of_tab_01(my_treeview):
         config_json_path = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'KD_YEU_CAU_DAT_HANG', 'treeview_tab_01_YCDH_input.json')
@@ -473,19 +615,7 @@ class Controller_action_after_event:
             
     def Kiem_tra_lai_data_trong_treeview(entry_notification, my_treeview):
         try:
-            # step 1: Lấy data trong treeview
-            
-            # step 2: 
-            # Gom lại các cột có trùng mã hàng - cột số 2
-            # Cột số 4 giữ lại một dòng duy nhất
-            # Cộng tổng các giá trị của các dòng có trùng mã hàng - cột số 5, 6, 7
-            # Cột nào có ghi chú thì giữ lại một dòng duy nhất: cột số 8
-            
-            # step 3: Đánh lại số thứ tự - cột số 01
-            
-            # step 3: Cập nhật lại data lên treeview
-            
-            # Lấy dữ liệu từ Treeview
+            # step: Lấy data trong treeview
             rows = []
             for item in my_treeview.get_children():
                 row_data = my_treeview.item(item, "values")
@@ -493,8 +623,15 @@ class Controller_action_after_event:
 
             # Nếu không có dữ liệu thì thoát
             if not rows:
-                return
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Vui lòng chọn dòng để update!", "red")
+                return False
 
+            # step: 
+            # Gom lại các cột có trùng mã hàng - cột số 2
+            # Cột số 4 giữ lại một dòng duy nhất
+            # Cộng tổng các giá trị của các dòng có trùng mã hàng - cột số 5, 6, 7
+            # Cột nào có ghi chú thì giữ lại một dòng duy nhất: cột số 8
+            
             # Gom nhóm theo mã hàng (cột số 2)
             grouped_data = defaultdict(lambda: [None, "", "", "", 0, 0, 0, 0, set()])  # Dùng set() để lưu nhiều ghi chú
 
@@ -532,10 +669,13 @@ class Controller_action_after_event:
             for i, (key, values) in enumerate(grouped_data.items(), start=1):
                 values[0] = i  # Cập nhật lại số thứ tự
                 my_treeview.insert("", "end", values=values)
+
+            return True
         
         except Exception as e:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
+            return False
         
 class Controller_auto_update_sl_giu_cho_va_sl_ycdh():
     def __init__(self, *args):
@@ -895,75 +1035,68 @@ class Controller_handel_all_events:
             print("Error at function: ", f_utils_get_current_function_name())
     
     def f_handle_event_update_selected_row_click(*args):
-        (
-        my_treeview,
-        entry_ma_hang_tab_01,
-        entry_ten_hang_tab_01,
-        entry_dvt,
-        entry_sl_kha_dung,
-        tab_01_entry_nhu_cau,
-        tab_01_entry_sl_giu_cho,
-        tab_01_entry_sl_YCDH,
-        tab_01_entry_ghi_chu_mat_hang
-        )= args
-        
-        selected_item = my_treeview.selection()
-        value_col_00 = my_treeview.item(selected_item, "values")[0] if my_treeview.item(selected_item, "values") else None
-        value_col_01 = entry_ma_hang_tab_01.get()
-        value_col_02 = entry_ten_hang_tab_01.get()
-        value_col_03 = entry_dvt.get()
-        value_col_04 = float(entry_sl_kha_dung.get().replace(',', '') or 0)
-        value_col_05 = float(tab_01_entry_nhu_cau.get().replace(',', '') or 0)
-        value_col_06 = float(tab_01_entry_sl_giu_cho.get().replace(',', '') or 0)
-        value_col_07 = float(tab_01_entry_sl_YCDH.get().replace(',', '') or 0)
-        value_col_08 = tab_01_entry_ghi_chu_mat_hang.get()
-        
-        Controller_action_after_event.update_selected_row(
-        my_treeview,
-        value_col_00,
-        value_col_01,
-        value_col_02,
-        value_col_03,
-        value_col_04,
-        value_col_05,
-        value_col_06,
-        value_col_07,
-        value_col_08)
-    
-    def f_handle_event_tab_01_btn_delete_click(my_treeview):
         try:
-            Controller_action_after_event.f_delete_one_row_in_treeview(my_treeview)
-            return "Clear all rows in treeview!"
+            (
+            entry_notification,
+            my_treeview,
+            entry_ma_hang_tab_01,
+            entry_ten_hang_tab_01,
+            entry_dvt,
+            entry_sl_kha_dung,
+            tab_01_entry_nhu_cau,
+            tab_01_entry_sl_giu_cho,
+            tab_01_entry_sl_YCDH,
+            tab_01_entry_ghi_chu_mat_hang
+            )= args
+            
+            flag = Controller_action_after_event.update_selected_row(
+            entry_notification,
+            my_treeview,
+            entry_ma_hang_tab_01,
+            entry_ten_hang_tab_01,
+            entry_dvt,
+            entry_sl_kha_dung,
+            tab_01_entry_nhu_cau,
+            tab_01_entry_sl_giu_cho,
+            tab_01_entry_sl_YCDH,
+            tab_01_entry_ghi_chu_mat_hang)
+            if flag == False:
+                return False
+                
+            if flag == True:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Row updated successfully!", "blue")
+                return True
+    
         except Exception as e:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
-            return f"Error: {e}"
+            return False
+    
+    def f_handle_event_tab_01_btn_delete_click(entry_notification, my_treeview):
+        try:
+            flag = Controller_action_after_event.f_delete_one_row_in_treeview(my_treeview)
+            if flag == False:
+                return False
+            
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Row deleted successfully!", "blue")
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
     
     def f_handle_tab_01_button_clear_click(entry_notification, my_treeview):
         try:
-            Controller_action_after_event.clear_all_contents_in_treeview(my_treeview)
-            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Clear all rows in treeview!", "blue")
+            flag = Controller_action_after_event.clear_all_contents_in_treeview(my_treeview)
+            if flag == False:
+                return False
+            else:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Clear all rows successfully!", "blue")
+                return True
         except Exception as e:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
-        
-    def f_handle_tab_01_button_get_click(my_treeview):
-        try:
-            Controller_action_after_event.f_get_data_from_treeview(my_treeview)
-            return "Got data from treeview!"
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return f"Error: {e}"
-    
-    def f_handle_btn_print_form_tu_tao_tu_code_click_():
-        try:
-            f_utils_create_print_template()
-            return "Print template created successfully!"
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return f"Error: {e}"
+            return False
 
     def f_handle_btn_print_click():
         try:
@@ -976,7 +1109,6 @@ class Controller_handel_all_events:
             print("Error at function: ", f_utils_get_current_function_name())
             return f"Error: {e}"
     
-    # def f_handle_event_get_the_latest_number_of_slip(entry_so_phieu, ma_thanh_vien, loai_phieu, database_name, table_name, column_name):
     def f_handle_event_get_the_latest_number_of_slip(tab_01_entry_so_phieu):
         ma_thanh_vien = controller_get_information_of_module.load_ma_thanh_vien()
         loai_phieu = controller_get_information_of_module.load_loai_phieu()
@@ -1186,43 +1318,21 @@ class Controller_handel_all_events:
                 entry_thong_tin_hop_dong,
                 entry_ghi_chu_cua_phieu,
                 tree)
-        # Notification
+            if flag == False:
+                return False
+            
             if flag == True:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Data saved successfully!", "blue")
         except Exception as e:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
+            return False
         
 class Controller_event_tab_01_btn_save_click:
     def f_handle_event_tab_01_btn_save_click(database_name, table_name, column_name, *args):
-        # Step get data and validate data
-        (   entry_notification,
-            entry_so_phieu, 
-            entry_ma_kh, 
-            entry_ten_kh,
-            entry_mst,
-            entry_dia_chi,
-            entry_so_hop_dong,
-            entry_thong_tin_hop_dong,
-            entry_ghi_chu_cua_phieu,
-            tree
-        ) = args
-        validate = Controller_event_tab_01_btn_save_click.validate_data( 
-            database_name, 
-            table_name, 
-            column_name,
-            entry_notification,
-            entry_so_phieu,
-            entry_ma_kh,
-            tree
-        )
-        # If False: error notification
-        if validate == False:
-            print("Error at function: ", f_utils_get_current_function_name())
-            return False
-        # If True: save data to SQL
-        else:
-            Controller_action_after_event.f_save_data_to_sql(
+        try:
+            # Step get data and validate data
+            (   entry_notification,
                 entry_so_phieu, 
                 entry_ma_kh, 
                 entry_ten_kh,
@@ -1232,43 +1342,76 @@ class Controller_event_tab_01_btn_save_click:
                 entry_thong_tin_hop_dong,
                 entry_ghi_chu_cua_phieu,
                 tree
-                )
-            return True
+            ) = args
+            flag = Controller_event_tab_01_btn_save_click.validate_data( 
+                database_name, 
+                table_name, 
+                column_name,
+                entry_notification,
+                entry_so_phieu,
+                entry_ma_kh,
+                tree
+            )
+            if flag == False:
+                return False
+            else:
+                Controller_action_after_event.f_save_data_to_sql(
+                    entry_so_phieu, 
+                    entry_ma_kh, 
+                    entry_ten_kh,
+                    entry_mst,
+                    entry_dia_chi,
+                    entry_so_hop_dong,
+                    entry_thong_tin_hop_dong,
+                    entry_ghi_chu_cua_phieu,
+                    tree
+                    )
+                return True
+            
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
 
     def validate_data(database_name, table_name, column_name, entry_notification, entry_so_phieu, entry_ma_khach_hang, my_treeview):
-        # Check if the client id is empty
-        if entry_ma_khach_hang.get() == "" or entry_ma_khach_hang.get() == "search here":
-            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Mã khách hàng không được để trống!", "red")
+        try:
+            # Check if the client id is empty
+            if entry_ma_khach_hang.get() == "" or entry_ma_khach_hang.get() == "search here":
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Mã khách hàng không được để trống!", "red")
+                print("Error at function: ", f_utils_get_current_function_name())
+                return False
+            
+            if len(my_treeview.get_children()) == 0:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Bảng không có dữ liệu", "red")
+                print("Error at function: ", f_utils_get_current_function_name())
+                return False
+            
+            # Check duplicate slip number
+            if Controller_action_after_event.f_Check_duplicate_and_auto_update_slip_number(
+                entry_so_phieu,
+                database_name, 
+                table_name,
+                column_name) == True:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số phiếu bị trùng, vui lòng thử lại!", "red")
+                print("Error at function: ", f_utils_get_current_function_name())
+                return False
+            
+            # Check exist client id
+            database_name = controller_get_information_of_module.load_database_name()
+            table_name = controller_get_information_of_module.load_table_name_TB_AD00_DANH_SACH_KHACH_HANG()
+            column_name = controller_get_information_of_module.load_column_name_ma_khach_hang()
+            if Controller_action_after_event.f_Check_exist_ma_khach_hang(
+                entry_ma_khach_hang,
+                database_name, 
+                table_name,
+                column_name) == True:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Mã khách hàng chưa tồn tại!", "red")
+                print("Error at function: ", f_utils_get_current_function_name())
+                return False
+            
+            # pass the validation
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
             return False
-        
-        if len(my_treeview.get_children()) == 0:
-            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Bảng không có dữ liệu", "red")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return False
-        
-        # Check duplicate slip number
-        if Controller_action_after_event.f_Check_duplicate_and_auto_update_slip_number(
-            entry_so_phieu,
-            database_name, 
-            table_name,
-            column_name) == True:
-            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số phiếu bị trùng, vui lòng thử lại!", "red")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return False
-        
-        # Check exist client id
-        database_name = controller_get_information_of_module.load_database_name()
-        table_name = controller_get_information_of_module.load_table_name_TB_AD00_DANH_SACH_KHACH_HANG()
-        column_name = controller_get_information_of_module.load_column_name_ma_khach_hang()
-        if Controller_action_after_event.f_Check_exist_ma_khach_hang(
-            entry_ma_khach_hang,
-            database_name, 
-            table_name,
-            column_name) == True:
-            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Mã khách hàng chưa tồn tại!", "red")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return False
-        
-        # pass the validation
-        return True
