@@ -120,11 +120,15 @@ def f_utils_set_menu_font(widget, size=14, font_is="Arial"):
     widget.config(font=custom_font)  # Apply the font to the menu
 
 def f_utils_open_dashboard_main():
-    from views.AD01_Dashboard_View.Dashboard_View import cls_Dashboard_View
-    new_view = cls_Dashboard_View()
-    utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
-    f_utils_set_center_screen(new_view)
-    new_view.focus_force()
+    try:
+        from views.AD01_Dashboard_View.Dashboard_View import cls_Dashboard_View
+        new_view = cls_Dashboard_View()
+        utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
+        f_utils_set_center_screen(new_view)
+        new_view.focus_force()
+    except Exception as e:
+        print(f"Error: {e}")
+        print("Error at function: ", f_utils_get_current_function_name())
     
 def f_utils_open_AI_chatbot():
     from views.AI00_MY_AI_ASSITANT.chat_view import AIChatApp
@@ -132,18 +136,26 @@ def f_utils_open_AI_chatbot():
     AIChatApp(new_window)
     
 def f_utils_open_dashboard_kinh_doanh():
-    from views.KD00_DashboardKinhDoanh_View.Dashboard_kinhdoanh_View import cls_Dashboard_kinhdoanh_View
-    new_view = cls_Dashboard_kinhdoanh_View()
-    utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
-    f_utils_set_center_screen(new_view)
-    new_view.focus_force()
+    try:
+        from views.KD00_DashboardKinhDoanh_View.Dashboard_kinhdoanh_View import cls_Dashboard_kinhdoanh_View
+        new_view = cls_Dashboard_kinhdoanh_View()
+        utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
+        f_utils_set_center_screen(new_view)
+        new_view.focus_force()
+    except Exception as e:
+        print(f"Error: {e}")
+        print("Error at function: ", f_utils_get_current_function_name())
     
 def f_utils_open_dashboard_vat_tu():
-    from views.VT00_DashboardVatTu_View.Dashboard_VatTu_View import cls_Dashboard_Vat_Tu_View
-    new_view = cls_Dashboard_Vat_Tu_View()
-    utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
-    f_utils_set_center_screen(new_view)
-    new_view.focus_force()
+    try:
+        from views.VT00_DashboardVatTu_View.Dashboard_VatTu_View import cls_Dashboard_Vat_Tu_View
+        new_view = cls_Dashboard_Vat_Tu_View()
+        utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
+        f_utils_set_center_screen(new_view)
+        new_view.focus_force()
+    except Exception as e:
+        print(f"Error: {e}")
+        print("Error at function: ", f_utils_get_current_function_name())
 
 def f_utils_show_fading_popup(message):
     # Tạo cửa sổ popup
@@ -888,7 +900,12 @@ def f_utils_sent_query_to_SQL(query):
 # ========================================================================================================================================================================
 # return current function name
 def f_utils_get_current_function_name():
-    return inspect.currentframe().f_back.f_code.co_name
+    func_name = inspect.currentframe().f_back.f_code.co_name
+    # Lấy đường dẫn đầy đủ của file chứa hàm gọi
+    file_name = inspect.currentframe().f_back.f_code.co_filename
+    # return caller function name
+    func_caller = inspect.currentframe().f_back.f_back.f_code.co_name
+    return func_name, file_name, func_caller
 
 # return caller function name
 def f_utils_get_caller_function_name():
