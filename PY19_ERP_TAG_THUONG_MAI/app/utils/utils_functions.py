@@ -26,8 +26,9 @@ from PIL import Image, ImageTk
 import pandas as pd
 import re
 
-from utils import *
-from .utils_controllers import *
+# Import từ chính thư mục utils
+from . import utils_controllers
+from . import utils_models
 
 def f_utils_setup_logo(parent_frame):
     # Define function when click
@@ -123,7 +124,7 @@ def f_utils_open_dashboard_main():
     try:
         from views.AD01_Dashboard_View.Dashboard_View import cls_Dashboard_View
         new_view = cls_Dashboard_View()
-        utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
+        utils_controllers.utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
         f_utils_set_center_screen(new_view)
         new_view.focus_force()
     except Exception as e:
@@ -139,7 +140,7 @@ def f_utils_open_dashboard_kinh_doanh():
     try:
         from views.KD00_DashboardKinhDoanh_View.Dashboard_kinhdoanh_View import cls_Dashboard_kinhdoanh_View
         new_view = cls_Dashboard_kinhdoanh_View()
-        utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
+        utils_controllers.utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
         f_utils_set_center_screen(new_view)
         new_view.focus_force()
     except Exception as e:
@@ -150,7 +151,7 @@ def f_utils_open_dashboard_vat_tu():
     try:
         from views.VT00_DashboardVatTu_View.Dashboard_VatTu_View import cls_Dashboard_Vat_Tu_View
         new_view = cls_Dashboard_Vat_Tu_View()
-        utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
+        utils_controllers.utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
         f_utils_set_center_screen(new_view)
         new_view.focus_force()
     except Exception as e:
@@ -166,7 +167,7 @@ def f_utils_show_fading_popup(message):
     # Ẩn thanh tiêu đề (title bar)
     popup.overrideredirect(True)
     # Căn giữa màn hình
-    utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(popup, 150, 50, maximize=False)
+    utils_controllers.utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(popup, 150, 50, maximize=False)
     f_utils_set_center_screen(popup)
     
     # Add frame

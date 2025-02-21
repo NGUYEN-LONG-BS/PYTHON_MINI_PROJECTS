@@ -1,6 +1,8 @@
 
-from .utils_models import *
-from utils import *
+# Import từ chính thư mục utils
+from . import utils_functions
+from . import utils_models
+
 import traceback
 from datetime import datetime
 
@@ -68,7 +70,7 @@ class utils_controller_get_the_latest_number_of_slip:
         # print("query", query)
         
         # lấy danh sách số phiếu từ SQL
-        danh_sach_so_phieu = utils_model_get_data_from_SQL.get_data_with_query(query)
+        danh_sach_so_phieu = utils_models.utils_model_get_data_from_SQL.get_data_with_query(query)
         # print("danh_sach_so_phieu", danh_sach_so_phieu)
         
         return danh_sach_so_phieu
@@ -100,14 +102,14 @@ class utils_controller_get_the_header_of_table_in_SQL_250221_11h01:
             WHERE TABLE_NAME = '{table_name}' AND TABLE_SCHEMA = 'dbo'
             """
             # lấy danh sách tên cột từ SQL
-            column_headers = utils_model_get_data_from_SQL.get_data_with_query(query)
+            column_headers = utils_models.utils_model_get_data_from_SQL.get_data_with_query(query)
             if not column_headers:
                 return None
             
             return column_headers
         except Exception as e:
             print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
+            print("Error at function: ", utils_functions.f_utils_get_current_function_name())
             return None
              
 class utils_controller_set_size_of_windown_250215_10h24:    
@@ -174,15 +176,15 @@ class utils_controller_TreeviewConfigurator_250217_13h20:
             my_treeview.heading(col, text="")  # Xóa tiêu đề
 
         # Load dữ liệu từ JSON
-        data = utils_model_TreeviewConfigLoader_250217_13h20.load_json(config_json_path)
+        data = utils_models.utils_model_TreeviewConfigLoader_250217_13h20.load_json(config_json_path)
         if not data:
             return
         
-        columns_config, column_names = utils_model_TreeviewConfigLoader_250217_13h20.get_column_config(data)
+        columns_config, column_names = utils_models.utils_model_TreeviewConfigLoader_250217_13h20.get_column_config(data)
         my_treeview["columns"] = column_names
 
         # Lấy cấu hình font header
-        header_font = utils_model_TreeviewConfigLoader_250217_13h20.get_header_font(data)
+        header_font = utils_models.utils_model_TreeviewConfigLoader_250217_13h20.get_header_font(data)
 
         # Cấu hình cột
         for config, col in zip(columns_config, column_names):

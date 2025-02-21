@@ -2,8 +2,9 @@ import os
 import json
 import pyodbc
 from datetime import datetime
-from utils import *
-from .utils_functions import *
+
+# Import từ chính thư mục utils
+from . import utils_functions
 
 class utils_model_TreeviewConfigLoader_250217_13h20:
     """Class để load cấu hình Treeview từ JSON"""
@@ -14,14 +15,14 @@ class utils_model_TreeviewConfigLoader_250217_13h20:
             with open(config_json_path, 'r', encoding='utf-8') as file:
                 return json.load(file)
         except FileNotFoundError:
-            print("Error at function: ", f_utils_get_current_function_name())
+            print("Error at function: ", utils_functions.f_utils_get_current_function_name())
             print(f"Error: File '{config_json_path}' không tồn tại.")
         except json.JSONDecodeError:
-            print("Error at function: ", f_utils_get_current_function_name())
+            print("Error at function: ", utils_functions.f_utils_get_current_function_name())
             print("Error: JSON bị lỗi hoặc không hợp lệ.")
         except Exception as e:
             print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
+            print("Error at function: ", utils_functions.f_utils_get_current_function_name())
         return None
 
     def get_column_config(data):
@@ -62,17 +63,17 @@ class utils_model_get_data_from_SQL:
             return data
         except Exception as e:
             print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
+            print("Error at function: ", utils_functions.f_utils_get_current_function_name())
             return []
     
     def fetch_data(query):
         try:
-            data = f_utils_fetch_data_from_database(query)
+            data = utils_functions.f_utils_fetch_data_from_database(query)
             if data:
                 return data
             else:
                 return []
         except Exception as e:
             print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
+            print("Error at function: ", utils_functions.f_utils_get_current_function_name())
             return []
