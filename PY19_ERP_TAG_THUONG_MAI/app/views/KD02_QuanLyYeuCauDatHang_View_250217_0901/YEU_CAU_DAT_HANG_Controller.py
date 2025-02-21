@@ -1053,17 +1053,14 @@ class Controller_handel_all_events:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "No data found in the selected file!", "red")
                 return False
 
-            print(data)
             # Chuyển dữ liệu từ list thành DataFrame
             df = pd.DataFrame(data[1:], columns=data[0])
 
             # Bỏ 2 cột đầu tiên
             df = df.iloc[:, 2:]
-            print(df)
 
             # Chuyển DataFrame thành list
             data_list = df.values.tolist()
-            print(data_list)
 
             # validate data
             flag = Controller_validate_data_from_Excel_file_to_import_to_SQL_250221_17h05.validate_data_from_Excel(entry_notification, data_list)
@@ -1080,7 +1077,8 @@ class Controller_handel_all_events:
             login_name, login_pass = f_utils_get_DB_USER_AND_DB_PASSWORD()
             table_name = controller_get_information_of_module.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
             data_array = data_list
-            flag = utils_model_import_data_to_SQL_SERVER_250221_16h45.f_insert_data_to_sql(server_name, 
+            flag = utils_model_import_data_to_SQL_SERVER_250221_16h45.f_insert_data_to_sql(entry_notification,
+                                                                                           server_name, 
                                                                                            database_name, 
                                                                                            login_name, 
                                                                                            login_pass, 
