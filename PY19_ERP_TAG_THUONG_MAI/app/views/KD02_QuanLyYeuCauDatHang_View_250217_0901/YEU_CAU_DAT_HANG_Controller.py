@@ -1086,6 +1086,7 @@ class Controller_handel_all_events:
                                                                                            data_array)
             if flag == False:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Import to Database fail!", "red")
+                messagebox.showinfo("Thông báo", "Lưu không thành công!")
                 return False
             else:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Save data successfully!", "blue")
