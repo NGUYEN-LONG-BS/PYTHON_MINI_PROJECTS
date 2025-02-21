@@ -14,12 +14,10 @@ class utils_model_TreeviewConfigLoader_250217_13h20:
             with open(config_json_path, 'r', encoding='utf-8') as file:
                 return json.load(file)
         except FileNotFoundError:
-            my_current_function = f_utils_get_current_function_name()
-            print(f"Error at function: {my_current_function}")
+            print("Error at function: ", f_utils_get_current_function_name())
             print(f"Error: File '{config_json_path}' không tồn tại.")
         except json.JSONDecodeError:
-            my_current_function = f_utils_get_current_function_name()
-            print(f"Error at function: {my_current_function}")
+            print("Error at function: ", f_utils_get_current_function_name())
             print("Error: JSON bị lỗi hoặc không hợp lệ.")
         except Exception as e:
             print(f"Error: {e}")
@@ -67,10 +65,11 @@ class utils_model_get_data_from_SQL:
     def fetch_data(query):
         try:
             print("Query 02: ", query)
+            # print("Error at function: ", f_utils_get_current_function_name())
             data = f_utils_fetch_data_from_database(query)
             # print(data)
             return data
         except Exception as e:
             print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
+            # print("Error at function: ", f_utils_get_current_function_name())
             return []

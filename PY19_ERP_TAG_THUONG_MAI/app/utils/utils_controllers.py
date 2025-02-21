@@ -93,16 +93,21 @@ class utils_controller_get_the_latest_number_of_slip:
    
 class utils_controller_get_the_header_of_table_in_SQL_250221_11h01:
     def get_column_names(database_name, table_name):
-        query = f"""
-        SELECT COLUMN_NAME
-        FROM [{database_name}].INFORMATION_SCHEMA.COLUMNS
-        WHERE TABLE_NAME = '{table_name}' AND TABLE_SCHEMA = 'dbo'
-        """
-        print("query", query)
-        # lấy danh sách tên cột từ SQL
-        column_headers = utils_model_get_data_from_SQL.get_data_with_query(query)
-        print("column_headers", column_headers)
-        return column_headers
+        try:
+            query = f"""
+            SELECT COLUMN_NAME
+            FROM [{database_name}].INFORMATION_SCHEMA.COLUMNS
+            WHERE TABLE_NAME = '{table_name}' AND TABLE_SCHEMA = 'dbo'
+            """
+            print("query 01", query)
+            # lấy danh sách tên cột từ SQL
+            column_headers = utils_model_get_data_from_SQL.get_data_with_query(query)
+            print("column_headers", column_headers)
+            return column_headers
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return None
              
 class utils_controller_set_size_of_windown_250215_10h24:    
     def f_utils_set_window_size_of_new_view(root, width=0, height=0, maximize=False):

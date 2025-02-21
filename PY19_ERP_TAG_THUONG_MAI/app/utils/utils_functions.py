@@ -809,19 +809,24 @@ def f_utils_format_number(value):
         return value  # Trả về nguyên giá trị nếu không phải số
 
 def f_utils_fetch_data_from_database(query):
-    print("query 2.9: ",query)
-    conn = f_utils_create_a_connection_string_to_SQL_Server()
-    cursor = conn.cursor()
-    cursor.execute(query)
-    rows = cursor.fetchall()
-    print("query 03: ",query)
-    print(rows)
-    # Đóng kết nối
-    if cursor:
-        cursor.close()
-    if conn:
-        conn.close()
-    return rows
+    try:
+        print("query 2.9: ",query)
+        conn = f_utils_create_a_connection_string_to_SQL_Server()
+        cursor = conn.cursor()
+        cursor.execute(query)
+        rows = cursor.fetchall()
+        print("query 03: ",query)
+        print(rows)
+        # Đóng kết nối
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
+        return rows
+    except Exception as e:
+        print(f"Error: {e}")
+        print("Error at function: ", f_utils_get_current_function_name())
+        return []
 
 def f_utils_sent_query_to_SQL(query):
     conn = f_utils_create_a_connection_string_to_SQL_Server()

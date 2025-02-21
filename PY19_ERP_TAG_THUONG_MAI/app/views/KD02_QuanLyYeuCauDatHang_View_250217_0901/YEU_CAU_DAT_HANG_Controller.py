@@ -1038,6 +1038,7 @@ class Controller_handel_all_events:
             else:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, text, "blue")
         except Exception as e:
+            print("vào đây nè")
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
         
