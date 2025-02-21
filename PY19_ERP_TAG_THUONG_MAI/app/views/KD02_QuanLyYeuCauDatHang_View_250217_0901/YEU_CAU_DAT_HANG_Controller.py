@@ -1031,7 +1031,7 @@ class Controller_handel_all_events:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Error: No data found!", "red")
                 return False
             
-            flag, text = f_utils_create_template_excel_file(column_names)
+            flag, text = f_utils_create_template_excel_file(file_name="template_YCDH.xlsx", sheet_name="template_YCDH", column_names=column_names)
             if flag == False:
                 return False
             else:

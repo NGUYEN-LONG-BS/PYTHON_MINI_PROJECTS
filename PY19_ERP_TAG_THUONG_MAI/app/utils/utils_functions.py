@@ -6,11 +6,14 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import font
 from tkinter import filedialog, messagebox
+
 import openpyxl
 from openpyxl import Workbook
-from openpyxl.styles import Font, Alignment
 from openpyxl.styles import Font, Alignment, PatternFill
 from openpyxl import load_workbook
+from openpyxl import Workbook
+from openpyxl.utils import get_column_letter
+
 import xlwings as xw
 from define import *
 import pyodbc
@@ -22,8 +25,9 @@ from decimal import Decimal
 from PIL import Image, ImageTk
 import pandas as pd
 import re
-from .utils_controllers import *
+
 from utils import *
+from .utils_controllers import *
 
 def f_utils_setup_logo(parent_frame):
     # Define function when click
@@ -206,17 +210,22 @@ def f_utils_tim_component_with_name(root=None, name_to_find=""):
     return None  # No matching widget found
 
 def f_utils_open_file():
-    # Open file dialog to select a file
-    file_path = filedialog.askopenfilename(title="Select a File")
-    file_name = os.path.basename(file_path)
-    if file_path:
-        # Check if the file is an Excel file
-        if file_path.endswith(('.xls', '.xlsx')):
-            return file_name
-        else:
-            return file_name
+    try:
+        # Open file dialog to select a file
+        file_path = filedialog.askopenfilename(title="Select a File")
+        file_name = os.path.basename(file_path)
+        if file_path:
+            # Check if the file is an Excel file
+            if file_path.endswith(('.xls', '.xlsx')):
+                return file_name
+            else:
+                return file_name
+    except Exception as e:
+        print(f"Error: {e}")
+        print("Error at function: ", f_utils_get_current_function_name())
+        return f"Error: {e}"
 
-def f_utils_create_template_excel_file(file_name="template_wb.xlsx",sheet_name="template_sh",column_names=["Col1", "Col2", "Col3"]):
+def f_utils_create_template_excel_file(file_name="template_wb.xlsx", sheet_name="template_sh", column_names=[('Col_01',), ('Col_02',), ('Col_03',)]):
     try:
         # Open a file dialog to select the save location
         export_path = PATH_DEFAUL
@@ -236,9 +245,19 @@ def f_utils_create_template_excel_file(file_name="template_wb.xlsx",sheet_name="
         workbook = Workbook()
         sheet = workbook.active
         sheet.title = sheet_name
-
+        
+        if os.path.exists(file_path):
+            base, extension = os.path.splitext(file_path)
+            counter = 1
+            # Keep generating new filenames until an unused name is found
+            while os.path.exists(file_path):
+                file_path = f"{base} ({counter}){extension}"
+                counter += 1
+        
         # Write column names to the first row
-        for col_num, column_name in enumerate(column_names, start=1):
+        for col_num, column_name_tuple in enumerate(column_names, start=1):
+            # Extract the string from the tuple
+            column_name = column_name_tuple[0]
             cell = sheet.cell(row=1, column=col_num, value=column_name)
             # Apply formatting to the header row
             cell.font = Font(bold=True, color="FFFFFF")
@@ -248,9 +267,27 @@ def f_utils_create_template_excel_file(file_name="template_wb.xlsx",sheet_name="
         # Set background color for the header row
         for cell in sheet[1]:
             cell.fill = PatternFill(start_color="4F81BD", end_color="4F81BD", fill_type="solid")
+            
+        # Auto-fit column widths based on content
+        for col_num in range(1, len(column_names) + 1):
+            max_length = 0
+            column_letter = get_column_letter(col_num)
+            for row in sheet.iter_rows(min_col=col_num, max_col=col_num):
+                for cell in row:
+                    try:
+                        if len(str(cell.value)) > max_length:
+                            max_length = len(cell.value)
+                    except:
+                        pass
+            adjusted_width = (max_length + 2)  # Add a little padding
+            sheet.column_dimensions[column_letter].width = adjusted_width
 
         # Save the workbook
         workbook.save(file_path)
+        
+        # Close the workbook
+        workbook.close()
+        
         return True, f"Excel file created and saved to: {file_path}"
     except Exception as e:
         print(f"Error: {e}")
