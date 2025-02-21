@@ -38,30 +38,31 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         # Update entry slip number
         Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(self.tab_01_entry_so_phieu)
         # Load data to tab 2: treeview YCDH log
-        self.f_tab_02_button_filter_click()
+        self.event_tab_02_button_filter_click()
     
     def f_set_command_for_elements(self):
         # config command for elements
-        self.tab_01_btn_refresh_number_of_slip.config(command=self.f_tab_01_button_get_number_of_slip_click)
+        self.tab_01_btn_refresh_number_of_slip.config(command=self.event_tab_01_button_get_number_of_slip_click)
         
-        self.tab_01_button_add.config(command=self.f_view_tab_01_button_add_click)
-        self.tab_01_button_update.config(command=self.f_view_tab_01_button_update_click)
-        self.tab_01_button_delete.config(command=self.f_view_tab_01_button_delete_click)
-        self.tab_01_button_clear.config(command=self.f_view_tab_01_button_clear_click)
+        self.tab_01_button_add.config(command=self.event_tab_01_button_add_row_click)
+        self.tab_01_button_update.config(command=self.event_tab_01_button_update_click)
+        self.tab_01_button_delete.config(command=self.event_tab_01_button_delete_click)
+        self.tab_01_button_clear.config(command=self.event_tab_01_button_clear_click)
         
-        self.tab_01_button_save.config(command=self.f_tab_01_button_save_click)
-        self.tab_01_button_print.config(command=self.f_tab_01_button_print_click)
+        self.tab_01_button_save.config(command=self.event_tab_01_button_save_click)
+        self.tab_01_button_print.config(command=self.event_tab_01_button_print_click)
         
-        self.tab_01_btn_template.config(command=self.f_tab_01_button_template_click)
-        self.tab_01_btn_get_import_file.config(command=self.f_tab_01_button_get_import_file_click)
-        self.tab_01_btn_import.config(command=self.f_tab_01_button_import_click)
+        self.tab_01_btn_template.config(command=self.event_tab_01_button_template_click)
+        self.tab_01_btn_get_import_file.config(command=self.event_tab_01_button_get_import_file_click)
+        self.tab_01_btn_import.config(command=self.event_tab_01_button_import_click)
+        self.tab_01_btn_start_import_file.config(command=self.event_tab_01_button_start_import_file_click)
         
-        self.tab_02_button_filter.config(command=self.f_tab_02_button_filter_click)
-        self.tab_02_button_clear_filter.config(command=self.f_tab_02_button_clear_click)
-        self.tab_02_button_export_excel.config(command=self.f_tab_02_button_export_excel_click)
+        self.tab_02_button_filter.config(command=self.event_tab_02_button_filter_click)
+        self.tab_02_button_clear_filter.config(command=self.event_tab_02_button_clear_filter_click)
+        self.tab_02_button_export_excel.config(command=self.event_tab_02_button_export_excel_click)
         
-        self.tab_02_button_edit_slip.config(command=self.f_tab_02_button_edit_click)
-        self.tab_02_button_delete_slip.config(command=self.f_tab_02_button_delete_click)
+        self.tab_02_button_edit_slip.config(command=self.event_tab_02_button_edit_slip_click)
+        self.tab_02_button_delete_slip.config(command=self.event_tab_02_button_delete_slip_click)
         
         # Gán sự kiện
         self.tab_01_treeview_YCDH.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_01_single_click)  # Single click
@@ -364,9 +365,6 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
             self.tab_01_entry_sl_giu_cho,
             self.tab_01_entry_sl_YCDH,
             self.tab_01_entry_ghi_chu_mat_hang)
-        
-    def _f_view_create_widgets_in_tab_02_frame_treeview(self):
-        self.tab_02_treeview_log_of_YCDH = self.tab_02_frame_treeview.treeview_normal
     
     def _f_view_create_widgets_in_tab_01_frame_button_02(self):
         parent_frame = self.tab_01_frame_button_02
@@ -418,6 +416,9 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     # Tab_02: create widgets
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
+    
+    def _f_view_create_widgets_in_tab_02_frame_treeview(self):
+        self.tab_02_treeview_log_of_YCDH = self.tab_02_frame_treeview.treeview_normal
     
     def _f_view_create_all_container_frames_in_tab_02(self):
         parent_frame = self.tab2
@@ -530,30 +531,10 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
     # Adding handler
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     
-    def f_view_tab_01_button_clear_click(self):
-        Controller_handel_all_events.f_handle_tab_01_button_clear_click(
-            self.tab_01_label_footer_notification, 
-            self.tab_01_treeview_YCDH)
-
-    # def f_tab_01_button_print_form_tu_tao_tu_code_click(self):
-    #     Controller_handel_all_events.f_handle_btn_print_form_tu_tao_tu_code_click_()
-        
-    def f_tab_01_button_print_click(self):
-        Controller_handel_all_events.f_handle_btn_print_click()
-        
-    def f_tab_01_button_get_number_of_slip_click(self):        
+    def event_tab_01_button_get_number_of_slip_click(self):        
         Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(self.tab_01_entry_so_phieu)
     
-    def f_tab_01_button_import_click(self):
-        print("Import config")
-        
-    def f_tab_01_button_template_click(self):
-        Controller_handel_all_events.f_handle_event_tab_01_button_template_click(self.tab_01_label_footer_notification)
-        
-    def f_tab_01_button_get_import_file_click(self):
-        Controller_handel_all_events.f_handle_event_tab_01_button_get_import_file_click(self.tab_01_label_footer_notification)
-
-    def f_view_tab_01_button_add_click(self):
+    def event_tab_01_button_add_row_click(self):
         Controller_handel_all_events.f_handle_event_tab_01_button_add_row_click(
             self.tab_01_label_footer_notification,
             self.tab_01_treeview_YCDH, 
@@ -567,13 +548,8 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
             self.tab_01_entry_sl_YCDH, 
             self.tab_01_entry_ghi_chu_mat_hang
             )
-        
-    def f_view_tab_01_button_delete_click(self):
-        Controller_handel_all_events.f_handle_event_tab_01_btn_delete_click(
-            self.tab_01_label_footer_notification,
-            self.tab_01_treeview_YCDH)
     
-    def f_view_tab_01_button_update_click(self):
+    def event_tab_01_button_update_click(self):
         Controller_handel_all_events.f_handle_event_update_selected_row_click(
         self.tab_01_label_footer_notification,
         self.tab_01_treeview_YCDH,
@@ -587,7 +563,20 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_entry_ghi_chu_mat_hang
         )
     
-    def f_tab_01_button_save_click(self):
+    def event_tab_01_button_delete_click(self):
+        Controller_handel_all_events.f_handle_event_tab_01_btn_delete_click(
+            self.tab_01_label_footer_notification,
+            self.tab_01_treeview_YCDH)
+    
+    def event_tab_01_button_clear_click(self):
+        Controller_handel_all_events.f_handle_tab_01_button_clear_click(
+            self.tab_01_label_footer_notification, 
+            self.tab_01_treeview_YCDH)
+        
+    def event_tab_01_button_print_click(self):
+        Controller_handel_all_events.f_handle_btn_print_click()
+        
+    def event_tab_01_button_save_click(self):
         Controller_handel_all_events.f_handle_event_tab_01_btn_save_click(
             self.tab_01_label_footer_notification,
             self.tab_01_entry_so_phieu, 
@@ -600,8 +589,20 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
             self.tab_01_note_for_slip,
             self.tab_01_treeview_YCDH
         )    
-
-    def f_tab_02_button_filter_click(self):
+    
+    def event_tab_01_button_template_click(self):
+        Controller_handel_all_events.f_handle_event_tab_01_button_template_click(self.tab_01_label_footer_notification)
+    
+    def event_tab_01_button_get_import_file_click(self):
+        Controller_handel_all_events.f_handle_event_tab_01_button_get_import_file_click(self.tab_01_label_footer_notification)
+    
+    def event_tab_01_button_import_click(self):
+        print("Import config")
+        
+    def event_tab_01_button_start_import_file_click():
+        print("Start import")
+    
+    def event_tab_02_button_filter_click(self):
         Controller_handel_all_events.f_handle_event_tab_02_button_filter_slip(
             self.tab_01_label_footer_notification,
             self.tab_02_treeview_log_of_YCDH,
@@ -613,7 +614,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
             self.tab_02_entry_ma_hang
             )
     
-    def f_tab_02_button_clear_click(self):
+    def event_tab_02_button_clear_filter_click(self):
         Controller_handel_all_events.f_handle_event_tab_02_button_clear_slip(
             self.tab_01_label_footer_notification, 
             self.tab_02_treeview_log_of_YCDH,
@@ -625,19 +626,19 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
             self.tab_02_entry_ten_hang
         )
         
-    def f_tab_02_button_export_excel_click(self):
+    def event_tab_02_button_export_excel_click(self):
         Controller_handel_all_events.f_handle_event_tab_02_button_export_excel_click(
             self.tab_01_label_footer_notification,
             self.tab_02_treeview_log_of_YCDH
         )
         
-    def f_tab_02_button_edit_click(self):
+    def event_tab_02_button_edit_slip_click(self):
         Controller_handel_all_events.handle_event_tab_02_button_edit_click(
             self.tab_01_label_footer_notification, 
             self.tab_02_treeview_log_of_YCDH
         )
     
-    def f_tab_02_button_delete_click(self):
+    def event_tab_02_button_delete_slip_click(self):
         Controller_handel_all_events.handle_event_btn_delete_click(
             self.tab_01_label_footer_notification, 
             self.tab_02_treeview_log_of_YCDH
