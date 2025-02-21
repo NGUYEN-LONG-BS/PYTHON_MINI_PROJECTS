@@ -54,8 +54,8 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         
         self.tab_01_btn_template.config(command=self.event_tab_01_button_template_click)
         self.tab_01_btn_get_import_file.config(command=self.event_tab_01_button_get_import_file_click)
-        self.tab_01_btn_import.config(command=self.event_tab_01_button_import_click)
-        self.tab_01_btn_start_import_file.config(command=self.event_tab_01_button_start_import_file_click)
+        # self.tab_01_btn_import.config(command=self.event_tab_01_button_import_click)
+        # self.tab_01_btn_start_import_file.config(command=self.event_tab_01_button_start_import_file_click)
         
         self.tab_02_button_filter.config(command=self.event_tab_02_button_filter_click)
         self.tab_02_button_clear_filter.config(command=self.event_tab_02_button_clear_filter_click)
@@ -397,14 +397,14 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_btn_get_import_file = tk.Button(tab_01_button_container_02_on_the_left, text="Get file")
         self.tab_01_btn_get_import_file.pack(side="left", padx=10)
         
-        # import button
-        self.tab_01_btn_import = tk.Button(tab_01_button_container_02_on_the_left, text="Import excel")
-        self.tab_01_btn_import.pack(side="left", padx=10)
+        # # import button
+        # self.tab_01_btn_import = tk.Button(tab_01_button_container_02_on_the_left, text="Import excel")
+        # self.tab_01_btn_import.pack(side="left", padx=10)
         
-        # star import button
-        self.tab_01_btn_start_import_file = tk.Button(tab_01_button_container_02_on_the_left, 
-                                                      text="Start import")
-        self.tab_01_btn_start_import_file.pack(side="left", padx=10)
+        # # star import button
+        # self.tab_01_btn_start_import_file = tk.Button(tab_01_button_container_02_on_the_left, 
+        #                                               text="Start import")
+        # self.tab_01_btn_start_import_file.pack(side="left", padx=10)
     
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
@@ -596,11 +596,11 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
     def event_tab_01_button_get_import_file_click(self):
         Controller_handel_all_events.f_handle_event_tab_01_button_get_import_file_click(self.tab_01_label_footer_notification)
     
-    def event_tab_01_button_import_click(self):
-        print("Import config")
+    # def event_tab_01_button_import_click(self):
+    #     print("Import config")
         
-    def event_tab_01_button_start_import_file_click():
-        print("Start import")
+    # def event_tab_01_button_start_import_file_click():
+    #     print("Start import")
     
     def event_tab_02_button_filter_click(self):
         Controller_handel_all_events.f_handle_event_tab_02_button_filter_slip(

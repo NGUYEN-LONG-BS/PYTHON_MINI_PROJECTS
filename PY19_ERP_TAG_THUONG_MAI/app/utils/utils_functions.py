@@ -230,9 +230,9 @@ def f_utils_open_file():
         if file_path:
             # Check if the file is an Excel file
             if file_path.endswith(('.xls', '.xlsx')):
-                return file_name
+                return file_name, file_path
             else:
-                return file_name
+                return "", ""
     except Exception as e:
         print(f"Error: {e}")
         print("Error at function: ", f_utils_get_current_function_name())

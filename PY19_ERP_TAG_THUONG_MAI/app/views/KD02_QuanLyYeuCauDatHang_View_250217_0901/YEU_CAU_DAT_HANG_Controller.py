@@ -41,7 +41,6 @@ class controller_get_information_of_module:
     def load_column_name_ma_khach_hang():
         column_name = "MA_DOI_TUONG"
         return column_name
-    
 
 class Controller_action_after_event:
     
@@ -1042,11 +1041,39 @@ class Controller_handel_all_events:
         
     def f_handle_event_tab_01_button_get_import_file_click(entry_notification):
         try:
-            text = f_utils_open_file()
-            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, text, "blue")
+            file_name, file_bath = f_utils_open_file()
+            if not file_name:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "No excel file selected!", "red")
+                return False
+            
+            # load data from excel file
+            # Bắt đầu từ ô A1
+            data = utils_model_get_data_from_Excel_250221_16h45.get_data_from_excel(file_bath, "template_YCDH", start_row=1, start_col=1)
+            if not data:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "No data found in the selected file!", "red")
+                return False
+            
+            # validate data
+            flag = Controller_validate_data_from_Excel_file_to_import_to_SQL_250221_17h05.validate_data_from_Excel(entry_notification, data)
+            if flag == False:
+                return False
+            
+            # Load data to database
+            server_name = ""
+            database_name = ""
+            login_name = ""
+            login_pass = ""
+            table_name = ""
+            data_array = ""
+            flag = utils_model_get_data_from_Excel_250221_16h45.f_insert_data_to_sql(server_name, database_name, login_name, login_pass, table_name, data_array)
+            if flag == False:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Import to Database fail!", "red")
+                return False
+            
         except Exception as e:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
+            return False
     
     def f_handle_event_update_selected_row_click(*args):
         try:
@@ -1429,3 +1456,22 @@ class Controller_event_tab_01_btn_save_click:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
             return False
+        
+class Controller_validate_data_from_Excel_file_to_import_to_SQL_250221_17h05:
+    def validate_data_from_Excel(entry_notification, data):
+        try:
+            # Check if the data is empty
+            if not data:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "No data found in the selected file!", "red")
+                print("Error at function: ", f_utils_get_current_function_name())
+                return False
+            
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+    
+    
+    
+    
