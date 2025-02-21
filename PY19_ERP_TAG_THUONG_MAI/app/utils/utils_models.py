@@ -83,7 +83,7 @@ class utils_model_get_data_from_Excel_250221_16h45:
     # Hàm để mở file Excel và lấy dữ liệu từ sheet, cho phép truyền vào ô bắt đầu
     def get_data_from_excel(file_path, sheet_name, start_row=1, start_col=1):
         # Mở file Excel
-        wb = load_workbook(file_path)
+        wb = load_workbook(file_path, data_only=True)   # Đảm bảo rằng ta đọc giá trị tính toán
         sheet = wb[sheet_name]
         
         # Lấy dữ liệu từ ô bắt đầu được chỉ định
@@ -92,7 +92,7 @@ class utils_model_get_data_from_Excel_250221_16h45:
             data.append(row)
         return data
     
-class utils_model_get_data_from_Excel_250221_16h45:
+class utils_model_import_data_to_SQL_SERVER_250221_16h45:
     def f_insert_data_to_sql(server_name, database_name, login_name, login_pass, table_name, data_array):
         """
         Hàm kết nối SQL Server và chèn dữ liệu từ mảng vào bảng, bỏ qua các cột có giá trị mặc định (ID, NGAY_TAO_PHIEU).
@@ -112,7 +112,7 @@ class utils_model_get_data_from_Excel_250221_16h45:
         except Exception as e:
             print(f"Error: {e}")
             print("Error at function: ", utils_functions.f_utils_get_current_function_name())
-            return
+            return False
 
         cursor = conn.cursor()
         
@@ -123,8 +123,8 @@ class utils_model_get_data_from_Excel_250221_16h45:
             # print("Danh sách cột trong bảng:", columns)
         except Exception as e:
             print(f"Error: {e}")
-            print("Error at function: ", utils_functions.f_utils_get_current_function_name())
-            return
+            print("Error at function: f_insert_data_to_sql")
+            return False
 
         # Loại bỏ các cột có giá trị mặc định (ID, NGAY_TAO_PHIEU)
         columns_to_insert = [col for col in columns if col not in ['ID', 'DATE']]
@@ -132,9 +132,13 @@ class utils_model_get_data_from_Excel_250221_16h45:
         
         # Kiểm tra số cột trong dữ liệu khớp với số cột cần chèn
         num_columns_to_insert = len(columns_to_insert)
-        if not all(len(row) == num_columns_to_insert for row in data_array):
-            print("Dữ liệu không khớp số cột cần chèn.")
-            return
+        print("num_columns_to_insert", num_columns_to_insert)
+
+        # Kiểm tra dữ liệu xem có đúng số cột cần chèn không
+        for row in data_array:
+            if len(row) != num_columns_to_insert:
+                print(f"Dữ liệu không khớp số cột cần chèn. Row: {row}")
+                return False
 
         # Chèn dữ liệu
         try:
@@ -145,11 +149,77 @@ class utils_model_get_data_from_Excel_250221_16h45:
                 cursor.execute(query, row)
             
             conn.commit()
-            # print("Dữ liệu đã được chèn thành công.")
+            print("Dữ liệu đã được chèn thành công.")
         except Exception as e:
             print(f"Error: {e}")
             print("Error at function: ", utils_functions.f_utils_get_current_function_name())
+            return False
         finally:
             cursor.close()
             conn.close()
             print("Kết nối đã được đóng.")
+            return True
+
+
+    # def f_insert_data_to_sql(server_name, database_name, login_name, login_pass, table_name, data_array):
+    #     """
+    #     Hàm kết nối SQL Server và chèn dữ liệu từ mảng vào bảng, bỏ qua các cột có giá trị mặc định (ID, NGAY_TAO_PHIEU).
+        
+    #     :param server_name: Tên hoặc địa chỉ IP của máy chủ SQL Server.
+    #     :param database_name: Tên cơ sở dữ liệu.
+    #     :param login_name: Tên người dùng SQL Server.
+    #     :param login_pass: Mật khẩu SQL Server.
+    #     :param table_name: Tên bảng trong cơ sở dữ liệu.
+    #     :param data_array: Mảng chứa dữ liệu cần chèn (list of lists).
+    #     """
+    #     # Kết nối đến SQL Server
+    #     connection_string = f"DRIVER={{SQL Server}};SERVER={server_name};DATABASE={database_name};UID={login_name};PWD={login_pass}"
+    #     try:
+    #         conn = pyodbc.connect(connection_string)
+    #         # print("Kết nối thành công đến cơ sở dữ liệu.")
+    #     except Exception as e:
+    #         print(f"Error: {e}")
+    #         print("Error at function: ", utils_functions.f_utils_get_current_function_name())
+    #         return
+
+    #     cursor = conn.cursor()
+        
+    #     # Lấy danh sách cột của bảng
+    #     try:
+    #         cursor.execute(f"SELECT * FROM {table_name} WHERE 1=0")
+    #         columns = [column[0] for column in cursor.description]  # Lấy tên cột
+    #         # print("Danh sách cột trong bảng:", columns)
+    #     except Exception as e:
+    #         print(f"Error: {e}")
+    #         print("Error at function: ", utils_functions.f_utils_get_current_function_name())
+    #         return
+
+    #     # Loại bỏ các cột có giá trị mặc định (ID, NGAY_TAO_PHIEU)
+    #     columns_to_insert = [col for col in columns if col not in ['ID', 'DATE']]
+    #     # print("Danh sách cột cần chèn:", columns_to_insert)
+        
+    #     # Kiểm tra số cột trong dữ liệu khớp với số cột cần chèn
+    #     num_columns_to_insert = len(columns_to_insert)
+    #     print("num_columns_to_insert", num_columns_to_insert)
+    #     len(row)
+    #     if not all(len(row) == num_columns_to_insert for row in data_array):
+    #         print("Dữ liệu không khớp số cột cần chèn.")
+    #         return
+
+    #     # Chèn dữ liệu
+    #     try:
+    #         placeholders = ", ".join(["?" for _ in range(num_columns_to_insert)])  # Tạo chuỗi placeholder "?, ?, ?"
+    #         query = f"INSERT INTO {table_name} ({', '.join(columns_to_insert)}) VALUES ({placeholders})"
+            
+    #         for row in data_array:
+    #             cursor.execute(query, row)
+            
+    #         conn.commit()
+    #         # print("Dữ liệu đã được chèn thành công.")
+    #     except Exception as e:
+    #         print(f"Error: {e}")
+    #         print("Error at function: ", utils_functions.f_utils_get_current_function_name())
+    #     finally:
+    #         cursor.close()
+    #         conn.close()
+    #         print("Kết nối đã được đóng.")

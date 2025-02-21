@@ -1052,24 +1052,48 @@ class Controller_handel_all_events:
             if not data:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "No data found in the selected file!", "red")
                 return False
-            
+
+            print(data)
+            # Chuyển dữ liệu từ list thành DataFrame
+            df = pd.DataFrame(data[1:], columns=data[0])
+
+            # Bỏ 2 cột đầu tiên
+            df = df.iloc[:, 2:]
+            print(df)
+
+            # Chuyển DataFrame thành list
+            data_list = df.values.tolist()
+            print(data_list)
+
             # validate data
-            flag = Controller_validate_data_from_Excel_file_to_import_to_SQL_250221_17h05.validate_data_from_Excel(entry_notification, data)
+            flag = Controller_validate_data_from_Excel_file_to_import_to_SQL_250221_17h05.validate_data_from_Excel(entry_notification, data_list)
             if flag == False:
                 return False
             
+            response = messagebox.askyesno("Xác nhận", "Dữ liệu đã hợp lệ. Bạn có muốn tiếp tục lưu không?")
+            if response == False:
+                return False
+
             # Load data to database
-            server_name = ""
-            database_name = ""
-            login_name = ""
-            login_pass = ""
-            table_name = ""
-            data_array = ""
-            flag = utils_model_get_data_from_Excel_250221_16h45.f_insert_data_to_sql(server_name, database_name, login_name, login_pass, table_name, data_array)
+            server_name = f_utils_get_DB_HOST()
+            database_name = f_utils_get_DB_NAME()
+            login_name, login_pass = f_utils_get_DB_USER_AND_DB_PASSWORD()
+            table_name = controller_get_information_of_module.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+            data_array = data_list
+            flag = utils_model_import_data_to_SQL_SERVER_250221_16h45.f_insert_data_to_sql(server_name, 
+                                                                                           database_name, 
+                                                                                           login_name, 
+                                                                                           login_pass, 
+                                                                                           table_name, 
+                                                                                           data_array)
             if flag == False:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Import to Database fail!", "red")
                 return False
-            
+            else:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Save data successfully!", "blue")
+                messagebox.showinfo("Thông báo", "Dữ liệu đã được lưu thành công!")
+                return True
+                
         except Exception as e:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
