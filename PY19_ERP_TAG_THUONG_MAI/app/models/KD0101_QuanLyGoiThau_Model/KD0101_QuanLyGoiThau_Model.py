@@ -26,7 +26,8 @@ def create_new_folder(base_path, folder_name):
         print(f"Folder created at: {new_folder_path}")
         return new_folder_path  # Return the full path of the created folder
     except Exception as e:
-        print(f"Error creating folder: {e}")
+        print(f"Error: {e}")
+        print("Error at function: ", f_utils_get_current_function_name())
         return None
 
 def list_directory_contents(directory):
@@ -36,7 +37,8 @@ def list_directory_contents(directory):
     try:
         return sorted(os.listdir(directory), reverse=True)
     except Exception as e:
-        print(f"Error listing directory contents: {e}")
+        print(f"Error: {e}")
+        print("Error at function: ", f_utils_get_current_function_name())
         return []
 
 def check_folder_exists(base_path, folder_name):

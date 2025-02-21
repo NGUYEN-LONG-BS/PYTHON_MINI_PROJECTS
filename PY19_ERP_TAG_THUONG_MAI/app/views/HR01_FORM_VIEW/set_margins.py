@@ -57,3 +57,5 @@ class cls_hr01_view(cls_base_form_number_04_dashboard):
         except Exception as e:
             text = f"Error opening document: {e}"
             self._f_config_notification(text=text, fg="red")
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())

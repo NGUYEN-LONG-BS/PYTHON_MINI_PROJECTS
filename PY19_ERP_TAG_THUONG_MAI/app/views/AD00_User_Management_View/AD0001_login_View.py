@@ -157,7 +157,8 @@ class cls_Login_View(tk.Tk):
                 json.dump(data, f, indent=4, ensure_ascii=False)
             # print(f"Credentials saved to {json_file}")
         except Exception as e:
-            print(f"Error saving credentials: {e}")
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
             
     def f_load_subsidiary_from_json(self):
         base_dir = os.path.dirname(__file__)
@@ -173,9 +174,11 @@ class cls_Login_View(tk.Tk):
                         try:
                             self.subsidiary_combobox.set(subsidiary)
                         except Exception as e:
-                            print(f"Error setting subsidiary value: {e}")
+                            print(f"Error: {e}")
+                            print("Error at function: ", f_utils_get_current_function_name())
             except Exception as e:
-                print(f"Error loading credentials: {e}")
+                print(f"Error: {e}")
+                print("Error at function: ", f_utils_get_current_function_name())
 
 # Controller: The logic and interaction between the model and view
 class cls_Login_Controller:

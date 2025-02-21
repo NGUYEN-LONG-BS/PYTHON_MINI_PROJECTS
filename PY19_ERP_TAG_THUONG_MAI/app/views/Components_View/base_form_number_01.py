@@ -31,7 +31,8 @@ class cls_base_form_number_01_EntryForm(tk.Tk):
         try:
             f_utils_setup_fav_icon(self)
         except Exception as e:
-            print(f"Error setting up favicon: {e}")
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
     
     def f_Goi_Cac_Thanh_Phan_Tai_Su_Dung(self):
         """Initializes reusable components."""
@@ -58,7 +59,8 @@ class cls_base_form_number_01_EntryForm(tk.Tk):
             self.f_add_elements_to_frame_body()
             
         except Exception as e:
-            print(f"Error initializing components: {e}")
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
     
     def _configure_grid_weights_of_self(self):
         """Configures grid weights for resizing."""

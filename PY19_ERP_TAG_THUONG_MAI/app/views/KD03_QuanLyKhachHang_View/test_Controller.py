@@ -110,7 +110,8 @@ class cls_test_Controller():
             # If model or view need controller reference
             self.model.controller = self  # Avoid recursion by passing after initialization
         except Exception as e:
-            print(f"Error initializing MVC components: {e}")
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
     
     def f_get_data_from_table(self, table):
         """
@@ -237,7 +238,8 @@ class cls_test_Controller_02_treeview():
             # If model or view need controller reference
             self.model.controller = self  # Avoid recursion by passing after initialization
         except Exception as e:
-            print(f"Error initializing MVC components: {e}")
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
     
     def add_to_treeview(self):
         ma_kh = self.entry_ma_kh.get()
@@ -351,8 +353,8 @@ class cls_test_Controller_02_treeview():
             return notification_text, data
         except Exception as e:
             error_details = traceback.format_exc()
-            print("Chi tiết lỗi:")
-            print(error_details)
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
             notification_text = f"Data validation failed. Error details:\n{error_details}"
             data = []
             return notification_text, data
@@ -463,7 +465,8 @@ class cls_test_Controller_06_treeview_tab_02():
             # If model or view need controller reference
             self.model.controller = self  # Avoid recursion by passing after initialization
         except Exception as e:
-            print(f"Error initializing MVC components: {e}")
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
     
     def f_get_table_config(self):
         return self.model.f_load_table_config_from_json()
@@ -596,8 +599,8 @@ class SQLController:
             return notification_text, data
         except Exception as e:
             error_details = traceback.format_exc()
-            print("Chi tiết lỗi:")
-            print(error_details)
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
             notification_text = f"Data validation failed. Error details:\n{error_details}"
             data = []
             return notification_text, data
@@ -764,6 +767,8 @@ class Controller_handel_all_events:
             Controller_action_after_event.clear_all_contents_in_treeview(my_treeview)
             return "Clear all rows in treeview!"
         except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
             return f"Error: {e}"
         
     def f_handle_tab_01_button_get_click(my_treeview):
@@ -771,6 +776,8 @@ class Controller_handel_all_events:
             Controller_action_after_event.f_get_data_from_treeview(my_treeview)
             return "Got data from treeview!"
         except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
             return f"Error: {e}"
     
     def f_handle_btn_print_form_tu_tao_tu_code_click_():
@@ -778,6 +785,8 @@ class Controller_handel_all_events:
             f_utils_create_print_template()
             return "Print template created successfully!"
         except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
             return f"Error: {e}"
 
     def f_handle_btn_print_click():
@@ -787,6 +796,8 @@ class Controller_handel_all_events:
             f_utils_open_print_template(path_template_file, sheet_name)
             return "Print template opened successfully!"
         except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
             return f"Error: {e}"
         
     def f_handle_event_get_the_latest_number_of_slip(entry_so_phieu):
@@ -796,6 +807,8 @@ class Controller_handel_all_events:
             Controller_action_after_event.f_get_the_latest_number_of_slip(entry_so_phieu, ma_thanh_vien, loai_phieu)
             return "Have gotten the latest number of slip!"
         except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
             return f"Error: {e}"
         
     def f_handle_event_tab_01_button_add_row_click(*args):
@@ -853,6 +866,8 @@ class Controller_handel_all_events:
         except Exception as e:
             # Correct entry ID because adding fail
             Controller_action_after_event.update_entry_id_after_adding_new_row(my_treeview, entry_id)
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
             fg="red"
             return f"Error: {e}", fg
         
@@ -890,6 +905,8 @@ class Controller_handel_all_events:
             SQLController.load_data(my_treeview, query)
             return "Data selected!"
         except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
             return f"Error: {e}"
         
     def f_handle_event_tab_02_button_clear_slip(my_treeview):
@@ -907,6 +924,8 @@ class Controller_handel_all_events:
             SQLController.load_data(my_treeview, query)
             return "Clear all filters!"
         except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
             return f"Error: {e}"
         
     def update_entry_id_when_initializing(my_treeview, entry_id):

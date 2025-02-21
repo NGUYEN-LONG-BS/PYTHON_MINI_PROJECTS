@@ -47,7 +47,8 @@ class cls_menu_top:
                 data = json.load(f)
             return data.get("username", "")  # Return the username from the JSON file
         except Exception as e:
-            print(f"Error reading credentials: {e}")
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
             return ""
     
     def f_check_permission(self, menu_name):

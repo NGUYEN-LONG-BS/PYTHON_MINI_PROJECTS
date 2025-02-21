@@ -548,6 +548,8 @@ class cls_test_View(cls_base_form_number_02_ManyTabs):
                     # Convert single value to string
                     json_serializable_config[key] = str(value)
             except Exception as e:
+                print(f"Error: {e}")
+                print("Error at function: ", f_utils_get_current_function_name())
                 # Handle unconvertible values (optional)
                 json_serializable_config[key] = f"Error converting: {e}"
 

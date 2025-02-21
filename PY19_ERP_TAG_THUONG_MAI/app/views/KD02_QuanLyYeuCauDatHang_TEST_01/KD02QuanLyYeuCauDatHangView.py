@@ -383,7 +383,8 @@ class cls_CRUDTreeviewView(tk.Tk):
                 data = json.load(file)
             return data["products"]
         except Exception as e:
-            print(f"Error loading products data: {e}")
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
             return []
         
     def filter_product_ids(self, event):

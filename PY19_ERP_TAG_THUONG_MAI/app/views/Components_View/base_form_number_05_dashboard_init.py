@@ -35,7 +35,8 @@ class cls_base_form_number_05_DashBoard_init(tk.Tk):
         try:
             f_utils_setup_fav_icon(self)
         except Exception as e:
-            print(f"Error setting up favicon: {e}")
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
     
     def f_Goi_Cac_Thanh_Phan_Tai_Su_Dung(self):
         """Initializes reusable components."""
@@ -53,7 +54,8 @@ class cls_base_form_number_05_DashBoard_init(tk.Tk):
             self.f_add_elements_to_frame_main()
             
         except Exception as e:
-            print(f"Error initializing components: {e}")
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
 
     def _close_window_Click(self):
         self.destroy()

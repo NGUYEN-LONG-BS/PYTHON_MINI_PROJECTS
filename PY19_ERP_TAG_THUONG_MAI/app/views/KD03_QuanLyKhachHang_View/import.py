@@ -1,5 +1,6 @@
 
 import pyodbc
+from utils import *
 
 def insert_data_to_sql(server_name, database_name, login_name, login_pass, table_name, data_array):
     """
@@ -18,7 +19,8 @@ def insert_data_to_sql(server_name, database_name, login_name, login_pass, table
         conn = pyodbc.connect(connection_string)
         # print("Kết nối thành công đến cơ sở dữ liệu.")
     except Exception as e:
-        print("Lỗi khi kết nối:", e)
+        print(f"Error: {e}")
+        print("Error at function: ", f_utils_get_current_function_name())
         return
     
     cursor = conn.cursor()
@@ -29,7 +31,8 @@ def insert_data_to_sql(server_name, database_name, login_name, login_pass, table
         columns = [column[0] for column in cursor.description]  # Lấy tên cột
         print("Danh sách cột trong bảng:", columns)
     except Exception as e:
-        print("Lỗi khi lấy thông tin bảng:", e)
+        print(f"Error: {e}")
+        print("Error at function: ", f_utils_get_current_function_name())
         return
 
     # Kiểm tra số cột trong bảng khớp với số cột trong dữ liệu
@@ -49,7 +52,8 @@ def insert_data_to_sql(server_name, database_name, login_name, login_pass, table
         conn.commit()
         # print("Dữ liệu đã được chèn thành công.")
     except Exception as e:
-        print("Lỗi khi chèn dữ liệu:", e)
+        print(f"Error: {e}")
+        print("Error at function: ", f_utils_get_current_function_name())
     finally:
         cursor.close()
         conn.close()

@@ -1,6 +1,7 @@
 import openai
 import tkinter as tk
 from tkinter import scrolledtext
+from utils import *
 
 # Đặt khóa API OpenAI của bạn tại đây
 openai.api_key = 'YOUR_API_KEY'
@@ -14,6 +15,8 @@ def chatgpt_response(query):
         )
         return response.choices[0].text.strip()
     except Exception as e:
+        print(f"Error: {e}")
+        print("Error at function: ", f_utils_get_current_function_name())
         return f"Error: {str(e)}"
 
 def send_query():

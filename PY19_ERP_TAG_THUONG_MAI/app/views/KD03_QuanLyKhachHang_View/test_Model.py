@@ -34,7 +34,8 @@ class cls_test_Model():
         except json.JSONDecodeError:
             print("Error: The JSON file is not properly formatted.")
         except Exception as e:
-            print(f"An error occurred: {e}")
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
 
     def f_load_table_config_from_json_name_only(self):
         """Load table and column configurations from JSON"""
@@ -49,7 +50,8 @@ class cls_test_Model():
         except json.JSONDecodeError:
             print("Error: The JSON file is not properly formatted.")
         except Exception as e:
-            print(f"An error occurred: {e}")
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
 
     def f_extract_from_json_columns_config(self):
         # Extract column configurations from the JSON
@@ -173,7 +175,8 @@ class cls_test_Model():
             conn = pyodbc.connect(connection_string)
             # print("Kết nối thành công đến cơ sở dữ liệu.")
         except Exception as e:
-            print("Lỗi khi kết nối:", e)
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
             return
         
         cursor = conn.cursor()
@@ -184,7 +187,8 @@ class cls_test_Model():
             columns = [column[0] for column in cursor.description]  # Lấy tên cột
             # print("Danh sách cột trong bảng:", columns)
         except Exception as e:
-            print("Lỗi khi lấy thông tin bảng:", e)
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
             return
 
         # Kiểm tra số cột trong bảng khớp với số cột trong dữ liệu
@@ -204,7 +208,8 @@ class cls_test_Model():
             conn.commit()
             # print("Dữ liệu đã được chèn thành công.")
         except Exception as e:
-            print("Lỗi khi chèn dữ liệu:", e)
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
         finally:
             cursor.close()
             conn.close()
@@ -227,7 +232,8 @@ class cls_test_Model():
             conn = pyodbc.connect(connection_string)
             # print("Kết nối thành công đến cơ sở dữ liệu.")
         except Exception as e:
-            print("Lỗi khi kết nối:", e)
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
             return
 
         cursor = conn.cursor()
@@ -238,7 +244,8 @@ class cls_test_Model():
             columns = [column[0] for column in cursor.description]  # Lấy tên cột
             print("Danh sách cột trong bảng:", columns)
         except Exception as e:
-            print("Lỗi khi lấy thông tin bảng:", e)
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
             return
 
         # Loại bỏ các cột có giá trị mặc định (ID, NGAY_TAO_PHIEU)
@@ -262,7 +269,8 @@ class cls_test_Model():
             conn.commit()
             # print("Dữ liệu đã được chèn thành công.")
         except Exception as e:
-            print("Lỗi khi chèn dữ liệu:", e)
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
         finally:
             cursor.close()
             conn.close()
@@ -516,7 +524,8 @@ class cls_test_Model_02():
             conn = pyodbc.connect(connection_string)
             # print("Kết nối thành công đến cơ sở dữ liệu.")
         except Exception as e:
-            print("Lỗi khi kết nối:", e)
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
             return
 
         cursor = conn.cursor()
@@ -527,7 +536,8 @@ class cls_test_Model_02():
             columns = [column[0] for column in cursor.description]  # Lấy tên cột
             print("Danh sách cột trong bảng:", columns)
         except Exception as e:
-            print("Lỗi khi lấy thông tin bảng:", e)
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
             return
 
         # Loại bỏ các cột có giá trị mặc định (ID, NGAY_TAO_PHIEU)
@@ -551,7 +561,8 @@ class cls_test_Model_02():
             conn.commit()
             # print("Dữ liệu đã được chèn thành công.")
         except Exception as e:
-            print("Lỗi khi chèn dữ liệu:", e)
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
         finally:
             cursor.close()
             conn.close()
@@ -575,7 +586,8 @@ class cls_test_Model_05_staticmenthod_get_data_from_SQL:
             conn = pyodbc.connect(connection_string)
             # print("Kết nối thành công đến cơ sở dữ liệu.")
         except Exception as e:
-            print("Lỗi khi kết nối:", e)
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
             return
         
         cursor = conn.cursor()
@@ -588,7 +600,8 @@ class cls_test_Model_05_staticmenthod_get_data_from_SQL:
             columns = [column[0] for column in cursor.description]  # Lấy tên cột
             print("Danh sách cột trong bảng:", columns)
         except Exception as e:
-            print("Lỗi khi lấy thông tin bảng:", e)
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
             return
 
         # Kiểm tra số cột trong bảng khớp với số cột trong dữ liệu
@@ -602,7 +615,8 @@ class cls_test_Model_05_staticmenthod_get_data_from_SQL:
             # in dữ liệu vào bảng nhật ký
             print("Dữ liệu đã được chèn thành công.")
         except Exception as e:
-            print("Lỗi khi chèn dữ liệu:", e)
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
         finally:
             cursor.close()
             conn.close()
@@ -637,7 +651,8 @@ class cls_test_Model_06_staticmenthod_get_config_of_table_YCDH_log_from_json():
         except json.JSONDecodeError:
             print("Error: The JSON file is not properly formatted.")
         except Exception as e:
-            print(f"An error occurred: {e}")
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
 
     def f_load_table_config_from_json_name_only(self):
         """Load table and column configurations from JSON"""
@@ -652,7 +667,8 @@ class cls_test_Model_06_staticmenthod_get_config_of_table_YCDH_log_from_json():
         except json.JSONDecodeError:
             print("Error: The JSON file is not properly formatted.")
         except Exception as e:
-            print(f"An error occurred: {e}")
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
 
     def f_extract_from_json_columns_config(self):
         # Extract column configurations from the JSON
@@ -766,7 +782,8 @@ class SQLModel:
             # print(data)
             return data
         except Exception as e:
-            print("Lỗi khi lấy dữ liệu:", e)
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
             return []
         
     @staticmethod
@@ -774,7 +791,8 @@ class SQLModel:
         try:
             f_utils_sent_query_to_SQL(query)
         except Exception as e:
-            print("Error senting query:", e)
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
     
     @staticmethod
     def f_02_insert_data_to_sql(server_name, database_name, login_name, login_pass, table_name, data_array):
@@ -794,7 +812,8 @@ class SQLModel:
             conn = pyodbc.connect(connection_string)
             # print("Kết nối thành công đến cơ sở dữ liệu.")
         except Exception as e:
-            print("Lỗi khi kết nối:", e)
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
             return
 
         cursor = conn.cursor()
@@ -805,7 +824,8 @@ class SQLModel:
             columns = [column[0] for column in cursor.description]  # Lấy tên cột
             # print("Danh sách cột trong bảng:", columns)
         except Exception as e:
-            print("Lỗi khi lấy thông tin bảng:", e)
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
             return
 
         # Loại bỏ các cột có giá trị mặc định (ID, NGAY_TAO_PHIEU)
@@ -829,7 +849,8 @@ class SQLModel:
             conn.commit()
             # print("Dữ liệu đã được chèn thành công.")
         except Exception as e:
-            print("Lỗi khi chèn dữ liệu:", e)
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
         finally:
             cursor.close()
             conn.close()

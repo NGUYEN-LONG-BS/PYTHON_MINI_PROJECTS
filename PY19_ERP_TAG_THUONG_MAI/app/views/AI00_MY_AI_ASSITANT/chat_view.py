@@ -52,7 +52,8 @@ class AIChatApp(tk.Tk):
         except RecursionError:
             print("Error: Maximum recursion depth exceeded! Check if `f_utils_setup_fav_icon` calls itself.")
         except Exception as e:
-            print(f"Error setting up favicon: {e}")
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
             traceback.print_exc()
     
     def chat_with_ai(self):

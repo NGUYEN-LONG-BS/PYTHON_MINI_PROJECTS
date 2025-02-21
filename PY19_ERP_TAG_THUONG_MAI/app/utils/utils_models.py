@@ -22,9 +22,8 @@ class utils_model_TreeviewConfigLoader_250217_13h20:
             print(f"Error at function: {my_current_function}")
             print("Error: JSON bị lỗi hoặc không hợp lệ.")
         except Exception as e:
-            my_current_function = f_utils_get_current_function_name()
-            print(f"Error at function: {my_current_function}")
-            print(f"Lỗi không xác định: {e}")
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
         return None
 
     @staticmethod
@@ -70,7 +69,6 @@ class utils_model_get_data_from_SQL:
             # print(data)
             return data
         except Exception as e:
-            my_current_function = f_utils_get_current_function_name()
-            print(f"Error at function: {my_current_function}")
-            print("Lỗi khi lấy dữ liệu:", e)
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
             return []

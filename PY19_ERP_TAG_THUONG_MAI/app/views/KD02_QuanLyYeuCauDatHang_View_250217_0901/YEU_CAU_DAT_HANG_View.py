@@ -549,6 +549,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
 
     def f_view_tab_01_button_add_click(self):
         Controller_handel_all_events.f_handle_event_tab_01_button_add_row_click(
+            self.tab_01_label_footer_notification,
             self.tab_01_treeview_YCDH, 
             self.tab_01_entry_id, 
             self.tab_01_entry_ma_hang, 
