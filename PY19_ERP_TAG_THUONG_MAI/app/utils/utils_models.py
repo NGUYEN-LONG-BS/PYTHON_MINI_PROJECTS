@@ -60,11 +60,13 @@ class utils_model_TreeviewConfigLoader_250217_13h20:
 class utils_model_get_data_from_SQL:
     
     def get_data_with_query(query):
+        print("Query 1.9: ", query)
         data = utils_model_get_data_from_SQL.fetch_data(query)
         return data
     
     def fetch_data(query):
         try:
+            print("Query 02: ", query)
             data = f_utils_fetch_data_from_database(query)
             # print(data)
             return data

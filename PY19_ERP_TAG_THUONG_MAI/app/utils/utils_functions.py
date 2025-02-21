@@ -216,41 +216,45 @@ def f_utils_open_file():
             return file_name
 
 def f_utils_create_template_excel_file(file_name="template_wb.xlsx",sheet_name="template_sh",column_names=["Col1", "Col2", "Col3"]):
-    # Open a file dialog to select the save location
-    desktop_path = os.path.join(os.path.expanduser("~"), "Desktop")
-    root = tk.Tk()
-    root.withdraw()  # Hide the main tkinter window
-    file_path = filedialog.asksaveasfilename(
-        defaultextension=".xlsx",
-        initialdir=desktop_path,
-        initialfile=file_name,
-        filetypes=[("Excel files", "*.xlsx"), ("All files", "*.*")],
-        title="Save Excel File"
-    )
-    if not file_path:
-        print("No file selected. Exiting.")
-        return
+    try:
+        # Open a file dialog to select the save location
+        export_path = PATH_DEFAUL
+        root = tk.Tk()
+        root.withdraw()  # Hide the main tkinter window
+        file_path = filedialog.asksaveasfilename(
+            defaultextension=".xlsx",
+            initialdir=export_path,
+            initialfile=file_name,
+            filetypes=[("Excel files", "*.xlsx"), ("All files", "*.*")],
+            title="Save Excel File"
+        )
+        if not file_path:
+            return False, ""
+        
+        # Create a new Excel workbook and sheet
+        workbook = Workbook()
+        sheet = workbook.active
+        sheet.title = sheet_name
 
-    # Create a new Excel workbook and sheet
-    workbook = Workbook()
-    sheet = workbook.active
-    sheet.title = sheet_name
+        # Write column names to the first row
+        for col_num, column_name in enumerate(column_names, start=1):
+            cell = sheet.cell(row=1, column=col_num, value=column_name)
+            # Apply formatting to the header row
+            cell.font = Font(bold=True, color="FFFFFF")
+            cell.alignment = Alignment(horizontal="center", vertical="center")
+            sheet.column_dimensions[cell.column_letter].width = 15  # Adjust column width
 
-    # Write column names to the first row
-    for col_num, column_name in enumerate(column_names, start=1):
-        cell = sheet.cell(row=1, column=col_num, value=column_name)
-        # Apply formatting to the header row
-        cell.font = Font(bold=True, color="FFFFFF")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        sheet.column_dimensions[cell.column_letter].width = 15  # Adjust column width
+        # Set background color for the header row
+        for cell in sheet[1]:
+            cell.fill = PatternFill(start_color="4F81BD", end_color="4F81BD", fill_type="solid")
 
-    # Set background color for the header row
-    for cell in sheet[1]:
-        cell.fill = PatternFill(start_color="4F81BD", end_color="4F81BD", fill_type="solid")
-
-    # Save the workbook
-    workbook.save(file_path)
-    return f"Excel file created and saved to: {file_path}"
+        # Save the workbook
+        workbook.save(file_path)
+        return True, f"Excel file created and saved to: {file_path}"
+    except Exception as e:
+        print(f"Error: {e}")
+        print("Error at function: ", f_utils_get_current_function_name())
+        return False, f"An error occurred: {str(e)}"
 
 def f_utils_find_string_in_row_of_excel(file_path, sheet_name, target_string, row_number=1, case_sensitive=True, return_as_index=True):
     """
@@ -805,10 +809,13 @@ def f_utils_format_number(value):
         return value  # Trả về nguyên giá trị nếu không phải số
 
 def f_utils_fetch_data_from_database(query):
+    print("query 2.9: ",query)
     conn = f_utils_create_a_connection_string_to_SQL_Server()
     cursor = conn.cursor()
     cursor.execute(query)
     rows = cursor.fetchall()
+    print("query 03: ",query)
+    print(rows)
     # Đóng kết nối
     if cursor:
         cursor.close()

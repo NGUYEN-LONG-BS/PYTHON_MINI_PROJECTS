@@ -90,7 +90,20 @@ class utils_controller_get_the_latest_number_of_slip:
         data_02 = utils_controller_get_the_latest_number_of_slip.extract_numbers_from_data_SQL_num_01(data_01)
         
         return data_02
-                
+   
+class utils_controller_get_the_header_of_table_in_SQL_250221_11h01:
+    def get_column_names(database_name, table_name):
+        query = f"""
+        SELECT COLUMN_NAME
+        FROM [{database_name}].INFORMATION_SCHEMA.COLUMNS
+        WHERE TABLE_NAME = '{table_name}' AND TABLE_SCHEMA = 'dbo'
+        """
+        print("query", query)
+        # lấy danh sách tên cột từ SQL
+        column_headers = utils_model_get_data_from_SQL.get_data_with_query(query)
+        print("column_headers", column_headers)
+        return column_headers
+             
 class utils_controller_set_size_of_windown_250215_10h24:    
     def f_utils_set_window_size_of_new_view(root, width=0, height=0, maximize=False):
         """Set the window size to 4/5 of the screen size or maximize it."""
@@ -199,3 +212,4 @@ class utils_controller_TreeviewHandler_click_250217_22h34:
             row_values = my_Treeview.item(selected_item[0], "values")
             return row_values[column_return] if len(row_values) > column_return else None
         return None
+    
