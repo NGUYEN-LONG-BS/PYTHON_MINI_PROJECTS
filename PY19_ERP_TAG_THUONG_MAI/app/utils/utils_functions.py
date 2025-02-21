@@ -23,6 +23,7 @@ from PIL import Image, ImageTk
 import pandas as pd
 import re
 from .utils_controllers import *
+from utils import *
 
 def f_utils_setup_logo(parent_frame):
     # Define function when click
