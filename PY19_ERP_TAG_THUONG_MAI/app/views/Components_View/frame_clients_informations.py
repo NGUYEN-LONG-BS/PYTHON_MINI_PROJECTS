@@ -44,8 +44,6 @@ class cls_frame_client_information_model:
 class cls_frame_client_information_controller:
     def __init__(self):
         self.model = cls_frame_client_information_model()  # Create an instance of the model
-        # self.view = cls_frame_client_information_view
-        # self.view.controller = self
 
     def get_data(self):
         return self.model.get_data()
@@ -159,7 +157,7 @@ class cls_TreeviewCombobox_clients(cls_my_text_entry_num_01):
         parent_widget.bind("<Button-1>", self.on_click_outside)
 
     def on_click_outside(self, event):
-        print("on_click_outside")
+        # print("on_click_outside")
         self.hide_dropdown()
     
     def f_handle_event_left_click(self, event):
@@ -194,17 +192,12 @@ class cls_TreeviewCombobox_clients(cls_my_text_entry_num_01):
             
             # Bind Treeview selection
             self.tree.bind("<<TreeviewSelect>>", self.on_tree_select)
-            # self.tree.bind("leave", self.hide_dropdown)
             self.tree.bind("<Leave>", self.hide_dropdown)
 
         else:
             self.dropdown.lift()
 
     def hide_dropdown(self, event=None):
-        # if self.dropdown:
-        #     self.dropdown.destroy()
-        #     self.dropdown = None
-        
         if self.dropdown:
             if hasattr(self, 'tree') and self.tree:
                 self.tree.destroy()

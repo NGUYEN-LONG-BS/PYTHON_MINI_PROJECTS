@@ -5,59 +5,59 @@ from datetime import datetime
 from Components_View import *
 from utils import *
 
-class cls_YEU_CAU_DAT_HANG_Model_05_staticmenthod_get_data_from_SQL:
-    @staticmethod
-    def get_data_from_SQL(server_name, database_name, login_name, login_pass, table_name, data_array):
-        """
-        Hàm kết nối SQL Server và lấy dữ liệu.
+# class cls_YEU_CAU_DAT_HANG_Model_05_staticmenthod_get_data_from_SQL:
+#     @staticmethod
+#     def get_data_from_SQL(server_name, database_name, login_name, login_pass, table_name, data_array):
+#         """
+#         Hàm kết nối SQL Server và lấy dữ liệu.
         
-        :param server_name: Tên hoặc địa chỉ IP của máy chủ SQL Server.
-        :param database_name: Tên cơ sở dữ liệu.
-        :param login_name: Tên người dùng SQL Server.
-        :param login_pass: Mật khẩu SQL Server.
-        :param table_name: Tên bảng trong cơ sở dữ liệu.
-        """
-        # Kết nối đến SQL Server
-        connection_string = f"DRIVER={{SQL Server}};SERVER={server_name};DATABASE={database_name};UID={login_name};PWD={login_pass}"
-        try:
-            conn = pyodbc.connect(connection_string)
-            # print("Kết nối thành công đến cơ sở dữ liệu.")
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return
+#         :param server_name: Tên hoặc địa chỉ IP của máy chủ SQL Server.
+#         :param database_name: Tên cơ sở dữ liệu.
+#         :param login_name: Tên người dùng SQL Server.
+#         :param login_pass: Mật khẩu SQL Server.
+#         :param table_name: Tên bảng trong cơ sở dữ liệu.
+#         """
+#         # Kết nối đến SQL Server
+#         connection_string = f"DRIVER={{SQL Server}};SERVER={server_name};DATABASE={database_name};UID={login_name};PWD={login_pass}"
+#         try:
+#             conn = pyodbc.connect(connection_string)
+#             # print("Kết nối thành công đến cơ sở dữ liệu.")
+#         except Exception as e:
+#             print(f"Error: {e}")
+#             print("Error at function: ", f_utils_get_current_function_name())
+#             return
         
-        cursor = conn.cursor()
+#         cursor = conn.cursor()
         
-        # Lấy danh sách cột của bảng
-        try:
-            # cursor.execute(f"SELECT * FROM {table_name} WHERE 1=0")
-            cursor.execute(f"SELECT * FROM [TBD_2024].[dbo].[TB_KD02_YEU_CAU_DAT_HANG]")
+#         # Lấy danh sách cột của bảng
+#         try:
+#             # cursor.execute(f"SELECT * FROM {table_name} WHERE 1=0")
+#             cursor.execute(f"SELECT * FROM [TBD_2024].[dbo].[TB_KD02_YEU_CAU_DAT_HANG]")
             
-            columns = [column[0] for column in cursor.description]  # Lấy tên cột
-            print("Danh sách cột trong bảng:", columns)
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return
+#             columns = [column[0] for column in cursor.description]  # Lấy tên cột
+#             print("Danh sách cột trong bảng:", columns)
+#         except Exception as e:
+#             print(f"Error: {e}")
+#             print("Error at function: ", f_utils_get_current_function_name())
+#             return
 
-        # Kiểm tra số cột trong bảng khớp với số cột trong dữ liệu
-        num_columns = len(columns)
-        if not all(len(row) == num_columns for row in data_array):
-            print("Dữ liệu không khớp số cột của bảng.")
-            return
+#         # Kiểm tra số cột trong bảng khớp với số cột trong dữ liệu
+#         num_columns = len(columns)
+#         if not all(len(row) == num_columns for row in data_array):
+#             print("Dữ liệu không khớp số cột của bảng.")
+#             return
 
-        # Thêm dữ liệu vào bảng nhật ký
-        try:
-            # in dữ liệu vào bảng nhật ký
-            print("Dữ liệu đã được chèn thành công.")
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-        finally:
-            cursor.close()
-            conn.close()
-            print("Kết nối đã được đóng.")
+#         # Thêm dữ liệu vào bảng nhật ký
+#         try:
+#             # in dữ liệu vào bảng nhật ký
+#             print("Dữ liệu đã được chèn thành công.")
+#         except Exception as e:
+#             print(f"Error: {e}")
+#             print("Error at function: ", f_utils_get_current_function_name())
+#         finally:
+#             cursor.close()
+#             conn.close()
+#             print("Kết nối đã được đóng.")
 
 # class cls_YEU_CAU_DAT_HANG_Model():
 #     def __init__(self):

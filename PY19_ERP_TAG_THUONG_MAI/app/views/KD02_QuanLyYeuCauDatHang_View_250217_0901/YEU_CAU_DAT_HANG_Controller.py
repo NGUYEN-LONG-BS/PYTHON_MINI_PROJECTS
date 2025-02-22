@@ -1531,7 +1531,7 @@ class Controller_validate_data_from_Excel_file_to_import_to_SQL_250221_17h05:
             # Check if the data is empty
             if not data:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "No data found in the selected file!", "red")
-                print("Error at function: ", f_utils_get_current_function_name())
+                # print("Error at function: ", f_utils_get_current_function_name())
                 return False
             
             return True
