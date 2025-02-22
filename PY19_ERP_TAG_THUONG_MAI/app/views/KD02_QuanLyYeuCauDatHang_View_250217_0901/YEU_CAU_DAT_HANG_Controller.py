@@ -535,10 +535,15 @@ class Controller_action_after_event:
             return result_value
         
     def treeview_of_tab_02_double_click(my_treeview):
-        result_value = utils_controller_TreeviewHandler_click_250217_22h34.treeview_double_click(my_treeview, column_return=1)
+        result_value = utils_controller_TreeviewHandler_click_250217_22h34.treeview_double_click(my_treeview, column_return=2)
         if result_value:
             return result_value
 
+    def treeview_of_tab_02_single_click(my_treeview):
+        result_value = utils_controller_TreeviewHandler_click_250217_22h34.treeview_double_click(my_treeview, column_return=2)
+        if result_value:
+            return result_value
+    
     def treeview_of_tab_01_single_click(
         my_treeview,
         entry_id,
@@ -1367,13 +1372,16 @@ class Controller_handel_all_events:
     def f_handle_event_initializing_format_of_treeview_of_tab_02(my_treeview):
         Controller_action_after_event.set_format_of_treeview_of_tab_02(my_treeview)
 
-    def f_handle_event_treeview_of_tab_01_double_click(my_treeview):
-        Controller_action_after_event.treeview_of_tab_01_double_click(my_treeview)
+    def f_handle_event_treeview_of_tab_01_double_click(entry_notification, my_treeview):
+        ma_hang = Controller_action_after_event.treeview_of_tab_01_double_click(my_treeview)
+        utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, ma_hang, "blue")
         
-    def f_handle_event_treeview_of_tab_02_double_click(my_treeview):
-        Controller_action_after_event.treeview_of_tab_02_double_click(my_treeview)
+    def f_handle_event_treeview_of_tab_02_double_click(entry_notification, my_treeview):
+        So_phieu = Controller_action_after_event.treeview_of_tab_02_double_click(my_treeview)
+        utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, So_phieu, "blue")
 
     def f_handle_event_treeview_of_tab_01_single_click(
+            entry_notification,
             my_treeview,
             entry_id,
             entry_ma_hang,
@@ -1396,6 +1404,11 @@ class Controller_handel_all_events:
         entry_sl_giu_cho,
         entry_sl_YCDH,
         entry_ghi_chu_mat_hang)
+        
+    def f_handle_event_treeview_of_tab_02_single_click(entry_notification, 
+                                                       my_treeview):
+        so_phieu = Controller_action_after_event.treeview_of_tab_02_single_click(my_treeview)
+        utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, so_phieu, "blue")
         
     def f_handle_event_tab_01_btn_save_click(*args):
         try:

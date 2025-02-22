@@ -69,6 +69,9 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_treeview_YCDH.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_01_single_click)  # Single click
         self.tab_01_treeview_YCDH.bind("<Double-1>", self.f_view_treeview_of_tab_01_double_click)  # Double click
         
+        self.tab_02_treeview_log_of_YCDH.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_02_single_click)  # Single click
+        self.tab_02_treeview_log_of_YCDH.bind("<Double-1>", self.f_view_treeview_of_tab_02_double_click)  # Double click
+        
     def f_define_all_elements(self):
         # Find in tab_01
         tab_01_frame = self.tab1
@@ -350,22 +353,6 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
     
     def _f_view_create_widgets_in_tab_01_frame_treeview(self):
         self.tab_01_treeview_YCDH = self.tab_01_frame_treeview.treeview_normal
-
-    def f_view_treeview_of_tab_01_double_click(self, event):
-        Controller_handel_all_events.f_handle_event_treeview_of_tab_01_double_click(self.tab_01_treeview_YCDH)
-
-    def f_view_treeview_of_tab_01_single_click(self, event):
-        Controller_handel_all_events.f_handle_event_treeview_of_tab_01_single_click(
-            self.tab_01_treeview_YCDH,
-            self.tab_01_entry_id,
-            self.tab_01_entry_ma_hang,
-            self.tab_01_entry_ten_hang,
-            self.tab_01_entry_dvt,
-            self.tab_01_entry_sl_kha_dung,
-            self.tab_01_entry_nhu_cau,
-            self.tab_01_entry_sl_giu_cho,
-            self.tab_01_entry_sl_YCDH,
-            self.tab_01_entry_ghi_chu_mat_hang)
     
     def _f_view_create_widgets_in_tab_01_frame_button_02(self):
         parent_frame = self.tab_01_frame_button_02
@@ -634,3 +621,32 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         # refresh data
         self.event_tab_02_button_filter_click()
     
+    def f_view_treeview_of_tab_01_double_click(self, event):
+        Controller_handel_all_events.f_handle_event_treeview_of_tab_01_double_click(
+            self.tab_01_label_footer_notification,
+            self.tab_01_treeview_YCDH)
+
+    def f_view_treeview_of_tab_01_single_click(self, event):
+        Controller_handel_all_events.f_handle_event_treeview_of_tab_01_single_click(
+            self.tab_01_label_footer_notification,
+            self.tab_01_treeview_YCDH,
+            self.tab_01_entry_id,
+            self.tab_01_entry_ma_hang,
+            self.tab_01_entry_ten_hang,
+            self.tab_01_entry_dvt,
+            self.tab_01_entry_sl_kha_dung,
+            self.tab_01_entry_nhu_cau,
+            self.tab_01_entry_sl_giu_cho,
+            self.tab_01_entry_sl_YCDH,
+            self.tab_01_entry_ghi_chu_mat_hang)
+        
+    def f_view_treeview_of_tab_02_double_click(self, event):
+        Controller_handel_all_events.f_handle_event_treeview_of_tab_02_double_click(
+            self.tab_01_label_footer_notification,
+            self.tab_02_treeview_log_of_YCDH)
+
+    def f_view_treeview_of_tab_02_single_click(self, event):
+        Controller_handel_all_events.f_handle_event_treeview_of_tab_02_single_click(
+            self.tab_01_label_footer_notification,
+            self.tab_02_treeview_log_of_YCDH)
+        
