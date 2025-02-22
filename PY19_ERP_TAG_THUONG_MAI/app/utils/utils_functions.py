@@ -701,86 +701,62 @@ def f_utils_change_format_date_from_ddmmyyyy_to_yyyymmdd(date_string):
     # Reformat and return the date as yyyy-mm-dd
     return f"{year}-{month}-{day}"
 
+def f_utils_get_unique_filename(directory, filename):
+    """
+    Kiểm tra xem file có tồn tại không. Nếu có, thêm số vào sau tên file để tránh trùng.
+    Ví dụ: exported_data.xlsx → exported_data_1.xlsx → exported_data_2.xlsx
+    """
+    base, ext = os.path.splitext(filename)  # Tách tên file và phần mở rộng
+    counter = 1
+    new_filename = filename
+
+    while os.path.exists(os.path.join(directory, new_filename)):
+        new_filename = f"{base}_{counter}{ext}"
+        counter += 1
+
+    return os.path.join(directory, new_filename)
+
 def f_utils_export_data_to_excel(data_header, data):
-    
-    # Check the type and shape of the data
-    print(f"Type of data: {type(data)}")
-    print(f"Type of first element in data: {type(data[0])}")
-    
-    for i, row in enumerate(data):
-        print(f"Row {i+1}: {type(row)}, Length: {len(row)}")
-    
-    # Check if the number of columns in data_header matches the number of elements in each row of data
-    if all(len(row) == len(data_header) for row in data):
-        print("Data and headers are consistent.")
-    else:
-        print("Error: The number of columns in the header does not match the number of columns in the data.")
+    # Kiểm tra tính nhất quán của dữ liệu
+    if not data or not data_header:
+        print("No data or headers provided.")
         return
     
-    print("data_header: ", data_header)
-    print("data_body: ", data)
-    
-    file_path = os.path.join(PATH_DEFAUL, "exported_data.xlsx")
-    
-    # Thử đưa dữ liệu mới vào thủ công
-    # Dữ liệu
-    data_header = ['STT', 'Số phiếu', 'Ngày trên phiếu', 'Mã đối tượng', 'Tên đối tượng', 'Mã số thuế', 'Địa chỉ', 'Số hợp đồng', 'Thông tin hợp đồng', 'Ghi chú phiếu', 'STT dòng', 'Mã hàng', 'Tên hàng', 
-                'ĐVT', 'Số lượng khả dụng', 'Số lượng nhu cầu', 'Số lượng giữ chỗ', 'Số lượng yêu cầu đặt hàng', 'Ghi chú sản phẩm']
+    # Chuyển đổi dữ liệu từ pyodbc.Row thành tuple (nếu cần)
+    data = [tuple(row) for row in data]
 
-    data_body = [
-        (1, '127', datetime(2025, 1, 23, 0, 0), '127', '127', 'MST', 'DIA_CHI', 'SO_HOP_DONG', 'THONG_TIN_HOP_DONG', 'GHI_CHU_CUA_PHIEU', 1, 'HH-01B-001', 'MBC 120AM', 'cái', Decimal('50.00'), Decimal('95.00'), Decimal('50.00'), Decimal('45.00'), 'loại hai'),
-        (2, '127', datetime(2025, 1, 23, 0, 0), '127', '127', 'MST', 'DIA_CHI', 'SO_HOP_DONG', 'THONG_TIN_HOP_DONG', 'GHI_CHU_CUA_PHIEU', 2, 'MT-05A-025', 'Nắp chụp LA - màu vàng', 'cái', Decimal('22.00'), Decimal('127.00'), Decimal('22.00'), Decimal('105.00'), 'loại nhựa'),
-        (3, '2025-02-06', datetime(2025, 2, 6, 0, 0), 'HH-01B-001', 'HH-01B-001', 'MST', '23', 'SO_HOP_DONG', 'THONG_TIN_HOP_DONG', 'GHI_CHU_CUA_PHIEU', 1, 'HH-01B-001', 'MBC 120AM', 'cái', Decimal('50.00'), Decimal('2.00'), Decimal('2.00'), Decimal('0.00'), ''),
-        (4, '2025-02-07', datetime(2025, 2, 7, 0, 0), 'HH-01B-001', 'HH-01B-001', 'MST', '23', 'SO_HOP_DONG', 'THONG_TIN_HOP_DONG', 'GHI_CHU_CUA_PHIEU', 1, 'HH-01B-001', 'MBC 120AM', 'cái', Decimal('50.00'), Decimal('16.00'), Decimal('16.00'), Decimal('0.00'), 'ngày mới'),
-        (5, '2025-02-07', datetime(2025, 2, 7, 0, 0), 'TM-01A-009', 'TM-01A-009', 'MST', '23', 'SO_HOP_DONG', 'THONG_TIN_HOP_DONG', 'GHI_CHU_CUA_PHIEU', 1, 'HH-01B-001', 'MBC 120AM', 'cái', Decimal('50.00'), Decimal('613.00'), Decimal('50.00'), Decimal('563.00'), 'nhìn nhận'),
-        (6, '2025-02-07', datetime(2025, 2, 7, 0, 0), 'TM-01A-009', 'TM-01A-009', 'MST', '23', 'SO_HOP_DONG', 'THONG_TIN_HOP_DONG', 'GHI_CHU_CUA_PHIEU', 2, 'TM-01A-009', 'LA 4000A', 'cái', Decimal('60.00'), Decimal('610.00'), Decimal('60.00'), Decimal('550.00'), ''),
-        (7, '612', datetime(2025, 1, 23, 0, 0), '612', '612', 'MST', 'DIA_CHI', 'SO_HOP_DONG', 'THONG_TIN_HOP_DONG', 'GHI_CHU_CUA_PHIEU', 1, 'TM-01A-009', 'LA 4000A', 'cái', Decimal('60.00'), Decimal('612.00'), Decimal('60.00'), Decimal('552.00'), ''),
-        (8, '98', datetime(2025, 1, 23, 0, 0), '98', '98', 'MST', 'DIA_CHI', 'SO_HOP_DONG', 'THONG_TIN_HOP_DONG', 'GHI_CHU_CUA_PHIEU', 1, 'HH-01B-001', 'MBC 120AM', 'cái', Decimal('50.00'), Decimal('98.00'), Decimal('50.00'), Decimal('48.00'), 'mccb loại 1')
-    ]
+    # Kiểm tra số lượng cột có khớp không
+    if len(data[0]) != len(data_header):
+        print(f"Error: Mismatch in column count. Expected {len(data_header)}, but got {len(data[0])}.")
+        return
     
-    data = data_body
-    # Check if the data is not empty
-    if data:
-        # Ensure the data is a list of tuples with 19 elements each
-        print(f"Shape of data: {len(data)} rows, {len(data[0]) if data else 0} columns")
-        print("First row of data:", data[0])
-        
-        # Creating the DataFrame
-        df = pd.DataFrame(data, columns=data_header)  # Force data to be a list
-        
-        # Print DataFrame for debugging
-        print(df.head())
-        print(df.info())
-        
-        # Convert Decimal and datetime types to Excel-compatible formats
-        for column in df.columns:
-            if df[column].dtype == 'object':
-                # Handle Decimal and datetime conversion
-                df[column] = df[column].apply(lambda x: float(x) if isinstance(x, Decimal) 
-                                              else str(x) if isinstance(x, datetime) 
-                                              else x)
-        
-        # Create a new workbook
-        wb = Workbook()
-        ws = wb.active
-        ws.title = "Exported Data"
-        
-        # Write header to the worksheet
-        headers = df.columns.tolist()
-        ws.append(headers)
-        
-        # Write data rows to the worksheet
-        for row in df.itertuples(index=False, name=None):
-            ws.append(row)
-        
-        # Save the Excel file to disk
-        wb.save(file_path)
-        print(f"Data exported successfully to {file_path}")
-        # Open the workbook
-        f_utils_open_an_excel_with_path(file_path)
-        print("Excel file opened for user.")
-    else:
-        print("No data available to export.")
+    # Tạo DataFrame
+    df = pd.DataFrame(data, columns=data_header)
+    
+    # Chuyển đổi kiểu dữ liệu Decimal và datetime để tương thích với Excel
+    for column in df.columns:
+        df[column] = df[column].apply(lambda x: float(x) if isinstance(x, Decimal) 
+                                      else x.strftime('%Y-%m-%d %H:%M:%S') if isinstance(x, datetime) 
+                                      else x)
+    
+    # Đường dẫn lưu file
+    file_path = os.path.join(os.getcwd(), "exported_data.xlsx")
+
+    # Xuất ra file Excel
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Exported Data"
+    
+    # Ghi header
+    ws.append(data_header)
+    
+    # Ghi dữ liệu
+    for row in df.itertuples(index=False, name=None):
+        ws.append(row)
+    
+    # Lưu file
+    wb.save(file_path)
+    print(f"Data exported successfully to {file_path}")
 
 # ========================================================================================================================================================================
 # Lấy thông tin từ file config.json

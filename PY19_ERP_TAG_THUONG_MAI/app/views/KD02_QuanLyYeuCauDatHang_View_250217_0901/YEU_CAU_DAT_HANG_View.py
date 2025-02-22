@@ -60,6 +60,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.tab_02_button_filter.config(command=self.event_tab_02_button_filter_click)
         self.tab_02_button_clear_filter.config(command=self.event_tab_02_button_clear_filter_click)
         self.tab_02_button_export_excel.config(command=self.event_tab_02_button_export_excel_click)
+        self.tab_02_button_export_all_data.config(command=self.event_tab_02_button_export_all_data_click)
         
         self.tab_02_button_edit_slip.config(command=self.event_tab_02_button_edit_slip_click)
         self.tab_02_button_delete_slip.config(command=self.event_tab_02_button_delete_slip_click)
@@ -509,6 +510,10 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         tab_02_button_container_02.pack(expand=True, pady=10)
         
         # Get Data button
+        self.tab_02_button_export_all_data = tk.Button(tab_02_button_container_02, text="Export all data")
+        self.tab_02_button_export_all_data.pack(side="left", padx=10)
+        
+        # Get Data button
         self.tab_02_button_export_excel = tk.Button(tab_02_button_container_02, text="Export Excel")
         self.tab_02_button_export_excel.pack(side="left", padx=10)
         
@@ -631,6 +636,10 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
             self.tab_01_label_footer_notification,
             self.tab_02_treeview_log_of_YCDH
         )
+        
+    def event_tab_02_button_export_all_data_click(self):
+        Controller_handel_all_events.f_handle_event_tab_02_button_export_all_data_click(
+            self.tab_01_label_footer_notification)
         
     def event_tab_02_button_edit_slip_click(self):
         Controller_handel_all_events.handle_event_tab_02_button_edit_click(

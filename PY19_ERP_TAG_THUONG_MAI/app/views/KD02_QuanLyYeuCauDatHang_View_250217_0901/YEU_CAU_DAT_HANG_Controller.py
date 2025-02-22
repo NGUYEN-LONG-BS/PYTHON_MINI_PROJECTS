@@ -3,8 +3,8 @@ import time
 from .YEU_CAU_DAT_HANG_Model import cls_YEU_CAU_DAT_HANG_Model
 # from .YEU_CAU_DAT_HANG_Model import cls_YEU_CAU_DAT_HANG_Model_02
 
-from .YEU_CAU_DAT_HANG_Model import SQLModel
-from .YEU_CAU_DAT_HANG_Model import Model_get_data_from_SQL
+# from .YEU_CAU_DAT_HANG_Model import SQLModel
+# from .YEU_CAU_DAT_HANG_Model import Model_get_data_from_SQL
 from Components_View import *   # Tại sao lại phải import Components_View
 from utils import *
 import traceback
@@ -864,17 +864,17 @@ class SQLController:
         else:
             return notification_text
 
-class utils_controller_SQL_to_excel:
-    def export_log_to_excel(query, my_excel_header):
-        # Truyền câu query vào model để lấy dữ liệu từ SQL (Giả sử hàm này trả về DataFrame)
-        df = Model_get_data_from_SQL.get_data_with_query(query)
+# class utils_controller_SQL_to_excel:
+#     def export_log_to_excel(query, my_excel_header):
+#         # Truyền câu query vào model để lấy dữ liệu từ SQL (Giả sử hàm này trả về DataFrame)
+#         df = utils_model_get_data_from_SQL.get_data_with_query(query)
         
-        # Kiểm tra nếu có dữ liệu trả về
-        if isinstance(df, list) and df:
-            f_utils_export_data_to_excel(my_excel_header, df)
-            print(f"Data exported successfully")
-        else:
-            print("No data found for the selected SO_PHIEU.")
+#         # Kiểm tra nếu có dữ liệu trả về
+#         if isinstance(df, list) and df:
+#             utils_controller_Export_data_to_Excel_250222_09h16.f_utils_export_data_to_excel(my_excel_header, df)
+#             print(f"Data exported successfully")
+#         else:
+#             print("No data found for the selected SO_PHIEU.")
         
 class Controller_get_the_latest_number_of_slip:
     
@@ -897,7 +897,7 @@ class Controller_get_the_latest_number_of_slip:
         # print("query", query)
         
         # lấy danh sách số phiếu từ SQL
-        danh_sach_so_phieu = Model_get_data_from_SQL.get_data_with_query(query)
+        danh_sach_so_phieu = utils_model_get_data_from_SQL.get_data_with_query(query)
         
         return danh_sach_so_phieu
         
@@ -949,7 +949,50 @@ class Controller_handel_all_events:
                 Controller_delete_row_in_SQL.update_deleted(so_phieu)
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"{so_phieu}, Slip deleted.", "blue")
                 return 
-    
+
+    def f_handle_event_tab_02_button_export_all_data_click(entry_notification):
+        try:
+            # Tạo câu query SQL với danh sách số phiếu
+            query = f"""
+            SELECT *
+            FROM [TBD_2024].[dbo].[TB_KD02_YEU_CAU_DAT_HANG]
+            """
+            # print("query", query)
+            
+            # Tạo header cho file Excel
+            header = ["ID",
+                    "DATE",
+                    "ID_NHAN_VIEN",
+                    "XOA_SUA",
+                    "NGAY_TREN_PHIEU",
+                    "SO_PHIEU",
+                    "MA_DOI_TUONG",
+                    "TEN_DOI_TUONG",
+                    "MA_SO_THUE",
+                    "DIA_CHI",
+                    "SO_HOP_DONG",
+                    "THONG_TIN_HOP_DONG",
+                    "GHI_CHU_PHIEU",
+                    "STT_DONG",
+                    "MA_HANG",
+                    "TEN_HANG",
+                    "DVT",
+                    "SO_LUONG_KHA_DUNG",
+                    "SO_LUONG_NHU_CAU",
+                    "SO_LUONG_GIU_CHO",
+                    "SO_LUONG_YEU_CAU_DAT_HANG",
+                    "GHI_CHU_SP"]
+
+            flag, path = utils_controller_Export_data_to_Excel_250222_09h16.export_log_to_excel(query, header)
+            if flag == False:
+                return False
+            
+            # Notification
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, path, "blue")
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+        
     def f_handle_event_tab_02_button_export_excel_click(entry_notification, my_treeview):
         try:
             # Export log to Excel
@@ -1009,10 +1052,12 @@ class Controller_handel_all_events:
                     "Số lượng yêu cầu đặt hàng", 
                     "Ghi chú sản phẩm"] 
             
-            utils_controller_SQL_to_excel.export_log_to_excel(query, header)
+            flag, path = utils_controller_Export_data_to_Excel_250222_09h16.export_log_to_excel(query, header)
+            if flag == False:
+                return False
             
             # Notification
-            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Export excel successfully!", "blue")
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, path, "blue")
         except Exception as e:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())

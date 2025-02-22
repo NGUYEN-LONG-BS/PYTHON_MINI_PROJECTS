@@ -163,4 +163,175 @@ class utils_model_import_data_to_SQL_SERVER_250221_16h45:
             return True
 
 
+class utils_model_get_data_from_SQL:
+    def get_data_with_query(query):
+        data = SQLModel.fetch_data(query)
+        return data
 
+class SQLModel:
+
+    def fetch_data(query):
+        try:
+            data = utils_functions.f_utils_fetch_data_from_database(query)
+            # print(data)
+            return data
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", utils_functions.f_utils_get_current_function_name())
+            return []
+        
+    def sent_SQL_query(query):
+        try:
+            utils_functions.f_utils_sent_query_to_SQL(query)
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", utils_functions.f_utils_get_current_function_name())
+    
+    def f_02_insert_data_to_sql(server_name, database_name, login_name, login_pass, table_name, data_array):
+        """
+        Hàm kết nối SQL Server và chèn dữ liệu từ mảng vào bảng, bỏ qua các cột có giá trị mặc định (ID, NGAY_TAO_PHIEU).
+        
+        :param server_name: Tên hoặc địa chỉ IP của máy chủ SQL Server.
+        :param database_name: Tên cơ sở dữ liệu.
+        :param login_name: Tên người dùng SQL Server.
+        :param login_pass: Mật khẩu SQL Server.
+        :param table_name: Tên bảng trong cơ sở dữ liệu.
+        :param data_array: Mảng chứa dữ liệu cần chèn (list of lists).
+        """
+        # Kết nối đến SQL Server
+        connection_string = f"DRIVER={{SQL Server}};SERVER={server_name};DATABASE={database_name};UID={login_name};PWD={login_pass}"
+        try:
+            conn = pyodbc.connect(connection_string)
+            # print("Kết nối thành công đến cơ sở dữ liệu.")
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", utils_functions.f_utils_get_current_function_name())
+            return
+
+        cursor = conn.cursor()
+        
+        # Lấy danh sách cột của bảng
+        try:
+            cursor.execute(f"SELECT * FROM {table_name} WHERE 1=0")
+            columns = [column[0] for column in cursor.description]  # Lấy tên cột
+            # print("Danh sách cột trong bảng:", columns)
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", utils_functions.f_utils_get_current_function_name())
+            return
+
+        # Loại bỏ các cột có giá trị mặc định (ID, NGAY_TAO_PHIEU)
+        columns_to_insert = [col for col in columns if col not in ['ID', 'DATE']]
+        # print("Danh sách cột cần chèn:", columns_to_insert)
+        
+        # Kiểm tra số cột trong dữ liệu khớp với số cột cần chèn
+        num_columns_to_insert = len(columns_to_insert)
+        if not all(len(row) == num_columns_to_insert for row in data_array):
+            print("Dữ liệu không khớp số cột cần chèn.")
+            return
+
+        # Chèn dữ liệu
+        try:
+            placeholders = ", ".join(["?" for _ in range(num_columns_to_insert)])  # Tạo chuỗi placeholder "?, ?, ?"
+            query = f"INSERT INTO {table_name} ({', '.join(columns_to_insert)}) VALUES ({placeholders})"
+            
+            for row in data_array:
+                cursor.execute(query, row)
+            
+            conn.commit()
+            # print("Dữ liệu đã được chèn thành công.")
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", utils_functions.f_utils_get_current_function_name())
+        finally:
+            cursor.close()
+            conn.close()
+            print("Kết nối đã được đóng.")
+    
+    def f_goi_ham_Export_to_TB_KD02_YEU_CAU_DAT_HANG(data_array, database_name, table_name):
+        server_name = "14.225.192.238, 1433"  # Địa chỉ IP của SQL Server
+        database_name = database_name
+        login_name = "sa"
+        login_pass = "Ta#9999"
+        table_name = table_name
+
+        SQLModel.f_02_insert_data_to_sql(server_name, database_name, login_name, login_pass, table_name, data_array)
+    
+    def f_validate_data_format(data_array):
+        """
+        Validate the format of data before inserting into SQL Server.
+        :param data_array: List of tuples containing the data to validate.
+        :return: True if all data is valid, otherwise False with error messages.
+        """
+        is_valid = True
+        for idx, row in enumerate(data_array):
+            try:
+                # Validate each field
+                column = 0
+                if not isinstance(row[column], str) or len(row[column]) > 10:
+                    raise ValueError(f"Data validation: ID_NHAN_VIEN (Row {idx+1}, Value: {row[column]}) must be a string with a maximum length of 10.")
+                column = 1
+                if not isinstance(row[column], str):
+                    raise ValueError(f"Data validation: XOA_SUA (Row {idx+1}, Value: {row[column]}) must be a string.")
+                column = 2
+                try:
+                    datetime.strptime(row[column], '%Y-%m-%d')
+                except ValueError:
+                    raise ValueError(f"Data validation: NGAY_TREN_PHIEU (Row {idx+1}, Value: {row[column]}) must be a valid date in 'YYYY-MM-DD' format.")
+                column = 3
+                if not isinstance(row[column], str) or len(row[column]) > 50:
+                    raise ValueError(f"Data validation: SO_PHIEU (Row {idx+1}, Value: {row[column]}) must be a string with a maximum length of 50.")
+                column = 4
+                if not isinstance(row[column], str) or len(row[column]) > 50:
+                    raise ValueError(f"Data validation: MA_DOI_TUONG (Row {idx+1}, Value: {row[column]}) must be a string with a maximum length of 50.")
+                column = 5
+                if not isinstance(row[column], str):
+                    raise ValueError(f"Data validation: TEN_DOI_TUONG (Row {idx+1}, Value: {row[column]}) must be a string.")
+                column = 6
+                if not isinstance(row[column], str):
+                    raise ValueError(f"Data validation: MST (Row {idx+1}, Value: {row[column]}) must be a string.")
+                column = 7
+                if not isinstance(row[column], str):
+                    raise ValueError(f"Data validation: DIA_CHI (Row {idx+1}, Value: {row[column]}) must be a string.")
+                column = 8
+                if not isinstance(row[column], str):
+                    raise ValueError(f"Data validation: SO_HOP_DONG (Row {idx+1}, Value: {row[column]}) must be a string.")
+                column = 9
+                if not isinstance(row[column], str):
+                    raise ValueError(f"Data validation: THONG_TIN_HOP_DONG (Row {idx+1}, Value: {row[column]}) must be a string.")
+                column = 10
+                if not isinstance(row[column], str):
+                    raise ValueError(f"Data validation: GHI_CHU_PHIEU (Row {idx+1}, Value: {row[column]}) must be a string.")
+                column = 11
+                if not isinstance(row[column], int) or row[column] < 1:
+                    raise ValueError(f"Data validation: STT_DONG (Row {idx+1}, Value: {row[column]}) must be an integer greater than 0.")
+                column = 12
+                if not isinstance(row[column], str):
+                    raise ValueError(f"Data validation: MA_HANG (Row {idx+1}, Value: {row[column]}) must be a string.")
+                column = 13
+                if not isinstance(row[column], str):
+                    raise ValueError(f"Data validation: TEN_HANG (Row {idx+1}, Value: {row[column]}) must be a string.")
+                column = 14
+                if not isinstance(row[column], str):
+                    raise ValueError(f"Data validation: DVT (Row {idx+1}, Value: {row[column]}) must be a string.")
+                column = 15
+                if not isinstance(row[column], (int, float)) or row[column] < 0:
+                    raise ValueError(f"Data validation: SO_LUONG_KHA_DUNG (Row {idx+1}, Value: {row[column]}) must be a positive number.")
+                column = 16
+                if not isinstance(row[column], (int, float)) or row[column] <= 0:
+                    raise ValueError(f"Data validation: SO_LUONG_NHU_CAU (Row {idx+1}, Value: {row[column]}) must be a positive number.")
+                column = 17
+                if not isinstance(row[column], (int, float)) or row[column] < 0:
+                    raise ValueError(f"Data validation: SO_LUONG_GIU_CHO (Row {idx+1}, Value: {row[column]}) must be a positive number.")
+                column = 18
+                if not isinstance(row[column], (int, float)) or row[column] < 0:
+                    raise ValueError(f"Data validation: SO_LUONG_YCDH (Row {idx+1}, Value: {row[column]}) must be a positive number.")
+                column = 19
+                if not isinstance(row[column], str):
+                    raise ValueError(f"Data validation: GHI_CHU_SP (Row {idx+1}, Value: {row[column]}) must be a string.")
+            
+            except ValueError as e:
+                is_valid = False
+                print(e)
+
+        return is_valid

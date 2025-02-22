@@ -14,11 +14,14 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import font
 from tkinter import filedialog, messagebox
+
 import openpyxl
 from openpyxl import Workbook
 from openpyxl.styles import Font, Alignment
 from openpyxl.styles import Font, Alignment, PatternFill
 from openpyxl import load_workbook
+from openpyxl.utils import get_column_letter
+
 import xlwings as xw
 from define import *
 import pyodbc
@@ -56,6 +59,118 @@ class utils_controller_action_after_event_250216_14h57:
 class utils_controller_config_notification_250220_10h05:
     def f_config_notification(element_label, text="...", fg="blue"):
             element_label.config(text=text, fg=fg)
+
+class utils_controller_Export_data_to_Excel_250222_09h16:
+    
+    def export_log_to_excel(query, my_excel_header):
+        # Truyền câu query vào model để lấy dữ liệu từ SQL (Giả sử hàm này trả về DataFrame)
+        df = utils_models.utils_model_get_data_from_SQL.get_data_with_query(query)
+        
+        # Kiểm tra nếu có dữ liệu trả về
+        if isinstance(df, list) and df:
+            path = utils_controller_Export_data_to_Excel_250222_09h16.f_utils_export_data_to_excel(my_excel_header, df)
+            if path:
+                return True, path
+        return False, None
+    
+    def f_utils_export_data_to_excel(data_header, data):
+        # Kiểm tra tính nhất quán của dữ liệu
+        if not data or not data_header:
+            print("No data or headers provided.")
+            return
+        
+        # Chuyển đổi dữ liệu từ pyodbc.Row thành tuple (nếu cần)
+        data = [tuple(row) for row in data]
+
+        # Kiểm tra số lượng cột có khớp không
+        if len(data[0]) != len(data_header):
+            print(f"Error: Mismatch in column count. Expected {len(data_header)}, but got {len(data[0])}.")
+            return
+        
+        # Tạo DataFrame
+        df = pd.DataFrame(data, columns=data_header)
+        
+        # Chuyển đổi kiểu dữ liệu Decimal và datetime để tương thích với Excel
+        for column in df.columns:
+            df[column] = df[column].apply(lambda x: float(x) if isinstance(x, Decimal) 
+                                        else x.strftime('%Y-%m-%d %H:%M:%S') if isinstance(x, datetime) 
+                                        else x)
+        
+        # Đường dẫn thư mục lưu file
+        directory = PATH_DEFAUL
+        if not os.path.exists(directory):
+            os.makedirs(directory)  # Tạo thư mục nếu chưa tồn tại
+        
+        # Tạo file với tên không trùng
+        file_path = utils_functions.f_utils_get_unique_filename(directory, "exported_data.xlsx")
+
+        # Xuất ra file Excel
+        wb = Workbook()
+        ws = wb.active
+        ws.title = "Exported Data"
+        
+        # Ghi header
+        ws.append(data_header)
+        
+        # Ghi dữ liệu
+        for row in df.itertuples(index=False, name=None):
+            ws.append(row)
+        
+        # Lưu file
+        wb.save(file_path)
+        wb.close()
+        # print(f"Data exported successfully to {file_path}")
+        utils_controller_Export_data_to_Excel_250222_09h16.format_excel_file(file_path, ws.title, "A1")
+        return file_path
+    
+    def format_excel_file(file_path, sheet_name, start_cell):
+        # Mở file Excel
+        wb = openpyxl.load_workbook(file_path)
+        
+        # Kiểm tra nếu sheet tồn tại
+        if sheet_name not in wb.sheetnames:
+            print(f"Sheet '{sheet_name}' không tồn tại trong {file_path}")
+            return
+        
+        ws = wb[sheet_name]  # Chọn sheet theo tên
+        
+        # Xác định vị trí bắt đầu (ví dụ: "A1")
+        start_row = ws[start_cell].row
+        start_col = ws[start_cell].column
+
+        # Tìm hàng và cột lớn nhất có dữ liệu
+        max_row = ws.max_row
+        max_col = ws.max_column
+
+        # Xác định phạm vi dữ liệu (Dynamic)
+        range_to_format = ws[start_cell:get_column_letter(max_col) + str(max_row)]
+
+        # Áp dụng định dạng cho từng ô
+        for row in range_to_format:
+            for cell in row:
+                cell.alignment = Alignment(
+                    horizontal="center",  # Căn giữa ngang
+                    vertical="center",    # Căn giữa dọc
+                    wrap_text=False,      # Không xuống dòng tự động
+                    shrink_to_fit=False   # Không co chữ vừa ô
+                )
+
+        # Tự động điều chỉnh độ rộng cột (AutoFit trong VBA)
+        for col_num in range(start_col, max_col + 1):
+            col_letter = get_column_letter(col_num)  # Lấy chữ cái của cột (A, B, C,...)
+            max_length = 0
+
+            for row_num in range(start_row, max_row + 1):
+                cell_value = ws[f"{col_letter}{row_num}"].value
+                if cell_value:
+                    max_length = max(max_length, len(str(cell_value)))
+
+            ws.column_dimensions[col_letter].width = max_length + 2  # Thêm padding
+
+        # Lưu file
+        wb.save(file_path)
+        wb.close()
+
 
 class utils_controller_get_the_latest_number_of_slip:
     
