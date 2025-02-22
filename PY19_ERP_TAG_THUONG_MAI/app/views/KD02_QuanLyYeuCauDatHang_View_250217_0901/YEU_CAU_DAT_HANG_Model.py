@@ -1,9 +1,9 @@
-import os
-import json
-import pyodbc
-from datetime import datetime
-from Components_View import *
-from utils import *
+# import os
+# import json
+# import pyodbc
+# from datetime import datetime
+# from Components_View import *
+# from utils import *
 
 # class cls_YEU_CAU_DAT_HANG_Model_05_staticmenthod_get_data_from_SQL:
 #     @staticmethod
