@@ -201,7 +201,13 @@ class cls_TreeviewCombobox_clients(cls_my_text_entry_num_01):
             self.dropdown.lift()
 
     def hide_dropdown(self, event=None):
+        # if self.dropdown:
+        #     self.dropdown.destroy()
+        #     self.dropdown = None
+        
         if self.dropdown:
+            if hasattr(self, 'tree') and self.tree:
+                self.tree.destroy()
             self.dropdown.destroy()
             self.dropdown = None
 
@@ -215,6 +221,9 @@ class cls_TreeviewCombobox_clients(cls_my_text_entry_num_01):
         self.refresh_data(query)
 
     def refresh_data(self, query=""):
+        if not hasattr(self, 'tree') or not self.tree:
+            return  # Tránh lỗi nếu self.tree không tồn tại
+        
         # Clear existing data
         for item in self.tree.get_children():
             self.tree.delete(item)

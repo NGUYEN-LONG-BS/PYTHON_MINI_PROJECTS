@@ -1,6 +1,6 @@
 from tkinter import messagebox
 import time
-from .YEU_CAU_DAT_HANG_Model import cls_YEU_CAU_DAT_HANG_Model
+# from .YEU_CAU_DAT_HANG_Model import cls_YEU_CAU_DAT_HANG_Model
 # from .YEU_CAU_DAT_HANG_Model import cls_YEU_CAU_DAT_HANG_Model_02
 
 # from .YEU_CAU_DAT_HANG_Model import SQLModel
@@ -1487,12 +1487,12 @@ class Controller_event_tab_01_btn_save_click:
             # Check if the client id is empty
             if entry_ma_khach_hang.get() == "" or entry_ma_khach_hang.get() == "search here":
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Mã khách hàng không được để trống!", "red")
-                print("Error at function: ", f_utils_get_current_function_name())
+                # print("Error at function: ", f_utils_get_current_function_name())
                 return False
             
             if len(my_treeview.get_children()) == 0:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Bảng không có dữ liệu", "red")
-                print("Error at function: ", f_utils_get_current_function_name())
+                # print("Error at function: ", f_utils_get_current_function_name())
                 return False
             
             # Check duplicate slip number
@@ -1502,7 +1502,7 @@ class Controller_event_tab_01_btn_save_click:
                 table_name,
                 column_name) == True:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số phiếu bị trùng, vui lòng thử lại!", "red")
-                print("Error at function: ", f_utils_get_current_function_name())
+                # print("Error at function: ", f_utils_get_current_function_name())
                 return False
             
             # Check exist client id
@@ -1515,7 +1515,7 @@ class Controller_event_tab_01_btn_save_click:
                 table_name,
                 column_name) == True:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Mã khách hàng chưa tồn tại!", "red")
-                print("Error at function: ", f_utils_get_current_function_name())
+                # print("Error at function: ", f_utils_get_current_function_name())
                 return False
             
             # pass the validation
