@@ -765,6 +765,19 @@ class Controller_delete_row_in_SQL:
         query = f"EXEC [{database_name}].[dbo].[Proc_TB_KD02_YEU_CAU_DAT_HANG_UPDATE_DELETED_250208_23h29] '{so_phieu}'"
         # Sent SQL query
         SQLModel.sent_SQL_query(query)
+
+class Controller_edit_row_in_SQL:
+    def get_data_want_to_edit(so_phieu):
+        # Create query
+        database_name = f_utils_get_DB_NAME()
+        query = f"""
+        SELECT * FROM [{database_name}].[dbo].[TB_KD02_YEU_CAU_DAT_HANG]
+        WHERE SO_PHIEU = '{so_phieu}' AND XOA_SUA = ''
+        """
+        # Sent SQL query
+        data = SQLModel.fetch_data(query)
+        print(data)
+        return data
  
 class SQLController:
     def load_data(tree, query):
@@ -933,7 +946,16 @@ class Controller_handel_all_events:
         # Check if no row is selected
         if not selected_items:
             utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Selection Error, No row selected.", "blue")
-            return 
+            return
+        
+        # Get the selected row
+        for item in selected_items:
+            row_values = my_treeview.item(item, 'values')
+            if len(row_values) > 2:  # Ensure the row has at least 2 columns
+                so_phieu = row_values[2]
+                Controller_edit_row_in_SQL.get_data_want_to_edit(so_phieu)
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Begin editing slip {so_phieu}.", "blue")
+                return 
     
     def handle_event_tab_02_btn_delete_slip_click(entry_notification, my_treeview):
         # Get the selected items
