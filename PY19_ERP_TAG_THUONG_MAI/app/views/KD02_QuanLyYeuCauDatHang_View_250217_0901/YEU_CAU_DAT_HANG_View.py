@@ -503,11 +503,11 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.tab_02_button_export_excel.pack(side="left", padx=10)
         
         # Get Data button
-        self.tab_02_button_edit_slip = tk.Button(tab_02_button_container_02, text="EDIT")
+        self.tab_02_button_edit_slip = tk.Button(tab_02_button_container_02, text="Edit slip")
         self.tab_02_button_edit_slip.pack(side="left", padx=10)
         
         # Export Data button
-        self.tab_02_button_delete_slip = tk.Button(tab_02_button_container_02, text="DELETE")
+        self.tab_02_button_delete_slip = tk.Button(tab_02_button_container_02, text="Delete slip")
         self.tab_02_button_delete_slip.pack(side="left", padx=10)
     
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
@@ -627,8 +627,10 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         )
     
     def event_tab_02_button_delete_slip_click(self):
-        Controller_handel_all_events.handle_event_btn_delete_click(
+        Controller_handel_all_events.handle_event_tab_02_btn_delete_slip_click(
             self.tab_01_label_footer_notification, 
             self.tab_02_treeview_log_of_YCDH
         )
+        # refresh data
+        self.event_tab_02_button_filter_click()
     

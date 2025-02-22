@@ -50,14 +50,17 @@ class cls_Treeview_frame_number_01(tk.Frame):
             # Bỏ highlight dòng trước đó (nếu dòng đó hợp lệ)
             if self.current_highlighted:
                 try:
-                    self.treeview_normal.item(self.current_highlighted, tags=())
+                    # Kiểm tra nếu dòng cũ còn tồn tại trước khi bỏ highlight
+                    if self.treeview_normal.exists(self.current_highlighted):
+                        self.treeview_normal.item(self.current_highlighted, tags=())
                 except ValueError:
                     pass  # Nếu item không tồn tại, bỏ qua và không gây lỗi
             
             # Gắn highlight cho dòng hiện tại
-            self.treeview_normal.item(row_id, tags=("highlighted",))
-            self.treeview_normal.tag_configure("highlighted", background=HIGHLIGHT_COLOR)
-            self.current_highlighted = row_id
+            if self.treeview_normal.exists(row_id):  # Kiểm tra nếu dòng hiện tại tồn tại
+                self.treeview_normal.item(row_id, tags=("highlighted",))
+                self.treeview_normal.tag_configure("highlighted", background=HIGHLIGHT_COLOR)
+                self.current_highlighted = row_id
         elif not row_id and self.current_highlighted:
             # Nếu không có dòng nào dưới con trỏ, bỏ highlight
             try:

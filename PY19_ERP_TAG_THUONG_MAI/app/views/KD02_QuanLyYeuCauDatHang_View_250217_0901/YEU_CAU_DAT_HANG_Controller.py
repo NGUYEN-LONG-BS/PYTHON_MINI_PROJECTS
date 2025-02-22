@@ -930,7 +930,7 @@ class Controller_handel_all_events:
             utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Selection Error, No row selected.", "blue")
             return 
     
-    def handle_event_btn_delete_click(entry_notification, my_treeview):
+    def handle_event_tab_02_btn_delete_slip_click(entry_notification, my_treeview):
         # Get the selected items
         selected_items = my_treeview.selection()
         
@@ -947,8 +947,8 @@ class Controller_handel_all_events:
         # Get the selected row
         for item in selected_items:
             row_values = my_treeview.item(item, 'values')
-            if len(row_values) > 1:  # Ensure the row has at least 2 columns
-                so_phieu = row_values[1]
+            if len(row_values) > 2:  # Ensure the row has at least 2 columns
+                so_phieu = row_values[2]
                 Controller_delete_row_in_SQL.update_deleted(so_phieu)
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"{so_phieu}, Slip deleted.", "blue")
                 return 
@@ -1306,7 +1306,7 @@ class Controller_handel_all_events:
         
             # Create value and fetch data
             query = f"""
-                    EXEC [dbo].[Proc_TB_KD02_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250211_14hh45] 
+                    EXEC [dbo].[Proc_TB_KD02_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250222_14hh40] 
                         @SO_PHIEU = '{so_phieu}', 
                         @SO_HOP_DONG = '{so_hop_dong}',
                         @START_DATE = '{formated_ngay_bat_dau}', 
