@@ -779,7 +779,8 @@ class SQLController:
         for row in data:
             tree.insert("", "end", values=(row[0], row[1], row[2], row[3], row[4],
                                            row[5], row[6], row[7], row[8], row[9],
-                                           row[10], row[11], row[12], row[13], row[14]))
+                                           row[10], row[11], row[12], row[13], row[14],
+                                           row[15]))
         
     # Function to print data from the Treeview
     def get_data_to_import_to_SQL(*args):
@@ -1404,7 +1405,7 @@ class Controller_handel_all_events:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
         
-    def f_handle_event_tab_02_button_clear_slip(
+    def f_handle_event_tab_02_button_clear_filter(
             entry_notification, 
             my_treeview,
             tab_02_entry_filter_slip_number,
@@ -1425,7 +1426,7 @@ class Controller_handel_all_events:
             
             # refresh data in treeview
             query = f"""
-                    EXEC [dbo].[Proc_TB_KD02_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250211_14hh45] 
+                    EXEC [dbo].[Proc_TB_KD02_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250222_14hh40] 
                         @SO_PHIEU = NULL, 
                         @SO_HOP_DONG = NULL,
                         @START_DATE = NULL, 

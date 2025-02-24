@@ -893,7 +893,7 @@ class Controller_handel_all_events:
         
             # Create value and fetch data
             query = f"""
-                    EXEC [dbo].[Proc_TB_KD02_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250211_14hh45] 
+                    EXEC [dbo].[Proc_TB_KD02_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250222_14hh40] 
                         @SO_PHIEU = '{so_phieu}', 
                         @SO_HOP_DONG = '{so_hop_dong}',
                         @START_DATE = '{formated_ngay_bat_dau}', 
@@ -913,7 +913,7 @@ class Controller_handel_all_events:
         try:
             # query = f"[Proc_TB_KD02_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250204_110h38]'','',''"
             query = f"""
-                    EXEC [dbo].[Proc_TB_KD02_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250211_14hh45] 
+                    EXEC [dbo].[Proc_TB_KD02_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250222_14hh40] 
                         @SO_PHIEU = NULL, 
                         @SO_HOP_DONG = NULL,
                         @START_DATE = NULL, 

@@ -610,7 +610,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
             )
     
     def event_tab_02_button_clear_filter_click(self):
-        Controller_handel_all_events.f_handle_event_tab_02_button_clear_slip(
+        Controller_handel_all_events.f_handle_event_tab_02_button_clear_filter(
             self.tab_01_label_footer_notification, 
             self.tab_02_treeview_log_of_YCDH,
             self.tab_02_entry_filter_slip_number,
