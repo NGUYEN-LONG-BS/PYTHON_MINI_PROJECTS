@@ -766,18 +766,7 @@ class Controller_delete_row_in_SQL:
         # Sent SQL query
         SQLModel.sent_SQL_query(query)
 
-class Controller_edit_row_in_SQL:
-    def get_data_want_to_edit(so_phieu):
-        # Create query
-        database_name = f_utils_get_DB_NAME()
-        query = f"""
-        SELECT * FROM [{database_name}].[dbo].[TB_KD02_YEU_CAU_DAT_HANG]
-        WHERE SO_PHIEU = '{so_phieu}' AND XOA_SUA = ''
-        """
-        # Sent SQL query
-        data = SQLModel.fetch_data(query)
-        print(data)
-        return data
+
  
 class SQLController:
     def load_data(tree, query):
@@ -884,18 +873,6 @@ class SQLController:
             return "Data exported"
         else:
             return notification_text
-
-# class utils_controller_SQL_to_excel:
-#     def export_log_to_excel(query, my_excel_header):
-#         # Truyền câu query vào model để lấy dữ liệu từ SQL (Giả sử hàm này trả về DataFrame)
-#         df = utils_model_get_data_from_SQL.get_data_with_query(query)
-        
-#         # Kiểm tra nếu có dữ liệu trả về
-#         if isinstance(df, list) and df:
-#             utils_controller_Export_data_to_Excel_250222_09h16.f_utils_export_data_to_excel(my_excel_header, df)
-#             print(f"Data exported successfully")
-#         else:
-#             print("No data found for the selected SO_PHIEU.")
         
 class Controller_get_the_latest_number_of_slip:
     
@@ -934,9 +911,28 @@ class Controller_get_the_latest_number_of_slip:
 
 class Controller_handel_all_events:
     
-    def handle_event_tab_02_button_edit_click(entry_notification, my_treeview):
+    def handle_event_tab_02_button_edit_click(entry_notification, active_tab, elements_list):
+        
+        # Active tab
+        notebook = active_tab.master  # Get the Notebook that contains the tab
+        notebook.select(active_tab)  # Select the correct tab
+        
+        (
+            entry_ngay_tren_phieu,
+            entry_so_phieu,
+            entry_ma_khach_hang,
+            entry_ten_hhach_hang,
+            entry_mst,
+            entry_dia_chi,
+            entry_so_hop_dong,
+            entry_thong_tin_hop_dong,
+            entry_note_for_slip,
+            my_treeview_to_get_data,
+            my_treeview_to_load_data
+            ) = elements_list
+
         # Get the selected items
-        selected_items = my_treeview.selection()
+        selected_items = my_treeview_to_get_data.selection()
         
         # Check if more than one row is selected
         if len(selected_items) > 1:
@@ -950,12 +946,12 @@ class Controller_handel_all_events:
         
         # Get the selected row
         for item in selected_items:
-            row_values = my_treeview.item(item, 'values')
+            row_values = my_treeview_to_get_data.item(item, 'values')
             if len(row_values) > 2:  # Ensure the row has at least 2 columns
                 so_phieu = row_values[2]
-                Controller_edit_row_in_SQL.get_data_want_to_edit(so_phieu)
+                Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG.begin_editing_slip(elements_list, so_phieu)
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Begin editing slip {so_phieu}.", "blue")
-                return 
+                return
     
     def handle_event_tab_02_btn_delete_slip_click(entry_notification, my_treeview):
         # Get the selected items
@@ -1577,7 +1573,168 @@ class Controller_validate_data_from_Excel_file_to_import_to_SQL_250221_17h05:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
             return False
+
+class Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG:
+    def begin_editing_slip(elements_list, so_phieu):
+        (
+            entry_ngay_tren_phieu,
+            entry_so_phieu,
+            entry_ma_khach_hang,
+            entry_ten_hhach_hang,
+            entry_mst,
+            entry_dia_chi,
+            entry_so_hop_dong,
+            entry_thong_tin_hop_dong,
+            entry_note_for_slip,
+            my_treeview_to_get_data,
+            my_treeview_to_load_data
+            ) = elements_list
+        data = Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG.get_data_want_to_edit(so_phieu)
+        if not data:
+            return
+        
+        first_row = Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG.get_first_row(data)
+        
+        # update entries
+        entries_list = (
+            entry_ngay_tren_phieu,
+            entry_so_phieu,
+            entry_ma_khach_hang,
+            entry_ten_hhach_hang,
+            entry_mst,
+            entry_dia_chi,
+            entry_so_hop_dong,
+            entry_thong_tin_hop_dong,
+            entry_note_for_slip
+            )
+        Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG.Insert_data_into_entries(entries_list, first_row)
+        Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG.Insert_data_into_treeview(my_treeview_to_load_data, data)
+        
     
+    def get_data_want_to_edit(so_phieu):
+        # Create query
+        database_name = f_utils_get_DB_NAME()
+        query = f"""
+        SELECT * FROM [{database_name}].[dbo].[TB_KD02_YEU_CAU_DAT_HANG]
+        WHERE SO_PHIEU = '{so_phieu}' AND XOA_SUA = ''
+        """
+        # Sent SQL query
+        data = SQLModel.fetch_data(query)
+        Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG.get_first_row(data)
+        return data
+    
+    def get_first_row(data):
+        """
+        Extracts the first row from a dataset and returns it as a dictionary.
+
+            -param data: List of tuples containing the dataset
+            -return: Dictionary with field names as keys and corresponding values
+        """
+        try:
+            if not data:
+                return None  # Return None if the data list is empty
+
+            first_row = data[0]
+            return first_row
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return None
+    
+    def Insert_data_into_entries(entries_list, data):
+        (
+            entry_ngay_tren_phieu,
+            entry_so_phieu,
+            entry_ma_khach_hang,
+            entry_ten_hhach_hang,
+            entry_mst,
+            entry_dia_chi,
+            entry_so_hop_dong,
+            entry_thong_tin_hop_dong,
+            entry_note_for_slip
+            ) = entries_list
+        try:
+            
+            # Handle the case where the date might be stored as a string instead of a datetime object
+            if isinstance(data[4], datetime):
+                value_ngay_tren_phieu = data[4].strftime('%d-%m-%Y')  # Convert datetime to 'DD-MM-YYYY'
+            else:
+                # If it's a string, try to parse it to a datetime object before formatting
+                value_ngay_tren_phieu = datetime.strptime(data[4], '%Y-%m-%d %H:%M:%S.%f').strftime('%d-%m-%Y')
+            value_so_phieu = data[5]
+            value_ma_khach_hang = data[6]
+            value_ten_khach_hang = data[7]
+            value_mst = data[8]
+            value_dia_chi = data[9]
+            value_so_hop_dong = data[10]
+            value_thong_tin_hop_dong = data[11]
+            value_note_for_slip = data[12]
+            
+            # Beging insert into entries
+            entry_ngay_tren_phieu.config(state="normal")
+            entry_ngay_tren_phieu.delete(0, tk.END)
+            entry_ngay_tren_phieu.insert(0, value_ngay_tren_phieu)
+            entry_ngay_tren_phieu.config(state="readonly")
+            
+            entry_so_phieu.config(state="normal")
+            entry_so_phieu.delete(0, tk.END)
+            entry_so_phieu.insert(0, value_so_phieu)
+            entry_so_phieu.config(state="readonly")
+            
+            entry_ma_khach_hang.delete(0, tk.END)
+            entry_ma_khach_hang.insert(0, value_ma_khach_hang)
+            
+            entry_ten_hhach_hang.delete(0, tk.END)
+            entry_ten_hhach_hang.insert(0, value_ten_khach_hang)
+            
+            entry_mst.delete(0, tk.END)
+            entry_mst.insert(0, value_mst)
+            
+            entry_dia_chi.delete(0, tk.END)
+            entry_dia_chi.insert(0, value_dia_chi)
+            
+            entry_so_hop_dong.delete(0, tk.END)
+            entry_so_hop_dong.insert(0, value_so_hop_dong)
+            
+            entry_thong_tin_hop_dong.delete(0, tk.END)
+            entry_thong_tin_hop_dong.insert(0, value_thong_tin_hop_dong)
+            
+            entry_note_for_slip.delete(0, tk.END)
+            entry_note_for_slip.insert(0, value_note_for_slip)
+            
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+        
+    def Insert_data_into_treeview(my_treeview, data):
+        # Xóa tất cả dữ liệu cũ trước khi thêm mới
+        my_treeview.delete(*my_treeview.get_children())
+        try:
+            for item in data:
+                # Đảm bảo item có đủ số lượng phần tử
+                item = list(item) + [''] * (22 - len(item))  
+
+                # Chuyển đổi các kiểu dữ liệu đặc biệt thành chuỗi
+                values = (
+                    str(item[13]) if len(item) > 13 else '',
+                    str(item[14]) if len(item) > 14 else '',
+                    str(item[15]) if len(item) > 15 else '',
+                    str(item[16]) if len(item) > 16 else '',
+                    str(item[17]) if len(item) > 17 else '',
+                    str(item[18]) if len(item) > 18 else '0',  # Decimal -> str
+                    str(item[19]) if len(item) > 19 else '0',  # Decimal -> str
+                    str(item[20]) if len(item) > 20 else '0',  # Decimal -> str
+                    str(item[21]) if len(item) > 21 else ''    # Giá trị cuối cùng (trống)
+                )
+                
+                # Chèn dữ liệu vào Treeview
+                my_treeview.insert("", "end", values=values)
+            
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
     
     
     

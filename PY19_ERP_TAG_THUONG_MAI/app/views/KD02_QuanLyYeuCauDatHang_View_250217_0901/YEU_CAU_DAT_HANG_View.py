@@ -79,6 +79,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_entry_ma_hang = f_utils_tim_component_with_name(tab_01_frame, "entry_ma_hang")
         self.tab_01_entry_ten_hang = f_utils_tim_component_with_name(tab_01_frame, "entry_ten_hang")
         self.tab_01_entry_dvt = f_utils_tim_component_with_name(tab_01_frame, "entry_dvt")
+        self.tab_01_entry_ngay_tren_phieu = f_utils_tim_component_with_name(tab_01_frame, "date_entry")
         self.tab_01_entry_so_phieu = f_utils_tim_component_with_name(tab_01_frame, "slips_entry")
         self.tab_01_btn_refresh_number_of_slip = f_utils_tim_component_with_name(tab_01_frame, "refresh_number_of_slip_button")
         self.tab_01_entry_ma_khach_hang = f_utils_tim_component_with_name(tab_01_frame, "entry_ma_khach_hang")
@@ -279,10 +280,10 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
 
         # Input fields
         tk.Label(self.tab_01_frame_slip_informations, text="Thông tin thêm:").pack(side="left")
-        self.tab_01_note_for_slip = cls_my_text_entry_num_01(self.tab_01_frame_slip_informations)
-        self.tab_01_note_for_slip.f_on_leaving(color=COLOR_WHITE)
-        self.tab_01_note_for_slip.f_on_not_selecting(color=COLOR_WHITE)
-        self.tab_01_note_for_slip.pack(side="left", fill="x", expand=True, pady=10)
+        self.tab_01_entry_note_for_slip = cls_my_text_entry_num_01(self.tab_01_frame_slip_informations)
+        self.tab_01_entry_note_for_slip.f_on_leaving(color=COLOR_WHITE)
+        self.tab_01_entry_note_for_slip.f_on_not_selecting(color=COLOR_WHITE)
+        self.tab_01_entry_note_for_slip.pack(side="left", fill="x", expand=True, pady=10)
         
     def _f_view_create_widgets_add_widget_into_frame_inventories_informations_tab_01(self):
         # create parent_frame
@@ -362,6 +363,10 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         # Create a sub-frame on the left
         tab_01_button_container_02_on_the_left = tk.Frame(parent_frame)
         tab_01_button_container_02_on_the_left.pack(side="left", expand=True, pady=10)
+        
+        # BTN update slip
+        self.tab_01_button_update_slip = tk.Button(tab_01_button_container_02_on_the_right, text="Update")
+        self.tab_01_button_update_slip.pack(side="right", padx=10)
         
         # BTN save
         self.tab_01_button_save = tk.Button(tab_01_button_container_02_on_the_right, text="Save")
@@ -563,7 +568,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
             self.tab_01_entry_dia_chi,
             self._tab_01_entry_so_hop_dong,
             self.tab_01_entry_thong_tin_hop_dong,
-            self.tab_01_note_for_slip,
+            self.tab_01_entry_note_for_slip,
             self.tab_01_treeview_YCDH
         )    
     
@@ -608,9 +613,24 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
             self.tab_01_label_footer_notification)
         
     def event_tab_02_button_edit_slip_click(self):
+        elements_list = (
+            self.tab_01_entry_ngay_tren_phieu,
+            self.tab_01_entry_so_phieu,
+            self.tab_01_entry_ma_khach_hang,
+            self.tab_01_entry_ten_khach_hang,
+            self.tab_01_entry_mst,
+            self.tab_01_entry_dia_chi,
+            self._tab_01_entry_so_hop_dong,
+            self.tab_01_entry_thong_tin_hop_dong,
+            self.tab_01_entry_note_for_slip,
+            self.tab_02_treeview_log_of_YCDH,
+            self.tab_01_treeview_YCDH
+            )
+            
         Controller_handel_all_events.handle_event_tab_02_button_edit_click(
             self.tab_01_label_footer_notification, 
-            self.tab_02_treeview_log_of_YCDH
+            self.tab1,
+            elements_list
         )
     
     def event_tab_02_button_delete_slip_click(self):
