@@ -213,7 +213,7 @@ class Controller_action_after_event:
     
     def f_Check_duplicate_and_auto_update_slip_number(entry_so_phieu, database_name, table_name, column_name):
         try:
-            kiem_tra_trung_so_phieu = Controller_action_after_event.f_Check_duplicate_value(entry_so_phieu, database_name, table_name, column_name)
+            kiem_tra_trung_so_phieu = f_utils_check_duplicate(entry_so_phieu, database_name, table_name, column_name)
             if kiem_tra_trung_so_phieu == False:    # có trùng phiếu
                 Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(entry_so_phieu)
                 messagebox.showinfo("Thông báo", "Số phiếu đã tồn tại, đã tự động lấy số phiếu mới. Vui lòng thực hiện lưu lại!")
@@ -226,7 +226,7 @@ class Controller_action_after_event:
     
     def f_Check_exist_ma_khach_hang(entry_ma_khach_hang, database_name, table_name, column_name):
         try:
-            kiem_tra_trung_so_phieu = Controller_action_after_event.f_Check_exist_value(entry_ma_khach_hang, database_name, table_name, column_name)
+            kiem_tra_trung_so_phieu = f_utils_check_exist(entry_ma_khach_hang, database_name, table_name, column_name)
             if kiem_tra_trung_so_phieu == False:    # Chưa có mã khách hàng
                 return False
             return True
@@ -239,8 +239,8 @@ class Controller_action_after_event:
     def f_Check_duplicate_value(entry_so_phieu, database_name, table_name, column_name):
         return f_utils_check_duplicate(entry_so_phieu, database_name, table_name, column_name)
     
-    def f_Check_exist_value(entry_to_check, database_name, table_name, column_name):
-        return f_utils_check_exist(entry_to_check, database_name, table_name, column_name)
+    # def f_Check_exist_value(entry_to_check, database_name, table_name, column_name):
+    #     return f_utils_check_exist(entry_to_check, database_name, table_name, column_name)
     
     def f_add_new_row(*args):
         try:
@@ -384,11 +384,6 @@ class Controller_action_after_event:
             entry_ghi_chu_cua_phieu,
             tree
         )
-        # Step 3: validate data
-        
-        # Step 4: sent data to sql
-        
-        # Step 5: Return notification
     
     def clear_all_contents_in_treeview(treeview):
         try:
@@ -762,12 +757,18 @@ class Controller_delete_row_in_SQL:
     def update_deleted(so_phieu):
         # Create query
         database_name = f_utils_get_DB_NAME()
-        query = f"EXEC [{database_name}].[dbo].[Proc_TB_KD02_YEU_CAU_DAT_HANG_UPDATE_DELETED_250208_23h29] '{so_phieu}'"
+        query = f"EXEC [{database_name}].[dbo].[Proc_TB_KD02_YEU_CAU_DAT_HANG_UPDATE_XOA_SUA_250224_13h09] '{so_phieu}', 'deleted'"
         # Sent SQL query
         SQLModel.sent_SQL_query(query)
 
+class Controller_edit_row_in_SQL:
+    def update_edited(so_phieu):
+        # Create query
+        database_name = f_utils_get_DB_NAME()
+        query = f"EXEC [{database_name}].[dbo].[Proc_TB_KD02_YEU_CAU_DAT_HANG_UPDATE_XOA_SUA_250224_13h09] '{so_phieu}', 'edited'"
+        # Sent SQL query
+        SQLModel.sent_SQL_query(query)
 
- 
 class SQLController:
     def load_data(tree, query):
         data = SQLModel.fetch_data(query)
@@ -975,6 +976,63 @@ class Controller_handel_all_events:
                 Controller_delete_row_in_SQL.update_deleted(so_phieu)
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"{so_phieu}, Slip deleted.", "blue")
                 return 
+
+    def handle_event_tab_01_btn_update_slip_click(entry_notification, entries_list):
+        (
+            entry_so_phieu,
+            entry_ma_kh,
+            entry_ten_kh,
+            entry_mst,
+            entry_dia_chi,
+            entry_so_hop_dong,
+            entry_thong_tin_hop_dong,
+            entry_ghi_chu_cua_phieu,
+            my_treeview
+            ) = entries_list
+        # Get the selected items
+        so_phieu = entry_so_phieu.get().strip()
+        if not so_phieu:
+            return
+        
+        database_name = controller_get_information_of_module.load_database_name()
+        table_name = controller_get_information_of_module.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+        column_name = controller_get_information_of_module.load_column_name_so_phieu()
+        
+        # Kiểm tra số phiếu đã tồn tại chưa
+        flag = f_utils_check_exist(entry_so_phieu, database_name, table_name, column_name)
+        if flag == False:
+            return
+        
+        # validate data
+        flag = Controller_event_tab_01_btn_save_click.validate_data( 
+                database_name, 
+                table_name, 
+                column_name,
+                entry_notification,
+                entry_ma_kh,
+                my_treeview
+            )
+        if flag == False:
+            return
+        
+        # cập nhật thông tin cũ thành edited
+        Controller_edit_row_in_SQL.update_edited(so_phieu)
+        
+        # create new record
+        Controller_action_after_event.f_save_data_to_sql(
+                entry_so_phieu, 
+                entry_ma_kh, 
+                entry_ten_kh,
+                entry_mst,
+                entry_dia_chi,
+                entry_so_hop_dong,
+                entry_thong_tin_hop_dong,
+                entry_ghi_chu_cua_phieu,
+                my_treeview
+                )
+        
+        utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"{so_phieu}, Slip updated.", "blue")
+        return 
 
     def f_handle_event_tab_02_button_export_all_data_click(entry_notification):
         try:
@@ -1491,32 +1549,60 @@ class Controller_event_tab_01_btn_save_click:
                 table_name, 
                 column_name,
                 entry_notification,
-                entry_so_phieu,
                 entry_ma_kh,
                 tree
             )
             if flag == False:
                 return False
-            else:
-                Controller_action_after_event.f_save_data_to_sql(
-                    entry_so_phieu, 
-                    entry_ma_kh, 
-                    entry_ten_kh,
-                    entry_mst,
-                    entry_dia_chi,
-                    entry_so_hop_dong,
-                    entry_thong_tin_hop_dong,
-                    entry_ghi_chu_cua_phieu,
-                    tree
-                    )
-                return True
+            
+            flag = Controller_event_tab_01_btn_save_click.validate_number_of_slip( 
+                database_name, 
+                table_name, 
+                column_name,
+                entry_notification,
+                entry_so_phieu
+            )
+            if flag == False:
+                return False
+            
+            Controller_action_after_event.f_save_data_to_sql(
+                entry_so_phieu, 
+                entry_ma_kh, 
+                entry_ten_kh,
+                entry_mst,
+                entry_dia_chi,
+                entry_so_hop_dong,
+                entry_thong_tin_hop_dong,
+                entry_ghi_chu_cua_phieu,
+                tree
+                )
+            return True
             
         except Exception as e:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
             return False
 
-    def validate_data(database_name, table_name, column_name, entry_notification, entry_so_phieu, entry_ma_khach_hang, my_treeview):
+    def validate_number_of_slip(database_name, table_name, column_name, entry_notification, entry_so_phieu):
+        try:
+            # Check duplicate slip number
+            if Controller_action_after_event.f_Check_duplicate_and_auto_update_slip_number(
+                entry_so_phieu,
+                database_name, 
+                table_name,
+                column_name) == True:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số phiếu bị trùng, vui lòng thử lại!", "red")
+                # print("Error at function: ", f_utils_get_current_function_name())
+                return False
+            
+            # pass the validation
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+        
+    def validate_data(database_name, table_name, column_name, entry_notification, entry_ma_khach_hang, my_treeview):
         try:
             # Check if the client id is empty
             if entry_ma_khach_hang.get() == "" or entry_ma_khach_hang.get() == "search here":
@@ -1529,16 +1615,6 @@ class Controller_event_tab_01_btn_save_click:
                 # print("Error at function: ", f_utils_get_current_function_name())
                 return False
             
-            # Check duplicate slip number
-            if Controller_action_after_event.f_Check_duplicate_and_auto_update_slip_number(
-                entry_so_phieu,
-                database_name, 
-                table_name,
-                column_name) == True:
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số phiếu bị trùng, vui lòng thử lại!", "red")
-                # print("Error at function: ", f_utils_get_current_function_name())
-                return False
-            
             # Check exist client id
             database_name = controller_get_information_of_module.load_database_name()
             table_name = controller_get_information_of_module.load_table_name_TB_AD00_DANH_SACH_KHACH_HANG()
@@ -1547,7 +1623,7 @@ class Controller_event_tab_01_btn_save_click:
                 entry_ma_khach_hang,
                 database_name, 
                 table_name,
-                column_name) == True:
+                column_name) == False:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Mã khách hàng chưa tồn tại!", "red")
                 # print("Error at function: ", f_utils_get_current_function_name())
                 return False
@@ -1609,7 +1685,6 @@ class Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG:
             )
         Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG.Insert_data_into_entries(entries_list, first_row)
         Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG.Insert_data_into_treeview(my_treeview_to_load_data, data)
-        
     
     def get_data_want_to_edit(so_phieu):
         # Create query

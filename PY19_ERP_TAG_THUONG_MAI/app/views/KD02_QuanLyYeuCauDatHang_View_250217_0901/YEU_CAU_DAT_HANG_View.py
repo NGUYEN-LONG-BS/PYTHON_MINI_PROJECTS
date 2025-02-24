@@ -45,10 +45,11 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_btn_refresh_number_of_slip.config(command=self.event_tab_01_button_get_number_of_slip_click)
         
         self.tab_01_button_add.config(command=self.event_tab_01_button_add_row_click)
-        self.tab_01_button_update.config(command=self.event_tab_01_button_update_click)
+        self.tab_01_button_update_row_in_treeview.config(command=self.event_tab_01_button_update_row_click)
         self.tab_01_button_delete.config(command=self.event_tab_01_button_delete_click)
         self.tab_01_button_clear.config(command=self.event_tab_01_button_clear_click)
         
+        self.tab_01_button_update_slip.config(command=self.event_tab_01_button_update_slip_click)
         self.tab_01_button_save.config(command=self.event_tab_01_button_save_click)
         self.tab_01_button_print.config(command=self.event_tab_01_button_print_click)
         
@@ -341,8 +342,8 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_button_add.pack(side="left", padx=10)
         
         # Update button
-        self.tab_01_button_update = tk.Button(tab_01_button_container_01, text="Update Row")
-        self.tab_01_button_update.pack(side="left", padx=10)
+        self.tab_01_button_update_row_in_treeview = tk.Button(tab_01_button_container_01, text="Update Row")
+        self.tab_01_button_update_row_in_treeview.pack(side="left", padx=10)
         
         # Delete button
         self.tab_01_button_delete = tk.Button(tab_01_button_container_01, text="Delete Row")
@@ -531,7 +532,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
             self.tab_01_entry_ghi_chu_mat_hang
             )
     
-    def event_tab_01_button_update_click(self):
+    def event_tab_01_button_update_row_click(self):
         Controller_handel_all_events.f_handle_event_update_selected_row_click(
         self.tab_01_label_footer_notification,
         self.tab_01_treeview_YCDH,
@@ -571,6 +572,24 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
             self.tab_01_entry_note_for_slip,
             self.tab_01_treeview_YCDH
         )    
+    
+    def event_tab_01_button_update_slip_click(self):
+        elements_list = (
+            self.tab_01_entry_so_phieu,
+            self.tab_01_entry_ma_khach_hang,
+            self.tab_01_entry_ten_khach_hang,
+            self.tab_01_entry_mst,
+            self.tab_01_entry_dia_chi,
+            self._tab_01_entry_so_hop_dong,
+            self.tab_01_entry_thong_tin_hop_dong,
+            self.tab_01_entry_note_for_slip,
+            self.tab_01_treeview_YCDH
+            )
+            
+        Controller_handel_all_events.handle_event_tab_01_btn_update_slip_click(
+            self.tab_01_label_footer_notification,
+            elements_list
+        )
     
     def event_tab_01_button_template_click(self):
         Controller_handel_all_events.f_handle_event_tab_01_button_template_click(self.tab_01_label_footer_notification)

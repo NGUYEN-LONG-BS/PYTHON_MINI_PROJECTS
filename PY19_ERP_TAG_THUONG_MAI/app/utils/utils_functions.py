@@ -901,7 +901,7 @@ def f_utils_check_duplicate(entry_to_check, database_name, table_name, column_na
         cursor = conn.cursor()
 
         # Truy vấn kiểm tra sự tồn tại của số phiếu
-        query = f"SELECT COUNT(*) FROM {database_name}.[dbo].{table_name} WHERE {column_name} = ?"
+        query = f"SELECT COUNT(*) FROM {database_name}.[dbo].{table_name} WHERE {column_name} = ? AND [XOA_SUA] = ''"
         cursor.execute(query, (value_to_check,))
         result = cursor.fetchone()[0]
 
@@ -937,17 +937,21 @@ def f_utils_check_exist(entry_to_check, database_name, table_name, column_name):
         cursor = conn.cursor()
 
         # Truy vấn kiểm tra sự tồn tại của số phiếu
-        query = f"SELECT CASE WHEN EXISTS(SELECT 1 FROM {database_name}.[dbo].{table_name} WHERE {column_name} = ?) THEN 1 ELSE 0 END"
+        query = f"SELECT CASE WHEN EXISTS(SELECT 1 FROM {database_name}.[dbo].{table_name} WHERE {column_name} = ? AND [XOA_SUA] = '') THEN 1 ELSE 0 END"
+        # print(query)
+        # print(value_to_check)
         cursor.execute(query, (value_to_check,))
         result = cursor.fetchone()[0]
 
+        # print("result: ", result)
+        
         if result:
             # Đóng kết nối
             if cursor:
                 cursor.close()
             if conn:
                 conn.close()
-            return False
+            return True
         else:
             messagebox.showinfo("Thông báo", f"Giá trị {value_to_check} chưa tồn tại. Vui lòng khởi tạo và thử lại!")
             # Đóng kết nối
@@ -955,7 +959,7 @@ def f_utils_check_exist(entry_to_check, database_name, table_name, column_name):
                 cursor.close()
             if conn:
                 conn.close()
-            return True
+            return False
         
     except Exception as e:
         print(f"Error: {e}")

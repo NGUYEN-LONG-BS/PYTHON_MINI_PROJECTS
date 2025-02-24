@@ -513,7 +513,7 @@ class Controller_delete_row_in_SQL:
     def update_deleted(so_phieu):
         # Create query
         database_name = f_utils_get_DB_NAME()
-        query = f"EXEC [{database_name}].[dbo].[Proc_TB_KD02_YEU_CAU_DAT_HANG_UPDATE_DELETED_250208_23h29] '{so_phieu}'"
+        query = f"EXEC [{database_name}].[dbo].[Proc_TB_KD02_YEU_CAU_DAT_HANG_UPDATE_XOA_SUA_250224_13h09] '{so_phieu}', 'deleted'"
         # Sent SQL query
         SQLModel.sent_SQL_query(query)
 
