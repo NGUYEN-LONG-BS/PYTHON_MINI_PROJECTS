@@ -26,15 +26,15 @@ class cls_KE_HOACH_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self._f_view_create_all_container_frames_in_tab_02()
     
     def f_set_up_format_of_tree_view(self):
-        Controller_handel_all_events.f_handle_event_initializing_format_of_treeview_of_tab_01(self.tab_01_treeview_YCDH)
-        Controller_handel_all_events.f_handle_event_initializing_format_of_treeview_of_tab_02(self.tab_02_treeview_log_of_YCDH)
+        Controller_handel_all_events.f_handle_event_initializing_format_of_treeview_of_tab_01(self.tab_01_treeview_KHDH)
+        Controller_handel_all_events.f_handle_event_initializing_format_of_treeview_of_tab_02(self.tab_02_treeview_log_of_KHDH)
         
     def f_set_up_when_initializing(self):
         # Update entry id
-        Controller_handel_all_events.update_entry_id_when_initializing(self.tab_01_treeview_YCDH, self.tab_01_entry_id)
+        Controller_handel_all_events.update_entry_id_when_initializing(self.tab_01_treeview_KHDH, self.tab_01_entry_id)
         # Update entry slip number
         Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(self.tab_01_entry_so_phieu)
-        # Load data to tab 2: treeview YCDH log
+        # Load data to tab 2: treeview KHDH log
         self.event_tab_02_button_filter_click()
     
     def f_set_command_for_elements(self):
@@ -52,8 +52,6 @@ class cls_KE_HOACH_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         
         self.tab_01_btn_template.config(command=self.event_tab_01_button_template_click)
         self.tab_01_btn_get_import_file.config(command=self.event_tab_01_button_get_import_file_click)
-        # self.tab_01_btn_import.config(command=self.event_tab_01_button_import_click)
-        # self.tab_01_btn_start_import_file.config(command=self.event_tab_01_button_start_import_file_click)
         
         self.tab_02_button_filter.config(command=self.event_tab_02_button_filter_click)
         self.tab_02_button_clear_filter.config(command=self.event_tab_02_button_clear_filter_click)
@@ -64,11 +62,11 @@ class cls_KE_HOACH_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.tab_02_button_delete_slip.config(command=self.event_tab_02_button_delete_slip_click)
         
         # Gán sự kiện
-        self.tab_01_treeview_YCDH.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_01_single_click)  # Single click
-        self.tab_01_treeview_YCDH.bind("<Double-1>", self.f_view_treeview_of_tab_01_double_click)  # Double click
+        self.tab_01_treeview_KHDH.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_01_single_click)  # Single click
+        self.tab_01_treeview_KHDH.bind("<Double-1>", self.f_view_treeview_of_tab_01_double_click)  # Double click
         
-        self.tab_02_treeview_log_of_YCDH.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_02_single_click)  # Single click
-        self.tab_02_treeview_log_of_YCDH.bind("<Double-1>", self.f_view_treeview_of_tab_02_double_click)  # Double click
+        self.tab_02_treeview_log_of_KHDH.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_02_single_click)  # Single click
+        self.tab_02_treeview_log_of_KHDH.bind("<Double-1>", self.f_view_treeview_of_tab_02_double_click)  # Double click
         
     def f_define_all_elements(self):
         # Find in tab_01
@@ -281,22 +279,9 @@ class cls_KE_HOACH_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_entry_nhu_cau.f_on_not_selecting(color=COLOR_WHITE)
         self.tab_01_entry_nhu_cau.grid(row=0, column=7, padx=(0, 10), pady=5, sticky="w")
         
-        # self.tab_01_label_sl_giu_cho = tk.Label(parent_frame, text="SL giữ chỗ:")
-        # self.tab_01_label_sl_giu_cho.grid(row=0, column=8, padx=(10, 2), pady=5, sticky="w")
-        # self.tab_01_entry_sl_giu_cho = cls_my_number_entry_num_01(parent_frame, width=10)
-        # self.tab_01_entry_sl_giu_cho.config(state="readonly")
-        # self.tab_01_entry_sl_giu_cho.grid(row=0, column=9, padx=(0, 10), pady=5, sticky="w")
-        
-        # self.tab_01_label_sl_YCDH = tk.Label(parent_frame, text="SL YCĐH:")
-        # self.tab_01_label_sl_YCDH.grid(row=0, column=10, padx=(10, 2), pady=5, sticky="w")
-        # self.tab_01_entry_sl_YCDH = cls_my_number_entry_num_01(parent_frame, width=10)
-        # self.tab_01_entry_sl_YCDH.config(state="readonly")
-        # self.tab_01_entry_sl_YCDH.grid(row=0, column=11, padx=(0, 10), pady=5, sticky="w")
 
         # Configure column weights for proper resizing
         parent_frame.columnconfigure(7, weight=1)  # Allow tab_01_entry_nhu_cau to expand
-        # parent_frame.columnconfigure(9, weight=1)  # Allow tab_01_entry_sl_giu_cho to expand
-        # parent_frame.columnconfigure(11, weight=1)  # Allow tab_01_entry_sl_YCDH to expand
         
         self._f_view_create_widgets_add_row_03_into_frame_inventories_informations_tab_01()
     
@@ -338,7 +323,7 @@ class cls_KE_HOACH_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_button_clear.pack(side="left", padx=10)
     
     def _f_view_create_widgets_in_tab_01_frame_treeview(self):
-        self.tab_01_treeview_YCDH = self.tab_01_frame_treeview.treeview_normal
+        self.tab_01_treeview_KHDH = self.tab_01_frame_treeview.treeview_normal
     
     def _f_view_create_widgets_in_tab_01_frame_button_02(self):
         parent_frame = self.tab_01_frame_button_02
@@ -381,7 +366,7 @@ class cls_KE_HOACH_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     
     def _f_view_create_widgets_in_tab_02_frame_treeview(self):
-        self.tab_02_treeview_log_of_YCDH = self.tab_02_frame_treeview.treeview_normal
+        self.tab_02_treeview_log_of_KHDH = self.tab_02_frame_treeview.treeview_normal
     
     def _f_view_create_all_container_frames_in_tab_02(self):
         parent_frame = self.tab2
@@ -504,7 +489,7 @@ class cls_KE_HOACH_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
     def event_tab_01_button_add_row_click(self):
         Controller_handel_all_events.f_handle_event_tab_01_button_add_row_click(
             self.tab_01_label_footer_notification,
-            self.tab_01_treeview_YCDH, 
+            self.tab_01_treeview_KHDH, 
             self.tab_01_entry_id, 
             self.tab_01_entry_ma_hang, 
             self.tab_01_entry_ten_hang, 
@@ -516,7 +501,7 @@ class cls_KE_HOACH_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
     def event_tab_01_button_update_row_click(self):
         Controller_handel_all_events.f_handle_event_update_selected_row_click(
         self.tab_01_label_footer_notification,
-        self.tab_01_treeview_YCDH,
+        self.tab_01_treeview_KHDH,
         self.tab_01_entry_ma_hang,
         self.tab_01_entry_ten_hang,
         self.tab_01_entry_dvt,
@@ -527,12 +512,12 @@ class cls_KE_HOACH_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
     def event_tab_01_button_delete_click(self):
         Controller_handel_all_events.f_handle_event_tab_01_btn_delete_click(
             self.tab_01_label_footer_notification,
-            self.tab_01_treeview_YCDH)
+            self.tab_01_treeview_KHDH)
     
     def event_tab_01_button_clear_click(self):
         Controller_handel_all_events.f_handle_tab_01_button_clear_click(
             self.tab_01_label_footer_notification, 
-            self.tab_01_treeview_YCDH)
+            self.tab_01_treeview_KHDH)
         
     def event_tab_01_button_print_click(self):
         Controller_handel_all_events.f_handle_btn_print_click()
@@ -548,7 +533,7 @@ class cls_KE_HOACH_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
             self._tab_01_entry_so_hop_dong,
             self.tab_01_entry_thong_tin_hop_dong,
             self.tab_01_entry_note_for_slip,
-            self.tab_01_treeview_YCDH
+            self.tab_01_treeview_KHDH
         )    
     
     def event_tab_01_button_update_slip_click(self):
@@ -561,7 +546,7 @@ class cls_KE_HOACH_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
             self._tab_01_entry_so_hop_dong,
             self.tab_01_entry_thong_tin_hop_dong,
             self.tab_01_entry_note_for_slip,
-            self.tab_01_treeview_YCDH
+            self.tab_01_treeview_KHDH
             )
             
         Controller_handel_all_events.handle_event_tab_01_btn_update_slip_click(
@@ -578,7 +563,7 @@ class cls_KE_HOACH_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
     def event_tab_02_button_filter_click(self):
         Controller_handel_all_events.f_handle_event_tab_02_button_filter_slip(
             self.tab_01_label_footer_notification,
-            self.tab_02_treeview_log_of_YCDH,
+            self.tab_02_treeview_log_of_KHDH,
             self.tab_02_entry_filter_slip_number, 
             self.tab_02_entry_filter_contract_number,
             self.tab_02_ngay_filter_bat_dau,
@@ -590,7 +575,7 @@ class cls_KE_HOACH_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
     def event_tab_02_button_clear_filter_click(self):
         Controller_handel_all_events.f_handle_event_tab_02_button_clear_filter(
             self.tab_01_label_footer_notification, 
-            self.tab_02_treeview_log_of_YCDH,
+            self.tab_02_treeview_log_of_KHDH,
             self.tab_02_entry_filter_slip_number,
             self.tab_02_entry_filter_contract_number,
             self.tab_02_entry_ma_khach_hang,
@@ -602,7 +587,7 @@ class cls_KE_HOACH_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
     def event_tab_02_button_export_excel_click(self):
         Controller_handel_all_events.f_handle_event_tab_02_button_export_excel_click(
             self.tab_01_label_footer_notification,
-            self.tab_02_treeview_log_of_YCDH
+            self.tab_02_treeview_log_of_KHDH
         )
         
     def event_tab_02_button_export_all_data_click(self):
@@ -620,8 +605,8 @@ class cls_KE_HOACH_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
             self._tab_01_entry_so_hop_dong,
             self.tab_01_entry_thong_tin_hop_dong,
             self.tab_01_entry_note_for_slip,
-            self.tab_02_treeview_log_of_YCDH,
-            self.tab_01_treeview_YCDH
+            self.tab_02_treeview_log_of_KHDH,
+            self.tab_01_treeview_KHDH
             )
             
         Controller_handel_all_events.handle_event_tab_02_button_edit_click(
@@ -633,7 +618,7 @@ class cls_KE_HOACH_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
     def event_tab_02_button_delete_slip_click(self):
         Controller_handel_all_events.handle_event_tab_02_btn_delete_slip_click(
             self.tab_01_label_footer_notification, 
-            self.tab_02_treeview_log_of_YCDH
+            self.tab_02_treeview_log_of_KHDH
         )
         # refresh data
         self.event_tab_02_button_filter_click()
@@ -641,12 +626,12 @@ class cls_KE_HOACH_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
     def f_view_treeview_of_tab_01_double_click(self, event):
         Controller_handel_all_events.f_handle_event_treeview_of_tab_01_double_click(
             self.tab_01_label_footer_notification,
-            self.tab_01_treeview_YCDH)
+            self.tab_01_treeview_KHDH)
 
     def f_view_treeview_of_tab_01_single_click(self, event):
         Controller_handel_all_events.f_handle_event_treeview_of_tab_01_single_click(
             self.tab_01_label_footer_notification,
-            self.tab_01_treeview_YCDH,
+            self.tab_01_treeview_KHDH,
             self.tab_01_entry_id,
             self.tab_01_entry_ma_hang,
             self.tab_01_entry_ten_hang,
@@ -657,10 +642,10 @@ class cls_KE_HOACH_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
     def f_view_treeview_of_tab_02_double_click(self, event):
         Controller_handel_all_events.f_handle_event_treeview_of_tab_02_double_click(
             self.tab_01_label_footer_notification,
-            self.tab_02_treeview_log_of_YCDH)
+            self.tab_02_treeview_log_of_KHDH)
 
     def f_view_treeview_of_tab_02_single_click(self, event):
         Controller_handel_all_events.f_handle_event_treeview_of_tab_02_single_click(
             self.tab_01_label_footer_notification,
-            self.tab_02_treeview_log_of_YCDH)
+            self.tab_02_treeview_log_of_KHDH)
         

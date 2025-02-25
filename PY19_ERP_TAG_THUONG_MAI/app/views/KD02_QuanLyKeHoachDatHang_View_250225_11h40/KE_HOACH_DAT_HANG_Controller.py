@@ -19,7 +19,7 @@ class controller_get_information_of_module:
         database_name = "TBD_2024"
         return database_name
     
-    def load_table_name_TB_KD02_YEU_CAU_DAT_HANG():
+    def load_table_name_TB_KD02_KE_HOACH_DAT_HANG():
         table_name = "TB_KD02_KE_HOACH_DAT_HANG"
         return table_name
     
@@ -369,7 +369,7 @@ class Controller_action_after_event:
         entry_so_phieu.insert(0, connection_number_of_slip)
         entry_so_phieu.config(state="readonly")
         
-    def f_check_input_of_treeview(entry_notification, id_value, ma_hang, ten_hang):    
+    def f_check_input_of_treeview(entry_notification, id_value, ma_hang, ten_hang, sl_nhu_cau):    
         try:
             # Kiểm tra các trường bắt buộc
             if not id_value or not ma_hang or not ten_hang:
@@ -379,6 +379,23 @@ class Controller_action_after_event:
             # Kiểm tra id_value có phải số nguyên hay không
             if not id_value.isdigit():
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"ID value '{id_value}' must be an integer!", "red")
+                return False
+            
+            # Kiểm tra sl_giu_cho và sl_yeu_cau_dat_hang có phải số hay không
+            try:
+                sl_giu_cho_value = float(sl_nhu_cau)
+            except ValueError:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Số lượng nhu cầu '{sl_nhu_cau}' phải là số.", "red")
+                return False
+            
+            # Kiểm tra sl_giu_cho và sl_yeu_cau_dat_hang không đồng thời bằng không
+            if sl_nhu_cau == 0:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số lượng nhu cầu không được bằng 0.", "red")
+                return False
+            
+            # Kiểm tra số lượng giữ chỗ hoặc yêu cầu đặt hàng hợp lệ
+            if sl_nhu_cau < 0:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số lượng nhu cầu không được âm.", "red")
                 return False
             
             return True
@@ -400,7 +417,8 @@ class Controller_action_after_event:
             flag = Controller_action_after_event.f_check_input_of_treeview(entry_notification, 
                                                                            id_value, 
                                                                            ma_hang, 
-                                                                           ten_hang)
+                                                                           ten_hang,
+                                                                           sl_nhu_cau)
             if flag == False:
                 return False
             
@@ -521,11 +539,11 @@ class Controller_action_after_event:
             # step: 
             # Gom lại các cột có trùng mã hàng - cột số 2
             # Cột số 4 giữ lại một dòng duy nhất
-            # Cộng tổng các giá trị của các dòng có trùng mã hàng - cột số 5, 6, 7
-            # Cột nào có ghi chú thì giữ lại một dòng duy nhất: cột số 8
+            # Cộng tổng các giá trị của các dòng có trùng mã hàng - cột số 5
+            # Cột nào có ghi chú thì giữ lại một dòng duy nhất: cột số 6
             
             # Gom nhóm theo mã hàng (cột số 2)
-            grouped_data = defaultdict(lambda: [None, "", "", "", 0, 0, 0, 0, set()])  # Dùng set() để lưu nhiều ghi chú
+            grouped_data = defaultdict(lambda: [None, "", "", "", 0, set()])  # Dùng set() để lưu nhiều ghi chú
 
             for row in rows:
                 ma_hang = row[1]  # Cột số 2 - Mã hàng
@@ -534,24 +552,18 @@ class Controller_action_after_event:
                     grouped_data[ma_hang][1] = ma_hang  # Mã hàng
                     grouped_data[ma_hang][2] = row[2]  # Tên hàng
                     grouped_data[ma_hang][3] = row[3]  # Đơn vị tính (Đvt)
-                    grouped_data[ma_hang][4] = float(row[4]) if row[4] else 0  # SL khả dụng
 
                 # Cộng tổng SL nhu cầu
-                grouped_data[ma_hang][5] += float(row[5]) if row[5] else 0
+                grouped_data[ma_hang][4] += float(row[4]) if row[4] else 0
 
                 # Lưu lại ghi chú (nếu có)
-                if row[8].strip():
-                    grouped_data[ma_hang][8].add(row[8].strip())  # Dùng set để tránh trùng lặp ghi chú
+                if row[5].strip():
+                    grouped_data[ma_hang][5].add(row[5].strip())  # Dùng set để tránh trùng lặp ghi chú
 
-            # Tính toán SL giữ chỗ và SL YCDH
+            # Gộp ghi chú
             for ma_hang, values in grouped_data.items():
-                sl_kha_dung = values[4]
-                sl_nhu_cau = values[5]
-                values[6] = min(sl_kha_dung, sl_nhu_cau)  # SL giữ chỗ
-                values[7] = max(sl_nhu_cau - sl_kha_dung, 0)  # SL YCDH
-
                 # Gộp tất cả ghi chú thành một chuỗi, cách nhau bởi "; "
-                values[8] = "; ".join(values[8])
+                values[5] = "; ".join(values[5])
 
             # Xóa dữ liệu cũ trong Treeview
             for item in my_treeview.get_children():
@@ -690,7 +702,7 @@ class SQLController:
         if SQLModel.f_validate_data_format(data_array):
             # If data is valid
             database_name = controller_get_information_of_module.load_database_name()
-            table_name = controller_get_information_of_module.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+            table_name = controller_get_information_of_module.load_table_name_TB_KD02_KE_HOACH_DAT_HANG()
             SQLModel.f_goi_ham_Export_to_TB_KD02_YEU_CAU_DAT_HANG(data_array, database_name, table_name)
             return "Data exported"
         else:
@@ -816,7 +828,7 @@ class Controller_handel_all_events:
             return
         
         database_name = controller_get_information_of_module.load_database_name()
-        table_name = controller_get_information_of_module.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+        table_name = controller_get_information_of_module.load_table_name_TB_KD02_KE_HOACH_DAT_HANG()
         column_name = controller_get_information_of_module.load_column_name_so_phieu()
         
         # Kiểm tra số phiếu đã tồn tại chưa
@@ -963,7 +975,7 @@ class Controller_handel_all_events:
             
             # Load the column headers from SQL
             database_name = controller_get_information_of_module.load_database_name()
-            table_name = controller_get_information_of_module.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+            table_name = controller_get_information_of_module.load_table_name_TB_KD02_KE_HOACH_DAT_HANG()
             
             column_names = utils_controller_get_the_header_of_table_in_SQL_250221_11h01.get_column_names(database_name, table_name)
             
@@ -1016,7 +1028,7 @@ class Controller_handel_all_events:
             server_name = f_utils_get_DB_HOST()
             database_name = f_utils_get_DB_NAME()
             login_name, login_pass = f_utils_get_DB_USER_AND_DB_PASSWORD()
-            table_name = controller_get_information_of_module.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+            table_name = controller_get_information_of_module.load_table_name_TB_KD02_KE_HOACH_DAT_HANG()
             data_array = data_list
             flag = utils_model_import_data_to_SQL_SERVER_250221_16h45.f_insert_data_to_sql(entry_notification,
                                                                                            server_name, 
@@ -1047,10 +1059,7 @@ class Controller_handel_all_events:
             entry_ma_hang_tab_01,
             entry_ten_hang_tab_01,
             entry_dvt,
-            entry_sl_kha_dung,
             tab_01_entry_nhu_cau,
-            tab_01_entry_sl_giu_cho,
-            tab_01_entry_sl_YCDH,
             tab_01_entry_ghi_chu_mat_hang
             )= args
             
@@ -1060,10 +1069,7 @@ class Controller_handel_all_events:
             entry_ma_hang_tab_01,
             entry_ten_hang_tab_01,
             entry_dvt,
-            entry_sl_kha_dung,
             tab_01_entry_nhu_cau,
-            tab_01_entry_sl_giu_cho,
-            tab_01_entry_sl_YCDH,
             tab_01_entry_ghi_chu_mat_hang)
             if flag == False:
                 return False
@@ -1118,7 +1124,7 @@ class Controller_handel_all_events:
         ma_thanh_vien = controller_get_information_of_module.load_ma_thanh_vien()
         loai_phieu = controller_get_information_of_module.load_loai_phieu()
         database_name = controller_get_information_of_module.load_database_name()
-        table_name = controller_get_information_of_module.load_table_name_TB_KD02_YEU_CAU_DAT_HANG() 
+        table_name = controller_get_information_of_module.load_table_name_TB_KD02_KE_HOACH_DAT_HANG() 
         column_name = controller_get_information_of_module.load_column_name_so_phieu()
         try:
             Controller_action_after_event.f_get_the_latest_number_of_slip(tab_01_entry_so_phieu, 
@@ -1303,7 +1309,7 @@ class Controller_handel_all_events:
             
             # call controller to handle event
             database_name = controller_get_information_of_module.load_database_name()
-            table_name = controller_get_information_of_module.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+            table_name = controller_get_information_of_module.load_table_name_TB_KD02_KE_HOACH_DAT_HANG()
             column_name = controller_get_information_of_module.load_column_name_so_phieu()
             flag = Controller_event_tab_01_btn_save_click.f_handle_event_tab_01_btn_save_click(
                 database_name,
@@ -1344,6 +1350,7 @@ class Controller_event_tab_01_btn_save_click:
                 entry_ghi_chu_cua_phieu,
                 tree
             ) = args
+            
             flag = Controller_event_tab_01_btn_save_click.validate_data( 
                 database_name, 
                 table_name, 
@@ -1425,7 +1432,6 @@ class Controller_event_tab_01_btn_save_click:
                 table_name,
                 column_name) == False:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Mã khách hàng chưa tồn tại!", "red")
-                # print("Error at function: ", f_utils_get_current_function_name())
                 return False
             
             # pass the validation
