@@ -394,18 +394,9 @@ class utils_model_SQL_server:
                 if not isinstance(row[column], str):
                     raise ValueError(f"Data validation: DVT (Row {idx+1}, Value: {row[column]}) must be a string.")
                 column = 15
-                if not isinstance(row[column], (int, float)) or row[column] < 0:
-                    raise ValueError(f"Data validation: SO_LUONG_KHA_DUNG (Row {idx+1}, Value: {row[column]}) must be a positive number.")
-                column = 16
                 if not isinstance(row[column], (int, float)) or row[column] <= 0:
                     raise ValueError(f"Data validation: SO_LUONG_NHU_CAU (Row {idx+1}, Value: {row[column]}) must be a positive number.")
-                column = 17
-                if not isinstance(row[column], (int, float)) or row[column] < 0:
-                    raise ValueError(f"Data validation: SO_LUONG_GIU_CHO (Row {idx+1}, Value: {row[column]}) must be a positive number.")
-                column = 18
-                if not isinstance(row[column], (int, float)) or row[column] < 0:
-                    raise ValueError(f"Data validation: SO_LUONG_YCDH (Row {idx+1}, Value: {row[column]}) must be a positive number.")
-                column = 19
+                column = 16
                 if not isinstance(row[column], str):
                     raise ValueError(f"Data validation: GHI_CHU_SP (Row {idx+1}, Value: {row[column]}) must be a string.")
             
