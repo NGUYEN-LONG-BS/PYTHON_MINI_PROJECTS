@@ -40,6 +40,22 @@ class controller_get_information_of_module:
         tab_02_treeview_config_json_path = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'KD_YEU_CAU_DAT_HANG', 'treeview_tab_02_YCDH_log.json')
         return tab_01_treeview_config_json_path, tab_02_treeview_config_json_path
 
+    def load_proc_update_xoa_sua():
+        proc_name = "Proc_TB_KD02_YEU_CAU_DAT_HANG_UPDATE_XOA_SUA_250224_13h09"
+        return proc_name
+    
+    def load_proc_filter_by_many_arguments():
+        proc_name = "Proc_TB_KD02_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250222_14hh40"
+        return proc_name
+    
+    def load_query_select_all_data():
+        table_name = controller_get_information_of_module.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+        query = f"""
+            SELECT *
+            FROM [TBD_2024].[dbo].[{table_name}]
+            """
+        return query
+    
 class Controller_action_after_event:
     
     # Function to update the selected row
@@ -751,7 +767,9 @@ class Controller_delete_row_in_SQL:
     def update_deleted(so_phieu):
         # Create query
         database_name = f_utils_get_DB_NAME()
-        query = f"EXEC [{database_name}].[dbo].[Proc_TB_KD02_YEU_CAU_DAT_HANG_UPDATE_XOA_SUA_250224_13h09] '{so_phieu}', 'deleted'"
+        proc_name = controller_get_information_of_module.load_proc_update_xoa_sua()
+        status = "deleted"
+        query = f"EXEC [{database_name}].[dbo].[{proc_name}] '{so_phieu}', '{status}'"
         # Sent SQL query
         utils_model_SQL_server.sent_SQL_query(query)
 
@@ -759,7 +777,9 @@ class Controller_edit_row_in_SQL:
     def update_edited(so_phieu):
         # Create query
         database_name = f_utils_get_DB_NAME()
-        query = f"EXEC [{database_name}].[dbo].[Proc_TB_KD02_YEU_CAU_DAT_HANG_UPDATE_XOA_SUA_250224_13h09] '{so_phieu}', 'edited'"
+        proc_name = controller_get_information_of_module.load_proc_update_xoa_sua()
+        status = "edited"
+        query = f"EXEC [{database_name}].[dbo].[{proc_name}] '{so_phieu}', '{status}'"
         # Sent SQL query
         utils_model_SQL_server.sent_SQL_query(query)
 
@@ -1032,11 +1052,7 @@ class Controller_handel_all_events:
     def f_handle_event_tab_02_button_export_all_data_click(entry_notification):
         try:
             # Tạo câu query SQL với danh sách số phiếu
-            query = f"""
-            SELECT *
-            FROM [TBD_2024].[dbo].[TB_KD02_YEU_CAU_DAT_HANG]
-            """
-            # print("query", query)
+            query = controller_get_information_of_module.load_query_select_all_data()
             
             # Tạo header cho file Excel
             header = ["ID",
@@ -1084,6 +1100,7 @@ class Controller_handel_all_events:
             # print("so_phieu_str", so_phieu_str)
             
             # Tạo câu query SQL với danh sách số phiếu
+            table_name = controller_get_information_of_module.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
             query = f"""
             SELECT 
                 ROW_NUMBER() OVER(ORDER BY [SO_PHIEU]) as RowNumber,
@@ -1105,7 +1122,7 @@ class Controller_handel_all_events:
                 [SO_LUONG_GIU_CHO],
                 [SO_LUONG_YEU_CAU_DAT_HANG],
                 [GHI_CHU_SP]
-            FROM [TBD_2024].[dbo].[TB_KD02_YEU_CAU_DAT_HANG]
+            FROM [TBD_2024].[dbo].[{table_name}]
             WHERE [SO_PHIEU] IN ({so_phieu_str})
             """
             # print("query", query)
@@ -1381,8 +1398,9 @@ class Controller_handel_all_events:
                 ma_hang = ''
         
             # Create value and fetch data
+            proc_name = controller_get_information_of_module.load_proc_filter_by_many_arguments()
             query = f"""
-                    EXEC [dbo].[Proc_TB_KD02_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250222_14hh40] 
+                    EXEC [dbo].[{proc_name}] 
                         @SO_PHIEU = '{so_phieu}', 
                         @SO_HOP_DONG = '{so_hop_dong}',
                         @START_DATE = '{formated_ngay_bat_dau}', 
@@ -1419,8 +1437,9 @@ class Controller_handel_all_events:
             tab_02_entry_ten_hang.delete(0, tk.END)
             
             # refresh data in treeview
+            proc_name = controller_get_information_of_module.load_proc_filter_by_many_arguments()
             query = f"""
-                    EXEC [dbo].[Proc_TB_KD02_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250222_14hh40] 
+                    EXEC [dbo].[{proc_name}] 
                         @SO_PHIEU = NULL, 
                         @SO_HOP_DONG = NULL,
                         @START_DATE = NULL, 
@@ -1684,8 +1703,9 @@ class Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG:
     def get_data_want_to_edit(so_phieu):
         # Create query
         database_name = f_utils_get_DB_NAME()
+        table_name = controller_get_information_of_module.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
         query = f"""
-        SELECT * FROM [{database_name}].[dbo].[TB_KD02_YEU_CAU_DAT_HANG]
+        SELECT * FROM [{database_name}].[dbo].[{table_name}]
         WHERE SO_PHIEU = '{so_phieu}' AND XOA_SUA = ''
         """
         # Sent SQL query
