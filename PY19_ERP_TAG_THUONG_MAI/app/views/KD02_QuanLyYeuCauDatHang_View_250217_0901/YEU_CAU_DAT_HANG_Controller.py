@@ -34,6 +34,11 @@ class controller_get_information_of_module:
     def load_column_name_ma_khach_hang():
         column_name = "MA_DOI_TUONG"
         return column_name
+    
+    def load_treeview_config_json_path():
+        tab_01_treeview_config_json_path = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'KD_YEU_CAU_DAT_HANG', 'treeview_tab_01_YCDH_input.json')
+        tab_02_treeview_config_json_path = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'KD_YEU_CAU_DAT_HANG', 'treeview_tab_02_YCDH_log.json')
+        return tab_01_treeview_config_json_path, tab_02_treeview_config_json_path
 
 class Controller_action_after_event:
     
@@ -506,13 +511,12 @@ class Controller_action_after_event:
             return False
         
     def set_format_of_treeview_of_tab_01(my_treeview):
-        config_json_path = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'KD_YEU_CAU_DAT_HANG', 'treeview_tab_01_YCDH_input.json')
-        utils_controller_TreeviewConfigurator_250217_13h20.apply_treeview_config(my_treeview, config_json_path)
+        tab_01_treeview_config_json_path, tab_02_treeview_config_json_path = controller_get_information_of_module.load_treeview_config_json_path()
+        utils_controller_TreeviewConfigurator_250217_13h20.apply_treeview_config(my_treeview, tab_01_treeview_config_json_path)
         
     def set_format_of_treeview_of_tab_02(my_treeview):
-        """Thiết lập cấu hình Treeview cho tab 02"""
-        config_json_path = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'KD_YEU_CAU_DAT_HANG', 'treeview_tab_02_YCDH_log.json')
-        utils_controller_TreeviewConfigurator_250217_13h20.apply_treeview_config(my_treeview, config_json_path)
+        tab_01_treeview_config_json_path, tab_02_treeview_config_json_path = controller_get_information_of_module.load_treeview_config_json_path()
+        utils_controller_TreeviewConfigurator_250217_13h20.apply_treeview_config(my_treeview, tab_02_treeview_config_json_path)
     
     def treeview_of_tab_01_double_click(my_treeview):
         result_value = utils_controller_TreeviewHandler_click_250217_22h34.treeview_double_click(my_treeview, column_return=1)
