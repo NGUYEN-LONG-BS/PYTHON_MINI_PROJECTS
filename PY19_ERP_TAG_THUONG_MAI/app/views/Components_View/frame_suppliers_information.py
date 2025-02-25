@@ -211,8 +211,12 @@ class cls_TreeviewCombobox_suppliers(cls_my_text_entry_num_01):
         return f"{self.dropdown_width}x{self.dropdown_height}+{x}+{y}"
 
     def filter_data(self, event):
-        query = self.get().lower()
-        self.refresh_data(query)
+        try:
+            query = self.get().lower()
+            self.refresh_data(query)
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
 
     def refresh_data(self, query=""):
         # Clear existing data
@@ -254,9 +258,11 @@ class cls_TreeviewCombobox_suppliers(cls_my_text_entry_num_01):
 
         # Nếu có dòng mới dưới con trỏ, highlight nó
         if row_id and row_id != self.current_highlighted:
-            # Bỏ highlight dòng trước đó
+            # Bỏ highlight dòng trước đó, nếu có
             if self.current_highlighted:
-                self.tree.item(self.current_highlighted, tags=())
+                # Kiểm tra nếu dòng hiện tại còn tồn tại
+                if self.tree.exists(self.current_highlighted):
+                    self.tree.item(self.current_highlighted, tags=())
             
             # Gắn highlight cho dòng hiện tại
             self.tree.item(row_id, tags=("highlighted",))
@@ -264,5 +270,6 @@ class cls_TreeviewCombobox_suppliers(cls_my_text_entry_num_01):
             self.current_highlighted = row_id
         elif not row_id and self.current_highlighted:
             # Nếu không có dòng nào dưới con trỏ, bỏ highlight
-            self.tree.item(self.current_highlighted, tags=())
+            if self.tree.exists(self.current_highlighted):
+                self.tree.item(self.current_highlighted, tags=())
             self.current_highlighted = None

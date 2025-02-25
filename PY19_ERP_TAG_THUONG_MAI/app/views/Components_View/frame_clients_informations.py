@@ -1,41 +1,50 @@
 import tkinter as tk
 from tkinter import ttk
 from entry import *
-# from PIL import Image, ImageTk
 
 # Model: cls_frame_client_information_model
 class cls_frame_client_information_model:
-    def __init__(self):
-        # Sample data to simulate the model
-        self.header = ["Mã KH", "Tên KH", "MST", "Địa chỉ"]
-        self.data = [
-            ("BH01", "Công ty TNHH Con số", "02641368626", "04 đường Nguyễn Trãi, Cần Thơ, Việt Nam"),
-            ("BH02", "Công ty TNHH Cửa Hàng", "02641368125", "26 đường Nguyễn Duy Hưng, Đà Nẵng, Việt Nam"),
-            ("BH03", "Công ty TNHH Một Thành Viên", "0264151515", "04 đường Lê Lợi, TP. Hồ Chí Minh, Việt Nam"),
-            ("BH04", "Công ty TNHH TTL", "0264136516", "28 đường Trường Chinh, Bình Định, Việt Nam"),
-            ("BH05", "Công ty CP Khổng lồ", "02641361121", "297 đường Phan Bội Châu, Quy Nhơn, Bình Định, Việt Nam"),
-            ("BH06", "Công ty TNHH Nhà Kính Đẹp", "02641368626", "04 đường Nguyễn Trãi, Cần Thơ, Việt Nam"),
-            ("BH07", "Công ty TNHH Trí Hiếu", "02641368125", "26 đường Nguyễn Duy Hưng, Đà Nẵng, Việt Nam"),
-            ("BH08", "Công ty TNHH Một Thành Viên Ngại Nùng Chi", "0264151515", "04 đường Lê Lợi, TP. Hồ Chí Minh, Việt Nam"),
-            ("BH09", "Công ty TNHH Nhận Thức Việt", "0264136516", "28 đường Trường Chinh, Bình Định, Việt Nam"),
-            ("BH10", "Công ty CP Chat GPT", "02641361121", "297 đường Phan Bội Châu, Quy Nhơn, Bình Định, Việt Nam"),
-            ("BH11", "Công ty TNHH Con Trí Tuệ", "02641368626", "04 đường Nguyễn Trãi, Cần Thơ, Việt Nam"),
-            ("BH12", "Công ty TNHH Cửa Hàng Vũ Phong", "02641368125", "26 đường Nguyễn Duy Hưng, Đà Nẵng, Việt Nam"),
-            ("BH13", "Công ty TNHH Một Thành Viên Nhất Nhất", "0264151515", "04 đường Lê Lợi, TP. Hồ Chí Minh, Việt Nam"),
-            ("BH14", "Công ty TNHH Cổ Phần TTL", "0264136516", "28 đường Trường Chinh, Bình Định, Việt Nam"),
-            ("BH15", "Công ty CP TNHH Khổng lồ", "02641361121", "297 đường Phan Bội Châu, Quy Nhơn, Bình Định, Việt Nam"),
-        ]
         
-
-    def get_data(self):
-        return self.data
+    def get_data(query=''):
+        # data = [
+        #     ("BH01", "Công ty TNHH Con số", "02641368626", "04 đường Nguyễn Trãi, Cần Thơ, Việt Nam"),
+        #     ("BH02", "Công ty TNHH Cửa Hàng", "02641368125", "26 đường Nguyễn Duy Hưng, Đà Nẵng, Việt Nam"),
+        #     ("BH03", "Công ty TNHH Một Thành Viên", "0264151515", "04 đường Lê Lợi, TP. Hồ Chí Minh, Việt Nam"),
+        #     ("BH04", "Công ty TNHH TTL", "0264136516", "28 đường Trường Chinh, Bình Định, Việt Nam"),
+        #     ("BH05", "Công ty CP Khổng lồ", "02641361121", "297 đường Phan Bội Châu, Quy Nhơn, Bình Định, Việt Nam"),
+        #     ("BH06", "Công ty TNHH Nhà Kính Đẹp", "02641368626", "04 đường Nguyễn Trãi, Cần Thơ, Việt Nam"),
+        #     ("BH07", "Công ty TNHH Trí Hiếu", "02641368125", "26 đường Nguyễn Duy Hưng, Đà Nẵng, Việt Nam"),
+        #     ("BH08", "Công ty TNHH Một Thành Viên Ngại Nùng Chi", "0264151515", "04 đường Lê Lợi, TP. Hồ Chí Minh, Việt Nam"),
+        #     ("BH09", "Công ty TNHH Nhận Thức Việt", "0264136516", "28 đường Trường Chinh, Bình Định, Việt Nam"),
+        #     ("BH10", "Công ty CP Chat GPT", "02641361121", "297 đường Phan Bội Châu, Quy Nhơn, Bình Định, Việt Nam"),
+        #     ("BH11", "Công ty TNHH Con Trí Tuệ", "02641368626", "04 đường Nguyễn Trãi, Cần Thơ, Việt Nam"),
+        #     ("BH12", "Công ty TNHH Cửa Hàng Vũ Phong", "02641368125", "26 đường Nguyễn Duy Hưng, Đà Nẵng, Việt Nam"),
+        #     ("BH13", "Công ty TNHH Một Thành Viên Nhất Nhất", "0264151515", "04 đường Lê Lợi, TP. Hồ Chí Minh, Việt Nam"),
+        #     ("BH14", "Công ty TNHH Cổ Phần TTL", "0264136516", "28 đường Trường Chinh, Bình Định, Việt Nam"),
+        #     ("BH15", "Công ty CP TNHH Khổng lồ", "02641361121", "297 đường Phan Bội Châu, Quy Nhơn, Bình Định, Việt Nam"),
+        # ]
+        query = f""" 
+            SELECT 
+                [MA_DOI_TUONG] AS [Mã KH],
+                [TEN_DOI_TUONG] AS [Tên KH],
+                [MA_SO_THUE] AS [MST],
+                [DIA_CHI] AS [Địa chỉ]
+            FROM [TBD_2024].[dbo].[TB_AD00_DANH_SACH_KHACH_HANG]
+            WHERE [XOA_SUA] = ''
+            ORDER BY [MA_DOI_TUONG]
+            """
+        data = SQLModel.fetch_data(query)
+        # print(data)
+        return data
     
-    def get_header(self):
-        return self.header
+    def get_header(query=''):
+        header = ["Mã KH", "Tên KH", "MST", "Địa chỉ"]
+        return header
 
-    def filter_data(self, query):
+    def filter_data(query):
         filtered_data = []
-        for row in self.data:
+        data = cls_frame_client_information_model.get_data()
+        for row in data:
             if query in row[0].lower() or query in row[1].lower() or query in row[2].lower():
                 filtered_data.append(row)
         return filtered_data
@@ -87,11 +96,15 @@ class cls_frame_client_information_view(tk.Frame):
         label = ttk.Label(self.frame_row_1, text="Khách hàng:")
         label.pack(side="left", padx=10, pady=5)
 
+        # Load data from the model
+        # data=self.controller.get_data(),
+        data=self.controller.get_data()         # bỏ dấu phẩy đi
+        
         # Main cls_TreeviewCombobox_clients
         self.treeview_combobox = cls_TreeviewCombobox_clients(
             self.frame_row_1,
             columns=self.controller.get_header(),
-            data=self.controller.get_data(),
+            data=data,
             dropdown_width=1200,
             dropdown_height=300,
             width=15,
@@ -151,14 +164,14 @@ class cls_TreeviewCombobox_clients(cls_my_text_entry_num_01):
         # Bind events to show and interact with dropdown
         self.bind("<Button-1>", self.f_handle_event_left_click)
         self.bind("<KeyRelease>", self.filter_data)
-        self.master.bind("<Button-1>", self.on_click_outside)  # Bind click event to master frame to hide dropdown
+        # self.master.bind("<Button-1>", self.on_click_outside)  # Bind click event to master frame to hide dropdown
         
-        parent_widget = self.master.nametowidget(self.master.winfo_parent())
-        parent_widget.bind("<Button-1>", self.on_click_outside)
+        # parent_widget = self.master.nametowidget(self.master.winfo_parent())
+        # parent_widget.bind("<Button-1>", self.on_click_outside)
 
-    def on_click_outside(self, event):
-        # print("on_click_outside")
-        self.hide_dropdown()
+    # def on_click_outside(self, event):
+    #     # print("on_click_outside")
+    #     self.hide_dropdown()
     
     def f_handle_event_left_click(self, event):
         self.f_on_click_clear_placeholder(event)
@@ -210,8 +223,12 @@ class cls_TreeviewCombobox_clients(cls_my_text_entry_num_01):
         return f"{self.dropdown_width}x{self.dropdown_height}+{x}+{y}"
 
     def filter_data(self, event):
-        query = self.get().lower()
-        self.refresh_data(query)
+        try:
+            query = self.get().lower()
+            self.refresh_data(query)
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
 
     def refresh_data(self, query=""):
         if not hasattr(self, 'tree') or not self.tree:
@@ -223,8 +240,12 @@ class cls_TreeviewCombobox_clients(cls_my_text_entry_num_01):
 
         # Insert filtered rows
         for row in self.data:
-            if query in row[0].lower() or query in row[1].lower() or query in row[2].lower():  # Filter by the first or second column or third column
-                self.tree.insert("", "end", values=row)
+            # print(row)
+            if (query in str(row[0]).lower() or 
+                query in str(row[1]).lower() or 
+                query in str(row[2]).lower()):  # Filter by the first or second column or third column
+                self.tree.insert("", "end", values=(row[0], row[1], row[2], row[3]))
+            
 
     def on_tree_select(self, event):
         selected_item = self.tree.focus()
@@ -256,9 +277,11 @@ class cls_TreeviewCombobox_clients(cls_my_text_entry_num_01):
 
         # Nếu có dòng mới dưới con trỏ, highlight nó
         if row_id and row_id != self.current_highlighted:
-            # Bỏ highlight dòng trước đó
+            # Bỏ highlight dòng trước đó, nếu có
             if self.current_highlighted:
-                self.tree.item(self.current_highlighted, tags=())
+                # Kiểm tra nếu dòng hiện tại còn tồn tại
+                if self.tree.exists(self.current_highlighted):
+                    self.tree.item(self.current_highlighted, tags=())
             
             # Gắn highlight cho dòng hiện tại
             self.tree.item(row_id, tags=("highlighted",))
@@ -266,5 +289,6 @@ class cls_TreeviewCombobox_clients(cls_my_text_entry_num_01):
             self.current_highlighted = row_id
         elif not row_id and self.current_highlighted:
             # Nếu không có dòng nào dưới con trỏ, bỏ highlight
-            self.tree.item(self.current_highlighted, tags=())
+            if self.tree.exists(self.current_highlighted):
+                self.tree.item(self.current_highlighted, tags=())
             self.current_highlighted = None

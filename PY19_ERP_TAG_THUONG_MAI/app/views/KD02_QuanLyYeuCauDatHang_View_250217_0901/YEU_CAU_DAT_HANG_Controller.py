@@ -4,16 +4,6 @@ import traceback
 from datetime import datetime
 from collections import defaultdict
 
-# import time
-# from Components_View import *   # Tại sao lại phải import Components_View
-# from .YEU_CAU_DAT_HANG_Model import cls_YEU_CAU_DAT_HANG_Model
-# from .YEU_CAU_DAT_HANG_Model import cls_YEU_CAU_DAT_HANG_Model_02
-
-# from .YEU_CAU_DAT_HANG_Model import SQLModel
-# from .YEU_CAU_DAT_HANG_Model import Model_get_data_from_SQL
-
-
-
 
 class controller_get_information_of_module:
         
