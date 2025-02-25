@@ -85,9 +85,10 @@ class cls_Dashboard_kinhdoanh_View(cls_base_form_number_02_ManyTabs):
             {"image": PATH_CARD_KD_QUAN_LY_KHACH_HANG,"text": "DANH SÁCH KHÁCH HÀNG", "click_event": self.f_card_01_click,"name_of_card": "card_frame_danh_sach_khach_hang", "visitable": False},
             {"image": PATH_CARD_KD_02,"text": "DANH SÁCH HÀNG HOÁ", "click_event": self.f_card_02_danh_sach_hang_hoa_click,"name_of_card": "card_frame_2", "visitable": True},
             {"image": PATH_CARD_KD_03,"text": "QUẢN LÝ GÓI THẦU", "click_event": self.f_card_03_click,"name_of_card": "card_frame_3", "visitable": False},
-            {"image": PATH_CARD_KD_04,"text": "QUẢN LÝ KẾ HOẠCH ĐẶT HÀNG", "click_event": self.f_card_04_ke_hoach_dat_hang_click,"name_of_card": "card_frame_4", "visitable": True},
-            {"image": PATH_CARD_KD_05,"text": "QUẢN LÝ YÊU CẦU ĐẶT HÀNG", "click_event": self.f_card_05_yeu_cau_dat_hang_click,"name_of_card": "card_frame_yeu_cau_dat_hang", "visitable": True},
-            {"image": PATH_CARD_KD_06,"text": "BÁO CÁO", "click_event": self.f_card_06_click,"name_of_card": "card_frame_6", "visitable": True},
+            {"image": PATH_CARD_KD_QUAN_LY_KE_HOACH_DAT_HANG,"text": "QUẢN LÝ KẾ HOẠCH ĐẶT HÀNG", "click_event": self.f_card_04_ke_hoach_dat_hang_click,"name_of_card": "card_frame_ke_hoach_dat_hang", "visitable": True},
+            {"image": PATH_CARD_KD_04,"text": "QUẢN LÝ CÔNG NỢ", "click_event": self.f_card_05_click,"name_of_card": "card_frame_4", "visitable": False},
+            {"image": PATH_CARD_KD_05,"text": "QUẢN LÝ YÊU CẦU ĐẶT HÀNG", "click_event": self.f_card_06_yeu_cau_dat_hang_click,"name_of_card": "card_frame_yeu_cau_dat_hang", "visitable": True},
+            {"image": PATH_CARD_KD_06,"text": "BÁO CÁO", "click_event": self.f_card_07_click,"name_of_card": "card_frame_6", "visitable": True},
         ]
 
         # Kích thước card và padding
@@ -170,7 +171,10 @@ class cls_Dashboard_kinhdoanh_View(cls_base_form_number_02_ManyTabs):
         f_utils_set_center_screen(new_view)
         new_view.focus_force()
     
-    def f_card_05_yeu_cau_dat_hang_click(self, event):
+    def f_card_05_click(self, event):
+        print("f_card_05_click")
+    
+    def f_card_06_yeu_cau_dat_hang_click(self, event):
         # from views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
         from views.KD02_QuanLyYeuCauDatHang_View_250217_0901.YEU_CAU_DAT_HANG_View import cls_YEU_CAU_DAT_HANG_View
         self.destroy()
@@ -180,8 +184,8 @@ class cls_Dashboard_kinhdoanh_View(cls_base_form_number_02_ManyTabs):
         f_utils_set_center_screen(new_view)
         new_view.focus_force()
 
-    def f_card_06_click(self, event):
-        print("f_card_06_click")
+    def f_card_07_click(self, event):
+        print("f_card_07_click")
 
     def _f_add_elements_to_card_QL_KHACHANG(self):
         try:

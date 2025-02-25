@@ -20,6 +20,7 @@ PATH_CARD_KD_QUAN_LY_KHACH_HANG = os.path.join(PATH_ROOT, "assets/img/KD_DS_KHAC
 PATH_CARD_KD_02 = os.path.join(PATH_ROOT, "assets/img/KD_DS_HANG_HOA.png")
 PATH_CARD_KD_03 = os.path.join(PATH_ROOT, "assets/img/KD_QUAN_LY_GOI_THAU.png")
 PATH_CARD_KD_04 = os.path.join(PATH_ROOT, "assets/img/KD_QUAN_LY_CONG_NO.png")
+PATH_CARD_KD_QUAN_LY_KE_HOACH_DAT_HANG = os.path.join(PATH_ROOT, "assets/img/KD_QUAN_LY_KE_HOACH_DAT_HANG.png")
 PATH_CARD_KD_05 = os.path.join(PATH_ROOT, "assets/img/KD_YEU_CAU_DAT_HANG.png")
 PATH_CARD_KD_06 = os.path.join(PATH_ROOT, "assets/img/KD_REPORT.png")
 

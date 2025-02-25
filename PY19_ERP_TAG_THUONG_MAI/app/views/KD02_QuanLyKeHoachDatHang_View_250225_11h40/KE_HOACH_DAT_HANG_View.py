@@ -3,7 +3,6 @@ from tkinter import ttk
 from Components_View import *
 from Components_View.treeview import cls_Treeview_frame_number_01
 from utils import *
-from .KE_HOACH_DAT_HANG_Controller import Controller_auto_update_sl_giu_cho_va_sl_ycdh
 from .KE_HOACH_DAT_HANG_Controller import Controller_handel_all_events
 
 class cls_KE_HOACH_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
@@ -17,8 +16,6 @@ class cls_KE_HOACH_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.f_set_up_format_of_tree_view()
         # Set up all global variants
         self.f_define_all_elements()
-        # Add controllers
-        self.f_create_controller_auto_update_3_entries_sl_nhu_cau_sl_giu_cho_sl_ycdh()
         # Set up when initializing
         self.f_set_up_when_initializing()
         self.f_set_command_for_elements()
@@ -77,6 +74,13 @@ class cls_KE_HOACH_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         # Find in tab_01
         tab_01_frame = self.tab1
         self.tab_01_entry_sl_kha_dung = f_utils_tim_component_with_name(tab_01_frame, "entry_sl_kha_dung")
+        self.tab_01_entry_sl_kha_dung.grid_forget()
+        self.tab_01_label_sl_kha_dung = f_utils_tim_component_with_name(tab_01_frame, "label_sl_kha_dung")
+        self.tab_01_label_sl_kha_dung.grid_forget()
+        self.tab_01_entry_sl_ton_kho = f_utils_tim_component_with_name(tab_01_frame, "entry_sl_ton_kho")
+        self.tab_01_entry_sl_ton_kho.grid_forget()
+        self.tab_01_label_sl_ton_kho = f_utils_tim_component_with_name(tab_01_frame, "label_sl_ton_kho")
+        self.tab_01_label_sl_ton_kho.grid_forget()
         self.tab_01_entry_ma_hang = f_utils_tim_component_with_name(tab_01_frame, "entry_ma_hang")
         self.tab_01_entry_ten_hang = f_utils_tim_component_with_name(tab_01_frame, "entry_ten_hang")
         self.tab_01_entry_dvt = f_utils_tim_component_with_name(tab_01_frame, "entry_dvt")
@@ -147,26 +151,6 @@ class cls_KE_HOACH_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
                         grandchild.destroy()
                         break
         return notebook
-        
-    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
-    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
-    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
-    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
-    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
-    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
-    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
-    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
-    # Adding controller
-    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
-    
-    def f_create_controller_auto_update_3_entries_sl_nhu_cau_sl_giu_cho_sl_ycdh(self):
-        # Initialize controller
-        self.controller_03_auto_update_number = Controller_auto_update_sl_giu_cho_va_sl_ycdh(
-            self.tab_01_entry_sl_kha_dung, 
-            self.tab_01_entry_nhu_cau, 
-            self.tab_01_entry_sl_giu_cho, 
-            self.tab_01_entry_sl_YCDH)
-        self.controller_03_auto_update_number.view = self
 
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
@@ -297,22 +281,22 @@ class cls_KE_HOACH_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_entry_nhu_cau.f_on_not_selecting(color=COLOR_WHITE)
         self.tab_01_entry_nhu_cau.grid(row=0, column=7, padx=(0, 10), pady=5, sticky="w")
         
-        self.tab_01_label_sl_giu_cho = tk.Label(parent_frame, text="SL giữ chỗ:")
-        self.tab_01_label_sl_giu_cho.grid(row=0, column=8, padx=(10, 2), pady=5, sticky="w")
-        self.tab_01_entry_sl_giu_cho = cls_my_number_entry_num_01(parent_frame, width=10)
-        self.tab_01_entry_sl_giu_cho.config(state="readonly")
-        self.tab_01_entry_sl_giu_cho.grid(row=0, column=9, padx=(0, 10), pady=5, sticky="w")
+        # self.tab_01_label_sl_giu_cho = tk.Label(parent_frame, text="SL giữ chỗ:")
+        # self.tab_01_label_sl_giu_cho.grid(row=0, column=8, padx=(10, 2), pady=5, sticky="w")
+        # self.tab_01_entry_sl_giu_cho = cls_my_number_entry_num_01(parent_frame, width=10)
+        # self.tab_01_entry_sl_giu_cho.config(state="readonly")
+        # self.tab_01_entry_sl_giu_cho.grid(row=0, column=9, padx=(0, 10), pady=5, sticky="w")
         
-        self.tab_01_label_sl_YCDH = tk.Label(parent_frame, text="SL YCĐH:")
-        self.tab_01_label_sl_YCDH.grid(row=0, column=10, padx=(10, 2), pady=5, sticky="w")
-        self.tab_01_entry_sl_YCDH = cls_my_number_entry_num_01(parent_frame, width=10)
-        self.tab_01_entry_sl_YCDH.config(state="readonly")
-        self.tab_01_entry_sl_YCDH.grid(row=0, column=11, padx=(0, 10), pady=5, sticky="w")
+        # self.tab_01_label_sl_YCDH = tk.Label(parent_frame, text="SL YCĐH:")
+        # self.tab_01_label_sl_YCDH.grid(row=0, column=10, padx=(10, 2), pady=5, sticky="w")
+        # self.tab_01_entry_sl_YCDH = cls_my_number_entry_num_01(parent_frame, width=10)
+        # self.tab_01_entry_sl_YCDH.config(state="readonly")
+        # self.tab_01_entry_sl_YCDH.grid(row=0, column=11, padx=(0, 10), pady=5, sticky="w")
 
         # Configure column weights for proper resizing
         parent_frame.columnconfigure(7, weight=1)  # Allow tab_01_entry_nhu_cau to expand
-        parent_frame.columnconfigure(9, weight=1)  # Allow tab_01_entry_sl_giu_cho to expand
-        parent_frame.columnconfigure(11, weight=1)  # Allow tab_01_entry_sl_YCDH to expand
+        # parent_frame.columnconfigure(9, weight=1)  # Allow tab_01_entry_sl_giu_cho to expand
+        # parent_frame.columnconfigure(11, weight=1)  # Allow tab_01_entry_sl_YCDH to expand
         
         self._f_view_create_widgets_add_row_03_into_frame_inventories_informations_tab_01()
     
@@ -525,10 +509,7 @@ class cls_KE_HOACH_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
             self.tab_01_entry_ma_hang, 
             self.tab_01_entry_ten_hang, 
             self.tab_01_entry_dvt, 
-            self.tab_01_entry_sl_kha_dung, 
             self.tab_01_entry_nhu_cau, 
-            self.tab_01_entry_sl_giu_cho, 
-            self.tab_01_entry_sl_YCDH, 
             self.tab_01_entry_ghi_chu_mat_hang
             )
     
@@ -539,10 +520,7 @@ class cls_KE_HOACH_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_entry_ma_hang,
         self.tab_01_entry_ten_hang,
         self.tab_01_entry_dvt,
-        self.tab_01_entry_sl_kha_dung,
         self.tab_01_entry_nhu_cau,
-        self.tab_01_entry_sl_giu_cho,
-        self.tab_01_entry_sl_YCDH,
         self.tab_01_entry_ghi_chu_mat_hang
         )
     
@@ -673,10 +651,7 @@ class cls_KE_HOACH_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
             self.tab_01_entry_ma_hang,
             self.tab_01_entry_ten_hang,
             self.tab_01_entry_dvt,
-            self.tab_01_entry_sl_kha_dung,
             self.tab_01_entry_nhu_cau,
-            self.tab_01_entry_sl_giu_cho,
-            self.tab_01_entry_sl_YCDH,
             self.tab_01_entry_ghi_chu_mat_hang)
         
     def f_view_treeview_of_tab_02_double_click(self, event):

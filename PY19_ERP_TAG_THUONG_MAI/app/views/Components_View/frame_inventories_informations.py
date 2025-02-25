@@ -152,14 +152,14 @@ class cls_frame_inventories_information_view(tk.Frame):
         entry_dvt.grid(row=0, column=1, padx=(0, 2), pady=5, sticky="w")
         self.additional_entries.append(entry_dvt)
 
-        label_sl_ton_kho = ttk.Label(parent_frame, text="SL tồn:")
+        label_sl_ton_kho = ttk.Label(parent_frame, text="SL tồn:", name="label_sl_ton_kho")
         label_sl_ton_kho.grid(row=0, column=2, padx=(10, 2), pady=5, sticky="w")
         
         entry_sl_ton_kho = cls_my_number_entry_num_01(parent_frame, width=10, name="entry_sl_ton_kho")
         entry_sl_ton_kho.grid(row=0, column=3, padx=(0, 10), pady=5, sticky="w")
         self.additional_entries.append(entry_sl_ton_kho)
         
-        label_sl_kha_dung = ttk.Label(parent_frame, text="SL khả dụng:")
+        label_sl_kha_dung = ttk.Label(parent_frame, text="SL khả dụng:", name="label_sl_kha_dung")
         label_sl_kha_dung.grid(row=0, column=4, padx=(10, 2), pady=5, sticky="w")
 
         entry_sl_kha_dung = cls_my_number_entry_num_01(parent_frame, width=10, name="entry_sl_kha_dung")
