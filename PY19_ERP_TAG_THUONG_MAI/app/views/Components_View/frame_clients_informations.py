@@ -16,7 +16,7 @@ class cls_frame_client_information_model:
             WHERE [XOA_SUA] = ''
             ORDER BY [MA_DOI_TUONG]
             """
-        data = SQLModel.fetch_data(query)
+        data = utils_model_SQL_server.fetch_data(query)
         # print(data)
         return data
     

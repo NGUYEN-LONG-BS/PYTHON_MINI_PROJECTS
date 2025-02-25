@@ -25,7 +25,7 @@ class cls_frame_inventories_information_model:
             FROM [TBD_2024].[dbo].[VIEW_INVENTORY_REPORT_QUANTITY_250214_09h40]
             ORDER BY [MA_HANG]
             """
-        data = SQLModel.fetch_data(query)
+        data = utils_model_SQL_server.fetch_data(query)
         return data
     
     def get_column_width():

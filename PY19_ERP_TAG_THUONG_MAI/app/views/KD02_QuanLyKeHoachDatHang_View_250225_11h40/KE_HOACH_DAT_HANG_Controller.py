@@ -595,7 +595,7 @@ class Controller_delete_row_in_SQL:
         database_name = f_utils_get_DB_NAME()
         query = f"EXEC [{database_name}].[dbo].[Proc_TB_KD02_KE_HOACH_DAT_HANG_UPDATE_XOA_SUA_250225_14h30] '{so_phieu}', 'deleted'"
         # Sent SQL query
-        SQLModel.sent_SQL_query(query)
+        utils_model_SQL_server.sent_SQL_query(query)
 
 class Controller_edit_row_in_SQL:
     def update_edited(so_phieu):
@@ -603,11 +603,11 @@ class Controller_edit_row_in_SQL:
         database_name = f_utils_get_DB_NAME()
         query = f"EXEC [{database_name}].[dbo].[Proc_TB_KD02_KE_HOACH_DAT_HANG_UPDATE_XOA_SUA_250225_14h30] '{so_phieu}', 'edited'"
         # Sent SQL query
-        SQLModel.sent_SQL_query(query)
+        utils_model_SQL_server.sent_SQL_query(query)
 
 class SQLController:
     def load_data(tree, query):
-        data = SQLModel.fetch_data(query)
+        data = utils_model_SQL_server.fetch_data(query)
         
         # tree = self.treeview_test_of_tag_02
         for item in tree.get_children():
@@ -699,11 +699,11 @@ class SQLController:
         # Step_02: validate data
         f_utils_get_unique_column_from_data(data_array, 8)
         # Step_03: Export data to SQL
-        if SQLModel.f_validate_data_format(data_array):
+        if utils_model_SQL_server.f_validate_data_format_KD02_KE_HOACH_DAT_HANG(data_array):
             # If data is valid
             database_name = controller_get_information_of_module.load_database_name()
             table_name = controller_get_information_of_module.load_table_name_TB_KD02_KE_HOACH_DAT_HANG()
-            SQLModel.f_goi_ham_Export_to_TB_KD02_YEU_CAU_DAT_HANG(data_array, database_name, table_name)
+            utils_model_SQL_server.f_goi_ham_Export_to_TB_KD02_YEU_CAU_DAT_HANG(data_array, database_name, table_name)
             return "Data exported"
         else:
             return notification_text
@@ -1500,7 +1500,7 @@ class Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG:
         WHERE SO_PHIEU = '{so_phieu}' AND XOA_SUA = ''
         """
         # Sent SQL query
-        data = SQLModel.fetch_data(query)
+        data = utils_model_SQL_server.fetch_data(query)
         Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG.get_first_row(data)
         return data
     
