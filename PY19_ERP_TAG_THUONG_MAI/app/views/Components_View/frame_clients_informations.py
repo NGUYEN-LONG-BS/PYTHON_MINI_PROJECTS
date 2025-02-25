@@ -20,6 +20,18 @@ class cls_frame_client_information_model:
         # print(data)
         return data
     
+    def get_column_width():
+        width_of_columns = (80, 400, 100, 200)
+        return width_of_columns
+
+    def get_width_of_dropdown():
+        width_of_dropdown = 850
+        return width_of_dropdown
+    
+    def get_height_of_dropdown():
+        height_of_dropdown = 300
+        return height_of_dropdown
+    
     def get_header(query=''):
         header = ["Mã KH", "Tên KH", "MST", "Địa chỉ"]
         return header
@@ -42,12 +54,23 @@ class cls_frame_client_information_controller:
     def get_data(self):
         return self.model.get_data()
     
+    def get_width_of_dropdown(self):
+        return cls_frame_client_information_model.get_width_of_dropdown()
+        # return self.model.width_of_dropdown
+    
+    def get_height_of_dropdown(self):
+        return cls_frame_client_information_model.get_height_of_dropdown()
+        # return self.model.height_of_dropdown
+    
+    def get_column_width(self):
+        return cls_frame_client_information_model.get_column_width()
+    
     def get_header(self):
         return self.model.get_header()
 
     def filter_data(self, query):
         filtered_data = self.model.filter_data(query)
-        self.view.update_combobox_data(filtered_data)
+        cls_frame_client_information_view.update_combobox_data(filtered_data)
         
 # View: cls_frame_client_information_view
 class cls_frame_client_information_view(tk.Frame):
@@ -85,14 +108,18 @@ class cls_frame_client_information_view(tk.Frame):
         # data=self.controller.get_data(),
         data=self.controller.get_data()         # bỏ dấu phẩy đi
         columns = self.controller.get_header()
+        column_width = self.controller.get_column_width()
+        dropdown_width = self.controller.get_width_of_dropdown()
+        dropdown_height = self.controller.get_height_of_dropdown()
         
         # Main cls_TreeviewCombobox_clients
         self.treeview_combobox = cls_TreeviewCombobox_clients(
             self.frame_row_1,
             columns=columns,
             data=data,
-            dropdown_width=1200,
-            dropdown_height=300,
+            dropdown_width=dropdown_width,
+            dropdown_height=dropdown_height,
+            column_width=column_width,
             width=15,
             name="entry_ma_khach_hang"
         )
@@ -127,14 +154,14 @@ class cls_frame_client_information_view(tk.Frame):
         self.treeview_combobox.data = data
         self.treeview_combobox.refresh_data()
 
-
 class cls_TreeviewCombobox_clients(cls_my_text_entry_num_01):
-    def __init__(self, master, columns, data, dropdown_width=800, dropdown_height=600, **kwargs):
+    def __init__(self, master, columns, data, dropdown_width=800, dropdown_height=600, column_width=(100, 300, 80, 120), **kwargs):
         super().__init__(master, **kwargs)
         self.columns = columns
         self.data = data
         self.dropdown_width = dropdown_width
         self.dropdown_height = dropdown_height
+        self.column_width = column_width
         self.dropdown = None
         
         # Placeholder setup
@@ -164,9 +191,12 @@ class cls_TreeviewCombobox_clients(cls_my_text_entry_num_01):
 
             # Create a Treeview in the dropdown
             self.tree = ttk.Treeview(self.dropdown, columns=self.columns, show="headings")
-            for col in self.columns:
+            
+            column_widths = self.column_width
+            
+            for idx, col in enumerate(self.columns):
                 self.tree.heading(col, text=col)
-                self.tree.column(col, width=120, anchor="w")
+                self.tree.column(col, width=column_widths[idx], anchor="w")  # Set width based on the column index
             self.tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
             # Add a scrollbar

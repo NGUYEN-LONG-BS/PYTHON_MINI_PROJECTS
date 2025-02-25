@@ -81,7 +81,7 @@ class cls_frame_inventories_information_controller:
 
     def filter_data(self, query):
         filtered_data = self.model.filter_data(query)
-        self.view.update_combobox_data(filtered_data)
+        cls_frame_inventories_information_view.update_combobox_data(filtered_data)
         
 # View: cls_frame_inventories_information_view
 class cls_frame_inventories_information_view(tk.Frame):
@@ -115,17 +115,20 @@ class cls_frame_inventories_information_view(tk.Frame):
         label_ma_hang = ttk.Label(self.frame_row_1, text="Mã hàng:")
         label_ma_hang.pack(side="left", padx=(10,2), pady=5)
 
-        columns = self.controller.get_header()
+        # Load data from the model
         data = self.controller.get_data()
+        columns = self.controller.get_header()
         column_width = self.controller.get_column_width()
+        dropdown_width=self.controller.get_width_of_dropdown()
+        dropdown_height=self.controller.get_height_of_dropdown()
         
         # Main cls_TreeviewCombobox_inventories
         self.treeview_combobox = cls_TreeviewCombobox_inventories(
             self.frame_row_1,
             columns=columns,
             data=data,
-            dropdown_width=self.controller.get_width_of_dropdown(),
-            dropdown_height=self.controller.get_height_of_dropdown(),
+            dropdown_width=dropdown_width,
+            dropdown_height=dropdown_height,
             column_width=column_width,
             width=15,
             name="entry_ma_hang"
