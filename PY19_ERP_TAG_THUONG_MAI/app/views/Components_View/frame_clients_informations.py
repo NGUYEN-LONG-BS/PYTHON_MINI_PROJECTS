@@ -6,23 +6,6 @@ from entry import *
 class cls_frame_client_information_model:
         
     def get_data(query=''):
-        # data = [
-        #     ("BH01", "Công ty TNHH Con số", "02641368626", "04 đường Nguyễn Trãi, Cần Thơ, Việt Nam"),
-        #     ("BH02", "Công ty TNHH Cửa Hàng", "02641368125", "26 đường Nguyễn Duy Hưng, Đà Nẵng, Việt Nam"),
-        #     ("BH03", "Công ty TNHH Một Thành Viên", "0264151515", "04 đường Lê Lợi, TP. Hồ Chí Minh, Việt Nam"),
-        #     ("BH04", "Công ty TNHH TTL", "0264136516", "28 đường Trường Chinh, Bình Định, Việt Nam"),
-        #     ("BH05", "Công ty CP Khổng lồ", "02641361121", "297 đường Phan Bội Châu, Quy Nhơn, Bình Định, Việt Nam"),
-        #     ("BH06", "Công ty TNHH Nhà Kính Đẹp", "02641368626", "04 đường Nguyễn Trãi, Cần Thơ, Việt Nam"),
-        #     ("BH07", "Công ty TNHH Trí Hiếu", "02641368125", "26 đường Nguyễn Duy Hưng, Đà Nẵng, Việt Nam"),
-        #     ("BH08", "Công ty TNHH Một Thành Viên Ngại Nùng Chi", "0264151515", "04 đường Lê Lợi, TP. Hồ Chí Minh, Việt Nam"),
-        #     ("BH09", "Công ty TNHH Nhận Thức Việt", "0264136516", "28 đường Trường Chinh, Bình Định, Việt Nam"),
-        #     ("BH10", "Công ty CP Chat GPT", "02641361121", "297 đường Phan Bội Châu, Quy Nhơn, Bình Định, Việt Nam"),
-        #     ("BH11", "Công ty TNHH Con Trí Tuệ", "02641368626", "04 đường Nguyễn Trãi, Cần Thơ, Việt Nam"),
-        #     ("BH12", "Công ty TNHH Cửa Hàng Vũ Phong", "02641368125", "26 đường Nguyễn Duy Hưng, Đà Nẵng, Việt Nam"),
-        #     ("BH13", "Công ty TNHH Một Thành Viên Nhất Nhất", "0264151515", "04 đường Lê Lợi, TP. Hồ Chí Minh, Việt Nam"),
-        #     ("BH14", "Công ty TNHH Cổ Phần TTL", "0264136516", "28 đường Trường Chinh, Bình Định, Việt Nam"),
-        #     ("BH15", "Công ty CP TNHH Khổng lồ", "02641361121", "297 đường Phan Bội Châu, Quy Nhơn, Bình Định, Việt Nam"),
-        # ]
         query = f""" 
             SELECT 
                 [MA_DOI_TUONG] AS [Mã KH],
@@ -45,7 +28,9 @@ class cls_frame_client_information_model:
         filtered_data = []
         data = cls_frame_client_information_model.get_data()
         for row in data:
-            if query in row[0].lower() or query in row[1].lower() or query in row[2].lower():
+            if (query in row[0].lower() or 
+                query in row[1].lower() or 
+                query in row[2].lower()):
                 filtered_data.append(row)
         return filtered_data
 
@@ -99,11 +84,12 @@ class cls_frame_client_information_view(tk.Frame):
         # Load data from the model
         # data=self.controller.get_data(),
         data=self.controller.get_data()         # bỏ dấu phẩy đi
+        columns = self.controller.get_header()
         
         # Main cls_TreeviewCombobox_clients
         self.treeview_combobox = cls_TreeviewCombobox_clients(
             self.frame_row_1,
-            columns=self.controller.get_header(),
+            columns=columns,
             data=data,
             dropdown_width=1200,
             dropdown_height=300,
@@ -164,14 +150,6 @@ class cls_TreeviewCombobox_clients(cls_my_text_entry_num_01):
         # Bind events to show and interact with dropdown
         self.bind("<Button-1>", self.f_handle_event_left_click)
         self.bind("<KeyRelease>", self.filter_data)
-        # self.master.bind("<Button-1>", self.on_click_outside)  # Bind click event to master frame to hide dropdown
-        
-        # parent_widget = self.master.nametowidget(self.master.winfo_parent())
-        # parent_widget.bind("<Button-1>", self.on_click_outside)
-
-    # def on_click_outside(self, event):
-    #     # print("on_click_outside")
-    #     self.hide_dropdown()
     
     def f_handle_event_left_click(self, event):
         self.f_on_click_clear_placeholder(event)
@@ -257,8 +235,9 @@ class cls_TreeviewCombobox_clients(cls_my_text_entry_num_01):
 
             # Populate additional Entry widgets with other column values
             for i, entry in enumerate(self.additional_entries):
-                entry.delete(0, tk.END)
-                entry.insert(0, values[i + 1])
+                if i + 1 < len(values):  # Ensure there are enough values to access
+                    entry.delete(0, tk.END)
+                    entry.insert(0, values[i + 1])
 
             self.hide_dropdown()
 

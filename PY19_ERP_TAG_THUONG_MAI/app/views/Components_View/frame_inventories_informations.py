@@ -5,54 +5,52 @@ from utils import *
 
 # Model: cls_frame_inventories_information_model
 class cls_frame_inventories_information_model:
-    def __init__(self):
-        # Sample data to simulate the model
-        self.header = ["Mã hàng", "Tên hàng", "Đvt", "SL khả dụng"]
-        self.width_of_columns = (100, 300, 80, 120)
-        self.width_of_dropdown = 700
-        self.height_of_dropdown = 300
-        self.data = [
-            ("HH-01A-039", "Dây chì", "sợi", 15),
-            ("HH-02A-010", "Tủ điện trung thế", "cái", 26),
-            ("HH-01B-001", "MBC 120AM", "cái", 50),
-            ("TM-01A-009", "LA 4000A", "cái", 60),
-            ("MT-05A-025", "Nắp chụp LA - màu vàng", "cái", 22),
-            ("HH-36A-038", "Dây chì", "sợi", 0),
-            ("HH-14A-011", "Tủ điện trung thế xi mạ", "cái", 24),
-            ("HH-16B-021", "MBC 150AM", "cái", 125),
-            ("TM-19A-109", "LA 4250A", "cái", 120),
-            ("MT-24A-125", "Nắp chụp LA - màu xanh", "cái", 162),
-            ("HH-01A-059", "Dây chì", "sợi", 15),
-            ("HH-02A-012", "Tủ điện trung thế", "cái", 26),
-            ("HH-01B-031", "MBC 120AM", "cái", 50),
-            ("TM-01A-209", "LA 4000A", "cái", 60),
-            ("MT-05A-225", "Nắp chụp LA - màu vàng", "cái", 22),
-            ("HH-36A-069", "Dây chì", "sợi", 32),
-            ("HH-14A-013", "Tủ điện trung thế xi mạ", "cái", 24),
-            ("HH-16B-041", "MBC 150AM", "cái", 125),
-            ("TM-19A-309", "LA 4250A", "cái", 120),
-            ("MT-24A-325", "Nắp chụp LA - màu xanh", "cái", 162)
-        ]
 
-    def get_data(self):
-        return self.data
+    def get_data(query=''):
+        query = f""" 
+            SELECT 
+                [MA_HANG] AS [Mã hàng],
+                [TEN_HANG] AS [Tên hàng],
+                [DVT] AS [đvt],
+                CASE 
+                    WHEN [Final_Stock] = FLOOR([Final_Stock]) 
+                    THEN FORMAT([Final_Stock], 'N0')  -- Nếu là số nguyên
+                    ELSE FORMAT([Final_Stock], 'N2')  -- Nếu có phần thập phân, hiển thị 2 chữ số
+                END AS [SL tồn],
+                CASE 
+                    WHEN [Final_Stock] = FLOOR([Final_Stock]) 
+                    THEN FORMAT([Final_Stock], 'N0')  -- Nếu là số nguyên
+                    ELSE FORMAT([Final_Stock], 'N2')  -- Nếu có phần thập phân, hiển thị 2 chữ số
+                END AS [SL khả dụng]
+            FROM [TBD_2024].[dbo].[VIEW_INVENTORY_REPORT_QUANTITY_250214_09h40]
+            ORDER BY [MA_HANG]
+            """
+        data = SQLModel.fetch_data(query)
+        return data
     
-    def get_column_width(self):
-        return self.width_of_columns
+    def get_column_width():
+        width_of_columns = (100, 300, 80, 120, 120)
+        return width_of_columns
 
-    def get_width_of_dropdown(self):
-        return self.width_of_dropdown
+    def get_width_of_dropdown():
+        width_of_dropdown = 820
+        return width_of_dropdown
     
-    def get_height_of_dropdown(self):
-        return self.height_of_dropdown
+    def get_height_of_dropdown():
+        height_of_dropdown = 300
+        return height_of_dropdown
     
-    def get_header(self):
-        return self.header
+    def get_header(query=''):
+        header = ["Mã hàng", "Tên hàng", "Đvt", "SL tồn", "SL khả dụng"]
+        return header
 
-    def filter_data(self, query):
+    def filter_data(query):
         filtered_data = []
-        for row in self.data:
-            if query in row[0].lower() or query in row[1].lower() or query in row[2].lower():
+        data = cls_frame_inventories_information_model.get_data()
+        for row in data:
+            if (query in row[0].lower() or 
+                query in row[1].lower() or 
+                query in row[2].lower()):
                 filtered_data.append(row)
         return filtered_data
 
@@ -62,19 +60,24 @@ class cls_frame_inventories_information_controller:
         self.model = cls_frame_inventories_information_model()  # Create an instance of the model
 
     def get_data(self):
-        return self.model.get_data()
+        return cls_frame_inventories_information_model.get_data('')
+        # return self.model.get_data()
     
     def get_width_of_dropdown(self):
-        return self.model.width_of_dropdown
+        return cls_frame_inventories_information_model.get_width_of_dropdown()
+        # return self.model.width_of_dropdown
     
     def get_height_of_dropdown(self):
-        return self.model.height_of_dropdown
+        return cls_frame_inventories_information_model.get_height_of_dropdown()
+        # return self.model.height_of_dropdown
     
     def get_column_width(self):
-        return self.model.get_column_width()
+        return cls_frame_inventories_information_model.get_column_width()
+        # return self.model.get_column_width()
     
     def get_header(self):
-        return self.model.get_header()
+        return cls_frame_inventories_information_model.get_header('')
+        # return self.model.get_header()
 
     def filter_data(self, query):
         filtered_data = self.model.filter_data(query)
@@ -112,14 +115,18 @@ class cls_frame_inventories_information_view(tk.Frame):
         label_ma_hang = ttk.Label(self.frame_row_1, text="Mã hàng:")
         label_ma_hang.pack(side="left", padx=(10,2), pady=5)
 
+        columns = self.controller.get_header()
+        data = self.controller.get_data()
+        column_width = self.controller.get_column_width()
+        
         # Main cls_TreeviewCombobox_inventories
         self.treeview_combobox = cls_TreeviewCombobox_inventories(
             self.frame_row_1,
-            columns=self.controller.get_header(),
-            data=self.controller.get_data(),
+            columns=columns,
+            data=data,
             dropdown_width=self.controller.get_width_of_dropdown(),
             dropdown_height=self.controller.get_height_of_dropdown(),
-            column_width=self.controller.get_column_width(),
+            column_width=column_width,
             width=15,
             name="entry_ma_hang"
         )
@@ -142,16 +149,24 @@ class cls_frame_inventories_information_view(tk.Frame):
         entry_dvt.grid(row=0, column=1, padx=(0, 2), pady=5, sticky="w")
         self.additional_entries.append(entry_dvt)
 
+        label_sl_ton_kho = ttk.Label(parent_frame, text="SL tồn:")
+        label_sl_ton_kho.grid(row=0, column=2, padx=(10, 2), pady=5, sticky="w")
+        
+        entry_sl_ton_kho = cls_my_number_entry_num_01(parent_frame, width=10, name="entry_sl_ton_kho")
+        entry_sl_ton_kho.grid(row=0, column=3, padx=(0, 10), pady=5, sticky="w")
+        self.additional_entries.append(entry_sl_ton_kho)
+        
         label_sl_kha_dung = ttk.Label(parent_frame, text="SL khả dụng:")
-        label_sl_kha_dung.grid(row=0, column=2, padx=(10, 2), pady=5, sticky="w")
+        label_sl_kha_dung.grid(row=0, column=4, padx=(10, 2), pady=5, sticky="w")
 
         entry_sl_kha_dung = cls_my_number_entry_num_01(parent_frame, width=10, name="entry_sl_kha_dung")
-        entry_sl_kha_dung.grid(row=0, column=3, padx=(0, 10), pady=5, sticky="w")
+        entry_sl_kha_dung.grid(row=0, column=5, padx=(0, 10), pady=5, sticky="w")
         self.additional_entries.append(entry_sl_kha_dung)
 
         # Configure column weights for proper resizing
         parent_frame.columnconfigure(1, weight=1)  # Allow entry_dvt to expand
         parent_frame.columnconfigure(3, weight=1)  # Allow entry_sl_kha_dung to expand
+        parent_frame.columnconfigure(5, weight=1)  # Allow entry_sl_kha_dung to expand
 
         # Link additional Entry widgets to the cls_TreeviewCombobox_inventories
         self.treeview_combobox.set_additional_entries(self.additional_entries)
@@ -243,14 +258,20 @@ class cls_TreeviewCombobox_inventories(cls_my_text_entry_num_01):
             print("Error at function: ", f_utils_get_current_function_name())
 
     def refresh_data(self, query=""):
+        if not hasattr(self, 'tree') or not self.tree:
+            return  # Tránh lỗi nếu self.tree không tồn tại
+        
         # Clear existing data
         for item in self.tree.get_children():
             self.tree.delete(item)
-
+        
         # Insert filtered rows
         for row in self.data:
-            if query in row[0].lower() or query in row[1].lower() or query in row[2].lower():  # Filter by the first or second column or third column
-                self.tree.insert("", "end", values=row)
+            # print(row)
+            if (query in str(row[0]).lower() or 
+                query in str(row[1]).lower()):  # Filter by the first or second column
+                self.tree.insert("", "end", values=(row[0], row[1], row[2], row[3], row[4]))
+            
 
     def on_tree_select(self, event):
         selected_item = self.tree.focus()
@@ -262,8 +283,9 @@ class cls_TreeviewCombobox_inventories(cls_my_text_entry_num_01):
 
             # Populate additional Entry widgets with other column values
             for i, entry in enumerate(self.additional_entries):
-                entry.delete(0, tk.END)
-                entry.insert(0, values[i + 1])
+                if i + 1 < len(values):  # Ensure there are enough values to access
+                    entry.delete(0, tk.END)
+                    entry.insert(0, values[i + 1])
 
             self.hide_dropdown()
 
