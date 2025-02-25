@@ -865,7 +865,7 @@ class SQLController:
             # If data is valid
             database_name = controller_get_information_of_module.load_database_name()
             table_name = controller_get_information_of_module.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
-            utils_model_SQL_server.f_goi_ham_Export_to_TB_KD02_YEU_CAU_DAT_HANG(data_array, database_name, table_name)
+            utils_model_SQL_server.f_goi_ham_Export_to_table(data_array, database_name, table_name)
             return "Data exported"
         else:
             return notification_text

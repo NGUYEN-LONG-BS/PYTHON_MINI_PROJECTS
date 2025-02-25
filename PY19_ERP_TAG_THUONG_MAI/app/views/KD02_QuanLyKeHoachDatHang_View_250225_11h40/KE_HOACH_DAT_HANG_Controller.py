@@ -381,14 +381,14 @@ class Controller_action_after_event:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"ID value '{id_value}' must be an integer!", "red")
                 return False
             
-            # Kiểm tra sl_giu_cho và sl_yeu_cau_dat_hang có phải số hay không
+            # Kiểm tra sl_giu_cho và sl_ke_hoach_dat_hang có phải số hay không
             try:
                 sl_giu_cho_value = float(sl_nhu_cau)
             except ValueError:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Số lượng nhu cầu '{sl_nhu_cau}' phải là số.", "red")
                 return False
             
-            # Kiểm tra sl_giu_cho và sl_yeu_cau_dat_hang không đồng thời bằng không
+            # Kiểm tra sl_giu_cho và sl_ke_hoach_dat_hang không đồng thời bằng không
             if sl_nhu_cau == 0:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số lượng nhu cầu không được bằng 0.", "red")
                 return False
@@ -703,7 +703,7 @@ class SQLController:
             # If data is valid
             database_name = controller_get_information_of_module.load_database_name()
             table_name = controller_get_information_of_module.load_table_name_TB_KD02_KE_HOACH_DAT_HANG()
-            utils_model_SQL_server.f_goi_ham_Export_to_TB_KD02_YEU_CAU_DAT_HANG(data_array, database_name, table_name)
+            utils_model_SQL_server.f_goi_ham_Export_to_table(data_array, database_name, table_name)
             return "Data exported"
         else:
             return notification_text
@@ -783,7 +783,7 @@ class Controller_handel_all_events:
             row_values = my_treeview_to_get_data.item(item, 'values')
             if len(row_values) > 2:  # Ensure the row has at least 2 columns
                 so_phieu = row_values[2]
-                Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG.begin_editing_slip(elements_list, so_phieu)
+                Controller_inherit_to_edit_slip_KE_HOACH_DAT_HANG.begin_editing_slip(elements_list, so_phieu)
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Begin editing slip {so_phieu}.", "blue")
                 return
     
@@ -1456,7 +1456,7 @@ class Controller_validate_data_from_Excel_file_to_import_to_SQL_250221_17h05:
             print("Error at function: ", f_utils_get_current_function_name())
             return False
 
-class Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG:
+class Controller_inherit_to_edit_slip_KE_HOACH_DAT_HANG:
     def begin_editing_slip(elements_list, so_phieu):
         (
             entry_ngay_tren_phieu,
@@ -1471,11 +1471,11 @@ class Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG:
             my_treeview_to_get_data,
             my_treeview_to_load_data
             ) = elements_list
-        data = Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG.get_data_want_to_edit(so_phieu)
+        data = Controller_inherit_to_edit_slip_KE_HOACH_DAT_HANG.get_data_want_to_edit(so_phieu)
         if not data:
             return
         
-        first_row = Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG.get_first_row(data)
+        first_row = Controller_inherit_to_edit_slip_KE_HOACH_DAT_HANG.get_first_row(data)
         
         # update entries
         entries_list = (
@@ -1489,19 +1489,19 @@ class Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG:
             entry_thong_tin_hop_dong,
             entry_note_for_slip
             )
-        Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG.Insert_data_into_entries(entries_list, first_row)
-        Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG.Insert_data_into_treeview(my_treeview_to_load_data, data)
+        Controller_inherit_to_edit_slip_KE_HOACH_DAT_HANG.Insert_data_into_entries(entries_list, first_row)
+        Controller_inherit_to_edit_slip_KE_HOACH_DAT_HANG.Insert_data_into_treeview(my_treeview_to_load_data, data)
     
     def get_data_want_to_edit(so_phieu):
         # Create query
         database_name = f_utils_get_DB_NAME()
         query = f"""
-        SELECT * FROM [{database_name}].[dbo].[TB_KD02_YEU_CAU_DAT_HANG]
+        SELECT * FROM [{database_name}].[dbo].[TB_KD02_KE_HOACH_DAT_HANG]
         WHERE SO_PHIEU = '{so_phieu}' AND XOA_SUA = ''
         """
         # Sent SQL query
         data = utils_model_SQL_server.fetch_data(query)
-        Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG.get_first_row(data)
+        Controller_inherit_to_edit_slip_KE_HOACH_DAT_HANG.get_first_row(data)
         return data
     
     def get_first_row(data):

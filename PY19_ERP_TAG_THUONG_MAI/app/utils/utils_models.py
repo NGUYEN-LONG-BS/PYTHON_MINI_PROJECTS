@@ -248,7 +248,7 @@ class utils_model_SQL_server:
             conn.close()
             print("Kết nối đã được đóng.")
     
-    def f_goi_ham_Export_to_TB_KD02_YEU_CAU_DAT_HANG(data_array, database_name, table_name):
+    def f_goi_ham_Export_to_table(data_array, database_name, table_name):
         server_name = "14.225.192.238, 1433"  # Địa chỉ IP của SQL Server
         database_name = database_name
         login_name = "sa"
