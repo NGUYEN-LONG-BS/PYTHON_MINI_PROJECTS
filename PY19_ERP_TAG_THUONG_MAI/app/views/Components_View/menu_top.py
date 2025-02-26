@@ -85,49 +85,40 @@ class cls_menu_top:
             menu_KinhDoanh.add_separator()
             
             # menu_KinhDoanh level 1
-            menu_KinhDoanh_QuanLyGoiThau = tk.Menu(menu_KinhDoanh, tearoff=0)
-            menu_KinhDoanh.add_cascade(label="Quản lý gói thầu", menu=menu_KinhDoanh_QuanLyGoiThau)
+            menu_KinhDoanh_KeHoachDatHang = tk.Menu(menu_KinhDoanh, tearoff=0)
+            menu_KinhDoanh.add_cascade(label="Kế hoạch đặt hàng", menu=menu_KinhDoanh_KeHoachDatHang)
             menu_KinhDoanh.add_separator()
             menu_KinhDoanh_QuanLyYeuCauDatHang = tk.Menu(menu_KinhDoanh, tearoff=0)
             menu_KinhDoanh.add_cascade(label="Quản lý yêu cầu đặt hàng", menu=menu_KinhDoanh_QuanLyYeuCauDatHang)
             menu_KinhDoanh.add_separator()
-            menu_KinhDoanh_QuanLyKhachHang = tk.Menu(menu_KinhDoanh, tearoff=0)
-            menu_KinhDoanh.add_cascade(label="Quản lý khách hàng", menu=menu_KinhDoanh_QuanLyKhachHang)
+            menu_KinhDoanh_DeNghiXuatKho = tk.Menu(menu_KinhDoanh, tearoff=0)
+            menu_KinhDoanh.add_cascade(label="Đề nghị xuất kho", menu=menu_KinhDoanh_DeNghiXuatKho)
             menu_KinhDoanh.add_separator()
             menu_KinhDoanh_QuanLyTonKho = tk.Menu(menu_KinhDoanh, tearoff=0)
-            menu_KinhDoanh.add_cascade(label="Quản lý tồn kho", menu=menu_KinhDoanh_QuanLyTonKho)
+            menu_KinhDoanh.add_cascade(label="Tồn kho", menu=menu_KinhDoanh_QuanLyTonKho)
             
-            # menu_KinhDoanh level 2: menu_KinhDoanh_QuanLyGoiThau
-            menu_KinhDoanh_QuanLyGoiThau.add_command(label="KD0101 |Quản lý gói thầu", command=self.f_KD0101_QuanLyGoiThau_click)
-            menu_KinhDoanh_QuanLyGoiThau.add_command(label="KD0102 |Tạo mới gói thầu", command=self.f_KD0101_QuanLyGoiThau_click)
-            menu_KinhDoanh_QuanLyGoiThau.add_separator()
-            menu_KinhDoanh_QuanLyGoiThau.add_command(label="KD0103 |Quản lý kế hoạch đặt hàng", command=self.f_do_nothing_click)
-            menu_KinhDoanh_QuanLyGoiThau.add_command(label="KD0104 |Tạo mới kế hoạch đặt hàng", command=self.f_do_nothing_click)
-            menu_KinhDoanh_QuanLyGoiThau.add_command(label="KD0105 |Nhật ký giao hàng", command=self.f_do_nothing_click)
+            # menu_KinhDoanh level 2: menu_KinhDoanh_KeHoachDatHang
+            menu_KinhDoanh_KeHoachDatHang.add_command(label="KD0201 |Tạo mới kế hoạch đặt hàng", command=self.f_tao_moi_KeHoachDatHang_click)
+            menu_KinhDoanh_KeHoachDatHang.add_command(label="KD0201 |Nhật ký kế hoạch đặt hàng", command=self.f_nhat_ky_KeHoachDatHang_click)
+            menu_KinhDoanh_KeHoachDatHang.add_separator()
             
             # menu_KinhDoanh level 2: menu_KinhDoanh_QuanLyYeuCauDatHang
-            menu_KinhDoanh_QuanLyYeuCauDatHang.add_command(label="KD0201 |Tạo mới YCĐH", command=self.f_tao_moi_YCDH_click)
-            menu_KinhDoanh_QuanLyYeuCauDatHang.add_command(label="KD0202 |Nhật ký YCĐH", command=self.f_nhat_ky_YCDH_click)
+            menu_KinhDoanh_QuanLyYeuCauDatHang.add_command(label="KD0202 |Tạo mới yêu cầu đặt hàng", command=self.f_tao_moi_YCDH_click)
+            menu_KinhDoanh_QuanLyYeuCauDatHang.add_command(label="KD0202 |Nhật ký yêu cầu đặt hàng", command=self.f_nhat_ky_YCDH_click)
             menu_KinhDoanh_QuanLyYeuCauDatHang.add_separator()
             menu_KinhDoanh_QuanLyYeuCauDatHang_BaoCaoYCDH = tk.Menu(menu_KinhDoanh_QuanLyYeuCauDatHang, tearoff=0)
             menu_KinhDoanh_QuanLyYeuCauDatHang.add_cascade(label="Báo cáo YCDH", menu=menu_KinhDoanh_QuanLyYeuCauDatHang_BaoCaoYCDH)
             
-            # menu_KinhDoanh level 2: menu_KinhDoanh_QuanLyKhachHang
-            menu_KinhDoanh_QuanLyKhachHang.add_command(label="KD0301 |Tạo mới khách hàng", command=self.f_KD_CRUDP_KhachHang_click)
-            menu_KinhDoanh_QuanLyKhachHang.add_command(label="KD0302 |Quản lý khách hàng", command=self.f_do_nothing_click)
-            menu_KinhDoanh_QuanLyKhachHang.add_separator()
-            menu_KinhDoanh_QuanLyKhachHang_BaoCaoKH = tk.Menu(menu_KinhDoanh_QuanLyKhachHang, tearoff=0)
-            menu_KinhDoanh_QuanLyKhachHang.add_cascade(label="Báo cáo khách hàng", menu=menu_KinhDoanh_QuanLyKhachHang_BaoCaoKH)
+            # menu_KinhDoanh level 2: menu_KinhDoanh_DeNghiXuatKho
+            menu_KinhDoanh_DeNghiXuatKho.add_command(label="KD0301 |Tạo mới đề nghị xuất kho", command=self.f_tao_moi_DeNghiXuatKho_click)
+            menu_KinhDoanh_DeNghiXuatKho.add_command(label="KD0301 |Nhật ký đề nghị xuất kho", command=self.f_nhat_ky_DeNghiXuatKho_click)
+            menu_KinhDoanh_DeNghiXuatKho.add_separator()
             
             # menu_KinhDoanh level 2: menu_KinhDoanh_QuanLyTonKho
             menu_KinhDoanh_QuanLyTonKho.add_command(label="KD0401 |Yêu cầu tạo mã hàng mới", command=self.f_do_nothing_click)
             menu_KinhDoanh_QuanLyTonKho.add_separator()
             menu_KinhDoanh_QuanLyTonKho_BaoCaoTonKho = tk.Menu(menu_KinhDoanh_QuanLyTonKho, tearoff=0)
             menu_KinhDoanh_QuanLyTonKho.add_cascade(label="Báo cáo tồn kho", menu=menu_KinhDoanh_QuanLyTonKho_BaoCaoTonKho)
-            
-            # menu_KinhDoanh level 3: menu_KinhDoanh_QuanLyKhachHang_BaoCaoKH
-            menu_KinhDoanh_QuanLyKhachHang_BaoCaoKH.add_command(label="Báo cáo 01", command=self.f_do_nothing_click)
-            menu_KinhDoanh_QuanLyKhachHang_BaoCaoKH.add_command(label="Báo cáo 02", command=self.f_do_nothing_click)
             
             # menu_KinhDoanh level 3: menu_KinhDoanh_QuanLyYeuCauDatHang_BaoCaoYCDH
             menu_KinhDoanh_QuanLyYeuCauDatHang_BaoCaoYCDH.add_command(label="Báo cáo YCDH 01", command=self.f_do_nothing_click)
@@ -139,13 +130,12 @@ class cls_menu_top:
         
             # Set font-size
             f_utils_set_menu_font(menu_KinhDoanh)
-            f_utils_set_menu_font(menu_KinhDoanh_QuanLyGoiThau)
+            f_utils_set_menu_font(menu_KinhDoanh_KeHoachDatHang)
             
             f_utils_set_menu_font(menu_KinhDoanh_QuanLyYeuCauDatHang)
             f_utils_set_menu_font(menu_KinhDoanh_QuanLyYeuCauDatHang_BaoCaoYCDH)
             
-            f_utils_set_menu_font(menu_KinhDoanh_QuanLyKhachHang)
-            f_utils_set_menu_font(menu_KinhDoanh_QuanLyKhachHang_BaoCaoKH)
+            f_utils_set_menu_font(menu_KinhDoanh_DeNghiXuatKho)
             
             f_utils_set_menu_font(menu_KinhDoanh_QuanLyTonKho)
             f_utils_set_menu_font(menu_KinhDoanh_QuanLyTonKho_BaoCaoTonKho)
@@ -311,6 +301,9 @@ class cls_menu_top:
         menu_TEST.add_command(label="KD0102 |Tạo mới gói thầu", command=self.f_KD0101_QuanLyGoiThau_click)
         menu_TEST.add_separator()
         menu_TEST.add_command(label="Test tốt import, Export", command=self.f_test_tot_click)
+        menu_TEST.add_command(label="CRUPP Khách hàng", command=self.f_KD_CRUDP_KhachHang_click)
+        
+        
         
         # Set font-size
         f_utils_set_menu_font(menu_TEST)
@@ -349,8 +342,21 @@ class cls_menu_top:
     def f_tao_moi_YCDH_click(self):
         self.f_open_tao_moi_YEU_CAU_DAT_HANG_View()
     
+    def f_tao_moi_DeNghiXuatKho_click(self):
+        self.f_open_tao_moi_DE_NGHI_XUAT_KHO_View()
+    
+    def f_tao_moi_KeHoachDatHang_click(self):
+        self.f_open_tao_moi_KE_HOACH_DAT_HANG_View()
+        
+    
     def f_nhat_ky_YCDH_click(self):
         self.f_open_nhat_ky_YEU_CAU_DAT_HANG_View()
+    
+    def f_nhat_ky_DeNghiXuatKho_click(self):
+        self.f_open_nhat_ky_DE_NGHI_XUAT_KHO_View()
+    
+    def f_nhat_ky_KeHoachDatHang_click(self):
+        self.f_open_nhat_ky_KE_HOACH_DAT_HANG_View()
         
     def f_test_tao_moi_YCDH_TALA_click(self):
         self.f_open_testview()
@@ -410,10 +416,60 @@ class cls_menu_top:
         f_utils_set_center_screen(new_view)
         new_view.focus_force()
     
+    def f_open_tao_moi_DE_NGHI_XUAT_KHO_View(self):
+        from views.KD03_QuanLyDeNghiXuatKho_View_250225_10h00.DE_NGHI_XUAT_KHO_View import cls_DE_NGHI_XUAT_KHO_View
+        self.parent.destroy()
+        new_view = cls_DE_NGHI_XUAT_KHO_View()
+        new_view.dashboard = self.parent
+        utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
+        f_utils_set_center_screen(new_view)
+        new_view.focus_force()
+    
+    def f_open_tao_moi_KE_HOACH_DAT_HANG_View(self):
+        from views.KD02_QuanLyKeHoachDatHang_View_250225_11h40.KE_HOACH_DAT_HANG_View import cls_KE_HOACH_DAT_HANG_View
+        self.parent.destroy()
+        new_view = cls_KE_HOACH_DAT_HANG_View()
+        new_view.dashboard = self.parent
+        utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
+        f_utils_set_center_screen(new_view)
+        new_view.focus_force()
+    
     def f_open_nhat_ky_YEU_CAU_DAT_HANG_View(self):
         from views.KD02_QuanLyYeuCauDatHang_View_250217_0901.YEU_CAU_DAT_HANG_View import cls_YEU_CAU_DAT_HANG_View
         self.parent.destroy()
         new_view = cls_YEU_CAU_DAT_HANG_View()
+        new_view.dashboard = self.parent
+        utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
+        f_utils_set_center_screen(new_view)
+        new_view.focus_force()
+        # Activate tab02
+        try:
+            tab_02 = f_utils_tim_component_with_name(new_view, "tab_02")
+            new_view.notebook.select(tab_02)  # Ensure `notebook` exists in `new_view`
+        except AttributeError:
+            my_current_function = f_utils_get_current_function_name()
+            print(f"Error at function: {my_current_function}")
+    
+    def f_open_nhat_ky_DE_NGHI_XUAT_KHO_View(self):
+        from views.KD03_QuanLyDeNghiXuatKho_View_250225_10h00.DE_NGHI_XUAT_KHO_View import cls_DE_NGHI_XUAT_KHO_View
+        self.parent.destroy()
+        new_view = cls_DE_NGHI_XUAT_KHO_View()
+        new_view.dashboard = self.parent
+        utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
+        f_utils_set_center_screen(new_view)
+        new_view.focus_force()
+        # Activate tab02
+        try:
+            tab_02 = f_utils_tim_component_with_name(new_view, "tab_02")
+            new_view.notebook.select(tab_02)  # Ensure `notebook` exists in `new_view`
+        except AttributeError:
+            my_current_function = f_utils_get_current_function_name()
+            print(f"Error at function: {my_current_function}")
+    
+    def f_open_nhat_ky_KE_HOACH_DAT_HANG_View(self):
+        from views.KD02_QuanLyKeHoachDatHang_View_250225_11h40.KE_HOACH_DAT_HANG_View import cls_KE_HOACH_DAT_HANG_View
+        self.parent.destroy()
+        new_view = cls_KE_HOACH_DAT_HANG_View()
         new_view.dashboard = self.parent
         utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
         f_utils_set_center_screen(new_view)
