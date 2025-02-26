@@ -3,7 +3,6 @@ from tkinter import ttk
 from Components_View import *
 from Components_View.treeview import cls_Treeview_frame_number_01
 from utils import *
-from .DE_NGHI_XUAT_KHO_Controller import Controller_auto_update_sl_giu_cho_va_sl_ycdh
 from .DE_NGHI_XUAT_KHO_Controller import Controller_handel_all_events
 
 class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
@@ -17,27 +16,27 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
         self.f_set_up_format_of_tree_view()
         # Set up all global variants
         self.f_define_all_elements()
-        # Add controllers
-        self.f_create_controller_auto_update_3_entries_sl_nhu_cau_sl_giu_cho_sl_ycdh()
         # Set up when initializing
         self.f_set_up_when_initializing()
         self.f_set_command_for_elements()
     
     def f_view_create_all_container_frames_of_window(self):
         # Settings tab content
-        self.f_view_create_widgets_all_container_frames_in_tab_01()
-        self._f_view_create_all_container_frames_in_tab_02()
+        self.f_view_create_all_container_frames_in_tab_01()
+        self.f_view_create_all_container_frames_in_tab_02()
+        self.f_view_create_all_container_frames_in_tab_03()
     
     def f_set_up_format_of_tree_view(self):
-        Controller_handel_all_events.f_handle_event_initializing_format_of_treeview_of_tab_01(self.tab_01_treeview_YCDH)
-        Controller_handel_all_events.f_handle_event_initializing_format_of_treeview_of_tab_02(self.tab_02_treeview_log_of_YCDH)
+        Controller_handel_all_events.f_handle_event_initializing_format_of_treeview_of_tab_01(self.tab_01_treeview_KHDH)
+        Controller_handel_all_events.f_handle_event_initializing_format_of_treeview_of_tab_02(self.tab_02_treeview_log_of_KHDH)
+        # Controller_handel_all_events.f_handle_event_initializing_format_of_treeview_of_tab_03(self.tab_03_treeview_log_of_KHDH)
         
     def f_set_up_when_initializing(self):
         # Update entry id
-        Controller_handel_all_events.update_entry_id_when_initializing(self.tab_01_treeview_YCDH, self.tab_01_entry_id)
+        Controller_handel_all_events.update_entry_id_when_initializing(self.tab_01_treeview_KHDH, self.tab_01_entry_id)
         # Update entry slip number
         Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(self.tab_01_entry_so_phieu)
-        # Load data to tab 2: treeview YCDH log
+        # Load data to tab 2: treeview KHDH log
         self.event_tab_02_button_filter_click()
     
     def f_set_command_for_elements(self):
@@ -55,8 +54,6 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
         
         self.tab_01_btn_template.config(command=self.event_tab_01_button_template_click)
         self.tab_01_btn_get_import_file.config(command=self.event_tab_01_button_get_import_file_click)
-        # self.tab_01_btn_import.config(command=self.event_tab_01_button_import_click)
-        # self.tab_01_btn_start_import_file.config(command=self.event_tab_01_button_start_import_file_click)
         
         self.tab_02_button_filter.config(command=self.event_tab_02_button_filter_click)
         self.tab_02_button_clear_filter.config(command=self.event_tab_02_button_clear_filter_click)
@@ -67,16 +64,23 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
         self.tab_02_button_delete_slip.config(command=self.event_tab_02_button_delete_slip_click)
         
         # Gán sự kiện
-        self.tab_01_treeview_YCDH.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_01_single_click)  # Single click
-        self.tab_01_treeview_YCDH.bind("<Double-1>", self.f_view_treeview_of_tab_01_double_click)  # Double click
+        self.tab_01_treeview_KHDH.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_01_single_click)  # Single click
+        self.tab_01_treeview_KHDH.bind("<Double-1>", self.f_view_treeview_of_tab_01_double_click)  # Double click
         
-        self.tab_02_treeview_log_of_YCDH.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_02_single_click)  # Single click
-        self.tab_02_treeview_log_of_YCDH.bind("<Double-1>", self.f_view_treeview_of_tab_02_double_click)  # Double click
+        self.tab_02_treeview_log_of_KHDH.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_02_single_click)  # Single click
+        self.tab_02_treeview_log_of_KHDH.bind("<Double-1>", self.f_view_treeview_of_tab_02_double_click)  # Double click
         
     def f_define_all_elements(self):
         # Find in tab_01
         tab_01_frame = self.tab1
         self.tab_01_entry_sl_kha_dung = f_utils_tim_component_with_name(tab_01_frame, "entry_sl_kha_dung")
+        # self.tab_01_entry_sl_kha_dung.grid_forget()
+        self.tab_01_label_sl_kha_dung = f_utils_tim_component_with_name(tab_01_frame, "label_sl_kha_dung")
+        # self.tab_01_label_sl_kha_dung.grid_forget()
+        self.tab_01_entry_sl_ton_kho = f_utils_tim_component_with_name(tab_01_frame, "entry_sl_ton_kho")
+        # self.tab_01_entry_sl_ton_kho.grid_forget()
+        self.tab_01_label_sl_ton_kho = f_utils_tim_component_with_name(tab_01_frame, "label_sl_ton_kho")
+        # self.tab_01_label_sl_ton_kho.grid_forget()
         self.tab_01_entry_ma_hang = f_utils_tim_component_with_name(tab_01_frame, "entry_ma_hang")
         self.tab_01_entry_ten_hang = f_utils_tim_component_with_name(tab_01_frame, "entry_ten_hang")
         self.tab_01_entry_dvt = f_utils_tim_component_with_name(tab_01_frame, "entry_dvt")
@@ -128,9 +132,10 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
         # Change the text of the second tabs
         notebook.tab(0, text="TẠO MỚI ĐỀ NGHỊ XUẤT KHO")
         notebook.tab(1, text="QUẢN LÝ ĐỀ NGHỊ XUẤT KHO")
+        notebook.tab(2, text="QUẢN LÝ YÊU CẦU ĐẶT HÀNG")
         
-        # Delete the third tab
-        notebook.forget(2)
+        # # Delete the third tab
+        # notebook.forget(2)
         
         # Change the title of TieuDeTab_01
         for child in self.tab1.winfo_children():
@@ -147,26 +152,6 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
                         grandchild.destroy()
                         break
         return notebook
-        
-    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
-    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
-    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
-    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
-    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
-    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
-    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
-    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
-    # Adding controller
-    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
-    
-    def f_create_controller_auto_update_3_entries_sl_nhu_cau_sl_giu_cho_sl_ycdh(self):
-        # Initialize controller
-        self.controller_03_auto_update_number = Controller_auto_update_sl_giu_cho_va_sl_ycdh(
-            self.tab_01_entry_sl_kha_dung, 
-            self.tab_01_entry_nhu_cau, 
-            self.tab_01_entry_sl_giu_cho, 
-            self.tab_01_entry_sl_YCDH)
-        self.controller_03_auto_update_number.view = self
 
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
@@ -179,7 +164,7 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
     # Tab_01: create widgets
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
         
-    def f_view_create_widgets_all_container_frames_in_tab_01(self):
+    def f_view_create_all_container_frames_in_tab_01(self):
         parent_frame = self.tab1
 
         # Frame H2
@@ -280,6 +265,12 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_entry_id.config(state="disabled")  # This makes the entry non-editable
 
         # Input fields
+        tk.Label(self.tab_01_frame_slip_informations, text="Số YCDH:").pack(side="left")
+        self.tab_01_entry_so_phieu_yeu_cau = cls_my_text_entry_num_01(self.tab_01_frame_slip_informations)
+        self.tab_01_entry_so_phieu_yeu_cau.pack(side="left", pady=10)
+        self.tab_01_entry_so_phieu_yeu_cau.config(state="readonly")
+        
+        # Input fields
         tk.Label(self.tab_01_frame_slip_informations, text="Thông tin thêm:").pack(side="left")
         self.tab_01_entry_note_for_slip = cls_my_text_entry_num_01(self.tab_01_frame_slip_informations)
         self.tab_01_entry_note_for_slip.f_on_leaving(color=COLOR_WHITE)
@@ -290,29 +281,13 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
         # create parent_frame
         parent_frame = self.tab_01_frame_inventories_informations.frame_row_2
         
+        parent_frame.pack(side="left")
         self._tab_01_label_nhu_cau = tk.Label(parent_frame, text="nhu cầu:")
         self._tab_01_label_nhu_cau.grid(row=0, column=6, padx=(10, 2), pady=5, sticky="w")
         self.tab_01_entry_nhu_cau = cls_my_number_entry_num_01(parent_frame, width=10)
         self.tab_01_entry_nhu_cau.f_on_leaving(color=COLOR_WHITE)
         self.tab_01_entry_nhu_cau.f_on_not_selecting(color=COLOR_WHITE)
         self.tab_01_entry_nhu_cau.grid(row=0, column=7, padx=(0, 10), pady=5, sticky="w")
-        
-        self.tab_01_label_sl_giu_cho = tk.Label(parent_frame, text="SL giữ chỗ:")
-        self.tab_01_label_sl_giu_cho.grid(row=0, column=8, padx=(10, 2), pady=5, sticky="w")
-        self.tab_01_entry_sl_giu_cho = cls_my_number_entry_num_01(parent_frame, width=10)
-        self.tab_01_entry_sl_giu_cho.config(state="readonly")
-        self.tab_01_entry_sl_giu_cho.grid(row=0, column=9, padx=(0, 10), pady=5, sticky="w")
-        
-        self.tab_01_label_sl_YCDH = tk.Label(parent_frame, text="SL YCĐH:")
-        self.tab_01_label_sl_YCDH.grid(row=0, column=10, padx=(10, 2), pady=5, sticky="w")
-        self.tab_01_entry_sl_YCDH = cls_my_number_entry_num_01(parent_frame, width=10)
-        self.tab_01_entry_sl_YCDH.config(state="readonly")
-        self.tab_01_entry_sl_YCDH.grid(row=0, column=11, padx=(0, 10), pady=5, sticky="w")
-
-        # Configure column weights for proper resizing
-        parent_frame.columnconfigure(7, weight=1)  # Allow tab_01_entry_nhu_cau to expand
-        parent_frame.columnconfigure(9, weight=1)  # Allow tab_01_entry_sl_giu_cho to expand
-        parent_frame.columnconfigure(11, weight=1)  # Allow tab_01_entry_sl_YCDH to expand
         
         self._f_view_create_widgets_add_row_03_into_frame_inventories_informations_tab_01()
     
@@ -354,7 +329,7 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_button_clear.pack(side="left", padx=10)
     
     def _f_view_create_widgets_in_tab_01_frame_treeview(self):
-        self.tab_01_treeview_YCDH = self.tab_01_frame_treeview.treeview_normal
+        self.tab_01_treeview_KHDH = self.tab_01_frame_treeview.treeview_normal
     
     def _f_view_create_widgets_in_tab_01_frame_button_02(self):
         parent_frame = self.tab_01_frame_button_02
@@ -397,9 +372,9 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     
     def _f_view_create_widgets_in_tab_02_frame_treeview(self):
-        self.tab_02_treeview_log_of_YCDH = self.tab_02_frame_treeview.treeview_normal
+        self.tab_02_treeview_log_of_KHDH = self.tab_02_frame_treeview.treeview_normal
     
-    def _f_view_create_all_container_frames_in_tab_02(self):
+    def f_view_create_all_container_frames_in_tab_02(self):
         parent_frame = self.tab2
 
         # Frame H2
@@ -511,6 +486,125 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
+    # Tab_03: create widgets
+    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
+    
+    def _f_view_create_widgets_in_tab_03_frame_treeview(self):
+        self.tab_03_treeview_log_of_KHDH = self.tab_03_frame_treeview.treeview_normal
+    
+    def f_view_create_all_container_frames_in_tab_03(self):
+        parent_frame = self.tab3
+
+        # Frame H2
+        self.tab_03_frame_H2 = tk.Frame(parent_frame)
+        self.tab_03_frame_H2.grid(row=0, column=0, sticky="ew")
+        self._f_view_create_widgets_in_tab_03_frame_H2()
+
+        # Frame entries
+        self.tab_03_frame_filter_entries = tk.Frame(parent_frame)
+        self.tab_03_frame_filter_entries.grid(row=1, column=0, sticky="ew")
+        self.f_view_create_widgets_in_tab_03_frame_filter_entries()
+
+        # Frame button
+        self.tab_03_frame_button_01 = tk.Frame(parent_frame)
+        self.tab_03_frame_button_01.grid(row=2, column=0, sticky="ew")
+        self._f_view_create_widgets_in_tab_03_frame_button_01()
+        
+        # Frame treeview
+        self.tab_03_frame_treeview = cls_Treeview_frame_number_01(parent_frame)
+        self.tab_03_frame_treeview.grid(row=3, column=0, sticky="nsew")
+        self._f_view_create_widgets_in_tab_03_frame_treeview()
+        
+        # Frame button
+        self.tab_03_frame_button_02 = tk.Frame(parent_frame)
+        self.tab_03_frame_button_02.grid(row=4, column=0, sticky="ew")
+        self._f_view_create_widgets_in_tab_03_frame_button_02()
+        
+        parent_frame.grid_rowconfigure(3, weight=1) # cho phép giãn nở
+        parent_frame.grid_columnconfigure(0, weight=1)
+
+    def _f_view_create_widgets_in_tab_03_frame_H2(self):
+        # Title H2
+        cls_my_label_num_03_title_H2(self.tab_03_frame_H2, text="DANH SÁCH YÊU CẦU ĐẶT HÀNG THAM CHIẾU").pack(anchor="center")
+     
+    def _f_view_create_widgets_in_tab_03_frame_button_01(self):
+        # Create a sub-frame to organize buttons in the center
+        tab_03_button_container_01 = tk.Frame(self.tab_03_frame_button_01)
+        tab_03_button_container_01.pack(expand=True, pady=10)
+        
+        # Add button
+        self.tab_03_button_filter = tk.Button(tab_03_button_container_01, text="Filter")
+        self.tab_03_button_filter.pack(side="left", padx=10)
+        
+        # Delete update
+        self.tab_03_button_clear_filter = tk.Button(tab_03_button_container_01, text="Clear")
+        self.tab_03_button_clear_filter.pack(side="left", padx=10)
+    
+    def f_view_create_widgets_in_tab_03_frame_filter_entries(self):
+        parent_frame_00 = tk.Frame(self.tab_03_frame_filter_entries)
+        parent_frame_00.grid(row=0, column=0, sticky="nsew")
+        parent_frame_01 = tk.Frame(self.tab_03_frame_filter_entries)
+        parent_frame_01.grid(row=0, column=1, sticky="nsew")
+        parent_frame_02 = tk.Frame(self.tab_03_frame_filter_entries)
+        parent_frame_02.grid(row=0, column=2, sticky="nsew")
+        
+        # Create Number of slip and contract number
+        tk.Label(parent_frame_00, text="Số phiếu").grid(row=0, column= 0, padx=(10, 0), pady=(10, 0), sticky="w")
+        self.tab_03_entry_filter_slip_number = cls_my_text_entry_num_01(parent_frame_00)
+        self.tab_03_entry_filter_slip_number.grid(row=0, column= 1, padx=(2, 10), pady=(10, 0), sticky="ew")
+        tk.Label(parent_frame_00, text="Số hợp đồng").grid(row=1, column= 0, padx=(10, 0), pady=(15, 10), sticky="w")
+        self.tab_03_entry_filter_contract_number = cls_my_text_entry_num_01(parent_frame_00)
+        self.tab_03_entry_filter_contract_number.grid(row=1, column= 1, padx=(2, 10), pady=(15, 10), sticky="ew")
+        
+        # Create frame inventories informations
+        self.tab_03_frame_seclect_date = cls_frame_DateSelector_view(parent_frame_01)
+        self.tab_03_frame_seclect_date.config(bd=0, relief="flat")
+        self.tab_03_frame_seclect_date.grid(row=0, column=0, sticky="ew")
+        
+        # Create frame clients informations
+        self.tab_03_frame_clients_informations = cls_frame_client_information_view(parent_frame_02)
+        self.tab_03_frame_clients_informations.config(bd=0, relief="flat")
+        self.tab_03_frame_clients_informations.grid(row=0, column=0, sticky="ew")
+        
+        # Create frame inventories informations
+        self.tab_03_frame_inventories_informations = cls_frame_inventories_information_view(parent_frame_02)
+        self.tab_03_frame_inventories_informations.config(bd=0, relief="flat")
+        self.tab_03_frame_inventories_informations.grid(row=1, column=0, pady=(10, 0), sticky="ew")
+    
+        # Allow stretching
+        self.tab_03_frame_filter_entries.columnconfigure(2, weight=1)   # Stretch the column to fill the width
+        parent_frame_02.columnconfigure(0, weight=1)                    # Stretch parent_frame_02
+    
+    def _f_view_create_widgets_in_tab_03_frame_button_02(self):
+        # Create a sub-frame to organize buttons in the center
+        tab_03_button_container_02 = tk.Frame(self.tab_03_frame_button_02)
+        tab_03_button_container_02.pack(expand=True, pady=10)
+        
+        # Get Data button
+        self.tab_03_button_export_all_data = tk.Button(tab_03_button_container_02, text="Export all data")
+        self.tab_03_button_export_all_data.pack(side="left", padx=10)
+        
+        # Get Data button
+        self.tab_03_button_export_excel = tk.Button(tab_03_button_container_02, text="Export Excel")
+        self.tab_03_button_export_excel.pack(side="left", padx=10)
+        
+        # Get Data button
+        self.tab_03_button_edit_slip = tk.Button(tab_03_button_container_02, text="Edit slip")
+        self.tab_03_button_edit_slip.pack(side="left", padx=10)
+        
+        # Export Data button
+        self.tab_03_button_delete_slip = tk.Button(tab_03_button_container_02, text="Delete slip")
+        self.tab_03_button_delete_slip.pack(side="left", padx=10)
+
+    
+    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
+    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
+    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
+    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
+    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
+    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
+    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
+    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     # Adding handler
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     
@@ -520,41 +614,35 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
     def event_tab_01_button_add_row_click(self):
         Controller_handel_all_events.f_handle_event_tab_01_button_add_row_click(
             self.tab_01_label_footer_notification,
-            self.tab_01_treeview_YCDH, 
+            self.tab_01_treeview_KHDH, 
             self.tab_01_entry_id, 
             self.tab_01_entry_ma_hang, 
             self.tab_01_entry_ten_hang, 
             self.tab_01_entry_dvt, 
-            self.tab_01_entry_sl_kha_dung, 
             self.tab_01_entry_nhu_cau, 
-            self.tab_01_entry_sl_giu_cho, 
-            self.tab_01_entry_sl_YCDH, 
             self.tab_01_entry_ghi_chu_mat_hang
             )
     
     def event_tab_01_button_update_row_click(self):
         Controller_handel_all_events.f_handle_event_update_selected_row_click(
         self.tab_01_label_footer_notification,
-        self.tab_01_treeview_YCDH,
+        self.tab_01_treeview_KHDH,
         self.tab_01_entry_ma_hang,
         self.tab_01_entry_ten_hang,
         self.tab_01_entry_dvt,
-        self.tab_01_entry_sl_kha_dung,
         self.tab_01_entry_nhu_cau,
-        self.tab_01_entry_sl_giu_cho,
-        self.tab_01_entry_sl_YCDH,
         self.tab_01_entry_ghi_chu_mat_hang
         )
     
     def event_tab_01_button_delete_click(self):
         Controller_handel_all_events.f_handle_event_tab_01_btn_delete_click(
             self.tab_01_label_footer_notification,
-            self.tab_01_treeview_YCDH)
+            self.tab_01_treeview_KHDH)
     
     def event_tab_01_button_clear_click(self):
         Controller_handel_all_events.f_handle_tab_01_button_clear_click(
             self.tab_01_label_footer_notification, 
-            self.tab_01_treeview_YCDH)
+            self.tab_01_treeview_KHDH)
         
     def event_tab_01_button_print_click(self):
         Controller_handel_all_events.f_handle_btn_print_click()
@@ -570,7 +658,7 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
             self._tab_01_entry_so_hop_dong,
             self.tab_01_entry_thong_tin_hop_dong,
             self.tab_01_entry_note_for_slip,
-            self.tab_01_treeview_YCDH
+            self.tab_01_treeview_KHDH
         )    
     
     def event_tab_01_button_update_slip_click(self):
@@ -583,7 +671,7 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
             self._tab_01_entry_so_hop_dong,
             self.tab_01_entry_thong_tin_hop_dong,
             self.tab_01_entry_note_for_slip,
-            self.tab_01_treeview_YCDH
+            self.tab_01_treeview_KHDH
             )
             
         Controller_handel_all_events.handle_event_tab_01_btn_update_slip_click(
@@ -600,7 +688,7 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
     def event_tab_02_button_filter_click(self):
         Controller_handel_all_events.f_handle_event_tab_02_button_filter_slip(
             self.tab_01_label_footer_notification,
-            self.tab_02_treeview_log_of_YCDH,
+            self.tab_02_treeview_log_of_KHDH,
             self.tab_02_entry_filter_slip_number, 
             self.tab_02_entry_filter_contract_number,
             self.tab_02_ngay_filter_bat_dau,
@@ -612,7 +700,7 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
     def event_tab_02_button_clear_filter_click(self):
         Controller_handel_all_events.f_handle_event_tab_02_button_clear_filter(
             self.tab_01_label_footer_notification, 
-            self.tab_02_treeview_log_of_YCDH,
+            self.tab_02_treeview_log_of_KHDH,
             self.tab_02_entry_filter_slip_number,
             self.tab_02_entry_filter_contract_number,
             self.tab_02_entry_ma_khach_hang,
@@ -624,7 +712,7 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
     def event_tab_02_button_export_excel_click(self):
         Controller_handel_all_events.f_handle_event_tab_02_button_export_excel_click(
             self.tab_01_label_footer_notification,
-            self.tab_02_treeview_log_of_YCDH
+            self.tab_02_treeview_log_of_KHDH
         )
         
     def event_tab_02_button_export_all_data_click(self):
@@ -642,8 +730,8 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
             self._tab_01_entry_so_hop_dong,
             self.tab_01_entry_thong_tin_hop_dong,
             self.tab_01_entry_note_for_slip,
-            self.tab_02_treeview_log_of_YCDH,
-            self.tab_01_treeview_YCDH
+            self.tab_02_treeview_log_of_KHDH,
+            self.tab_01_treeview_KHDH
             )
             
         Controller_handel_all_events.handle_event_tab_02_button_edit_click(
@@ -655,7 +743,7 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
     def event_tab_02_button_delete_slip_click(self):
         Controller_handel_all_events.handle_event_tab_02_btn_delete_slip_click(
             self.tab_01_label_footer_notification, 
-            self.tab_02_treeview_log_of_YCDH
+            self.tab_02_treeview_log_of_KHDH
         )
         # refresh data
         self.event_tab_02_button_filter_click()
@@ -663,29 +751,26 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
     def f_view_treeview_of_tab_01_double_click(self, event):
         Controller_handel_all_events.f_handle_event_treeview_of_tab_01_double_click(
             self.tab_01_label_footer_notification,
-            self.tab_01_treeview_YCDH)
+            self.tab_01_treeview_KHDH)
 
     def f_view_treeview_of_tab_01_single_click(self, event):
         Controller_handel_all_events.f_handle_event_treeview_of_tab_01_single_click(
             self.tab_01_label_footer_notification,
-            self.tab_01_treeview_YCDH,
+            self.tab_01_treeview_KHDH,
             self.tab_01_entry_id,
             self.tab_01_entry_ma_hang,
             self.tab_01_entry_ten_hang,
             self.tab_01_entry_dvt,
-            self.tab_01_entry_sl_kha_dung,
             self.tab_01_entry_nhu_cau,
-            self.tab_01_entry_sl_giu_cho,
-            self.tab_01_entry_sl_YCDH,
             self.tab_01_entry_ghi_chu_mat_hang)
         
     def f_view_treeview_of_tab_02_double_click(self, event):
         Controller_handel_all_events.f_handle_event_treeview_of_tab_02_double_click(
             self.tab_01_label_footer_notification,
-            self.tab_02_treeview_log_of_YCDH)
+            self.tab_02_treeview_log_of_KHDH)
 
     def f_view_treeview_of_tab_02_single_click(self, event):
         Controller_handel_all_events.f_handle_event_treeview_of_tab_02_single_click(
             self.tab_01_label_footer_notification,
-            self.tab_02_treeview_log_of_YCDH)
+            self.tab_02_treeview_log_of_KHDH)
         

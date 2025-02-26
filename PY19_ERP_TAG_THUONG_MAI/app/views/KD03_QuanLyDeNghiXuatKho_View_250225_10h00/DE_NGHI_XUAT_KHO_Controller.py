@@ -12,15 +12,15 @@ class controller_get_information_of_module:
         return ma_thanh_vien
     
     def load_loai_phieu():
-        loai_phieu = "YCDH"
+        loai_phieu = "DNXK"
         return loai_phieu
     
     def load_database_name():
         database_name = "TBD_2024"
         return database_name
     
-    def load_table_name_TB_KD02_YEU_CAU_DAT_HANG():
-        table_name = "TB_KD02_YEU_CAU_DAT_HANG"
+    def load_table_name_TB_KD02_KE_HOACH_DAT_HANG():
+        table_name = "TB_KD02_KE_HOACH_DAT_HANG"
         return table_name
     
     def load_table_name_TB_AD00_DANH_SACH_KHACH_HANG():
@@ -36,20 +36,20 @@ class controller_get_information_of_module:
         return column_name
     
     def load_treeview_config_json_path():
-        tab_01_treeview_config_json_path = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'KD_YEU_CAU_DAT_HANG', 'treeview_tab_01_YCDH_input.json')
-        tab_02_treeview_config_json_path = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'KD_YEU_CAU_DAT_HANG', 'treeview_tab_02_YCDH_log.json')
+        tab_01_treeview_config_json_path = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'KD_KE_HOACH_DAT_HANG', 'treeview_tab_01_KHDH_input.json')
+        tab_02_treeview_config_json_path = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'KD_KE_HOACH_DAT_HANG', 'treeview_tab_02_KHDH_log.json')
         return tab_01_treeview_config_json_path, tab_02_treeview_config_json_path
-
-    def load_proc_update_xoa_sua():
-        proc_name = "Proc_TB_KD02_YEU_CAU_DAT_HANG_UPDATE_XOA_SUA_250224_13h09"
-        return proc_name
     
-    def load_proc_filter_by_many_arguments():
-        proc_name = "Proc_TB_KD02_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250222_14hh40"
+    def load_proc_update_xoa_sua():
+        proc_name = "Proc_TB_KD02_KE_HOACH_DAT_HANG_UPDATE_XOA_SUA_250225_14h30"
         return proc_name
+
+    def load_proc_filter_by_many_arguments():
+        proc_filter = "Proc_TB_KD02_KE_HOACH_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250225_14hh03"
+        return proc_filter
     
     def load_query_select_all_data():
-        table_name = controller_get_information_of_module.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+        table_name = controller_get_information_of_module.load_table_name_TB_KD02_KE_HOACH_DAT_HANG()
         query = f"""
             SELECT *
             FROM [TBD_2024].[dbo].[{table_name}]
@@ -107,10 +107,7 @@ class Controller_action_after_event:
                 entry_ma_hang_tab_01,
                 entry_ten_hang_tab_01,
                 entry_dvt,
-                entry_sl_kha_dung,
                 tab_01_entry_nhu_cau,
-                tab_01_entry_sl_giu_cho,
-                tab_01_entry_sl_YCDH,
                 tab_01_entry_ghi_chu_mat_hang
                 )= args
             
@@ -119,13 +116,10 @@ class Controller_action_after_event:
             value_col_01 = entry_ma_hang_tab_01.get()
             value_col_02 = entry_ten_hang_tab_01.get()
             value_col_03 = entry_dvt.get()
-            value_col_04 = float(entry_sl_kha_dung.get().replace(',', '') or 0)
-            value_col_05 = float(tab_01_entry_nhu_cau.get().replace(',', '') or 0)
-            value_col_06 = float(tab_01_entry_sl_giu_cho.get().replace(',', '') or 0)
-            value_col_07 = float(tab_01_entry_sl_YCDH.get().replace(',', '') or 0)
-            value_col_08 = tab_01_entry_ghi_chu_mat_hang.get()
+            value_col_04 = float(tab_01_entry_nhu_cau.get().replace(',', '') or 0)
+            value_col_05 = tab_01_entry_ghi_chu_mat_hang.get()
             
-            value_to_update = (value_col_00, value_col_01, value_col_02, value_col_03, value_col_04, value_col_05, value_col_06, value_col_07, value_col_08)
+            value_to_update = (value_col_00, value_col_01, value_col_02, value_col_03, value_col_04, value_col_05)
             
             selected_item = my_treeview.selection()  # Get the selected item
             
@@ -149,10 +143,7 @@ class Controller_action_after_event:
                 entry_ma_hang_tab_01,
                 entry_ten_hang_tab_01,
                 entry_dvt,
-                entry_sl_kha_dung,
                 tab_01_entry_nhu_cau,
-                tab_01_entry_sl_giu_cho,
-                tab_01_entry_sl_YCDH,
                 tab_01_entry_ghi_chu_mat_hang
                 )= args
             
@@ -170,10 +161,7 @@ class Controller_action_after_event:
                 entry_ma_hang_tab_01,
                 entry_ten_hang_tab_01,
                 entry_dvt,
-                entry_sl_kha_dung,
                 tab_01_entry_nhu_cau,
-                tab_01_entry_sl_giu_cho,
-                tab_01_entry_sl_YCDH,
                 tab_01_entry_ghi_chu_mat_hang)
             if flag == False:
                 return False
@@ -250,9 +238,6 @@ class Controller_action_after_event:
     def f_Check_duplicate_value(entry_so_phieu, database_name, table_name, column_name):
         return f_utils_check_duplicate(entry_so_phieu, database_name, table_name, column_name)
     
-    # def f_Check_exist_value(entry_to_check, database_name, table_name, column_name):
-    #     return f_utils_check_exist(entry_to_check, database_name, table_name, column_name)
-    
     def f_add_new_row(*args):
         try:
             # Get the arguments
@@ -262,11 +247,8 @@ class Controller_action_after_event:
                 entry_id,
                 entry_ma_hang, 
                 entry_ten_hang, 
-                entry_dvt, 
-                entry_sl_kha_dung, 
+                entry_dvt,  
                 entry_sl_nhu_cau, 
-                entry_sl_giu_cho, 
-                entry_sl_yeu_cau_dat_hang, 
                 entry_ghi_chu_mat_hang
             )= args
             
@@ -275,10 +257,7 @@ class Controller_action_after_event:
             ma_hang_value = entry_ma_hang.get()
             ten_hang_value = entry_ten_hang.get()
             dvt_value = entry_dvt.get()
-            sl_kha_dung_value = float(entry_sl_kha_dung.get().replace(',', '') or 0)
             sl_nhu_cau_value = float(entry_sl_nhu_cau.get().replace(',', '') or 0)
-            sl_giu_cho_value = float(entry_sl_giu_cho.get().replace(',', '') or 0)
-            sl_yeu_cau_dat_hang_value = float(entry_sl_yeu_cau_dat_hang.get().replace(',', '') or 0)
             ghi_chu_mat_hang_value = entry_ghi_chu_mat_hang.get()
             
             # Start controller
@@ -287,11 +266,8 @@ class Controller_action_after_event:
                 id_value, 
                 ma_hang_value, 
                 ten_hang_value, 
-                dvt_value, 
-                sl_kha_dung_value, 
+                dvt_value,  
                 sl_nhu_cau_value, 
-                sl_giu_cho_value, 
-                sl_yeu_cau_dat_hang_value, 
                 ghi_chu_mat_hang_value, 
                 my_treeview
                 )
@@ -304,9 +280,7 @@ class Controller_action_after_event:
             
             flag = Controller_action_after_event.clear_input_fields(
                 entry_ghi_chu_mat_hang, 
-                entry_sl_nhu_cau,
-                entry_sl_giu_cho,
-                entry_sl_yeu_cau_dat_hang
+                entry_sl_nhu_cau
                 )
             if flag == False:
                 return False
@@ -328,11 +302,8 @@ class Controller_action_after_event:
                 entry_id,
                 entry_ma_hang, 
                 entry_ten_hang, 
-                entry_dvt, 
-                entry_sl_kha_dung, 
+                entry_dvt,  
                 entry_sl_nhu_cau, 
-                entry_sl_giu_cho, 
-                entry_sl_yeu_cau_dat_hang, 
                 entry_ghi_chu_mat_hang
             )= args
             # Step 2: add new row
@@ -342,11 +313,8 @@ class Controller_action_after_event:
                 entry_id,
                 entry_ma_hang, 
                 entry_ten_hang, 
-                entry_dvt, 
-                entry_sl_kha_dung, 
+                entry_dvt,  
                 entry_sl_nhu_cau, 
-                entry_sl_giu_cho, 
-                entry_sl_yeu_cau_dat_hang, 
                 entry_ghi_chu_mat_hang
                 )
             if flag == False:
@@ -406,17 +374,6 @@ class Controller_action_after_event:
             print("Error at function: ", f_utils_get_current_function_name())
             return False
     
-    # def f_get_data_from_treeview(treeview):
-    #     try:
-    #         rows = []
-    #         for child in treeview.get_children():
-    #             rows.append(treeview.item(child)["values"])
-    #         return rows
-    #     except Exception as e:
-    #         print(f"Error: {e}")
-    #         print("Error at function: ", f_utils_get_current_function_name())
-    #         return []
-    
     def f_get_the_latest_number_of_slip(entry_so_phieu, ma_thanh_vien, loai_phieu, database_name, table_name, column_name):
         # Get the latest number of slip
         so_phieu = Controller_get_the_latest_number_of_slip.handle_button_get_number_of_slip_click(database_name, table_name, column_name)
@@ -428,7 +385,7 @@ class Controller_action_after_event:
         entry_so_phieu.insert(0, connection_number_of_slip)
         entry_so_phieu.config(state="readonly")
         
-    def f_check_input_of_treeview(entry_notification, id_value, ma_hang, ten_hang, sl_giu_cho, sl_yeu_cau_dat_hang):    
+    def f_check_input_of_treeview(entry_notification, id_value, ma_hang, ten_hang, sl_nhu_cau):    
         try:
             # Kiểm tra các trường bắt buộc
             if not id_value or not ma_hang or not ten_hang:
@@ -440,22 +397,21 @@ class Controller_action_after_event:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"ID value '{id_value}' must be an integer!", "red")
                 return False
             
-            # Kiểm tra sl_giu_cho và sl_yeu_cau_dat_hang có phải số hay không
+            # Kiểm tra sl_giu_cho và sl_ke_hoach_dat_hang có phải số hay không
             try:
-                sl_giu_cho_value = float(sl_giu_cho)
-                sl_yeu_cau_dat_hang_value = float(sl_yeu_cau_dat_hang)
+                sl_giu_cho_value = float(sl_nhu_cau)
             except ValueError:
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Số lượng giữ chỗ '{sl_giu_cho}' và số lượng yêu cầu đặt hàng '{sl_yeu_cau_dat_hang}' phải là số.", "red")
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Số lượng nhu cầu '{sl_nhu_cau}' phải là số.", "red")
                 return False
             
-            # Kiểm tra sl_giu_cho và sl_yeu_cau_dat_hang không đồng thời bằng không
-            if sl_giu_cho_value == 0 and sl_yeu_cau_dat_hang_value == 0:
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số lượng giữ chỗ và số lượng yêu cầu đặt hàng không được đồng thời bằng 0.", "red")
+            # Kiểm tra sl_giu_cho và sl_ke_hoach_dat_hang không đồng thời bằng không
+            if sl_nhu_cau == 0:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số lượng nhu cầu không được bằng 0.", "red")
                 return False
             
             # Kiểm tra số lượng giữ chỗ hoặc yêu cầu đặt hàng hợp lệ
-            if sl_giu_cho_value < 0 or sl_yeu_cau_dat_hang_value < 0:
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số lượng giữ chỗ và số lượng yêu cầu đặt hàng không được âm.", "red")
+            if sl_nhu_cau < 0:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số lượng nhu cầu không được âm.", "red")
                 return False
             
             return True
@@ -468,11 +424,8 @@ class Controller_action_after_event:
                                 id_value, 
                                 ma_hang, 
                                 ten_hang, 
-                                dvt, 
-                                sl_kha_dung, 
+                                dvt,  
                                 sl_nhu_cau, 
-                                sl_giu_cho, 
-                                sl_yeu_cau_dat_hang, 
                                 ghi_chu_mat_hang, 
                                 my_treeview):
         try:
@@ -480,14 +433,13 @@ class Controller_action_after_event:
             flag = Controller_action_after_event.f_check_input_of_treeview(entry_notification, 
                                                                            id_value, 
                                                                            ma_hang, 
-                                                                           ten_hang, 
-                                                                           sl_giu_cho, 
-                                                                           sl_yeu_cau_dat_hang)
+                                                                           ten_hang,
+                                                                           sl_nhu_cau)
             if flag == False:
                 return False
             
             # Add row to the treeview
-            my_treeview.insert("", "end", values=(id_value, ma_hang, ten_hang, dvt, sl_kha_dung, sl_nhu_cau, sl_giu_cho, sl_yeu_cau_dat_hang, ghi_chu_mat_hang))
+            my_treeview.insert("", "end", values=(id_value, ma_hang, ten_hang, dvt, sl_nhu_cau, ghi_chu_mat_hang))
             return True
         
         except Exception as e:
@@ -495,18 +447,11 @@ class Controller_action_after_event:
             print("Error at function: ", f_utils_get_current_function_name())
             return False
     
-    def clear_input_fields(entry_ghi_chu_mat_hang, entry_sl_nhu_cau, entry_sl_giu_cho, entry_sl_YCDH):
+    def clear_input_fields(entry_ghi_chu_mat_hang, entry_sl_nhu_cau):
         try:
             entry_ghi_chu_mat_hang.delete(0, tk.END)
             entry_sl_nhu_cau.delete(0, tk.END)
 
-            entry_sl_giu_cho.config(state='normal')
-            entry_sl_giu_cho.delete(0, tk.END)
-            entry_sl_giu_cho.config(state='disabled')
-
-            entry_sl_YCDH.config(state='normal')
-            entry_sl_YCDH.delete(0, tk.END)
-            entry_sl_YCDH.config(state='disabled')
             return True
         except Exception as e:
             print(f"Error: {e}")
@@ -555,16 +500,13 @@ class Controller_action_after_event:
         entry_ma_hang,
         entry_ten_hang,
         entry_dvt,
-        entry_sl_kha_dung,
         entry_sl_nhu_cau,
-        entry_sl_giu_cho,
-        entry_sl_YCDH,
         entry_ghi_chu_mat_hang):
         
         result_tuple = utils_controller_TreeviewHandler_click_250217_22h34.treeview_single_click(my_treeview)
         if not result_tuple:
             return
-        id_value, ma_hang, ten_hang, dvt, sl_kha_dung, sl_nhu_cau, sl_giu_cho, sl_dat_hang, ghi_chu_mat_hang = result_tuple
+        id_value, ma_hang, ten_hang, dvt, sl_nhu_cau, ghi_chu_mat_hang = result_tuple
         
         # Clear and update the Entry widgets if values are returned
         if id_value is not None:
@@ -584,14 +526,6 @@ class Controller_action_after_event:
         if dvt is not None:
             entry_dvt.delete(0, tk.END)
             entry_dvt.insert(0, dvt)
-        
-        if sl_kha_dung is not None:
-            entry_sl_kha_dung.delete(0, tk.END)
-            if float(sl_kha_dung).is_integer():  # Nếu là số nguyên
-                formatted_sl_kha_dung = f"{int(float(sl_kha_dung)):,}"
-            else:  # Nếu là số thập phân
-                formatted_sl_kha_dung = f"{float(sl_kha_dung):,.2f}"
-            entry_sl_kha_dung.insert(0, formatted_sl_kha_dung)
             
         if sl_nhu_cau is not None:
             entry_sl_nhu_cau.delete(0, tk.END)
@@ -600,26 +534,6 @@ class Controller_action_after_event:
             else:  # Nếu là số thập phân
                 formatted_sl_nhu_cau = f"{float(sl_nhu_cau):,.2f}"
             entry_sl_nhu_cau.insert(0, formatted_sl_nhu_cau)
-        
-        if sl_giu_cho is not None:
-            entry_sl_giu_cho.config(state="normal")
-            entry_sl_giu_cho.delete(0, tk.END)
-            if float(sl_giu_cho).is_integer():  # Nếu là số nguyên
-                formatted_sl_giu_cho = f"{int(float(sl_giu_cho)):,}"
-            else:  # Nếu là số thập phân
-                formatted_sl_giu_cho = f"{float(sl_giu_cho):,.2f}"
-            entry_sl_giu_cho.insert(0, formatted_sl_giu_cho)
-            entry_sl_giu_cho.config(state="disabled")
-            
-        if sl_dat_hang is not None:
-            entry_sl_YCDH.config(state="normal")
-            entry_sl_YCDH.delete(0, tk.END)
-            if float(sl_dat_hang).is_integer():  # Nếu là số nguyên
-                formatted_sl_dat_hang = f"{int(float(sl_dat_hang)):,}"
-            else:  # Nếu là số thập phân
-                formatted_sl_dat_hang = f"{float(sl_dat_hang):,.2f}"
-            entry_sl_YCDH.insert(0, formatted_sl_dat_hang)
-            entry_sl_YCDH.config(state="disabled")
             
         if ghi_chu_mat_hang is not None:
             entry_ghi_chu_mat_hang.delete(0, tk.END)
@@ -641,11 +555,11 @@ class Controller_action_after_event:
             # step: 
             # Gom lại các cột có trùng mã hàng - cột số 2
             # Cột số 4 giữ lại một dòng duy nhất
-            # Cộng tổng các giá trị của các dòng có trùng mã hàng - cột số 5, 6, 7
-            # Cột nào có ghi chú thì giữ lại một dòng duy nhất: cột số 8
+            # Cộng tổng các giá trị của các dòng có trùng mã hàng - cột số 5
+            # Cột nào có ghi chú thì giữ lại một dòng duy nhất: cột số 6
             
             # Gom nhóm theo mã hàng (cột số 2)
-            grouped_data = defaultdict(lambda: [None, "", "", "", 0, 0, 0, 0, set()])  # Dùng set() để lưu nhiều ghi chú
+            grouped_data = defaultdict(lambda: [None, "", "", "", 0, set()])  # Dùng set() để lưu nhiều ghi chú
 
             for row in rows:
                 ma_hang = row[1]  # Cột số 2 - Mã hàng
@@ -654,24 +568,18 @@ class Controller_action_after_event:
                     grouped_data[ma_hang][1] = ma_hang  # Mã hàng
                     grouped_data[ma_hang][2] = row[2]  # Tên hàng
                     grouped_data[ma_hang][3] = row[3]  # Đơn vị tính (Đvt)
-                    grouped_data[ma_hang][4] = float(row[4]) if row[4] else 0  # SL khả dụng
 
                 # Cộng tổng SL nhu cầu
-                grouped_data[ma_hang][5] += float(row[5]) if row[5] else 0
+                grouped_data[ma_hang][4] += float(row[4]) if row[4] else 0
 
                 # Lưu lại ghi chú (nếu có)
-                if row[8].strip():
-                    grouped_data[ma_hang][8].add(row[8].strip())  # Dùng set để tránh trùng lặp ghi chú
+                if row[5].strip():
+                    grouped_data[ma_hang][5].add(row[5].strip())  # Dùng set để tránh trùng lặp ghi chú
 
-            # Tính toán SL giữ chỗ và SL YCDH
+            # Gộp ghi chú
             for ma_hang, values in grouped_data.items():
-                sl_kha_dung = values[4]
-                sl_nhu_cau = values[5]
-                values[6] = min(sl_kha_dung, sl_nhu_cau)  # SL giữ chỗ
-                values[7] = max(sl_nhu_cau - sl_kha_dung, 0)  # SL YCDH
-
                 # Gộp tất cả ghi chú thành một chuỗi, cách nhau bởi "; "
-                values[8] = "; ".join(values[8])
+                values[5] = "; ".join(values[5])
 
             # Xóa dữ liệu cũ trong Treeview
             for item in my_treeview.get_children():
@@ -689,72 +597,6 @@ class Controller_action_after_event:
             print("Error at function: ", f_utils_get_current_function_name())
             return False
         
-class Controller_auto_update_sl_giu_cho_va_sl_ycdh():
-    def __init__(self, *args):
-        # Get arguments
-        (self.entry_sl_kha_dung,
-        self.entry_sl_nhu_cau,
-        self.entry_sl_giu_cho,
-        self.entry_sl_yeu_cau_dat_hang) = args
-        
-        # Trace to monitor changes in entry_sl_kha_dung
-        self.var_sl_kha_dung = tk.StringVar()
-        self.entry_sl_kha_dung.config(textvariable=self.var_sl_kha_dung)
-        self.var_sl_kha_dung.trace_add("write", lambda *args: self.update_entries())
-        
-        # Bind updates to changes in the first two entries
-        self.entry_sl_nhu_cau.bind("<KeyRelease>", self.update_entries)
-            
-    def validate_and_update(self, proposed_value):
-        self.update_entries()
-        return True
-    
-    def update_entries(self, event=None):
-        try:
-            # Loại bỏ dấu phẩy ngăn cách phần ngàn
-            sl_kha_dung = self.entry_sl_kha_dung.get().replace(",", "")
-            sl_nhu_cau = self.entry_sl_nhu_cau.get().replace(",", "")
-            
-            # Retrieve and convert the input values
-            num_kha_dung = float(sl_kha_dung or 0)
-            num_nhu_cau = float(sl_nhu_cau or 0)
-
-            # Calculate the values for the dependent entries
-            min_value = min(num_kha_dung, num_nhu_cau)
-            difference = max((num_nhu_cau - num_kha_dung), 0)
-
-            if min_value.is_integer():  # Nếu là số nguyên
-                formatted_text_01 = f"{int(min_value):,}"
-            else:  # Nếu là số thập phân
-                formatted_text_01 = f"{min_value:,.2f}"
-            
-            if difference.is_integer():  # Nếu là số nguyên
-                formatted_text_02 = f"{int(difference):,}"
-            else:  # Nếu là số thập phân
-                formatted_text_02 = f"{difference:,.2f}"
-
-            # Update the dependent entries
-            self.entry_sl_giu_cho.config(state="normal")
-            self.entry_sl_giu_cho.delete(0, tk.END)
-            self.entry_sl_giu_cho.insert(0, f"{formatted_text_01}")
-            self.entry_sl_giu_cho.config(state="readonly")
-
-            self.entry_sl_yeu_cau_dat_hang.config(state="normal")
-            self.entry_sl_yeu_cau_dat_hang.delete(0, tk.END)
-            self.entry_sl_yeu_cau_dat_hang.insert(0, f"{formatted_text_02}")
-            self.entry_sl_yeu_cau_dat_hang.config(state="readonly")
-        except ValueError:
-            # Handle invalid input gracefully
-            self.entry_sl_giu_cho.config(state="normal")
-            self.entry_sl_giu_cho.delete(0, tk.END)
-            self.entry_sl_giu_cho.insert(0, "Error")
-            self.entry_sl_giu_cho.config(state="readonly")
-
-            self.entry_sl_yeu_cau_dat_hang.config(state="normal")
-            self.entry_sl_yeu_cau_dat_hang.delete(0, tk.END)
-            self.entry_sl_yeu_cau_dat_hang.insert(0, "Error")
-            self.entry_sl_yeu_cau_dat_hang.config(state="readonly")
-            
 class cls_test_Controller_04_validate_before_saving():
     def __init__(self, tree):
         self.data_sl_kha_dung = []
@@ -793,8 +635,7 @@ class SQLController:
         for row in data:
             tree.insert("", "end", values=(row[0], row[1], row[2], row[3], row[4],
                                            row[5], row[6], row[7], row[8], row[9],
-                                           row[10], row[11], row[12], row[13], row[14],
-                                           row[15]))
+                                           row[10], row[11], row[12]))
         
     # Function to print data from the Treeview
     def get_data_to_import_to_SQL(*args):
@@ -836,10 +677,7 @@ class SQLController:
                     ,row[2]
                     ,row[3]
                     ,float(row[4])
-                    ,float(row[5])
-                    ,float(row[6])
-                    ,float(row[7])
-                    ,row[8]
+                    ,row[5]
                 ))
             notification_text = "Data exported"
             return notification_text, data
@@ -881,10 +719,10 @@ class SQLController:
         # Step_02: validate data
         f_utils_get_unique_column_from_data(data_array, 8)
         # Step_03: Export data to SQL
-        if utils_model_SQL_server.f_validate_data_format_KD02_YEU_CAU_DAT_HANG(data_array):
+        if utils_model_SQL_server.f_validate_data_format_KD02_KE_HOACH_DAT_HANG(data_array):
             # If data is valid
             database_name = controller_get_information_of_module.load_database_name()
-            table_name = controller_get_information_of_module.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+            table_name = controller_get_information_of_module.load_table_name_TB_KD02_KE_HOACH_DAT_HANG()
             utils_model_SQL_server.f_goi_ham_Export_to_table(data_array, database_name, table_name)
             return "Data exported"
         else:
@@ -965,7 +803,7 @@ class Controller_handel_all_events:
             row_values = my_treeview_to_get_data.item(item, 'values')
             if len(row_values) > 2:  # Ensure the row has at least 2 columns
                 so_phieu = row_values[2]
-                Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG.begin_editing_slip(elements_list, so_phieu)
+                Controller_inherit_to_edit_slip_KE_HOACH_DAT_HANG.begin_editing_slip(elements_list, so_phieu)
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Begin editing slip {so_phieu}.", "blue")
                 return
     
@@ -1010,7 +848,7 @@ class Controller_handel_all_events:
             return
         
         database_name = controller_get_information_of_module.load_database_name()
-        table_name = controller_get_information_of_module.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+        table_name = controller_get_information_of_module.load_table_name_TB_KD02_KE_HOACH_DAT_HANG()
         column_name = controller_get_information_of_module.load_column_name_so_phieu()
         
         # Kiểm tra số phiếu đã tồn tại chưa
@@ -1072,10 +910,7 @@ class Controller_handel_all_events:
                     "MA_HANG",
                     "TEN_HANG",
                     "DVT",
-                    "SO_LUONG_KHA_DUNG",
                     "SO_LUONG_NHU_CAU",
-                    "SO_LUONG_GIU_CHO",
-                    "SO_LUONG_YEU_CAU_DAT_HANG",
                     "GHI_CHU_SP"]
 
             flag, path = utils_controller_Export_data_to_Excel_250222_09h16.export_log_to_excel(query, header)
@@ -1100,7 +935,7 @@ class Controller_handel_all_events:
             # print("so_phieu_str", so_phieu_str)
             
             # Tạo câu query SQL với danh sách số phiếu
-            table_name = controller_get_information_of_module.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+            table_name = controller_get_information_of_module.load_table_name_TB_KD02_KE_HOACH_DAT_HANG()
             query = f"""
             SELECT 
                 ROW_NUMBER() OVER(ORDER BY [SO_PHIEU]) as RowNumber,
@@ -1117,10 +952,7 @@ class Controller_handel_all_events:
                 [MA_HANG],
                 [TEN_HANG],
                 [DVT],
-                [SO_LUONG_KHA_DUNG],
                 [SO_LUONG_NHU_CAU],
-                [SO_LUONG_GIU_CHO],
-                [SO_LUONG_YEU_CAU_DAT_HANG],
                 [GHI_CHU_SP]
             FROM [TBD_2024].[dbo].[{table_name}]
             WHERE [SO_PHIEU] IN ({so_phieu_str})
@@ -1141,11 +973,8 @@ class Controller_handel_all_events:
                     "STT dòng", 
                     "Mã hàng", 
                     "Tên hàng", 
-                    "ĐVT", 
-                    "Số lượng khả dụng", 
+                    "ĐVT",  
                     "Số lượng nhu cầu", 
-                    "Số lượng giữ chỗ", 
-                    "Số lượng yêu cầu đặt hàng", 
                     "Ghi chú sản phẩm"] 
             
             flag, path = utils_controller_Export_data_to_Excel_250222_09h16.export_log_to_excel(query, header)
@@ -1163,7 +992,7 @@ class Controller_handel_all_events:
             
             # Load the column headers from SQL
             database_name = controller_get_information_of_module.load_database_name()
-            table_name = controller_get_information_of_module.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+            table_name = controller_get_information_of_module.load_table_name_TB_KD02_KE_HOACH_DAT_HANG()
             
             column_names = utils_controller_get_the_header_of_table_in_SQL_250221_11h01.get_column_names(database_name, table_name)
             
@@ -1171,7 +1000,7 @@ class Controller_handel_all_events:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Error: No data found!", "red")
                 return False
             
-            flag, text = f_utils_create_template_excel_file(file_name="template_YCDH.xlsx", sheet_name="template_YCDH", column_names=column_names)
+            flag, text = f_utils_create_template_excel_file(file_name="template_KHDH.xlsx", sheet_name="template_KHDH", column_names=column_names)
             if flag == False:
                 return False
             else:
@@ -1189,7 +1018,7 @@ class Controller_handel_all_events:
             
             # load data from excel file
             # Bắt đầu từ ô A1
-            data = utils_model_get_data_from_Excel_250221_16h45.get_data_from_excel(file_bath, "template_YCDH", start_row=1, start_col=1)
+            data = utils_model_get_data_from_Excel_250221_16h45.get_data_from_excel(file_bath, "template_KHDH", start_row=1, start_col=1)
             if not data:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "No data found in the selected file!", "red")
                 return False
@@ -1216,7 +1045,7 @@ class Controller_handel_all_events:
             server_name = f_utils_get_DB_HOST()
             database_name = f_utils_get_DB_NAME()
             login_name, login_pass = f_utils_get_DB_USER_AND_DB_PASSWORD()
-            table_name = controller_get_information_of_module.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+            table_name = controller_get_information_of_module.load_table_name_TB_KD02_KE_HOACH_DAT_HANG()
             data_array = data_list
             flag = utils_model_import_data_to_SQL_SERVER_250221_16h45.f_insert_data_to_sql(entry_notification,
                                                                                            server_name, 
@@ -1247,10 +1076,7 @@ class Controller_handel_all_events:
             entry_ma_hang_tab_01,
             entry_ten_hang_tab_01,
             entry_dvt,
-            entry_sl_kha_dung,
             tab_01_entry_nhu_cau,
-            tab_01_entry_sl_giu_cho,
-            tab_01_entry_sl_YCDH,
             tab_01_entry_ghi_chu_mat_hang
             )= args
             
@@ -1260,10 +1086,7 @@ class Controller_handel_all_events:
             entry_ma_hang_tab_01,
             entry_ten_hang_tab_01,
             entry_dvt,
-            entry_sl_kha_dung,
             tab_01_entry_nhu_cau,
-            tab_01_entry_sl_giu_cho,
-            tab_01_entry_sl_YCDH,
             tab_01_entry_ghi_chu_mat_hang)
             if flag == False:
                 return False
@@ -1318,7 +1141,7 @@ class Controller_handel_all_events:
         ma_thanh_vien = controller_get_information_of_module.load_ma_thanh_vien()
         loai_phieu = controller_get_information_of_module.load_loai_phieu()
         database_name = controller_get_information_of_module.load_database_name()
-        table_name = controller_get_information_of_module.load_table_name_TB_KD02_YEU_CAU_DAT_HANG() 
+        table_name = controller_get_information_of_module.load_table_name_TB_KD02_KE_HOACH_DAT_HANG() 
         column_name = controller_get_information_of_module.load_column_name_so_phieu()
         try:
             Controller_action_after_event.f_get_the_latest_number_of_slip(tab_01_entry_so_phieu, 
@@ -1342,11 +1165,8 @@ class Controller_handel_all_events:
                 entry_id,
                 entry_ma_hang, 
                 entry_ten_hang, 
-                entry_dvt, 
-                entry_sl_kha_dung, 
+                entry_dvt,  
                 entry_sl_nhu_cau, 
-                entry_sl_giu_cho, 
-                entry_sl_yeu_cau_dat_hang, 
                 entry_ghi_chu_mat_hang
             )= args
             flag = Controller_action_after_event.f_add_new_row_and_renew_the_tree_view(
@@ -1356,10 +1176,7 @@ class Controller_handel_all_events:
                 entry_ma_hang, 
                 entry_ten_hang, 
                 entry_dvt, 
-                entry_sl_kha_dung, 
                 entry_sl_nhu_cau, 
-                entry_sl_giu_cho, 
-                entry_sl_yeu_cau_dat_hang, 
                 entry_ghi_chu_mat_hang
             )
 
@@ -1398,9 +1215,9 @@ class Controller_handel_all_events:
                 ma_hang = ''
         
             # Create value and fetch data
-            proc_name = controller_get_information_of_module.load_proc_filter_by_many_arguments()
+            proc_filter = controller_get_information_of_module.load_proc_filter_by_many_arguments()
             query = f"""
-                    EXEC [dbo].[{proc_name}] 
+                    EXEC [dbo].[{proc_filter}] 
                         @SO_PHIEU = '{so_phieu}', 
                         @SO_HOP_DONG = '{so_hop_dong}',
                         @START_DATE = '{formated_ngay_bat_dau}', 
@@ -1437,9 +1254,9 @@ class Controller_handel_all_events:
             tab_02_entry_ten_hang.delete(0, tk.END)
             
             # refresh data in treeview
-            proc_name = controller_get_information_of_module.load_proc_filter_by_many_arguments()
+            proc_filter = controller_get_information_of_module.load_proc_filter_by_many_arguments()
             query = f"""
-                    EXEC [dbo].[{proc_name}] 
+                    EXEC [dbo].[{proc_filter}] 
                         @SO_PHIEU = NULL, 
                         @SO_HOP_DONG = NULL,
                         @START_DATE = NULL, 
@@ -1477,10 +1294,7 @@ class Controller_handel_all_events:
             entry_ma_hang,
             entry_ten_hang,
             entry_dvt,
-            entry_sl_kha_dung,
             entry_sl_nhu_cau,
-            entry_sl_giu_cho,
-            entry_sl_YCDH,
             entry_ghi_chu_mat_hang):
         
         Controller_action_after_event.treeview_of_tab_01_single_click(
@@ -1489,10 +1303,7 @@ class Controller_handel_all_events:
         entry_ma_hang,
         entry_ten_hang,
         entry_dvt,
-        entry_sl_kha_dung,
         entry_sl_nhu_cau,
-        entry_sl_giu_cho,
-        entry_sl_YCDH,
         entry_ghi_chu_mat_hang)
         
     def f_handle_event_treeview_of_tab_02_single_click(entry_notification, 
@@ -1517,7 +1328,7 @@ class Controller_handel_all_events:
             
             # call controller to handle event
             database_name = controller_get_information_of_module.load_database_name()
-            table_name = controller_get_information_of_module.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+            table_name = controller_get_information_of_module.load_table_name_TB_KD02_KE_HOACH_DAT_HANG()
             column_name = controller_get_information_of_module.load_column_name_so_phieu()
             flag = Controller_event_tab_01_btn_save_click.f_handle_event_tab_01_btn_save_click(
                 database_name,
@@ -1558,6 +1369,7 @@ class Controller_event_tab_01_btn_save_click:
                 entry_ghi_chu_cua_phieu,
                 tree
             ) = args
+            
             flag = Controller_event_tab_01_btn_save_click.validate_data( 
                 database_name, 
                 table_name, 
@@ -1639,7 +1451,6 @@ class Controller_event_tab_01_btn_save_click:
                 table_name,
                 column_name) == False:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Mã khách hàng chưa tồn tại!", "red")
-                # print("Error at function: ", f_utils_get_current_function_name())
                 return False
             
             # pass the validation
@@ -1664,7 +1475,7 @@ class Controller_validate_data_from_Excel_file_to_import_to_SQL_250221_17h05:
             print("Error at function: ", f_utils_get_current_function_name())
             return False
 
-class Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG:
+class Controller_inherit_to_edit_slip_KE_HOACH_DAT_HANG:
     def begin_editing_slip(elements_list, so_phieu):
         (
             entry_ngay_tren_phieu,
@@ -1679,11 +1490,11 @@ class Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG:
             my_treeview_to_get_data,
             my_treeview_to_load_data
             ) = elements_list
-        data = Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG.get_data_want_to_edit(so_phieu)
+        data = Controller_inherit_to_edit_slip_KE_HOACH_DAT_HANG.get_data_want_to_edit(so_phieu)
         if not data:
             return
         
-        first_row = Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG.get_first_row(data)
+        first_row = Controller_inherit_to_edit_slip_KE_HOACH_DAT_HANG.get_first_row(data)
         
         # update entries
         entries_list = (
@@ -1697,20 +1508,20 @@ class Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG:
             entry_thong_tin_hop_dong,
             entry_note_for_slip
             )
-        Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG.Insert_data_into_entries(entries_list, first_row)
-        Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG.Insert_data_into_treeview(my_treeview_to_load_data, data)
+        Controller_inherit_to_edit_slip_KE_HOACH_DAT_HANG.Insert_data_into_entries(entries_list, first_row)
+        Controller_inherit_to_edit_slip_KE_HOACH_DAT_HANG.Insert_data_into_treeview(my_treeview_to_load_data, data)
     
     def get_data_want_to_edit(so_phieu):
         # Create query
         database_name = f_utils_get_DB_NAME()
-        table_name = controller_get_information_of_module.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+        table_name = controller_get_information_of_module.load_table_name_TB_KD02_KE_HOACH_DAT_HANG()
         query = f"""
         SELECT * FROM [{database_name}].[dbo].[{table_name}]
         WHERE SO_PHIEU = '{so_phieu}' AND XOA_SUA = ''
         """
         # Sent SQL query
         data = utils_model_SQL_server.fetch_data(query)
-        Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG.get_first_row(data)
+        Controller_inherit_to_edit_slip_KE_HOACH_DAT_HANG.get_first_row(data)
         return data
     
     def get_first_row(data):
@@ -1803,7 +1614,7 @@ class Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG:
         try:
             for item in data:
                 # Đảm bảo item có đủ số lượng phần tử
-                item = list(item) + [''] * (22 - len(item))  
+                item = list(item) + [''] * (20 - len(item))  
 
                 # Chuyển đổi các kiểu dữ liệu đặc biệt thành chuỗi
                 values = (
@@ -1813,9 +1624,7 @@ class Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG:
                     str(item[16]) if len(item) > 16 else '',
                     str(item[17]) if len(item) > 17 else '',
                     str(item[18]) if len(item) > 18 else '0',  # Decimal -> str
-                    str(item[19]) if len(item) > 19 else '0',  # Decimal -> str
-                    str(item[20]) if len(item) > 20 else '0',  # Decimal -> str
-                    str(item[21]) if len(item) > 21 else ''    # Giá trị cuối cùng (trống)
+                    str(item[19]) if len(item) > 19 else ''    # Giá trị cuối cùng (trống)
                 )
                 
                 # Chèn dữ liệu vào Treeview

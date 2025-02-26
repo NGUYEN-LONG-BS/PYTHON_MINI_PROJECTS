@@ -190,7 +190,7 @@ class cls_Dashboard_kinhdoanh_View(cls_base_form_number_02_ManyTabs):
         
     def f_card_DE_NGHI_XUAT_KHO_click(self, event):
         # from views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
-        from views.KD03_QuanLyDeNghiXuatKho_View_250226_08h25.DE_NGHI_XUAT_KHO_View import cls_DE_NGHI_XUAT_KHO_View
+        from views.KD03_QuanLyDeNghiXuatKho_View_250225_10h00.DE_NGHI_XUAT_KHO_View import cls_DE_NGHI_XUAT_KHO_View
         self.destroy()
         new_view = cls_DE_NGHI_XUAT_KHO_View()
         # new_view.dashboard = self.parent
