@@ -1,0 +1,162 @@
+{
+    "table": {
+        "name": "Nhật ký yêu cầu đặt hàng",
+        "description": "Tập hợp cấu hình cho bảng.",
+        "headings": {"family": "Arial", "size": 12, "weight": "bold"},
+        "columns": [
+            {
+                "name": "STT",
+                "width": 50,
+                "min_width": 50,
+                "anchor": "center",
+                "stretch": false,
+                "font": {"family": "Arial", "size": 12, "weight": "bold"},
+                "background_color": "#f0f0f0",
+                "foreground_color": "#000000",
+                "show": "headings"
+            },
+            {
+                "name": "Ngày",
+                "width": 150,
+                "min_width": 150,
+                "anchor": "w",
+                "stretch": true,
+                "font": {"family": "Verdana", "size": 12, "weight": "normal"},
+                "background_color": "#ffffff",
+                "foreground_color": "#000000",
+                "show": "headings"
+            },
+            {
+                "name": "Số phiếu",
+                "width": 150,
+                "min_width": 150,
+                "anchor": "w",
+                "stretch": true,
+                "font": {"family": "Verdana", "size": 12, "weight": "normal"},
+                "background_color": "#ffffff",
+                "foreground_color": "#000000",
+                "show": "headings"
+            },
+            {
+                "name": "Mã KH",
+                "width": 100,
+                "min_width": 100,
+                "anchor": "w",
+                "stretch": true,
+                "font": {"family": "Verdana", "size": 12, "weight": "normal"},
+                "background_color": "#ffffff",
+                "foreground_color": "#000000",
+                "show": "headings"
+            },
+            {
+                "name": "Tên KH",
+                "width": 400,
+                "min_width": 300,
+                "anchor": "w",
+                "stretch": true,
+                "font": {"family": "Verdana", "size": 12, "weight": "normal"},
+                "background_color": "#ffffff",
+                "foreground_color": "#000000",
+                "show": "headings"
+            },
+            {
+                "name": "Số hợp đồng",
+                "width": 120,
+                "min_width": 120,
+                "anchor": "w",
+                "stretch": true,
+                "font": {"family": "Verdana", "size": 12, "weight": "normal"},
+                "background_color": "#ffffff",
+                "foreground_color": "#000000",
+                "show": "headings"
+            },
+            {
+                "name": "Ghi chú phiếu",
+                "width": 120,
+                "min_width": 120,
+                "anchor": "w",
+                "stretch": true,
+                "font": {"family": "Verdana", "size": 12, "weight": "normal"},
+                "background_color": "#ffffff",
+                "foreground_color": "#000000",
+                "show": "headings"
+            },
+            {
+                "name": "STT dòng",
+                "width": 100,
+                "min_width": 100,
+                "anchor": "w",
+                "stretch": true,
+                "font": {"family": "Verdana", "size": 12, "weight": "normal"},
+                "background_color": "#ffffff",
+                "foreground_color": "#000000",
+                "show": "headings"
+            },
+            {
+                "name": "Mã hàng",
+                "width": 100,
+                "min_width": 100,
+                "anchor": "w",
+                "stretch": true,
+                "font": {"family": "Verdana", "size": 12, "weight": "normal"},
+                "background_color": "#ffffff",
+                "foreground_color": "#000000",
+                "show": "headings"
+            },
+            {
+                "name": "Tên mặt hàng",
+                "width": 300,
+                "min_width": 300,
+                "anchor": "w",
+                "stretch": true,
+                "font": {"family": "Verdana", "size": 12, "weight": "normal"},
+                "background_color": "#ffffff",
+                "foreground_color": "#000000",
+                "show": "headings"
+            },
+            {
+                "name": "Đvt",
+                "width": 100,
+                "min_width": 100,
+                "anchor": "w",
+                "stretch": true,
+                "font": {"family": "Verdana", "size": 12, "weight": "normal"},
+                "background_color": "#ffffff",
+                "foreground_color": "#000000",
+                "show": "headings"
+            },
+            {
+                "name": "SL nhu cầu",
+                "width": 120,
+                "min_width": 120,
+                "anchor": "w",
+                "stretch": false,
+                "font": {"family": "Arial", "size": 12, "weight": "normal"},
+                "background_color": "#ffffff",
+                "foreground_color": "#4287f5",
+                "show": "headings"
+            },
+            {
+                "name": "Ghi chú sản phẩm",
+                "width": 400,
+                "min_width": 300,
+                "anchor": "w",
+                "stretch": true,
+                "font": {"family": "Verdana", "size": 12, "weight": "normal"},
+                "background_color": "#ffffff",
+                "foreground_color": "#000000",
+                "show": "headings"
+            }
+        ],
+        "scrollbars": {
+            "vertical": {"enabled": true, "command": "yscrollcommand"},
+            "horizontal": {"enabled": true, "command": "xscrollcommand"}
+        },
+        "general": {
+            "border_width": 2,
+            "relief": "solid",
+            "padding": 10,
+            "background_color": "#be03fc"
+        }
+    }
+}
