@@ -89,6 +89,7 @@ class cls_Dashboard_kinhdoanh_View(cls_base_form_number_02_ManyTabs):
             {"image": PATH_CARD_KD_04,"text": "QUẢN LÝ CÔNG NỢ", "click_event": self.f_card_05_click,"name_of_card": "card_frame_4", "visitable": False},
             {"image": PATH_CARD_KD_05,"text": "QUẢN LÝ YÊU CẦU ĐẶT HÀNG", "click_event": self.f_card_06_yeu_cau_dat_hang_click,"name_of_card": "card_frame_yeu_cau_dat_hang", "visitable": True},
             {"image": PATH_CARD_KD_06,"text": "BÁO CÁO", "click_event": self.f_card_07_click,"name_of_card": "card_frame_6", "visitable": True},
+            {"image": PATH_CARD_KD_QUAN_LY_DE_NGHI_XUAT_KHO,"text": "ĐỀ NGHỊ XUẤT KHO", "click_event": self.f_card_DE_NGHI_XUAT_KHO_click,"name_of_card": "card_frame_de_nghi_xuat_kho", "visitable": True},
         ]
 
         # Kích thước card và padding
@@ -186,6 +187,16 @@ class cls_Dashboard_kinhdoanh_View(cls_base_form_number_02_ManyTabs):
 
     def f_card_07_click(self, event):
         print("f_card_07_click")
+        
+    def f_card_DE_NGHI_XUAT_KHO_click(self, event):
+        # from views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
+        from views.KD03_QuanLyDeNghiXuatKho_View_250226_08h25.DE_NGHI_XUAT_KHO_View import cls_DE_NGHI_XUAT_KHO_View
+        self.destroy()
+        new_view = cls_DE_NGHI_XUAT_KHO_View()
+        # new_view.dashboard = self.parent
+        utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
+        f_utils_set_center_screen(new_view)
+        new_view.focus_force()
 
     def _f_add_elements_to_card_QL_KHACHANG(self):
         try:

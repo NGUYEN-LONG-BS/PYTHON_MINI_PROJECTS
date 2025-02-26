@@ -3,13 +3,13 @@ from tkinter import ttk
 from Components_View import *
 from Components_View.treeview import cls_Treeview_frame_number_01
 from utils import *
-from .YEU_CAU_NHAN_HANG_Controller import Controller_auto_update_sl_giu_cho_va_sl_ycdh
-from .YEU_CAU_NHAN_HANG_Controller import Controller_handel_all_events
+from .DE_NGHI_XUAT_KHO_Controller import Controller_auto_update_sl_giu_cho_va_sl_ycdh
+from .DE_NGHI_XUAT_KHO_Controller import Controller_handel_all_events
 
-class cls_YEU_CAU_NHAN_HANG_View(cls_base_form_number_02_ManyTabs):
+class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
     def __init__(self):
-        title = "KD02 | QUẢN LÝ YÊU CẦU NHẬN HÀNG"
-        name = "QUẢN LÝ YÊU CẦU NHẬN HÀNG"
+        title = "KD03 | QUẢN LÝ ĐỀ NGHỊ XUẤT KHO"
+        name = "QUẢN LÝ ĐỀ NGHỊ XUẤT KHO"
         super().__init__(title_of_form=title, name_of_slip=name)
         # call reuse components
         self.f_view_thay_doi_gia_tri_cua_base_form()
@@ -126,8 +126,8 @@ class cls_YEU_CAU_NHAN_HANG_View(cls_base_form_number_02_ManyTabs):
             return
 
         # Change the text of the second tabs
-        notebook.tab(0, text="TẠO MỚI YÊU CẦU NHẬN HÀNG")
-        notebook.tab(1, text="QUẢN LÝ YÊU CẦU NHẬN HÀNG")
+        notebook.tab(0, text="TẠO MỚI ĐỀ NGHỊ XUẤT KHO")
+        notebook.tab(1, text="QUẢN LÝ ĐỀ NGHỊ XUẤT KHO")
         
         # Delete the third tab
         notebook.forget(2)
@@ -213,7 +213,7 @@ class cls_YEU_CAU_NHAN_HANG_View(cls_base_form_number_02_ManyTabs):
 
     def _f_view_create_widgets_in_tab_01_frame_H2(self):
         # Title H2
-        cls_my_label_num_03_title_H2(self.tab_01_frame_H2, text="PHIẾU YÊU CẦU NHẬN HÀNG").pack(anchor="center")
+        cls_my_label_num_03_title_H2(self.tab_01_frame_H2, text="PHIẾU ĐỀ NGHỊ XUẤT KHO").pack(anchor="center")
      
     def _f_view_create_widgets_in_tab_01_frame_entries(self):
         self.tab_01_container_frame_entries = tk.Frame(self.tab_01_frame_entries)
@@ -432,7 +432,7 @@ class cls_YEU_CAU_NHAN_HANG_View(cls_base_form_number_02_ManyTabs):
 
     def _f_view_create_widgets_in_tab_02_frame_H2(self):
         # Title H2
-        cls_my_label_num_03_title_H2(self.tab_02_frame_H2, text="NHẬT KÝ YÊU CẦU NHẬN HÀNG").pack(anchor="center")
+        cls_my_label_num_03_title_H2(self.tab_02_frame_H2, text="NHẬT KÝ ĐỀ NGHỊ XUẤT KHO").pack(anchor="center")
      
     def _f_view_create_widgets_in_tab_02_frame_button_01(self):
         # Create a sub-frame to organize buttons in the center
