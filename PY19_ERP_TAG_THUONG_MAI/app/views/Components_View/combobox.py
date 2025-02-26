@@ -22,7 +22,7 @@ class cls_my_combobox_num_01(ttk.Combobox):
         style.configure("TCombobox",
                         background=BG_COLOR_0_0,  # Default background color
                         foreground="black",       # Text color
-                        font=("Arial", 12),         # Font
+                        font=FONT_DEFAULT_NUM_01,         # Font
                         borderwidth=0,             # Remove the border width
                         relief="flat",
                         fieldbackground=BG_COLOR_0_0, # Same as background color to hide internal border

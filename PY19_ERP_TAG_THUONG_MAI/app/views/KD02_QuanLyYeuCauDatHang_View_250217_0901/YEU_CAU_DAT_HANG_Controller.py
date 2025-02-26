@@ -4,36 +4,11 @@ import traceback
 from datetime import datetime
 from collections import defaultdict
 
-
 class controller_get_information_of_module:
-        
-    def load_ma_thanh_vien():
-        ma_thanh_vien = "TB"
-        return ma_thanh_vien
     
     def load_loai_phieu():
         loai_phieu = "YCDH"
         return loai_phieu
-    
-    def load_database_name():
-        database_name = "TBD_2024"
-        return database_name
-    
-    def load_table_name_TB_KD02_YEU_CAU_DAT_HANG():
-        table_name = "TB_KD02_YEU_CAU_DAT_HANG"
-        return table_name
-    
-    def load_table_name_TB_AD00_DANH_SACH_KHACH_HANG():
-        table_name = "TB_AD00_DANH_SACH_KHACH_HANG"
-        return table_name
-    
-    def load_column_name_so_phieu():
-        column_name = "SO_PHIEU"
-        return column_name
-    
-    def load_column_name_ma_khach_hang():
-        column_name = "MA_DOI_TUONG"
-        return column_name
     
     def load_treeview_config_json_path():
         tab_01_treeview_config_json_path = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'KD_YEU_CAU_DAT_HANG', 'treeview_tab_01_YCDH_input.json')
@@ -44,17 +19,30 @@ class controller_get_information_of_module:
         proc_name = "Proc_TB_KD02_YEU_CAU_DAT_HANG_UPDATE_XOA_SUA_250224_13h09"
         return proc_name
     
+    def load_proc_mark_expired():
+        proc_name = "Proc_TB_KD02_YEU_CAU_DAT_HANG_UPDATE_EXPIRED_250226_13h15"
+        return proc_name
+    
     def load_proc_filter_by_many_arguments():
-        proc_name = "Proc_TB_KD02_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250222_14hh40"
+        proc_name = "Proc_TB_KD02_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250226_14h15"
         return proc_name
     
     def load_query_select_all_data():
-        table_name = controller_get_information_of_module.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+        database_name = utils_controller_get_information_of_database.load_database_name()
+        table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
         query = f"""
             SELECT *
-            FROM [TBD_2024].[dbo].[{table_name}]
+            FROM [{database_name}].[dbo].[{table_name}]
             """
         return query
+    
+    def load_column_name_so_phieu():
+        column_name = "SO_PHIEU"
+        return column_name
+    
+    def load_column_name_ma_khach_hang():
+        column_name = "MA_DOI_TUONG"
+        return column_name
     
 class Controller_action_after_event:
     
@@ -773,6 +761,16 @@ class Controller_delete_row_in_SQL:
         # Sent SQL query
         utils_model_SQL_server.sent_SQL_query(query)
 
+class Controller_mark_expired_slip:
+    def mark_expired(so_phieu):
+        # Create query
+        database_name = f_utils_get_DB_NAME()
+        proc_name = controller_get_information_of_module.load_proc_mark_expired()
+        status = "1"
+        query = f"EXEC [{database_name}].[dbo].[{proc_name}] '{so_phieu}', '{status}'"
+        # Sent SQL query
+        utils_model_SQL_server.sent_SQL_query(query)
+
 class Controller_edit_row_in_SQL:
     def update_edited(so_phieu):
         # Create query
@@ -883,8 +881,8 @@ class SQLController:
         # Step_03: Export data to SQL
         if utils_model_SQL_server.f_validate_data_format_KD02_YEU_CAU_DAT_HANG(data_array):
             # If data is valid
-            database_name = controller_get_information_of_module.load_database_name()
-            table_name = controller_get_information_of_module.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+            database_name = utils_controller_get_information_of_database.load_database_name()
+            table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
             utils_model_SQL_server.f_goi_ham_Export_to_table(data_array, database_name, table_name)
             return "Data exported"
         else:
@@ -992,6 +990,29 @@ class Controller_handel_all_events:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"{so_phieu}, Slip deleted.", "blue")
                 return 
 
+    def handle_event_tab_02_btn_mark_expired_click(entry_notification, my_treeview):
+        # Get the selected items
+        selected_items = my_treeview.selection()
+        
+        # Check if more than one row is selected
+        if len(selected_items) > 1:
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Selection Error, Please select only one row.", "blue")
+            return
+        
+        # Check if no row is selected
+        if not selected_items:
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Selection Error, No row selected.", "blue")
+            return 
+            
+        # Get the selected row
+        for item in selected_items:
+            row_values = my_treeview.item(item, 'values')
+            if len(row_values) > 2:  # Ensure the row has at least 2 columns
+                so_phieu = row_values[2]
+                Controller_mark_expired_slip.mark_expired(so_phieu)
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"{so_phieu}, Slip deleted.", "blue")
+                return 
+
     def handle_event_tab_01_btn_update_slip_click(entry_notification, entries_list):
         (
             entry_so_phieu,
@@ -1009,8 +1030,8 @@ class Controller_handel_all_events:
         if not so_phieu:
             return
         
-        database_name = controller_get_information_of_module.load_database_name()
-        table_name = controller_get_information_of_module.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+        database_name = utils_controller_get_information_of_database.load_database_name()
+        table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
         column_name = controller_get_information_of_module.load_column_name_so_phieu()
         
         # Kiểm tra số phiếu đã tồn tại chưa
@@ -1076,7 +1097,8 @@ class Controller_handel_all_events:
                     "SO_LUONG_NHU_CAU",
                     "SO_LUONG_GIU_CHO",
                     "SO_LUONG_YEU_CAU_DAT_HANG",
-                    "GHI_CHU_SP"]
+                    "GHI_CHU_SP",
+                    "EXPIRED"]
 
             flag, path = utils_controller_Export_data_to_Excel_250222_09h16.export_log_to_excel(query, header)
             if flag == False:
@@ -1092,7 +1114,7 @@ class Controller_handel_all_events:
         try:
             # Export log to Excel
             # lấy danh sách số phiếu từ treeview
-            danh_sach_so_phieu = f_utils_get_unique_column_from_treeview(my_treeview, 1)
+            danh_sach_so_phieu = f_utils_get_unique_column_from_treeview(my_treeview, 2)
             # print("danh_sach_so_phieu", danh_sach_so_phieu)
             
             # Chuyển danh sách số phiếu thành chuỗi SQL, đảm bảo các giá trị dạng chuỗi được bao trong dấu nháy đơn
@@ -1100,7 +1122,8 @@ class Controller_handel_all_events:
             # print("so_phieu_str", so_phieu_str)
             
             # Tạo câu query SQL với danh sách số phiếu
-            table_name = controller_get_information_of_module.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+            database_name = utils_controller_get_information_of_database.load_database_name()
+            table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
             query = f"""
             SELECT 
                 ROW_NUMBER() OVER(ORDER BY [SO_PHIEU]) as RowNumber,
@@ -1122,10 +1145,9 @@ class Controller_handel_all_events:
                 [SO_LUONG_GIU_CHO],
                 [SO_LUONG_YEU_CAU_DAT_HANG],
                 [GHI_CHU_SP]
-            FROM [TBD_2024].[dbo].[{table_name}]
+            FROM [{database_name}].[dbo].[{table_name}]
             WHERE [SO_PHIEU] IN ({so_phieu_str})
             """
-            # print("query", query)
             
             # Tạo header cho file Excel
             header = ["STT", 
@@ -1162,8 +1184,8 @@ class Controller_handel_all_events:
         try:
             
             # Load the column headers from SQL
-            database_name = controller_get_information_of_module.load_database_name()
-            table_name = controller_get_information_of_module.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+            database_name = utils_controller_get_information_of_database.load_database_name()
+            table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
             
             column_names = utils_controller_get_the_header_of_table_in_SQL_250221_11h01.get_column_names(database_name, table_name)
             
@@ -1216,7 +1238,7 @@ class Controller_handel_all_events:
             server_name = f_utils_get_DB_HOST()
             database_name = f_utils_get_DB_NAME()
             login_name, login_pass = f_utils_get_DB_USER_AND_DB_PASSWORD()
-            table_name = controller_get_information_of_module.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+            table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
             data_array = data_list
             flag = utils_model_import_data_to_SQL_SERVER_250221_16h45.f_insert_data_to_sql(entry_notification,
                                                                                            server_name, 
@@ -1315,10 +1337,10 @@ class Controller_handel_all_events:
             return f"Error: {e}"
     
     def f_handle_event_get_the_latest_number_of_slip(tab_01_entry_so_phieu):
-        ma_thanh_vien = controller_get_information_of_module.load_ma_thanh_vien()
+        ma_thanh_vien = utils_controller_get_information_of_database.load_ma_thanh_vien()
         loai_phieu = controller_get_information_of_module.load_loai_phieu()
-        database_name = controller_get_information_of_module.load_database_name()
-        table_name = controller_get_information_of_module.load_table_name_TB_KD02_YEU_CAU_DAT_HANG() 
+        database_name = utils_controller_get_information_of_database.load_database_name()
+        table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG() 
         column_name = controller_get_information_of_module.load_column_name_so_phieu()
         try:
             Controller_action_after_event.f_get_the_latest_number_of_slip(tab_01_entry_so_phieu, 
@@ -1379,7 +1401,8 @@ class Controller_handel_all_events:
                 entry_ngay_bat_dau,
                 entry_ngay_ket_thuc,
                 entry_ma_doi_tuong,
-                entry_ma_hang
+                entry_ma_hang,
+                combo_trang_thai
             )= args
             
             so_phieu = entry_so_phieu.get()
@@ -1396,7 +1419,12 @@ class Controller_handel_all_events:
                 ma_doi_tuong = ''
             if ma_hang == 'search here':
                 ma_hang = ''
-        
+
+            if combo_trang_thai.get() == "Còn hạn":
+                combo_trang_thai = 0
+            else:
+                combo_trang_thai = 1
+            
             # Create value and fetch data
             proc_name = controller_get_information_of_module.load_proc_filter_by_many_arguments()
             query = f"""
@@ -1406,9 +1434,10 @@ class Controller_handel_all_events:
                         @START_DATE = '{formated_ngay_bat_dau}', 
                         @END_DATE = '{formated_ngay_ket_thuc}',
                         @MA_DOI_TUONG = '{ma_doi_tuong}',
-                        @MA_HANG = '{ma_hang}';
+                        @MA_HANG = '{ma_hang}',
+                        @EXPIRED = {combo_trang_thai};
                     """
-            # print(query)
+            
             SQLController.load_data(my_treeview, query)
             
             # Notification
@@ -1425,7 +1454,8 @@ class Controller_handel_all_events:
             tab_02_entry_ma_khach_hang,
             tab_02_entry_ten_khach_hang,
             tab_02_entry_ma_hang,
-            tab_02_entry_ten_hang):
+            tab_02_entry_ten_hang,
+            tab_02_combo_trang_thai):
         
         try:
             # clear all entries
@@ -1435,6 +1465,7 @@ class Controller_handel_all_events:
             tab_02_entry_ten_khach_hang.delete(0, tk.END)
             tab_02_entry_ma_hang.delete(0, tk.END)
             tab_02_entry_ten_hang.delete(0, tk.END)
+            tab_02_combo_trang_thai.set("Còn hạn")
             
             # refresh data in treeview
             proc_name = controller_get_information_of_module.load_proc_filter_by_many_arguments()
@@ -1445,8 +1476,10 @@ class Controller_handel_all_events:
                         @START_DATE = NULL, 
                         @END_DATE = NULL,
                         @MA_DOI_TUONG = NULL,
-                        @MA_HANG = NULL;
+                        @MA_HANG = NULL,
+                        @EXPIRED = 0;
                     """
+            
             SQLController.load_data(my_treeview, query)
             utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Clear all filter!", "blue")
         except Exception as e:
@@ -1516,8 +1549,8 @@ class Controller_handel_all_events:
             ) = args
             
             # call controller to handle event
-            database_name = controller_get_information_of_module.load_database_name()
-            table_name = controller_get_information_of_module.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+            database_name = utils_controller_get_information_of_database.load_database_name()
+            table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
             column_name = controller_get_information_of_module.load_column_name_so_phieu()
             flag = Controller_event_tab_01_btn_save_click.f_handle_event_tab_01_btn_save_click(
                 database_name,
@@ -1630,8 +1663,8 @@ class Controller_event_tab_01_btn_save_click:
                 return False
             
             # Check exist client id
-            database_name = controller_get_information_of_module.load_database_name()
-            table_name = controller_get_information_of_module.load_table_name_TB_AD00_DANH_SACH_KHACH_HANG()
+            database_name = utils_controller_get_information_of_database.load_database_name()
+            table_name = utils_controller_get_information_of_database.load_table_name_TB_AD00_DANH_SACH_KHACH_HANG()
             column_name = controller_get_information_of_module.load_column_name_ma_khach_hang()
             if Controller_action_after_event.f_Check_exist_ma_khach_hang(
                 entry_ma_khach_hang,
@@ -1703,7 +1736,7 @@ class Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG:
     def get_data_want_to_edit(so_phieu):
         # Create query
         database_name = f_utils_get_DB_NAME()
-        table_name = controller_get_information_of_module.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+        table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
         query = f"""
         SELECT * FROM [{database_name}].[dbo].[{table_name}]
         WHERE SO_PHIEU = '{so_phieu}' AND XOA_SUA = ''

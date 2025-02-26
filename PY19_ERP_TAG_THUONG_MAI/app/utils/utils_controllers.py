@@ -336,3 +336,30 @@ class utils_controller_TreeviewHandler_click_250217_22h34:
             return row_values[column_return] if len(row_values) > column_return else None
         return None
     
+class utils_controller_get_information_of_database:
+        
+    def load_ma_thanh_vien():
+        ma_thanh_vien = "TB"
+        return ma_thanh_vien
+    
+    def load_database_name():
+        database_name = "TBD_2024"
+        return database_name
+    
+    def load_table_name_TB_KD02_KE_HOACH_DAT_HANG():
+        table_name = "TB_KD02_KE_HOACH_DAT_HANG"
+        return table_name
+    
+    def load_table_name_TB_KD02_YEU_CAU_DAT_HANG():
+        table_name = "TB_KD02_YEU_CAU_DAT_HANG"
+        return table_name
+    
+    def load_table_name_TB_KD03_DE_NGHI_XUAT_KHO():
+        table_name = "TB_KD03_DE_NGHI_XUAT_KHO"
+        return table_name
+    
+    def load_table_name_TB_AD00_DANH_SACH_KHACH_HANG():
+        table_name = "TB_AD00_DANH_SACH_KHACH_HANG"
+        return table_name
+    
+    

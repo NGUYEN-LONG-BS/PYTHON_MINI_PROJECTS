@@ -65,6 +65,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         
         self.tab_02_button_edit_slip.config(command=self.event_tab_02_button_edit_slip_click)
         self.tab_02_button_delete_slip.config(command=self.event_tab_02_button_delete_slip_click)
+        self.tab_02_button_mark_expired.config(command=self.event_tab_02_button_mark_expired_click)
         
         # Gán sự kiện
         self.tab_01_treeview_YCDH.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_01_single_click)  # Single click
@@ -459,9 +460,16 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         tk.Label(parent_frame_00, text="Số phiếu").grid(row=0, column= 0, padx=(10, 0), pady=(10, 0), sticky="w")
         self.tab_02_entry_filter_slip_number = cls_my_text_entry_num_01(parent_frame_00)
         self.tab_02_entry_filter_slip_number.grid(row=0, column= 1, padx=(2, 10), pady=(10, 0), sticky="ew")
-        tk.Label(parent_frame_00, text="Số hợp đồng").grid(row=1, column= 0, padx=(10, 0), pady=(15, 10), sticky="w")
+        
+        tk.Label(parent_frame_00, text="Số hợp đồng").grid(row=1, column= 0, padx=(10, 0), pady=(15, 0), sticky="w")
         self.tab_02_entry_filter_contract_number = cls_my_text_entry_num_01(parent_frame_00)
-        self.tab_02_entry_filter_contract_number.grid(row=1, column= 1, padx=(2, 10), pady=(15, 10), sticky="ew")
+        self.tab_02_entry_filter_contract_number.grid(row=1, column= 1, padx=(2, 10), pady=(15, 0), sticky="ew")
+        
+        tk.Label(parent_frame_00, text="Trạng thái").grid(row=2, column= 0, padx=(10, 0), pady=(15, 10), sticky="w")
+        self.tab_02_entry_filter_trang_thai = cls_my_combobox_num_01(parent_frame_00, values=["Còn hạn", "Hết hạn"])
+        self.tab_02_entry_filter_trang_thai.grid(row=2, column= 1, padx=(2, 10), pady=(15, 0), sticky="ew")
+        # Set default value
+        self.tab_02_entry_filter_trang_thai.set("Còn hạn")
         
         # Create frame inventories informations
         self.tab_02_frame_seclect_date = cls_frame_DateSelector_view(parent_frame_01)
@@ -495,13 +503,17 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.tab_02_button_export_excel = tk.Button(tab_02_button_container_02, text="Export Excel")
         self.tab_02_button_export_excel.pack(side="left", padx=10)
         
-        # Get Data button
+        # Edit Slip button
         self.tab_02_button_edit_slip = tk.Button(tab_02_button_container_02, text="Edit slip")
         self.tab_02_button_edit_slip.pack(side="left", padx=10)
         
-        # Export Data button
+        # Delete Slip button
         self.tab_02_button_delete_slip = tk.Button(tab_02_button_container_02, text="Delete slip")
         self.tab_02_button_delete_slip.pack(side="left", padx=10)
+        
+        # Mark Expired button
+        self.tab_02_button_mark_expired = tk.Button(tab_02_button_container_02, text="Mark Expired")
+        self.tab_02_button_mark_expired.pack(side="left", padx=10)
     
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
@@ -606,7 +618,8 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
             self.tab_02_ngay_filter_bat_dau,
             self.tab_02_ngay_filter_ket_thuc,
             self.tab_02_entry_ma_khach_hang,
-            self.tab_02_entry_ma_hang
+            self.tab_02_entry_ma_hang,
+            self.tab_02_entry_filter_trang_thai
             )
     
     def event_tab_02_button_clear_filter_click(self):
@@ -618,7 +631,8 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
             self.tab_02_entry_ma_khach_hang,
             self.tab_02_entry_ten_khach_hang,
             self.tab_02_entry_ma_hang,
-            self.tab_02_entry_ten_hang
+            self.tab_02_entry_ten_hang,
+            self.tab_02_entry_filter_trang_thai
         )
         
     def event_tab_02_button_export_excel_click(self):
@@ -654,6 +668,14 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
     
     def event_tab_02_button_delete_slip_click(self):
         Controller_handel_all_events.handle_event_tab_02_btn_delete_slip_click(
+            self.tab_01_label_footer_notification, 
+            self.tab_02_treeview_log_of_YCDH
+        )
+        # refresh data
+        self.event_tab_02_button_filter_click()
+    
+    def event_tab_02_button_mark_expired_click(self):
+        Controller_handel_all_events.handle_event_tab_02_btn_mark_expired_click(
             self.tab_01_label_footer_notification, 
             self.tab_02_treeview_log_of_YCDH
         )

@@ -6,26 +6,10 @@ from collections import defaultdict
 
 
 class controller_get_information_of_module:
-        
-    def load_ma_thanh_vien():
-        ma_thanh_vien = "TB"
-        return ma_thanh_vien
     
     def load_loai_phieu():
         loai_phieu = "DNXK"
         return loai_phieu
-    
-    def load_database_name():
-        database_name = "TBD_2024"
-        return database_name
-    
-    def load_table_name_TB_KD02_KE_HOACH_DAT_HANG():
-        table_name = "TB_KD02_KE_HOACH_DAT_HANG"
-        return table_name
-    
-    def load_table_name_TB_AD00_DANH_SACH_KHACH_HANG():
-        table_name = "TB_AD00_DANH_SACH_KHACH_HANG"
-        return table_name
     
     def load_column_name_so_phieu():
         column_name = "SO_PHIEU"
@@ -49,10 +33,11 @@ class controller_get_information_of_module:
         return proc_filter
     
     def load_query_select_all_data():
-        table_name = controller_get_information_of_module.load_table_name_TB_KD02_KE_HOACH_DAT_HANG()
+        database_name = utils_controller_get_information_of_database.load_database_name()
+        table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
         query = f"""
             SELECT *
-            FROM [TBD_2024].[dbo].[{table_name}]
+            FROM [{database_name}].[dbo].[{table_name}]
             """
         return query
     
@@ -721,8 +706,8 @@ class SQLController:
         # Step_03: Export data to SQL
         if utils_model_SQL_server.f_validate_data_format_KD02_KE_HOACH_DAT_HANG(data_array):
             # If data is valid
-            database_name = controller_get_information_of_module.load_database_name()
-            table_name = controller_get_information_of_module.load_table_name_TB_KD02_KE_HOACH_DAT_HANG()
+            database_name = utils_controller_get_information_of_database.load_database_name()
+            table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
             utils_model_SQL_server.f_goi_ham_Export_to_table(data_array, database_name, table_name)
             return "Data exported"
         else:
@@ -847,8 +832,8 @@ class Controller_handel_all_events:
         if not so_phieu:
             return
         
-        database_name = controller_get_information_of_module.load_database_name()
-        table_name = controller_get_information_of_module.load_table_name_TB_KD02_KE_HOACH_DAT_HANG()
+        database_name = utils_controller_get_information_of_database.load_database_name()
+        table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
         column_name = controller_get_information_of_module.load_column_name_so_phieu()
         
         # Kiểm tra số phiếu đã tồn tại chưa
@@ -935,7 +920,8 @@ class Controller_handel_all_events:
             # print("so_phieu_str", so_phieu_str)
             
             # Tạo câu query SQL với danh sách số phiếu
-            table_name = controller_get_information_of_module.load_table_name_TB_KD02_KE_HOACH_DAT_HANG()
+            database_name = utils_controller_get_information_of_database.load_database_name()
+            table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
             query = f"""
             SELECT 
                 ROW_NUMBER() OVER(ORDER BY [SO_PHIEU]) as RowNumber,
@@ -954,7 +940,7 @@ class Controller_handel_all_events:
                 [DVT],
                 [SO_LUONG_NHU_CAU],
                 [GHI_CHU_SP]
-            FROM [TBD_2024].[dbo].[{table_name}]
+            FROM [{database_name}].[dbo].[{table_name}]
             WHERE [SO_PHIEU] IN ({so_phieu_str})
             """
             # print("query", query)
@@ -991,8 +977,8 @@ class Controller_handel_all_events:
         try:
             
             # Load the column headers from SQL
-            database_name = controller_get_information_of_module.load_database_name()
-            table_name = controller_get_information_of_module.load_table_name_TB_KD02_KE_HOACH_DAT_HANG()
+            database_name = utils_controller_get_information_of_database.load_database_name()
+            table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
             
             column_names = utils_controller_get_the_header_of_table_in_SQL_250221_11h01.get_column_names(database_name, table_name)
             
@@ -1045,7 +1031,7 @@ class Controller_handel_all_events:
             server_name = f_utils_get_DB_HOST()
             database_name = f_utils_get_DB_NAME()
             login_name, login_pass = f_utils_get_DB_USER_AND_DB_PASSWORD()
-            table_name = controller_get_information_of_module.load_table_name_TB_KD02_KE_HOACH_DAT_HANG()
+            table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
             data_array = data_list
             flag = utils_model_import_data_to_SQL_SERVER_250221_16h45.f_insert_data_to_sql(entry_notification,
                                                                                            server_name, 
@@ -1138,10 +1124,10 @@ class Controller_handel_all_events:
             return f"Error: {e}"
     
     def f_handle_event_get_the_latest_number_of_slip(tab_01_entry_so_phieu):
-        ma_thanh_vien = controller_get_information_of_module.load_ma_thanh_vien()
+        ma_thanh_vien = utils_controller_get_information_of_database.load_ma_thanh_vien()
         loai_phieu = controller_get_information_of_module.load_loai_phieu()
-        database_name = controller_get_information_of_module.load_database_name()
-        table_name = controller_get_information_of_module.load_table_name_TB_KD02_KE_HOACH_DAT_HANG() 
+        database_name = utils_controller_get_information_of_database.load_database_name()
+        table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG() 
         column_name = controller_get_information_of_module.load_column_name_so_phieu()
         try:
             Controller_action_after_event.f_get_the_latest_number_of_slip(tab_01_entry_so_phieu, 
@@ -1327,8 +1313,8 @@ class Controller_handel_all_events:
             ) = args
             
             # call controller to handle event
-            database_name = controller_get_information_of_module.load_database_name()
-            table_name = controller_get_information_of_module.load_table_name_TB_KD02_KE_HOACH_DAT_HANG()
+            database_name = utils_controller_get_information_of_database.load_database_name()
+            table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
             column_name = controller_get_information_of_module.load_column_name_so_phieu()
             flag = Controller_event_tab_01_btn_save_click.f_handle_event_tab_01_btn_save_click(
                 database_name,
@@ -1442,8 +1428,8 @@ class Controller_event_tab_01_btn_save_click:
                 return False
             
             # Check exist client id
-            database_name = controller_get_information_of_module.load_database_name()
-            table_name = controller_get_information_of_module.load_table_name_TB_AD00_DANH_SACH_KHACH_HANG()
+            database_name = utils_controller_get_information_of_database.load_database_name()
+            table_name = utils_controller_get_information_of_database.load_table_name_TB_AD00_DANH_SACH_KHACH_HANG()
             column_name = controller_get_information_of_module.load_column_name_ma_khach_hang()
             if Controller_action_after_event.f_Check_exist_ma_khach_hang(
                 entry_ma_khach_hang,
@@ -1514,7 +1500,7 @@ class Controller_inherit_to_edit_slip_KE_HOACH_DAT_HANG:
     def get_data_want_to_edit(so_phieu):
         # Create query
         database_name = f_utils_get_DB_NAME()
-        table_name = controller_get_information_of_module.load_table_name_TB_KD02_KE_HOACH_DAT_HANG()
+        table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
         query = f"""
         SELECT * FROM [{database_name}].[dbo].[{table_name}]
         WHERE SO_PHIEU = '{so_phieu}' AND XOA_SUA = ''

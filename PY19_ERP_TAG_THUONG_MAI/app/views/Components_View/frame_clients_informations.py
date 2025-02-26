@@ -6,13 +6,14 @@ from entry import *
 class cls_frame_client_information_model:
         
     def get_data(query=''):
+        database_name = utils_controller_get_information_of_database.load_database_name()
         query = f""" 
             SELECT 
                 [MA_DOI_TUONG] AS [Mã KH],
                 [TEN_DOI_TUONG] AS [Tên KH],
                 [MA_SO_THUE] AS [MST],
                 [DIA_CHI] AS [Địa chỉ]
-            FROM [TBD_2024].[dbo].[TB_AD00_DANH_SACH_KHACH_HANG]
+            FROM [{database_name}].[dbo].[TB_AD00_DANH_SACH_KHACH_HANG]
             WHERE [XOA_SUA] = ''
             ORDER BY [MA_DOI_TUONG]
             """

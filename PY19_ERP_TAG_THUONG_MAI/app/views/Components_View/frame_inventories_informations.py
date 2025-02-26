@@ -7,6 +7,7 @@ from utils import *
 class cls_frame_inventories_information_model:
 
     def get_data(query=''):
+        database_name = utils_controller_get_information_of_database.load_database_name()
         query = f""" 
             SELECT 
                 [MA_HANG] AS [Mã hàng],
@@ -22,7 +23,7 @@ class cls_frame_inventories_information_model:
                     THEN FORMAT([Final_Stock], 'N0')  -- Nếu là số nguyên
                     ELSE FORMAT([Final_Stock], 'N2')  -- Nếu có phần thập phân, hiển thị 2 chữ số
                 END AS [SL khả dụng]
-            FROM [TBD_2024].[dbo].[VIEW_INVENTORY_REPORT_QUANTITY_250214_09h40]
+            FROM [{database_name}].[dbo].[VIEW_INVENTORY_REPORT_QUANTITY_250214_09h40]
             ORDER BY [MA_HANG]
             """
         data = utils_model_SQL_server.fetch_data(query)

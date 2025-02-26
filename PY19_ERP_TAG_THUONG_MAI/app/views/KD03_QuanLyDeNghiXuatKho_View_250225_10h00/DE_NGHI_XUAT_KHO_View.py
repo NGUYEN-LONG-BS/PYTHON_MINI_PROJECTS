@@ -132,7 +132,7 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
         # Change the text of the second tabs
         notebook.tab(0, text="TẠO MỚI ĐỀ NGHỊ XUẤT KHO")
         notebook.tab(1, text="QUẢN LÝ ĐỀ NGHỊ XUẤT KHO")
-        notebook.tab(2, text="QUẢN LÝ YÊU CẦU ĐẶT HÀNG")
+        notebook.tab(2, text="THAM CHIẾU YÊU CẦU ĐẶT HÀNG")
         
         # # Delete the third tab
         # notebook.forget(2)

@@ -268,7 +268,7 @@ class cls_test_Controller_02_treeview():
         # Step_03: Export data to SQL
         if self.model.f_validate_data_format(data_array):
             print("Data is valid. Ready for insertion.")
-            database_name = "TBD_2024"
+            database_name = utils_controller_get_information_of_database.load_database_name()
             table_name = "[TB_KD02_YEU_CAU_DAT_HANG]"
             self.model.f_goi_ham_Export_to_TB_KD02_YEU_CAU_DAT_HANG(data_array, database_name, table_name)
             return "Data exported to SQL Server KD02_YEU_CAU_DAT_HANG!"
@@ -641,7 +641,7 @@ class SQLController:
         # Step_03: Export data to SQL
         if SQLModel.f_validate_data_format(data_array):
             # If data is valid
-            database_name = "TBD_2024"
+            database_name = utils_controller_get_information_of_database.load_database_name()
             table_name = "[TB_KD02_YEU_CAU_DAT_HANG]"
             SQLModel.f_goi_ham_Export_to_TB_KD02_YEU_CAU_DAT_HANG(data_array, database_name, table_name)
             return "Data exported"
