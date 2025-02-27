@@ -247,6 +247,8 @@ class Controller_action_after_event:
                 entry_ma_hang, 
                 entry_ten_hang, 
                 entry_dvt,  
+                entry_sl_ton_kho, 
+                entry_sl_kha_dung, 
                 entry_sl_nhu_cau, 
                 entry_ghi_chu_mat_hang
             )= args
@@ -256,6 +258,8 @@ class Controller_action_after_event:
             ma_hang_value = entry_ma_hang.get()
             ten_hang_value = entry_ten_hang.get()
             dvt_value = entry_dvt.get()
+            sl_ton_kho_value = float(entry_sl_ton_kho.get().replace(',', '') or 0)
+            sl_kha_dung_value = float(entry_sl_kha_dung.get().replace(',', '') or 0) 
             sl_nhu_cau_value = float(entry_sl_nhu_cau.get().replace(',', '') or 0)
             ghi_chu_mat_hang_value = entry_ghi_chu_mat_hang.get()
             
@@ -266,6 +270,8 @@ class Controller_action_after_event:
                 ma_hang_value, 
                 ten_hang_value, 
                 dvt_value,  
+                sl_ton_kho_value,
+                sl_kha_dung_value,
                 sl_nhu_cau_value, 
                 ghi_chu_mat_hang_value, 
                 my_treeview
@@ -302,6 +308,8 @@ class Controller_action_after_event:
                 entry_ma_hang, 
                 entry_ten_hang, 
                 entry_dvt,  
+                entry_sl_ton_kho, 
+                entry_sl_kha_dung, 
                 entry_sl_nhu_cau, 
                 entry_ghi_chu_mat_hang
             )= args
@@ -313,6 +321,8 @@ class Controller_action_after_event:
                 entry_ma_hang, 
                 entry_ten_hang, 
                 entry_dvt,  
+                entry_sl_ton_kho, 
+                entry_sl_kha_dung, 
                 entry_sl_nhu_cau, 
                 entry_ghi_chu_mat_hang
                 )
@@ -384,7 +394,7 @@ class Controller_action_after_event:
         entry_so_phieu.insert(0, connection_number_of_slip)
         entry_so_phieu.config(state="readonly")
         
-    def f_check_input_of_treeview(entry_notification, id_value, ma_hang, ten_hang, sl_nhu_cau):    
+    def f_check_input_of_treeview(entry_notification, id_value, ma_hang, ten_hang, sl_ton_kho, sl_kha_dung, sl_nhu_cau):    
         try:
             # Kiểm tra các trường bắt buộc
             if not id_value or not ma_hang or not ten_hang:
@@ -396,9 +406,9 @@ class Controller_action_after_event:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"ID value '{id_value}' must be an integer!", "red")
                 return False
             
-            # Kiểm tra sl_giu_cho và sl_ke_hoach_dat_hang có phải số hay không
+            # Kiểm tra sl_nhu_cau có phải số hay không
             try:
-                sl_giu_cho_value = float(sl_nhu_cau)
+                sl_nhu_cau_value = float(sl_nhu_cau)
             except ValueError:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Số lượng nhu cầu '{sl_nhu_cau}' phải là số.", "red")
                 return False
@@ -424,6 +434,8 @@ class Controller_action_after_event:
                                 ma_hang, 
                                 ten_hang, 
                                 dvt,  
+                                sl_ton_kho,
+                                sl_kha_dung,
                                 sl_nhu_cau, 
                                 ghi_chu_mat_hang, 
                                 my_treeview):
@@ -433,12 +445,14 @@ class Controller_action_after_event:
                                                                            id_value, 
                                                                            ma_hang, 
                                                                            ten_hang,
+                                                                           sl_ton_kho,
+                                                                           sl_kha_dung,
                                                                            sl_nhu_cau)
             if flag == False:
                 return False
             
             # Add row to the treeview
-            my_treeview.insert("", "end", values=(id_value, ma_hang, ten_hang, dvt, sl_nhu_cau, ghi_chu_mat_hang))
+            my_treeview.insert("", "end", values=(id_value, ma_hang, ten_hang, dvt, sl_ton_kho, sl_kha_dung, sl_nhu_cau, ghi_chu_mat_hang))
             return True
         
         except Exception as e:
@@ -559,7 +573,8 @@ class Controller_action_after_event:
             for item in my_treeview.get_children():
                 row_data = my_treeview.item(item, "values")
                 rows.append(row_data)
-
+            # print(rows)
+            
             # Nếu không có dữ liệu thì thoát
             if not rows:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Vui lòng chọn dòng để update!", "red")
@@ -572,7 +587,7 @@ class Controller_action_after_event:
             # Cột nào có ghi chú thì giữ lại một dòng duy nhất: cột số 6
             
             # Gom nhóm theo mã hàng (cột số 2)
-            grouped_data = defaultdict(lambda: [None, "", "", "", 0, set()])  # Dùng set() để lưu nhiều ghi chú
+            grouped_data = defaultdict(lambda: [None, "", "", "", 0, 0, 0, set()])  # Dùng set() để lưu nhiều ghi chú
 
             for row in rows:
                 ma_hang = row[1]  # Cột số 2 - Mã hàng
@@ -581,18 +596,20 @@ class Controller_action_after_event:
                     grouped_data[ma_hang][1] = ma_hang  # Mã hàng
                     grouped_data[ma_hang][2] = row[2]  # Tên hàng
                     grouped_data[ma_hang][3] = row[3]  # Đơn vị tính (Đvt)
+                    grouped_data[ma_hang][4] = row[4]  # sl tồn kho
+                    grouped_data[ma_hang][5] = row[5]  # sl khả dụng
 
                 # Cộng tổng SL nhu cầu
-                grouped_data[ma_hang][4] += float(row[4]) if row[4] else 0
+                grouped_data[ma_hang][6] += float(row[6]) if row[6] else 0
 
                 # Lưu lại ghi chú (nếu có)
-                if row[5].strip():
-                    grouped_data[ma_hang][5].add(row[5].strip())  # Dùng set để tránh trùng lặp ghi chú
+                if row[7].strip():
+                    grouped_data[ma_hang][7].add(row[7].strip())  # Dùng set để tránh trùng lặp ghi chú
 
             # Gộp ghi chú
             for ma_hang, values in grouped_data.items():
                 # Gộp tất cả ghi chú thành một chuỗi, cách nhau bởi "; "
-                values[5] = "; ".join(values[5])
+                values[7] = "; ".join(values[7])
 
             # Xóa dữ liệu cũ trong Treeview
             for item in my_treeview.get_children():
@@ -1323,6 +1340,8 @@ class Controller_handel_all_events:
                 entry_ma_hang, 
                 entry_ten_hang, 
                 entry_dvt,  
+                entry_sl_ton_kho, 
+                entry_sl_kha_dung, 
                 entry_sl_nhu_cau, 
                 entry_ghi_chu_mat_hang
             )= args
@@ -1333,6 +1352,8 @@ class Controller_handel_all_events:
                 entry_ma_hang, 
                 entry_ten_hang, 
                 entry_dvt, 
+                entry_sl_ton_kho, 
+                entry_sl_kha_dung, 
                 entry_sl_nhu_cau, 
                 entry_ghi_chu_mat_hang
             )

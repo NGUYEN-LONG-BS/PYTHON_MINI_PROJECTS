@@ -60,6 +60,17 @@
                 "show": "headings"
             },
             {
+                "name": "Số YCDH",
+                "width": 120,
+                "min_width": 120,
+                "anchor": "w",
+                "stretch": true,
+                "font": {"family": "Verdana", "size": 12, "weight": "normal"},
+                "background_color": "#ffffff",
+                "foreground_color": "#000000",
+                "show": "headings"
+            },
+            {
                 "name": "Số hợp đồng",
                 "width": 120,
                 "min_width": 120,

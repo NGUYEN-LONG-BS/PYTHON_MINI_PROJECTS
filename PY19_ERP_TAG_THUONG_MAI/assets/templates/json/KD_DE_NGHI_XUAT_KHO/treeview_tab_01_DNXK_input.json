@@ -49,6 +49,17 @@
                 "show": "headings"
             },
             {
+                "name": "SL tồn kho",
+                "width": 120,
+                "min_width": 120,
+                "anchor": "w",
+                "stretch": false,
+                "font": {"family": "Arial", "size": 12, "weight": "normal"},
+                "background_color": "#ffffff",
+                "foreground_color": "#4287f5",
+                "show": "headings"
+            },
+            {
                 "name": "SL khả dụng",
                 "width": 120,
                 "min_width": 120,
@@ -60,29 +71,7 @@
                 "show": "headings"
             },
             {
-                "name": "SL nhu cầu",
-                "width": 120,
-                "min_width": 120,
-                "anchor": "w",
-                "stretch": false,
-                "font": {"family": "Arial", "size": 12, "weight": "normal"},
-                "background_color": "#ffffff",
-                "foreground_color": "#4287f5",
-                "show": "headings"
-            },
-            {
-                "name": "SL giữ chỗ",
-                "width": 120,
-                "min_width": 120,
-                "anchor": "w",
-                "stretch": false,
-                "font": {"family": "Arial", "size": 12, "weight": "normal"},
-                "background_color": "#ffffff",
-                "foreground_color": "#4287f5",
-                "show": "headings"
-            },
-            {
-                "name": "SL YCDH",
+                "name": "SL DN xuất",
                 "width": 120,
                 "min_width": 120,
                 "anchor": "w",
