@@ -170,7 +170,6 @@ class cls_Dashboard_admin_View(cls_base_form_number_02_ManyTabs):
         root = tk.Tk()
         new_view = EncryptionApp(root)
         root.mainloop()
-        root.focus_force()
     
     def f_card_05_click(self, event):
         print("f_card_05_click")
