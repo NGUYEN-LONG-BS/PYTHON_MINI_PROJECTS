@@ -912,7 +912,7 @@ class Controller_handel_all_events:
         try:
             # Export log to Excel
             # lấy danh sách số phiếu từ treeview
-            danh_sach_so_phieu = f_utils_get_unique_column_from_treeview(my_treeview, 1)
+            danh_sach_so_phieu = f_utils_get_unique_column_from_treeview(my_treeview, 2)
             # print("danh_sach_so_phieu", danh_sach_so_phieu)
             
             # Chuyển danh sách số phiếu thành chuỗi SQL, đảm bảo các giá trị dạng chuỗi được bao trong dấu nháy đơn

@@ -50,7 +50,7 @@
             },
             {
                 "name": "Tên KH",
-                "width": 400,
+                "width": 300,
                 "min_width": 300,
                 "anchor": "w",
                 "stretch": true,
@@ -61,17 +61,6 @@
             },
             {
                 "name": "Số hợp đồng",
-                "width": 120,
-                "min_width": 120,
-                "anchor": "w",
-                "stretch": true,
-                "font": {"family": "Verdana", "size": 12, "weight": "normal"},
-                "background_color": "#ffffff",
-                "foreground_color": "#000000",
-                "show": "headings"
-            },
-            {
-                "name": "Ghi chú phiếu",
                 "width": 120,
                 "min_width": 120,
                 "anchor": "w",
@@ -126,17 +115,6 @@
                 "show": "headings"
             },
             {
-                "name": "SL khả dụng",
-                "width": 120,
-                "min_width": 120,
-                "anchor": "w",
-                "stretch": false,
-                "font": {"family": "Arial", "size": 12, "weight": "normal"},
-                "background_color": "#ffffff",
-                "foreground_color": "#4287f5",
-                "show": "headings"
-            },
-            {
                 "name": "SL nhu cầu",
                 "width": 120,
                 "min_width": 120,
@@ -148,7 +126,7 @@
                 "show": "headings"
             },
             {
-                "name": "SL giữ chỗ",
+                "name": "SL tồn kho",
                 "width": 120,
                 "min_width": 120,
                 "anchor": "w",
@@ -159,7 +137,7 @@
                 "show": "headings"
             },
             {
-                "name": "SL YCDH",
+                "name": "SL khả dụng",
                 "width": 120,
                 "min_width": 120,
                 "anchor": "w",
@@ -170,14 +148,14 @@
                 "show": "headings"
             },
             {
-                "name": "Ghi chú sản phẩm",
-                "width": 400,
-                "min_width": 300,
+                "name": "SL quyết toán",
+                "width": 120,
+                "min_width": 120,
                 "anchor": "w",
-                "stretch": true,
-                "font": {"family": "Verdana", "size": 12, "weight": "normal"},
+                "stretch": false,
+                "font": {"family": "Arial", "size": 12, "weight": "normal"},
                 "background_color": "#ffffff",
-                "foreground_color": "#000000",
+                "foreground_color": "#4287f5",
                 "show": "headings"
             }
         ],

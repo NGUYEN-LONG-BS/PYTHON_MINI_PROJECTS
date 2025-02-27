@@ -362,4 +362,10 @@ class utils_controller_get_information_of_database:
         table_name = "TB_AD00_DANH_SACH_KHACH_HANG"
         return table_name
     
+    def load_table_name_VIEW_QUYET_TOAN_YEU_CAU_DAT_HANG():
+        table_name = "VIEW_QUYET_TOAN_YEU_CAU_DAT_HANG"
+        return table_name
+    
+    
+    
     

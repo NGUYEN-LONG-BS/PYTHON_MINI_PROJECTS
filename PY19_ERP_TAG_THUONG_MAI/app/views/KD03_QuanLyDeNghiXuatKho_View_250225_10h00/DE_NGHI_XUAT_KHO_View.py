@@ -29,7 +29,7 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
     def f_set_up_format_of_tree_view(self):
         Controller_handel_all_events.f_handle_event_initializing_format_of_treeview_of_tab_01(self.tab_01_treeview_KHDH)
         Controller_handel_all_events.f_handle_event_initializing_format_of_treeview_of_tab_02(self.tab_02_treeview_log_of_KHDH)
-        # Controller_handel_all_events.f_handle_event_initializing_format_of_treeview_of_tab_03(self.tab_03_treeview_log_of_KHDH)
+        Controller_handel_all_events.f_handle_event_initializing_format_of_treeview_of_tab_03(self.tab_03_treeview_log_of_KHDH)
         
     def f_set_up_when_initializing(self):
         # Update entry id
@@ -38,9 +38,11 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
         Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(self.tab_01_entry_so_phieu)
         # Load data to tab 2: treeview KHDH log
         self.event_tab_02_button_filter_click()
+        # Load data to tab 3: treeview YCDH log
+        self.event_tab_03_button_filter_click()
     
     def f_set_command_for_elements(self):
-        # config command for elements
+        # Tab 01
         self.tab_01_btn_refresh_number_of_slip.config(command=self.event_tab_01_button_get_number_of_slip_click)
         
         self.tab_01_button_add.config(command=self.event_tab_01_button_add_row_click)
@@ -55,6 +57,7 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_btn_template.config(command=self.event_tab_01_button_template_click)
         self.tab_01_btn_get_import_file.config(command=self.event_tab_01_button_get_import_file_click)
         
+        # Tab 02
         self.tab_02_button_filter.config(command=self.event_tab_02_button_filter_click)
         self.tab_02_button_clear_filter.config(command=self.event_tab_02_button_clear_filter_click)
         self.tab_02_button_export_excel.config(command=self.event_tab_02_button_export_excel_click)
@@ -63,12 +66,23 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
         self.tab_02_button_edit_slip.config(command=self.event_tab_02_button_edit_slip_click)
         self.tab_02_button_delete_slip.config(command=self.event_tab_02_button_delete_slip_click)
         
+        # Tab 02
+        self.tab_03_button_filter.config(command=self.event_tab_03_button_filter_click)
+        self.tab_03_button_clear_filter.config(command=self.event_tab_03_button_clear_filter_click)
+        self.tab_03_button_export_excel.config(command=self.event_tab_03_button_export_excel_click)
+        self.tab_03_button_export_all_data.config(command=self.event_tab_03_button_export_all_data_click)
+        
+        self.tab_03_button_inherit.config(command=self.event_tab_03_button_inherit_click)
+        
         # Gán sự kiện
         self.tab_01_treeview_KHDH.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_01_single_click)  # Single click
         self.tab_01_treeview_KHDH.bind("<Double-1>", self.f_view_treeview_of_tab_01_double_click)  # Double click
         
         self.tab_02_treeview_log_of_KHDH.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_02_single_click)  # Single click
         self.tab_02_treeview_log_of_KHDH.bind("<Double-1>", self.f_view_treeview_of_tab_02_double_click)  # Double click
+        
+        self.tab_03_treeview_log_of_KHDH.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_03_single_click)  # Single click
+        self.tab_03_treeview_log_of_KHDH.bind("<Double-1>", self.f_view_treeview_of_tab_03_double_click)  # Double click
         
     def f_define_all_elements(self):
         # Find in tab_01
@@ -91,7 +105,7 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_entry_ten_khach_hang = f_utils_tim_component_with_name(tab_01_frame, "entry_ten_khach_hang")
         self.tab_01_entry_mst = f_utils_tim_component_with_name(tab_01_frame, "entry_mst")
         self.tab_01_entry_dia_chi = f_utils_tim_component_with_name(tab_01_frame, "entry_dia_chi")
-        self._tab_01_entry_so_hop_dong = f_utils_tim_component_with_name(tab_01_frame, "entry_so_hop_dong")
+        self.tab_01_entry_so_hop_dong = f_utils_tim_component_with_name(tab_01_frame, "entry_so_hop_dong")
         self.tab_01_entry_thong_tin_hop_dong = f_utils_tim_component_with_name(tab_01_frame, "entry_thong_tin_ngan_cua_hop_dong")
         self.tab_01_label_footer_notification = f_utils_tim_component_label_with_text(self, "Notification")
         
@@ -109,6 +123,21 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
         self.tab_02_entry_ten_hang = f_utils_tim_component_with_name(tab_02_frame, "entry_ten_hang")
         self.tab_02_ngay_filter_bat_dau = f_utils_tim_component_with_name(tab_02_frame, "start_date_entry")
         self.tab_02_ngay_filter_ket_thuc = f_utils_tim_component_with_name(tab_02_frame, "end_date_entry")
+        
+        # Find in tab_03
+        tab_03_frame = self.tab3
+        self.tab_03_entry_ma_khach_hang = f_utils_tim_component_with_name(tab_03_frame, "entry_ma_khach_hang")
+        self.tab_03_entry_ten_khach_hang = f_utils_tim_component_with_name(tab_03_frame, "entry_ten_khach_hang")
+        self.tab_03_entry_mst = f_utils_tim_component_with_name(tab_03_frame, "entry_mst")
+        self.tab_03_entry_mst.pack_forget()
+        self.tab_03_entry_dia_chi = f_utils_tim_component_with_name(tab_03_frame, "entry_dia_chi")
+        self.tab_03_entry_dia_chi.pack_forget()
+        self._tab_03_frame_row_2_of_inventories_info = f_utils_tim_component_with_name(tab_03_frame, "frame_row_2_of_inventories_info")
+        self._tab_03_frame_row_2_of_inventories_info.pack_forget()
+        self.tab_03_entry_ma_hang = f_utils_tim_component_with_name(tab_03_frame, "entry_ma_hang")
+        self.tab_03_entry_ten_hang = f_utils_tim_component_with_name(tab_03_frame, "entry_ten_hang")
+        self.tab_03_ngay_filter_bat_dau = f_utils_tim_component_with_name(tab_03_frame, "start_date_entry")
+        self.tab_03_ngay_filter_ket_thuc = f_utils_tim_component_with_name(tab_03_frame, "end_date_entry")
     
     def f_view_thay_doi_gia_tri_cua_base_form(self):
         # Thay đổi thông tin các tab
@@ -589,12 +618,8 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
         self.tab_03_button_export_excel.pack(side="left", padx=10)
         
         # Get Data button
-        self.tab_03_button_edit_slip = tk.Button(tab_03_button_container_02, text="Edit slip")
-        self.tab_03_button_edit_slip.pack(side="left", padx=10)
-        
-        # Export Data button
-        self.tab_03_button_delete_slip = tk.Button(tab_03_button_container_02, text="Delete slip")
-        self.tab_03_button_delete_slip.pack(side="left", padx=10)
+        self.tab_03_button_inherit = tk.Button(tab_03_button_container_02, text="Inherit")
+        self.tab_03_button_inherit.pack(side="left", padx=10)
 
     
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
@@ -655,7 +680,7 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
             self.tab_01_entry_ten_khach_hang,
             self.tab_01_entry_mst,
             self.tab_01_entry_dia_chi,
-            self._tab_01_entry_so_hop_dong,
+            self.tab_01_entry_so_hop_dong,
             self.tab_01_entry_thong_tin_hop_dong,
             self.tab_01_entry_note_for_slip,
             self.tab_01_treeview_KHDH
@@ -668,7 +693,7 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
             self.tab_01_entry_ten_khach_hang,
             self.tab_01_entry_mst,
             self.tab_01_entry_dia_chi,
-            self._tab_01_entry_so_hop_dong,
+            self.tab_01_entry_so_hop_dong,
             self.tab_01_entry_thong_tin_hop_dong,
             self.tab_01_entry_note_for_slip,
             self.tab_01_treeview_KHDH
@@ -697,6 +722,18 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
             self.tab_02_entry_ma_hang
             )
     
+    def event_tab_03_button_filter_click(self):
+        Controller_handel_all_events.f_handle_event_tab_03_button_filter_slip(
+            self.tab_01_label_footer_notification,
+            self.tab_03_treeview_log_of_KHDH,
+            self.tab_03_entry_filter_slip_number, 
+            self.tab_03_entry_filter_contract_number,
+            self.tab_03_ngay_filter_bat_dau,
+            self.tab_03_ngay_filter_ket_thuc,
+            self.tab_03_entry_ma_khach_hang,
+            self.tab_03_entry_ma_hang
+            )
+    
     def event_tab_02_button_clear_filter_click(self):
         Controller_handel_all_events.f_handle_event_tab_02_button_clear_filter(
             self.tab_01_label_footer_notification, 
@@ -708,15 +745,37 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
             self.tab_02_entry_ma_hang,
             self.tab_02_entry_ten_hang
         )
-        
+    
+    def event_tab_03_button_clear_filter_click(self):
+        Controller_handel_all_events.f_handle_event_tab_03_button_clear_filter(
+            self.tab_01_label_footer_notification, 
+            self.tab_02_treeview_log_of_KHDH,
+            self.tab_02_entry_filter_slip_number,
+            self.tab_02_entry_filter_contract_number,
+            self.tab_02_entry_ma_khach_hang,
+            self.tab_02_entry_ten_khach_hang,
+            self.tab_02_entry_ma_hang,
+            self.tab_02_entry_ten_hang
+        )
+    
     def event_tab_02_button_export_excel_click(self):
         Controller_handel_all_events.f_handle_event_tab_02_button_export_excel_click(
             self.tab_01_label_footer_notification,
             self.tab_02_treeview_log_of_KHDH
         )
         
+    def event_tab_03_button_export_excel_click(self):
+        Controller_handel_all_events.f_handle_event_tab_03_button_export_excel_click(
+            self.tab_01_label_footer_notification,
+            self.tab_03_treeview_log_of_KHDH
+        )
+        
     def event_tab_02_button_export_all_data_click(self):
         Controller_handel_all_events.f_handle_event_tab_02_button_export_all_data_click(
+            self.tab_01_label_footer_notification)
+        
+    def event_tab_03_button_export_all_data_click(self):
+        Controller_handel_all_events.f_handle_event_tab_03_button_export_all_data_click(
             self.tab_01_label_footer_notification)
         
     def event_tab_02_button_edit_slip_click(self):
@@ -727,7 +786,7 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
             self.tab_01_entry_ten_khach_hang,
             self.tab_01_entry_mst,
             self.tab_01_entry_dia_chi,
-            self._tab_01_entry_so_hop_dong,
+            self.tab_01_entry_so_hop_dong,
             self.tab_01_entry_thong_tin_hop_dong,
             self.tab_01_entry_note_for_slip,
             self.tab_02_treeview_log_of_KHDH,
@@ -735,6 +794,27 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
             )
             
         Controller_handel_all_events.handle_event_tab_02_button_edit_click(
+            self.tab_01_label_footer_notification, 
+            self.tab1,
+            elements_list
+        )
+    
+    def event_tab_03_button_inherit_click(self):
+        elements_list = (
+            self.tab_01_entry_ngay_tren_phieu,
+            self.tab_01_entry_so_phieu,
+            self.tab_01_entry_ma_khach_hang,
+            self.tab_01_entry_ten_khach_hang,
+            self.tab_01_entry_mst,
+            self.tab_01_entry_dia_chi,
+            self.tab_01_entry_so_hop_dong,
+            self.tab_01_entry_thong_tin_hop_dong,
+            self.tab_01_entry_note_for_slip,
+            self.tab_02_treeview_log_of_KHDH,
+            self.tab_01_treeview_KHDH
+            )
+            
+        Controller_handel_all_events.handle_event_tab_03_button_inherit_click(
             self.tab_01_label_footer_notification, 
             self.tab1,
             elements_list
@@ -774,3 +854,15 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
             self.tab_01_label_footer_notification,
             self.tab_02_treeview_log_of_KHDH)
         
+    def f_view_treeview_of_tab_03_single_click(self, event):
+        Controller_handel_all_events.f_handle_event_treeview_of_tab_03_single_click(
+            self.tab_01_label_footer_notification,
+            self.tab_03_treeview_log_of_KHDH)
+        
+    def f_view_treeview_of_tab_03_double_click(self, event):
+        Controller_handel_all_events.f_handle_event_treeview_of_tab_03_double_click(
+            self.tab_01_label_footer_notification,
+            self.tab_03_treeview_log_of_KHDH)
+
+
+    

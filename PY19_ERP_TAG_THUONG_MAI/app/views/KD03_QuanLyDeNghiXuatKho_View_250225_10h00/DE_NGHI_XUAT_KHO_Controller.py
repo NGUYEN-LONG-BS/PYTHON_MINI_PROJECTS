@@ -20,9 +20,10 @@ class controller_get_information_of_module:
         return column_name
     
     def load_treeview_config_json_path():
-        tab_01_treeview_config_json_path = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'KD_KE_HOACH_DAT_HANG', 'treeview_tab_01_KHDH_input.json')
-        tab_02_treeview_config_json_path = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'KD_KE_HOACH_DAT_HANG', 'treeview_tab_02_KHDH_log.json')
-        return tab_01_treeview_config_json_path, tab_02_treeview_config_json_path
+        tab_01_treeview_config_json_path = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'KD_DE_NGHI_XUAT_KHO', 'treeview_tab_01_DNXK_input.json')
+        tab_02_treeview_config_json_path = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'KD_DE_NGHI_XUAT_KHO', 'treeview_tab_02_DNXK_log.json')
+        tab_03_treeview_config_json_path = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'KD_DE_NGHI_XUAT_KHO', 'treeview_tab_03_YCDH_ref.json')
+        return tab_01_treeview_config_json_path, tab_02_treeview_config_json_path, tab_03_treeview_config_json_path
     
     def load_proc_update_xoa_sua():
         proc_name = "Proc_TB_KD02_KE_HOACH_DAT_HANG_UPDATE_XOA_SUA_250225_14h30"
@@ -32,9 +33,22 @@ class controller_get_information_of_module:
         proc_filter = "Proc_TB_KD02_KE_HOACH_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250225_14hh03"
         return proc_filter
     
-    def load_query_select_all_data():
+    def load_Proc_VIEW_QUYET_TOAN_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS():
+        proc_filter = "Proc_VIEW_QUYET_TOAN_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250227_14h23"
+        return proc_filter
+    
+    def tab_02_load_query_select_all_data():
         database_name = utils_controller_get_information_of_database.load_database_name()
-        table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+        table_name = utils_controller_get_information_of_database.load_table_name_VIEW_QUYET_TOAN_YEU_CAU_DAT_HANG()
+        query = f"""
+            SELECT *
+            FROM [{database_name}].[dbo].[{table_name}]
+            """
+        return query
+    
+    def tab_03_load_query_select_all_data():
+        database_name = utils_controller_get_information_of_database.load_database_name()
+        table_name = utils_controller_get_information_of_database.load_table_name_VIEW_QUYET_TOAN_YEU_CAU_DAT_HANG()
         query = f"""
             SELECT *
             FROM [{database_name}].[dbo].[{table_name}]
@@ -457,12 +471,16 @@ class Controller_action_after_event:
             return False
         
     def set_format_of_treeview_of_tab_01(my_treeview):
-        tab_01_treeview_config_json_path, tab_02_treeview_config_json_path = controller_get_information_of_module.load_treeview_config_json_path()
+        tab_01_treeview_config_json_path, tab_02_treeview_config_json_path, tab_03_treeview_config_json_path = controller_get_information_of_module.load_treeview_config_json_path()
         utils_controller_TreeviewConfigurator_250217_13h20.apply_treeview_config(my_treeview, tab_01_treeview_config_json_path)
         
     def set_format_of_treeview_of_tab_02(my_treeview):
-        tab_01_treeview_config_json_path, tab_02_treeview_config_json_path = controller_get_information_of_module.load_treeview_config_json_path()
+        tab_01_treeview_config_json_path, tab_02_treeview_config_json_path, tab_03_treeview_config_json_path = controller_get_information_of_module.load_treeview_config_json_path()
         utils_controller_TreeviewConfigurator_250217_13h20.apply_treeview_config(my_treeview, tab_02_treeview_config_json_path)
+
+    def set_format_of_treeview_of_tab_03(my_treeview):
+        tab_01_treeview_config_json_path, tab_02_treeview_config_json_path, tab_03_treeview_config_json_path = controller_get_information_of_module.load_treeview_config_json_path()
+        utils_controller_TreeviewConfigurator_250217_13h20.apply_treeview_config(my_treeview, tab_03_treeview_config_json_path)
     
     def treeview_of_tab_01_double_click(my_treeview):
         result_value = utils_controller_TreeviewHandler_click_250217_22h34.treeview_double_click(my_treeview, column_return=1)
@@ -473,8 +491,18 @@ class Controller_action_after_event:
         result_value = utils_controller_TreeviewHandler_click_250217_22h34.treeview_double_click(my_treeview, column_return=2)
         if result_value:
             return result_value
+    
+    def treeview_of_tab_03_double_click(my_treeview):
+        result_value = utils_controller_TreeviewHandler_click_250217_22h34.treeview_double_click(my_treeview, column_return=2)
+        if result_value:
+            return result_value
 
     def treeview_of_tab_02_single_click(my_treeview):
+        result_value = utils_controller_TreeviewHandler_click_250217_22h34.treeview_double_click(my_treeview, column_return=2)
+        if result_value:
+            return result_value
+        
+    def treeview_of_tab_03_single_click(my_treeview):
         result_value = utils_controller_TreeviewHandler_click_250217_22h34.treeview_double_click(my_treeview, column_return=2)
         if result_value:
             return result_value
@@ -792,6 +820,49 @@ class Controller_handel_all_events:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Begin editing slip {so_phieu}.", "blue")
                 return
     
+    def handle_event_tab_03_button_inherit_click(entry_notification, active_tab, elements_list):
+        
+        # Active tab
+        notebook = active_tab.master  # Get the Notebook that contains the tab
+        notebook.select(active_tab)  # Select the correct tab
+        
+        (
+            entry_ngay_tren_phieu,
+            entry_so_phieu,
+            entry_ma_khach_hang,
+            entry_ten_hhach_hang,
+            entry_mst,
+            entry_dia_chi,
+            entry_so_hop_dong,
+            entry_thong_tin_hop_dong,
+            entry_note_for_slip,
+            my_treeview_to_get_data,
+            my_treeview_to_load_data
+            ) = elements_list
+
+        # Get the selected items
+        selected_items = my_treeview_to_get_data.selection()
+        
+        # Check if more than one row is selected
+        if len(selected_items) > 1:
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Selection Error, Please select only one row.", "blue")
+            return
+        
+        # Check if no row is selected
+        if not selected_items:
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Selection Error, No row selected.", "blue")
+            return
+        
+        # Get the selected row
+        for item in selected_items:
+            row_values = my_treeview_to_get_data.item(item, 'values')
+            if len(row_values) > 2:  # Ensure the row has at least 2 columns
+                so_phieu = row_values[2]
+                Controller_inherit_to_edit_slip_KE_HOACH_DAT_HANG.begin_editing_slip(elements_list, so_phieu)
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Begin editing slip {so_phieu}.", "blue")
+                return
+    
+    
     def handle_event_tab_02_btn_delete_slip_click(entry_notification, my_treeview):
         # Get the selected items
         selected_items = my_treeview.selection()
@@ -875,7 +946,7 @@ class Controller_handel_all_events:
     def f_handle_event_tab_02_button_export_all_data_click(entry_notification):
         try:
             # Tạo câu query SQL với danh sách số phiếu
-            query = controller_get_information_of_module.load_query_select_all_data()
+            query = controller_get_information_of_module.tab_02_load_query_select_all_data()
             
             # Tạo header cho file Excel
             header = ["ID",
@@ -907,12 +978,47 @@ class Controller_handel_all_events:
         except Exception as e:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
+            
+    def f_handle_event_tab_03_button_export_all_data_click(entry_notification):
+        try:
+            # Tạo câu query SQL với danh sách số phiếu
+            query = controller_get_information_of_module.tab_03_load_query_select_all_data()
+            
+            # Tạo header cho file Excel
+            header = [
+                    "NGAY_TREN_PHIEU",
+                    "SO_PHIEU",
+                    "MA_DOI_TUONG",
+                    "TEN_DOI_TUONG",
+                    "SO_HOP_DONG",
+                    "STT_DONG",
+                    "MA_HANG",
+                    "TEN_HANG",
+                    "DVT",
+                    "SO_LUONG_NHU_CAU",
+                    "SO_LUONG_GIU_CHO",
+                    "SO_LUONG_YEU_CAU_DAT_HANG",
+                    "SO_LUONG_TON_KHO",
+                    "SO_LUONG_KHA_DUNG",
+                    "SO_PHIEU_QUYET_TOAN",
+                    "SO_LUONG_QUYET_TOAN"]
+
+      
+            flag, path = utils_controller_Export_data_to_Excel_250222_09h16.export_log_to_excel(query, header)
+            if flag == False:
+                return False
+            
+            # Notification
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, path, "blue")
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
         
     def f_handle_event_tab_02_button_export_excel_click(entry_notification, my_treeview):
         try:
             # Export log to Excel
             # lấy danh sách số phiếu từ treeview
-            danh_sach_so_phieu = f_utils_get_unique_column_from_treeview(my_treeview, 1)
+            danh_sach_so_phieu = f_utils_get_unique_column_from_treeview(my_treeview, 2)
             # print("danh_sach_so_phieu", danh_sach_so_phieu)
             
             # Chuyển danh sách số phiếu thành chuỗi SQL, đảm bảo các giá trị dạng chuỗi được bao trong dấu nháy đơn
@@ -922,6 +1028,7 @@ class Controller_handel_all_events:
             # Tạo câu query SQL với danh sách số phiếu
             database_name = utils_controller_get_information_of_database.load_database_name()
             table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+            column_name = controller_get_information_of_module.load_column_name_so_phieu()
             query = f"""
             SELECT 
                 ROW_NUMBER() OVER(ORDER BY [SO_PHIEU]) as RowNumber,
@@ -941,7 +1048,7 @@ class Controller_handel_all_events:
                 [SO_LUONG_NHU_CAU],
                 [GHI_CHU_SP]
             FROM [{database_name}].[dbo].[{table_name}]
-            WHERE [SO_PHIEU] IN ({so_phieu_str})
+            WHERE [{column_name}] IN ({so_phieu_str})
             """
             # print("query", query)
             
@@ -972,6 +1079,70 @@ class Controller_handel_all_events:
         except Exception as e:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
+            
+    def f_handle_event_tab_03_button_export_excel_click(entry_notification, my_treeview):
+        try:
+            # Export log to Excel
+            # lấy danh sách số phiếu từ treeview
+            danh_sach_so_phieu = f_utils_get_unique_column_from_treeview(my_treeview, 2)
+            # print("danh_sach_so_phieu", danh_sach_so_phieu)
+            
+            # Chuyển danh sách số phiếu thành chuỗi SQL, đảm bảo các giá trị dạng chuỗi được bao trong dấu nháy đơn
+            so_phieu_str = ', '.join([f"'{str(x)}'" for x in danh_sach_so_phieu])
+            # print("so_phieu_str", so_phieu_str)
+            
+            # Tạo câu query SQL với danh sách số phiếu
+            database_name = utils_controller_get_information_of_database.load_database_name()
+            table_name = utils_controller_get_information_of_database.load_table_name_VIEW_QUYET_TOAN_YEU_CAU_DAT_HANG()
+            column_name = controller_get_information_of_module.load_column_name_so_phieu()
+            query = f"""
+            SELECT 
+                ROW_NUMBER() OVER(ORDER BY [SO_PHIEU]) as RowNumber,
+                [SO_PHIEU],
+                [NGAY_TREN_PHIEU],
+                [MA_DOI_TUONG],
+                [TEN_DOI_TUONG],
+                [SO_HOP_DONG],
+                [STT_DONG],
+                [MA_HANG],
+                [TEN_HANG],
+                [DVT],
+                [SO_LUONG_NHU_CAU],
+                [SO_LUONG_TON_KHO],
+                [SO_LUONG_KHA_DUNG],
+                [SO_LUONG_QUYET_TOAN]
+
+            FROM [{database_name}].[dbo].[{table_name}]
+            WHERE [{column_name}] IN ({so_phieu_str})
+            """
+            # print("query", query)
+            
+            # Tạo header cho file Excel
+            header = ["STT", 
+                    "Số phiếu", 
+                    "Ngày trên phiếu", 
+                    "Mã đối tượng", 
+                    "Tên đối tượng", 
+                    "Số hợp đồng", 
+                    "STT dòng", 
+                    "Mã hàng", 
+                    "Tên hàng", 
+                    "ĐVT",  
+                    "Số lượng nhu cầu", 
+                    "Số lượng tồn kho", 
+                    "Số lượng khả dụng", 
+                    "Số lượng quyết toán"] 
+            
+            flag, path = utils_controller_Export_data_to_Excel_250222_09h16.export_log_to_excel(query, header)
+            if flag == False:
+                return False
+            
+            # Notification
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, path, "blue")
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+    
     
     def f_handle_event_tab_01_button_template_click(entry_notification):
         try:
@@ -1219,25 +1390,108 @@ class Controller_handel_all_events:
         except Exception as e:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
+            
+    def f_handle_event_tab_03_button_filter_slip(entry_notification, my_treeview, *args):
+        try:
+            # Get the arguments
+            (
+                entry_so_phieu, 
+                entry_so_hop_dong,
+                entry_ngay_bat_dau,
+                entry_ngay_ket_thuc,
+                entry_ma_doi_tuong,
+                entry_ma_hang
+            )= args
+            
+            so_phieu = entry_so_phieu.get()
+            so_hop_dong = entry_so_hop_dong.get()
+            ngay_bat_dau = entry_ngay_bat_dau.get()
+            ngay_ket_thuc = entry_ngay_ket_thuc.get()
+            ma_doi_tuong = entry_ma_doi_tuong.get()
+            ma_hang = entry_ma_hang.get()
+            
+            # Reformat the value
+            formated_ngay_bat_dau = f_utils_change_format_date_from_ddmmyyyy_to_yyyymmdd(ngay_bat_dau)
+            formated_ngay_ket_thuc = f_utils_change_format_date_from_ddmmyyyy_to_yyyymmdd(ngay_ket_thuc)
+            if ma_doi_tuong == 'search here':
+                ma_doi_tuong = ''
+            if ma_hang == 'search here':
+                ma_hang = ''
+        
+            # Create value and fetch data
+            proc_filter = controller_get_information_of_module.load_Proc_VIEW_QUYET_TOAN_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS()
+            query = f"""
+                    EXEC [dbo].[{proc_filter}] 
+                        @SO_PHIEU = '{so_phieu}', 
+                        @SO_HOP_DONG = '{so_hop_dong}',
+                        @START_DATE = '{formated_ngay_bat_dau}', 
+                        @END_DATE = '{formated_ngay_ket_thuc}',
+                        @MA_DOI_TUONG = '{ma_doi_tuong}',
+                        @MA_HANG = '{ma_hang}';
+                    """
+            # print(query)
+            SQLController.load_data(my_treeview, query)
+            
+            # Notification
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Data loaded!", "blue")
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
         
     def f_handle_event_tab_02_button_clear_filter(
             entry_notification, 
             my_treeview,
-            tab_02_entry_filter_slip_number,
-            tab_02_entry_filter_contract_number,
-            tab_02_entry_ma_khach_hang,
-            tab_02_entry_ten_khach_hang,
-            tab_02_entry_ma_hang,
-            tab_02_entry_ten_hang):
+            entry_filter_slip_number,
+            entry_filter_contract_number,
+            entry_ma_khach_hang,
+            entry_ten_khach_hang,
+            entry_ma_hang,
+            entry_ten_hang):
         
         try:
             # clear all entries
-            tab_02_entry_filter_slip_number.delete(0, tk.END)
-            tab_02_entry_filter_contract_number.delete(0, tk.END)
-            tab_02_entry_ma_khach_hang.delete(0, tk.END)
-            tab_02_entry_ten_khach_hang.delete(0, tk.END)
-            tab_02_entry_ma_hang.delete(0, tk.END)
-            tab_02_entry_ten_hang.delete(0, tk.END)
+            entry_filter_slip_number.delete(0, tk.END)
+            entry_filter_contract_number.delete(0, tk.END)
+            entry_ma_khach_hang.delete(0, tk.END)
+            entry_ten_khach_hang.delete(0, tk.END)
+            entry_ma_hang.delete(0, tk.END)
+            entry_ten_hang.delete(0, tk.END)
+            
+            # refresh data in treeview
+            proc_filter = controller_get_information_of_module.load_proc_filter_by_many_arguments()
+            query = f"""
+                    EXEC [dbo].[{proc_filter}] 
+                        @SO_PHIEU = NULL, 
+                        @SO_HOP_DONG = NULL,
+                        @START_DATE = NULL, 
+                        @END_DATE = NULL,
+                        @MA_DOI_TUONG = NULL,
+                        @MA_HANG = NULL;
+                    """
+            SQLController.load_data(my_treeview, query)
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Clear all filter!", "blue")
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            
+    def f_handle_event_tab_03_button_clear_filter(
+            entry_notification, 
+            my_treeview,
+            entry_filter_slip_number,
+            entry_filter_contract_number,
+            entry_ma_khach_hang,
+            entry_ten_khach_hang,
+            entry_ma_hang,
+            entry_ten_hang):
+        
+        try:
+            # clear all entries
+            entry_filter_slip_number.delete(0, tk.END)
+            entry_filter_contract_number.delete(0, tk.END)
+            entry_ma_khach_hang.delete(0, tk.END)
+            entry_ten_khach_hang.delete(0, tk.END)
+            entry_ma_hang.delete(0, tk.END)
+            entry_ten_hang.delete(0, tk.END)
             
             # refresh data in treeview
             proc_filter = controller_get_information_of_module.load_proc_filter_by_many_arguments()
@@ -1264,6 +1518,9 @@ class Controller_handel_all_events:
     
     def f_handle_event_initializing_format_of_treeview_of_tab_02(my_treeview):
         Controller_action_after_event.set_format_of_treeview_of_tab_02(my_treeview)
+        
+    def f_handle_event_initializing_format_of_treeview_of_tab_03(my_treeview):
+        Controller_action_after_event.set_format_of_treeview_of_tab_03(my_treeview)
 
     def f_handle_event_treeview_of_tab_01_double_click(entry_notification, my_treeview):
         ma_hang = Controller_action_after_event.treeview_of_tab_01_double_click(my_treeview)
@@ -1271,6 +1528,10 @@ class Controller_handel_all_events:
         
     def f_handle_event_treeview_of_tab_02_double_click(entry_notification, my_treeview):
         So_phieu = Controller_action_after_event.treeview_of_tab_02_double_click(my_treeview)
+        utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, So_phieu, "blue")
+
+    def f_handle_event_treeview_of_tab_03_double_click(entry_notification, my_treeview):
+        So_phieu = Controller_action_after_event.treeview_of_tab_03_double_click(my_treeview)
         utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, So_phieu, "blue")
 
     def f_handle_event_treeview_of_tab_01_single_click(
@@ -1295,6 +1556,11 @@ class Controller_handel_all_events:
     def f_handle_event_treeview_of_tab_02_single_click(entry_notification, 
                                                        my_treeview):
         so_phieu = Controller_action_after_event.treeview_of_tab_02_single_click(my_treeview)
+        utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, so_phieu, "blue")
+    
+    def f_handle_event_treeview_of_tab_03_single_click(entry_notification, 
+                                                       my_treeview):
+        so_phieu = Controller_action_after_event.treeview_of_tab_03_single_click(my_treeview)
         utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, so_phieu, "blue")
         
     def f_handle_event_tab_01_btn_save_click(*args):
