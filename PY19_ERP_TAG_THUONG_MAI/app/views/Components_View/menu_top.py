@@ -250,6 +250,8 @@ class cls_menu_top:
         else:
             menu_Admin = tk.Menu(top_menu, tearoff=0)
             top_menu.add_cascade(label="Admin", menu=menu_Admin)
+            menu_Admin.add_command(label="Dashboard Admin", command=self.f_Admin_Home_main_click)
+            menu_Admin.add_separator()
             
             # Sub-menu level 1
             Admin_menu_Level_1 = tk.Menu(menu_Admin, tearoff=0)
@@ -261,6 +263,7 @@ class cls_menu_top:
             menu_Admin.add_cascade(label="Quản lý danh sách người dùng", menu=Admin_menu_Level_1)
             Admin_menu_Level_1.add_command(label="AD0101 |Tạo mới người dùng", command=self.f_do_nothing_click)
             Admin_menu_Level_1.add_command(label="AD0102 |Danh sách người dùng", command=self.f_do_nothing_click)
+            menu_Admin.add_separator()
             
             # Set font-size
             f_utils_set_menu_font(menu_Admin)
@@ -320,6 +323,9 @@ class cls_menu_top:
     # Define the action fuctions for Kinhd doanh home menu
     def f_Kinh_Doanh_Home_main_click(self):
         self.f_open_Kinh_Doanh_DashBoard()
+        
+    def f_Admin_Home_main_click(self):
+        self.f_open_Admin_DashBoard()
     
     # Define the action fuctions for QLGT menu
     def f_QLGT_TaoMoi_click(self):
@@ -603,6 +609,10 @@ class cls_menu_top:
     def f_open_Kinh_Doanh_DashBoard(self):
         self.parent.destroy()
         f_utils_open_dashboard_kinh_doanh()
+    
+    def f_open_Admin_DashBoard(self):
+        self.parent.destroy()
+        f_utils_open_dashboard_admin()
         
     def f_destroy_current_window(self):
         self.parent.destroy()

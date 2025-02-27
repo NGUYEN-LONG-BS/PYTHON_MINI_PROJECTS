@@ -147,6 +147,17 @@ def f_utils_open_dashboard_kinh_doanh():
         print(f"Error: {e}")
         print("Error at function: ", f_utils_get_current_function_name())
     
+def f_utils_open_dashboard_admin():
+    try:
+        from views.AD00_DashboardAdmin_View.Dashboard_admin_View import cls_Dashboard_admin_View
+        new_view = cls_Dashboard_admin_View()
+        utils_controllers.utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
+        f_utils_set_center_screen(new_view)
+        new_view.focus_force()
+    except Exception as e:
+        print(f"Error: {e}")
+        print("Error at function: ", f_utils_get_current_function_name())
+    
 def f_utils_open_dashboard_vat_tu():
     try:
         from views.VT00_DashboardVatTu_View.Dashboard_VatTu_View import cls_Dashboard_Vat_Tu_View

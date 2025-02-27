@@ -3,7 +3,7 @@ from tkinter import filedialog, messagebox
 import json
 from cryptography.fernet import Fernet
 import os
-from define import *
+from utils import *
 
 class EncryptionApp:
     def __init__(self, root):
@@ -32,6 +32,7 @@ class EncryptionApp:
         with open(PATH_CONFIG_KEY, "wb") as key_file:
             key_file.write(key)
         messagebox.showinfo("Success", "Encryption key generated and saved as 'encryption_key.key'")
+        self.root.focus_force()
     
     def encrypt_and_save(self):
         if not os.path.exists(PATH_CONFIG_KEY):
@@ -53,6 +54,7 @@ class EncryptionApp:
             entry.delete(0, tk.END)
         
         messagebox.showinfo("Success", "Encrypted config saved to 'config.json'")
+        self.root.focus_force()
     
     def decrypt_and_load(self):
         messagebox.showinfo("Hướng dẫn", "Chọn đường dẫn đến file config.json")
@@ -79,6 +81,7 @@ class EncryptionApp:
                 self.entries[key].insert(0, value)
         
         messagebox.showinfo("Success", "Configuration successfully decrypted and loaded.")
+        self.root.focus_force()
 
 if __name__ == "__main__":
     root = tk.Tk()

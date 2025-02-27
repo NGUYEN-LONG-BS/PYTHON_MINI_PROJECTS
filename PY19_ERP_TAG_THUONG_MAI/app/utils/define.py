@@ -25,6 +25,9 @@ PATH_CARD_KD_05 = os.path.join(PATH_ROOT, "assets/img/KD_YEU_CAU_DAT_HANG.png")
 PATH_CARD_KD_06 = os.path.join(PATH_ROOT, "assets/img/KD_REPORT.png")
 PATH_CARD_KD_QUAN_LY_DE_NGHI_XUAT_KHO = os.path.join(PATH_ROOT, "assets/img/KD_QUAN_LY_DE_NGHI_XUAT_KHO.png")
 
+PATH_CARD_ADMIN_QUAN_LY_DATABASE = os.path.join(PATH_ROOT, "assets/img/ADMIN_QUAN_LY_DATABASE.png")
+PATH_CARD_ADMIN_CAI_DAT_CHUNG = os.path.join(PATH_ROOT, "assets/img/ADMIN_CAI_DAT_CHUNG.png")
+
 PATH_ICON_HIDE = os.path.join(PATH_ASSETS_ICONS, "icon-closed-eye-50.png")
 PATH_ICON_UNHIDE = os.path.join(PATH_ASSETS_ICONS, "icon-opening-eye-26.png")
 
