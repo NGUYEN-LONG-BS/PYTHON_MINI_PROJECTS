@@ -382,6 +382,45 @@ class utils_controller_get_information_of_database:
         table_name = "VIEW_QUYET_TOAN_YEU_CAU_DAT_HANG"
         return table_name
     
-    
-    
+class utils_controller_get_data_from_SQL_to_treeview_with_quey_and_params_list:
+    def load_data_to_treeview(my_treeview, data):
+        # Lấy số lượng cột từ my_treeview
+        columns_count = len(my_treeview["columns"])
+        
+        # Xóa hết các item trong treeview hiện tại
+        for item in my_treeview.get_children():
+            my_treeview.delete(item)
+        
+        # # Duyệt qua từng dòng dữ liệu và chèn vào treeview
+        # for row in data:
+        #     values = row[:columns_count]  # Chỉ lấy số lượng cột theo `columns_count`
+        #     my_treeview.insert("", "end", values=values)
+            
+        # Duyệt qua từng dòng dữ liệu và chèn vào treeview
+        for row in data:
+            # Chỉ lấy các giá trị trong row tương ứng với số cột
+            values = row[:columns_count]  # Cắt bỏ các cột thừa
+            
+            # Kiểm tra và xử lý kiểu dữ liệu nếu cần thiết (chẳng hạn ngày tháng)
+            processed_values = []
+            for value in values:
+                if isinstance(value, str):  # Nếu là chuỗi, giữ nguyên
+                    processed_values.append(value)
+                elif isinstance(value, (int, float)):  # Nếu là số, giữ nguyên
+                    processed_values.append(value)
+                elif isinstance(value, datetime):  # Nếu là ngày tháng, chuyển sang dạng chuỗi
+                    processed_values.append(value.strftime("%d-%m-%Y"))
+                else:
+                    processed_values.append(value)  # Thêm giá trị gốc nếu không thuộc các loại trên
+
+            # Nếu thiếu cột, bổ sung None
+            if len(processed_values) < columns_count:
+                processed_values.extend([None] * (columns_count - len(processed_values)))
+            
+            # Chèn dữ liệu vào Treeview
+            my_treeview.insert("", "end", values=processed_values)
+        
+    def load_data_with_quey_and_params(my_treeview, query, params_list):
+        data = utils_models.utils_model_SQL_server.fetch_data_with_quey_and_params(query, params_list)
+        utils_controller_get_data_from_SQL_to_treeview_with_quey_and_params_list.load_data_to_treeview(my_treeview, data)    
     

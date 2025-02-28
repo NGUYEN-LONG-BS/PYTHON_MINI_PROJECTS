@@ -901,32 +901,24 @@ class Controller_edit_row_in_SQL:
         utils_model_SQL_server.sent_SQL_query(query)
 
 class SQLController:
-    def load_data(tree, query):
-        data = utils_model_SQL_server.fetch_data(query)
+    # def load_data_to_treeview(my_treeview, data):
+    #     # Lấy số lượng cột từ my_treeview
+    #     columns_count = len(my_treeview["columns"])
         
-        # tree = self.treeview_test_of_tag_02
-        for item in tree.get_children():
-            tree.delete(item)
-        for row in data:
-            tree.insert("", "end", values=(row[0], row[1], row[2], row[3], row[4],
-                                           row[5], row[6], row[7], row[8], row[9],
-                                           row[10], row[11], row[12], row[13], row[14],
-                                           row[15]))
+    #     # Xóa hết các item trong treeview hiện tại
+    #     for item in my_treeview.get_children():
+    #         my_treeview.delete(item)
         
-    def load_data_with_quey_and_params(tree, query, params_list):
-        data = utils_model_SQL_server.fetch_data_with_quey_and_params(query, params_list)
+    #     # Duyệt qua từng dòng dữ liệu và chèn vào treeview
+    #     for row in data:
+    #         values = row[:columns_count]  # Chỉ lấy số lượng cột theo `columns_count`
+    #         my_treeview.insert("", "end", values=values)
         
-        # tree = self.treeview_test_of_tag_02
-        for item in tree.get_children():
-            tree.delete(item)
-        for row in data:
-            tree.insert("", "end", values=(row[0], row[1], row[2], row[3], row[4],
-                                           row[5], row[6], row[7], row[8], row[9],
-                                           row[10], row[11], row[12], row[13], row[14],
-                                           row[15]))    
+    # def load_data_with_quey_and_params(my_treeview, query, params_list):
+    #     data = utils_model_SQL_server.fetch_data_with_quey_and_params(query, params_list)
+    #     SQLController.load_data_to_treeview(my_treeview, data)
     
-    # Function to print data from the Treeview
-    def get_data_to_import_to_SQL(*args):
+    def get_data_to_import_to_SQL_TB_KD02_YEU_CAU_DAT_HANG(*args):
         (
             entry_so_phieu, 
             entry_ma_kh, 
@@ -995,7 +987,7 @@ class SQLController:
         ) = args
         
         # Step_01: Get data
-        flag, data_array = SQLController.get_data_to_import_to_SQL(entry_so_phieu, 
+        flag, data_array = SQLController.get_data_to_import_to_SQL_TB_KD02_YEU_CAU_DAT_HANG(entry_so_phieu, 
                                                                     entry_ma_kh, 
                                                                     entry_ten_kh,
                                                                     entry_mst,
@@ -1472,8 +1464,7 @@ class Controller_handel_all_events:
                     
             query = controller_get_information_of_module.load_query_filter_data_to_treeview()
             
-            # SQLController.load_data(my_treeview, query)
-            SQLController.load_data_with_quey_and_params(my_treeview, query, (combo_trang_thai, so_phieu, so_phieu, so_hop_dong, so_hop_dong, formated_ngay_bat_dau, formated_ngay_ket_thuc, formated_ngay_bat_dau, formated_ngay_ket_thuc, ma_doi_tuong, ma_doi_tuong, ma_hang, ma_hang))
+            utils_controller_get_data_from_SQL_to_treeview_with_quey_and_params_list.load_data_with_quey_and_params(my_treeview, query, (combo_trang_thai, so_phieu, so_phieu, so_hop_dong, so_hop_dong, formated_ngay_bat_dau, formated_ngay_ket_thuc, formated_ngay_bat_dau, formated_ngay_ket_thuc, ma_doi_tuong, ma_doi_tuong, ma_hang, ma_hang))
             
             # Notification
             utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Data loaded!", "blue")
@@ -1513,8 +1504,7 @@ class Controller_handel_all_events:
             
             query = controller_get_information_of_module.load_query_filter_data_to_treeview()
             
-            # SQLController.load_data(my_treeview, query)
-            SQLController.load_data_with_quey_and_params(my_treeview, query, (combo_trang_thai, so_phieu, so_phieu, so_hop_dong, so_hop_dong, formated_ngay_bat_dau, formated_ngay_ket_thuc, formated_ngay_bat_dau, formated_ngay_ket_thuc, ma_doi_tuong, ma_doi_tuong, ma_hang, ma_hang))
+            utils_controller_get_data_from_SQL_to_treeview_with_quey_and_params_list.load_data_with_quey_and_params(my_treeview, query, (combo_trang_thai, so_phieu, so_phieu, so_hop_dong, so_hop_dong, formated_ngay_bat_dau, formated_ngay_ket_thuc, formated_ngay_bat_dau, formated_ngay_ket_thuc, ma_doi_tuong, ma_doi_tuong, ma_hang, ma_hang))
             
             utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Clear all filter!", "blue")
         except Exception as e:
