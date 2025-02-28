@@ -180,6 +180,16 @@ class utils_model_SQL_server:
             print("Error at function: ", utils_functions.f_utils_get_current_function_name())
             return []
         
+    def fetch_data_with_quey_and_params(query, params_list):
+        try:
+            data = utils_functions.f_utils_fetch_data_from_database_with_quey_and_params(query, params_list)
+            # print(data)
+            return data
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", utils_functions.f_utils_get_current_function_name())
+            return []    
+        
     def sent_SQL_query(query):
         try:
             utils_functions.f_utils_sent_query_to_SQL(query)

@@ -863,6 +863,23 @@ def f_utils_fetch_data_from_database(query):
         print("Error at function: ", f_utils_get_current_function_name())
         return []
 
+def f_utils_fetch_data_from_database_with_quey_and_params(query, params_list=[]):
+    try:
+        conn = f_utils_create_a_connection_string_to_SQL_Server()
+        cursor = conn.cursor()
+        cursor.execute(query, params_list)
+        rows = cursor.fetchall()
+        # Đóng kết nối
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
+        return rows
+    except Exception as e:
+        print(f"Error: {e}")
+        print("Error at function: ", f_utils_get_current_function_name())
+        return []
+
 def f_utils_sent_query_to_SQL(query):
     conn = f_utils_create_a_connection_string_to_SQL_Server()
     if conn:

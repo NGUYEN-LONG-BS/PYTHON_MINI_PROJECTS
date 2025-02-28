@@ -34,7 +34,8 @@ class controller_get_information_of_module:
         return proc_filter
     
     def load_Proc_VIEW_QUYET_TOAN_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS():
-        proc_filter = "Proc_VIEW_QUYET_TOAN_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250227_14h23"
+        # proc_filter = "Proc_VIEW_QUYET_TOAN_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250227_14h23"
+        proc_filter = "Proc_VIEW_QUYET_TOAN_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_AND_ID_NHAN_VIEN_250228_09h21"
         return proc_filter
     
     def tab_02_load_query_select_all_data():
@@ -658,6 +659,17 @@ class Controller_edit_row_in_SQL:
 class SQLController:
     def load_data(tree, query):
         data = utils_model_SQL_server.fetch_data(query)
+        
+        # tree = self.treeview_test_of_tag_02
+        for item in tree.get_children():
+            tree.delete(item)
+        for row in data:
+            tree.insert("", "end", values=(row[0], row[1], row[2], row[3], row[4],
+                                           row[5], row[6], row[7], row[8], row[9],
+                                           row[10], row[11], row[12]))
+            
+    def load_data_with_quey_and_params(tree, query, params_list):
+        data = utils_model_SQL_server.fetch_data_with_quey_and_params(query, params_list)
         
         # tree = self.treeview_test_of_tag_02
         for item in tree.get_children():
@@ -1424,6 +1436,7 @@ class Controller_handel_all_events:
                 entry_ma_hang
             )= args
             
+            # Create value and fetch data
             so_phieu = entry_so_phieu.get()
             so_hop_dong = entry_so_hop_dong.get()
             ngay_bat_dau = entry_ngay_bat_dau.get()
@@ -1439,19 +1452,38 @@ class Controller_handel_all_events:
             if ma_hang == 'search here':
                 ma_hang = ''
         
-            # Create value and fetch data
-            proc_filter = controller_get_information_of_module.load_Proc_VIEW_QUYET_TOAN_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS()
+            danh_sach_id_nhan_vien = utils_controller_get_information_of_database.load_danh_sach_id_duoc_phan_quyen()
+            
+            # Câu lệnh SQL với các tham số
             query = f"""
-                    EXEC [dbo].[{proc_filter}] 
-                        @SO_PHIEU = '{so_phieu}', 
-                        @SO_HOP_DONG = '{so_hop_dong}',
-                        @START_DATE = '{formated_ngay_bat_dau}', 
-                        @END_DATE = '{formated_ngay_ket_thuc}',
-                        @MA_DOI_TUONG = '{ma_doi_tuong}',
-                        @MA_HANG = '{ma_hang}';
-                    """
-            # print(query)
-            SQLController.load_data(my_treeview, query)
+            SELECT
+                ROW_NUMBER() OVER(ORDER BY [SO_PHIEU] DESC, [NGAY_TREN_PHIEU] DESC) as RowNumber,
+                FORMAT([NGAY_TREN_PHIEU], 'dd-MM-yyyy') as NGAY_TREN_PHIEU,
+                [SO_PHIEU],
+                [MA_DOI_TUONG],
+                [TEN_DOI_TUONG],
+                [SO_HOP_DONG],
+                [STT_DONG],
+                [MA_HANG],
+                [TEN_HANG],
+                [DVT],
+                [SO_LUONG_NHU_CAU],
+                [SO_LUONG_TON_KHO],
+                [SO_LUONG_KHA_DUNG],
+                [SO_LUONG_QUYET_TOAN]
+            FROM [TBD_2024].[dbo].[VIEW_QUYET_TOAN_YEU_CAU_DAT_HANG]
+            WHERE
+                ID_NHAN_VIEN IN ({danh_sach_id_nhan_vien})  -- Bạn sẽ truyền tham số vào đây
+                AND (? IS NULL OR SO_PHIEU LIKE '%' + ? + '%')
+                AND (? IS NULL OR SO_HOP_DONG LIKE '%' + ? + '%')
+                AND (? IS NULL OR ? IS NULL OR NGAY_TREN_PHIEU BETWEEN ? AND ?)
+                AND (? IS NULL OR MA_DOI_TUONG LIKE '%' + ? + '%')
+                AND (? IS NULL OR MA_HANG LIKE '%' + ? + '%')
+            """
+
+            # Chạy câu lệnh SQL với các tham số
+            danh_sach_tham_so = (so_phieu, so_phieu, so_hop_dong, so_hop_dong, formated_ngay_bat_dau, formated_ngay_ket_thuc, formated_ngay_bat_dau, formated_ngay_ket_thuc, ma_doi_tuong, ma_doi_tuong, ma_hang, ma_hang)
+            SQLController.load_data_with_quey_and_params(my_treeview, query, danh_sach_tham_so)
             
             # Notification
             utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Data loaded!", "blue")

@@ -338,6 +338,10 @@ class utils_controller_TreeviewHandler_click_250217_22h34:
     
 class utils_controller_get_information_of_database:
         
+    def load_danh_sach_id_duoc_phan_quyen():
+        danh_sach_id_duoc_phan_quyen = "'NV01', 'NV02', 'NV03'"
+        return danh_sach_id_duoc_phan_quyen
+        
     def load_ma_thanh_vien():
         ma_thanh_vien = "TB"
         return ma_thanh_vien

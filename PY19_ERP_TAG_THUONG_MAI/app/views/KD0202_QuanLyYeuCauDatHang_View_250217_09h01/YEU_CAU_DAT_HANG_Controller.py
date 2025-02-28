@@ -30,9 +30,17 @@ class controller_get_information_of_module:
     def load_query_select_all_data():
         database_name = utils_controller_get_information_of_database.load_database_name()
         table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+        danh_sach_id = "'NV01', 'NV02', 'NV03'"
+        # danh_sach_id = "'NV03', 'NV02'"
+        # danh_sach_id = "'NV02'"
+        # danh_sach_id = "'NV01'"
+        # danh_sach_id = "'NV03'"
         query = f"""
             SELECT *
             FROM [{database_name}].[dbo].[{table_name}]
+            WHERE 
+                  [ID_NHAN_VIEN] IN ({danh_sach_id})
+            ORDER BY [SO_PHIEU] DESC
             """
         return query
     
@@ -1119,7 +1127,11 @@ class Controller_handel_all_events:
             
             # Chuyển danh sách số phiếu thành chuỗi SQL, đảm bảo các giá trị dạng chuỗi được bao trong dấu nháy đơn
             so_phieu_str = ', '.join([f"'{str(x)}'" for x in danh_sach_so_phieu])
-            # print("so_phieu_str", so_phieu_str)
+            print("so_phieu_str", so_phieu_str)
+            
+            # danh_sach_id = "'NV01', 'NV02', 'NV03'"
+            # danh_sach_id = "'NV01', 'NV02'"
+            danh_sach_id = "'NV02'"
             
             # Tạo câu query SQL với danh sách số phiếu
             database_name = utils_controller_get_information_of_database.load_database_name()
@@ -1146,8 +1158,11 @@ class Controller_handel_all_events:
                 [SO_LUONG_YEU_CAU_DAT_HANG],
                 [GHI_CHU_SP]
             FROM [{database_name}].[dbo].[{table_name}]
-            WHERE [SO_PHIEU] IN ({so_phieu_str})
+            WHERE [SO_PHIEU] IN ({so_phieu_str}) AND
+                  [ID_NHAN_VIEN] IN ({danh_sach_id})
+            ORDER BY [SO_PHIEU] DESC
             """
+            print(query)
             
             # Tạo header cho file Excel
             header = ["STT", 
@@ -1467,20 +1482,46 @@ class Controller_handel_all_events:
             tab_02_entry_ten_hang.delete(0, tk.END)
             tab_02_combo_trang_thai.set("Còn hạn")
             
-            # refresh data in treeview
-            proc_name = controller_get_information_of_module.load_proc_filter_by_many_arguments()
+            # Create value to filter and fetch data
+            so_phieu = "NULL"
+            so_hop_dong = "NULL"
+            ngay_bat_dau = "NULL"
+            ngay_ket_thuc = "NULL"
+            ma_doi_tuong = "NULL"
+            ma_hang = "NULL"
+            het_han = 0
+            
             query = f"""
-                    EXEC [dbo].[{proc_name}] 
-                        @SO_PHIEU = NULL, 
-                        @SO_HOP_DONG = NULL,
-                        @START_DATE = NULL, 
-                        @END_DATE = NULL,
-                        @MA_DOI_TUONG = NULL,
-                        @MA_HANG = NULL,
-                        @EXPIRED = 0;
+                        SELECT
+                        ROW_NUMBER() OVER(ORDER BY [SO_PHIEU] DESC, [NGAY_TREN_PHIEU] DESC) as RowNumber
+                        ,FORMAT([NGAY_TREN_PHIEU], 'dd-MM-yyyy') as NGAY_TREN_PHIEU
+                        ,[SO_PHIEU]
+                        ,[MA_DOI_TUONG]
+                        ,[TEN_DOI_TUONG]
+                        ,[SO_HOP_DONG]
+                        ,[GHI_CHU_PHIEU]
+                        ,[STT_DONG]
+                        ,[MA_HANG]
+                        ,[TEN_HANG]
+                        ,[DVT]
+                        ,[SO_LUONG_KHA_DUNG]
+                        ,[SO_LUONG_NHU_CAU]
+                        ,[SO_LUONG_GIU_CHO]
+                        ,[SO_LUONG_YEU_CAU_DAT_HANG]
+                        ,[GHI_CHU_SP]	
+                    FROM [TBD_2024].[dbo].[TB_KD02_YEU_CAU_DAT_HANG]
+                    WHERE 
+                        [XOA_SUA] = '' AND
+                        [EXPIRED] = {het_han} AND
+                        ({so_phieu} IS NULL OR SO_PHIEU LIKE '%' + {so_phieu} + '%') AND
+                        ({so_hop_dong} IS NULL OR SO_HOP_DONG LIKE '%' + {so_hop_dong} + '%') AND
+                        ({ngay_bat_dau} IS NULL OR {ngay_ket_thuc} IS NULL OR NGAY_TREN_PHIEU BETWEEN {ngay_bat_dau} AND {ngay_ket_thuc}) AND
+                        ({ma_doi_tuong} IS NULL OR MA_DOI_TUONG LIKE '%' + {ma_doi_tuong} + '%') AND
+                        ({ma_hang} IS NULL OR MA_HANG LIKE '%' + {ma_hang} + '%')
                     """
             
             SQLController.load_data(my_treeview, query)
+            
             utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Clear all filter!", "blue")
         except Exception as e:
             print(f"Error: {e}")
