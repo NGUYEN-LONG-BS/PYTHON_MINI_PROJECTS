@@ -1480,7 +1480,7 @@ class Controller_handel_all_events:
                 AND (? IS NULL OR MA_DOI_TUONG LIKE '%' + ? + '%')
                 AND (? IS NULL OR MA_HANG LIKE '%' + ? + '%')
             """
-
+            
             # Chạy câu lệnh SQL với các tham số
             danh_sach_tham_so = (so_phieu, so_phieu, so_hop_dong, so_hop_dong, formated_ngay_bat_dau, formated_ngay_ket_thuc, formated_ngay_bat_dau, formated_ngay_ket_thuc, ma_doi_tuong, ma_doi_tuong, ma_hang, ma_hang)
             SQLController.load_data_with_quey_and_params(my_treeview, query, danh_sach_tham_so)

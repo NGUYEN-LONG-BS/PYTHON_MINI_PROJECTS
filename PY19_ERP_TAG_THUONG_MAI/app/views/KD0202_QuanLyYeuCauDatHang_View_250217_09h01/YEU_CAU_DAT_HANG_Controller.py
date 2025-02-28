@@ -23,18 +23,45 @@ class controller_get_information_of_module:
         proc_name = "Proc_TB_KD02_YEU_CAU_DAT_HANG_UPDATE_EXPIRED_250226_13h15"
         return proc_name
     
-    def load_proc_filter_by_many_arguments():
-        proc_name = "Proc_TB_KD02_YEU_CAU_DAT_HANG_FILTER_BY_MANY_ARGUMENTS_250226_14h15"
-        return proc_name
+    def load_query_filter_data_to_treeview():
+        database_name = utils_controller_get_information_of_database.load_database_name()
+        table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+        danh_sach_id = utils_controller_get_information_of_database.load_danh_sach_id_duoc_phan_quyen()
+        query = f"""
+                SELECT
+                ROW_NUMBER() OVER(ORDER BY [SO_PHIEU] DESC, [NGAY_TREN_PHIEU] DESC) as RowNumber
+                ,FORMAT([NGAY_TREN_PHIEU], 'dd-MM-yyyy') as NGAY_TREN_PHIEU
+                ,[SO_PHIEU]
+                ,[MA_DOI_TUONG]
+                ,[TEN_DOI_TUONG]
+                ,[SO_HOP_DONG]
+                ,[GHI_CHU_PHIEU]
+                ,[STT_DONG]
+                ,[MA_HANG]
+                ,[TEN_HANG]
+                ,[DVT]
+                ,[SO_LUONG_KHA_DUNG]
+                ,[SO_LUONG_NHU_CAU]
+                ,[SO_LUONG_GIU_CHO]
+                ,[SO_LUONG_YEU_CAU_DAT_HANG]
+                ,[GHI_CHU_SP]	
+            FROM [{database_name}].[dbo].[{table_name}]
+            WHERE 
+                [ID_NHAN_VIEN] IN ({danh_sach_id}) AND
+                [XOA_SUA] = '' AND
+                [EXPIRED] = ? AND
+                (? IS NULL OR SO_PHIEU LIKE '%' + ? + '%') AND
+                (? IS NULL OR SO_HOP_DONG LIKE '%' + ? + '%') AND
+                (? IS NULL OR ? IS NULL OR NGAY_TREN_PHIEU BETWEEN ? AND ?) AND
+                (? IS NULL OR MA_DOI_TUONG LIKE '%' + ? + '%') AND
+                (? IS NULL OR MA_HANG LIKE '%' + ? + '%')
+            """
+        return query
     
     def load_query_select_all_data():
         database_name = utils_controller_get_information_of_database.load_database_name()
         table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
-        danh_sach_id = "'NV01', 'NV02', 'NV03'"
-        # danh_sach_id = "'NV03', 'NV02'"
-        # danh_sach_id = "'NV02'"
-        # danh_sach_id = "'NV01'"
-        # danh_sach_id = "'NV03'"
+        danh_sach_id = utils_controller_get_information_of_database.load_danh_sach_id_duoc_phan_quyen()
         query = f"""
             SELECT *
             FROM [{database_name}].[dbo].[{table_name}]
@@ -42,7 +69,89 @@ class controller_get_information_of_module:
                   [ID_NHAN_VIEN] IN ({danh_sach_id})
             ORDER BY [SO_PHIEU] DESC
             """
-        return query
+        
+        # Tạo header cho file Excel
+        header = ["ID",
+                "DATE",
+                "ID_NHAN_VIEN",
+                "XOA_SUA",
+                "NGAY_TREN_PHIEU",
+                "SO_PHIEU",
+                "MA_DOI_TUONG",
+                "TEN_DOI_TUONG",
+                "MA_SO_THUE",
+                "DIA_CHI",
+                "SO_HOP_DONG",
+                "THONG_TIN_HOP_DONG",
+                "GHI_CHU_PHIEU",
+                "STT_DONG",
+                "MA_HANG",
+                "TEN_HANG",
+                "DVT",
+                "SO_LUONG_KHA_DUNG",
+                "SO_LUONG_NHU_CAU",
+                "SO_LUONG_GIU_CHO",
+                "SO_LUONG_YEU_CAU_DAT_HANG",
+                "GHI_CHU_SP",
+                "EXPIRED"]
+        
+        return query, header
+    
+    def load_query_select_data_filtered_to_Excel(danh_sach_so_phieu):
+        # Tạo câu query SQL với danh sách số phiếu
+            database_name = utils_controller_get_information_of_database.load_database_name()
+            table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+            danh_sach_id = utils_controller_get_information_of_database.load_danh_sach_id_duoc_phan_quyen()
+            query = f"""
+            SELECT 
+                ROW_NUMBER() OVER(ORDER BY [SO_PHIEU]) as RowNumber,
+                [SO_PHIEU],
+                [NGAY_TREN_PHIEU],
+                [MA_DOI_TUONG],
+                [TEN_DOI_TUONG],
+                [MA_SO_THUE],
+                [DIA_CHI],
+                [SO_HOP_DONG],
+                [THONG_TIN_HOP_DONG],
+                [GHI_CHU_PHIEU],
+                [STT_DONG],
+                [MA_HANG],
+                [TEN_HANG],
+                [DVT],
+                [SO_LUONG_KHA_DUNG],
+                [SO_LUONG_NHU_CAU],
+                [SO_LUONG_GIU_CHO],
+                [SO_LUONG_YEU_CAU_DAT_HANG],
+                [GHI_CHU_SP]
+            FROM [{database_name}].[dbo].[{table_name}]
+            WHERE [SO_PHIEU] IN ({danh_sach_so_phieu}) AND
+                  [ID_NHAN_VIEN] IN ({danh_sach_id})
+            ORDER BY [SO_PHIEU] DESC
+            """
+            # print(query)
+            
+            # Tạo header cho file Excel
+            header = ["STT", 
+                    "Số phiếu", 
+                    "Ngày trên phiếu", 
+                    "Mã đối tượng", 
+                    "Tên đối tượng", 
+                    "Mã số thuế", 
+                    "Địa chỉ", 
+                    "Số hợp đồng", 
+                    "Thông tin hợp đồng", 
+                    "Ghi chú phiếu", 
+                    "STT dòng", 
+                    "Mã hàng", 
+                    "Tên hàng", 
+                    "ĐVT", 
+                    "Số lượng khả dụng", 
+                    "Số lượng nhu cầu", 
+                    "Số lượng giữ chỗ", 
+                    "Số lượng yêu cầu đặt hàng", 
+                    "Ghi chú sản phẩm"]   
+            
+            return query, header
     
     def load_column_name_so_phieu():
         column_name = "SO_PHIEU"
@@ -246,9 +355,6 @@ class Controller_action_after_event:
     def f_Check_duplicate_value(entry_so_phieu, database_name, table_name, column_name):
         return f_utils_check_duplicate(entry_so_phieu, database_name, table_name, column_name)
     
-    # def f_Check_exist_value(entry_to_check, database_name, table_name, column_name):
-    #     return f_utils_check_exist(entry_to_check, database_name, table_name, column_name)
-    
     def f_add_new_row(*args):
         try:
             # Get the arguments
@@ -401,17 +507,6 @@ class Controller_action_after_event:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
             return False
-    
-    # def f_get_data_from_treeview(treeview):
-    #     try:
-    #         rows = []
-    #         for child in treeview.get_children():
-    #             rows.append(treeview.item(child)["values"])
-    #         return rows
-    #     except Exception as e:
-    #         print(f"Error: {e}")
-    #         print("Error at function: ", f_utils_get_current_function_name())
-    #         return []
     
     def f_get_the_latest_number_of_slip(entry_so_phieu, ma_thanh_vien, loai_phieu, database_name, table_name, column_name):
         # Get the latest number of slip
@@ -802,6 +897,18 @@ class SQLController:
                                            row[10], row[11], row[12], row[13], row[14],
                                            row[15]))
         
+    def load_data_with_quey_and_params(tree, query, params_list):
+        data = utils_model_SQL_server.fetch_data_with_quey_and_params(query, params_list)
+        
+        # tree = self.treeview_test_of_tag_02
+        for item in tree.get_children():
+            tree.delete(item)
+        for row in data:
+            tree.insert("", "end", values=(row[0], row[1], row[2], row[3], row[4],
+                                           row[5], row[6], row[7], row[8], row[9],
+                                           row[10], row[11], row[12], row[13], row[14],
+                                           row[15]))    
+    
     # Function to print data from the Treeview
     def get_data_to_import_to_SQL(*args):
         (
@@ -1081,32 +1188,7 @@ class Controller_handel_all_events:
     def f_handle_event_tab_02_button_export_all_data_click(entry_notification):
         try:
             # Tạo câu query SQL với danh sách số phiếu
-            query = controller_get_information_of_module.load_query_select_all_data()
-            
-            # Tạo header cho file Excel
-            header = ["ID",
-                    "DATE",
-                    "ID_NHAN_VIEN",
-                    "XOA_SUA",
-                    "NGAY_TREN_PHIEU",
-                    "SO_PHIEU",
-                    "MA_DOI_TUONG",
-                    "TEN_DOI_TUONG",
-                    "MA_SO_THUE",
-                    "DIA_CHI",
-                    "SO_HOP_DONG",
-                    "THONG_TIN_HOP_DONG",
-                    "GHI_CHU_PHIEU",
-                    "STT_DONG",
-                    "MA_HANG",
-                    "TEN_HANG",
-                    "DVT",
-                    "SO_LUONG_KHA_DUNG",
-                    "SO_LUONG_NHU_CAU",
-                    "SO_LUONG_GIU_CHO",
-                    "SO_LUONG_YEU_CAU_DAT_HANG",
-                    "GHI_CHU_SP",
-                    "EXPIRED"]
+            query, header = controller_get_information_of_module.load_query_select_all_data()
 
             flag, path = utils_controller_Export_data_to_Excel_250222_09h16.export_log_to_excel(query, header)
             if flag == False:
@@ -1127,63 +1209,62 @@ class Controller_handel_all_events:
             
             # Chuyển danh sách số phiếu thành chuỗi SQL, đảm bảo các giá trị dạng chuỗi được bao trong dấu nháy đơn
             so_phieu_str = ', '.join([f"'{str(x)}'" for x in danh_sach_so_phieu])
-            print("so_phieu_str", so_phieu_str)
-            
-            # danh_sach_id = "'NV01', 'NV02', 'NV03'"
-            # danh_sach_id = "'NV01', 'NV02'"
-            danh_sach_id = "'NV02'"
+            # print("so_phieu_str", so_phieu_str)
             
             # Tạo câu query SQL với danh sách số phiếu
-            database_name = utils_controller_get_information_of_database.load_database_name()
-            table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
-            query = f"""
-            SELECT 
-                ROW_NUMBER() OVER(ORDER BY [SO_PHIEU]) as RowNumber,
-                [SO_PHIEU],
-                [NGAY_TREN_PHIEU],
-                [MA_DOI_TUONG],
-                [TEN_DOI_TUONG],
-                [MA_SO_THUE],
-                [DIA_CHI],
-                [SO_HOP_DONG],
-                [THONG_TIN_HOP_DONG],
-                [GHI_CHU_PHIEU],
-                [STT_DONG],
-                [MA_HANG],
-                [TEN_HANG],
-                [DVT],
-                [SO_LUONG_KHA_DUNG],
-                [SO_LUONG_NHU_CAU],
-                [SO_LUONG_GIU_CHO],
-                [SO_LUONG_YEU_CAU_DAT_HANG],
-                [GHI_CHU_SP]
-            FROM [{database_name}].[dbo].[{table_name}]
-            WHERE [SO_PHIEU] IN ({so_phieu_str}) AND
-                  [ID_NHAN_VIEN] IN ({danh_sach_id})
-            ORDER BY [SO_PHIEU] DESC
-            """
-            print(query)
+            # database_name = utils_controller_get_information_of_database.load_database_name()
+            # table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+            # danh_sach_id = utils_controller_get_information_of_database.load_danh_sach_id_duoc_phan_quyen()
             
-            # Tạo header cho file Excel
-            header = ["STT", 
-                    "Số phiếu", 
-                    "Ngày trên phiếu", 
-                    "Mã đối tượng", 
-                    "Tên đối tượng", 
-                    "Mã số thuế", 
-                    "Địa chỉ", 
-                    "Số hợp đồng", 
-                    "Thông tin hợp đồng", 
-                    "Ghi chú phiếu", 
-                    "STT dòng", 
-                    "Mã hàng", 
-                    "Tên hàng", 
-                    "ĐVT", 
-                    "Số lượng khả dụng", 
-                    "Số lượng nhu cầu", 
-                    "Số lượng giữ chỗ", 
-                    "Số lượng yêu cầu đặt hàng", 
-                    "Ghi chú sản phẩm"] 
+            query, header = controller_get_information_of_module.load_query_select_data_filtered_to_Excel(so_phieu_str)
+            # query = f"""
+            # SELECT 
+            #     ROW_NUMBER() OVER(ORDER BY [SO_PHIEU]) as RowNumber,
+            #     [SO_PHIEU],
+            #     [NGAY_TREN_PHIEU],
+            #     [MA_DOI_TUONG],
+            #     [TEN_DOI_TUONG],
+            #     [MA_SO_THUE],
+            #     [DIA_CHI],
+            #     [SO_HOP_DONG],
+            #     [THONG_TIN_HOP_DONG],
+            #     [GHI_CHU_PHIEU],
+            #     [STT_DONG],
+            #     [MA_HANG],
+            #     [TEN_HANG],
+            #     [DVT],
+            #     [SO_LUONG_KHA_DUNG],
+            #     [SO_LUONG_NHU_CAU],
+            #     [SO_LUONG_GIU_CHO],
+            #     [SO_LUONG_YEU_CAU_DAT_HANG],
+            #     [GHI_CHU_SP]
+            # FROM [{database_name}].[dbo].[{table_name}]
+            # WHERE [SO_PHIEU] IN ({so_phieu_str}) AND
+            #       [ID_NHAN_VIEN] IN ({danh_sach_id})
+            # ORDER BY [SO_PHIEU] DESC
+            # """
+            # # print(query)
+            
+            # # Tạo header cho file Excel
+            # header = ["STT", 
+            #         "Số phiếu", 
+            #         "Ngày trên phiếu", 
+            #         "Mã đối tượng", 
+            #         "Tên đối tượng", 
+            #         "Mã số thuế", 
+            #         "Địa chỉ", 
+            #         "Số hợp đồng", 
+            #         "Thông tin hợp đồng", 
+            #         "Ghi chú phiếu", 
+            #         "STT dòng", 
+            #         "Mã hàng", 
+            #         "Tên hàng", 
+            #         "ĐVT", 
+            #         "Số lượng khả dụng", 
+            #         "Số lượng nhu cầu", 
+            #         "Số lượng giữ chỗ", 
+            #         "Số lượng yêu cầu đặt hàng", 
+            #         "Ghi chú sản phẩm"] 
             
             flag, path = utils_controller_Export_data_to_Excel_250222_09h16.export_log_to_excel(query, header)
             if flag == False:
@@ -1439,21 +1520,11 @@ class Controller_handel_all_events:
                 combo_trang_thai = 0
             else:
                 combo_trang_thai = 1
+                    
+            query = controller_get_information_of_module.load_query_filter_data_to_treeview()
             
-            # Create value and fetch data
-            proc_name = controller_get_information_of_module.load_proc_filter_by_many_arguments()
-            query = f"""
-                    EXEC [dbo].[{proc_name}] 
-                        @SO_PHIEU = '{so_phieu}', 
-                        @SO_HOP_DONG = '{so_hop_dong}',
-                        @START_DATE = '{formated_ngay_bat_dau}', 
-                        @END_DATE = '{formated_ngay_ket_thuc}',
-                        @MA_DOI_TUONG = '{ma_doi_tuong}',
-                        @MA_HANG = '{ma_hang}',
-                        @EXPIRED = {combo_trang_thai};
-                    """
-            
-            SQLController.load_data(my_treeview, query)
+            # SQLController.load_data(my_treeview, query)
+            SQLController.load_data_with_quey_and_params(my_treeview, query, (combo_trang_thai, so_phieu, so_phieu, so_hop_dong, so_hop_dong, formated_ngay_bat_dau, formated_ngay_ket_thuc, formated_ngay_bat_dau, formated_ngay_ket_thuc, ma_doi_tuong, ma_doi_tuong, ma_hang, ma_hang))
             
             # Notification
             utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Data loaded!", "blue")
@@ -1483,44 +1554,18 @@ class Controller_handel_all_events:
             tab_02_combo_trang_thai.set("Còn hạn")
             
             # Create value to filter and fetch data
-            so_phieu = "NULL"
-            so_hop_dong = "NULL"
-            ngay_bat_dau = "NULL"
-            ngay_ket_thuc = "NULL"
-            ma_doi_tuong = "NULL"
-            ma_hang = "NULL"
-            het_han = 0
+            so_phieu = None
+            so_hop_dong = None
+            formated_ngay_bat_dau = None
+            formated_ngay_ket_thuc = None
+            ma_doi_tuong = None
+            ma_hang = None
+            combo_trang_thai = 0
             
-            query = f"""
-                        SELECT
-                        ROW_NUMBER() OVER(ORDER BY [SO_PHIEU] DESC, [NGAY_TREN_PHIEU] DESC) as RowNumber
-                        ,FORMAT([NGAY_TREN_PHIEU], 'dd-MM-yyyy') as NGAY_TREN_PHIEU
-                        ,[SO_PHIEU]
-                        ,[MA_DOI_TUONG]
-                        ,[TEN_DOI_TUONG]
-                        ,[SO_HOP_DONG]
-                        ,[GHI_CHU_PHIEU]
-                        ,[STT_DONG]
-                        ,[MA_HANG]
-                        ,[TEN_HANG]
-                        ,[DVT]
-                        ,[SO_LUONG_KHA_DUNG]
-                        ,[SO_LUONG_NHU_CAU]
-                        ,[SO_LUONG_GIU_CHO]
-                        ,[SO_LUONG_YEU_CAU_DAT_HANG]
-                        ,[GHI_CHU_SP]	
-                    FROM [TBD_2024].[dbo].[TB_KD02_YEU_CAU_DAT_HANG]
-                    WHERE 
-                        [XOA_SUA] = '' AND
-                        [EXPIRED] = {het_han} AND
-                        ({so_phieu} IS NULL OR SO_PHIEU LIKE '%' + {so_phieu} + '%') AND
-                        ({so_hop_dong} IS NULL OR SO_HOP_DONG LIKE '%' + {so_hop_dong} + '%') AND
-                        ({ngay_bat_dau} IS NULL OR {ngay_ket_thuc} IS NULL OR NGAY_TREN_PHIEU BETWEEN {ngay_bat_dau} AND {ngay_ket_thuc}) AND
-                        ({ma_doi_tuong} IS NULL OR MA_DOI_TUONG LIKE '%' + {ma_doi_tuong} + '%') AND
-                        ({ma_hang} IS NULL OR MA_HANG LIKE '%' + {ma_hang} + '%')
-                    """
+            query = controller_get_information_of_module.load_query_filter_data_to_treeview()
             
-            SQLController.load_data(my_treeview, query)
+            # SQLController.load_data(my_treeview, query)
+            SQLController.load_data_with_quey_and_params(my_treeview, query, (combo_trang_thai, so_phieu, so_phieu, so_hop_dong, so_hop_dong, formated_ngay_bat_dau, formated_ngay_ket_thuc, formated_ngay_bat_dau, formated_ngay_ket_thuc, ma_doi_tuong, ma_doi_tuong, ma_hang, ma_hang))
             
             utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Clear all filter!", "blue")
         except Exception as e:
