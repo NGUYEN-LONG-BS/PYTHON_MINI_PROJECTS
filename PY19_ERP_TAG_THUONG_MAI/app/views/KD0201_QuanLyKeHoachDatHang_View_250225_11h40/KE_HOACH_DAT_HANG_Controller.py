@@ -332,12 +332,7 @@ class Controller_action_after_event:
         ) = args
         
         # Step 2.1: get ID_nhan_vien và Xoa_sua
-        ID_nhan_vien = "NV01"
-        Xoa_Sua = ""
-        
         SQLController.f_controller_handle_btn_save_03_click_(
-            ID_nhan_vien,
-            Xoa_Sua,
             entry_so_phieu, 
             entry_ma_kh, 
             entry_ten_kh,
@@ -625,8 +620,6 @@ class SQLController:
     # Function to print data from the Treeview
     def get_data_to_import_to_SQL(*args):
         (
-            ID_nhan_vien,
-            Xoa_Sua,
             entry_so_phieu, 
             entry_ma_kh, 
             entry_ten_kh,
@@ -637,6 +630,9 @@ class SQLController:
             entry_ghi_chu_cua_phieu,
             tree
         ) = args
+        
+        ID_nhan_vien = utils_controller_get_information_of_database.load_id_nhan_vien()
+        Xoa_Sua = utils_controller_get_information_of_database.load_xoa_sua_mac_dinh()
         
         value_ma_khach_hang = "" if entry_ma_kh.get() == "search here" else entry_ma_kh.get()
         value_so_hop_dong = "" if entry_so_hop_dong.get() == "search here" else entry_so_hop_dong.get()
@@ -676,8 +672,6 @@ class SQLController:
     
     def f_controller_handle_btn_save_03_click_(*args):
         (
-            ID_nhan_vien,
-            Xoa_Sua,
             entry_so_phieu, 
             entry_ma_kh, 
             entry_ten_kh,
@@ -689,9 +683,7 @@ class SQLController:
             tree
         ) = args
         # Step_01: Get data
-        notification_text, data_array = SQLController.get_data_to_import_to_SQL(ID_nhan_vien,
-                                                                                Xoa_Sua,
-                                                                                entry_so_phieu, 
+        notification_text, data_array = SQLController.get_data_to_import_to_SQL(entry_so_phieu, 
                                                                                 entry_ma_kh, 
                                                                                 entry_ten_kh,
                                                                                 entry_mst,

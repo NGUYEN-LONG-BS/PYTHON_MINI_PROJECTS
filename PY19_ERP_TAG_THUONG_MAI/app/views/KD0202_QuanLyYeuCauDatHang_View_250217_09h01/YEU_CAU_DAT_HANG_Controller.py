@@ -10,6 +10,14 @@ class controller_get_information_of_module:
         loai_phieu = "YCDH"
         return loai_phieu
     
+    def load_column_name_so_phieu():
+        column_name = "SO_PHIEU"
+        return column_name
+    
+    def load_column_name_ma_khach_hang():
+        column_name = "MA_DOI_TUONG"
+        return column_name
+    
     def load_treeview_config_json_path():
         tab_01_treeview_config_json_path = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'KD_YEU_CAU_DAT_HANG', 'treeview_tab_01_YCDH_input.json')
         tab_02_treeview_config_json_path = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'KD_YEU_CAU_DAT_HANG', 'treeview_tab_02_YCDH_log.json')
@@ -153,13 +161,18 @@ class controller_get_information_of_module:
             
             return query, header
     
-    def load_column_name_so_phieu():
-        column_name = "SO_PHIEU"
-        return column_name
-    
-    def load_column_name_ma_khach_hang():
-        column_name = "MA_DOI_TUONG"
-        return column_name
+    def load_query_get_list_number_of_slip():
+        column_name = controller_get_information_of_module.load_column_name_so_phieu()
+        database_name = utils_controller_get_information_of_database.load_database_name()
+        table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+        # Tạo câu query SQL với danh sách số phiếu
+        query = f"""
+        SELECT DISTINCT
+            {column_name}
+        FROM {database_name}.[dbo].{table_name}
+        WHERE [XOA_SUA] = ''
+        """
+        return query
     
 class Controller_action_after_event:
     
@@ -327,7 +340,10 @@ class Controller_action_after_event:
             print("Error at function: ", f_utils_get_current_function_name())
             return False
     
-    def f_Check_duplicate_and_auto_update_slip_number(entry_so_phieu, database_name, table_name, column_name):
+    def f_Check_duplicate_and_auto_update_slip_number(entry_so_phieu):
+        database_name = utils_controller_get_information_of_database.load_database_name()
+        table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+        column_name = controller_get_information_of_module.load_column_name_so_phieu()
         try:
             kiem_tra_trung_so_phieu = f_utils_check_duplicate(entry_so_phieu, database_name, table_name, column_name)
             if kiem_tra_trung_so_phieu == False:    # có trùng phiếu
@@ -340,7 +356,10 @@ class Controller_action_after_event:
             print("Error at function: ", f_utils_get_current_function_name())
             return False
     
-    def f_Check_exist_ma_khach_hang(entry_ma_khach_hang, database_name, table_name, column_name):
+    def f_Check_exist_ma_khach_hang(entry_ma_khach_hang):
+        database_name = utils_controller_get_information_of_database.load_database_name()
+        table_name = utils_controller_get_information_of_database.load_table_name_TB_AD00_DANH_SACH_KHACH_HANG()
+        column_name = controller_get_information_of_module.load_column_name_ma_khach_hang()
         try:
             kiem_tra_trung_so_phieu = f_utils_check_exist(entry_ma_khach_hang, database_name, table_name, column_name)
             if kiem_tra_trung_so_phieu == False:    # Chưa có mã khách hàng
@@ -481,12 +500,7 @@ class Controller_action_after_event:
         ) = args
         
         # Step 2.1: get ID_nhan_vien và Xoa_sua
-        ID_nhan_vien = "NV01"
-        Xoa_Sua = ""
-        
-        SQLController.f_controller_handle_btn_save_03_click_(
-            ID_nhan_vien,
-            Xoa_Sua,
+        SQLController.f_controller_handle_btn_save_click(
             entry_so_phieu, 
             entry_ma_kh, 
             entry_ten_kh,
@@ -508,9 +522,11 @@ class Controller_action_after_event:
             print("Error at function: ", f_utils_get_current_function_name())
             return False
     
-    def f_get_the_latest_number_of_slip(entry_so_phieu, ma_thanh_vien, loai_phieu, database_name, table_name, column_name):
+    def f_get_the_latest_number_of_slip(entry_so_phieu):
+        ma_thanh_vien = utils_controller_get_information_of_database.load_ma_thanh_vien()
+        loai_phieu = controller_get_information_of_module.load_loai_phieu()
         # Get the latest number of slip
-        so_phieu = Controller_get_the_latest_number_of_slip.handle_button_get_number_of_slip_click(database_name, table_name, column_name)
+        so_phieu = Controller_get_the_latest_number_of_slip.handle_button_get_number_of_slip_click()
         # Create the connection string
         connection_number_of_slip = f"{ma_thanh_vien}-{loai_phieu}-{so_phieu + 1}"
         # Config the entry_so_phieu
@@ -912,8 +928,6 @@ class SQLController:
     # Function to print data from the Treeview
     def get_data_to_import_to_SQL(*args):
         (
-            ID_nhan_vien,
-            Xoa_Sua,
             entry_so_phieu, 
             entry_ma_kh, 
             entry_ten_kh,
@@ -924,6 +938,11 @@ class SQLController:
             entry_ghi_chu_cua_phieu,
             tree
         ) = args
+        
+        # Các giá trị mặc định
+        ID_nhan_vien = utils_controller_get_information_of_database.load_id_nhan_vien()
+        Xoa_Sua = utils_controller_get_information_of_database.load_xoa_sua_mac_dinh()
+        Expired = utils_controller_get_information_of_database.load_expired_mac_dinh()
         
         value_ma_khach_hang = "" if entry_ma_kh.get() == "search here" else entry_ma_kh.get()
         value_so_hop_dong = "" if entry_so_hop_dong.get() == "search here" else entry_so_hop_dong.get()
@@ -952,22 +971,18 @@ class SQLController:
                     ,float(row[5])
                     ,float(row[6])
                     ,float(row[7])
-                    ,row[8]
+                    ,row[8],
+                    Expired
                 ))
-            notification_text = "Data exported"
-            return notification_text, data
+            return True, data
         except Exception as e:
-            error_details = traceback.format_exc()
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
-            notification_text = f"Data validation failed. Error details:\n{error_details}"
             data = []
-            return notification_text, data
+            return False, data
     
-    def f_controller_handle_btn_save_03_click_(*args):
+    def f_controller_handle_btn_save_click(*args):
         (
-            ID_nhan_vien,
-            Xoa_Sua,
             entry_so_phieu, 
             entry_ma_kh, 
             entry_ten_kh,
@@ -978,19 +993,21 @@ class SQLController:
             entry_ghi_chu_cua_phieu,
             tree
         ) = args
+        
         # Step_01: Get data
-        notification_text, data_array = SQLController.get_data_to_import_to_SQL(ID_nhan_vien,
-                                                                                Xoa_Sua,
-                                                                                entry_so_phieu, 
-                                                                                entry_ma_kh, 
-                                                                                entry_ten_kh,
-                                                                                entry_mst,
-                                                                                entry_dia_chi,
-                                                                                entry_so_hop_dong,
-                                                                                entry_thong_tin_hop_dong,
-                                                                                entry_ghi_chu_cua_phieu,
-                                                                                tree
-                                                                                )
+        flag, data_array = SQLController.get_data_to_import_to_SQL(entry_so_phieu, 
+                                                                    entry_ma_kh, 
+                                                                    entry_ten_kh,
+                                                                    entry_mst,
+                                                                    entry_dia_chi,
+                                                                    entry_so_hop_dong,
+                                                                    entry_thong_tin_hop_dong,
+                                                                    entry_ghi_chu_cua_phieu,
+                                                                    tree
+                                                                    )
+        if flag == False:
+            return "Data validation failed (01). Please fix the errors."
+        
         # Step_02: validate data
         f_utils_get_unique_column_from_data(data_array, 8)
         # Step_03: Export data to SQL
@@ -1001,26 +1018,21 @@ class SQLController:
             utils_model_SQL_server.f_goi_ham_Export_to_table(data_array, database_name, table_name)
             return "Data exported"
         else:
-            return notification_text
+            return "Data validation failed (02). Please fix the errors."
         
 class Controller_get_the_latest_number_of_slip:
     
-    def handle_button_get_number_of_slip_click(database_name, table_name, column_name):
+    def handle_button_get_number_of_slip_click():
         # Lấy danh sách số phiếu từ SQL
-        data_01 = Controller_get_the_latest_number_of_slip.get_list_number_of_slip(database_name, table_name, column_name)
+        data_01 = Controller_get_the_latest_number_of_slip.get_list_number_of_slip()
         # Lấy số phiếu cuối cùng
         data_02 = Controller_get_the_latest_number_of_slip.extract_numbers_from_data_SQL_num_01(data_01)
         return data_02
     
-    def get_list_number_of_slip(database_name, table_name, column_name):
+    def get_list_number_of_slip():
         
         # Tạo câu query SQL với danh sách số phiếu
-        query = f"""
-        SELECT DISTINCT
-            {column_name}
-        FROM {database_name}.[dbo].{table_name}
-        WHERE [XOA_SUA] = ''
-        """
+        query = controller_get_information_of_module.load_query_get_list_number_of_slip()
         # print("query", query)
         
         # lấy danh sách số phiếu từ SQL
@@ -1211,60 +1223,7 @@ class Controller_handel_all_events:
             so_phieu_str = ', '.join([f"'{str(x)}'" for x in danh_sach_so_phieu])
             # print("so_phieu_str", so_phieu_str)
             
-            # Tạo câu query SQL với danh sách số phiếu
-            # database_name = utils_controller_get_information_of_database.load_database_name()
-            # table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
-            # danh_sach_id = utils_controller_get_information_of_database.load_danh_sach_id_duoc_phan_quyen()
-            
             query, header = controller_get_information_of_module.load_query_select_data_filtered_to_Excel(so_phieu_str)
-            # query = f"""
-            # SELECT 
-            #     ROW_NUMBER() OVER(ORDER BY [SO_PHIEU]) as RowNumber,
-            #     [SO_PHIEU],
-            #     [NGAY_TREN_PHIEU],
-            #     [MA_DOI_TUONG],
-            #     [TEN_DOI_TUONG],
-            #     [MA_SO_THUE],
-            #     [DIA_CHI],
-            #     [SO_HOP_DONG],
-            #     [THONG_TIN_HOP_DONG],
-            #     [GHI_CHU_PHIEU],
-            #     [STT_DONG],
-            #     [MA_HANG],
-            #     [TEN_HANG],
-            #     [DVT],
-            #     [SO_LUONG_KHA_DUNG],
-            #     [SO_LUONG_NHU_CAU],
-            #     [SO_LUONG_GIU_CHO],
-            #     [SO_LUONG_YEU_CAU_DAT_HANG],
-            #     [GHI_CHU_SP]
-            # FROM [{database_name}].[dbo].[{table_name}]
-            # WHERE [SO_PHIEU] IN ({so_phieu_str}) AND
-            #       [ID_NHAN_VIEN] IN ({danh_sach_id})
-            # ORDER BY [SO_PHIEU] DESC
-            # """
-            # # print(query)
-            
-            # # Tạo header cho file Excel
-            # header = ["STT", 
-            #         "Số phiếu", 
-            #         "Ngày trên phiếu", 
-            #         "Mã đối tượng", 
-            #         "Tên đối tượng", 
-            #         "Mã số thuế", 
-            #         "Địa chỉ", 
-            #         "Số hợp đồng", 
-            #         "Thông tin hợp đồng", 
-            #         "Ghi chú phiếu", 
-            #         "STT dòng", 
-            #         "Mã hàng", 
-            #         "Tên hàng", 
-            #         "ĐVT", 
-            #         "Số lượng khả dụng", 
-            #         "Số lượng nhu cầu", 
-            #         "Số lượng giữ chỗ", 
-            #         "Số lượng yêu cầu đặt hàng", 
-            #         "Ghi chú sản phẩm"] 
             
             flag, path = utils_controller_Export_data_to_Excel_250222_09h16.export_log_to_excel(query, header)
             if flag == False:
@@ -1433,18 +1392,8 @@ class Controller_handel_all_events:
             return f"Error: {e}"
     
     def f_handle_event_get_the_latest_number_of_slip(tab_01_entry_so_phieu):
-        ma_thanh_vien = utils_controller_get_information_of_database.load_ma_thanh_vien()
-        loai_phieu = controller_get_information_of_module.load_loai_phieu()
-        database_name = utils_controller_get_information_of_database.load_database_name()
-        table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG() 
-        column_name = controller_get_information_of_module.load_column_name_so_phieu()
         try:
-            Controller_action_after_event.f_get_the_latest_number_of_slip(tab_01_entry_so_phieu, 
-                                                                          ma_thanh_vien, 
-                                                                          loai_phieu, 
-                                                                          database_name, 
-                                                                          table_name, 
-                                                                          column_name)
+            Controller_action_after_event.f_get_the_latest_number_of_slip(tab_01_entry_so_phieu)
             return "Have gotten the latest number of slip!"
         except Exception as e:
             print(f"Error: {e}")
@@ -1635,13 +1584,7 @@ class Controller_handel_all_events:
             ) = args
             
             # call controller to handle event
-            database_name = utils_controller_get_information_of_database.load_database_name()
-            table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
-            column_name = controller_get_information_of_module.load_column_name_so_phieu()
             flag = Controller_event_tab_01_btn_save_click.f_handle_event_tab_01_btn_save_click(
-                database_name,
-                table_name,
-                column_name,
                 entry_notification,
                 entry_so_phieu, 
                 entry_ma_kh, 
@@ -1663,7 +1606,7 @@ class Controller_handel_all_events:
             return False
         
 class Controller_event_tab_01_btn_save_click:
-    def f_handle_event_tab_01_btn_save_click(database_name, table_name, column_name, *args):
+    def f_handle_event_tab_01_btn_save_click(*args):
         try:
             # Step get data and validate data
             (   entry_notification,
@@ -1677,10 +1620,7 @@ class Controller_event_tab_01_btn_save_click:
                 entry_ghi_chu_cua_phieu,
                 tree
             ) = args
-            flag = Controller_event_tab_01_btn_save_click.validate_data( 
-                database_name, 
-                table_name, 
-                column_name,
+            flag = Controller_event_tab_01_btn_save_click.validate_data(
                 entry_notification,
                 entry_ma_kh,
                 tree
@@ -1689,9 +1629,6 @@ class Controller_event_tab_01_btn_save_click:
                 return False
             
             flag = Controller_event_tab_01_btn_save_click.validate_number_of_slip( 
-                database_name, 
-                table_name, 
-                column_name,
                 entry_notification,
                 entry_so_phieu
             )
@@ -1716,14 +1653,10 @@ class Controller_event_tab_01_btn_save_click:
             print("Error at function: ", f_utils_get_current_function_name())
             return False
 
-    def validate_number_of_slip(database_name, table_name, column_name, entry_notification, entry_so_phieu):
+    def validate_number_of_slip(entry_notification, entry_so_phieu):
         try:
             # Check duplicate slip number
-            if Controller_action_after_event.f_Check_duplicate_and_auto_update_slip_number(
-                entry_so_phieu,
-                database_name, 
-                table_name,
-                column_name) == True:
+            if Controller_action_after_event.f_Check_duplicate_and_auto_update_slip_number(entry_so_phieu) == True:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số phiếu bị trùng, vui lòng thử lại!", "red")
                 # print("Error at function: ", f_utils_get_current_function_name())
                 return False
@@ -1735,7 +1668,7 @@ class Controller_event_tab_01_btn_save_click:
             print("Error at function: ", f_utils_get_current_function_name())
             return False
         
-    def validate_data(database_name, table_name, column_name, entry_notification, entry_ma_khach_hang, my_treeview):
+    def validate_data(entry_notification, entry_ma_khach_hang, my_treeview):
         try:
             # Check if the client id is empty
             if entry_ma_khach_hang.get() == "" or entry_ma_khach_hang.get() == "search here":
@@ -1749,14 +1682,7 @@ class Controller_event_tab_01_btn_save_click:
                 return False
             
             # Check exist client id
-            database_name = utils_controller_get_information_of_database.load_database_name()
-            table_name = utils_controller_get_information_of_database.load_table_name_TB_AD00_DANH_SACH_KHACH_HANG()
-            column_name = controller_get_information_of_module.load_column_name_ma_khach_hang()
-            if Controller_action_after_event.f_Check_exist_ma_khach_hang(
-                entry_ma_khach_hang,
-                database_name, 
-                table_name,
-                column_name) == False:
+            if Controller_action_after_event.f_Check_exist_ma_khach_hang(entry_ma_khach_hang) == False:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Mã khách hàng chưa tồn tại!", "red")
                 # print("Error at function: ", f_utils_get_current_function_name())
                 return False

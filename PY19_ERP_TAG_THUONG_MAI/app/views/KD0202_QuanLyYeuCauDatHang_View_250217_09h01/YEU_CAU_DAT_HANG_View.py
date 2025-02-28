@@ -55,8 +55,6 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         
         self.tab_01_btn_template.config(command=self.event_tab_01_button_template_click)
         self.tab_01_btn_get_import_file.config(command=self.event_tab_01_button_get_import_file_click)
-        # self.tab_01_btn_import.config(command=self.event_tab_01_button_import_click)
-        # self.tab_01_btn_start_import_file.config(command=self.event_tab_01_button_start_import_file_click)
         
         self.tab_02_button_filter.config(command=self.event_tab_02_button_filter_click)
         self.tab_02_button_clear_filter.config(command=self.event_tab_02_button_clear_filter_click)

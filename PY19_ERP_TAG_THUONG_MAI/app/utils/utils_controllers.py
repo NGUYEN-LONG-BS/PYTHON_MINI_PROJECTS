@@ -338,6 +338,18 @@ class utils_controller_TreeviewHandler_click_250217_22h34:
     
 class utils_controller_get_information_of_database:
         
+    def load_id_nhan_vien():
+        ID_nhan_vien = "NV01"
+        return ID_nhan_vien
+    
+    def load_xoa_sua_mac_dinh():
+        Xoa_Sua = ""
+        return Xoa_Sua
+        
+    def load_expired_mac_dinh():
+        Expired = 0
+        return Expired
+        
     def load_danh_sach_id_duoc_phan_quyen():
         danh_sach_id_duoc_phan_quyen = "'NV01', 'NV02', 'NV03'"
         return danh_sach_id_duoc_phan_quyen
