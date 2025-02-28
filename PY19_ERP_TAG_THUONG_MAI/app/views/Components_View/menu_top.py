@@ -291,20 +291,20 @@ class cls_menu_top:
         menu_TEST = tk.Menu(top_menu, tearoff=0)
         top_menu.add_cascade(label="TEST", menu=menu_TEST)
         
-        menu_TEST.add_command(label="Các gói thầu đã lập", command=self.f_QLGT_GoiThauDaLap_click)
-        menu_TEST.add_command(label="Tạo mới gói thầu", command=self.f_QLGT_TaoMoi_click)
-        menu_TEST.add_command(label="Các gói thầu đã lập", command=self.f_QLGT_GoiThauDaLap_click)
+    #     menu_TEST.add_command(label="Các gói thầu đã lập", command=self.f_QLGT_GoiThauDaLap_click)
+    #     menu_TEST.add_command(label="Tạo mới gói thầu", command=self.f_QLGT_TaoMoi_click)
+    #     menu_TEST.add_command(label="Các gói thầu đã lập", command=self.f_QLGT_GoiThauDaLap_click)
 
-        menu_TEST.add_separator()
-        menu_TEST.add_command(label="Test |Phiếu Yêu cầu đặt hàng", command=self.f_test_tao_moi_YCDH_TALA_click)
-        menu_TEST.add_command(label="Test |Nhật ký yêu cầu đặt hàng", command=self.f_test_nhat_ky_YCDH_TALA_click)
+    #     menu_TEST.add_separator()
+    #     menu_TEST.add_command(label="Test |Phiếu Yêu cầu đặt hàng", command=self.f_test_tao_moi_YCDH_TALA_click)
+    #     menu_TEST.add_command(label="Test |Nhật ký yêu cầu đặt hàng", command=self.f_test_nhat_ky_YCDH_TALA_click)
         
-        menu_TEST.add_separator()
+    #     menu_TEST.add_separator()
         menu_TEST.add_command(label="KD0101 |Quản lý gói thầu", command=self.f_KD0101_QuanLyGoiThau_click)
         menu_TEST.add_command(label="KD0102 |Tạo mới gói thầu", command=self.f_KD0101_QuanLyGoiThau_click)
         menu_TEST.add_separator()
-        menu_TEST.add_command(label="Test tốt import, Export", command=self.f_test_tot_click)
-        menu_TEST.add_command(label="CRUPP Khách hàng", command=self.f_KD_CRUDP_KhachHang_click)
+    #     menu_TEST.add_command(label="Test tốt import, Export", command=self.f_test_tot_click)
+    #     menu_TEST.add_command(label="CRUPP Khách hàng", command=self.f_KD_CRUDP_KhachHang_click)
         
         
         
@@ -336,13 +336,13 @@ class cls_menu_top:
         print("f_QLGT_TaoMoi_click selected")
         self.f_open_KD0101_QuanLyGoiThau_View()
     
-    def f_test_tot_click(self):
-        print("f_test_tot_click selected")
-        self.f_open_f_test_tot_click_View()
+    # def f_test_tot_click(self):
+    #     print("f_test_tot_click selected")
+    #     self.f_open_f_test_tot_click_View()
     
-    def f_QLGT_GoiThauDaLap_click(self):
-        print("f_QLGT_GoiThauDaLap_click selected")
-        self.f_open_KD01_01QuanLyGoiThauView()
+    # def f_QLGT_GoiThauDaLap_click(self):
+    #     print("f_QLGT_GoiThauDaLap_click selected")
+    #     self.f_open_KD01_01QuanLyGoiThauView()
     
     # Define the action fuctions for QLYCDT menu
     def f_tao_moi_YCDH_click(self):
@@ -404,17 +404,17 @@ class cls_menu_top:
         f_utils_set_center_screen(new_view)                     # Center the new window on the screen
         new_view.focus_force()                                  # Ensure the new window is in focus
         
-    def f_open_KD02QuanLyYeuCauDatHangView(self):
-        from views.KD02_QuanLyYeuCauDatHang_View.KD0201_PhieuYeuCauDatHang_View import cls_KD0201_PhieuYeuCauDatHang_View
-        self.parent.destroy()
-        new_view = cls_KD0201_PhieuYeuCauDatHang_View()
-        new_view.dashboard = self.parent
-        utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
-        f_utils_set_center_screen(new_view)
-        new_view.focus_force()
+    # def f_open_KD02QuanLyYeuCauDatHangView(self):
+    #     from views.KD02_QuanLyYeuCauDatHang_View.KD0201_PhieuYeuCauDatHang_View import cls_KD0201_PhieuYeuCauDatHang_View
+    #     self.parent.destroy()
+    #     new_view = cls_KD0201_PhieuYeuCauDatHang_View()
+    #     new_view.dashboard = self.parent
+    #     utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
+    #     f_utils_set_center_screen(new_view)
+    #     new_view.focus_force()
 
     def f_open_tao_moi_YEU_CAU_DAT_HANG_View(self):
-        from views.KD02_QuanLyYeuCauDatHang_View_250217_0901.YEU_CAU_DAT_HANG_View import cls_YEU_CAU_DAT_HANG_View
+        from views.KD0202_QuanLyYeuCauDatHang_View_250217_09h01.YEU_CAU_DAT_HANG_View import cls_YEU_CAU_DAT_HANG_View
         self.parent.destroy()
         new_view = cls_YEU_CAU_DAT_HANG_View()
         new_view.dashboard = self.parent
@@ -423,7 +423,7 @@ class cls_menu_top:
         new_view.focus_force()
     
     def f_open_tao_moi_DE_NGHI_XUAT_KHO_View(self):
-        from views.KD03_QuanLyDeNghiXuatKho_View_250225_10h00.DE_NGHI_XUAT_KHO_View import cls_DE_NGHI_XUAT_KHO_View
+        from views.KD0301_QuanLyDeNghiXuatKho_View_250225_10h00.DE_NGHI_XUAT_KHO_View import cls_DE_NGHI_XUAT_KHO_View
         self.parent.destroy()
         new_view = cls_DE_NGHI_XUAT_KHO_View()
         new_view.dashboard = self.parent
@@ -432,7 +432,7 @@ class cls_menu_top:
         new_view.focus_force()
     
     def f_open_tao_moi_KE_HOACH_DAT_HANG_View(self):
-        from views.KD02_QuanLyKeHoachDatHang_View_250225_11h40.KE_HOACH_DAT_HANG_View import cls_KE_HOACH_DAT_HANG_View
+        from views.KD0201_QuanLyKeHoachDatHang_View_250225_11h40.KE_HOACH_DAT_HANG_View import cls_KE_HOACH_DAT_HANG_View
         self.parent.destroy()
         new_view = cls_KE_HOACH_DAT_HANG_View()
         new_view.dashboard = self.parent
@@ -441,7 +441,7 @@ class cls_menu_top:
         new_view.focus_force()
     
     def f_open_nhat_ky_YEU_CAU_DAT_HANG_View(self):
-        from views.KD02_QuanLyYeuCauDatHang_View_250217_0901.YEU_CAU_DAT_HANG_View import cls_YEU_CAU_DAT_HANG_View
+        from views.KD0202_QuanLyYeuCauDatHang_View_250217_09h01.YEU_CAU_DAT_HANG_View import cls_YEU_CAU_DAT_HANG_View
         self.parent.destroy()
         new_view = cls_YEU_CAU_DAT_HANG_View()
         new_view.dashboard = self.parent
@@ -457,7 +457,7 @@ class cls_menu_top:
             print(f"Error at function: {my_current_function}")
     
     def f_open_nhat_ky_DE_NGHI_XUAT_KHO_View(self):
-        from views.KD03_QuanLyDeNghiXuatKho_View_250225_10h00.DE_NGHI_XUAT_KHO_View import cls_DE_NGHI_XUAT_KHO_View
+        from views.KD0301_QuanLyDeNghiXuatKho_View_250225_10h00.DE_NGHI_XUAT_KHO_View import cls_DE_NGHI_XUAT_KHO_View
         self.parent.destroy()
         new_view = cls_DE_NGHI_XUAT_KHO_View()
         new_view.dashboard = self.parent
@@ -473,7 +473,7 @@ class cls_menu_top:
             print(f"Error at function: {my_current_function}")
     
     def f_open_nhat_ky_KE_HOACH_DAT_HANG_View(self):
-        from views.KD02_QuanLyKeHoachDatHang_View_250225_11h40.KE_HOACH_DAT_HANG_View import cls_KE_HOACH_DAT_HANG_View
+        from views.KD0201_QuanLyKeHoachDatHang_View_250225_11h40.KE_HOACH_DAT_HANG_View import cls_KE_HOACH_DAT_HANG_View
         self.parent.destroy()
         new_view = cls_KE_HOACH_DAT_HANG_View()
         new_view.dashboard = self.parent
@@ -488,30 +488,30 @@ class cls_menu_top:
             my_current_function = f_utils_get_current_function_name()
             print(f"Error at function: {my_current_function}")
     
-    def f_open_testview(self):
-        from views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
-        self.parent.destroy()
-        new_view = cls_test_View()
-        new_view.dashboard = self.parent
-        utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
-        f_utils_set_center_screen(new_view)
-        new_view.focus_force()
+    # def f_open_testview(self):
+    #     from views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
+    #     self.parent.destroy()
+    #     new_view = cls_test_View()
+    #     new_view.dashboard = self.parent
+    #     utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
+    #     f_utils_set_center_screen(new_view)
+    #     new_view.focus_force()
     
-    def f_open_tab_02_of_testview(self):
-        from views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
-        self.parent.destroy()
-        new_view = cls_test_View()
-        new_view.dashboard = self.parent
-        utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
-        f_utils_set_center_screen(new_view)
-        new_view.focus_force()
-        # Activate tab02
-        try:
-            tab_02 = f_utils_tim_component_with_name(new_view, "tab_02")
-            new_view.notebook.select(tab_02)  # Ensure `notebook` exists in `new_view`
-        except AttributeError:
-            my_current_function = f_utils_get_current_function_name()
-            print(f"Error at function: {my_current_function}")
+    # def f_open_tab_02_of_testview(self):
+    #     from views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
+    #     self.parent.destroy()
+    #     new_view = cls_test_View()
+    #     new_view.dashboard = self.parent
+    #     utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
+    #     f_utils_set_center_screen(new_view)
+    #     new_view.focus_force()
+    #     # Activate tab02
+    #     try:
+    #         tab_02 = f_utils_tim_component_with_name(new_view, "tab_02")
+    #         new_view.notebook.select(tab_02)  # Ensure `notebook` exists in `new_view`
+    #     except AttributeError:
+    #         my_current_function = f_utils_get_current_function_name()
+    #         print(f"Error at function: {my_current_function}")
             
     def f_open_HR01(self):
         from views.HR01_FORM_VIEW.set_margins import cls_hr01_view
@@ -522,33 +522,33 @@ class cls_menu_top:
         f_utils_set_center_screen(new_view)
         new_view.focus_force()
     
-    def f_open_KD0301_CRUDP_KhachHang_View(self):
-        from views.KD03_QuanLyKhachHang_View.KD0301_CRUDP_KhachHang_View import cls_KD0301_CRUDP_KhachHang_View
-        self.parent.destroy()
-        new_view = cls_KD0301_CRUDP_KhachHang_View()
-        new_view.dashboard = self.parent
-        utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
-        f_utils_set_center_screen(new_view)
-        new_view.focus_force()
+    # def f_open_KD0301_CRUDP_KhachHang_View(self):
+    #     from views.KD03_QuanLyKhachHang_View.KD0301_CRUDP_KhachHang_View import cls_KD0301_CRUDP_KhachHang_View
+    #     self.parent.destroy()
+    #     new_view = cls_KD0301_CRUDP_KhachHang_View()
+    #     new_view.dashboard = self.parent
+    #     utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
+    #     f_utils_set_center_screen(new_view)
+    #     new_view.focus_force()
     
-    def f_open_KD01_01QuanLyGoiThauView(self):
-        from views.KD01_QuanLyGoiThau_TEST_02.KD01_01QuanLyGoiThauView import cls_View
-        self.parent.destroy()
-        new_view = cls_View()
-        new_view.dashboard = self.parent
-        utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
-        f_utils_set_center_screen(new_view)
-        new_view.focus_force()
+    # def f_open_KD01_01QuanLyGoiThauView(self):
+    #     from views.KD01_QuanLyGoiThau_TEST_02.KD01_01QuanLyGoiThauView import cls_View
+    #     self.parent.destroy()
+    #     new_view = cls_View()
+    #     new_view.dashboard = self.parent
+    #     utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
+    #     f_utils_set_center_screen(new_view)
+    #     new_view.focus_force()
         
     
-    def f_open_KD01QuanLyGoiThauView(self):
-        from views.KD01_QuanLyGoiThau_TEST_01.KD01QuanLyGoiThauView import cls_KD01QuanLyGoiThauView
-        self.parent.destroy()
-        new_view = cls_KD01QuanLyGoiThauView()
-        new_view.dashboard = self.parent
-        utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
-        f_utils_set_center_screen(new_view)
-        new_view.focus_force()
+    # def f_open_KD01QuanLyGoiThauView(self):
+    #     from views.KD01_QuanLyGoiThau_TEST_01.KD01QuanLyGoiThauView import cls_KD01QuanLyGoiThauView
+    #     self.parent.destroy()
+    #     new_view = cls_KD01QuanLyGoiThauView()
+    #     new_view.dashboard = self.parent
+    #     utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
+    #     f_utils_set_center_screen(new_view)
+    #     new_view.focus_force()
         
         
     def f_open_KD0101_QuanLyGoiThau_View(self):
@@ -560,14 +560,14 @@ class cls_menu_top:
         f_utils_set_center_screen(new_view)
         new_view.focus_force()
         
-    def f_open_f_test_tot_click_View(self):
-        from views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
-        self.parent.destroy()
-        new_view = cls_test_View()
-        # new_view.dashboard = self.parent
-        utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
-        f_utils_set_center_screen(new_view)
-        new_view.focus_force()
+    # def f_open_f_test_tot_click_View(self):
+    #     from views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
+    #     self.parent.destroy()
+    #     new_view = cls_test_View()
+    #     # new_view.dashboard = self.parent
+    #     utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
+    #     f_utils_set_center_screen(new_view)
+    #     new_view.focus_force()
         
     def f_open_cls_VT0101_DonDatHang_View(self):
         from views.VT01_QuanLyDonDatHang_View.VT0101_DonDatHang_View import cls_VT0101_DonDatHang_View

@@ -166,7 +166,7 @@ class cls_Dashboard_kinhdoanh_View(cls_base_form_number_02_ManyTabs):
         
     def f_card_04_ke_hoach_dat_hang_click(self, event):
         # from views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
-        from views.KD02_QuanLyKeHoachDatHang_View_250225_11h40.KE_HOACH_DAT_HANG_View import cls_KE_HOACH_DAT_HANG_View
+        from views.KD0201_QuanLyKeHoachDatHang_View_250225_11h40.KE_HOACH_DAT_HANG_View import cls_KE_HOACH_DAT_HANG_View
         self.destroy()
         new_view = cls_KE_HOACH_DAT_HANG_View()
         # new_view.dashboard = self.parent
@@ -179,7 +179,7 @@ class cls_Dashboard_kinhdoanh_View(cls_base_form_number_02_ManyTabs):
     
     def f_card_06_yeu_cau_dat_hang_click(self, event):
         # from views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
-        from views.KD02_QuanLyYeuCauDatHang_View_250217_0901.YEU_CAU_DAT_HANG_View import cls_YEU_CAU_DAT_HANG_View
+        from views.KD0202_QuanLyYeuCauDatHang_View_250217_09h01.YEU_CAU_DAT_HANG_View import cls_YEU_CAU_DAT_HANG_View
         self.destroy()
         new_view = cls_YEU_CAU_DAT_HANG_View()
         # new_view.dashboard = self.parent
@@ -192,7 +192,7 @@ class cls_Dashboard_kinhdoanh_View(cls_base_form_number_02_ManyTabs):
         
     def f_card_DE_NGHI_XUAT_KHO_click(self, event):
         # from views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
-        from views.KD03_QuanLyDeNghiXuatKho_View_250225_10h00.DE_NGHI_XUAT_KHO_View import cls_DE_NGHI_XUAT_KHO_View
+        from views.KD0301_QuanLyDeNghiXuatKho_View_250225_10h00.DE_NGHI_XUAT_KHO_View import cls_DE_NGHI_XUAT_KHO_View
         self.destroy()
         new_view = cls_DE_NGHI_XUAT_KHO_View()
         # new_view.dashboard = self.parent
