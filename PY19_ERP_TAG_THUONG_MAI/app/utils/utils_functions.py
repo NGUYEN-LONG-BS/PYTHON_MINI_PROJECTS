@@ -673,10 +673,11 @@ def f_utils_set_style(object):
         style.map("TFrame", 
                 background=[("active", HIGHLIGHT_COLOR)])  # Optional: Change on hover or active state
         
-def f_utils_get_unique_column_from_data(sample_data, number_column):
-        # Trích xuất cột thứ n và loại bỏ trùng lặp
-        unique_ma_hang = list(set(row[number_column] for row in sample_data))
-        return unique_ma_hang
+# def f_utils_check_exist_list_of_inventories_code(sample_data, number_column):
+#         # Trích xuất cột thứ n và loại bỏ trùng lặp
+#         unique_inventories_code_list = list(set(row[number_column] for row in sample_data))
+#         f_utils_check_exist()
+#         return True
 
 def f_utils_get_unique_column_from_treeview(treeview, number_column):
         # Extract unique values from the specified column in the Treeview
@@ -953,43 +954,43 @@ def f_utils_check_duplicate(entry_to_check, database_name, table_name, column_na
         print("Error at function: ", f_utils_get_current_function_name())
         return False
 
-def f_utils_check_exist(entry_to_check, database_name, table_name, column_name):
-    value_to_check = entry_to_check.get().strip()
+# def f_utils_check_exist(entry_to_check, database_name, table_name, column_name):
+#     value_to_check = entry_to_check.get().strip()
     
-    if not value_to_check:
-        messagebox.showwarning("Lỗi", "Vui lòng nhập giá trị cần kiểm tra!")
-        return False
+#     if not value_to_check:
+#         messagebox.showwarning("Lỗi", "Vui lòng nhập giá trị cần kiểm tra!")
+#         return False
 
-    try:
-        conn = f_utils_create_a_connection_string_to_SQL_Server()
-        cursor = conn.cursor()
+#     try:
+#         conn = f_utils_create_a_connection_string_to_SQL_Server()
+#         cursor = conn.cursor()
 
-        # Truy vấn kiểm tra sự tồn tại của số phiếu
-        query = f"SELECT CASE WHEN EXISTS(SELECT 1 FROM {database_name}.[dbo].{table_name} WHERE {column_name} = ? AND [XOA_SUA] = '') THEN 1 ELSE 0 END"
-        # print(query)
-        # print(value_to_check)
-        cursor.execute(query, (value_to_check,))
-        result = cursor.fetchone()[0]
+#         # Truy vấn kiểm tra sự tồn tại của số phiếu
+#         query = f"SELECT CASE WHEN EXISTS(SELECT 1 FROM {database_name}.[dbo].{table_name} WHERE {column_name} = ? AND [XOA_SUA] = '') THEN 1 ELSE 0 END"
+#         # print(query)
+#         # print(value_to_check)
+#         cursor.execute(query, (value_to_check,))
+#         result = cursor.fetchone()[0]
 
-        # print("result: ", result)
+#         # print("result: ", result)
         
-        if result:
-            # Đóng kết nối
-            if cursor:
-                cursor.close()
-            if conn:
-                conn.close()
-            return True
-        else:
-            messagebox.showinfo("Thông báo", f"Giá trị {value_to_check} chưa tồn tại. Vui lòng khởi tạo và thử lại!")
-            # Đóng kết nối
-            if cursor:
-                cursor.close()
-            if conn:
-                conn.close()
-            return False
+#         if result:
+#             # Đóng kết nối
+#             if cursor:
+#                 cursor.close()
+#             if conn:
+#                 conn.close()
+#             return True
+#         else:
+#             messagebox.showinfo("Thông báo", f"Giá trị {value_to_check} chưa tồn tại. Vui lòng khởi tạo và thử lại!")
+#             # Đóng kết nối
+#             if cursor:
+#                 cursor.close()
+#             if conn:
+#                 conn.close()
+#             return False
         
-    except Exception as e:
-        print(f"Error: {e}")
-        print("Error at function: ", f_utils_get_current_function_name())
-        return False
+#     except Exception as e:
+#         print(f"Error: {e}")
+#         print("Error at function: ", f_utils_get_current_function_name())
+#         return False

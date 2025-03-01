@@ -36,7 +36,8 @@ class cls_frame_DateSelector_view(tk.Frame):
 
         # Entry 1 (from this date)
         self.entry_01 = cls_my_date_time_entry_num_01(self.frames[0], width=20, name="start_date_entry")
-        self.entry_01.insert(0, self.first_day_of_month())
+        # self.entry_01.insert(0, self.first_day_of_month())
+        self.entry_01.insert(0, self.day_30_days_ago())
         self.entry_01.grid(row=0, column=1, padx=(0, 2), pady=0, sticky="ew")
 
         # Entry 2 (to this date)
@@ -87,6 +88,11 @@ class cls_frame_DateSelector_view(tk.Frame):
     def first_day_of_month(self):
         today = datetime.today()
         return today.replace(day=1).strftime('%d-%m-%Y')
+    
+    def day_30_days_ago(self):
+        today = datetime.today()
+        date_30_days_ago = today - timedelta(days=30)
+        return date_30_days_ago.strftime('%d-%m-%Y')
 
     # Function to get today's date
     def today_date(self):

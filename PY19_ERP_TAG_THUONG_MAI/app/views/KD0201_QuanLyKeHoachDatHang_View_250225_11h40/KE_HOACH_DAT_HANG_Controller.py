@@ -209,8 +209,9 @@ class Controller_action_after_event:
             return False
     
     def f_Check_exist_ma_khach_hang(entry_ma_khach_hang, database_name, table_name, column_name):
+        values_ma_khach_hang = entry_ma_khach_hang.get().strip()
         try:
-            kiem_tra_trung_so_phieu = f_utils_check_exist(entry_ma_khach_hang, database_name, table_name, column_name)
+            kiem_tra_trung_so_phieu = utils_controller_check_exist.check_exist_values(values_ma_khach_hang, database_name, table_name, column_name)
             if kiem_tra_trung_so_phieu == False:    # Chưa có mã khách hàng
                 return False
             return True
@@ -617,7 +618,6 @@ class SQLController:
                                            row[5], row[6], row[7], row[8], row[9],
                                            row[10], row[11], row[12]))
         
-    # Function to print data from the Treeview
     def get_data_to_import_to_SQL(*args):
         (
             entry_so_phieu, 
@@ -693,8 +693,7 @@ class SQLController:
                                                                                 entry_ghi_chu_cua_phieu,
                                                                                 tree
                                                                                 )
-        # Step_02: validate data
-        f_utils_get_unique_column_from_data(data_array, 8)
+
         # Step_03: Export data to SQL
         if utils_model_SQL_server.f_validate_data_format_KD02_KE_HOACH_DAT_HANG(data_array):
             # If data is valid
@@ -829,8 +828,10 @@ class Controller_handel_all_events:
         column_name = controller_get_information_of_module.load_column_name_so_phieu()
         
         # Kiểm tra số phiếu đã tồn tại chưa
-        flag = f_utils_check_exist(entry_so_phieu, database_name, table_name, column_name)
+        value_to_check = entry_so_phieu.get().strip()
+        flag, notification_text = utils_controller_check_exist.check_exist_values(value_to_check, database_name, table_name, column_name)
         if flag == False:
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
             return
         
         # validate data

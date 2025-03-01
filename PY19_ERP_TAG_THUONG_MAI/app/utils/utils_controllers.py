@@ -390,11 +390,6 @@ class utils_controller_get_data_from_SQL_to_treeview_with_quey_and_params_list:
         # Xóa hết các item trong treeview hiện tại
         for item in my_treeview.get_children():
             my_treeview.delete(item)
-        
-        # # Duyệt qua từng dòng dữ liệu và chèn vào treeview
-        # for row in data:
-        #     values = row[:columns_count]  # Chỉ lấy số lượng cột theo `columns_count`
-        #     my_treeview.insert("", "end", values=values)
             
         # Duyệt qua từng dòng dữ liệu và chèn vào treeview
         for row in data:
@@ -423,4 +418,55 @@ class utils_controller_get_data_from_SQL_to_treeview_with_quey_and_params_list:
     def load_data_with_quey_and_params(my_treeview, query, params_list):
         data = utils_models.utils_model_SQL_server.fetch_data_with_quey_and_params(query, params_list)
         utils_controller_get_data_from_SQL_to_treeview_with_quey_and_params_list.load_data_to_treeview(my_treeview, data)    
+    
+
+class utils_controller_check_exist:
+    def check_exist_values(values_to_check, database_name, table_name, column_name):
+        # Nếu đầu vào là None hoặc rỗng, trả về False
+        if not values_to_check:
+            notification_text = f"Không có giá trị nào để kiểm tra."
+            return False, notification_text
+
+        # Nếu chỉ có một giá trị (chuỗi hoặc số), chuyển thành tuple
+        if isinstance(values_to_check, (str, int, float)):
+            values_to_check = (values_to_check,)
+        # Nếu là danh sách, chuyển thành tuple
+        elif isinstance(values_to_check, list):
+            values_to_check = tuple(values_to_check)
+        # Nếu không phải tuple sau khi kiểm tra, return False
+        elif not isinstance(values_to_check, tuple):
+            notification_text = f"Các giá trị cần kiểm tra không ở định dạng phù hợp: {values_to_check}"
+            return False, notification_text
+
+        try:
+            conn = utils_functions.f_utils_create_a_connection_string_to_SQL_Server()
+            cursor = conn.cursor()
+            
+            placeholders = ', '.join('?' * len(values_to_check))
+            query = (f"SELECT {column_name} FROM {database_name}.[dbo].{table_name} "
+                    f"WHERE {column_name} IN ({placeholders}) AND [XOA_SUA] = ''")
+            
+            cursor.execute(query, values_to_check)
+            existing_values = {row[0] for row in cursor.fetchall()}
+            
+            cursor.close()
+            conn.close()
+            
+            missing_values = set(values_to_check) - existing_values
+            
+            if not missing_values:
+                return True
+            else:
+                notification_text = f"Các giá trị chưa tồn tại: {missing_values}"
+                return False, notification_text
+        
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", utils_functions.f_utils_get_current_function_name())
+            notification_text = ""
+            return False, notification_text
+        
+        
+        
+        
     

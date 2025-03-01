@@ -751,7 +751,7 @@ class SQLController:
                                                                                 tree
                                                                                 )
         # Step_02: validate data
-        f_utils_get_unique_column_from_data(data_array, 8)
+        f_utils_check_exist_list_of_inventories_code(data_array, 8)
         # Step_03: Export data to SQL
         if utils_model_SQL_server.f_validate_data_format_KD02_KE_HOACH_DAT_HANG(data_array):
             # If data is valid

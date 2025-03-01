@@ -360,9 +360,11 @@ class Controller_action_after_event:
         database_name = utils_controller_get_information_of_database.load_database_name()
         table_name = utils_controller_get_information_of_database.load_table_name_TB_AD00_DANH_SACH_KHACH_HANG()
         column_name = controller_get_information_of_module.load_column_name_ma_khach_hang()
+        value_to_check = entry_ma_khach_hang.get().strip()
         try:
-            kiem_tra_trung_so_phieu = f_utils_check_exist(entry_ma_khach_hang, database_name, table_name, column_name)
-            if kiem_tra_trung_so_phieu == False:    # Chưa có mã khách hàng
+            flag, notification_text = utils_controller_check_exist.check_exist_values(value_to_check, database_name, table_name, column_name)
+            if flag == False:    # Chưa có mã khách hàng
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
                 return False
             return True
         
@@ -485,32 +487,32 @@ class Controller_action_after_event:
             print("Error at function: ", f_utils_get_current_function_name())
             return False
     
-    def f_save_data_to_sql(*args):
-        # Step 1: get value from args
-        (
-            entry_so_phieu,
-            entry_ma_kh,
-            entry_ten_kh,
-            entry_mst,
-            entry_dia_chi,
-            entry_so_hop_dong,
-            entry_thong_tin_hop_dong,
-            entry_ghi_chu_cua_phieu,
-            tree
-        ) = args
+    # def f_save_data_to_sql(*args):
+    #     # Step 1: get value from args
+    #     (
+    #         entry_so_phieu,
+    #         entry_ma_kh,
+    #         entry_ten_kh,
+    #         entry_mst,
+    #         entry_dia_chi,
+    #         entry_so_hop_dong,
+    #         entry_thong_tin_hop_dong,
+    #         entry_ghi_chu_cua_phieu,
+    #         tree
+    #     ) = args
         
-        # Step 2.1: get ID_nhan_vien và Xoa_sua
-        SQLController.f_controller_handle_btn_save_click(
-            entry_so_phieu, 
-            entry_ma_kh, 
-            entry_ten_kh,
-            entry_mst,
-            entry_dia_chi,
-            entry_so_hop_dong,
-            entry_thong_tin_hop_dong,
-            entry_ghi_chu_cua_phieu,
-            tree
-        )
+    #     # Step 2.1: get ID_nhan_vien và Xoa_sua
+    #     SQLController.f_controller_handle_btn_save_click(
+    #         entry_so_phieu, 
+    #         entry_ma_kh, 
+    #         entry_ten_kh,
+    #         entry_mst,
+    #         entry_dia_chi,
+    #         entry_so_hop_dong,
+    #         entry_thong_tin_hop_dong,
+    #         entry_ghi_chu_cua_phieu,
+    #         tree
+    #     )
     
     def clear_all_contents_in_treeview(treeview):
         try:
@@ -998,19 +1000,18 @@ class SQLController:
                                                                     tree
                                                                     )
         if flag == False:
-            return "Data validation failed (01). Please fix the errors."
+            return
         
         # Step_02: validate data
-        f_utils_get_unique_column_from_data(data_array, 8)
+        # Check if exist inventory code
+        f_utils_check_exist_list_of_inventories_code(data_array, 8)
         # Step_03: Export data to SQL
         if utils_model_SQL_server.f_validate_data_format_KD02_YEU_CAU_DAT_HANG(data_array):
             # If data is valid
-            database_name = utils_controller_get_information_of_database.load_database_name()
-            table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
-            utils_model_SQL_server.f_goi_ham_Export_to_table(data_array, database_name, table_name)
-            return "Data exported"
+            utils_model_SQL_server.f_goi_ham_Export_to_table(data_array)
+            return
         else:
-            return "Data validation failed (02). Please fix the errors."
+            return
         
 class Controller_get_the_latest_number_of_slip:
     
@@ -1154,8 +1155,10 @@ class Controller_handel_all_events:
         column_name = controller_get_information_of_module.load_column_name_so_phieu()
         
         # Kiểm tra số phiếu đã tồn tại chưa
-        flag = f_utils_check_exist(entry_so_phieu, database_name, table_name, column_name)
+        value_to_check = entry_so_phieu.get().strip()
+        flag, notification_text = utils_controller_check_exist.check_exist_values(value_to_check, database_name, table_name, column_name)
         if flag == False:
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
             return
         
         # validate data
@@ -1174,7 +1177,9 @@ class Controller_handel_all_events:
         Controller_edit_row_in_SQL.update_edited(so_phieu)
         
         # create new record
-        Controller_action_after_event.f_save_data_to_sql(
+        # Controller_action_after_event.f_save_data_to_sql(
+        
+        SQLController.f_controller_handle_btn_save_click(
                 entry_so_phieu, 
                 entry_ma_kh, 
                 entry_ten_kh,
@@ -1625,7 +1630,8 @@ class Controller_event_tab_01_btn_save_click:
             if flag == False:
                 return False
             
-            Controller_action_after_event.f_save_data_to_sql(
+            # Controller_action_after_event.f_save_data_to_sql(
+            SQLController.f_controller_handle_btn_save_click(
                 entry_so_phieu, 
                 entry_ma_kh, 
                 entry_ten_kh,
