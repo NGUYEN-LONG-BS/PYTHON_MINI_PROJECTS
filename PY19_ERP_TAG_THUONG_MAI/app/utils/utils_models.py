@@ -258,11 +258,10 @@ class utils_model_SQL_server:
             conn.close()
             # print("Kết nối đã được đóng.")
     
-    def f_goi_ham_Export_to_table(data_array):
+    def f_goi_ham_Export_to_table(data_array, table_name):
         server_name = utils_functions.f_utils_get_DB_HOST()
         login_name, login_pass = utils_functions.f_utils_get_DB_USER_AND_DB_PASSWORD()
         database_name = utils_controllers.utils_controller_get_information_of_database.load_database_name()
-        table_name = utils_controllers.utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
 
         utils_model_SQL_server.f_02_insert_data_to_sql(server_name, database_name, login_name, login_pass, table_name, data_array)
     

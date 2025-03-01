@@ -1006,7 +1006,8 @@ class SQLController:
         # Step_03: Export data to SQL
         if utils_model_SQL_server.f_validate_data_format_KD02_YEU_CAU_DAT_HANG(data_array):
             # If data is valid
-            utils_model_SQL_server.f_goi_ham_Export_to_table(data_array)
+            table_name = utils_controllers.utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+            utils_model_SQL_server.f_goi_ham_Export_to_table(data_array, table_name)
             return
         else:
             return
