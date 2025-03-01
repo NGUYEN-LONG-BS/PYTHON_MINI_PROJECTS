@@ -361,6 +361,7 @@ class Controller_action_after_event:
         table_name = utils_controller_get_information_of_database.load_table_name_TB_AD00_DANH_SACH_KHACH_HANG()
         column_name = controller_get_information_of_module.load_column_name_ma_khach_hang()
         value_to_check = entry_ma_khach_hang.get().strip()
+
         try:
             flag, notification_text = utils_controller_check_exist.check_exist_values(value_to_check, database_name, table_name, column_name)
             if flag == False:

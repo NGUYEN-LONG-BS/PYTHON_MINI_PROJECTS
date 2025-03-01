@@ -841,8 +841,7 @@ class Controller_handel_all_events:
                 column_name,
                 entry_notification,
                 entry_ma_kh,
-                my_treeview
-            )
+                my_treeview)
         if flag == False:
             return
         

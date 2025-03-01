@@ -455,7 +455,8 @@ class utils_controller_check_exist:
             missing_values = set(values_to_check) - existing_values
             
             if not missing_values:
-                return True
+                notification_text = ""
+                return True, notification_text
             else:
                 notification_text = f"Các giá trị chưa tồn tại: {missing_values}"
                 return False, notification_text
