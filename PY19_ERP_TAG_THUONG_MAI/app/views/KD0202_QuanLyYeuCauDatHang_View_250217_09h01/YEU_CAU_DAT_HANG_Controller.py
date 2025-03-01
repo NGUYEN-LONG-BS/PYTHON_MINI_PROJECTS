@@ -487,33 +487,6 @@ class Controller_action_after_event:
             print("Error at function: ", f_utils_get_current_function_name())
             return False
     
-    # def f_save_data_to_sql(*args):
-    #     # Step 1: get value from args
-    #     (
-    #         entry_so_phieu,
-    #         entry_ma_kh,
-    #         entry_ten_kh,
-    #         entry_mst,
-    #         entry_dia_chi,
-    #         entry_so_hop_dong,
-    #         entry_thong_tin_hop_dong,
-    #         entry_ghi_chu_cua_phieu,
-    #         tree
-    #     ) = args
-        
-    #     # Step 2.1: get ID_nhan_vien và Xoa_sua
-    #     SQLController.f_controller_handle_btn_save_click(
-    #         entry_so_phieu, 
-    #         entry_ma_kh, 
-    #         entry_ten_kh,
-    #         entry_mst,
-    #         entry_dia_chi,
-    #         entry_so_hop_dong,
-    #         entry_thong_tin_hop_dong,
-    #         entry_ghi_chu_cua_phieu,
-    #         tree
-    #     )
-    
     def clear_all_contents_in_treeview(treeview):
         try:
             for item in treeview.get_children():
@@ -902,25 +875,9 @@ class Controller_edit_row_in_SQL:
         # Sent SQL query
         utils_model_SQL_server.sent_SQL_query(query)
 
-class SQLController:
-    # def load_data_to_treeview(my_treeview, data):
-    #     # Lấy số lượng cột từ my_treeview
-    #     columns_count = len(my_treeview["columns"])
-        
-    #     # Xóa hết các item trong treeview hiện tại
-    #     for item in my_treeview.get_children():
-    #         my_treeview.delete(item)
-        
-    #     # Duyệt qua từng dòng dữ liệu và chèn vào treeview
-    #     for row in data:
-    #         values = row[:columns_count]  # Chỉ lấy số lượng cột theo `columns_count`
-    #         my_treeview.insert("", "end", values=values)
-        
-    # def load_data_with_quey_and_params(my_treeview, query, params_list):
-    #     data = utils_model_SQL_server.fetch_data_with_quey_and_params(query, params_list)
-    #     SQLController.load_data_to_treeview(my_treeview, data)
-    
-    def get_data_to_import_to_SQL_TB_KD02_YEU_CAU_DAT_HANG(*args):
+class Controller_save_data_on_GUI_into_database:
+
+    def get_data_from_GUI_view(*args):
         (
             entry_so_phieu, 
             entry_ma_kh, 
@@ -975,7 +932,7 @@ class SQLController:
             data = []
             return False, data
     
-    def f_controller_handle_btn_save_click(*args):
+    def f_save_data_on_GUI_to_database(*args):
         (
             entry_so_phieu, 
             entry_ma_kh, 
@@ -989,7 +946,7 @@ class SQLController:
         ) = args
         
         # Step_01: Get data
-        flag, data_array = SQLController.get_data_to_import_to_SQL_TB_KD02_YEU_CAU_DAT_HANG(entry_so_phieu, 
+        flag, data_array = Controller_save_data_on_GUI_into_database.get_data_from_GUI_view(entry_so_phieu, 
                                                                     entry_ma_kh, 
                                                                     entry_ten_kh,
                                                                     entry_mst,
@@ -1002,8 +959,7 @@ class SQLController:
         if flag == False:
             return
         
-        
-        # Step_03: Export data to SQL
+        # Step_02: Export data to SQL
         if utils_model_SQL_server.f_validate_data_format_KD02_YEU_CAU_DAT_HANG(data_array):
             # If data is valid
             table_name = utils_controllers.utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
@@ -1178,7 +1134,7 @@ class Controller_handel_all_events:
         # create new record
         # Controller_action_after_event.f_save_data_to_sql(
         
-        SQLController.f_controller_handle_btn_save_click(
+        Controller_save_data_on_GUI_into_database.f_save_data_on_GUI_to_database(
                 entry_so_phieu, 
                 entry_ma_kh, 
                 entry_ten_kh,
@@ -1630,7 +1586,7 @@ class Controller_event_tab_01_btn_save_click:
                 return False
             
             # Controller_action_after_event.f_save_data_to_sql(
-            SQLController.f_controller_handle_btn_save_click(
+            Controller_save_data_on_GUI_into_database.f_save_data_on_GUI_to_database(
                 entry_so_phieu, 
                 entry_ma_kh, 
                 entry_ten_kh,
