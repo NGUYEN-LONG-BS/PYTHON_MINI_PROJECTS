@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import filedialog, messagebox, simpledialog
 import PyPDF2
 from docx import Document
-from utils import *
+# from utils import *
 
 # Hàm chọn file PDF
 def open_pdf_file():
@@ -33,7 +33,7 @@ def open_pdf_file():
                 messagebox.showwarning("Lỗi", "Không thể đọc nội dung từ file PDF!")
         except Exception as e:
             print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
+            # print("Error at function: ", f_utils_get_current_function_name())
             messagebox.showerror("Lỗi", f"Đã có lỗi xảy ra: {str(e)}")
     else:
         messagebox.showwarning("Lỗi", "Không có file PDF nào được chọn.")

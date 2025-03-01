@@ -363,8 +363,7 @@ class Controller_action_after_event:
         value_to_check = entry_ma_khach_hang.get().strip()
         try:
             flag, notification_text = utils_controller_check_exist.check_exist_values(value_to_check, database_name, table_name, column_name)
-            if flag == False:    # Chưa có mã khách hàng
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
+            if flag == False:
                 return False
             return True
         
@@ -1002,9 +1001,7 @@ class SQLController:
         if flag == False:
             return
         
-        # Step_02: validate data
-        # Check if exist inventory code
-        f_utils_check_exist_list_of_inventories_code(data_array, 8)
+        
         # Step_03: Export data to SQL
         if utils_model_SQL_server.f_validate_data_format_KD02_YEU_CAU_DAT_HANG(data_array):
             # If data is valid
@@ -1163,8 +1160,8 @@ class Controller_handel_all_events:
         
         # validate data
         flag = Controller_event_tab_01_btn_save_click.validate_data( 
-                database_name, 
-                table_name, 
+                database_name,
+                table_name,
                 column_name,
                 entry_notification,
                 entry_ma_kh,

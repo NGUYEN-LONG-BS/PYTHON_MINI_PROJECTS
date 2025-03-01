@@ -224,9 +224,10 @@ class Controller_action_after_event:
             return False
     
     def f_Check_exist_ma_khach_hang(entry_ma_khach_hang, database_name, table_name, column_name):
+        value_to_check = entry_ma_khach_hang.get().strip()
         try:
-            kiem_tra_trung_so_phieu = f_utils_check_exist(entry_ma_khach_hang, database_name, table_name, column_name)
-            if kiem_tra_trung_so_phieu == False:    # Chưa có mã khách hàng
+            flag, notification_text = utils_controller_check_exist.check_exist_values(value_to_check, database_name, table_name, column_name)
+            if flag == False:
                 return False
             return True
         
@@ -750,8 +751,7 @@ class SQLController:
                                                                                 entry_ghi_chu_cua_phieu,
                                                                                 tree
                                                                                 )
-        # Step_02: validate data
-        f_utils_check_exist_list_of_inventories_code(data_array, 8)
+        
         # Step_03: Export data to SQL
         if utils_model_SQL_server.f_validate_data_format_KD02_KE_HOACH_DAT_HANG(data_array):
             # If data is valid
@@ -929,8 +929,10 @@ class Controller_handel_all_events:
         column_name = controller_get_information_of_module.load_column_name_so_phieu()
         
         # Kiểm tra số phiếu đã tồn tại chưa
-        flag = f_utils_check_exist(entry_so_phieu, database_name, table_name, column_name)
+        value_to_check = entry_so_phieu.get().strip()
+        flag, notification_text = utils_controller_check_exist.check_exist_values(value_to_check, database_name, table_name, column_name)
         if flag == False:
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
             return
         
         # validate data
