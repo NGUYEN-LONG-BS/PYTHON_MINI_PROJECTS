@@ -377,6 +377,10 @@ class utils_controller_get_information_of_database:
     def load_table_name_TB_AD00_DANH_SACH_KHACH_HANG():
         table_name = "TB_AD00_DANH_SACH_KHACH_HANG"
         return table_name
+
+    def load_table_name_TB_INVENTORY_CATEGORIES():
+        table_name = "TB_INVENTORY_CATEGORIES_250214_09h05"
+        return table_name
     
     def load_table_name_VIEW_QUYET_TOAN_YEU_CAU_DAT_HANG():
         table_name = "VIEW_QUYET_TOAN_YEU_CAU_DAT_HANG"
@@ -419,7 +423,6 @@ class utils_controller_get_data_from_SQL_to_treeview_with_quey_and_params_list:
         data = utils_models.utils_model_SQL_server.fetch_data_with_quey_and_params(query, params_list)
         utils_controller_get_data_from_SQL_to_treeview_with_quey_and_params_list.load_data_to_treeview(my_treeview, data)    
     
-
 class utils_controller_check_exist:
     def check_exist_values(values_to_check, database_name, table_name, column_name):
         # Nếu đầu vào là None hoặc rỗng, trả về False
@@ -467,7 +470,23 @@ class utils_controller_check_exist:
             notification_text = ""
             return False, notification_text
         
+    def get_unique_column_values(my_treeview, column_index):
+        """
+        Lấy danh sách giá trị không trùng lặp từ một cột trong Treeview.
+
+        :param treeview: Đối tượng Treeview
+        :param column_index: Vị trí cột (bắt đầu từ 0)
+        :return: Danh sách các giá trị không trùng lặp
+        """
+        unique_values = set()
+        for child in my_treeview.get_children():
+            values = my_treeview.item(child)["values"]
+            if len(values) > column_index:  # Đảm bảo cột tồn tại trong dữ liệu
+                unique_values.add(values[column_index])
+        return list(unique_values)
+
         
+
         
         
     

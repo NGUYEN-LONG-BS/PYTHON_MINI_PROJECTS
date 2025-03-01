@@ -18,6 +18,10 @@ class controller_get_information_of_module:
         column_name = "MA_DOI_TUONG"
         return column_name
     
+    def load_column_name_ma_hang():
+        column_name = "MA_HANG"
+        return column_name
+    
     def load_treeview_config_json_path():
         tab_01_treeview_config_json_path = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'KD_YEU_CAU_DAT_HANG', 'treeview_tab_01_YCDH_input.json')
         tab_02_treeview_config_json_path = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'KD_YEU_CAU_DAT_HANG', 'treeview_tab_02_YCDH_log.json')
@@ -1088,67 +1092,6 @@ class Controller_handel_all_events:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"{so_phieu}, Slip deleted.", "blue")
                 return 
 
-    def handle_event_tab_01_btn_update_slip_click(entry_notification, entries_list):
-        (
-            entry_so_phieu,
-            entry_ma_kh,
-            entry_ten_kh,
-            entry_mst,
-            entry_dia_chi,
-            entry_so_hop_dong,
-            entry_thong_tin_hop_dong,
-            entry_ghi_chu_cua_phieu,
-            my_treeview
-            ) = entries_list
-        # Get the selected items
-        so_phieu = entry_so_phieu.get().strip()
-        if not so_phieu:
-            return
-        
-        database_name = utils_controller_get_information_of_database.load_database_name()
-        table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
-        column_name = controller_get_information_of_module.load_column_name_so_phieu()
-        
-        # Kiểm tra số phiếu đã tồn tại chưa
-        value_to_check = entry_so_phieu.get().strip()
-        flag, notification_text = utils_controller_check_exist.check_exist_values(value_to_check, database_name, table_name, column_name)
-        if flag == False:
-            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
-            return
-        
-        # validate data
-        flag = Controller_event_tab_01_btn_save_click.validate_data( 
-                database_name,
-                table_name,
-                column_name,
-                entry_notification,
-                entry_ma_kh,
-                my_treeview
-            )
-        if flag == False:
-            return
-        
-        # cập nhật thông tin cũ thành edited
-        Controller_edit_row_in_SQL.update_edited(so_phieu)
-        
-        # create new record
-        # Controller_action_after_event.f_save_data_to_sql(
-        
-        Controller_save_data_on_GUI_into_database.f_save_data_on_GUI_to_database(
-                entry_so_phieu, 
-                entry_ma_kh, 
-                entry_ten_kh,
-                entry_mst,
-                entry_dia_chi,
-                entry_so_hop_dong,
-                entry_thong_tin_hop_dong,
-                entry_ghi_chu_cua_phieu,
-                my_treeview
-                )
-        
-        utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"{so_phieu}, Slip updated.", "blue")
-        return 
-
     def f_handle_event_tab_02_button_export_all_data_click(entry_notification):
         try:
             # Tạo câu query SQL với danh sách số phiếu
@@ -1555,6 +1498,105 @@ class Controller_handel_all_events:
             print("Error at function: ", f_utils_get_current_function_name())
             return False
         
+    def handle_event_tab_01_btn_update_slip_click(*args):
+        try:
+            (
+                entry_notification,
+                entry_so_phieu, 
+                entry_ma_kh, 
+                entry_ten_kh,
+                entry_mst,
+                entry_dia_chi,
+                entry_so_hop_dong,
+                entry_thong_tin_hop_dong,
+                entry_ghi_chu_cua_phieu,
+                tree
+            ) = args
+            
+            # call controller to handle event
+            flag = Controller_event_tab_01_btn_update_slip_click.f_handle_event_tab_01_btn_update_slip_click(
+                entry_notification,
+                entry_so_phieu, 
+                entry_ma_kh, 
+                entry_ten_kh,
+                entry_mst,
+                entry_dia_chi,
+                entry_so_hop_dong,
+                entry_thong_tin_hop_dong,
+                entry_ghi_chu_cua_phieu,
+                tree)
+            if flag == False:
+                return False
+            
+            if flag == True:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Data updated successfully!", "blue")
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+        
+class Controller_event_tab_01_btn_update_slip_click:
+    def f_handle_event_tab_01_btn_update_slip_click(*args):
+        # Step get data and validate data
+        (   
+            entry_notification,
+            entry_so_phieu,
+            entry_ma_kh,
+            entry_ten_kh,
+            entry_mst,
+            entry_dia_chi,
+            entry_so_hop_dong,
+            entry_thong_tin_hop_dong,
+            entry_ghi_chu_cua_phieu,
+            my_treeview
+            ) = args
+        # Get the selected items
+        so_phieu = entry_so_phieu.get().strip()
+        if not so_phieu:
+            return
+        
+        database_name = utils_controller_get_information_of_database.load_database_name()
+        table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+        column_name = controller_get_information_of_module.load_column_name_so_phieu()
+        
+        # Kiểm tra số phiếu đã tồn tại chưa
+        value_to_check = entry_so_phieu.get().strip()
+        flag, notification_text = utils_controller_check_exist.check_exist_values(value_to_check, database_name, table_name, column_name)
+        if flag == False:
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
+            return
+        
+        # validate data
+        flag = Controller_validate_data_on_GUI.validate_data_when_saving( 
+                entry_notification,
+                entry_ma_kh,
+                my_treeview,
+                column_index=1
+            )
+        if flag == False:
+            return
+        
+        # cập nhật thông tin cũ thành edited
+        Controller_edit_row_in_SQL.update_edited(so_phieu)
+        
+        # create new record
+        # Controller_action_after_event.f_save_data_to_sql(
+        
+        Controller_save_data_on_GUI_into_database.f_save_data_on_GUI_to_database(
+                entry_so_phieu, 
+                entry_ma_kh, 
+                entry_ten_kh,
+                entry_mst,
+                entry_dia_chi,
+                entry_so_hop_dong,
+                entry_thong_tin_hop_dong,
+                entry_ghi_chu_cua_phieu,
+                my_treeview
+                )
+        
+        utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"{so_phieu}, Slip updated.", "blue")
+        return 
+
 class Controller_event_tab_01_btn_save_click:
     def f_handle_event_tab_01_btn_save_click(*args):
         try:
@@ -1570,17 +1612,19 @@ class Controller_event_tab_01_btn_save_click:
                 entry_ghi_chu_cua_phieu,
                 tree
             ) = args
-            flag = Controller_event_tab_01_btn_save_click.validate_data(
+            
+            flag = Controller_validate_data_on_GUI.validate_number_of_slip( 
                 entry_notification,
-                entry_ma_kh,
-                tree
+                entry_so_phieu
             )
             if flag == False:
                 return False
             
-            flag = Controller_event_tab_01_btn_save_click.validate_number_of_slip( 
+            flag = Controller_validate_data_on_GUI.validate_data_when_saving(
                 entry_notification,
-                entry_so_phieu
+                entry_ma_kh,
+                tree,
+                column_index=1
             )
             if flag == False:
                 return False
@@ -1604,6 +1648,19 @@ class Controller_event_tab_01_btn_save_click:
             print("Error at function: ", f_utils_get_current_function_name())
             return False
 
+class Controller_validate_data_on_GUI:
+    def validate_data_when_saving(entry_notification, entry_ma_khach_hang, my_treeview, column_index):
+        
+        flag = Controller_validate_data_on_GUI.validate_data_orther_information(entry_notification, entry_ma_khach_hang, my_treeview)
+        if flag == False:
+            return False
+        
+        flag = Controller_validate_data_on_GUI.validate_danh_sach_ma_hang(entry_notification, my_treeview, column_index)
+        if flag == False:
+            return False
+        
+        return True
+    
     def validate_number_of_slip(entry_notification, entry_so_phieu):
         try:
             # Check duplicate slip number
@@ -1619,7 +1676,24 @@ class Controller_event_tab_01_btn_save_click:
             print("Error at function: ", f_utils_get_current_function_name())
             return False
         
-    def validate_data(entry_notification, entry_ma_khach_hang, my_treeview):
+    def validate_danh_sach_ma_hang(entry_notification, my_treeview, column_index):
+        database_name = utils_controller_get_information_of_database.load_database_name()
+        table_name = utils_controller_get_information_of_database.load_table_name_TB_INVENTORY_CATEGORIES()
+        column_name = controller_get_information_of_module.load_column_name_ma_hang()
+        value_to_check = utils_controller_check_exist.get_unique_column_values(my_treeview, column_index)
+        
+        try:
+            flag, notification_text = utils_controller_check_exist.check_exist_values(value_to_check, database_name, table_name, column_name)
+            if flag == False:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Mã hàng chưa tồn tại!", "red")
+                return False
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+        
+    def validate_data_orther_information(entry_notification, entry_ma_khach_hang, my_treeview):
         try:
             # Check if the client id is empty
             if entry_ma_khach_hang.get() == "" or entry_ma_khach_hang.get() == "search here":
