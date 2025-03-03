@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
 from Components_View import *
-# from Components_View.treeview import cls_Treeview_frame_number_01
 from utils import *
 from .YEU_CAU_DAT_HANG_Controller import Controller_auto_update_sl_giu_cho_va_sl_ycdh
 from .YEU_CAU_DAT_HANG_Controller import Controller_handel_all_events
