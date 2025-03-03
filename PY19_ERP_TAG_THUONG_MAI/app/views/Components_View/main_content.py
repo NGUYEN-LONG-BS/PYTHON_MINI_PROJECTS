@@ -1,4 +1,3 @@
-# Project/views/components/main_content.py
 import tkinter as tk
 
 def create_main_content(parent, left_menu_frame, right_banner_frame, content_type="statistics"):

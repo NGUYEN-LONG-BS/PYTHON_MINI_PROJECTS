@@ -1,5 +1,4 @@
 import tkinter as tk
-import customtkinter as ctk
 
 def create_notification(parent, message="This is a notification!"):
     notification_frame = tk.Frame(parent, bg="lightblue", padx=10, pady=5)

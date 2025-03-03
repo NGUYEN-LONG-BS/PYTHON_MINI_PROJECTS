@@ -1,8 +1,6 @@
 import tkinter as tk
 from utils import *
-from utils.define import *
 import json
-import sys
 import os
 
 class cls_menu_top:

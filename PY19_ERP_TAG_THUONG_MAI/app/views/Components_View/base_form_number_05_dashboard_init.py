@@ -1,9 +1,8 @@
 import tkinter as tk
-from Components_View import *
-from Components_View.menu_top import cls_menu_top
 from utils import *
-from utils.define import *
 from PIL import Image, ImageTk
+from . import menu_top
+from . import frame
 
 class cls_base_form_number_05_DashBoard_init(tk.Tk):
     def __init__(self, title_of_form="Default Title", name_of_slip="TẬP ĐOÀN TUẤN ÂN"):
@@ -42,10 +41,10 @@ class cls_base_form_number_05_DashBoard_init(tk.Tk):
         """Initializes reusable components."""
         try:
             # Add cls_menu_top
-            cls_menu_top(self)
+            menu_top.cls_menu_top(self)
 
             # Add cls_Frame_Main
-            self.frame_main = cls_Frame_Main(self)
+            self.frame_main = frame.cls_Frame_Main(self)
             self.frame_main.grid(row=0, column=0, sticky="nsew")
             # Configure grid weights for resizing
             self._configure_grid_weights_of_self()
@@ -66,13 +65,13 @@ class cls_base_form_number_05_DashBoard_init(tk.Tk):
     
     def f_add_elements_to_frame_main(self):
         # Add elements to frame_main
-        Frame_Header = cls_Frame_Header(self.frame_main, name_of_slip=self.name_of_slip)
+        Frame_Header = frame.cls_Frame_Header(self.frame_main, name_of_slip=self.name_of_slip)
         Frame_Header.grid(row=0, column=0, sticky="ew")
         
-        self.Frame_Body = cls_Frame_Body(self.frame_main)
+        self.Frame_Body = frame.cls_Frame_Body(self.frame_main)
         self.Frame_Body.grid(row=1, column=0, sticky="nsew")
               
-        self.Frame_Footer = cls_Frame_Footer(self.frame_main)
+        self.Frame_Footer = frame.cls_Frame_Footer(self.frame_main)
         self.Frame_Footer.grid(row=2, column=0, sticky="ew")
         
         # Add elements to frame_body

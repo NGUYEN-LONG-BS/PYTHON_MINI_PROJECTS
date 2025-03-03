@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
-from entry import *
-# from PIL import Image, ImageTk
+from . import entry
+from utils import *
 
 # Model: cls_frame_suppliers_information_model
 class cls_frame_suppliers_information_model:
@@ -104,13 +104,13 @@ class cls_frame_suppliers_information_view(tk.Frame):
         # Additional Entry widgets for other column values
         self.additional_entries = []
         
-        entry_client_names = cls_my_text_entry_num_01(self.frame_row_1, width=50,
+        entry_client_names = entry.cls_my_text_entry_num_01(self.frame_row_1, width=50,
                                                       name="entry_ten_nha_cung_cap")
         entry_client_names.pack(side="left", fill="x", expand=True, padx=(0, 10), pady=5)
         self.additional_entries.append(entry_client_names)
     
     def _f_create_widgets_of_frame_row_2(self):    
-        entry_client_tax_numbers = cls_my_text_entry_num_01(
+        entry_client_tax_numbers = entry.cls_my_text_entry_num_01(
             self.frame_row_2, 
             width=15,
             name="entry_mst_nha_cung_cap"
@@ -118,7 +118,7 @@ class cls_frame_suppliers_information_view(tk.Frame):
         entry_client_tax_numbers.pack(side="left", padx=(10, 2), pady=5)
         self.additional_entries.append(entry_client_tax_numbers)
 
-        entry_client_address = cls_my_text_entry_num_01(self.frame_row_2,
+        entry_client_address = entry.cls_my_text_entry_num_01(self.frame_row_2,
                                                         name="entry_dia_chi_nha_cung_cap")
         entry_client_address.pack(side="left", fill="x", expand=True, padx=(0, 10), pady=5)
         self.additional_entries.append(entry_client_address)
@@ -131,7 +131,7 @@ class cls_frame_suppliers_information_view(tk.Frame):
         self.treeview_combobox.refresh_data()
 
 
-class cls_TreeviewCombobox_suppliers(cls_my_text_entry_num_01):
+class cls_TreeviewCombobox_suppliers(entry.cls_my_text_entry_num_01):
     def __init__(self, master, columns, data, dropdown_width=800, dropdown_height=600, **kwargs):
         super().__init__(master, **kwargs)
         self.columns = columns

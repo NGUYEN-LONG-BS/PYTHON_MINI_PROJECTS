@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from entry import *
+from . import entry
 from utils import *
 
 # Model: cls_frame_inventories_information_model
@@ -139,7 +139,7 @@ class cls_frame_inventories_information_view(tk.Frame):
         # Additional Entry widgets for other column values
         self.additional_entries = []
         
-        entry_inventory_names = cls_my_text_entry_num_01(self.frame_row_1, name="entry_ten_hang")
+        entry_inventory_names = entry.cls_my_text_entry_num_01(self.frame_row_1, name="entry_ten_hang")
         entry_inventory_names.pack(side="left", fill="x", expand=True, padx=(0, 10), pady=5)
         self.additional_entries.append(entry_inventory_names)
     
@@ -149,21 +149,21 @@ class cls_frame_inventories_information_view(tk.Frame):
         label_dvt = ttk.Label(parent_frame, text="Đvt:")
         label_dvt.grid(row=0, column=0, padx=(10, 2), pady=5, sticky="w")
            
-        entry_dvt = cls_my_text_entry_num_01(parent_frame, width=7, name="entry_dvt")
+        entry_dvt = entry.cls_my_text_entry_num_01(parent_frame, width=7, name="entry_dvt")
         entry_dvt.grid(row=0, column=1, padx=(0, 2), pady=5, sticky="w")
         self.additional_entries.append(entry_dvt)
 
         label_sl_ton_kho = ttk.Label(parent_frame, text="SL tồn:", name="label_sl_ton_kho")
         label_sl_ton_kho.grid(row=0, column=2, padx=(10, 2), pady=5, sticky="w")
         
-        entry_sl_ton_kho = cls_my_number_entry_num_01(parent_frame, width=10, name="entry_sl_ton_kho")
+        entry_sl_ton_kho = entry.cls_my_number_entry_num_01(parent_frame, width=10, name="entry_sl_ton_kho")
         entry_sl_ton_kho.grid(row=0, column=3, padx=(0, 10), pady=5, sticky="w")
         self.additional_entries.append(entry_sl_ton_kho)
         
         label_sl_kha_dung = ttk.Label(parent_frame, text="SL khả dụng:", name="label_sl_kha_dung")
         label_sl_kha_dung.grid(row=0, column=4, padx=(10, 2), pady=5, sticky="w")
 
-        entry_sl_kha_dung = cls_my_number_entry_num_01(parent_frame, width=10, name="entry_sl_kha_dung")
+        entry_sl_kha_dung = entry.cls_my_number_entry_num_01(parent_frame, width=10, name="entry_sl_kha_dung")
         entry_sl_kha_dung.grid(row=0, column=5, padx=(0, 10), pady=5, sticky="w")
         self.additional_entries.append(entry_sl_kha_dung)
 
@@ -180,7 +180,7 @@ class cls_frame_inventories_information_view(tk.Frame):
         self.treeview_combobox.refresh_data()
 
 
-class cls_TreeviewCombobox_inventories(cls_my_text_entry_num_01):
+class cls_TreeviewCombobox_inventories(entry.cls_my_text_entry_num_01):
     def __init__(self, master, columns, data, dropdown_width=800, dropdown_height=600, column_width=(100, 300, 80, 120), **kwargs):
         super().__init__(master, **kwargs)
         self.columns = columns

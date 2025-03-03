@@ -1,4 +1,3 @@
-# Project/views/components/header.py
 import tkinter as tk
 from utils import *
 

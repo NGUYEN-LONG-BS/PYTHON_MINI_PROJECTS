@@ -1,4 +1,3 @@
-# Project/views/components/left_menu.py
 import tkinter as tk
 
 def create_left_menu(parent):

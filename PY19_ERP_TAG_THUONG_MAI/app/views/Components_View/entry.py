@@ -1,6 +1,5 @@
 import tkinter as tk
 from utils import *
-from utils.define import *
 
 class cls_my_text_entry_num_01(tk.Entry):
     def __init__(self, parent, *args, **kwargs):

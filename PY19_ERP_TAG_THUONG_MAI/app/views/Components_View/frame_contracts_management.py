@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from entry import *
+from . import entry
 from utils import *
 
 # Model: cls_frame_contracts_management_model
@@ -88,7 +88,7 @@ class cls_frame_contracts_management_view(tk.Frame):
         # Additional Entry widgets for other column values
         self.additional_entries = []
         
-        entry_contract_short_info = cls_my_text_entry_num_01(self.frame_row_1, name="entry_thong_tin_ngan_cua_hop_dong")
+        entry_contract_short_info = entry.cls_my_text_entry_num_01(self.frame_row_1, name="entry_thong_tin_ngan_cua_hop_dong")
         entry_contract_short_info.pack(side="left", fill="x", expand=True, padx=(0, 10), pady=5)
         self.additional_entries.append(entry_contract_short_info)
 
@@ -99,7 +99,7 @@ class cls_frame_contracts_management_view(tk.Frame):
         self.treeview_combobox.data = data
         self.treeview_combobox.refresh_data()
 
-class cls_TreeviewCombobox_contracts(cls_my_text_entry_num_01):
+class cls_TreeviewCombobox_contracts(entry.cls_my_text_entry_num_01):
     def __init__(self, master, columns, data, dropdown_width=800, dropdown_height=600, **kwargs):
         super().__init__(master, **kwargs)
         self.columns = columns

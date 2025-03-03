@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import ttk
-from entry import *
 from utils import *
 
 class cls_Treeview_frame_number_01(tk.Frame):

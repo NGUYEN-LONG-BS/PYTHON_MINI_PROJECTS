@@ -1,9 +1,8 @@
 import tkinter as tk
-from .label import *
-from .entry import *
 from utils import *
-from utils.define import *
-from PIL import Image, ImageTk  # For handling images
+from PIL import Image, ImageTk
+from . import label
+from . import entry
 
 class cls_ToolTip:
     """Custom tooltip class."""
@@ -48,15 +47,6 @@ class cls_frame_while_design(tk.Frame):
     def hide_tooltip(self, event):
         self.tooltip.hide_tip()
 
-# class cls_frame_normal(tk.Frame):
-#     def __init__(self, master=None, *args, **kwargs):
-#         super().__init__(master, *args, **kwargs)
-#         self.f_set_style()
-        
-#     def f_set_style(self):
-#         self.configure(bd=0, relief="flat")
-#         # self.configure(bd=1, relief="solid")  # dùng khi phân tích khung
-
 class cls_Frame_Main(tk.Frame):
     def __init__(self, parent, *args, **kwargs):
         super().__init__(parent, *args, **kwargs)
@@ -88,7 +78,7 @@ class cls_Frame_Header(cls_Frame_Main):
         Name_Label_Frame = tk.Frame(self, width=100, height=100, bd=0, relief='flat')
         Name_Label_Frame.pack(fill='both', expand=True)
         # Create a label for the name of the slip
-        Name_label = cls_my_label_num_02_title_H1(Name_Label_Frame, text=self.name_of_slip)
+        Name_label = label.cls_my_label_num_02_title_H1(Name_Label_Frame, text=self.name_of_slip)
         Name_label.place(relx=0.5, rely=0.5, anchor="center")
         
 class cls_Frame_Footer(cls_Frame_Main):
@@ -147,7 +137,7 @@ class cls_Frame_date_and_number_of_slip(tk.Frame):
 
         # Date Label and Entry
         tk.Label(self, text="Ngày:", bg=BG_COLOR_0_0).pack(side="left", padx=(0, 2))
-        self.date_entry = cls_my_date_time_entry_num_01(self, name="date_entry")
+        self.date_entry = entry.cls_my_date_time_entry_num_01(self, name="date_entry")
         self.date_entry.config(state="normal")
         self.date_entry.insert(0, today)
         self.date_entry.config(state="readonly")
@@ -155,7 +145,7 @@ class cls_Frame_date_and_number_of_slip(tk.Frame):
 
         # Number of Slips Label and Entry
         tk.Label(self, text="Số chứng từ:", bg=BG_COLOR_0_0).pack(side="left", padx=(5, 2))
-        self.slips_entry = cls_my_text_entry_num_01(self, name="slips_entry")
+        self.slips_entry = entry.cls_my_text_entry_num_01(self, name="slips_entry")
         self.slips_entry.pack(side="left")
         
         # Load 48x48 icon

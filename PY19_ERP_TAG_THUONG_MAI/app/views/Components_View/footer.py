@@ -1,4 +1,3 @@
-# Project/views/components/footer.py
 import tkinter as tk
 
 def create_footer(parent):

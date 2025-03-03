@@ -1,4 +1,3 @@
-# Project/views/components/right_banner.py
 import tkinter as tk
 
 def create_right_banner(parent):

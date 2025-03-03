@@ -1,8 +1,7 @@
 import tkinter as tk
-from Components_View import *
-from Components_View.menu_top import cls_menu_top
 from utils import *
-from utils.define import *
+from . import menu_top
+from . import frame
 
 class cls_base_form_number_03_DashBoard(tk.Tk):
     def __init__(self, title_of_form="Default Title"):
@@ -38,9 +37,9 @@ class cls_base_form_number_03_DashBoard(tk.Tk):
         """Initializes reusable components."""
         try:
             # Add cls_menu_top
-            cls_menu_top(self)
+            menu_top.cls_menu_top(self)
 
-            self.frame_main = cls_Frame_Main(self)
+            self.frame_main = frame.cls_Frame_Main(self)
             self.frame_main.grid(row=0, column=0, sticky="nsew")
             
             # Configure grid weights for resizing
