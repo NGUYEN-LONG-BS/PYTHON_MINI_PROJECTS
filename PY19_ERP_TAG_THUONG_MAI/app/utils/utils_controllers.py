@@ -485,6 +485,47 @@ class utils_controller_check_exist:
                 unique_values.add(values[column_index])
         return list(unique_values)
 
+
+class utils_controller_validate_number_of_slip_before_imporing_to_SQL:
+    def start_validate(data=None, collumn_index=1, so_ky_tu=6, ma_tv=None, loai_phieu=None, database_name=None, table_name=None, column_name=None):
+        new_data = utils_controller_validate_number_of_slip_before_imporing_to_SQL.get_last_four_from_third_column(data, collumn_index, so_ky_tu)
+        if not new_data:
+            notification_text = "Không có data để kiểm tra."
+            return False, notification_text
+        
+        # Dùng list comprehension để thêm tiền tố
+        new_data = tuple(f'{ma_tv}-{loai_phieu}-{item}' for item in new_data)
+        print(new_data)
+        
+        print("new_data", new_data)
+        print("database_name", database_name)
+        print("table_name", table_name)
+        print("column_name", column_name)
+        flag, notification_text = utils_controller_check_exist.check_exist_values(new_data, database_name, table_name, column_name)
+        if flag == False:
+            return False, notification_text
+        else:
+            return True, "Số phiếu đã tồn tại."
+        
+    def get_last_four_from_third_column(data, column_index, so_ky_tu):
+        # Lấy các giá trị duy nhất từ các ký tự cuối cùng
+        unique_values = set(str(item[column_index])[-so_ky_tu:] for item in data)
+        
+        # Chuyển lại thành danh sách (nếu cần) và trả về
+        return list(unique_values)
+
+class utils_controller_validate_id_before_imporing_to_SQL:
+    def start_validate(data=None, collumn_index=1, database_name=None, table_name=None, column_name=None):
+        new_data = utils_controller_validate_id_before_imporing_to_SQL.get_column_number_of_slip(data, collumn_index)
+        if not new_data:
+            notification_text = "Không có data để kiểm tra."
+            return False, notification_text
+        
+        falg, notification_text = utils_controller_check_exist.check_exist_values(new_data, database_name, table_name, column_name)
+        return falg, notification_text
+    
+    def get_column_number_of_slip(data, collumn_index=1):
+        return [item[collumn_index] for item in data]
         
 
         

@@ -1068,6 +1068,7 @@ class Controller_save_data_on_GUI_into_database:
                     ,row[8],
                     Expired
                 ))
+            print(data)
             return True, data
         except Exception as e:
             print(f"Error: {e}")
@@ -1333,6 +1334,17 @@ class Controller_validate_data_from_Excel_file_to_import_to_SQL_250221_17h05:
                 # print("Error at function: ", f_utils_get_current_function_name())
                 return False
             
+            database_name = utils_controller_get_information_of_database.load_database_name()
+            table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+            column_name = controller_get_information_of_module.load_column_name_so_phieu()
+            ma_tv = utils_controller_get_information_of_database.load_ma_thanh_vien()
+            loai_phieu = controller_get_information_of_module.load_loai_phieu()
+            
+            flag, notification_text = utils_controller_validate_number_of_slip_before_imporing_to_SQL.start_validate(data, collumn_index=3, so_ky_tu=6, ma_tv=ma_tv, loai_phieu=loai_phieu, database_name=database_name, table_name=table_name, column_name=column_name)
+            if flag == True:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
+                return False
+            
             return True
         except Exception as e:
             print(f"Error: {e}")
@@ -1590,11 +1602,12 @@ class Controller_import_bulk_data_from_Excel_file_to_SQL_KD02_YEU_CAU_DAT_HANG:
 
             # validate data
             flag = Controller_validate_data_from_Excel_file_to_import_to_SQL_250221_17h05.validate_data_from_Excel(entry_notification, data_list)
+            print("flag", flag)
             if flag == False:
                 return False
             
-            response = messagebox.askyesno("Xác nhận", "Dữ liệu đã hợp lệ. Bạn có muốn tiếp tục lưu không?")
-            if response == False:
+            result = f_utils_ask_yes_no("Xác nhận", "Dữ liệu đã hợp lệ. Bạn có muốn tiếp tục lưu không?")
+            if result == False:
                 return False
 
             # Load data to database
@@ -1603,6 +1616,10 @@ class Controller_import_bulk_data_from_Excel_file_to_SQL_KD02_YEU_CAU_DAT_HANG:
             login_name, login_pass = f_utils_get_DB_USER_AND_DB_PASSWORD()
             table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
             data_array = data_list
+            print(data_array)
+            
+            converted_data = [tuple(item) for item in data_array]
+            print(converted_data)
             flag = utils_model_import_data_to_SQL_SERVER_250221_16h45.f_insert_data_to_sql(entry_notification,
                                                                                            server_name, 
                                                                                            database_name, 
