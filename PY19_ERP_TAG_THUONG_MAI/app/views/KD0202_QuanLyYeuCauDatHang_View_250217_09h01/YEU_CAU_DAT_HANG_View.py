@@ -640,7 +640,9 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
             self.tab_01_label_footer_notification)
         
     def event_tab_02_button_edit_slip_click(self):
-        elements_list = (
+        Controller_handel_all_events.handle_event_tab_02_button_edit_click(
+            self.tab_01_label_footer_notification, 
+            self.tab1,
             self.tab_01_entry_ngay_tren_phieu,
             self.tab_01_entry_so_phieu,
             self.tab_01_entry_ma_khach_hang,
@@ -652,12 +654,6 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
             self.tab_01_entry_note_for_slip,
             self.tab_02_treeview_log_of_YCDH,
             self.tab_01_treeview_YCDH
-            )
-            
-        Controller_handel_all_events.handle_event_tab_02_button_edit_click(
-            self.tab_01_label_footer_notification, 
-            self.tab1,
-            elements_list
         )
     
     def event_tab_02_button_delete_slip_click(self):

@@ -182,21 +182,24 @@ class Controller_handel_all_events:
     """Công dụng chuyển tiếp các event từ view sang controller
         Nếu thay đổi controller, không phải sửa view
     """
-    def handle_event_tab_02_button_edit_click(entry_notification, active_tab, *args):
-        (
-            entry_ngay_tren_phieu,
-            entry_so_phieu,
-            entry_ma_khach_hang,
-            entry_ten_hhach_hang,
-            entry_mst,
-            entry_dia_chi,
-            entry_so_hop_dong,
-            entry_thong_tin_hop_dong,
-            entry_note_for_slip,
-            my_treeview_to_get_data,
-            my_treeview_to_load_data
-            ) = args
-        Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG.start_editing(entry_notification, active_tab,
+    def handle_event_tab_02_button_edit_click(*args):
+        (entry_notification, 
+        active_tab, 
+        entry_ngay_tren_phieu,
+        entry_so_phieu,
+        entry_ma_khach_hang,
+        entry_ten_hhach_hang,
+        entry_mst,
+        entry_dia_chi,
+        entry_so_hop_dong,
+        entry_thong_tin_hop_dong,
+        entry_note_for_slip,
+        my_treeview_to_get_data,
+        my_treeview_to_load_data) = args
+        
+        Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG.start_editing(
+            entry_notification, 
+            active_tab,
             entry_ngay_tren_phieu,
             entry_so_phieu,
             entry_ma_khach_hang,
@@ -1348,25 +1351,26 @@ class Controller_validate_data_from_Excel_file_to_import_to_SQL_250221_17h05:
             return False
 
 class Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG:
-    def start_editing(entry_notification, active_tab, elements_list):
+    def start_editing(*args):
+        (
+        entry_notification, 
+        active_tab, 
+        entry_ngay_tren_phieu,
+        entry_so_phieu,
+        entry_ma_khach_hang,
+        entry_ten_hhach_hang,
+        entry_mst,
+        entry_dia_chi,
+        entry_so_hop_dong,
+        entry_thong_tin_hop_dong,
+        entry_note_for_slip,
+        my_treeview_to_get_data,
+        my_treeview_to_load_data
+            ) = args
         
         # Active tab
         notebook = active_tab.master  # Get the Notebook that contains the tab
         notebook.select(active_tab)  # Select the correct tab
-        
-        (
-            entry_ngay_tren_phieu,
-            entry_so_phieu,
-            entry_ma_khach_hang,
-            entry_ten_hhach_hang,
-            entry_mst,
-            entry_dia_chi,
-            entry_so_hop_dong,
-            entry_thong_tin_hop_dong,
-            entry_note_for_slip,
-            my_treeview_to_get_data,
-            my_treeview_to_load_data
-            ) = elements_list
 
         # Get the selected items
         selected_items = my_treeview_to_get_data.selection()
@@ -1386,24 +1390,44 @@ class Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG:
             row_values = my_treeview_to_get_data.item(item, 'values')
             if len(row_values) > 2:  # Ensure the row has at least 2 columns
                 so_phieu = row_values[2]
-                Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG.begin_editing_slip(elements_list, so_phieu)
+                Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG.begin_editing_slip(entry_ngay_tren_phieu,
+                entry_so_phieu,
+                entry_ma_khach_hang,
+                entry_ten_hhach_hang,
+                entry_mst,
+                entry_dia_chi,
+                entry_so_hop_dong,
+                entry_thong_tin_hop_dong,
+                entry_note_for_slip,
+                my_treeview_to_get_data,
+                my_treeview_to_load_data, so_phieu)
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Begin editing slip {so_phieu}.", "blue")
                 return
     
-    def begin_editing_slip(elements_list, so_phieu):
-        (
-            entry_ngay_tren_phieu,
-            entry_so_phieu,
-            entry_ma_khach_hang,
-            entry_ten_hhach_hang,
-            entry_mst,
-            entry_dia_chi,
-            entry_so_hop_dong,
-            entry_thong_tin_hop_dong,
-            entry_note_for_slip,
-            my_treeview_to_get_data,
-            my_treeview_to_load_data
-            ) = elements_list
+    def begin_editing_slip(entry_ngay_tren_phieu,
+        entry_so_phieu,
+        entry_ma_khach_hang,
+        entry_ten_hhach_hang,
+        entry_mst,
+        entry_dia_chi,
+        entry_so_hop_dong,
+        entry_thong_tin_hop_dong,
+        entry_note_for_slip,
+        my_treeview_to_get_data,
+        my_treeview_to_load_data, so_phieu):
+        # (
+        #     entry_ngay_tren_phieu,
+        #     entry_so_phieu,
+        #     entry_ma_khach_hang,
+        #     entry_ten_hhach_hang,
+        #     entry_mst,
+        #     entry_dia_chi,
+        #     entry_so_hop_dong,
+        #     entry_thong_tin_hop_dong,
+        #     entry_note_for_slip,
+        #     my_treeview_to_get_data,
+        #     my_treeview_to_load_data
+        #     ) = elements_list
         data = Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG.get_data_want_to_edit(so_phieu)
         if not data:
             return
