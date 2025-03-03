@@ -177,11 +177,254 @@ class controller_get_information_of_module:
         WHERE [XOA_SUA] = ''
         """
         return query
+
+class Controller_handel_all_events:
+    """Công dụng chuyển tiếp các event từ view sang controller
+        Nếu thay đổi controller, không phải sửa view
+    """
+    def handle_event_tab_02_button_edit_click(entry_notification, active_tab, *args):
+        (
+            entry_ngay_tren_phieu,
+            entry_so_phieu,
+            entry_ma_khach_hang,
+            entry_ten_hhach_hang,
+            entry_mst,
+            entry_dia_chi,
+            entry_so_hop_dong,
+            entry_thong_tin_hop_dong,
+            entry_note_for_slip,
+            my_treeview_to_get_data,
+            my_treeview_to_load_data
+            ) = args
+        Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG.start_editing(entry_notification, active_tab,
+            entry_ngay_tren_phieu,
+            entry_so_phieu,
+            entry_ma_khach_hang,
+            entry_ten_hhach_hang,
+            entry_mst,
+            entry_dia_chi,
+            entry_so_hop_dong,
+            entry_thong_tin_hop_dong,
+            entry_note_for_slip,
+            my_treeview_to_get_data,
+            my_treeview_to_load_data)
+    
+    def handle_event_tab_02_btn_delete_slip_click(entry_notification, my_treeview):
+        Controller_delete_slip_in_SQL.delete_slip_in_SQL(entry_notification, my_treeview)
+
+    def handle_event_tab_02_btn_mark_expired_click(entry_notification, my_treeview):
+        Controller_mark_expired_slip.start_mark_expired(entry_notification, my_treeview)
+
+    def f_handle_event_tab_02_button_export_all_data_click(entry_notification):
+        Controller_export_all_data.export_all_data(entry_notification)
+        
+    def f_handle_event_tab_02_button_export_excel_click(entry_notification, my_treeview):
+        Controller_export_data_on_GUI.export_on_GUI_to_excel(entry_notification, my_treeview)
+    
+    def f_handle_event_tab_01_button_template_click(entry_notification):
+        Controller_create_template_file.get_template(entry_notification)
+        
+    def f_handle_event_tab_01_button_get_import_file_click(entry_notification):
+        Controller_import_bulk_data_from_Excel_file_to_SQL_KD02_YEU_CAU_DAT_HANG.f_handle_event_tab_01_button_get_import_file_click(entry_notification)
+    
+    def f_handle_event_update_selected_row_click(*args):
+        (
+        entry_notification,
+        my_treeview,
+        entry_ma_hang_tab_01,
+        entry_ten_hang_tab_01,
+        entry_dvt,
+        entry_sl_kha_dung,
+        tab_01_entry_nhu_cau,
+        tab_01_entry_sl_giu_cho,
+        tab_01_entry_sl_YCDH,
+        tab_01_entry_ghi_chu_mat_hang
+        )= args
+            
+        Controller_update_selected_row.update_selected_row(entry_notification,
+        my_treeview,
+        entry_ma_hang_tab_01,
+        entry_ten_hang_tab_01,
+        entry_dvt,
+        entry_sl_kha_dung,
+        tab_01_entry_nhu_cau,
+        tab_01_entry_sl_giu_cho,
+        tab_01_entry_sl_YCDH,
+        tab_01_entry_ghi_chu_mat_hang)
+    
+    def f_handle_event_tab_01_btn_delete_click(entry_notification, my_treeview):
+        Controller_delete_row_in_treeview.delete_row(entry_notification, my_treeview)
+    
+    def f_handle_tab_01_button_clear_click(entry_notification, my_treeview):
+        Controller_clear_all_rows_in_treeview.clear_all_rows(entry_notification, my_treeview)
+
+    def f_handle_btn_print_click():
+        Controller_print_current_slip.print_slip_on_GUI()
+    
+    def f_handle_event_get_the_latest_number_of_slip(tab_01_entry_so_phieu):
+        Cotroller_get_the_latest_number_of_slip.get_the_latest_number_of_slip(tab_01_entry_so_phieu)
+        
+    def f_handle_event_tab_01_button_add_row_click(*args):
+        (
+            entry_notification,
+            my_treeview, 
+            entry_id,
+            entry_ma_hang, 
+            entry_ten_hang, 
+            entry_dvt, 
+            entry_sl_kha_dung, 
+            entry_sl_nhu_cau, 
+            entry_sl_giu_cho, 
+            entry_sl_yeu_cau_dat_hang, 
+            entry_ghi_chu_mat_hang
+        )= args
+        Controller_add_row_to_treeview.add_row(entry_notification,
+            my_treeview, 
+            entry_id,
+            entry_ma_hang, 
+            entry_ten_hang, 
+            entry_dvt, 
+            entry_sl_kha_dung, 
+            entry_sl_nhu_cau, 
+            entry_sl_giu_cho, 
+            entry_sl_yeu_cau_dat_hang, 
+            entry_ghi_chu_mat_hang)
+        
+    def f_handle_event_tab_02_button_filter_slip(entry_notification, my_treeview, *args):
+        (
+            entry_so_phieu, 
+            entry_so_hop_dong,
+            entry_ngay_bat_dau,
+            entry_ngay_ket_thuc,
+            entry_ma_doi_tuong,
+            entry_ma_hang,
+            combo_trang_thai
+        )= args
+        Controller_filter_with_conditions_on_tab_02.filter_log_with_conditions(entry_notification, my_treeview,
+            entry_so_phieu, 
+            entry_so_hop_dong,
+            entry_ngay_bat_dau,
+            entry_ngay_ket_thuc,
+            entry_ma_doi_tuong,
+            entry_ma_hang,
+            combo_trang_thai)
+        
+    def f_handle_event_tab_02_button_clear_filter(entry_notification, 
+            my_treeview,
+            tab_02_entry_filter_slip_number,
+            tab_02_entry_filter_contract_number,
+            tab_02_entry_ma_khach_hang,
+            tab_02_entry_ten_khach_hang,
+            tab_02_entry_ma_hang,
+            tab_02_entry_ten_hang,
+            tab_02_combo_trang_thai):
+        
+        Controller_clear_all_filter_condition.clear_filter_condition(entry_notification, 
+            my_treeview,
+            tab_02_entry_filter_slip_number,
+            tab_02_entry_filter_contract_number,
+            tab_02_entry_ma_khach_hang,
+            tab_02_entry_ten_khach_hang,
+            tab_02_entry_ma_hang,
+            tab_02_entry_ten_hang,
+            tab_02_combo_trang_thai)
+        
+    def update_entry_id_when_initializing(my_treeview, entry_id):
+        Controller_update_entry_id.update_entry_id_after_adding_new_row(my_treeview, entry_id)
+        
+    def f_handle_event_initializing_format_of_treeview_of_tab_01(my_treeview):
+        Controller_format_treeview.set_format_of_treeview_of_tab_01(my_treeview)
+    
+    def f_handle_event_initializing_format_of_treeview_of_tab_02(my_treeview):
+        Controller_format_treeview.set_format_of_treeview_of_tab_02(my_treeview)
+
+    def f_handle_event_treeview_of_tab_01_double_click(entry_notification, my_treeview):
+        ma_hang = Controller_click_on_treeview.treeview_of_tab_01_double_click(my_treeview)
+        utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, ma_hang, "blue")
+        
+    def f_handle_event_treeview_of_tab_02_double_click(entry_notification, my_treeview):
+        So_phieu = Controller_click_on_treeview.treeview_of_tab_02_double_click(my_treeview)
+        utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, So_phieu, "blue")
+
+    def f_handle_event_treeview_of_tab_01_single_click(entry_notification, my_treeview,
+            entry_id,
+            entry_ma_hang,
+            entry_ten_hang,
+            entry_dvt,
+            entry_sl_kha_dung,
+            entry_sl_nhu_cau,
+            entry_sl_giu_cho,
+            entry_sl_YCDH,
+            entry_ghi_chu_mat_hang):
+        
+        Controller_click_on_treeview.treeview_of_tab_01_single_click(
+        my_treeview,
+        entry_id,
+        entry_ma_hang,
+        entry_ten_hang,
+        entry_dvt,
+        entry_sl_kha_dung,
+        entry_sl_nhu_cau,
+        entry_sl_giu_cho,
+        entry_sl_YCDH,
+        entry_ghi_chu_mat_hang)
+        
+    def f_handle_event_treeview_of_tab_02_single_click(entry_notification, my_treeview):
+        so_phieu = Controller_click_on_treeview.treeview_of_tab_02_single_click(my_treeview)
+        utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, so_phieu, "blue")
+        
+    def f_handle_event_tab_01_btn_save_click(*args):
+        (
+            entry_notification,
+            entry_so_phieu, 
+            entry_ma_kh, 
+            entry_ten_kh,
+            entry_mst,
+            entry_dia_chi,
+            entry_so_hop_dong,
+            entry_thong_tin_hop_dong,
+            entry_ghi_chu_cua_phieu,
+            tree
+        ) = args
+        Controller_save_slip.save_slip(entry_notification,
+            entry_so_phieu, 
+            entry_ma_kh, 
+            entry_ten_kh,
+            entry_mst,
+            entry_dia_chi,
+            entry_so_hop_dong,
+            entry_thong_tin_hop_dong,
+            entry_ghi_chu_cua_phieu,
+            tree)
+        
+    def handle_event_tab_01_btn_update_slip_click(*args):
+        (
+            entry_notification,
+            entry_so_phieu, 
+            entry_ma_kh, 
+            entry_ten_kh,
+            entry_mst,
+            entry_dia_chi,
+            entry_so_hop_dong,
+            entry_thong_tin_hop_dong,
+            entry_ghi_chu_cua_phieu,
+            tree
+        ) = args
+        Controller_update_slip.update_slip(entry_notification,
+            entry_so_phieu, 
+            entry_ma_kh, 
+            entry_ten_kh,
+            entry_mst,
+            entry_dia_chi,
+            entry_so_hop_dong,
+            entry_thong_tin_hop_dong,
+            entry_ghi_chu_cua_phieu,
+            tree)
     
 class Controller_action_after_event:
     
-    # Function to update the selected row
     def validate_data_before_updating_row_in_tree_view(*args):
+        # Function to update the selected row
         try:
             # Lấy các giá trị theo thứ tự truyền vào
             (
@@ -220,8 +463,8 @@ class Controller_action_after_event:
             print("Error at function: ", f_utils_get_current_function_name())
             return False
 
-    # Function to update the selected row
     def begin_updating_row_in_tree_view(*args):
+        # Function to update the selected row
         try:
             (
                 entry_notification,
@@ -425,7 +668,7 @@ class Controller_action_after_event:
             if flag == False:
                 return False
             
-            flag = Controller_action_after_event.update_entry_id_after_adding_new_row(my_treeview, entry_id)
+            flag = Controller_update_entry_id.update_entry_id_after_adding_new_row(my_treeview, entry_id)
             if flag == False:
                 return False
             
@@ -441,7 +684,7 @@ class Controller_action_after_event:
             return True
         except Exception as e:
             # Correct entry ID because adding fail
-            Controller_action_after_event.update_entry_id_after_adding_new_row(my_treeview, entry_id)
+            Controller_update_entry_id.update_entry_id_after_adding_new_row(my_treeview, entry_id)
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
             return False
@@ -599,118 +842,6 @@ class Controller_action_after_event:
             print("Error at function: ", f_utils_get_current_function_name())
             return False
 
-    def update_entry_id_after_adding_new_row(tree, entry_id):
-        try:
-            row_count = 1 + len(tree.get_children())    
-            entry_id.config(state="normal")  # Enable the Entry widget to update the value
-            entry_id.delete(0, tk.END)  # Clear the existing value
-            entry_id.insert(0, row_count)  # Insert the new value (ID)
-            entry_id.config(state="disabled")  # Disable the Entry widget again
-            return True
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return False
-        
-    def set_format_of_treeview_of_tab_01(my_treeview):
-        tab_01_treeview_config_json_path, tab_02_treeview_config_json_path = controller_get_information_of_module.load_treeview_config_json_path()
-        utils_controller_TreeviewConfigurator_250217_13h20.apply_treeview_config(my_treeview, tab_01_treeview_config_json_path)
-        
-    def set_format_of_treeview_of_tab_02(my_treeview):
-        tab_01_treeview_config_json_path, tab_02_treeview_config_json_path = controller_get_information_of_module.load_treeview_config_json_path()
-        utils_controller_TreeviewConfigurator_250217_13h20.apply_treeview_config(my_treeview, tab_02_treeview_config_json_path)
-    
-    def treeview_of_tab_01_double_click(my_treeview):
-        result_value = utils_controller_TreeviewHandler_click_250217_22h34.treeview_double_click(my_treeview, column_return=1)
-        if result_value:
-            return result_value
-        
-    def treeview_of_tab_02_double_click(my_treeview):
-        result_value = utils_controller_TreeviewHandler_click_250217_22h34.treeview_double_click(my_treeview, column_return=2)
-        if result_value:
-            return result_value
-
-    def treeview_of_tab_02_single_click(my_treeview):
-        result_value = utils_controller_TreeviewHandler_click_250217_22h34.treeview_double_click(my_treeview, column_return=2)
-        if result_value:
-            return result_value
-    
-    def treeview_of_tab_01_single_click(
-        my_treeview,
-        entry_id,
-        entry_ma_hang,
-        entry_ten_hang,
-        entry_dvt,
-        entry_sl_kha_dung,
-        entry_sl_nhu_cau,
-        entry_sl_giu_cho,
-        entry_sl_YCDH,
-        entry_ghi_chu_mat_hang):
-        
-        result_tuple = utils_controller_TreeviewHandler_click_250217_22h34.treeview_single_click(my_treeview)
-        if not result_tuple:
-            return
-        id_value, ma_hang, ten_hang, dvt, sl_kha_dung, sl_nhu_cau, sl_giu_cho, sl_dat_hang, ghi_chu_mat_hang = result_tuple
-        
-        # Clear and update the Entry widgets if values are returned
-        if id_value is not None:
-            entry_id.config(state="normal")  # Enable the Entry widget to update the value
-            entry_id.delete(0, tk.END)
-            entry_id.insert(0, id_value)
-            entry_id.config(state="disabled")  # Disable the Entry widget again
-
-        if ma_hang is not None:
-            entry_ma_hang.delete(0, tk.END)
-            entry_ma_hang.insert(0, ma_hang)
-            
-        if ten_hang is not None:
-            entry_ten_hang.delete(0, tk.END)
-            entry_ten_hang.insert(0, ten_hang)
-            
-        if dvt is not None:
-            entry_dvt.delete(0, tk.END)
-            entry_dvt.insert(0, dvt)
-        
-        if sl_kha_dung is not None:
-            entry_sl_kha_dung.delete(0, tk.END)
-            if float(sl_kha_dung).is_integer():  # Nếu là số nguyên
-                formatted_sl_kha_dung = f"{int(float(sl_kha_dung)):,}"
-            else:  # Nếu là số thập phân
-                formatted_sl_kha_dung = f"{float(sl_kha_dung):,.2f}"
-            entry_sl_kha_dung.insert(0, formatted_sl_kha_dung)
-            
-        if sl_nhu_cau is not None:
-            entry_sl_nhu_cau.delete(0, tk.END)
-            if float(sl_nhu_cau).is_integer():  # Nếu là số nguyên
-                formatted_sl_nhu_cau = f"{int(float(sl_nhu_cau)):,}"
-            else:  # Nếu là số thập phân
-                formatted_sl_nhu_cau = f"{float(sl_nhu_cau):,.2f}"
-            entry_sl_nhu_cau.insert(0, formatted_sl_nhu_cau)
-        
-        if sl_giu_cho is not None:
-            entry_sl_giu_cho.config(state="normal")
-            entry_sl_giu_cho.delete(0, tk.END)
-            if float(sl_giu_cho).is_integer():  # Nếu là số nguyên
-                formatted_sl_giu_cho = f"{int(float(sl_giu_cho)):,}"
-            else:  # Nếu là số thập phân
-                formatted_sl_giu_cho = f"{float(sl_giu_cho):,.2f}"
-            entry_sl_giu_cho.insert(0, formatted_sl_giu_cho)
-            entry_sl_giu_cho.config(state="disabled")
-            
-        if sl_dat_hang is not None:
-            entry_sl_YCDH.config(state="normal")
-            entry_sl_YCDH.delete(0, tk.END)
-            if float(sl_dat_hang).is_integer():  # Nếu là số nguyên
-                formatted_sl_dat_hang = f"{int(float(sl_dat_hang)):,}"
-            else:  # Nếu là số thập phân
-                formatted_sl_dat_hang = f"{float(sl_dat_hang):,.2f}"
-            entry_sl_YCDH.insert(0, formatted_sl_dat_hang)
-            entry_sl_YCDH.config(state="disabled")
-            
-        if ghi_chu_mat_hang is not None:
-            entry_ghi_chu_mat_hang.delete(0, tk.END)
-            entry_ghi_chu_mat_hang.insert(0, ghi_chu_mat_hang)
-            
     def Kiem_tra_lai_data_trong_treeview(entry_notification, my_treeview):
         try:
             # step: Lấy data trong treeview
@@ -841,14 +972,6 @@ class Controller_auto_update_sl_giu_cho_va_sl_ycdh():
             self.entry_sl_yeu_cau_dat_hang.insert(0, "Error")
             self.entry_sl_yeu_cau_dat_hang.config(state="readonly")
             
-class cls_test_Controller_04_validate_before_saving():
-    def __init__(self, tree):
-        self.data_sl_kha_dung = []
-            
-    def validate_and_update(self):
-        print("Kiểm tra số lượng khả dụng khớp thì mới cho lưu!")
-        return True
-                
 class Controller_delete_row_in_SQL:
     def update_deleted(so_phieu):
         # Create query
@@ -860,6 +983,29 @@ class Controller_delete_row_in_SQL:
         utils_model_SQL_server.sent_SQL_query(query)
 
 class Controller_mark_expired_slip:
+    def start_mark_expired(entry_notification, my_treeview):
+        # Get the selected items
+        selected_items = my_treeview.selection()
+        
+        # Check if more than one row is selected
+        if len(selected_items) > 1:
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Selection Error, Please select only one row.", "blue")
+            return
+        
+        # Check if no row is selected
+        if not selected_items:
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Selection Error, No row selected.", "blue")
+            return 
+            
+        # Get the selected row
+        for item in selected_items:
+            row_values = my_treeview.item(item, 'values')
+            if len(row_values) > 2:  # Ensure the row has at least 2 columns
+                so_phieu = row_values[2]
+                Controller_mark_expired_slip.mark_expired(so_phieu)
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"{so_phieu}, Slip deleted.", "blue")
+                return 
+    
     def mark_expired(so_phieu):
         # Create query
         database_name = f_utils_get_DB_NAME()
@@ -1002,539 +1148,6 @@ class Controller_get_the_latest_number_of_slip:
             data_final = max(data_02)
         return data_final
 
-class Controller_handel_all_events:
-    
-    def handle_event_tab_02_button_edit_click(entry_notification, active_tab, elements_list):
-        
-        # Active tab
-        notebook = active_tab.master  # Get the Notebook that contains the tab
-        notebook.select(active_tab)  # Select the correct tab
-        
-        (
-            entry_ngay_tren_phieu,
-            entry_so_phieu,
-            entry_ma_khach_hang,
-            entry_ten_hhach_hang,
-            entry_mst,
-            entry_dia_chi,
-            entry_so_hop_dong,
-            entry_thong_tin_hop_dong,
-            entry_note_for_slip,
-            my_treeview_to_get_data,
-            my_treeview_to_load_data
-            ) = elements_list
-
-        # Get the selected items
-        selected_items = my_treeview_to_get_data.selection()
-        
-        # Check if more than one row is selected
-        if len(selected_items) > 1:
-            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Selection Error, Please select only one row.", "blue")
-            return
-        
-        # Check if no row is selected
-        if not selected_items:
-            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Selection Error, No row selected.", "blue")
-            return
-        
-        # Get the selected row
-        for item in selected_items:
-            row_values = my_treeview_to_get_data.item(item, 'values')
-            if len(row_values) > 2:  # Ensure the row has at least 2 columns
-                so_phieu = row_values[2]
-                Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG.begin_editing_slip(elements_list, so_phieu)
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Begin editing slip {so_phieu}.", "blue")
-                return
-    
-    def handle_event_tab_02_btn_delete_slip_click(entry_notification, my_treeview):
-        # Get the selected items
-        selected_items = my_treeview.selection()
-        
-        # Check if more than one row is selected
-        if len(selected_items) > 1:
-            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Selection Error, Please select only one row.", "blue")
-            return
-        
-        # Check if no row is selected
-        if not selected_items:
-            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Selection Error, No row selected.", "blue")
-            return 
-            
-        # Get the selected row
-        for item in selected_items:
-            row_values = my_treeview.item(item, 'values')
-            if len(row_values) > 2:  # Ensure the row has at least 2 columns
-                so_phieu = row_values[2]
-                Controller_delete_row_in_SQL.update_deleted(so_phieu)
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"{so_phieu}, Slip deleted.", "blue")
-                return 
-
-    def handle_event_tab_02_btn_mark_expired_click(entry_notification, my_treeview):
-        # Get the selected items
-        selected_items = my_treeview.selection()
-        
-        # Check if more than one row is selected
-        if len(selected_items) > 1:
-            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Selection Error, Please select only one row.", "blue")
-            return
-        
-        # Check if no row is selected
-        if not selected_items:
-            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Selection Error, No row selected.", "blue")
-            return 
-            
-        # Get the selected row
-        for item in selected_items:
-            row_values = my_treeview.item(item, 'values')
-            if len(row_values) > 2:  # Ensure the row has at least 2 columns
-                so_phieu = row_values[2]
-                Controller_mark_expired_slip.mark_expired(so_phieu)
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"{so_phieu}, Slip deleted.", "blue")
-                return 
-
-    def f_handle_event_tab_02_button_export_all_data_click(entry_notification):
-        try:
-            # Tạo câu query SQL với danh sách số phiếu
-            query, header = controller_get_information_of_module.load_query_select_all_data()
-
-            flag, path = utils_controller_Export_data_to_Excel_250222_09h16.export_log_to_excel(query, header)
-            if flag == False:
-                return False
-            
-            # Notification
-            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, path, "blue")
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-        
-    def f_handle_event_tab_02_button_export_excel_click(entry_notification, my_treeview):
-        try:
-            # Export log to Excel
-            # lấy danh sách số phiếu từ treeview
-            danh_sach_so_phieu = f_utils_get_unique_column_from_treeview(my_treeview, 2)
-            # print("danh_sach_so_phieu", danh_sach_so_phieu)
-            
-            # Chuyển danh sách số phiếu thành chuỗi SQL, đảm bảo các giá trị dạng chuỗi được bao trong dấu nháy đơn
-            so_phieu_str = ', '.join([f"'{str(x)}'" for x in danh_sach_so_phieu])
-            # print("so_phieu_str", so_phieu_str)
-            
-            query, header = controller_get_information_of_module.load_query_select_data_filtered_to_Excel(so_phieu_str)
-            
-            flag, path = utils_controller_Export_data_to_Excel_250222_09h16.export_log_to_excel(query, header)
-            if flag == False:
-                return False
-            
-            # Notification
-            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, path, "blue")
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-    
-    def f_handle_event_tab_01_button_template_click(entry_notification):
-        try:
-            
-            # Load the column headers from SQL
-            database_name = utils_controller_get_information_of_database.load_database_name()
-            table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
-            
-            column_names = utils_controller_get_the_header_of_table_in_SQL_250221_11h01.get_column_names(database_name, table_name)
-            
-            if not column_names:
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Error: No data found!", "red")
-                return False
-            
-            flag, text = f_utils_create_template_excel_file(file_name="template_YCDH.xlsx", sheet_name="template_YCDH", column_names=column_names)
-            if flag == False:
-                return False
-            else:
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, text, "blue")
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-        
-    def f_handle_event_tab_01_button_get_import_file_click(entry_notification):
-        try:
-            file_name, file_bath = f_utils_open_file()
-            if not file_name:
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "No excel file selected!", "red")
-                return False
-            
-            # load data from excel file
-            # Bắt đầu từ ô A1
-            data = utils_model_get_data_from_Excel_250221_16h45.get_data_from_excel(file_bath, "template_YCDH", start_row=1, start_col=1)
-            if not data:
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "No data found in the selected file!", "red")
-                return False
-
-            # Chuyển dữ liệu từ list thành DataFrame
-            df = pd.DataFrame(data[1:], columns=data[0])
-
-            # Bỏ 2 cột đầu tiên
-            df = df.iloc[:, 2:]
-
-            # Chuyển DataFrame thành list
-            data_list = df.values.tolist()
-
-            # validate data
-            flag = Controller_validate_data_from_Excel_file_to_import_to_SQL_250221_17h05.validate_data_from_Excel(entry_notification, data_list)
-            if flag == False:
-                return False
-            
-            response = messagebox.askyesno("Xác nhận", "Dữ liệu đã hợp lệ. Bạn có muốn tiếp tục lưu không?")
-            if response == False:
-                return False
-
-            # Load data to database
-            server_name = f_utils_get_DB_HOST()
-            database_name = f_utils_get_DB_NAME()
-            login_name, login_pass = f_utils_get_DB_USER_AND_DB_PASSWORD()
-            table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
-            data_array = data_list
-            flag = utils_model_import_data_to_SQL_SERVER_250221_16h45.f_insert_data_to_sql(entry_notification,
-                                                                                           server_name, 
-                                                                                           database_name, 
-                                                                                           login_name, 
-                                                                                           login_pass, 
-                                                                                           table_name, 
-                                                                                           data_array)
-            if flag == False:
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Import to Database fail!", "red")
-                messagebox.showinfo("Thông báo", "Lưu không thành công!")
-                return False
-            else:
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Save data successfully!", "blue")
-                messagebox.showinfo("Thông báo", "Dữ liệu đã được lưu thành công!")
-                return True
-                
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return False
-    
-    def f_handle_event_update_selected_row_click(*args):
-        try:
-            (
-            entry_notification,
-            my_treeview,
-            entry_ma_hang_tab_01,
-            entry_ten_hang_tab_01,
-            entry_dvt,
-            entry_sl_kha_dung,
-            tab_01_entry_nhu_cau,
-            tab_01_entry_sl_giu_cho,
-            tab_01_entry_sl_YCDH,
-            tab_01_entry_ghi_chu_mat_hang
-            )= args
-            
-            flag = Controller_action_after_event.update_selected_row(
-            entry_notification,
-            my_treeview,
-            entry_ma_hang_tab_01,
-            entry_ten_hang_tab_01,
-            entry_dvt,
-            entry_sl_kha_dung,
-            tab_01_entry_nhu_cau,
-            tab_01_entry_sl_giu_cho,
-            tab_01_entry_sl_YCDH,
-            tab_01_entry_ghi_chu_mat_hang)
-            if flag == False:
-                return False
-                
-            if flag == True:
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Row updated successfully!", "blue")
-                return True
-    
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return False
-    
-    def f_handle_event_tab_01_btn_delete_click(entry_notification, my_treeview):
-        try:
-            flag = Controller_action_after_event.f_delete_one_row_in_treeview(my_treeview)
-            if flag == False:
-                return False
-            
-            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Row deleted successfully!", "blue")
-            return True
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return False
-    
-    def f_handle_tab_01_button_clear_click(entry_notification, my_treeview):
-        try:
-            flag = Controller_action_after_event.clear_all_contents_in_treeview(my_treeview)
-            if flag == False:
-                return False
-            else:
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Clear all rows successfully!", "blue")
-                return True
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return False
-
-    def f_handle_btn_print_click():
-        try:
-            path_template_file = os.path.join(PATH_ASSETS_TEMPLATES_EXCEL, "PRINT_KD0201.xlsx")
-            sheet_name = "KD0201_YEU_CAU_DAT_HANG"
-            f_utils_open_print_template(path_template_file, sheet_name)
-            return "Print template opened successfully!"
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return f"Error: {e}"
-    
-    def f_handle_event_get_the_latest_number_of_slip(tab_01_entry_so_phieu):
-        try:
-            Controller_action_after_event.f_get_the_latest_number_of_slip(tab_01_entry_so_phieu)
-            return "Have gotten the latest number of slip!"
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return f"Error: {e}"
-        
-    def f_handle_event_tab_01_button_add_row_click(*args):
-        try:
-            # Get the arguments
-            (
-                entry_notification,
-                my_treeview, 
-                entry_id,
-                entry_ma_hang, 
-                entry_ten_hang, 
-                entry_dvt, 
-                entry_sl_kha_dung, 
-                entry_sl_nhu_cau, 
-                entry_sl_giu_cho, 
-                entry_sl_yeu_cau_dat_hang, 
-                entry_ghi_chu_mat_hang
-            )= args
-            flag = Controller_action_after_event.f_add_new_row_and_renew_the_tree_view(
-                entry_notification,
-                my_treeview, 
-                entry_id,
-                entry_ma_hang, 
-                entry_ten_hang, 
-                entry_dvt, 
-                entry_sl_kha_dung, 
-                entry_sl_nhu_cau, 
-                entry_sl_giu_cho, 
-                entry_sl_yeu_cau_dat_hang, 
-                entry_ghi_chu_mat_hang
-            )
-
-        # Notification
-            if flag == True:
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Adding row successfully!", "blue")
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-        
-    def f_handle_event_tab_02_button_filter_slip(entry_notification, my_treeview, *args):
-        try:
-            # Get the arguments
-            (
-                entry_so_phieu, 
-                entry_so_hop_dong,
-                entry_ngay_bat_dau,
-                entry_ngay_ket_thuc,
-                entry_ma_doi_tuong,
-                entry_ma_hang,
-                combo_trang_thai
-            )= args
-            
-            so_phieu = entry_so_phieu.get()
-            so_hop_dong = entry_so_hop_dong.get()
-            ngay_bat_dau = entry_ngay_bat_dau.get()
-            ngay_ket_thuc = entry_ngay_ket_thuc.get()
-            ma_doi_tuong = entry_ma_doi_tuong.get()
-            ma_hang = entry_ma_hang.get()
-            
-            # Reformat the value
-            formated_ngay_bat_dau = f_utils_change_format_date_from_ddmmyyyy_to_yyyymmdd(ngay_bat_dau)
-            formated_ngay_ket_thuc = f_utils_change_format_date_from_ddmmyyyy_to_yyyymmdd(ngay_ket_thuc)
-            if ma_doi_tuong == 'search here':
-                ma_doi_tuong = ''
-            if ma_hang == 'search here':
-                ma_hang = ''
-
-            if combo_trang_thai.get() == "Còn hạn":
-                combo_trang_thai = 0
-            else:
-                combo_trang_thai = 1
-                    
-            query = controller_get_information_of_module.load_query_filter_data_to_treeview()
-            
-            utils_controller_get_data_from_SQL_to_treeview_with_quey_and_params_list.load_data_with_quey_and_params(my_treeview, query, (combo_trang_thai, so_phieu, so_phieu, so_hop_dong, so_hop_dong, formated_ngay_bat_dau, formated_ngay_ket_thuc, formated_ngay_bat_dau, formated_ngay_ket_thuc, ma_doi_tuong, ma_doi_tuong, ma_hang, ma_hang))
-            
-            # Notification
-            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Data loaded!", "blue")
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-        
-    def f_handle_event_tab_02_button_clear_filter(
-            entry_notification, 
-            my_treeview,
-            tab_02_entry_filter_slip_number,
-            tab_02_entry_filter_contract_number,
-            tab_02_entry_ma_khach_hang,
-            tab_02_entry_ten_khach_hang,
-            tab_02_entry_ma_hang,
-            tab_02_entry_ten_hang,
-            tab_02_combo_trang_thai):
-        
-        try:
-            # clear all entries
-            tab_02_entry_filter_slip_number.delete(0, tk.END)
-            tab_02_entry_filter_contract_number.delete(0, tk.END)
-            tab_02_entry_ma_khach_hang.delete(0, tk.END)
-            tab_02_entry_ten_khach_hang.delete(0, tk.END)
-            tab_02_entry_ma_hang.delete(0, tk.END)
-            tab_02_entry_ten_hang.delete(0, tk.END)
-            tab_02_combo_trang_thai.set("Còn hạn")
-            
-            # Create value to filter and fetch data
-            so_phieu = None
-            so_hop_dong = None
-            formated_ngay_bat_dau = None
-            formated_ngay_ket_thuc = None
-            ma_doi_tuong = None
-            ma_hang = None
-            combo_trang_thai = 0
-            
-            query = controller_get_information_of_module.load_query_filter_data_to_treeview()
-            
-            utils_controller_get_data_from_SQL_to_treeview_with_quey_and_params_list.load_data_with_quey_and_params(my_treeview, query, (combo_trang_thai, so_phieu, so_phieu, so_hop_dong, so_hop_dong, formated_ngay_bat_dau, formated_ngay_ket_thuc, formated_ngay_bat_dau, formated_ngay_ket_thuc, ma_doi_tuong, ma_doi_tuong, ma_hang, ma_hang))
-            
-            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Clear all filter!", "blue")
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-        
-    def update_entry_id_when_initializing(my_treeview, entry_id):
-        Controller_action_after_event.update_entry_id_after_adding_new_row(my_treeview, entry_id)
-        
-    def f_handle_event_initializing_format_of_treeview_of_tab_01(my_treeview):
-        Controller_action_after_event.set_format_of_treeview_of_tab_01(my_treeview)
-    
-    def f_handle_event_initializing_format_of_treeview_of_tab_02(my_treeview):
-        Controller_action_after_event.set_format_of_treeview_of_tab_02(my_treeview)
-
-    def f_handle_event_treeview_of_tab_01_double_click(entry_notification, my_treeview):
-        ma_hang = Controller_action_after_event.treeview_of_tab_01_double_click(my_treeview)
-        utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, ma_hang, "blue")
-        
-    def f_handle_event_treeview_of_tab_02_double_click(entry_notification, my_treeview):
-        So_phieu = Controller_action_after_event.treeview_of_tab_02_double_click(my_treeview)
-        utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, So_phieu, "blue")
-
-    def f_handle_event_treeview_of_tab_01_single_click(
-            entry_notification,
-            my_treeview,
-            entry_id,
-            entry_ma_hang,
-            entry_ten_hang,
-            entry_dvt,
-            entry_sl_kha_dung,
-            entry_sl_nhu_cau,
-            entry_sl_giu_cho,
-            entry_sl_YCDH,
-            entry_ghi_chu_mat_hang):
-        
-        Controller_action_after_event.treeview_of_tab_01_single_click(
-        my_treeview,
-        entry_id,
-        entry_ma_hang,
-        entry_ten_hang,
-        entry_dvt,
-        entry_sl_kha_dung,
-        entry_sl_nhu_cau,
-        entry_sl_giu_cho,
-        entry_sl_YCDH,
-        entry_ghi_chu_mat_hang)
-        
-    def f_handle_event_treeview_of_tab_02_single_click(entry_notification, 
-                                                       my_treeview):
-        so_phieu = Controller_action_after_event.treeview_of_tab_02_single_click(my_treeview)
-        utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, so_phieu, "blue")
-        
-    def f_handle_event_tab_01_btn_save_click(*args):
-        try:
-            (
-                entry_notification,
-                entry_so_phieu, 
-                entry_ma_kh, 
-                entry_ten_kh,
-                entry_mst,
-                entry_dia_chi,
-                entry_so_hop_dong,
-                entry_thong_tin_hop_dong,
-                entry_ghi_chu_cua_phieu,
-                tree
-            ) = args
-            
-            # call controller to handle event
-            flag = Controller_event_tab_01_btn_save_click.f_handle_event_tab_01_btn_save_click(
-                entry_notification,
-                entry_so_phieu, 
-                entry_ma_kh, 
-                entry_ten_kh,
-                entry_mst,
-                entry_dia_chi,
-                entry_so_hop_dong,
-                entry_thong_tin_hop_dong,
-                entry_ghi_chu_cua_phieu,
-                tree)
-            if flag == False:
-                return False
-            
-            if flag == True:
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Data saved successfully!", "blue")
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return False
-        
-    def handle_event_tab_01_btn_update_slip_click(*args):
-        try:
-            (
-                entry_notification,
-                entry_so_phieu, 
-                entry_ma_kh, 
-                entry_ten_kh,
-                entry_mst,
-                entry_dia_chi,
-                entry_so_hop_dong,
-                entry_thong_tin_hop_dong,
-                entry_ghi_chu_cua_phieu,
-                tree
-            ) = args
-            
-            # call controller to handle event
-            flag = Controller_event_tab_01_btn_update_slip_click.f_handle_event_tab_01_btn_update_slip_click(
-                entry_notification,
-                entry_so_phieu, 
-                entry_ma_kh, 
-                entry_ten_kh,
-                entry_mst,
-                entry_dia_chi,
-                entry_so_hop_dong,
-                entry_thong_tin_hop_dong,
-                entry_ghi_chu_cua_phieu,
-                tree)
-            if flag == False:
-                return False
-            
-            if flag == True:
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Data updated successfully!", "blue")
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return False
-        
 class Controller_event_tab_01_btn_update_slip_click:
     def f_handle_event_tab_01_btn_update_slip_click(*args):
         # Step get data and validate data
@@ -1735,6 +1348,48 @@ class Controller_validate_data_from_Excel_file_to_import_to_SQL_250221_17h05:
             return False
 
 class Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG:
+    def start_editing(entry_notification, active_tab, elements_list):
+        
+        # Active tab
+        notebook = active_tab.master  # Get the Notebook that contains the tab
+        notebook.select(active_tab)  # Select the correct tab
+        
+        (
+            entry_ngay_tren_phieu,
+            entry_so_phieu,
+            entry_ma_khach_hang,
+            entry_ten_hhach_hang,
+            entry_mst,
+            entry_dia_chi,
+            entry_so_hop_dong,
+            entry_thong_tin_hop_dong,
+            entry_note_for_slip,
+            my_treeview_to_get_data,
+            my_treeview_to_load_data
+            ) = elements_list
+
+        # Get the selected items
+        selected_items = my_treeview_to_get_data.selection()
+        
+        # Check if more than one row is selected
+        if len(selected_items) > 1:
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Selection Error, Please select only one row.", "blue")
+            return
+        
+        # Check if no row is selected
+        if not selected_items:
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Selection Error, No row selected.", "blue")
+            return
+        
+        # Get the selected row
+        for item in selected_items:
+            row_values = my_treeview_to_get_data.item(item, 'values')
+            if len(row_values) > 2:  # Ensure the row has at least 2 columns
+                so_phieu = row_values[2]
+                Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG.begin_editing_slip(elements_list, so_phieu)
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Begin editing slip {so_phieu}.", "blue")
+                return
+    
     def begin_editing_slip(elements_list, so_phieu):
         (
             entry_ngay_tren_phieu,
@@ -1895,6 +1550,557 @@ class Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
             return False
+        
+class Controller_import_bulk_data_from_Excel_file_to_SQL_KD02_YEU_CAU_DAT_HANG:
+    def f_handle_event_tab_01_button_get_import_file_click(entry_notification):
+        wb = None  # Khởi tạo biến workbook để theo dõi và đóng sau
+        try:
+            file_name, file_path = f_utils_open_file()
+            if not file_name:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "No excel file selected!", "red")
+                return False
+            
+            # load data from excel file
+            # Bắt đầu từ ô A1
+            data = utils_model_get_data_from_Excel_250221_16h45.get_data_from_excel(file_path, "template_YCDH", start_row=1, start_col=1)
+            wb = load_workbook(file_path, data_only=True)  # Mở workbook để sử dụng và đóng sau
+            if not data:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "No data found in the selected file!", "red")
+                return False
+
+            # Chuyển dữ liệu từ list thành DataFrame
+            df = pd.DataFrame(data[1:], columns=data[0])
+
+            # Bỏ 2 cột đầu tiên
+            df = df.iloc[:, 2:]
+
+            # Chuyển DataFrame thành list
+            data_list = df.values.tolist()
+
+            # validate data
+            flag = Controller_validate_data_from_Excel_file_to_import_to_SQL_250221_17h05.validate_data_from_Excel(entry_notification, data_list)
+            if flag == False:
+                return False
+            
+            response = messagebox.askyesno("Xác nhận", "Dữ liệu đã hợp lệ. Bạn có muốn tiếp tục lưu không?")
+            if response == False:
+                return False
+
+            # Load data to database
+            server_name = f_utils_get_DB_HOST()
+            database_name = f_utils_get_DB_NAME()
+            login_name, login_pass = f_utils_get_DB_USER_AND_DB_PASSWORD()
+            table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+            data_array = data_list
+            flag = utils_model_import_data_to_SQL_SERVER_250221_16h45.f_insert_data_to_sql(entry_notification,
+                                                                                           server_name, 
+                                                                                           database_name, 
+                                                                                           login_name, 
+                                                                                           login_pass, 
+                                                                                           table_name, 
+                                                                                           data_array)
+            if flag == False:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Import to Database fail!", "red")
+                messagebox.showinfo("Thông báo", "Lưu không thành công!")
+                return False
+            else:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Save data successfully!", "blue")
+                messagebox.showinfo("Thông báo", "Dữ liệu đã được lưu thành công!")
+                return True
+                
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+        finally:
+            # Đóng file Excel nếu workbook đã được mở
+            if wb is not None:
+                wb.close()
+                
+class Controller_delete_slip_in_SQL:
+    def delete_slip_in_SQL(entry_notification, my_treeview):
+        # Get the selected items
+        selected_items = my_treeview.selection()
+        
+        # Check if more than one row is selected
+        if len(selected_items) > 1:
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Selection Error, Please select only one row.", "blue")
+            return
+        
+        # Check if no row is selected
+        if not selected_items:
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Selection Error, No row selected.", "blue")
+            return 
+            
+        # Get the selected row
+        for item in selected_items:
+            row_values = my_treeview.item(item, 'values')
+            if len(row_values) > 2:  # Ensure the row has at least 2 columns
+                so_phieu = row_values[2]
+                Controller_delete_row_in_SQL.update_deleted(so_phieu)
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"{so_phieu}, Slip deleted.", "blue")
+                return
+            
+class Controller_click_on_treeview:
+    def treeview_of_tab_01_double_click(my_treeview):
+        result_value = utils_controller_TreeviewHandler_click_250217_22h34.treeview_double_click(my_treeview, column_return=1)
+        if result_value:
+            return result_value
+        
+    def treeview_of_tab_02_double_click(my_treeview):
+        result_value = utils_controller_TreeviewHandler_click_250217_22h34.treeview_double_click(my_treeview, column_return=2)
+        if result_value:
+            return result_value
+
+    def treeview_of_tab_02_single_click(my_treeview):
+        result_value = utils_controller_TreeviewHandler_click_250217_22h34.treeview_double_click(my_treeview, column_return=2)
+        if result_value:
+            return result_value
     
+    def treeview_of_tab_01_single_click(my_treeview,
+        entry_id,
+        entry_ma_hang,
+        entry_ten_hang,
+        entry_dvt,
+        entry_sl_kha_dung,
+        entry_sl_nhu_cau,
+        entry_sl_giu_cho,
+        entry_sl_YCDH,
+        entry_ghi_chu_mat_hang):
+        
+        result_tuple = utils_controller_TreeviewHandler_click_250217_22h34.treeview_single_click(my_treeview)
+        if not result_tuple:
+            return
+        id_value, ma_hang, ten_hang, dvt, sl_kha_dung, sl_nhu_cau, sl_giu_cho, sl_dat_hang, ghi_chu_mat_hang = result_tuple
+        
+        # Clear and update the Entry widgets if values are returned
+        if id_value is not None:
+            entry_id.config(state="normal")  # Enable the Entry widget to update the value
+            entry_id.delete(0, tk.END)
+            entry_id.insert(0, id_value)
+            entry_id.config(state="disabled")  # Disable the Entry widget again
+
+        if ma_hang is not None:
+            entry_ma_hang.delete(0, tk.END)
+            entry_ma_hang.insert(0, ma_hang)
+            
+        if ten_hang is not None:
+            entry_ten_hang.delete(0, tk.END)
+            entry_ten_hang.insert(0, ten_hang)
+            
+        if dvt is not None:
+            entry_dvt.delete(0, tk.END)
+            entry_dvt.insert(0, dvt)
+        
+        if sl_kha_dung is not None:
+            entry_sl_kha_dung.delete(0, tk.END)
+            if float(sl_kha_dung).is_integer():  # Nếu là số nguyên
+                formatted_sl_kha_dung = f"{int(float(sl_kha_dung)):,}"
+            else:  # Nếu là số thập phân
+                formatted_sl_kha_dung = f"{float(sl_kha_dung):,.2f}"
+            entry_sl_kha_dung.insert(0, formatted_sl_kha_dung)
+            
+        if sl_nhu_cau is not None:
+            entry_sl_nhu_cau.delete(0, tk.END)
+            if float(sl_nhu_cau).is_integer():  # Nếu là số nguyên
+                formatted_sl_nhu_cau = f"{int(float(sl_nhu_cau)):,}"
+            else:  # Nếu là số thập phân
+                formatted_sl_nhu_cau = f"{float(sl_nhu_cau):,.2f}"
+            entry_sl_nhu_cau.insert(0, formatted_sl_nhu_cau)
+        
+        if sl_giu_cho is not None:
+            entry_sl_giu_cho.config(state="normal")
+            entry_sl_giu_cho.delete(0, tk.END)
+            if float(sl_giu_cho).is_integer():  # Nếu là số nguyên
+                formatted_sl_giu_cho = f"{int(float(sl_giu_cho)):,}"
+            else:  # Nếu là số thập phân
+                formatted_sl_giu_cho = f"{float(sl_giu_cho):,.2f}"
+            entry_sl_giu_cho.insert(0, formatted_sl_giu_cho)
+            entry_sl_giu_cho.config(state="disabled")
+            
+        if sl_dat_hang is not None:
+            entry_sl_YCDH.config(state="normal")
+            entry_sl_YCDH.delete(0, tk.END)
+            if float(sl_dat_hang).is_integer():  # Nếu là số nguyên
+                formatted_sl_dat_hang = f"{int(float(sl_dat_hang)):,}"
+            else:  # Nếu là số thập phân
+                formatted_sl_dat_hang = f"{float(sl_dat_hang):,.2f}"
+            entry_sl_YCDH.insert(0, formatted_sl_dat_hang)
+            entry_sl_YCDH.config(state="disabled")
+            
+        if ghi_chu_mat_hang is not None:
+            entry_ghi_chu_mat_hang.delete(0, tk.END)
+            entry_ghi_chu_mat_hang.insert(0, ghi_chu_mat_hang)
+       
+class Controller_format_treeview:
+    def set_format_of_treeview_of_tab_01(my_treeview):
+        tab_01_treeview_config_json_path, tab_02_treeview_config_json_path = controller_get_information_of_module.load_treeview_config_json_path()
+        utils_controller_TreeviewConfigurator_250217_13h20.apply_treeview_config(my_treeview, tab_01_treeview_config_json_path)
+        
+    def set_format_of_treeview_of_tab_02(my_treeview):
+        tab_01_treeview_config_json_path, tab_02_treeview_config_json_path = controller_get_information_of_module.load_treeview_config_json_path()
+        utils_controller_TreeviewConfigurator_250217_13h20.apply_treeview_config(my_treeview, tab_02_treeview_config_json_path)
+        
+class Controller_update_entry_id:
+    def update_entry_id_after_adding_new_row(tree, entry_id):
+        try:
+            row_count = 1 + len(tree.get_children())    
+            entry_id.config(state="normal")  # Enable the Entry widget to update the value
+            entry_id.delete(0, tk.END)  # Clear the existing value
+            entry_id.insert(0, row_count)  # Insert the new value (ID)
+            entry_id.config(state="disabled")  # Disable the Entry widget again
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+ 
+class Controller_clear_all_filter_condition:
+    def clear_filter_condition(
+            entry_notification, 
+            my_treeview,
+            tab_02_entry_filter_slip_number,
+            tab_02_entry_filter_contract_number,
+            tab_02_entry_ma_khach_hang,
+            tab_02_entry_ten_khach_hang,
+            tab_02_entry_ma_hang,
+            tab_02_entry_ten_hang,
+            tab_02_combo_trang_thai):
+        
+        try:
+            # clear all entries
+            tab_02_entry_filter_slip_number.delete(0, tk.END)
+            tab_02_entry_filter_contract_number.delete(0, tk.END)
+            tab_02_entry_ma_khach_hang.delete(0, tk.END)
+            tab_02_entry_ten_khach_hang.delete(0, tk.END)
+            tab_02_entry_ma_hang.delete(0, tk.END)
+            tab_02_entry_ten_hang.delete(0, tk.END)
+            tab_02_combo_trang_thai.set("Còn hạn")
+            
+            # Create value to filter and fetch data
+            so_phieu = None
+            so_hop_dong = None
+            formated_ngay_bat_dau = None
+            formated_ngay_ket_thuc = None
+            ma_doi_tuong = None
+            ma_hang = None
+            combo_trang_thai = 0
+            
+            query = controller_get_information_of_module.load_query_filter_data_to_treeview()
+            
+            utils_controller_get_data_from_SQL_to_treeview_with_quey_and_params_list.load_data_with_quey_and_params(my_treeview, query, (combo_trang_thai, so_phieu, so_phieu, so_hop_dong, so_hop_dong, formated_ngay_bat_dau, formated_ngay_ket_thuc, formated_ngay_bat_dau, formated_ngay_ket_thuc, ma_doi_tuong, ma_doi_tuong, ma_hang, ma_hang))
+            
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Clear all filter!", "blue")
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            
+class Controller_filter_with_conditions_on_tab_02:  
+    def filter_log_with_conditions(entry_notification, my_treeview, *args):
+        try:
+            # Get the arguments
+            (
+                entry_so_phieu, 
+                entry_so_hop_dong,
+                entry_ngay_bat_dau,
+                entry_ngay_ket_thuc,
+                entry_ma_doi_tuong,
+                entry_ma_hang,
+                combo_trang_thai
+            )= args
+            
+            so_phieu = entry_so_phieu.get()
+            so_hop_dong = entry_so_hop_dong.get()
+            ngay_bat_dau = entry_ngay_bat_dau.get()
+            ngay_ket_thuc = entry_ngay_ket_thuc.get()
+            ma_doi_tuong = entry_ma_doi_tuong.get()
+            ma_hang = entry_ma_hang.get()
+            
+            # Reformat the value
+            formated_ngay_bat_dau = f_utils_change_format_date_from_ddmmyyyy_to_yyyymmdd(ngay_bat_dau)
+            formated_ngay_ket_thuc = f_utils_change_format_date_from_ddmmyyyy_to_yyyymmdd(ngay_ket_thuc)
+            if ma_doi_tuong == 'search here':
+                ma_doi_tuong = ''
+            if ma_hang == 'search here':
+                ma_hang = ''
+
+            if combo_trang_thai.get() == "Còn hạn":
+                combo_trang_thai = 0
+            else:
+                combo_trang_thai = 1
+                    
+            query = controller_get_information_of_module.load_query_filter_data_to_treeview()
+            
+            utils_controller_get_data_from_SQL_to_treeview_with_quey_and_params_list.load_data_with_quey_and_params(my_treeview, query, (combo_trang_thai, so_phieu, so_phieu, so_hop_dong, so_hop_dong, formated_ngay_bat_dau, formated_ngay_ket_thuc, formated_ngay_bat_dau, formated_ngay_ket_thuc, ma_doi_tuong, ma_doi_tuong, ma_hang, ma_hang))
+            
+            # Notification
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Data loaded!", "blue")
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            
+class Controller_print_current_slip:
+    def print_slip_on_GUI():
+        try:
+            path_template_file = os.path.join(PATH_ASSETS_TEMPLATES_EXCEL, "PRINT_KD0201.xlsx")
+            sheet_name = "KD0201_YEU_CAU_DAT_HANG"
+            f_utils_open_print_template(path_template_file, sheet_name)
+            return "Print template opened successfully!"
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return f"Error: {e}"
+        
+class Controller_export_all_data:
+    def export_all_data(entry_notification):
+        try:
+            # Tạo câu query SQL với danh sách số phiếu
+            query, header = controller_get_information_of_module.load_query_select_all_data()
+
+            flag, path = utils_controller_Export_data_to_Excel_250222_09h16.export_log_to_excel(query, header)
+            if flag == False:
+                return False
+            
+            # Notification
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, path, "blue")
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+
+class Controller_export_data_on_GUI:
+    def export_on_GUI_to_excel(entry_notification, my_treeview):
+        try:
+            # Export log to Excel
+            # lấy danh sách số phiếu từ treeview
+            danh_sach_so_phieu = f_utils_get_unique_column_from_treeview(my_treeview, 2)
+            # print("danh_sach_so_phieu", danh_sach_so_phieu)
+            
+            # Chuyển danh sách số phiếu thành chuỗi SQL, đảm bảo các giá trị dạng chuỗi được bao trong dấu nháy đơn
+            so_phieu_str = ', '.join([f"'{str(x)}'" for x in danh_sach_so_phieu])
+            # print("so_phieu_str", so_phieu_str)
+            
+            query, header = controller_get_information_of_module.load_query_select_data_filtered_to_Excel(so_phieu_str)
+            
+            flag, path = utils_controller_Export_data_to_Excel_250222_09h16.export_log_to_excel(query, header)
+            if flag == False:
+                return False
+            
+            # Notification
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, path, "blue")
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+
+class Controller_create_template_file:
+    def get_template(entry_notification):
+        try:
+            
+            # Load the column headers from SQL
+            database_name = utils_controller_get_information_of_database.load_database_name()
+            table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+            
+            column_names = utils_controller_get_the_header_of_table_in_SQL_250221_11h01.get_column_names(database_name, table_name)
+            
+            if not column_names:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Error: No data found!", "red")
+                return False
+            
+            flag, text = f_utils_create_template_excel_file(file_name="template_YCDH.xlsx", sheet_name="template_YCDH", column_names=column_names)
+            if flag == False:
+                return False
+            else:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, text, "blue")
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
     
+class Controller_delete_row_in_treeview:
+    def delete_row(entry_notification, my_treeview):
+        try:
+            flag = Controller_action_after_event.f_delete_one_row_in_treeview(my_treeview)
+            if flag == False:
+                return False
+            
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Row deleted successfully!", "blue")
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+        
+class Controller_clear_all_rows_in_treeview:
+    def clear_all_rows(entry_notification, my_treeview):
+        try:
+            flag = Controller_action_after_event.clear_all_contents_in_treeview(my_treeview)
+            if flag == False:
+                return False
+            else:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Clear all rows successfully!", "blue")
+                return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+        
+class Controller_update_slip:
+    def update_slip(*args):
+        try:
+            (
+                entry_notification,
+                entry_so_phieu, 
+                entry_ma_kh, 
+                entry_ten_kh,
+                entry_mst,
+                entry_dia_chi,
+                entry_so_hop_dong,
+                entry_thong_tin_hop_dong,
+                entry_ghi_chu_cua_phieu,
+                tree
+            ) = args
+            
+            # call controller to handle event
+            flag = Controller_event_tab_01_btn_update_slip_click.f_handle_event_tab_01_btn_update_slip_click(
+                entry_notification,
+                entry_so_phieu, 
+                entry_ma_kh, 
+                entry_ten_kh,
+                entry_mst,
+                entry_dia_chi,
+                entry_so_hop_dong,
+                entry_thong_tin_hop_dong,
+                entry_ghi_chu_cua_phieu,
+                tree)
+            if flag == False:
+                return False
+            
+            if flag == True:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Data updated successfully!", "blue")
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+        
+class Controller_save_slip:
+    def save_slip(*args):
+        try:
+            (
+                entry_notification,
+                entry_so_phieu, 
+                entry_ma_kh, 
+                entry_ten_kh,
+                entry_mst,
+                entry_dia_chi,
+                entry_so_hop_dong,
+                entry_thong_tin_hop_dong,
+                entry_ghi_chu_cua_phieu,
+                tree
+            ) = args
+            
+            # call controller to handle event
+            flag = Controller_event_tab_01_btn_save_click.f_handle_event_tab_01_btn_save_click(
+                entry_notification,
+                entry_so_phieu, 
+                entry_ma_kh, 
+                entry_ten_kh,
+                entry_mst,
+                entry_dia_chi,
+                entry_so_hop_dong,
+                entry_thong_tin_hop_dong,
+                entry_ghi_chu_cua_phieu,
+                tree)
+            if flag == False:
+                return False
+            
+            if flag == True:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Data saved successfully!", "blue")
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+        
+class Controller_add_row_to_treeview:
+    def add_row(*args):
+        try:
+            # Get the arguments
+            (
+                entry_notification,
+                my_treeview, 
+                entry_id,
+                entry_ma_hang, 
+                entry_ten_hang, 
+                entry_dvt, 
+                entry_sl_kha_dung, 
+                entry_sl_nhu_cau, 
+                entry_sl_giu_cho, 
+                entry_sl_yeu_cau_dat_hang, 
+                entry_ghi_chu_mat_hang
+            )= args
+            flag = Controller_action_after_event.f_add_new_row_and_renew_the_tree_view(
+                entry_notification,
+                my_treeview, 
+                entry_id,
+                entry_ma_hang, 
+                entry_ten_hang, 
+                entry_dvt, 
+                entry_sl_kha_dung, 
+                entry_sl_nhu_cau, 
+                entry_sl_giu_cho, 
+                entry_sl_yeu_cau_dat_hang, 
+                entry_ghi_chu_mat_hang
+            )
+
+        # Notification
+            if flag == True:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Adding row successfully!", "blue")
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+                  
+class Cotroller_get_the_latest_number_of_slip:
+    def get_the_latest_number_of_slip(tab_01_entry_so_phieu):
+        try:
+            Controller_action_after_event.f_get_the_latest_number_of_slip(tab_01_entry_so_phieu)
+            return "Have gotten the latest number of slip!"
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return f"Error: {e}"
+        
+class Controller_update_selected_row:
+    def update_selected_row(*args):
+        try:
+            (
+            entry_notification,
+            my_treeview,
+            entry_ma_hang_tab_01,
+            entry_ten_hang_tab_01,
+            entry_dvt,
+            entry_sl_kha_dung,
+            tab_01_entry_nhu_cau,
+            tab_01_entry_sl_giu_cho,
+            tab_01_entry_sl_YCDH,
+            tab_01_entry_ghi_chu_mat_hang
+            )= args
+            
+            flag = Controller_action_after_event.update_selected_row(
+            entry_notification,
+            my_treeview,
+            entry_ma_hang_tab_01,
+            entry_ten_hang_tab_01,
+            entry_dvt,
+            entry_sl_kha_dung,
+            tab_01_entry_nhu_cau,
+            tab_01_entry_sl_giu_cho,
+            tab_01_entry_sl_YCDH,
+            tab_01_entry_ghi_chu_mat_hang)
+            if flag == False:
+                return False
+                
+            if flag == True:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Row updated successfully!", "blue")
+                return True
     
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
