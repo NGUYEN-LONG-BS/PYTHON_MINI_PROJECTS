@@ -212,11 +212,11 @@ class Controller_handel_all_events:
             my_treeview_to_get_data,
             my_treeview_to_load_data)
     
-    def handle_event_tab_02_btn_delete_slip_click(entry_notification, my_treeview):
-        Controller_delete_slip_in_SQL.delete_slip_in_SQL(entry_notification, my_treeview)
+    def handle_event_tab_02_btn_delete_slip_click(entry_notification, my_treeview, button_filter):
+        Controller_delete_slip_in_SQL.delete_slip_in_SQL(entry_notification, my_treeview, button_filter)
 
-    def handle_event_tab_02_btn_mark_expired_click(entry_notification, my_treeview):
-        Controller_mark_expired_slip.start_mark_expired(entry_notification, my_treeview)
+    def handle_event_tab_02_btn_mark_expired_click(entry_notification, my_treeview, button_filter):
+        Controller_mark_expired_slip.start_mark_expired(entry_notification, my_treeview, button_filter)
 
     def f_handle_event_tab_02_button_export_all_data_click(entry_notification):
         Controller_export_all_data.export_all_data(entry_notification)
@@ -585,22 +585,6 @@ class Controller_action_after_event:
                 new_values = (index,) + values[1:]  # Update the first column with the new number
                 my_treeview.item(item, values=new_values)  # Set the updated values
             return True
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return False
-    
-    def f_Check_duplicate_and_auto_update_slip_number(entry_so_phieu):
-        database_name = utils_controller_get_information_of_database.load_database_name()
-        table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
-        column_name = controller_get_information_of_module.load_column_name_so_phieu()
-        try:
-            kiem_tra_trung_so_phieu = f_utils_check_duplicate(entry_so_phieu, database_name, table_name, column_name)
-            if kiem_tra_trung_so_phieu == False:    # có trùng phiếu
-                Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(entry_so_phieu)
-                messagebox.showinfo("Thông báo", "Số phiếu đã tồn tại, đã tự động lấy số phiếu mới. Vui lòng thực hiện lưu lại!")
-                return True
-        
         except Exception as e:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
@@ -986,7 +970,7 @@ class Controller_delete_row_in_SQL:
         utils_model_SQL_server.sent_SQL_query(query)
 
 class Controller_mark_expired_slip:
-    def start_mark_expired(entry_notification, my_treeview):
+    def start_mark_expired(entry_notification, my_treeview, button_filter):
         # Get the selected items
         selected_items = my_treeview.selection()
         
@@ -999,7 +983,12 @@ class Controller_mark_expired_slip:
         if not selected_items:
             utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Selection Error, No row selected.", "blue")
             return 
-            
+        
+        result = f_utils_ask_yes_no("Thông báo", "Bạn muốn đánh dấu phiếu hết hạn không?")
+        if not result:
+            # Nếu người dùng chọn No
+            return
+        
         # Get the selected row
         for item in selected_items:
             row_values = my_treeview.item(item, 'values')
@@ -1007,7 +996,9 @@ class Controller_mark_expired_slip:
                 so_phieu = row_values[2]
                 Controller_mark_expired_slip.mark_expired(so_phieu)
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"{so_phieu}, Slip deleted.", "blue")
-                return 
+
+        # Refresh data by simulating a click on the filter button
+        button_filter.invoke()
     
     def mark_expired(so_phieu):
         # Create query
@@ -1280,9 +1271,8 @@ class Controller_validate_data_on_GUI:
     def validate_number_of_slip(entry_notification, entry_so_phieu):
         try:
             # Check duplicate slip number
-            if Controller_action_after_event.f_Check_duplicate_and_auto_update_slip_number(entry_so_phieu) == True:
+            if Controller_check_duplicate_and_auto_update_slip_number.f_Check_duplicate_and_update_slip_number(entry_so_phieu) == True:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số phiếu bị trùng, vui lòng thử lại!", "red")
-                # print("Error at function: ", f_utils_get_current_function_name())
                 return False
             
             # pass the validation
@@ -1352,8 +1342,7 @@ class Controller_validate_data_from_Excel_file_to_import_to_SQL_250221_17h05:
 
 class Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG:
     def start_editing(*args):
-        (
-        entry_notification, 
+        (entry_notification, 
         active_tab, 
         entry_ngay_tren_phieu,
         entry_so_phieu,
@@ -1365,12 +1354,8 @@ class Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG:
         entry_thong_tin_hop_dong,
         entry_note_for_slip,
         my_treeview_to_get_data,
-        my_treeview_to_load_data
-            ) = args
+        my_treeview_to_load_data) = args
         
-        # Active tab
-        notebook = active_tab.master  # Get the Notebook that contains the tab
-        notebook.select(active_tab)  # Select the correct tab
 
         # Get the selected items
         selected_items = my_treeview_to_get_data.selection()
@@ -1402,7 +1387,10 @@ class Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG:
                 my_treeview_to_get_data,
                 my_treeview_to_load_data, so_phieu)
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Begin editing slip {so_phieu}.", "blue")
-                return
+            
+        # Active tab
+        notebook = active_tab.master  # Get the Notebook that contains the tab
+        notebook.select(active_tab)  # Select the correct tab
     
     def begin_editing_slip(entry_ngay_tren_phieu,
         entry_so_phieu,
@@ -1642,7 +1630,7 @@ class Controller_import_bulk_data_from_Excel_file_to_SQL_KD02_YEU_CAU_DAT_HANG:
                 wb.close()
                 
 class Controller_delete_slip_in_SQL:
-    def delete_slip_in_SQL(entry_notification, my_treeview):
+    def delete_slip_in_SQL(entry_notification, my_treeview, button_filter):
         # Get the selected items
         selected_items = my_treeview.selection()
         
@@ -1655,7 +1643,13 @@ class Controller_delete_slip_in_SQL:
         if not selected_items:
             utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Selection Error, No row selected.", "blue")
             return 
-            
+        
+        result = f_utils_ask_yes_no("Thông báo", "Bạn muốn tiến hành xoá phiếu không?")
+        # Kiểm tra kết quả
+        if not result:
+            # Nếu người dùng chọn No, hủy bỏ các thao tác
+            return
+        
         # Get the selected row
         for item in selected_items:
             row_values = my_treeview.item(item, 'values')
@@ -1663,7 +1657,9 @@ class Controller_delete_slip_in_SQL:
                 so_phieu = row_values[2]
                 Controller_delete_row_in_SQL.update_deleted(so_phieu)
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"{so_phieu}, Slip deleted.", "blue")
-                return
+        
+        # Refresh data by simulating a click on the filter button
+        button_filter.invoke()
             
 class Controller_click_on_treeview:
     def treeview_of_tab_01_double_click(my_treeview):
@@ -2124,6 +2120,28 @@ class Controller_update_selected_row:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Row updated successfully!", "blue")
                 return True
     
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+        
+class Controller_check_duplicate_and_auto_update_slip_number:
+    def f_Check_duplicate_and_update_slip_number(entry_so_phieu):
+        database_name = utils_controller_get_information_of_database.load_database_name()
+        table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+        column_name = controller_get_information_of_module.load_column_name_so_phieu()
+        try:
+            kiem_tra_trung_so_phieu = f_utils_check_duplicate(entry_so_phieu, database_name, table_name, column_name)
+            if kiem_tra_trung_so_phieu == False:    # có trùng phiếu
+                result = f_utils_ask_yes_no("Thông báo", "Số phiếu đã tồn tại, bạn có muốn tự động lấy số phiếu mới không?")
+                # Kiểm tra kết quả
+                if result:
+                    # Nếu người dùng chọn Yes
+                    Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(entry_so_phieu)
+                    return True
+                else:
+                    # Nếu người dùng chọn No
+                    return False
         except Exception as e:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())

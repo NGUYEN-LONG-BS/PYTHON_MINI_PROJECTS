@@ -770,6 +770,13 @@ def f_utils_export_data_to_excel(data_header, data):
     wb.save(file_path)
     print(f"Data exported successfully to {file_path}")
 
+def f_utils_ask_yes_no(title: str, message: str) -> bool:
+    # Hiển thị hộp thoại thông báo với các lựa chọn Yes/No
+    result = messagebox.askyesno(title, message)
+    
+    # Trả về kết quả (True nếu chọn Yes, False nếu chọn No)
+    return result
+
 # ========================================================================================================================================================================
 # Lấy thông tin từ file config.json
 # ========================================================================================================================================================================

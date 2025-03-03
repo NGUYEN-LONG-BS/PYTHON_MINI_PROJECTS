@@ -553,8 +553,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_entry_nhu_cau,
         self.tab_01_entry_sl_giu_cho,
         self.tab_01_entry_sl_YCDH,
-        self.tab_01_entry_ghi_chu_mat_hang
-        )
+        self.tab_01_entry_ghi_chu_mat_hang)
     
     def event_tab_01_button_delete_click(self):
         Controller_handel_all_events.f_handle_event_tab_01_btn_delete_click(
@@ -580,8 +579,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
             self._tab_01_entry_so_hop_dong,
             self.tab_01_entry_thong_tin_hop_dong,
             self.tab_01_entry_note_for_slip,
-            self.tab_01_treeview_YCDH
-        )    
+            self.tab_01_treeview_YCDH)
     
     def event_tab_01_button_update_slip_click(self):
         Controller_handel_all_events.handle_event_tab_01_btn_update_slip_click(
@@ -594,8 +592,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
             self._tab_01_entry_so_hop_dong,
             self.tab_01_entry_thong_tin_hop_dong,
             self.tab_01_entry_note_for_slip,
-            self.tab_01_treeview_YCDH
-        )
+            self.tab_01_treeview_YCDH)
     
     def event_tab_01_button_template_click(self):
         Controller_handel_all_events.f_handle_event_tab_01_button_template_click(self.tab_01_label_footer_notification)
@@ -653,24 +650,19 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
             self.tab_01_entry_thong_tin_hop_dong,
             self.tab_01_entry_note_for_slip,
             self.tab_02_treeview_log_of_YCDH,
-            self.tab_01_treeview_YCDH
-        )
+            self.tab_01_treeview_YCDH)
     
     def event_tab_02_button_delete_slip_click(self):
         Controller_handel_all_events.handle_event_tab_02_btn_delete_slip_click(
             self.tab_01_label_footer_notification, 
-            self.tab_02_treeview_log_of_YCDH
-        )
-        # refresh data
-        self.event_tab_02_button_filter_click()
+            self.tab_02_treeview_log_of_YCDH,
+            self.tab_02_button_filter)
     
     def event_tab_02_button_mark_expired_click(self):
         Controller_handel_all_events.handle_event_tab_02_btn_mark_expired_click(
             self.tab_01_label_footer_notification, 
-            self.tab_02_treeview_log_of_YCDH
-        )
-        # refresh data
-        self.event_tab_02_button_filter_click()
+            self.tab_02_treeview_log_of_YCDH,
+            self.tab_02_button_filter)
     
     def f_view_treeview_of_tab_01_double_click(self, event):
         Controller_handel_all_events.f_handle_event_treeview_of_tab_01_double_click(
