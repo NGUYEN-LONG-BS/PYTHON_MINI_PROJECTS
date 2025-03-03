@@ -539,8 +539,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
             self.tab_01_entry_nhu_cau, 
             self.tab_01_entry_sl_giu_cho, 
             self.tab_01_entry_sl_YCDH, 
-            self.tab_01_entry_ghi_chu_mat_hang
-            )
+            self.tab_01_entry_ghi_chu_mat_hang)
     
     def event_tab_01_button_update_row_click(self):
         Controller_handel_all_events.f_handle_event_update_selected_row_click(
@@ -610,8 +609,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
             self.tab_02_ngay_filter_ket_thuc,
             self.tab_02_entry_ma_khach_hang,
             self.tab_02_entry_ma_hang,
-            self.tab_02_entry_filter_trang_thai
-            )
+            self.tab_02_entry_filter_trang_thai)
     
     def event_tab_02_button_clear_filter_click(self):
         Controller_handel_all_events.f_handle_event_tab_02_button_clear_filter(
@@ -623,14 +621,12 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
             self.tab_02_entry_ten_khach_hang,
             self.tab_02_entry_ma_hang,
             self.tab_02_entry_ten_hang,
-            self.tab_02_entry_filter_trang_thai
-        )
+            self.tab_02_entry_filter_trang_thai)
         
     def event_tab_02_button_export_excel_click(self):
         Controller_handel_all_events.f_handle_event_tab_02_button_export_excel_click(
             self.tab_01_label_footer_notification,
-            self.tab_02_treeview_log_of_YCDH
-        )
+            self.tab_02_treeview_log_of_YCDH)
         
     def event_tab_02_button_export_all_data_click(self):
         Controller_handel_all_events.f_handle_event_tab_02_button_export_all_data_click(
