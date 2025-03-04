@@ -692,7 +692,7 @@ class utils_controller_validate_logic_in_columns_num_03_no_duplicate_inventory_i
 
 class utils_controller_validate_logic_in_columns_num_04_no_duplicate_stt_dong:
     """
-    Cột thứ 2 (chỉ mục 1, tính từ 0) phải là duy nhất.
+    Cột thứ 2 (chỉ mục 1, tính từ 0) phải là duy nhất trong từng số phiếu.
     Cột thứ 2 phải là số nguyên.
     Cột thứ 2 phải bắt đầu từ số 1 và tiếp tục tăng liên tiếp.
     """
@@ -704,8 +704,7 @@ class utils_controller_validate_logic_in_columns_num_04_no_duplicate_stt_dong:
             return False, notification_text
 
         ticket_item_dict = {}  # Dictionary lưu danh sách mã hàng theo số phiếu
-        unique_column_values = set()  # Set để lưu giá trị duy nhất của cột thứ 2
-        expected_value = 1  # Giá trị mong đợi đầu tiên
+        expected_value_dict = {}  # Dictionary để lưu giá trị mong đợi theo từng số phiếu
 
         for row in new_data:
             if len(row) < len(column_indices):
@@ -713,18 +712,17 @@ class utils_controller_validate_logic_in_columns_num_04_no_duplicate_stt_dong:
 
             ticket, item = row  # Lấy số phiếu và mã hàng
 
-            # Kiểm tra nếu giá trị item là None
-            if item is None:
-                return False, f"Có giá trị None ở cột thứ STT dong, vui lòng kiểm tra lại dữ liệu."
+            # Kiểm tra nếu giá trị item là None hoặc NaN
+            if item is None or (isinstance(item, float) and math.isnan(item)):
+                return False, f"Có giá trị None hoặc NaN ở cột thứ 2, vui lòng kiểm tra lại dữ liệu."
 
-            # Kiểm tra một số phiếu không có hai dòng trùng mã hàng
-            if ticket not in ticket_item_dict:
-                ticket_item_dict[ticket] = set()
+            # Chuyển đổi số thực thành số nguyên nếu nó là số nguyên (VD: 16.0 -> 16)
+            if isinstance(item, float) and item.is_integer():
+                item = int(item)
             
-            if item in ticket_item_dict[ticket]:
-                return False, f"Số phiếu {ticket} chứa mã hàng trùng nhau: {item}."
-            
-            ticket_item_dict[ticket].add(item)
+            # Kiểm tra cột thứ 2 là số nguyên dương
+            if not isinstance(item, int) or item <= 0:
+                return False, f"Giá trị ở cột thứ 2 phải là số nguyên dương: {item}."
             
             # Kiểm tra cột thứ 2 là số nguyên
             try:
@@ -732,21 +730,26 @@ class utils_controller_validate_logic_in_columns_num_04_no_duplicate_stt_dong:
             except ValueError:
                 return False, f"Giá trị ở cột thứ 2 không phải là số nguyên: {item}."
             
-            # Kiểm tra cột thứ 2 là duy nhất
-            if item_int in unique_column_values:
-                return False, f"Giá trị {item_int} ở cột thứ 2 bị trùng lặp."
+            # Kiểm tra số phiếu đã xuất hiện hay chưa
+            if ticket not in ticket_item_dict:
+                ticket_item_dict[ticket] = set()
+                expected_value_dict[ticket] = 1  # Giá trị mong đợi đầu tiên cho số phiếu này
             
-            unique_column_values.add(item_int)
+            # Kiểm tra số phiếu không có hai dòng trùng mã hàng
+            if item_int in ticket_item_dict[ticket]:
+                return False, f"Số phiếu {ticket} chứa mã hàng trùng nhau: {item_int}."
             
-            # Kiểm tra cột thứ 2 bắt đầu từ 1 và liên tiếp
-            if item_int != expected_value:
-                return False, f"Giá trị ở cột thứ 2 không theo thứ tự liên tiếp, mong đợi {expected_value}, nhận {item_int}."
-            expected_value += 1
+            ticket_item_dict[ticket].add(item_int)
+            
+            # Kiểm tra cột thứ 2 bắt đầu từ 1 và liên tiếp trong từng số phiếu
+            if item_int != expected_value_dict[ticket]:
+                return False, f"Số phiếu {ticket} có STT dòng không theo thứ tự liên tiếp, mong đợi {expected_value_dict[ticket]}, nhận {item_int}."
+            expected_value_dict[ticket] += 1
 
-        return True, "Dữ liệu hợp lệ: Cột thứ 2 là duy nhất, là số nguyên và bắt đầu từ 1 theo thứ tự liên tiếp."
+        return True, "Dữ liệu hợp lệ: Mỗi số phiếu có giá trị duy nhất, là số nguyên và bắt đầu từ 1 theo thứ tự liên tiếp."
         
     def get_values_from_columns(data, column_indices):
-        values = [[row[i] if row[i] is not None else None for i in column_indices] for row in data]
+        values = [[row[i] if row[i] is not None and not (isinstance(row[i], float) and math.isnan(row[i])) else None for i in column_indices] for row in data]
         return values
 
     
