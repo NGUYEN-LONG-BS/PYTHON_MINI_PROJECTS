@@ -122,7 +122,7 @@ def f_utils_set_menu_font(widget, size=14, font_is="Arial"):
 
 def f_utils_open_dashboard_main():
     try:
-        from views.AD01_Dashboard_View.Dashboard_View import cls_Dashboard_View
+        from app.views.AD01_Dashboard_View.Dashboard_View import cls_Dashboard_View
         new_view = cls_Dashboard_View()
         utils_controllers.utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
         f_utils_set_center_screen(new_view)
@@ -132,13 +132,13 @@ def f_utils_open_dashboard_main():
         print("Error at function: ", f_utils_get_current_function_name())
     
 def f_utils_open_AI_chatbot():
-    from views.AI00_MY_AI_ASSITANT.chat_view import AIChatApp
+    from app.views.AI00_MY_AI_ASSITANT.chat_view import AIChatApp
     new_window = tk.Toplevel()
     AIChatApp(new_window)
     
 def f_utils_open_dashboard_kinh_doanh():
     try:
-        from views.KD00_DashboardKinhDoanh_View.Dashboard_kinhdoanh_View import cls_Dashboard_kinhdoanh_View
+        from app.views.KD00_DashboardKinhDoanh_View.Dashboard_kinhdoanh_View import cls_Dashboard_kinhdoanh_View
         new_view = cls_Dashboard_kinhdoanh_View()
         utils_controllers.utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
         f_utils_set_center_screen(new_view)
@@ -149,7 +149,7 @@ def f_utils_open_dashboard_kinh_doanh():
     
 def f_utils_open_dashboard_admin():
     try:
-        from views.AD00_DashboardAdmin_View.Dashboard_admin_View import cls_Dashboard_admin_View
+        from app.views.AD00_DashboardAdmin_View.Dashboard_admin_View import cls_Dashboard_admin_View
         new_view = cls_Dashboard_admin_View()
         utils_controllers.utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
         f_utils_set_center_screen(new_view)
@@ -160,7 +160,7 @@ def f_utils_open_dashboard_admin():
     
 def f_utils_open_dashboard_vat_tu():
     try:
-        from views.VT00_DashboardVatTu_View.Dashboard_VatTu_View import cls_Dashboard_Vat_Tu_View
+        from app.views.VT00_DashboardVatTu_View.Dashboard_VatTu_View import cls_Dashboard_Vat_Tu_View
         new_view = cls_Dashboard_Vat_Tu_View()
         utils_controllers.utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
         f_utils_set_center_screen(new_view)
