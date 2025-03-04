@@ -2,6 +2,7 @@
 # Import từ chính thư mục utils
 from . import utils_functions
 from . import utils_models
+import define
 
 import traceback
 from datetime import datetime
@@ -23,7 +24,7 @@ from openpyxl import load_workbook
 from openpyxl.utils import get_column_letter
 
 import xlwings as xw
-from define import *
+
 import pyodbc
 import json
 from cryptography.fernet import Fernet
@@ -98,7 +99,7 @@ class utils_controller_Export_data_to_Excel_250222_09h16:
                                         else x)
         
         # Đường dẫn thư mục lưu file
-        directory = PATH_DEFAUL
+        directory = define.PATH_DEFAUL
         if not os.path.exists(directory):
             os.makedirs(directory)  # Tạo thư mục nếu chưa tồn tại
         
