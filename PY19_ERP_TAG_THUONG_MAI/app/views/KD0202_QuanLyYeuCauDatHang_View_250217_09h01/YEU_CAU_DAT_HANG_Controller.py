@@ -1362,8 +1362,22 @@ class Controller_validate_data_from_Excel_file_to_import_to_SQL_250221_17h05:
                 return False
             
             # Kiểm tra: một số phiếu tương ứng với một mã khách hàng
+            flag, notification_text = utils_controller_validate_logic_in_columns_num_02_one_slip_one_id.start_validate(data, column_indices=[3, 4])
+            if flag == False:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
+                return False
             
-            # Kiểm tra: trong một phiếu tồn tại hai mã hàng
+            # Kiểm tra: trong một phiếu không được tồn tại hai dòng có mã hàng trùng nhau
+            flag, notification_text = utils_controller_validate_logic_in_columns_num_03_no_duplicate_inventory_id.start_validate(data, column_indices=[3, 12])
+            if flag == False:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
+                return False
+            
+            # Kiểm tra: stt dòng có phải là duy nhất, phải là số nguyên, phải bắt đầu từ số 1 và tiếp tục tăng liên tiếp
+            flag, notification_text = utils_controller_validate_logic_in_columns_num_04_no_duplicate_stt_dong.start_validate(data, column_indices=[3, 11])
+            if flag == False:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
+                return False
             
             # Kiểm tra có ô nào không có dữ liệu: Số phiếu, mã khách hàng, mã hàng, nhu cầu, sl giữ chỗ, sl YCĐH
             # số phiếu
@@ -1421,6 +1435,10 @@ class Controller_validate_data_from_Excel_file_to_import_to_SQL_250221_17h05:
                 return False
             
             # Kiểm tra số lượng nhu cầu = số lượng giữ chỗ + số lượng YCĐH
+            flag, notification_text = utils_controller_validate_logic_in_columns_num_01_nhu_cau_bang_tong_giucho_ycdh.start_validate(data, column_indices=[16, 17, 18])
+            if flag == False:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
+                return False
             
             return True
         except Exception as e:

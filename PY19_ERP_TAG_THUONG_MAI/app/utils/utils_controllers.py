@@ -596,7 +596,157 @@ class utils_controller_validate_is_True_False:
         # Chuyển lại thành danh sách (nếu cần) và trả về
         return list(values)
         
+class utils_controller_validate_logic_in_columns_num_01_nhu_cau_bang_tong_giucho_ycdh:
+    def start_validate(data=None, column_indices=[1, 2, 3]):
+        new_data = utils_controller_validate_logic_in_columns_num_01_nhu_cau_bang_tong_giucho_ycdh.get_values_from_columns(data, column_indices)
+        if not new_data:
+            notification_text = "Không có data để kiểm tra."
+            return False, notification_text
 
+        for row in new_data:
+            if len(row) < len(column_indices):
+                notification_text = f"Dữ liệu không đủ {len(column_indices)} cột để kiểm tra."
+                return True, notification_text
+            
+            last_column_index = len(column_indices)
+            # Kiểm tra các giá trị có phải là NULL
+            if row[0] != sum(row[1:last_column_index]):
+                notification_text = f"Cột đầu không bằng tổng các cột sau {column_indices}"
+                return False, notification_text
         
+        notification_text = "Good logic in columns"
+        return True, notification_text
         
+    def get_values_from_columns(data, column_indices):
+        values = [[row[i] for i in column_indices] for row in data]
+        return values
+        
+class utils_controller_validate_logic_in_columns_num_02_one_slip_one_id:
+    def start_validate(data=None, column_indices=[1, 2]):
+        new_data = utils_controller_validate_logic_in_columns_num_02_one_slip_one_id.get_values_from_columns(data, column_indices)
+        if not new_data:
+            notification_text = "Không có data để kiểm tra."
+            return False, notification_text
+
+        # Dùng dictionary để kiểm tra mỗi số phiếu có bao nhiêu mã khách hàng
+        ticket_dict = {}
+
+        for row in new_data:
+            if len(row) < len(column_indices):
+                return False, f"Dữ liệu không đủ {len(column_indices)} cột để kiểm tra."
+
+            ticket, customer = row  # Lấy số phiếu và mã khách hàng
+
+            if ticket not in ticket_dict:
+                ticket_dict[ticket] = set()  # Tạo một tập hợp để lưu mã khách hàng
+
+            ticket_dict[ticket].add(customer)
+
+        # Kiểm tra xem có số phiếu nào có nhiều hơn 1 mã khách hàng không
+        invalid_tickets = {ticket: customers for ticket, customers in ticket_dict.items() if len(customers) > 1}
+
+        if invalid_tickets:
+            error_messages = [
+                f"Số phiếu {ticket} có nhiều mã khách hàng: {', '.join(customers)}"
+                for ticket, customers in invalid_tickets.items()
+            ]
+            return False, "\n".join(error_messages)
+        
+        notification_text = "Good logic in columns"
+        return True, notification_text
+        
+    def get_values_from_columns(data, column_indices):
+        values = [[row[i] for i in column_indices] for row in data]
+        return values
+    
+class utils_controller_validate_logic_in_columns_num_03_no_duplicate_inventory_id:
+    def start_validate(data=None, column_indices=[1, 2]):
+        new_data = utils_controller_validate_logic_in_columns_num_02_one_slip_one_id.get_values_from_columns(data, column_indices)
+        if not new_data:
+            notification_text = "Không có data để kiểm tra."
+            return False, notification_text
+
+        # Dùng dictionary để kiểm tra mỗi số phiếu có bao nhiêu mã khách hàng
+        ticket_item_dict = {}  # Dictionary lưu danh sách mã hàng theo số phiếu
+
+        for row in new_data:
+            if len(row) < len(column_indices):
+                return False, f"Dữ liệu không đủ {len(column_indices)} cột để kiểm tra."
+
+            ticket, item = row  # Lấy số phiếu và mã hàng
+
+            # Kiểm tra một số phiếu không có hai dòng trùng mã hàng
+            if ticket not in ticket_item_dict:
+                ticket_item_dict[ticket] = set()
+            
+            if item in ticket_item_dict[ticket]:
+                return False, f"Số phiếu {ticket} chứa mã hàng trùng nhau: {item}."
+            
+            ticket_item_dict[ticket].add(item)
+
+        return True, "Dữ liệu hợp lệ: Không có số phiếu nào chứa mã hàng trùng nhau."
+        
+    def get_values_from_columns(data, column_indices):
+        values = [[row[i] for i in column_indices] for row in data]
+        return values
+
+class utils_controller_validate_logic_in_columns_num_04_no_duplicate_stt_dong:
+    """
+    Cột thứ 2 (chỉ mục 1, tính từ 0) phải là duy nhất.
+    Cột thứ 2 phải là số nguyên.
+    Cột thứ 2 phải bắt đầu từ số 1 và tiếp tục tăng liên tiếp.
+    """
+    
+    def start_validate(data=None, column_indices=[1, 2]):
+        new_data = utils_controller_validate_logic_in_columns_num_03_no_duplicate_inventory_id.get_values_from_columns(data, column_indices)
+        if not new_data:
+            notification_text = "Không có data để kiểm tra."
+            return False, notification_text
+
+        ticket_item_dict = {}  # Dictionary lưu danh sách mã hàng theo số phiếu
+        unique_column_values = set()  # Set để lưu giá trị duy nhất của cột thứ 2
+        expected_value = 1  # Giá trị mong đợi đầu tiên
+
+        for row in new_data:
+            if len(row) < len(column_indices):
+                return False, f"Dữ liệu không đủ {len(column_indices)} cột để kiểm tra."
+
+            ticket, item = row  # Lấy số phiếu và mã hàng
+
+            # Kiểm tra nếu giá trị item là None
+            if item is None:
+                return False, f"Có giá trị None ở cột thứ STT dong, vui lòng kiểm tra lại dữ liệu."
+
+            # Kiểm tra một số phiếu không có hai dòng trùng mã hàng
+            if ticket not in ticket_item_dict:
+                ticket_item_dict[ticket] = set()
+            
+            if item in ticket_item_dict[ticket]:
+                return False, f"Số phiếu {ticket} chứa mã hàng trùng nhau: {item}."
+            
+            ticket_item_dict[ticket].add(item)
+            
+            # Kiểm tra cột thứ 2 là số nguyên
+            try:
+                item_int = int(item)
+            except ValueError:
+                return False, f"Giá trị ở cột thứ 2 không phải là số nguyên: {item}."
+            
+            # Kiểm tra cột thứ 2 là duy nhất
+            if item_int in unique_column_values:
+                return False, f"Giá trị {item_int} ở cột thứ 2 bị trùng lặp."
+            
+            unique_column_values.add(item_int)
+            
+            # Kiểm tra cột thứ 2 bắt đầu từ 1 và liên tiếp
+            if item_int != expected_value:
+                return False, f"Giá trị ở cột thứ 2 không theo thứ tự liên tiếp, mong đợi {expected_value}, nhận {item_int}."
+            expected_value += 1
+
+        return True, "Dữ liệu hợp lệ: Cột thứ 2 là duy nhất, là số nguyên và bắt đầu từ 1 theo thứ tự liên tiếp."
+        
+    def get_values_from_columns(data, column_indices):
+        values = [[row[i] if row[i] is not None else None for i in column_indices] for row in data]
+        return values
+
     
