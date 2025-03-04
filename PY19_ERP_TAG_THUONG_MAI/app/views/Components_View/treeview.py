@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from utils import *
+from app.utils import *
 
 class cls_Treeview_frame_number_01(tk.Frame):
     def __init__(self, parent, columns=["Col_01", "Col_02", "Col_03"], height=10, **kwargs):

@@ -1,7 +1,7 @@
 import openai
 import tkinter as tk
 from tkinter import scrolledtext
-from utils import *
+from app.utils import *
 
 # Đặt khóa API OpenAI của bạn tại đây
 openai.api_key = 'YOUR_API_KEY'

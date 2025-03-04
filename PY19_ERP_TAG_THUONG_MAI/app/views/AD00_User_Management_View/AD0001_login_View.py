@@ -4,8 +4,8 @@ from tkinter import ttk
 from tkinter import messagebox
 import json
 from PIL import Image, ImageTk
-from Components_View import *
-from utils import *
+from app.views.Components_View import *
+from app.utils import *
 
 # View: The UI that the user interacts with
 class cls_Login_View(tk.Tk):

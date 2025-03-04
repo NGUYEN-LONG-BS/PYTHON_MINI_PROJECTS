@@ -2,7 +2,7 @@ import os
 import json
 import pyodbc
 import pandas as pd
-from utils import *
+from app.utils import *
 
 def create_new_folder(base_path, folder_name):
     """

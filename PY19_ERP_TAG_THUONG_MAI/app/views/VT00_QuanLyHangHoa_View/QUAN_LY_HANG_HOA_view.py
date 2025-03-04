@@ -4,7 +4,7 @@ import time
 import json
 from Components_View import *
 from Components_View.treeview import cls_Treeview_frame_number_01
-from utils import *
+from app.utils import *
 
 from .QUAN_LY_HANG_HOA_controller import Controller_handel_all_events
 

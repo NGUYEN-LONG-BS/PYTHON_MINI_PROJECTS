@@ -1,5 +1,5 @@
 import tkinter as tk
-from utils import *
+from app.utils import *
 import json
 import os
 

@@ -1,5 +1,5 @@
 import tkinter as tk
-from utils import *
+from app.utils import *
 from PIL import Image, ImageTk
 from . import label
 from . import entry

@@ -1,5 +1,5 @@
 import tkinter as tk
-from utils import *
+from app.utils import *
 
 class cls_my_label_num_01(tk.Label):
     def __init__(self, parent, *args, **kwargs):

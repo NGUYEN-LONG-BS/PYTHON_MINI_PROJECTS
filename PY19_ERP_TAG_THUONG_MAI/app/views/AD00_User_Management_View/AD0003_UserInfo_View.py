@@ -1,10 +1,10 @@
 import os
 import tkinter as tk
-from utils import *
+from app.utils import *
 from Components_View.logo import setup_logo
 from Components_View import *
 import json
-from utils import *
+from app.utils import *
 
 class cls_user_info(tk.Tk):
     def __init__(self):

@@ -71,7 +71,7 @@ class cls_App:
             if subdir_path not in sys.path:
                 sys.path.append(subdir_path)
 
-        # Hiển thị tất cả đường dẫn trong sys.path
+        # # Hiển thị tất cả đường dẫn trong sys.path
         # print(sys.path)
 
     def run(self):

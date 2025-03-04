@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from datetime import datetime, timedelta
-from utils import *
+from app.utils import *
 from . import entry
 from . import button
 

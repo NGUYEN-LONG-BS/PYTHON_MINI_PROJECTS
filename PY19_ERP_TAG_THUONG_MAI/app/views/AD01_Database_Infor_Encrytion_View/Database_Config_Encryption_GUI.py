@@ -3,7 +3,7 @@ from tkinter import filedialog, messagebox
 import json
 from cryptography.fernet import Fernet
 import os
-from utils import *
+from app.utils import *
 
 class EncryptionApp:
     def __init__(self, root):

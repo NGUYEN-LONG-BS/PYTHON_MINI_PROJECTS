@@ -1,5 +1,5 @@
 import tkinter as tk
-from utils import *
+from app.utils import *
 from . import menu_top
 from . import frame
 

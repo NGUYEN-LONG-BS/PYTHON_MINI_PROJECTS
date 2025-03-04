@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog
 import openai
-from utils import *
+from app.utils import *
 import traceback
 
 class AIChatApp(tk.Tk):

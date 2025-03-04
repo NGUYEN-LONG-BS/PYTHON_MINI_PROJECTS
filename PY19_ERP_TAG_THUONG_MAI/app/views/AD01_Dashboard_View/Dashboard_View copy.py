@@ -1,6 +1,6 @@
 import tkinter as tk
 from Components_View import *
-from utils import *
+from app.utils import *
 
 class cls_Dashboard_View(tk.Tk):
     def __init__(self):

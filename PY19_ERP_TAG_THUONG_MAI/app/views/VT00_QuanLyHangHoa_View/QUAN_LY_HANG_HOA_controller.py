@@ -1,4 +1,4 @@
-from utils import *
+from app.utils import *
 
 class Controller_handel_all_events:
     def update_entry_id_when_initializing(my_treeview, entry_id):

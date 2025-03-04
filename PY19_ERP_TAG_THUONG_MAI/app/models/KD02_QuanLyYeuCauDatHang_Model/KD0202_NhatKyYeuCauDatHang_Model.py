@@ -3,7 +3,7 @@ import os
 import json
 import pyodbc
 import pandas as pd
-from utils import *
+from app.utils import *
 
 class cls_KD0202_NhatKyYeuCauDatHang_Model:
     def __init__(self):

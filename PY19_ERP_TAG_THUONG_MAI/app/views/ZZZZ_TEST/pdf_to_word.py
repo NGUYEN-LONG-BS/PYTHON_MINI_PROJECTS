@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import filedialog, messagebox, simpledialog
 import PyPDF2
 from docx import Document
-# from utils import *
+# from app.utils import *
 
 # Hàm chọn file PDF
 def open_pdf_file():

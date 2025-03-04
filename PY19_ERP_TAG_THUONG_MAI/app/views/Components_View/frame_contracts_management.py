@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from . import entry
-from utils import *
+from app.utils import *
 
 # Model: cls_frame_contracts_management_model
 class cls_frame_contracts_management_model:

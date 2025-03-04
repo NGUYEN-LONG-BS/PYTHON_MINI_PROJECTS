@@ -1,5 +1,5 @@
 import tkinter as tk
-from utils import *
+from app.utils import *
 
 class cls_Register_View(tk.Tk):
     def __init__(self):

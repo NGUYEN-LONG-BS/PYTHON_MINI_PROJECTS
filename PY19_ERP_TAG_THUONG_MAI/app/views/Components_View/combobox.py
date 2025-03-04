@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from utils import *
+from app.utils import *
 
 class cls_my_combobox_num_01(ttk.Combobox):
     def __init__(self, parent, *args, **kwargs):

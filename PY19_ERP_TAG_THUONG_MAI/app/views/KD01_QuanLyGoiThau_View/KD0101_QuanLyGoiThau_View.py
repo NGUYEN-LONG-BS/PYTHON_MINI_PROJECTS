@@ -6,7 +6,7 @@ from datetime import datetime
 # from app.controllers.KD01QuanLyGoiThauController import cls_Controller_config_treeview
 from controllers.KD01_QuanLyGoiThau_Controller import cls_KD01QuanLyGoiThauController
 from controllers.KD01_QuanLyGoiThau_Controller import cls_Controller_config_treeview
-from utils import *
+from app.utils import *
 from Components_View import *
 from Components_View.user_Info import setup_employee_info_labels  # Import the function
 from Components_View.logo import setup_logo  # Import the setup_logo function
