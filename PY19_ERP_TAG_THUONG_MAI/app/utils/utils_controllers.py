@@ -2,7 +2,7 @@
 # Import từ chính thư mục utils
 from . import utils_functions
 from . import utils_models
-import define
+from . import define
 
 import traceback
 from datetime import datetime

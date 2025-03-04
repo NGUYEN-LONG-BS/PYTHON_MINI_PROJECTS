@@ -28,7 +28,7 @@ import re
 # Import từ chính thư mục utils
 from . import utils_controllers
 from . import utils_models
-import define
+from . import define
 
 def f_utils_setup_logo(parent_frame):
     # Define function when click
