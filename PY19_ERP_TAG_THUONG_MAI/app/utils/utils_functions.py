@@ -15,7 +15,6 @@ from openpyxl import Workbook
 from openpyxl.utils import get_column_letter
 
 import xlwings as xw
-from define import *
 import pyodbc
 import json
 from cryptography.fernet import Fernet
@@ -29,6 +28,7 @@ import re
 # Import từ chính thư mục utils
 from . import utils_controllers
 from . import utils_models
+import define
 
 def f_utils_setup_logo(parent_frame):
     # Define function when click
@@ -42,8 +42,8 @@ def f_utils_setup_logo(parent_frame):
         
     try:
         # Try loading the light mode image first
-        logo_image_light = Image.open(PATH_LOGO_LIGHT)
-        logo_image_dark = Image.open(PATH_LOGO_DARK)
+        logo_image_light = Image.open(define.PATH_LOGO_LIGHT)
+        logo_image_dark = Image.open(define.PATH_LOGO_DARK)
         
         # Convert the PIL image to a Tkinter-compatible photo image
         logo_image_light_tk = ImageTk.PhotoImage(logo_image_light)
@@ -174,7 +174,7 @@ def f_utils_show_fading_popup(message):
     popup = tk.Toplevel()
     popup.title("Thông báo")
     # Set background color of popup window
-    popup.config(bg=BG_COLOR_0_0)
+    popup.config(bg=define.BG_COLOR_0_0)
     # Ẩn thanh tiêu đề (title bar)
     popup.overrideredirect(True)
     # Căn giữa màn hình
@@ -252,7 +252,7 @@ def f_utils_open_file():
 def f_utils_create_template_excel_file(file_name="template_wb.xlsx", sheet_name="template_sh", column_names=[('Col_01',), ('Col_02',), ('Col_03',)]):
     try:
         # Open a file dialog to select the save location
-        export_path = PATH_DEFAUL
+        export_path = define.PATH_DEFAUL
         root = tk.Tk()
         root.withdraw()  # Hide the main tkinter window
         file_path = filedialog.asksaveasfilename(
@@ -619,59 +619,59 @@ def f_utils_set_style(object):
 
         # Customize the notebook style
         style.configure("TNotebook", 
-                        background=BG_COLOR_0_0, 
+                        background=define.BG_COLOR_0_0, 
                         borderwidth=0
                         )
         style.configure("TNotebook.Tab",
-                        background=BG_COLOR_0_0,
-                        foreground=FG_COLOR_01,
+                        background=define.BG_COLOR_0_0,
+                        foreground=define.FG_COLOR_01,
                         padding=[10, 5],
                         font=("Arial", 12, "bold"))
         style.map("TNotebook.Tab", 
-                background=[("selected", HIGHLIGHT_COLOR)],
-                foreground=[("selected", FG_COLOR_01)],
+                background=[("selected", define.HIGHLIGHT_COLOR)],
+                foreground=[("selected", define.FG_COLOR_01)],
                 padding=[("selected", [10, 5])],                                # Maintain padding without expanding borders
                 expand=[("selected", [0, 0, 0, 0])])                            # No border expansion when selected
         
         # Customize the Label style
         style.configure("TLabel", 
-                        background=BG_COLOR_0_0,  # Background color for labels
-                        foreground=FG_COLOR_01, # Text color
+                        background=define.BG_COLOR_0_0,  # Background color for labels
+                        foreground=define.FG_COLOR_01, # Text color
                         font=("Arial", 10))     # Font style and size
 
         # Customize the Treeview style
         style.configure("Treeview", 
-                        background=BG_COLOR_0_0, 
-                        foreground=FG_COLOR_01, 
+                        background=define.BG_COLOR_0_0, 
+                        foreground=define.FG_COLOR_01, 
                         rowheight=25,          # Row height
-                        fieldbackground=BG_COLOR_0_0, # Background color for the cells
+                        fieldbackground=define.BG_COLOR_0_0, # Background color for the cells
                         font=("Arial", 10))
         style.map("Treeview", 
-                background=[("selected", HIGHLIGHT_COLOR)],
-                foreground=[("selected", FG_COLOR_01)])
+                background=[("selected", define.HIGHLIGHT_COLOR)],
+                foreground=[("selected", define.FG_COLOR_01)])
 
         # Customize the Treeview heading style
         style.configure("Treeview.Heading", 
-                        background=BG_COLOR_0_0, 
-                        foreground=FG_COLOR_01, 
+                        background=define.BG_COLOR_0_0, 
+                        foreground=define.FG_COLOR_01, 
                         font=("Arial", 11, "bold")) # Font for headings
 
         # Customize the Scrollbar style
         style.configure("TScrollbar", 
-                        background=BG_COLOR_0_0, 
-                        troughcolor=BG_COLOR_0_2, # Trough (track) color
-                        arrowcolor=FG_COLOR_03) # Arrow color
+                        background=define.BG_COLOR_0_0, 
+                        troughcolor=define.BG_COLOR_0_2, # Trough (track) color
+                        arrowcolor=define.FG_COLOR_03) # Arrow color
         style.map("TScrollbar", 
-                background=[("pressed", HIGHLIGHT_COLOR), ("active", FG_COLOR_03)])
+                background=[("pressed", define.HIGHLIGHT_COLOR), ("active", define.FG_COLOR_03)])
         
         # Customize the Frame style
         style.configure("TFrame", 
-                        background=BG_COLOR_0_0,  # Background color for frames
+                        background=define.BG_COLOR_0_0,  # Background color for frames
                         borderwidth=2,           # Border width
                         relief="flat")           # Relief style (flat, raised, sunken, etc.)
 
         style.map("TFrame", 
-                background=[("active", HIGHLIGHT_COLOR)])  # Optional: Change on hover or active state
+                background=[("active", define.HIGHLIGHT_COLOR)])  # Optional: Change on hover or active state
         
 # def f_utils_check_exist_list_of_inventories_code(sample_data, number_column):
 #         # Trích xuất cột thứ n và loại bỏ trùng lặp
@@ -800,8 +800,8 @@ def load_config(file_path, encryption_key):
 
 def f_utils_create_a_connection_string_to_SQL_Server():
     
-    encryption_key = load_encryption_key(PATH_CONFIG_KEY)
-    config = load_config(PATH_CONFIG_JSON, encryption_key)
+    encryption_key = load_encryption_key(define.PATH_CONFIG_KEY)
+    config = load_config(define.PATH_CONFIG_JSON, encryption_key)
     
     # SQL-Server connection string with Server Authentication
     conn = pyodbc.connect(
@@ -816,24 +816,24 @@ def f_utils_create_a_connection_string_to_SQL_Server():
 
 def f_utils_get_DB_HOST():
     # Get config and encryption-key
-    encryption_key = load_encryption_key(PATH_CONFIG_KEY)
-    config = load_config(PATH_CONFIG_JSON, encryption_key)
+    encryption_key = load_encryption_key(define.PATH_CONFIG_KEY)
+    config = load_config(define.PATH_CONFIG_JSON, encryption_key)
     # Get database_name
     database_host = config["DB_HOST"]
     return database_host
 
 def f_utils_get_DB_NAME():
     # Get config and encryption-key
-    encryption_key = load_encryption_key(PATH_CONFIG_KEY)
-    config = load_config(PATH_CONFIG_JSON, encryption_key)
+    encryption_key = load_encryption_key(define.PATH_CONFIG_KEY)
+    config = load_config(define.PATH_CONFIG_JSON, encryption_key)
     # Get database_name
     database_name = config["DB_NAME"]
     return database_name
 
 def f_utils_get_DB_USER_AND_DB_PASSWORD():
     # Get config and encryption-key
-    encryption_key = load_encryption_key(PATH_CONFIG_KEY)
-    config = load_config(PATH_CONFIG_JSON, encryption_key)
+    encryption_key = load_encryption_key(define.PATH_CONFIG_KEY)
+    config = load_config(define.PATH_CONFIG_JSON, encryption_key)
     # Get database_name
     DB_USER = config["DB_USER"]
     DB_PASSWORD = config["DB_PASSWORD"]
