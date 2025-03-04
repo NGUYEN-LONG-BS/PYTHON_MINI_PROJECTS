@@ -39,6 +39,8 @@ PATH_ASSETS_TEMPLATES_JSON = os.path.join(PATH_ASSETS_TEMPLATES, "json")
 PATH_CONFIG_JSON = os.path.join(PATH_ROOT, "config/config.json")
 PATH_CONFIG_KEY = os.path.join(PATH_ROOT, "config/encryption_key.key")
 
+PATH_JSON_LOGIN_CREDENTIALS = os.path.join(PATH_ASSETS_TEMPLATES_JSON, "AD_LOGIN/login_credentials.json")
+
 def f_define_PATH_DEFAUL():
     paths_to_check = [
         r"C:\\Users\\ADMIN\\Desktop",
