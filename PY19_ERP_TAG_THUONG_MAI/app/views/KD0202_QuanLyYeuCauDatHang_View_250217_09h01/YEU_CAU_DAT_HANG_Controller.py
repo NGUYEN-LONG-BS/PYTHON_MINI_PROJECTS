@@ -1334,16 +1334,93 @@ class Controller_validate_data_from_Excel_file_to_import_to_SQL_250221_17h05:
                 # print("Error at function: ", f_utils_get_current_function_name())
                 return False
             
+            # Kiểm tra số phiếu đã tồn tại chưa
             database_name = utils_controller_get_information_of_database.load_database_name()
             table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
             column_name = controller_get_information_of_module.load_column_name_so_phieu()
             ma_tv = utils_controller_get_information_of_database.load_ma_thanh_vien()
             loai_phieu = controller_get_information_of_module.load_loai_phieu()
-            
-            flag, notification_text = utils_controller_validate_number_of_slip_before_imporing_to_SQL.start_validate(data, collumn_index=3, so_ky_tu=6, ma_tv=ma_tv, loai_phieu=loai_phieu, database_name=database_name, table_name=table_name, column_name=column_name)
+            flag, notification_text = utils_controller_validate_number_of_slip_is_exist_in_database.start_validate(data, column_index=3, so_ky_tu=4, ma_tv=ma_tv, loai_phieu=loai_phieu, database_name=database_name, table_name=table_name, column_name=column_name)
             if flag == True:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
                 return False
+
+            # Kiểm tra mã khách hàng đã tồn tại chưa
+            table_name = utils_controller_get_information_of_database.load_table_name_TB_AD00_DANH_SACH_KHACH_HANG()
+            column_name = controller_get_information_of_module.load_column_name_ma_khach_hang()
+            flag, notification_text = utils_controller_validate_id_is_exist_in_database.start_validate(data, column_index=4, database_name=database_name, table_name=table_name, column_name=column_name)
+            if flag == False:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
+                return False
+            
+            # Kiểm tra mã hàng đã tồn tại chưa
+            table_name = utils_controller_get_information_of_database.load_table_name_TB_INVENTORY_CATEGORIES()
+            column_name = controller_get_information_of_module.load_column_name_ma_hang()
+            flag, notification_text = utils_controller_validate_id_is_exist_in_database.start_validate(data, column_index=12, database_name=database_name, table_name=table_name, column_name=column_name)
+            if flag == False:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
+                return False
+            
+            # Kiểm tra: một số phiếu tương ứng với một mã khách hàng
+            
+            # Kiểm tra: trong một phiếu tồn tại hai mã hàng
+            
+            # Kiểm tra có ô nào không có dữ liệu: Số phiếu, mã khách hàng, mã hàng, nhu cầu, sl giữ chỗ, sl YCĐH
+            # số phiếu
+            flag, notification_text = utils_controller_validate_is_NULL.start_validate(data, column_index=3)
+            if flag == True:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
+                return False
+            # mã khách hàng
+            flag, notification_text = utils_controller_validate_is_NULL.start_validate(data, column_index=4)
+            if flag == True:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
+                return False
+            # mã hàng
+            flag, notification_text = utils_controller_validate_is_NULL.start_validate(data, column_index=12)
+            if flag == True:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
+                return False
+            # sl nhu cầu
+            flag, notification_text = utils_controller_validate_is_NULL.start_validate(data, column_index=16)
+            if flag == True:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
+                return False
+            # sl giữ chỗ
+            flag, notification_text = utils_controller_validate_is_NULL.start_validate(data, column_index=17)
+            if flag == True:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
+                return False
+            # sl YCĐH
+            flag, notification_text = utils_controller_validate_is_NULL.start_validate(data, column_index=18)
+            if flag == True:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
+                return False
+            
+            # Kiểm tra các ô bắt buộc là số: nhu cầu, giữ chỗ giữ lại, giữ chỗ YCĐH
+            # sl nhu cầu
+            flag, notification_text = utils_controller_validate_is_number.start_validate(data, column_index=16)
+            if flag == False:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
+                return False
+            # sl giữ chỗ
+            flag, notification_text = utils_controller_validate_is_number.start_validate(data, column_index=17)
+            if flag == False:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
+                return False
+            # sl YCĐH
+            flag, notification_text = utils_controller_validate_is_number.start_validate(data, column_index=18)
+            if flag == False:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
+                return False
+            
+            # Kiểm tra cột Expired có phải là giá trị True False không
+            flag, notification_text = utils_controller_validate_is_True_False.start_validate(data, column_index=20)
+            if flag == False:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
+                return False
+            
+            # Kiểm tra số lượng nhu cầu = số lượng giữ chỗ + số lượng YCĐH
             
             return True
         except Exception as e:
@@ -1598,35 +1675,36 @@ class Controller_import_bulk_data_from_Excel_file_to_SQL_KD02_YEU_CAU_DAT_HANG:
             df = df.iloc[:, 2:]
 
             # Chuyển DataFrame thành list
-            data_list = df.values.tolist()
-
+            data_list_to_validate = df.values.tolist()
+            # print("data_list_to_validate",data_list_to_validate)
+            
             # validate data
-            flag = Controller_validate_data_from_Excel_file_to_import_to_SQL_250221_17h05.validate_data_from_Excel(entry_notification, data_list)
-            print("flag", flag)
+            flag = Controller_validate_data_from_Excel_file_to_import_to_SQL_250221_17h05.validate_data_from_Excel(entry_notification, data_list_to_validate)
             if flag == False:
                 return False
             
-            result = f_utils_ask_yes_no("Xác nhận", "Dữ liệu đã hợp lệ. Bạn có muốn tiếp tục lưu không?")
+            result = f_utils_ask_yes_no("Xác nhận", "Dữ liệu đã hợp lệ. Hệ thống sẽ tự động điều chỉnh lại số phiếu theo cú pháp quy định. Bạn có muốn tiếp tục lưu không?")
             if result == False:
                 return False
+            
+            # Tiến hành điều chỉnh lại cột số phiếu
 
             # Load data to database
             server_name = f_utils_get_DB_HOST()
             database_name = f_utils_get_DB_NAME()
             login_name, login_pass = f_utils_get_DB_USER_AND_DB_PASSWORD()
             table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
-            data_array = data_list
-            print(data_array)
+            data_array = data_list_to_validate
             
-            converted_data = [tuple(item) for item in data_array]
-            print(converted_data)
+            data_to_import_to_database = [tuple(item) for item in data_array]
+            # print("data_to_import_to_database", data_to_import_to_database)
             flag = utils_model_import_data_to_SQL_SERVER_250221_16h45.f_insert_data_to_sql(entry_notification,
                                                                                            server_name, 
                                                                                            database_name, 
                                                                                            login_name, 
                                                                                            login_pass, 
                                                                                            table_name, 
-                                                                                           data_array)
+                                                                                           data_to_import_to_database)
             if flag == False:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Import to Database fail!", "red")
                 messagebox.showinfo("Thông báo", "Lưu không thành công!")
