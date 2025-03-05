@@ -1,2 +1,0 @@
-from .KD0201_PhieuYeuCauDatHang_Model import cls_KD0201_PhieuYeuCauDatHang_Model
-from .KD0202_NhatKyYeuCauDatHang_Model import cls_KD0202_NhatKyYeuCauDatHang_Model

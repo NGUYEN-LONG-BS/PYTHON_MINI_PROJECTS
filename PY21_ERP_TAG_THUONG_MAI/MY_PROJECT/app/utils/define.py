@@ -9,10 +9,9 @@ if getattr(sys, 'frozen', False):
     # Define paths
     PATH_ROOT = BASE_DIR
     PATH_PARENT_OF_ROOT = BASE_DIR
-    # PATH_PARENT_OF_ROOT = os.path.abspath(os.path.join(BASE_DIR, "../"))
-    print(f"BASE_DIR: {BASE_DIR}")
-    print(f"PATH_ROOT: {PATH_ROOT}")
-    print(f"PATH_PARENT_OF_ROOT: {PATH_PARENT_OF_ROOT}")
+    # print(f"BASE_DIR: {BASE_DIR}")
+    # print(f"PATH_ROOT: {PATH_ROOT}")
+    # print(f"PATH_PARENT_OF_ROOT: {PATH_PARENT_OF_ROOT}")
 else:
     # Khi chạy từ file .py
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -20,9 +19,9 @@ else:
     # Define paths
     PATH_ROOT = os.path.abspath(os.path.join(BASE_DIR, "../.."))
     PATH_PARENT_OF_ROOT = os.path.abspath(os.path.join(BASE_DIR, "../../.."))
-    print(f"BASE_DIR: {BASE_DIR}")
-    print(f"PATH_ROOT: {PATH_ROOT}")
-    print(f"PATH_PARENT_OF_ROOT: {PATH_PARENT_OF_ROOT}")
+    # print(f"BASE_DIR: {BASE_DIR}")
+    # print(f"PATH_ROOT: {PATH_ROOT}")
+    # print(f"PATH_PARENT_OF_ROOT: {PATH_PARENT_OF_ROOT}")
     
 
 # Định nghĩa thư mục `assets` nằm cùng cấp với `main.exe`
