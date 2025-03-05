@@ -42,7 +42,7 @@ def package_exe():
             "pyinstaller",
             "--onefile",
             # "--noconsole",
-            f"--add-data={assets_folder};assets",  # Đảm bảo thư mục `assets` được đóng gói
+            # f"--add-data={assets_folder};assets",  # Đảm bảo thư mục `assets` được đóng gói
             "--distpath", output_folder,
             file_path
         ], check=True)

@@ -918,6 +918,7 @@ def f_utils_get_current_function_name():
     file_name = inspect.currentframe().f_back.f_code.co_filename
     # return caller function name
     func_caller = inspect.currentframe().f_back.f_back.f_code.co_name
+    time.sleep(2)
     return func_name, file_name, func_caller
 
 # return caller function name

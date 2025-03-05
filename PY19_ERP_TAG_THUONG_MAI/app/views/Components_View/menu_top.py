@@ -38,7 +38,8 @@ class cls_menu_top:
     def read_user_from_json(self):
         """ Reads the logged-in user's username from the JSON file. """
         # Sử dụng đường dẫn tuyệt đối
-        json_file = os.path.join(PATH_ROOT, 'app', 'views','AD00_User_Management_View', 'login_credentials.json')
+        # json_file = os.path.join(PATH_ROOT, 'app', 'views','AD00_User_Management_View', 'login_credentials.json')
+        json_file = define.PATH_JSON_LOGIN_CREDENTIALS
         # print(json_file)
         try:
             with open(json_file, 'r') as f:
