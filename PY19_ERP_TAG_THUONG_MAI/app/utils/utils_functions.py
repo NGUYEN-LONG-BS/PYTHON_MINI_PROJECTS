@@ -37,7 +37,7 @@ def f_utils_setup_logo(parent_frame):
         parent_window = parent_frame.winfo_toplevel()
         parent_window.destroy()  # Close the parent window
         # Open Dashboard
-        from views.AD01_Dashboard_View.Dashboard_View import cls_Dashboard_View
+        from app.views.AD01_Dashboard_View.Dashboard_View import cls_Dashboard_View
         cls_Dashboard_View()
         
     try:

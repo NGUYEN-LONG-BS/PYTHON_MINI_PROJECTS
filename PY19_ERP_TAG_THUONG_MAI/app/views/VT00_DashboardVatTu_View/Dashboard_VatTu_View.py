@@ -149,7 +149,7 @@ class cls_Dashboard_Vat_Tu_View(cls_base_form_number_02_ManyTabs):
     def f_card_01_click(self, event):
         print("f_card_01_click")
     def f_card_02_danh_sach_hang_hoa_click(self, event):
-        from views.VT00_QuanLyHangHoa_View.QUAN_LY_HANG_HOA_view import cls_test_View
+        from app.views.VT00_QuanLyHangHoa_View.QUAN_LY_HANG_HOA_view import cls_test_View
         self.destroy()
         new_view = cls_test_View()
         # new_view.dashboard = self.parent
@@ -163,7 +163,7 @@ class cls_Dashboard_Vat_Tu_View(cls_base_form_number_02_ManyTabs):
         print("f_card_04_click")
     
     def f_card_05_yeu_cau_dat_hang_click(self, event):
-        from views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
+        from app.views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
         self.destroy()
         new_view = cls_test_View()
         # new_view.dashboard = self.parent

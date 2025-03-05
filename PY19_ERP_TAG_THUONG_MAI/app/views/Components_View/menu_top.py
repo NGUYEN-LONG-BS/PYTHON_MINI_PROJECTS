@@ -396,7 +396,7 @@ class cls_menu_top:
         f_utils_show_fading_popup("coming soon")
     
     def f_open_login_window(self):
-        from views.AD00_User_Management_View.AD0001_login_View import cls_Login_View   # lazy import to avoid circular import
+        from app.views.AD00_User_Management_View.AD0001_login_View import cls_Login_View   # lazy import to avoid circular import
         self.parent.destroy()
         new_view = cls_Login_View()                             # Create an instance of the class
         new_view.dashboard = self.parent                        # Pass the reference of the dashboard to KD01 view
@@ -404,7 +404,7 @@ class cls_menu_top:
         new_view.focus_force()                                  # Ensure the new window is in focus
         
     # def f_open_KD02QuanLyYeuCauDatHangView(self):
-    #     from views.KD02_QuanLyYeuCauDatHang_View.KD0201_PhieuYeuCauDatHang_View import cls_KD0201_PhieuYeuCauDatHang_View
+    #     from app.views.KD02_QuanLyYeuCauDatHang_View.KD0201_PhieuYeuCauDatHang_View import cls_KD0201_PhieuYeuCauDatHang_View
     #     self.parent.destroy()
     #     new_view = cls_KD0201_PhieuYeuCauDatHang_View()
     #     new_view.dashboard = self.parent
@@ -413,7 +413,7 @@ class cls_menu_top:
     #     new_view.focus_force()
 
     def f_open_tao_moi_YEU_CAU_DAT_HANG_View(self):
-        from views.KD0202_QuanLyYeuCauDatHang_View_250217_09h01.YEU_CAU_DAT_HANG_View import cls_YEU_CAU_DAT_HANG_View
+        from app.views.KD0202_QuanLyYeuCauDatHang_View_250217_09h01.YEU_CAU_DAT_HANG_View import cls_YEU_CAU_DAT_HANG_View
         self.parent.destroy()
         new_view = cls_YEU_CAU_DAT_HANG_View()
         new_view.dashboard = self.parent
@@ -422,7 +422,7 @@ class cls_menu_top:
         new_view.focus_force()
     
     def f_open_tao_moi_DE_NGHI_XUAT_KHO_View(self):
-        from views.KD0301_QuanLyDeNghiXuatKho_View_250225_10h00.DE_NGHI_XUAT_KHO_View import cls_DE_NGHI_XUAT_KHO_View
+        from app.views.KD0301_QuanLyDeNghiXuatKho_View_250225_10h00.DE_NGHI_XUAT_KHO_View import cls_DE_NGHI_XUAT_KHO_View
         self.parent.destroy()
         new_view = cls_DE_NGHI_XUAT_KHO_View()
         new_view.dashboard = self.parent
@@ -431,7 +431,7 @@ class cls_menu_top:
         new_view.focus_force()
     
     def f_open_tao_moi_KE_HOACH_DAT_HANG_View(self):
-        from views.KD0201_QuanLyKeHoachDatHang_View_250225_11h40.KE_HOACH_DAT_HANG_View import cls_KE_HOACH_DAT_HANG_View
+        from app.views.KD0201_QuanLyKeHoachDatHang_View_250225_11h40.KE_HOACH_DAT_HANG_View import cls_KE_HOACH_DAT_HANG_View
         self.parent.destroy()
         new_view = cls_KE_HOACH_DAT_HANG_View()
         new_view.dashboard = self.parent
@@ -440,7 +440,7 @@ class cls_menu_top:
         new_view.focus_force()
     
     def f_open_nhat_ky_YEU_CAU_DAT_HANG_View(self):
-        from views.KD0202_QuanLyYeuCauDatHang_View_250217_09h01.YEU_CAU_DAT_HANG_View import cls_YEU_CAU_DAT_HANG_View
+        from app.views.KD0202_QuanLyYeuCauDatHang_View_250217_09h01.YEU_CAU_DAT_HANG_View import cls_YEU_CAU_DAT_HANG_View
         self.parent.destroy()
         new_view = cls_YEU_CAU_DAT_HANG_View()
         new_view.dashboard = self.parent
@@ -456,7 +456,7 @@ class cls_menu_top:
             print(f"Error at function: {my_current_function}")
     
     def f_open_nhat_ky_DE_NGHI_XUAT_KHO_View(self):
-        from views.KD0301_QuanLyDeNghiXuatKho_View_250225_10h00.DE_NGHI_XUAT_KHO_View import cls_DE_NGHI_XUAT_KHO_View
+        from app.views.KD0301_QuanLyDeNghiXuatKho_View_250225_10h00.DE_NGHI_XUAT_KHO_View import cls_DE_NGHI_XUAT_KHO_View
         self.parent.destroy()
         new_view = cls_DE_NGHI_XUAT_KHO_View()
         new_view.dashboard = self.parent
@@ -472,7 +472,7 @@ class cls_menu_top:
             print(f"Error at function: {my_current_function}")
     
     def f_open_nhat_ky_KE_HOACH_DAT_HANG_View(self):
-        from views.KD0201_QuanLyKeHoachDatHang_View_250225_11h40.KE_HOACH_DAT_HANG_View import cls_KE_HOACH_DAT_HANG_View
+        from app.views.KD0201_QuanLyKeHoachDatHang_View_250225_11h40.KE_HOACH_DAT_HANG_View import cls_KE_HOACH_DAT_HANG_View
         self.parent.destroy()
         new_view = cls_KE_HOACH_DAT_HANG_View()
         new_view.dashboard = self.parent
@@ -488,7 +488,7 @@ class cls_menu_top:
             print(f"Error at function: {my_current_function}")
     
     # def f_open_testview(self):
-    #     from views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
+    #     from app.views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
     #     self.parent.destroy()
     #     new_view = cls_test_View()
     #     new_view.dashboard = self.parent
@@ -497,7 +497,7 @@ class cls_menu_top:
     #     new_view.focus_force()
     
     # def f_open_tab_02_of_testview(self):
-    #     from views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
+    #     from app.views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
     #     self.parent.destroy()
     #     new_view = cls_test_View()
     #     new_view.dashboard = self.parent
@@ -513,7 +513,7 @@ class cls_menu_top:
     #         print(f"Error at function: {my_current_function}")
             
     def f_open_HR01(self):
-        from views.HR01_FORM_VIEW.set_margins import cls_hr01_view
+        from app.views.HR01_FORM_VIEW.set_margins import cls_hr01_view
         self.parent.destroy()
         new_view = cls_hr01_view()
         new_view.dashboard = self.parent
@@ -522,7 +522,7 @@ class cls_menu_top:
         new_view.focus_force()
     
     # def f_open_KD0301_CRUDP_KhachHang_View(self):
-    #     from views.KD03_QuanLyKhachHang_View.KD0301_CRUDP_KhachHang_View import cls_KD0301_CRUDP_KhachHang_View
+    #     from app.views.KD03_QuanLyKhachHang_View.KD0301_CRUDP_KhachHang_View import cls_KD0301_CRUDP_KhachHang_View
     #     self.parent.destroy()
     #     new_view = cls_KD0301_CRUDP_KhachHang_View()
     #     new_view.dashboard = self.parent
@@ -531,7 +531,7 @@ class cls_menu_top:
     #     new_view.focus_force()
     
     # def f_open_KD01_01QuanLyGoiThauView(self):
-    #     from views.KD01_QuanLyGoiThau_TEST_02.KD01_01QuanLyGoiThauView import cls_View
+    #     from app.views.KD01_QuanLyGoiThau_TEST_02.KD01_01QuanLyGoiThauView import cls_View
     #     self.parent.destroy()
     #     new_view = cls_View()
     #     new_view.dashboard = self.parent
@@ -541,7 +541,7 @@ class cls_menu_top:
         
     
     # def f_open_KD01QuanLyGoiThauView(self):
-    #     from views.KD01_QuanLyGoiThau_TEST_01.KD01QuanLyGoiThauView import cls_KD01QuanLyGoiThauView
+    #     from app.views.KD01_QuanLyGoiThau_TEST_01.KD01QuanLyGoiThauView import cls_KD01QuanLyGoiThauView
     #     self.parent.destroy()
     #     new_view = cls_KD01QuanLyGoiThauView()
     #     new_view.dashboard = self.parent
@@ -551,7 +551,7 @@ class cls_menu_top:
         
         
     def f_open_KD0101_QuanLyGoiThau_View(self):
-        from views.KD01_QuanLyGoiThau_View.KD0101_QuanLyGoiThau_View import cls_KD0101_QuanLyGoiThau_View
+        from app.views.KD01_QuanLyGoiThau_View.KD0101_QuanLyGoiThau_View import cls_KD0101_QuanLyGoiThau_View
         self.parent.destroy()
         new_view = cls_KD0101_QuanLyGoiThau_View()
         new_view.dashboard = self.parent
@@ -560,7 +560,7 @@ class cls_menu_top:
         new_view.focus_force()
         
     # def f_open_f_test_tot_click_View(self):
-    #     from views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
+    #     from app.views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
     #     self.parent.destroy()
     #     new_view = cls_test_View()
     #     # new_view.dashboard = self.parent
@@ -569,7 +569,7 @@ class cls_menu_top:
     #     new_view.focus_force()
         
     def f_open_cls_VT0101_DonDatHang_View(self):
-        from views.VT01_QuanLyDonDatHang_View.VT0101_DonDatHang_View import cls_VT0101_DonDatHang_View
+        from app.views.VT01_QuanLyDonDatHang_View.VT0101_DonDatHang_View import cls_VT0101_DonDatHang_View
         self.parent.destroy()
         new_view = cls_VT0101_DonDatHang_View()
         # new_view.dashboard = self.parent
@@ -579,7 +579,7 @@ class cls_menu_top:
         
         
     def f_open_cls_VT0102_DonDatHang_TM_View(self):
-        from views.VT01_QuanLyDonDatHang_View.VT0102_DonDatHang_TM_View import cls_VT0102_DonDatHang_TM_View
+        from app.views.VT01_QuanLyDonDatHang_View.VT0102_DonDatHang_TM_View import cls_VT0102_DonDatHang_TM_View
         self.parent.destroy()
         new_view = cls_VT0102_DonDatHang_TM_View()
         # new_view.dashboard = self.parent

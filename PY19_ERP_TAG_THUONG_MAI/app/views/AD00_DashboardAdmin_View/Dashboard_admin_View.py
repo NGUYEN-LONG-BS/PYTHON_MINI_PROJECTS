@@ -153,7 +153,7 @@ class cls_Dashboard_admin_View(cls_base_form_number_02_ManyTabs):
     def f_card_01_click(self, event):
         print("f_card_01_click")
     def f_card_02_danh_sach_hang_hoa_click(self, event):
-        from views.VT00_QuanLyHangHoa_View.QUAN_LY_HANG_HOA_view import cls_test_View
+        from app.views.VT00_QuanLyHangHoa_View.QUAN_LY_HANG_HOA_view import cls_test_View
         self.destroy()
         new_view = cls_test_View()
         # new_view.dashboard = self.parent
@@ -165,8 +165,8 @@ class cls_Dashboard_admin_View(cls_base_form_number_02_ManyTabs):
         print("f_card_03_click")
         
     def f_card_quan_ly_dia_chi_database_click(self, event):
-        # from views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
-        from views.AD01_Database_Infor_Encrytion_View.Database_Config_Encryption_GUI import EncryptionApp
+        # from app.views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
+        from app.views.AD01_Database_Infor_Encrytion_View.Database_Config_Encryption_GUI import EncryptionApp
         root = tk.Tk()
         new_view = EncryptionApp(root)
         root.mainloop()
@@ -175,8 +175,8 @@ class cls_Dashboard_admin_View(cls_base_form_number_02_ManyTabs):
         print("f_card_05_click")
     
     def f_card_06_yeu_cau_dat_hang_click(self, event):
-        # from views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
-        from views.KD02_QuanLyYeuCauDatHang_View_250217_0901.YEU_CAU_DAT_HANG_View import cls_YEU_CAU_DAT_HANG_View
+        # from app.views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
+        from app.views.KD02_QuanLyYeuCauDatHang_View_250217_0901.YEU_CAU_DAT_HANG_View import cls_YEU_CAU_DAT_HANG_View
         self.destroy()
         new_view = cls_YEU_CAU_DAT_HANG_View()
         # new_view.dashboard = self.parent
@@ -188,8 +188,8 @@ class cls_Dashboard_admin_View(cls_base_form_number_02_ManyTabs):
         print("f_card_07_click")
         
     def f_card_DE_NGHI_XUAT_KHO_click(self, event):
-        # from views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
-        from views.KD03_QuanLyDeNghiXuatKho_View_250225_10h00.DE_NGHI_XUAT_KHO_View import cls_DE_NGHI_XUAT_KHO_View
+        # from app.views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
+        from app.views.KD03_QuanLyDeNghiXuatKho_View_250225_10h00.DE_NGHI_XUAT_KHO_View import cls_DE_NGHI_XUAT_KHO_View
         self.destroy()
         new_view = cls_DE_NGHI_XUAT_KHO_View()
         # new_view.dashboard = self.parent

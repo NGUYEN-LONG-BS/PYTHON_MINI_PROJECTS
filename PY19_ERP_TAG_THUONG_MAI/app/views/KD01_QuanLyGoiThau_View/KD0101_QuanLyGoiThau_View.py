@@ -246,7 +246,7 @@ class cls_KD0101_QuanLyGoiThau_View(tk.Tk):
     def Function_close_KD01_Click(self):
         self.destroy()
         # Now import KD01QuanLyGoiThauView inside the function to avoid circular import
-        from views.AD01_Dashboard_View.Dashboard_View import cls_Dashboard_View
+        from app.views.AD01_Dashboard_View.Dashboard_View import cls_Dashboard_View
         cls_Dashboard_View()
 
     # =======================================================================================================================
