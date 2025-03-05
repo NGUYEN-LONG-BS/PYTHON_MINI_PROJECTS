@@ -140,8 +140,6 @@ class cls_Login_View(tk.Tk):
         
     def f_write_credentials_to_json(self, username, subsidiary):    # Function to write credentials to a JSON file
         # Xác định đường dẫn file json
-        # base_dir = os.path.dirname(__file__)
-        # json_file = os.path.join(base_dir, 'login_credentials.json')
         json_file = PATH_JSON_LOGIN_CREDENTIALS
         
         # Create a dictionary with the credentials
@@ -160,8 +158,8 @@ class cls_Login_View(tk.Tk):
             print("Error at function: ", f_utils_get_current_function_name())
             
     def f_load_subsidiary_from_json(self):
-        base_dir = os.path.dirname(__file__)
-        json_file = os.path.join(base_dir, 'login_credentials.json')
+        # Xác định đường dẫn file json
+        json_file = PATH_JSON_LOGIN_CREDENTIALS  
         
         if os.path.exists(json_file):
             try:
