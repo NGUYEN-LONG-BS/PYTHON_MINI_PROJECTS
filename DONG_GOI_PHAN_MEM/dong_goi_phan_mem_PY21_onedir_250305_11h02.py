@@ -30,15 +30,15 @@ def package_exe():
     assets_folder = os.path.join(project_root, "assets")
     config_folder = os.path.join(project_root, "config")
 
-    # Kiểm tra thư mục config
-    if not os.path.exists(assets_folder):
-        messagebox.showerror("Lỗi", "Thư mục 'assets' không tồn tại! Hãy chắc chắn rằng nó nằm cùng cấp với file Python.")
-        return
+    # # Kiểm tra thư mục config
+    # if not os.path.exists(assets_folder):
+    #     messagebox.showerror("Lỗi", "Thư mục 'assets' không tồn tại! Hãy chắc chắn rằng nó nằm cùng cấp với file Python.")
+    #     return
     
-    # Kiểm tra thư mục config
-    if not os.path.exists(config_folder):
-        messagebox.showerror("Lỗi", "Thư mục 'config' không tồn tại! Hãy chắc chắn rằng nó nằm cùng cấp với file Python.")
-        return
+    # # Kiểm tra thư mục config
+    # if not os.path.exists(config_folder):
+    #     messagebox.showerror("Lỗi", "Thư mục 'config' không tồn tại! Hãy chắc chắn rằng nó nằm cùng cấp với file Python.")
+    #     return
 
     try:
         messagebox.showinfo("Đang đóng gói", "Quá trình đóng gói đang diễn ra, vui lòng đợi!")
@@ -48,8 +48,8 @@ def package_exe():
             "pyinstaller",
             "--onedir",  # Chuyển từ --onefile sang --onedir
             # "--noconsole",  # Ẩn console nếu là ứng dụng GUI
-            f"--add-data={assets_folder};assets",  # Đảm bảo thư mục được đóng gói
-            f"--add-data={config_folder};config",  # Đảm bảo thư mục được đóng gói
+            # f"--add-data={assets_folder};assets",  # Đảm bảo thư mục được đóng gói
+            # f"--add-data={config_folder};config",  # Đảm bảo thư mục được đóng gói
             "--distpath", output_folder,  # Định nghĩa thư mục xuất
             file_path  # File nguồn để đóng gói
         ], check=True)

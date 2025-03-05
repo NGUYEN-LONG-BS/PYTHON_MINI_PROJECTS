@@ -5,6 +5,7 @@ import sys
 if getattr(sys, 'frozen', False):
     # Khi chạy từ file .exe
     BASE_DIR = os.path.dirname(sys.executable)
+    
     # Define paths
     PATH_ROOT = BASE_DIR
     PATH_PARENT_OF_ROOT = os.path.abspath(os.path.join(BASE_DIR, "../"))
@@ -14,6 +15,7 @@ if getattr(sys, 'frozen', False):
 else:
     # Khi chạy từ file .py
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    
     # Define paths
     PATH_ROOT = os.path.abspath(os.path.join(BASE_DIR, "../.."))
     PATH_PARENT_OF_ROOT = os.path.abspath(os.path.join(BASE_DIR, "../../.."))
@@ -23,8 +25,8 @@ else:
     
 
 # Định nghĩa thư mục `assets` nằm cùng cấp với `main.exe`
-PATH_ASSETS = os.path.join(PATH_ROOT, "assets")
-PATH_CONFIG = os.path.join(PATH_ROOT, "config")
+PATH_ASSETS = os.path.join(PATH_PARENT_OF_ROOT, "assets")
+PATH_CONFIG = os.path.join(PATH_PARENT_OF_ROOT, "config")
 
 # Define paths
 # PATH_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
