@@ -13,41 +13,40 @@ else:
 PATH_ROOT = os.path.abspath(os.path.join(BASE_DIR, "../.."))
 PATH_PARENT_OF_ROOT = os.path.abspath(os.path.join(BASE_DIR, "../../.."))
 
-# # Định nghĩa thư mục `assets` nằm cùng cấp với `main.exe`
-# PATH_ASSETS = os.path.join(BASE_DIR, "assets")
-
-
+# Định nghĩa thư mục `assets` nằm cùng cấp với `main.exe`
+PATH_ASSETS = os.path.join(PATH_PARENT_OF_ROOT, "assets")
+# PATH_ASSETS = os.path.join(PATH_ROOT, "assets")
 
 # Define paths
 # PATH_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 # PATH_PARENT_OF_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.."))
-PATH_ASSETS_ICONS = os.path.join(PATH_PARENT_OF_ROOT, "assets/icons")
-PATH_ASSETS_TEMPLATES = os.path.join(PATH_PARENT_OF_ROOT, "assets/templates")
+PATH_ASSETS_ICONS = os.path.join(PATH_ASSETS, "icons")
+PATH_ASSETS_TEMPLATES = os.path.join(PATH_ASSETS, "templates")
 
-PATH_LOGO_LIGHT = os.path.join(PATH_PARENT_OF_ROOT, "assets/img/logo-Light.jpg")
-PATH_LOGO_DARK = os.path.join(PATH_PARENT_OF_ROOT, "assets/img/logo-Dark.jpg")
+PATH_LOGO_LIGHT = os.path.join(PATH_ASSETS, "img/logo-Light.jpg")
+PATH_LOGO_DARK = os.path.join(PATH_ASSETS, "img/logo-Dark.jpg")
 
-PATH_CARD_IMG = os.path.join(PATH_PARENT_OF_ROOT, "assets/img/teamwork.jpg")
-PATH_CARD_BAN_KINH_DOANH = os.path.join(PATH_PARENT_OF_ROOT, "assets/img/BanKinhDoanh.png")
-PATH_CARD_BAN_VAT_TU = os.path.join(PATH_PARENT_OF_ROOT, "assets/img/VAT_TU.png")
-PATH_CARD_KHO = os.path.join(PATH_PARENT_OF_ROOT, "assets/img/KHO.png")
-PATH_CARD_BAN_TAI_CHINH = os.path.join(PATH_PARENT_OF_ROOT, "assets/img/TAI_CHINH.png")
-PATH_CARD_BAN_KY_THUAT = os.path.join(PATH_PARENT_OF_ROOT, "assets/img/KY_THUAT.png")
-PATH_CARD_BAN_NHAN_SU = os.path.join(PATH_PARENT_OF_ROOT, "assets/img/NHAN_SU.png")
+PATH_CARD_IMG = os.path.join(PATH_ASSETS, "img/teamwork.jpg")
+PATH_CARD_BAN_KINH_DOANH = os.path.join(PATH_ASSETS, "img/BanKinhDoanh.png")
+PATH_CARD_BAN_VAT_TU = os.path.join(PATH_ASSETS, "img/VAT_TU.png")
+PATH_CARD_KHO = os.path.join(PATH_ASSETS, "img/KHO.png")
+PATH_CARD_BAN_TAI_CHINH = os.path.join(PATH_ASSETS, "img/TAI_CHINH.png")
+PATH_CARD_BAN_KY_THUAT = os.path.join(PATH_ASSETS, "img/KY_THUAT.png")
+PATH_CARD_BAN_NHAN_SU = os.path.join(PATH_ASSETS, "img/NHAN_SU.png")
 
-PATH_CARD_KD_QUAN_LY_KHACH_HANG = os.path.join(PATH_PARENT_OF_ROOT, "assets/img/KD_DS_KHACH_HANG.png")
-PATH_CARD_KD_02 = os.path.join(PATH_PARENT_OF_ROOT, "assets/img/KD_DS_HANG_HOA.png")
-PATH_CARD_KD_03 = os.path.join(PATH_PARENT_OF_ROOT, "assets/img/KD_QUAN_LY_GOI_THAU.png")
-PATH_CARD_KD_04 = os.path.join(PATH_PARENT_OF_ROOT, "assets/img/KD_QUAN_LY_CONG_NO.png")
-PATH_CARD_KD_QUAN_LY_KE_HOACH_DAT_HANG = os.path.join(PATH_PARENT_OF_ROOT, "assets/img/KD_QUAN_LY_KE_HOACH_DAT_HANG.png")
-PATH_CARD_KD_05 = os.path.join(PATH_PARENT_OF_ROOT, "assets/img/KD_YEU_CAU_DAT_HANG.png")
-PATH_CARD_KD_06 = os.path.join(PATH_PARENT_OF_ROOT, "assets/img/KD_REPORT.png")
-PATH_CARD_KD_QUAN_LY_DE_NGHI_XUAT_KHO = os.path.join(PATH_PARENT_OF_ROOT, "assets/img/KD_QUAN_LY_DE_NGHI_XUAT_KHO.png")
+PATH_CARD_KD_QUAN_LY_KHACH_HANG = os.path.join(PATH_ASSETS, "img/KD_DS_KHACH_HANG.png")
+PATH_CARD_KD_02 = os.path.join(PATH_ASSETS, "img/KD_DS_HANG_HOA.png")
+PATH_CARD_KD_03 = os.path.join(PATH_ASSETS, "img/KD_QUAN_LY_GOI_THAU.png")
+PATH_CARD_KD_04 = os.path.join(PATH_ASSETS, "img/KD_QUAN_LY_CONG_NO.png")
+PATH_CARD_KD_QUAN_LY_KE_HOACH_DAT_HANG = os.path.join(PATH_ASSETS, "img/KD_QUAN_LY_KE_HOACH_DAT_HANG.png")
+PATH_CARD_KD_05 = os.path.join(PATH_ASSETS, "img/KD_YEU_CAU_DAT_HANG.png")
+PATH_CARD_KD_06 = os.path.join(PATH_ASSETS, "img/KD_REPORT.png")
+PATH_CARD_KD_QUAN_LY_DE_NGHI_XUAT_KHO = os.path.join(PATH_ASSETS, "img/KD_QUAN_LY_DE_NGHI_XUAT_KHO.png")
 
-PATH_CARD_ADMIN_QUAN_LY_DATABASE = os.path.join(PATH_PARENT_OF_ROOT, "assets/img/ADMIN_QUAN_LY_DATABASE.png")
-PATH_CARD_ADMIN_CAI_DAT_CHUNG = os.path.join(PATH_PARENT_OF_ROOT, "assets/img/ADMIN_CAI_DAT_CHUNG.png")
+PATH_CARD_ADMIN_QUAN_LY_DATABASE = os.path.join(PATH_ASSETS, "img/ADMIN_QUAN_LY_DATABASE.png")
+PATH_CARD_ADMIN_CAI_DAT_CHUNG = os.path.join(PATH_ASSETS, "img/ADMIN_CAI_DAT_CHUNG.png")
 
-PATH_FAV_ICON = os.path.join(PATH_PARENT_OF_ROOT, "assets/icons/favicon.png")
+PATH_FAV_ICON = os.path.join(PATH_ASSETS, "icons/favicon.png")
 
 PATH_ICON_HIDE = os.path.join(PATH_ASSETS_ICONS, "icon-closed-eye-50.png")
 PATH_ICON_UNHIDE = os.path.join(PATH_ASSETS_ICONS, "icon-opening-eye-26.png")
