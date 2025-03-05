@@ -1,8 +1,26 @@
 import os
+import sys
+
+# Lấy thư mục chứa main.exe hoặc script đang chạy
+if getattr(sys, 'frozen', False):
+    # Khi chạy từ file .exe
+    BASE_DIR = os.path.dirname(sys.executable)
+else:
+    # Khi chạy từ file .py
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Define paths
-PATH_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
-PATH_PARENT_OF_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.."))
+PATH_ROOT = os.path.abspath(os.path.join(BASE_DIR, "../.."))
+PATH_PARENT_OF_ROOT = os.path.abspath(os.path.join(BASE_DIR, "../../.."))
+
+# # Định nghĩa thư mục `assets` nằm cùng cấp với `main.exe`
+# PATH_ASSETS = os.path.join(BASE_DIR, "assets")
+
+
+
+# Define paths
+# PATH_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+# PATH_PARENT_OF_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.."))
 PATH_ASSETS_ICONS = os.path.join(PATH_PARENT_OF_ROOT, "assets/icons")
 PATH_ASSETS_TEMPLATES = os.path.join(PATH_PARENT_OF_ROOT, "assets/templates")
 
