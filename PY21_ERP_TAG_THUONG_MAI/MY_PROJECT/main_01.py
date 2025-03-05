@@ -3,9 +3,10 @@ import sys
 import traceback
 import tkinter as tk
 from tkinter import messagebox, ttk
+from app.utils import *
 
 class cls_SplashScreen(tk.Toplevel):
-    def __init__(self, master=None, duration=3000):  # Thời gian hiển thị (3 giây)
+    def __init__(self, master=None, duration=3000):  # Màn hình chờ hiển thị 3 giây
         super().__init__(master)
         self.master = master
         self.duration = duration
@@ -55,12 +56,10 @@ class cls_SplashScreen(tk.Toplevel):
         else:
             self.destroy()  
 
-
 class cls_App:
     def __init__(self):
         self.root = tk.Tk()
         self.root.withdraw()  # Ẩn cửa sổ chính ban đầu
-        self.image_cache = []  # Giữ hình ảnh trong bộ nhớ
         self.f_setup_sys_path()
 
     def f_setup_sys_path(self):
@@ -85,7 +84,7 @@ class cls_App:
         """Chạy ứng dụng với màn hình chờ trước khi hiển thị cửa sổ đăng nhập."""
         try:
             splash = cls_SplashScreen(self.root, duration=3000)  
-            self.root.update()  
+            # self.root.update()  # Cập nhật ngay lập tức để hiển thị Splash Screen
 
             # Chờ 3 giây rồi mở cửa sổ đăng nhập
             self.root.after(3000, self.f_show_login_window)
@@ -94,11 +93,27 @@ class cls_App:
         except Exception as e:
             self.handle_error(e)
 
+    # def f_show_login_window(self):
+    #     """Hiển thị cửa sổ đăng nhập sau màn hình chờ."""
+    #     from app.views.AD00_User_Management_View.AD0001_login_View import cls_Login_View
+    #     login_window = cls_Login_View()
+    #     login_window.mainloop()
+        
     def f_show_login_window(self):
         """Hiển thị cửa sổ đăng nhập sau màn hình chờ."""
         from app.views.AD00_User_Management_View.AD0001_login_View import cls_Login_View
+        from PIL import Image, ImageTk  # Import cần thiết để giữ ảnh trong bộ nhớ
+
+        # Load icon vào bộ nhớ trước khi mở cửa sổ đăng nhập
+        try:
+            fav_icon_path = PATH_FAV_ICON  # Đường dẫn icon
+            img = Image.open(fav_icon_path)
+            self.icon_image = ImageTk.PhotoImage(img)  # Giữ ảnh trong bộ nhớ
+        except Exception as e:
+            print(f"Không thể tải icon: {e}")
+
         login_window = cls_Login_View()
-        login_window.image_cache = self.image_cache  # Giữ ảnh trong bộ nhớ
+        login_window.icon_image = self.icon_image  # Giữ ảnh trong bộ nhớ
         login_window.mainloop()
 
     def handle_error(self, e):
@@ -114,7 +129,6 @@ class cls_App:
         messagebox.showerror("Lỗi Ứng Dụng", f"Đã xảy ra lỗi:\n\n{error_msg}")
 
         input("Nhấn Enter để thoát...")  
-
 
 if __name__ == "__main__":
     try:
