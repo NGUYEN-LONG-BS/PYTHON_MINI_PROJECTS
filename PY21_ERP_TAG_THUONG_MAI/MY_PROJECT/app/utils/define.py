@@ -14,8 +14,9 @@ PATH_ROOT = os.path.abspath(os.path.join(BASE_DIR, "../.."))
 PATH_PARENT_OF_ROOT = os.path.abspath(os.path.join(BASE_DIR, "../../.."))
 
 # Định nghĩa thư mục `assets` nằm cùng cấp với `main.exe`
-PATH_ASSETS = os.path.join(PATH_PARENT_OF_ROOT, "assets")
-# PATH_ASSETS = os.path.join(PATH_ROOT, "assets")
+# PATH_ASSETS = os.path.join(PATH_PARENT_OF_ROOT, "assets")
+PATH_ASSETS = os.path.join(PATH_ROOT, "assets")
+PATH_CONFIG = os.path.join(PATH_ROOT, "config")
 
 # Define paths
 # PATH_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
@@ -56,8 +57,8 @@ PATH_PRINT_TEMPLATES = os.path.join(PATH_ASSETS_TEMPLATES, "print_templates.xlsx
 
 PATH_ASSETS_TEMPLATES_JSON = os.path.join(PATH_ASSETS_TEMPLATES, "json")
 
-PATH_CONFIG_JSON = os.path.join(PATH_ROOT, "config/config.json")
-PATH_CONFIG_KEY = os.path.join(PATH_ROOT, "config/encryption_key.key")
+PATH_CONFIG_JSON = os.path.join(PATH_CONFIG, "config.json")
+PATH_CONFIG_KEY = os.path.join(PATH_CONFIG, "encryption_key.key")
 
 PATH_JSON_LOGIN_CREDENTIALS = os.path.join(PATH_ASSETS_TEMPLATES_JSON, "AD_LOGIN/login_credentials.json")
 
