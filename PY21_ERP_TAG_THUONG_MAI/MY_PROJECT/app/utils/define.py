@@ -8,7 +8,8 @@ if getattr(sys, 'frozen', False):
     
     # Define paths
     PATH_ROOT = BASE_DIR
-    PATH_PARENT_OF_ROOT = os.path.abspath(os.path.join(BASE_DIR, "../"))
+    PATH_PARENT_OF_ROOT = BASE_DIR
+    # PATH_PARENT_OF_ROOT = os.path.abspath(os.path.join(BASE_DIR, "../"))
     print(f"BASE_DIR: {BASE_DIR}")
     print(f"PATH_ROOT: {PATH_ROOT}")
     print(f"PATH_PARENT_OF_ROOT: {PATH_PARENT_OF_ROOT}")
@@ -28,9 +29,6 @@ else:
 PATH_ASSETS = os.path.join(PATH_PARENT_OF_ROOT, "assets")
 PATH_CONFIG = os.path.join(PATH_PARENT_OF_ROOT, "config")
 
-# Define paths
-# PATH_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
-# PATH_PARENT_OF_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.."))
 PATH_ASSETS_ICONS = os.path.join(PATH_ASSETS, "icons")
 PATH_ASSETS_TEMPLATES = os.path.join(PATH_ASSETS, "templates")
 
