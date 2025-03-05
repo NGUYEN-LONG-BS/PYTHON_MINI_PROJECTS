@@ -16,9 +16,16 @@ def select_output_folder():
         entry_output.delete(0, tk.END)
         entry_output.insert(0, folder_path)
 
+def select_icon():
+    icon_path = filedialog.askopenfilename(filetypes=[("Icon Files", "*.ico")])
+    if icon_path:
+        entry_icon.delete(0, tk.END)
+        entry_icon.insert(0, icon_path)
+
 def package_exe():
     file_path = entry_path.get()
     output_folder = entry_output.get()
+    icon_path = entry_icon.get()
     hide_console = var_noconsole.get()
     
     if not file_path:
@@ -46,6 +53,10 @@ def package_exe():
         if hide_console:
             command.append("--noconsole")
         
+        # Nếu có icon, thêm vào lệnh
+        if icon_path:
+            command.extend(["--icon", icon_path])
+        
         command.append(file_path)  # Thêm file nguồn vào danh sách lệnh
         
         # Thực thi lệnh PyInstaller
@@ -69,7 +80,7 @@ def package_exe():
 # Giao diện Tkinter
 root = tk.Tk()
 root.title("Đóng gói Python thành EXE")
-root.geometry("400x300")
+root.geometry("400x350")
 
 tk.Label(root, text="Chọn file Python để đóng gói:").pack(pady=5)
 
@@ -86,6 +97,13 @@ entry_output.pack(pady=5)
 
 btn_output = tk.Button(root, text="Chọn thư mục", command=select_output_folder)
 btn_output.pack(pady=5)
+
+# Thêm chức năng chọn icon
+entry_icon = tk.Entry(root, width=50)
+entry_icon.pack(pady=5)
+
+btn_icon = tk.Button(root, text="Chọn icon", command=select_icon)
+btn_icon.pack(pady=5)
 
 # Thêm checkbox để chọn có ẩn console hay không
 var_noconsole = tk.BooleanVar()
