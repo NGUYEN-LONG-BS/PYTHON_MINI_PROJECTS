@@ -7,7 +7,6 @@ import time
 
 class cls_App:
     def __init__(self):
-        
         self.log_file = "error_log.txt"
         self.log("Ứng dụng khởi động...\n")
         # Khởi tạo các cấu hình cần thiết, bao gồm thiết lập sys.path
@@ -17,7 +16,7 @@ class cls_App:
         """Ghi log vào file"""
         with open(self.log_file, "a", encoding="utf-8") as f:
             f.write(message + "\n")
-    
+
     def f_setup_sys_path(self):
         """
         Thiết lập lại sys.path để Python có thể tìm thấy các module trong thư mục `app`.

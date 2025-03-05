@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from Components_View import *
+from app.views.Components_View import *
 from Components_View.treeview import cls_Treeview_frame_number_01
 from app.utils import *
 from .DE_NGHI_XUAT_KHO_Controller import Controller_handel_all_events

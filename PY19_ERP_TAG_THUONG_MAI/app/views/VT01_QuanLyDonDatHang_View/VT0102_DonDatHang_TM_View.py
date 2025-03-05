@@ -1,5 +1,5 @@
 import tkinter as tk
-from Components_View import *
+from app.views.Components_View import *
 from app.utils import *
 from utils.define import *
 

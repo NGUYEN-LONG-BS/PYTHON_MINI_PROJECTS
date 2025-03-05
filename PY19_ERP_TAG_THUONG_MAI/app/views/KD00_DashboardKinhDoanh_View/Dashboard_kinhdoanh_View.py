@@ -1,12 +1,13 @@
 import tkinter as tk
-from Components_View import *
-from app.utils import *
-
 from tkinter import ttk
+
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 import numpy as np
+
+from app.views.Components_View import *
+from app.utils import *
 
 class cls_Dashboard_kinhdoanh_View(cls_base_form_number_02_ManyTabs):
     def __init__(self):

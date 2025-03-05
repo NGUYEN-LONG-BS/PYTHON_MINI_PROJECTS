@@ -3,7 +3,7 @@ from tkinter import messagebox
 import tempfile
 from docx import Document
 from docx.shared import Cm
-from Components_View import *
+from app.views.Components_View import *
 
 class cls_hr01_view(cls_base_form_number_04_dashboard):
     def __init__(self):

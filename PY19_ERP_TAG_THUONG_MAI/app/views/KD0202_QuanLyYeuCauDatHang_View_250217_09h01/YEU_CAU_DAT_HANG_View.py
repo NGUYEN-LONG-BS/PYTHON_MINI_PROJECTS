@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from Components_View import *
+from app.views.Components_View import *
 from app.utils import *
 from .YEU_CAU_DAT_HANG_Controller import Controller_auto_update_sl_giu_cho_va_sl_ycdh
 from .YEU_CAU_DAT_HANG_Controller import Controller_handel_all_events
