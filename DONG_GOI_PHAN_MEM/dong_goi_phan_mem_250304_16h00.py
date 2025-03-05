@@ -28,6 +28,7 @@ def package_exe():
     # Xác định thư mục chứa file Python
     project_root = os.path.dirname(file_path)
     assets_folder = os.path.join(project_root, "assets")
+    config_folder = os.path.join(project_root, "config")
 
     # Kiểm tra thư mục assets
     if not os.path.exists(assets_folder):
@@ -42,7 +43,8 @@ def package_exe():
             "pyinstaller",
             "--onefile",
             # "--noconsole",
-            f"--add-data={assets_folder};assets",  # Đảm bảo thư mục `assets` được đóng gói
+            f"--add-data={assets_folder};assets",  # Đảm bảo thư mục được đóng gói
+            f"--add-data={config_folder};config",  # Đảm bảo thư mục được đóng gói
             "--distpath", output_folder,
             file_path
         ], check=True)
