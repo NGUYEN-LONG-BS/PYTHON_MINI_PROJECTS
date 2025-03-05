@@ -66,17 +66,27 @@ def f_utils_setup_logo(parent_frame):
         error_label.bind("<Button-1>", on_logo_click)  # Button-1 is left mouse click
 
 def f_utils_setup_fav_icon(window):
-        # Get the project root directory
-        # project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.."))  # Going levels up
-        
-        # Load the logo images
-        # fav_icon = os.path.join(project_root, "assets/icons/favicon.png")
         fav_icon = define.PATH_FAV_ICON
         
         img = Image.open(fav_icon)  # Replace with the path to your image file
         logo = ImageTk.PhotoImage(img)
         # Set the window icon
         window.iconphoto(False, logo)
+        
+        # fav_icon = define.PATH_FAV_ICON  # Đường dẫn icon
+    
+        # try:
+        #     img = Image.open(fav_icon)  # Mở hình ảnh
+        #     logo = ImageTk.PhotoImage(img)  # Chuyển đổi sang Tkinter PhotoImage
+            
+        #     # Giữ tham chiếu để tránh bị garbage collected
+        #     window.icon_image = logo  
+            
+        #     # Đặt icon cho cửa sổ
+        #     window.iconphoto(False, window.icon_image)
+
+        # except Exception as e:
+        #     print(f"Error loading icon: {e}")
 
 def f_utils_find_my_function_path(function_name):
     source_file = inspect.getfile(function_name)
