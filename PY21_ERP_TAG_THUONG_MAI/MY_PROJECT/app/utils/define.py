@@ -47,6 +47,8 @@ PATH_CARD_KD_QUAN_LY_DE_NGHI_XUAT_KHO = os.path.join(PATH_PARENT_OF_ROOT, "asset
 PATH_CARD_ADMIN_QUAN_LY_DATABASE = os.path.join(PATH_PARENT_OF_ROOT, "assets/img/ADMIN_QUAN_LY_DATABASE.png")
 PATH_CARD_ADMIN_CAI_DAT_CHUNG = os.path.join(PATH_PARENT_OF_ROOT, "assets/img/ADMIN_CAI_DAT_CHUNG.png")
 
+PATH_FAV_ICON = os.path.join(PATH_PARENT_OF_ROOT, "assets/icons/favicon.png")
+
 PATH_ICON_HIDE = os.path.join(PATH_ASSETS_ICONS, "icon-closed-eye-50.png")
 PATH_ICON_UNHIDE = os.path.join(PATH_ASSETS_ICONS, "icon-opening-eye-26.png")
 

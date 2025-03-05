@@ -67,10 +67,11 @@ def f_utils_setup_logo(parent_frame):
 
 def f_utils_setup_fav_icon(window):
         # Get the project root directory
-        project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.."))  # Going levels up
+        # project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.."))  # Going levels up
         
         # Load the logo images
-        fav_icon = os.path.join(project_root, "assets/icons/favicon.png")
+        # fav_icon = os.path.join(project_root, "assets/icons/favicon.png")
+        fav_icon = define.PATH_FAV_ICON
         
         img = Image.open(fav_icon)  # Replace with the path to your image file
         logo = ImageTk.PhotoImage(img)
