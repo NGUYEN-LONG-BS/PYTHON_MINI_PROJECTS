@@ -5,16 +5,24 @@ import sys
 if getattr(sys, 'frozen', False):
     # Khi chạy từ file .exe
     BASE_DIR = os.path.dirname(sys.executable)
+    # Define paths
+    PATH_ROOT = BASE_DIR
+    PATH_PARENT_OF_ROOT = os.path.abspath(os.path.join(BASE_DIR, "../"))
+    print(f"BASE_DIR: {BASE_DIR}")
+    print(f"PATH_ROOT: {PATH_ROOT}")
+    print(f"PATH_PARENT_OF_ROOT: {PATH_PARENT_OF_ROOT}")
 else:
     # Khi chạy từ file .py
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
-# Define paths
-PATH_ROOT = os.path.abspath(os.path.join(BASE_DIR, "../.."))
-PATH_PARENT_OF_ROOT = os.path.abspath(os.path.join(BASE_DIR, "../../.."))
+    # Define paths
+    PATH_ROOT = os.path.abspath(os.path.join(BASE_DIR, "../.."))
+    PATH_PARENT_OF_ROOT = os.path.abspath(os.path.join(BASE_DIR, "../../.."))
+    print(f"BASE_DIR: {BASE_DIR}")
+    print(f"PATH_ROOT: {PATH_ROOT}")
+    print(f"PATH_PARENT_OF_ROOT: {PATH_PARENT_OF_ROOT}")
+    
 
 # Định nghĩa thư mục `assets` nằm cùng cấp với `main.exe`
-# PATH_ASSETS = os.path.join(PATH_PARENT_OF_ROOT, "assets")
 PATH_ASSETS = os.path.join(PATH_ROOT, "assets")
 PATH_CONFIG = os.path.join(PATH_ROOT, "config")
 
