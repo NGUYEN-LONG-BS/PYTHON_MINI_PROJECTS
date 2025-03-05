@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from app.views.Components_View import *
-from Components_View.treeview import cls_Treeview_frame_number_01
+# from app.views.Components_View.treeview import cls_Treeview_frame_number_01
 from app.utils import *
 from .KE_HOACH_DAT_HANG_Controller import Controller_handel_all_events
 

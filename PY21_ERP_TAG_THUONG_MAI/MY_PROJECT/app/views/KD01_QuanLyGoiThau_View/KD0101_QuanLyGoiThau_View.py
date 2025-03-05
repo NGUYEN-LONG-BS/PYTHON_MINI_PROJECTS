@@ -8,8 +8,8 @@ from controllers.KD01_QuanLyGoiThau_Controller import cls_KD01QuanLyGoiThauContr
 from controllers.KD01_QuanLyGoiThau_Controller import cls_Controller_config_treeview
 from app.utils import *
 from app.views.Components_View import *
-from Components_View.user_Info import setup_employee_info_labels  # Import the function
-from Components_View.logo import setup_logo  # Import the setup_logo function
+from app.views.Components_View.user_Info import setup_employee_info_labels  # Import the function
+from app.views.Components_View.logo import setup_logo  # Import the setup_logo function
 
 class cls_KD0101_QuanLyGoiThau_View(tk.Tk):
     
