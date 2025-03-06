@@ -753,4 +753,20 @@ class utils_controller_validate_logic_in_columns_num_04_no_duplicate_stt_dong:
         values = [[row[i] if row[i] is not None and not (isinstance(row[i], float) and math.isnan(row[i])) else None for i in column_indices] for row in data]
         return values
 
-    
+class utils_controller_get_data_to_print:
+    def get_treeview_data(treeview: ttk.Treeview, columns: tuple) -> list:
+        """
+        Trích xuất dữ liệu từ Treeview.
+        
+        Args:
+            treeview (ttk.Treeview): Treeview cần lấy dữ liệu.
+            columns (tuple): Tuple chứa index các cột cần lấy dữ liệu.
+
+        Returns:
+            list: Danh sách các tuple, mỗi tuple chứa dữ liệu của một hàng theo các cột được chọn.
+        """
+        data = []
+        for item in treeview.get_children():
+            row = tuple(treeview.item(item, 'values')[col] for col in columns)
+            data.append(row)
+        return data

@@ -1983,6 +1983,12 @@ class Controller_print_current_slip:
             print("Error at function: ", f_utils_get_current_function_name())
             return f"Error: {e}"
         
+    def get_data_to_print(my_treeview):
+        data_info_of_slip = []
+        column_indices = (0, 1, 2, 3)
+        data_of_table = utils_controller_get_data_to_print.get_treeview_data(my_treeview, column_indices)
+        return data_info_of_slip, data_of_table
+        
 class Controller_export_all_data:
     def export_all_data(entry_notification):
         try:
