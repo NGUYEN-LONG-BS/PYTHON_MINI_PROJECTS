@@ -1974,6 +1974,16 @@ class Controller_filter_with_conditions_on_tab_02:
 class Controller_print_current_slip:
     def print_slip_on_GUI():
         try:
+            template_path = Controller_print_current_slip.get_print_template()
+            
+            return "Print template opened successfully!"
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return f"Error: {e}"
+        
+    def get_print_template():
+        try:
             path_template_file = os.path.join(PATH_ASSETS_TEMPLATES_EXCEL, "PRINT_KD0201.xlsx")
             sheet_name = "KD0201_YEU_CAU_DAT_HANG"
             f_utils_open_print_template(path_template_file, sheet_name)

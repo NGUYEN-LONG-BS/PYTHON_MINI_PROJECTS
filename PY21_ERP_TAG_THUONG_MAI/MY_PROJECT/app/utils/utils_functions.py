@@ -461,6 +461,9 @@ def f_utils_copy_sheet_to_new_workbook(file_path, sheet_name):
 
         # Close the original workbook
         wb.close()
+        
+        new_wb.save(os.path.join("define.PATH_DEFAUL", "file_print.xlsx"))
+        new_wb.close()
     except Exception as e:
         print(f"Error: {e}")
         print("Error at function: ", f_utils_get_current_function_name())
@@ -569,14 +572,7 @@ def f_utils_open_print_template(file_path, sheet_name):
     start_row = f_utils_find_string_in_column_of_excel(file_path, sheet_name, "FIRST_ROW", column_number=1, case_sensitive=True, return_as_index=True)
     last_row = f_utils_find_string_in_column_of_excel(file_path, sheet_name, "LAST_ROW", column_number=1, case_sensitive=True, return_as_index=True)
     
-    print(start_column)
-    print(end_column)
-    print(value_column)
-    print(start_row)
-    print(last_row)
-    
     f_utils_copy_sheet_to_new_workbook(file_path, sheet_name)
-    # f_utils_delete_extend_row_and_column(file_path, sheet_name, start_column, end_column, start_row, last_row)
     
 def f_utils_on_entry_change(entry_widget):
     """
