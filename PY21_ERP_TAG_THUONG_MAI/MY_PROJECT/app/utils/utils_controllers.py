@@ -797,5 +797,5 @@ class utils_controller_Export_data_to_print_template:
             print("Error at function: ", utils_functions.f_utils_get_current_function_name())
             return False
         
-    def start_loading_data_to_print_template(data_information_of_slip, data_information_from_treeview, template_path):
+    def load_data_to_print_template(data_information_of_slip, data_information_from_treeview, template_path):
         print(data_information_of_slip)
