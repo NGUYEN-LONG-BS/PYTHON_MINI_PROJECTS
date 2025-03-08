@@ -260,8 +260,27 @@ class Controller_handel_all_events:
     def f_handle_tab_01_button_clear_click(entry_notification, my_treeview):
         Controller_clear_all_rows_in_treeview.clear_all_rows(entry_notification, my_treeview)
 
-    def f_handle_btn_print_click():
-        Controller_print_current_slip.print_slip_on_GUI()
+    def f_handle_btn_print_click(entry_notification
+            , entry_so_phieu
+            , entry_ma_khach_hang
+            , entry_ten_khach_hang
+            , entry_mst
+            , entry_dia_chi
+            , entry_so_hop_dong
+            , entry_thong_tin_hop_dong
+            , entry_note_for_slip
+            , my_treeview):
+        
+        Controller_print_current_slip.print_slip_on_GUI(entry_notification
+            , entry_so_phieu
+            , entry_ma_khach_hang
+            , entry_ten_khach_hang
+            , entry_mst
+            , entry_dia_chi
+            , entry_so_hop_dong
+            , entry_thong_tin_hop_dong
+            , entry_note_for_slip
+            , my_treeview)
     
     def f_handle_event_get_the_latest_number_of_slip(tab_01_entry_so_phieu):
         Cotroller_get_the_latest_number_of_slip.get_the_latest_number_of_slip(tab_01_entry_so_phieu)
@@ -1972,11 +1991,37 @@ class Controller_filter_with_conditions_on_tab_02:
             print("Error at function: ", f_utils_get_current_function_name())
             
 class Controller_print_current_slip:
-    def print_slip_on_GUI():
+    def print_slip_on_GUI(entry_notification
+            , entry_so_phieu
+            , entry_ma_khach_hang
+            , entry_ten_khach_hang
+            , entry_mst
+            , entry_dia_chi
+            , entry_so_hop_dong
+            , entry_thong_tin_hop_dong
+            , entry_note_for_slip
+            , my_treeview):
         try:
+            
+            
+            # Lấy dữ liệu của slip
+            data_information_of_slip = Controller_print_current_slip.get_data_info_of_slip_to_print(
+                entry_so_phieu
+                , entry_ma_khach_hang
+                , entry_ten_khach_hang
+                , entry_mst
+                , entry_dia_chi
+                , entry_so_hop_dong
+                , entry_thong_tin_hop_dong
+                , entry_note_for_slip)
+            data_information_from_treeview = Controller_print_current_slip.get_data_of_treeview_to_print(my_treeview)
             template_path = Controller_print_current_slip.get_print_template()
             
-            return "Print template opened successfully!"
+            print(data_information_of_slip)
+            print(data_information_from_treeview)
+            print(template_path)
+            
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, template_path, "blue")
         except Exception as e:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
@@ -1986,18 +2031,43 @@ class Controller_print_current_slip:
         try:
             path_template_file = os.path.join(PATH_ASSETS_TEMPLATES_EXCEL, "PRINT_KD0201.xlsx")
             sheet_name = "KD0201_YEU_CAU_DAT_HANG"
-            f_utils_open_print_template(path_template_file, sheet_name)
-            return "Print template opened successfully!"
+            new_path = f_utils_open_print_template(path_template_file, sheet_name)
+
+            return new_path
         except Exception as e:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
             return f"Error: {e}"
         
-    def get_data_to_print(my_treeview):
-        data_info_of_slip = []
+    def get_data_of_treeview_to_print(my_treeview):
         column_indices = (0, 1, 2, 3)
         data_of_table = utils_controller_get_data_to_print.get_treeview_data(my_treeview, column_indices)
-        return data_info_of_slip, data_of_table
+        return data_of_table
+    
+    def get_data_info_of_slip_to_print(
+            entry_so_phieu
+            , entry_ma_khach_hang
+            , entry_ten_khach_hang
+            , entry_mst
+            , entry_dia_chi
+            , entry_so_hop_dong
+            , entry_thong_tin_hop_dong
+            , entry_note_for_slip):
+        
+        # Lấy dữ liệu của slip
+        value_01 = entry_so_phieu.get()
+        value_02 = entry_ma_khach_hang.get()
+        value_03 = entry_ten_khach_hang.get()
+        value_04 = entry_mst.get()
+        value_05 = entry_dia_chi.get()
+        value_06 = entry_so_hop_dong.get()
+        value_07 = entry_thong_tin_hop_dong.get()
+        value_08 = entry_note_for_slip.get()
+        
+        # Tạo một list chứa dữ liệu để export
+        data_info_of_slip = [(value_01,), (value_02,), (value_03,), (value_04,), (value_05,), (value_06,), (value_07,), (value_08,)]
+        
+        return data_info_of_slip
         
 class Controller_export_all_data:
     def export_all_data(entry_notification):

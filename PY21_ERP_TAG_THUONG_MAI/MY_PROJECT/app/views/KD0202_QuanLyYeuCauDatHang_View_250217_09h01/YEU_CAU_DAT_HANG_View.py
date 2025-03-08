@@ -564,7 +564,18 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
             self.tab_01_treeview_YCDH)
         
     def event_tab_01_button_print_click(self):
-        Controller_handel_all_events.f_handle_btn_print_click()
+        Controller_handel_all_events.f_handle_btn_print_click(
+            self.tab_01_label_footer_notification
+            , self.tab_01_entry_so_phieu
+            , self.tab_01_entry_ma_khach_hang
+            , self.tab_01_entry_ten_khach_hang
+            , self.tab_01_entry_mst
+            , self.tab_01_entry_dia_chi
+            , self._tab_01_entry_so_hop_dong
+            , self.tab_01_entry_thong_tin_hop_dong
+            , self.tab_01_entry_note_for_slip
+            , self.tab_01_treeview_YCDH
+            )
         
     def event_tab_01_button_save_click(self):
         Controller_handel_all_events.f_handle_event_tab_01_btn_save_click(
