@@ -271,7 +271,7 @@ class Controller_handel_all_events:
             , entry_note_for_slip
             , my_treeview):
         
-        Controller_print_current_slip.print_slip_on_GUI(entry_notification
+        Controller_print_current_slip.start_printing_curent_slip_on_GUI(entry_notification
             , entry_so_phieu
             , entry_ma_khach_hang
             , entry_ten_khach_hang
@@ -1991,7 +1991,7 @@ class Controller_filter_with_conditions_on_tab_02:
             print("Error at function: ", f_utils_get_current_function_name())
             
 class Controller_print_current_slip:
-    def print_slip_on_GUI(entry_notification
+    def start_printing_curent_slip_on_GUI(entry_notification
             , entry_so_phieu
             , entry_ma_khach_hang
             , entry_ten_khach_hang
@@ -2003,7 +2003,6 @@ class Controller_print_current_slip:
             , my_treeview):
         try:
             
-            
             # Lấy dữ liệu của slip
             data_information_of_slip = Controller_print_current_slip.get_data_info_of_slip_to_print(
                 entry_so_phieu
@@ -2014,12 +2013,17 @@ class Controller_print_current_slip:
                 , entry_so_hop_dong
                 , entry_thong_tin_hop_dong
                 , entry_note_for_slip)
+            
+            # Lấy dữ liệu của treeview
             data_information_from_treeview = Controller_print_current_slip.get_data_of_treeview_to_print(my_treeview)
+            
+            # tạo template và lấy đường dẫn
             template_path = Controller_print_current_slip.get_print_template()
             
-            print(data_information_of_slip)
-            print(data_information_from_treeview)
-            print(template_path)
+            # Load data to template
+            flag = Controller_print_current_slip.load_data_to_print_template(data_information_of_slip, data_information_from_treeview, template_path)
+            if flag == False:
+                return
             
             utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, template_path, "blue")
         except Exception as e:
@@ -2068,6 +2072,19 @@ class Controller_print_current_slip:
         data_info_of_slip = [(value_01,), (value_02,), (value_03,), (value_04,), (value_05,), (value_06,), (value_07,), (value_08,)]
         
         return data_info_of_slip
+    
+    def load_data_to_print_template(data_information_of_slip, data_information_from_treeview, template_path):
+        try:
+            # Load data to template
+            flag = utils_controller_Export_data_to_print_template.load_data_to_print_template(data_information_of_slip, data_information_from_treeview, template_path)
+            if flag == False:
+                return False
+            else:
+                return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
         
 class Controller_export_all_data:
     def export_all_data(entry_notification):

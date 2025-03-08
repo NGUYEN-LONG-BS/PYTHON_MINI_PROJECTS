@@ -770,3 +770,32 @@ class utils_controller_get_data_to_print:
             row = tuple(treeview.item(item, 'values')[col] for col in columns)
             data.append(row)
         return data
+    
+class utils_controller_Export_data_to_print_template:
+    def start_loading_data_to_print_template(data_information_of_slip, data_information_from_treeview, template_path):
+        try:
+            # Đếm số dòng trên treeview
+            
+            # Xác định vị trí bắt đầu information of slip
+            
+            # Xác định vị trí bắt đầu information from treeview
+            
+            # Thêm dòng trên template
+            
+            # load data into template: info of slip
+            
+            # load data into template: info of treeview
+            
+            # Load data to template
+            flag = utils_controller_Export_data_to_print_template.load_data_to_print_template(data_information_of_slip, data_information_from_treeview, template_path)
+            if flag == False:
+                return False
+            else:
+                return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", utils_functions.f_utils_get_current_function_name())
+            return False
+        
+    def start_loading_data_to_print_template(data_information_of_slip, data_information_from_treeview, template_path):
+        print(data_information_of_slip)
