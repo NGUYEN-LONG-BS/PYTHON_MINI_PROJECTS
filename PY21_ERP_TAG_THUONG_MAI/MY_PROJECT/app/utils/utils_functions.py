@@ -1,5 +1,6 @@
 import os
 import sys
+import gc
 import time
 import inspect
 import tkinter as tk
@@ -13,6 +14,7 @@ from openpyxl.styles import Font, Alignment, PatternFill
 from openpyxl import load_workbook
 from openpyxl import Workbook
 from openpyxl.utils import get_column_letter
+from copy import copy
 
 import xlwings as xw
 import pyodbc
@@ -568,16 +570,58 @@ def f_utils_copy_all_cells_and_paste_value(file_path, sheet_name):
         raise Exception(f"An error occurred: {str(e)}")
 
 def f_utils_open_print_template(file_path, sheet_name):
-    start_column = f_utils_find_string_in_row_of_excel(file_path, sheet_name, "FIRST_COLUMN", row_number=1, case_sensitive=True, return_as_index=True)
-    end_column = f_utils_find_string_in_row_of_excel(file_path, sheet_name, "LAST_COLUMN", row_number=1, case_sensitive=True, return_as_index=True)
-    value_column = f_utils_find_string_in_row_of_excel(file_path, sheet_name, "VALUE_COLUMN", row_number=1, case_sensitive=True, return_as_index=False)
-    start_row = f_utils_find_string_in_column_of_excel(file_path, sheet_name, "FIRST_ROW", column_number=1, case_sensitive=True, return_as_index=True)
-    last_row = f_utils_find_string_in_column_of_excel(file_path, sheet_name, "LAST_ROW", column_number=1, case_sensitive=True, return_as_index=True)
-    
     print_file_path = f_utils_copy_sheet_to_new_workbook(file_path, sheet_name)
-    
     return print_file_path
+
+def f_utils_paste_data_to_column_in_excel(file_path, sheet_name, data, start_row=2, start_column='K'):
+    """
+    Paste a list of tuples into a specified column of an Excel sheet.
     
+    :param file_path: Path to the Excel file.
+    :param sheet_name: Name of the sheet where data should be pasted.
+    :param data: List of tuples containing data.
+    :param start_row: Starting row for pasting data (default is 2).
+    :param start_column: Column letter where data should be pasted (default is 'K').
+    """
+    try:
+        # Load the workbook and sheet
+        wb = openpyxl.load_workbook(file_path)
+        sheet = wb[sheet_name]
+        
+        # Paste data into the specified column
+        for i, value in enumerate(data, start=start_row):
+            if isinstance(value, tuple) and len(value) > 0:
+                sheet[f'{start_column}{i}'] = value[0]  # Extract first element of tuple if exists
+            else:
+                sheet[f'{start_column}{i}'] = ""  # Handle empty tuples gracefully
+        
+        # Save the workbook
+        wb.save(file_path)
+        wb.close()
+        del wb      # Close the workbook and free up memory
+        gc.collect()
+    except Exception as e:
+        print(f"Error: {e}")
+
+def f_utils_insert_rows_in_range(file_path, sheet_name, start_col, start_row, last_col, last_row, num_rows):
+    # Load workbook
+    wb = openpyxl.load_workbook(file_path)
+
+    # Kiểm tra sheet có tồn tại không
+    if sheet_name not in wb.sheetnames:
+        print(f"Sheet '{sheet_name}' không tồn tại trong file.")
+        return
+
+    sheet = wb[sheet_name]
+
+    # Chèn số dòng mới
+    sheet.insert_rows(start_row, num_rows)
+
+    # Lưu file
+    wb.save(file_path)
+
+    print(f"Đã chèn {num_rows} dòng từ hàng {start_row} đến hàng {last_row} trong sheet '{sheet_name}'.")
+
 def f_utils_on_entry_change(entry_widget):
     """
     Callback to handle changes in the Entry widget.

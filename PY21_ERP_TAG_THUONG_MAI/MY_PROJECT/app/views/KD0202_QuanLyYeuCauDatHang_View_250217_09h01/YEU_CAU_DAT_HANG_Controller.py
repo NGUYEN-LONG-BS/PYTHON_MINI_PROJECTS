@@ -176,6 +176,14 @@ class controller_get_information_of_module:
         WHERE [XOA_SUA] = ''
         """
         return query
+    
+    def load_print_template_path():
+        path_template_file = os.path.join(PATH_ASSETS_TEMPLATES_EXCEL, "PRINT_KD0201.xlsx")
+        return path_template_file
+    
+    def load_print_template_sheet_name():
+        sheet_name = "KD0201_YEU_CAU_DAT_HANG"
+        return sheet_name
 
 class Controller_handel_all_events:
     """Công dụng chuyển tiếp các event từ view sang controller
@@ -261,6 +269,7 @@ class Controller_handel_all_events:
         Controller_clear_all_rows_in_treeview.clear_all_rows(entry_notification, my_treeview)
 
     def f_handle_btn_print_click(entry_notification
+            , entry_ngay_tren_phieu
             , entry_so_phieu
             , entry_ma_khach_hang
             , entry_ten_khach_hang
@@ -272,6 +281,7 @@ class Controller_handel_all_events:
             , my_treeview):
         
         Controller_print_current_slip.start_printing_curent_slip_on_GUI(entry_notification
+            , entry_ngay_tren_phieu
             , entry_so_phieu
             , entry_ma_khach_hang
             , entry_ten_khach_hang
@@ -1992,6 +2002,7 @@ class Controller_filter_with_conditions_on_tab_02:
             
 class Controller_print_current_slip:
     def start_printing_curent_slip_on_GUI(entry_notification
+            , entry_ngay_tren_phieu
             , entry_so_phieu
             , entry_ma_khach_hang
             , entry_ten_khach_hang
@@ -2002,10 +2013,15 @@ class Controller_print_current_slip:
             , entry_note_for_slip
             , my_treeview):
         try:
-            
+            # check slip before printing
+            flag = Controller_print_current_slip.check_slip_before_printing(entry_notification, my_treeview)
+            if flag == False:
+                return
+                        
             # Lấy dữ liệu của slip
             data_information_of_slip = Controller_print_current_slip.get_data_info_of_slip_to_print(
-                entry_so_phieu
+                entry_ngay_tren_phieu
+                , entry_so_phieu
                 , entry_ma_khach_hang
                 , entry_ten_khach_hang
                 , entry_mst
@@ -2013,30 +2029,73 @@ class Controller_print_current_slip:
                 , entry_so_hop_dong
                 , entry_thong_tin_hop_dong
                 , entry_note_for_slip)
+            if data_information_of_slip == None:
+                return
             
             # Lấy dữ liệu của treeview
             data_information_from_treeview = Controller_print_current_slip.get_data_of_treeview_to_print(my_treeview)
+            if data_information_from_treeview == None:
+                return
             
             # tạo template và lấy đường dẫn
-            template_path = Controller_print_current_slip.get_print_template()
-            
-            # Load data to template
-            flag = Controller_print_current_slip.load_data_to_print_template(data_information_of_slip, data_information_from_treeview, template_path)
-            if flag == False:
-                return
+            template_path = Controller_print_current_slip.pass_data_to_print_template(data_information_of_slip, data_information_from_treeview)
             
             utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, template_path, "blue")
         except Exception as e:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
             return f"Error: {e}"
-        
-    def get_print_template():
+    
+    def check_slip_before_printing(entry_notification, my_treeview):
         try:
-            path_template_file = os.path.join(PATH_ASSETS_TEMPLATES_EXCEL, "PRINT_KD0201.xlsx")
-            sheet_name = "KD0201_YEU_CAU_DAT_HANG"
+            # check if slip has data
+            if len(my_treeview.get_children()) == 0:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "No data to print!", "red")
+                return False
+            
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+    
+    def pass_data_to_print_template(data_information_of_slip, data_information_from_treeview):
+        try:
+            path_template_file = controller_get_information_of_module.load_print_template_path()
+            sheet_name = controller_get_information_of_module.load_print_template_sheet_name()
             new_path = f_utils_open_print_template(path_template_file, sheet_name)
 
+            # lấy thông tin từ file template
+            first_column_tpye_text = f_utils_find_string_in_row_of_excel(path_template_file, sheet_name, "FIRST_COLUMN", row_number=1, case_sensitive=True, return_as_index=False)
+            last_column_tpye_text = f_utils_find_string_in_row_of_excel(path_template_file, sheet_name, "LAST_COLUMN", row_number=1, case_sensitive=True, return_as_index=False)
+            value_column_tpye_text = f_utils_find_string_in_row_of_excel(path_template_file, sheet_name, "VALUE_COLUMN", row_number=1, case_sensitive=True, return_as_index=False)
+            first_row = f_utils_find_string_in_column_of_excel(path_template_file, sheet_name, "FIRST_ROW", column_number=1, case_sensitive=True, return_as_index=True)
+            last_row = f_utils_find_string_in_column_of_excel(path_template_file, sheet_name, "LAST_ROW", column_number=1, case_sensitive=True, return_as_index=True)
+            stt_dong_row = f_utils_find_string_in_column_of_excel(path_template_file, sheet_name, "STT_DONG", column_number=1, case_sensitive=True, return_as_index=True)
+            tong_row = f_utils_find_string_in_column_of_excel(path_template_file, sheet_name, "TONG", column_number=1, case_sensitive=True, return_as_index=True)
+            
+            f_utils_paste_data_to_column_in_excel(new_path, sheet_name, data_information_of_slip, start_row=first_row, start_column=value_column_tpye_text)
+
+            # Count the number of tuples
+            amount_of_rows = len(data_information_from_treeview)
+            print(f"Amount of rows: {amount_of_rows}")
+            
+            first_column_tpye_index = f_utils_find_string_in_row_of_excel(path_template_file, sheet_name, "FIRST_COLUMN", row_number=1, case_sensitive=True, return_as_index=True)
+            last_column_tpye_index = f_utils_find_string_in_row_of_excel(path_template_file, sheet_name, "LAST_COLUMN", row_number=1, case_sensitive=True, return_as_index=True)
+            
+            # Insert rows
+            print("new_path", new_path)
+            print("sheet_name", sheet_name)
+            print("start_col", first_column_tpye_index)
+            print("start_row", stt_dong_row)
+            print("last_col", last_column_tpye_index)
+            print("last_row", stt_dong_row)
+            print("num_rows", amount_of_rows)
+            
+            f_utils_insert_rows_in_range(new_path, sheet_name, start_col=first_column_tpye_index, start_row=tong_row - 1, last_col=last_column_tpye_index, last_row=tong_row - 1, num_rows=amount_of_rows)
+            
+            # f_utils_paste_data_to_column_in_excel(new_path, sheet_name, data_information_from_treeview, start_row=1, start_column=last_column)
+            
             return new_path
         except Exception as e:
             print(f"Error: {e}")
@@ -2049,7 +2108,8 @@ class Controller_print_current_slip:
         return data_of_table
     
     def get_data_info_of_slip_to_print(
-            entry_so_phieu
+            entry_ngay_tren_phieu
+            , entry_so_phieu
             , entry_ma_khach_hang
             , entry_ten_khach_hang
             , entry_mst
@@ -2059,32 +2119,20 @@ class Controller_print_current_slip:
             , entry_note_for_slip):
         
         # Lấy dữ liệu của slip
-        value_01 = entry_so_phieu.get()
-        value_02 = entry_ma_khach_hang.get()
-        value_03 = entry_ten_khach_hang.get()
-        value_04 = entry_mst.get()
-        value_05 = entry_dia_chi.get()
-        value_06 = entry_so_hop_dong.get()
-        value_07 = entry_thong_tin_hop_dong.get()
-        value_08 = entry_note_for_slip.get()
+        value_01 = entry_ngay_tren_phieu.get()
+        value_02 = entry_so_phieu.get()
+        value_03 = entry_ma_khach_hang.get()
+        value_04 = entry_ten_khach_hang.get()
+        value_05 = entry_mst.get()
+        value_06 = entry_dia_chi.get()
+        value_07 = entry_so_hop_dong.get()
+        value_08 = entry_thong_tin_hop_dong.get()
+        value_09 = entry_note_for_slip.get()
         
         # Tạo một list chứa dữ liệu để export
-        data_info_of_slip = [(value_01,), (value_02,), (value_03,), (value_04,), (value_05,), (value_06,), (value_07,), (value_08,)]
+        data_info_of_slip = [(value_01,), (value_02,), (value_03,), (value_04,), (value_05,), (value_06,), (value_07,), (value_08,), (value_09,)]
         
         return data_info_of_slip
-    
-    def load_data_to_print_template(data_information_of_slip, data_information_from_treeview, template_path):
-        try:
-            # Load data to template
-            flag = utils_controller_Export_data_to_print_template.load_data_to_print_template(data_information_of_slip, data_information_from_treeview, template_path)
-            if flag == False:
-                return False
-            else:
-                return True
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return False
         
 class Controller_export_all_data:
     def export_all_data(entry_notification):

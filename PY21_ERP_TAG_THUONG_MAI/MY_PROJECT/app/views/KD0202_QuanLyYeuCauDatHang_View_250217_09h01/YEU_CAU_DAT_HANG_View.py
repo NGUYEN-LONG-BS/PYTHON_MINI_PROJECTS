@@ -566,6 +566,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
     def event_tab_01_button_print_click(self):
         Controller_handel_all_events.f_handle_btn_print_click(
             self.tab_01_label_footer_notification
+            , self.tab_01_entry_ngay_tren_phieu
             , self.tab_01_entry_so_phieu
             , self.tab_01_entry_ma_khach_hang
             , self.tab_01_entry_ten_khach_hang
