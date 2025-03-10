@@ -2084,15 +2084,7 @@ class Controller_print_current_slip:
             last_column_tpye_index = f_utils_find_string_in_row_of_excel(path_template_file, sheet_name, "LAST_COLUMN", row_number=1, case_sensitive=True, return_as_index=True)
             
             # Insert rows
-            print("new_path", new_path)
-            print("sheet_name", sheet_name)
-            print("start_col", first_column_tpye_index)
-            print("start_row", stt_dong_row)
-            print("last_col", last_column_tpye_index)
-            print("last_row", stt_dong_row)
-            print("num_rows", amount_of_rows)
-            
-            f_utils_insert_rows_in_range(new_path, sheet_name, start_col=first_column_tpye_index, start_row=tong_row - 1, last_col=last_column_tpye_index, last_row=tong_row - 1, num_rows=amount_of_rows)
+            f_utils_insert_rows_in_range(new_path, sheet_name, start_col=first_column_tpye_index, start_row=tong_row, last_col=last_column_tpye_index, last_row=tong_row, num_rows=amount_of_rows)
             
             # f_utils_paste_data_to_column_in_excel(new_path, sheet_name, data_information_from_treeview, start_row=1, start_column=last_column)
             
