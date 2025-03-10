@@ -650,7 +650,7 @@ def f_utils_insert_rows_in_range(file_path, sheet_name, start_col, start_row, la
         # Merge lại ô
         sheet.merge_cells(start_row=min_row, start_column=min_col, end_row=max_row, end_column=max_col)
 
-    # 4️⃣ Sao chép định dạng từ một hàng sang hàng khác (Format Painter)
+    
     source_start_row, source_end_row = start_row - 1, start_row - 1
     source_start_col, source_end_col = start_col, last_col
     target_start_row, target_end_row = start_row - 1 + num_rows - 1, start_row - 1 + num_rows - 1
@@ -661,6 +661,7 @@ def f_utils_insert_rows_in_range(file_path, sheet_name, start_col, start_row, la
     print(source_start_col, source_end_col)
     print(target_start_col, target_end_col)
 
+    # 4️⃣ Sao chép định dạng từ một hàng sang hàng khác (Format Painter)
     for src_row, tgt_row in zip(range(source_start_row, source_end_row + 1), range(target_start_row, target_end_row + 1)):
         for src_col, tgt_col in zip(range(source_start_col, source_end_col + 1), range(target_start_col, target_end_col + 1)):
             source_cell = sheet.cell(row=src_row, column=src_col)
