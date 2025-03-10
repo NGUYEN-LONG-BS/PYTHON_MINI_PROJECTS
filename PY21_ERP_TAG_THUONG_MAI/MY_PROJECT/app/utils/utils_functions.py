@@ -666,6 +666,11 @@ def f_utils_insert_rows_in_range(file_path, sheet_name, start_col, start_row, la
         for src_col, tgt_col in zip(range(source_start_col, source_end_col + 1), range(target_start_col, target_end_col + 1)):
             source_cell = sheet.cell(row=src_row, column=src_col)
             target_cell = sheet.cell(row=tgt_row, column=tgt_col)
+            
+            print(src_row, src_col)
+            print(sheet.cell(row=src_row, column=src_col).value)
+            # print(tgt_row, tgt_col)
+            # print(sheet.cell(row=tgt_row, column=tgt_col).value)
 
             # Sao chép định dạng an toàn
             target_cell.fill = PatternFill(
