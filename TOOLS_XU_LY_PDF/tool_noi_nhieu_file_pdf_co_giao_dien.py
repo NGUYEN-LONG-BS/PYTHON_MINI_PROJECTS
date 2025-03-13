@@ -1,0 +1,77 @@
+import tkinter as tk
+from tkinter import filedialog, messagebox
+from PyPDF2 import PdfMerger
+
+class PDFMergerApp:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Nối file PDF")
+        self.root.geometry("400x200")
+
+        # Biến lưu trữ đường dẫn các file PDF
+        self.pdf_files = []
+
+        # Tạo giao diện
+        self.label = tk.Label(root, text="Chọn các file PDF để nối:", font=("Arial", 12))
+        self.label.pack(pady=10)
+
+        self.select_button = tk.Button(root, text="Chọn file PDF", command=self.select_pdf_files)
+        self.select_button.pack(pady=5)
+
+        self.merge_button = tk.Button(root, text="Nối file PDF", command=self.merge_pdfs, state=tk.DISABLED)
+        self.merge_button.pack(pady=5)
+
+        self.status_label = tk.Label(root, text="", fg="blue")
+        self.status_label.pack(pady=10)
+
+    def select_pdf_files(self):
+        # Mở hộp thoại chọn file và cho phép chọn nhiều file PDF
+        self.pdf_files = filedialog.askopenfilenames(
+            title="Chọn các file PDF",
+            filetypes=[("PDF files", "*.pdf")]
+        )
+
+        if self.pdf_files:
+            self.status_label.config(text=f"Đã chọn {len(self.pdf_files)} file PDF.")
+            self.merge_button.config(state=tk.NORMAL)  # Kích hoạt nút "Nối file PDF"
+        else:
+            self.status_label.config(text="Không có file PDF nào được chọn.")
+            self.merge_button.config(state=tk.DISABLED)  # Vô hiệu hóa nút "Nối file PDF"
+
+    def merge_pdfs(self):
+        if not self.pdf_files:
+            messagebox.showwarning("Cảnh báo", "Vui lòng chọn ít nhất một file PDF!")
+            return
+
+        # Chọn nơi lưu file PDF đã nối
+        output_file = filedialog.asksaveasfilename(
+            title="Lưu file PDF đã nối",
+            defaultextension=".pdf",
+            filetypes=[("PDF files", "*.pdf")]
+        )
+
+        if output_file:
+            try:
+                merger = PdfMerger()
+
+                # Thêm từng file PDF vào merger
+                for pdf in self.pdf_files:
+                    merger.append(pdf)
+
+                # Lưu file PDF đã nối
+                merger.write(output_file)
+                merger.close()
+
+                messagebox.showinfo("Thành công", f"Đã nối và lưu file PDF tại:\n{output_file}")
+                self.status_label.config(text="Hoàn thành!")
+                self.pdf_files = []  # Reset danh sách file
+                self.merge_button.config(state=tk.DISABLED)  # Vô hiệu hóa nút sau khi hoàn thành
+            except Exception as e:
+                messagebox.showerror("Lỗi", f"Đã xảy ra lỗi khi nối file PDF:\n{str(e)}")
+        else:
+            messagebox.showwarning("Cảnh báo", "Bạn chưa chọn nơi lưu file PDF!")
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = PDFMergerApp(root)
+    root.mainloop()
