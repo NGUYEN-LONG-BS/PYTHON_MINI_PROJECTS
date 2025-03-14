@@ -6,7 +6,7 @@ class PDFMergerApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Nối file PDF")
-        self.root.geometry("400x200")
+        self.root.geometry("400x300")
 
         # Biến lưu trữ đường dẫn các file PDF
         self.pdf_files = []
@@ -24,14 +24,23 @@ class PDFMergerApp:
         self.status_label = tk.Label(root, text="", fg="blue")
         self.status_label.pack(pady=10)
 
+        # Listbox để hiển thị các file đã chọn
+        self.file_listbox = tk.Listbox(root, width=50, height=10)
+        self.file_listbox.pack(pady=10)
+
     def select_pdf_files(self):
         # Mở hộp thoại chọn file và cho phép chọn nhiều file PDF
-        self.pdf_files = filedialog.askopenfilenames(
+        selected_files = filedialog.askopenfilenames(
             title="Chọn các file PDF",
             filetypes=[("PDF files", "*.pdf")]
         )
 
-        if self.pdf_files:
+        if selected_files:
+            for file in selected_files:
+                # Thêm từng file vào listbox và danh sách pdf_files
+                self.pdf_files.append(file)
+                self.file_listbox.insert(tk.END, file)
+
             self.status_label.config(text=f"Đã chọn {len(self.pdf_files)} file PDF.")
             self.merge_button.config(state=tk.NORMAL)  # Kích hoạt nút "Nối file PDF"
         else:
@@ -54,10 +63,11 @@ class PDFMergerApp:
             try:
                 merger = PdfMerger()
 
+                # Đang nối theo thứ tự tên file
                 # Thêm từng file PDF vào merger
                 for pdf in self.pdf_files:
                     merger.append(pdf)
-
+                    
                 # Lưu file PDF đã nối
                 merger.write(output_file)
                 merger.close()
@@ -65,6 +75,7 @@ class PDFMergerApp:
                 messagebox.showinfo("Thành công", f"Đã nối và lưu file PDF tại:\n{output_file}")
                 self.status_label.config(text="Hoàn thành!")
                 self.pdf_files = []  # Reset danh sách file
+                self.file_listbox.delete(0, tk.END)  # Xóa tất cả các file trong listbox
                 self.merge_button.config(state=tk.DISABLED)  # Vô hiệu hóa nút sau khi hoàn thành
             except Exception as e:
                 messagebox.showerror("Lỗi", f"Đã xảy ra lỗi khi nối file PDF:\n{str(e)}")
