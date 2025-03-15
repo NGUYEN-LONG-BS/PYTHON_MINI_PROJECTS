@@ -12,8 +12,11 @@ class PDFMergerApp:
         self.pdf_files = []
 
         # Tạo giao diện
-        self.label = tk.Label(root, text="Chọn các file PDF để nối:", font=("Arial", 12))
-        self.label.pack(pady=10)
+        self.label_01 = tk.Label(root, text="Chọn các file PDF để nối:", font=("Arial", 12))
+        self.label_01.pack(pady=10)
+        
+        self.label_02 = tk.Label(root, text="Lưu ý: nối theo thứ tự abc tên file", font=("Arial", 9))
+        self.label_02.pack(pady=10)
 
         self.select_button = tk.Button(root, text="Chọn file PDF", command=self.select_pdf_files)
         self.select_button.pack(pady=5)
