@@ -1,8 +1,0 @@
-Traceback (most recent call last):
-  File "C:\Users\ADMIN\Desktop\ICONS\GITHUB\PYTHON_MINI_PROJECTS\PY21_ERP_TAG_THUONG_MAI\MY_PROJECT\main.py", line 62, in run
-    splash = cls_SplashScreen(self.root, duration=3000)  # 3 giây
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\ADMIN\Desktop\ICONS\GITHUB\PYTHON_MINI_PROJECTS\PY21_ERP_TAG_THUONG_MAI\MY_PROJECT\main.py", line 19, in __init__
-    self.eval('tk::PlaceWindow . center')
-    ^^^^^^^^^
-AttributeError: 'cls_SplashScreen' object has no attribute 'eval'
