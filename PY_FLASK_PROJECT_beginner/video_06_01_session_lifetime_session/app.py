@@ -1,9 +1,10 @@
 # https://www.youtube.com/watch?v=sJJsehONNc8&list=PLFyAEmibWSQCc60nNQByzmtbMjk3fGyIK&index=7
 # LẬP TRÌNH WEB FLASK-PYTHON #6: SESSION LÀ GÌ, LIFETIME SESSION
 
-from flask import Flask, redirect, url_for, render_template, request
+from flask import Flask, redirect, url_for, render_template, request, session
 
 app = Flask(__name__)
+app.config['SECERET_KEY'] = "thanhdz"
 
 @app.route('/')
 def render_home_page():
@@ -15,8 +16,9 @@ def render_home_page():
 def login():
     if request.method == 'POST':
         username = request.form['username']
-        password = request.form['password']
+        password = request.form[    'password']
         if username == 'admin' and password == '123456':
+            session['username'] = username
             return redirect(url_for('hello_user', name='admin'))
     return render_template("login.html")
     
@@ -27,9 +29,13 @@ def hello_world():
                            ,cars=["Vin", "BMW", "Audi", "Toyota", "Honda", "Suzuki", "Mazda"]
                            )
 
-@app.route('/user/<name>')
-def hello_user(name):
-    return f"<H1>Hello {name}</H1>"
+@app.route('/user')
+def hello_user():
+    if 'username' in session:
+        name = session['username']
+        return f"<H1>Hello {name}</H1>"
+    else:
+        return redirect(url_for('login'))
     
 if __name__ == '__main__':
     app.run(debug=True)
