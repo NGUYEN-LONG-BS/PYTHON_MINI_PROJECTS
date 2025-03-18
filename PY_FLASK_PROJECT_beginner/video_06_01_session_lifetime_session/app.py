@@ -4,7 +4,7 @@
 from flask import Flask, redirect, url_for, render_template, request, session
 
 app = Flask(__name__)
-app.config['SECERET_KEY'] = "thanhdz"
+app.config["SECERET_KEY"] = "thanhdz"
 
 @app.route('/')
 def render_home_page():
