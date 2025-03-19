@@ -16,7 +16,7 @@ def render_home_page():
 def login():
     if request.method == 'POST':
         username = request.form['username']
-        password = request.form[    'password']
+        password = request.form['password']
         if username == 'admin' and password == '123456':
             session['username'] = username
             return redirect(url_for('hello_user', name='admin'))
