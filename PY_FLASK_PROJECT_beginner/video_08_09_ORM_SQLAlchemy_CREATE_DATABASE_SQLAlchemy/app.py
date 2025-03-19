@@ -5,10 +5,25 @@
 
 from flask import Flask, redirect, url_for, render_template, request, session, flash
 from datetime import timedelta
+from flask_sqlalchemy import SQLAlchemy
+from os import path
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "thanhdz"
+app.config["SECRET_KEY"] = "anhnebs"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.permanent_session_lifetime = timedelta(minutes=1)
+
+db = SQLAlchemy(app)
+
+class User(db.Model):
+    user_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), nullable=False)
+    
+    def __init__(self, name, email):
+        self.name = name
+        self.email = email
 
 @app.route('/home')
 @app.route('/')
@@ -60,4 +75,7 @@ def logout():
     return redirect(url_for('login'))
     
 if __name__ == '__main__':
+    if not path.exists("users.db"):
+        db.create_all(app=app)
+        print("Database created")
     app.run(debug=True)
