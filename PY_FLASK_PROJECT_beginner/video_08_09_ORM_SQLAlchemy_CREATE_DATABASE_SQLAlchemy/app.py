@@ -1,5 +1,7 @@
 # https://www.youtube.com/watch?v=0jYoqAXjry0&t=5s
 # LẬP TRÌNH WEB FLASK-PYTHON #8: TỔNG QUAN ORM, SQLAlchemy
+# https://www.youtube.com/watch?v=krLPOgN1Kg0&list=PLFyAEmibWSQCc60nNQByzmtbMjk3fGyIK&index=10
+# LẬP TRÌNH WEB FLASK-PYTHON #9: CREATE DATABASE SQLAlchemy
 
 from flask import Flask, redirect, url_for, render_template, request, session, flash
 from datetime import timedelta
