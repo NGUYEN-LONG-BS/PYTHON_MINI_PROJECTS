@@ -63,12 +63,24 @@ def hello_world():
                            ,cars=["Vin", "BMW", "Audi", "Toyota", "Honda", "Suzuki", "Mazda"]
                            )
 
-@app.route('/user')
+@app.route('/user', methods=['POST', 'GET'])
 def f_user():
     print("chuyển sang trang user.html")
     if 'username' in session:
         name = session['username']
+        
+        # Nếu có dữ liệu gửi lên từ form, thêm email vào cơ sở dữ liệu
+        if request.method == 'POST':
+            email = request.form['email']  # Lấy giá trị email từ form
+            if email:
+                # Tạo một đối tượng User mới và thêm vào cơ sở dữ liệu
+                new_user = User(name=name, email=email)
+                db.session.add(new_user)
+                db.session.commit()  # Lưu thay đổi vào cơ sở dữ liệu
+                flash(f"Email {email} has been saved.", 'success')  # Thông báo thành công
+        
         return render_template("user.html", var_name=name)
+        
     else:
         return redirect(url_for('login'))
 

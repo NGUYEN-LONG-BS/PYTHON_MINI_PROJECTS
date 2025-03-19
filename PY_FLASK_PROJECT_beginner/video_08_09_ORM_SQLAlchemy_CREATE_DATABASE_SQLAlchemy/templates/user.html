@@ -13,7 +13,8 @@
     {% endwith %}
     <p>Đây là trang user của: {{ var_name }}</p>
     <div style="margin-left: 50px;">
-        <form action="#" method="post">
+        <!-- <form action="#" method="post"> -->
+        <form action="{{ url_for('f_user') }}" method="post">   <!-- Hai cách đều được-->
             <label for="username">Email:</label>
             <input type="email" name="email" placeholder="Enter email..." value="{{email if email}}"></input>
             <button style="background-color: blueviolet; color: white;" type="submit">Submit</button>            
