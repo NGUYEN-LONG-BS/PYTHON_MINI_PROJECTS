@@ -6,11 +6,15 @@
 from flask import Flask, redirect, url_for, render_template, request, session, flash
 from datetime import timedelta
 from flask_sqlalchemy import SQLAlchemy
+import os
 from os import path
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "anhnebs"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
+# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
+# Lấy đường dẫn tuyệt đối của file app.py
+basedir = path.abspath(path.dirname(__file__))
+app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{path.join(basedir, 'users.db')}"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.permanent_session_lifetime = timedelta(minutes=1)
 
@@ -41,12 +45,12 @@ def login():
         if username == 'admin' and password == '123456':
             session['username'] = username  # Lưu trữ tên người dùng vào session
             flash('You logged in successfully', 'info')
-            return render_template("user", var_name=username)
+            return redirect(url_for("f_user", var_name=username))
     if 'username' in session:
         print("username đã có trong session")
         flash('You are already logged in', 'info')
         name = session['username']
-        return render_template("user", var_name=name)
+        return redirect(url_for("f_user", var_name=name))
     else:
         flash('You are not logged in', 'info')
         print("username không có trong session")
@@ -60,8 +64,8 @@ def hello_world():
                            )
 
 @app.route('/user')
-def user():
-    print("chuyển sang hello_user")
+def f_user():
+    print("chuyển sang trang user.html")
     if 'username' in session:
         name = session['username']
         return render_template("user.html", var_name=name)
@@ -75,7 +79,10 @@ def logout():
     return redirect(url_for('login'))
     
 if __name__ == '__main__':
-    if not path.exists("users.db"):
-        db.create_all(app = app)
-        print("Database created")
+    with app.app_context():  # Tạo application context
+        # if not path.exists("users.db"):
+        if not path.exists(app.config["SQLALCHEMY_DATABASE_URI"].replace("sqlite:///", "")):
+            # db.create_all(app = app)
+            db.create_all()
+            print("Database created")
     app.run(debug=True)
