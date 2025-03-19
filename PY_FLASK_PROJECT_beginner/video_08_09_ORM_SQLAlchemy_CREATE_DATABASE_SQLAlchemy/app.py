@@ -41,12 +41,12 @@ def login():
         if username == 'admin' and password == '123456':
             session['username'] = username  # Lưu trữ tên người dùng vào session
             flash('You logged in successfully', 'info')
-            return render_template("user.html", var_name=username)
+            return render_template("user", var_name=username)
     if 'username' in session:
         print("username đã có trong session")
         flash('You are already logged in', 'info')
         name = session['username']
-        return render_template("user.html", var_name=name)
+        return render_template("user", var_name=name)
     else:
         flash('You are not logged in', 'info')
         print("username không có trong session")
@@ -60,7 +60,7 @@ def hello_world():
                            )
 
 @app.route('/user')
-def hello_user():
+def user():
     print("chuyển sang hello_user")
     if 'username' in session:
         name = session['username']
@@ -76,6 +76,6 @@ def logout():
     
 if __name__ == '__main__':
     if not path.exists("users.db"):
-        db.create_all(app=app)
+        db.create_all(app = app)
         print("Database created")
     app.run(debug=True)
