@@ -652,19 +652,28 @@ def f_utils_paste_data_to_range_in_excel(file_path, sheet_name, data, start_row=
         print(f"Error: {e}")
 
 def f_utils_insert_rows_in_range(file_path, sheet_name, start_col_letter, start_row, last_col_letter, last_row, num_rows):
+    print(start_col_letter)
+    print(start_row)
+    print(last_col_letter)
+    print(last_row)
     # Mở Excel và workbook từ đường dẫn
     wb = xw.Book(file_path)
     ws = wb.sheets[sheet_name]  # Chọn sheet theo tên
 
-    range_paste = f"{start_col_letter}{start_row}:{last_col_letter}{last_row + num_rows}"
+    range_to_insert = f"{start_col_letter}{start_row + 1}:{last_col_letter}{last_row + num_rows}"
+    range_copy = f"{start_col_letter}{start_row + 1 }:{last_col_letter}{start_row + 1}"
+    range_paste = f"{start_col_letter}{start_row + 2}:{last_col_letter}{last_row + num_rows}"
+    
+    print(range_to_insert)
+    print(range_copy)
+    print(range_paste)
     
     # Xác định vùng cần chèn dòng mới
     range_to_insert = ws.range(range_paste)  # Vùng paste cũng là nơi chèn dòng mới
 
     # Chèn một dòng mới vào vị trí hiện tại của selection
     range_to_insert.api.Rows.Insert(Shift=-4121)  # -4121 = "ShiftDown"
-
-    range_copy = f"{start_col_letter}{start_row - 1}:{last_col_letter}{start_row}"
+    
     # Sao chép và dán dữ liệu
     ws.range(range_copy).copy(ws.range(range_paste))
         

@@ -2086,7 +2086,13 @@ class Controller_print_current_slip:
             amount_of_rows = len(data_information_from_treeview)
             
             # Insert rows
-            f_utils_insert_rows_in_range(new_path, sheet_name, start_col_letter=first_column_tpye_text, start_row=tong_row, last_col_letter=last_column_tpye_text, last_row=tong_row, num_rows=amount_of_rows)
+            f_utils_insert_rows_in_range(new_path, 
+                                         sheet_name, 
+                                         start_col_letter=first_column_tpye_text, 
+                                         start_row=stt_dong_row, 
+                                         last_col_letter=last_column_tpye_text, 
+                                         last_row=stt_dong_row, 
+                                         num_rows=amount_of_rows)
             
             return new_path
         except Exception as e:
