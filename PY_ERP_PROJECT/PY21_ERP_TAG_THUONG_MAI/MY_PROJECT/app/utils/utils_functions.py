@@ -629,19 +629,38 @@ def f_utils_paste_data_to_range_in_excel(file_path, sheet_name, data, start_row=
         sheet = wb[sheet_name]
         
         # Convert start_column letter to column number
-        # start_column_num = openpyxl.utils.column_index_from_string(start_column)
         start_column_num = start_column
+
+        # Convert data to pandas DataFrame for easier manipulation
+        df = pd.DataFrame(data)
+
+        # Function to convert values
+        def convert_value(val):
+            try:
+                # Check if the value is a string representing a number
+                if isinstance(val, str) and val.replace('.', '', 1).isdigit():  # Handle string numbers
+                    num = float(val)
+                    if num.is_integer():
+                        return int(num)  # If it's an integer, remove decimal part
+                    else:
+                        return round(num, 2)  # If it's a float, round to 2 decimal places
+                elif isinstance(val, (int, float)):  # Handle int/float numbers
+                    if val.is_integer():
+                        return int(val)  # If it's an integer, remove decimal part
+                    else:
+                        return round(val, 2)  # If it's a float, round to 2 decimal places
+                else:
+                    return val  # If it's neither int nor float, return as is
+            except ValueError:
+                return val  # Return the original value if conversion fails
         
-        # Paste data into the specified range
-        for i, value in enumerate(data, start=start_row):
-            if isinstance(value, tuple) and len(value) > 0:
-                # Loop through the tuple and paste each element into the corresponding column
-                for j, val in enumerate(value):
-                    sheet.cell(row=i, column=start_column_num + j, value=val)
-            else:
-                # Handle empty tuples gracefully
-                for j in range(len(value)):
-                    sheet.cell(row=i, column=start_column_num + j, value="")
+        # Convert the data to the desired format
+        new_data = df.applymap(convert_value)
+        
+        # Paste data into the specified range starting from start_row and start_column
+        for i, row in enumerate(new_data.values, start=start_row):
+            for j, val in enumerate(row):
+                sheet.cell(row=i, column=start_column_num + j, value=val)
         
         # Save the workbook
         wb.save(file_path)
@@ -652,30 +671,28 @@ def f_utils_paste_data_to_range_in_excel(file_path, sheet_name, data, start_row=
         print(f"Error: {e}")
 
 def f_utils_insert_rows_in_range(file_path, sheet_name, start_col_letter, start_row, last_col_letter, last_row, num_rows):
-    print(start_col_letter)
-    print(start_row)
-    print(last_col_letter)
-    print(last_row)
-    # Mở Excel và workbook từ đường dẫn
-    wb = xw.Book(file_path)
-    ws = wb.sheets[sheet_name]  # Chọn sheet theo tên
+    if num_rows > 1:
+        # Mở Excel và workbook từ đường dẫn
+        wb = xw.Book(file_path)
+        ws = wb.sheets[sheet_name]  # Chọn sheet theo tên
 
-    range_to_insert = f"{start_col_letter}{start_row + 1}:{last_col_letter}{last_row + num_rows}"
-    range_copy = f"{start_col_letter}{start_row + 1 }:{last_col_letter}{start_row + 1}"
-    range_paste = f"{start_col_letter}{start_row + 2}:{last_col_letter}{last_row + num_rows}"
-    
-    print(range_to_insert)
-    print(range_copy)
-    print(range_paste)
-    
-    # Xác định vùng cần chèn dòng mới
-    range_to_insert = ws.range(range_paste)  # Vùng paste cũng là nơi chèn dòng mới
+        range_to_insert = f"{start_col_letter}{start_row + 1}:{last_col_letter}{last_row + num_rows}"
+        range_copy = f"{start_col_letter}{start_row + 1 }:{last_col_letter}{start_row + 1}"
+        range_paste = f"{start_col_letter}{start_row + 2}:{last_col_letter}{last_row + num_rows}"
+        
+        # Xác định vùng cần chèn dòng mới
+        range_to_insert = ws.range(range_paste)  # Vùng paste cũng là nơi chèn dòng mới
 
-    # Chèn một dòng mới vào vị trí hiện tại của selection
-    range_to_insert.api.Rows.Insert(Shift=-4121)  # -4121 = "ShiftDown"
-    
-    # Sao chép và dán dữ liệu
-    ws.range(range_copy).copy(ws.range(range_paste))
+        # Chèn một dòng mới vào vị trí hiện tại của selection
+        range_to_insert.api.Rows.Insert(Shift=-4121)  # -4121 = "ShiftDown"
+        
+        # Sao chép và dán dữ liệu
+        ws.range(range_copy).copy(ws.range(range_paste))
+    elif num_rows == 1:
+        return
+    else:
+        # print("Error: Number of rows to insert must be greater than 1")
+        return
         
 def f_utils_on_entry_change(entry_widget):
     """
