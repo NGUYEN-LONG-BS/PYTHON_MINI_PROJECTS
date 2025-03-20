@@ -612,98 +612,62 @@ def f_utils_paste_data_to_column_in_excel(file_path, sheet_name, data, start_row
         gc.collect()
     except Exception as e:
         print(f"Error: {e}")
-
-def f_utils_insert_rows_in_range(file_path, sheet_name, start_col, start_row, last_col, last_row, num_rows):
-    print("--")
-    print("file_path", file_path)
-    print("sheet_name", sheet_name)
-    print("start_col", start_col)
-    print("start_row", start_row)
-    print("last_col", last_col)
-    print("last_row", last_row)
-    print("num_rows", num_rows)
-    print("--")
+        
+def f_utils_paste_data_to_range_in_excel(file_path, sheet_name, data, start_row=2, start_column='K'):
+    """
+    Paste a list of tuples into a specified range in an Excel sheet.
     
-    # Load workbook
-    wb = openpyxl.load_workbook(file_path)
+    :param file_path: Path to the Excel file.
+    :param sheet_name: Name of the sheet where data should be pasted.
+    :param data: List of tuples containing data.
+    :param start_row: Starting row for pasting data (default is 2).
+    :param start_column: Column letter where data should be pasted (default is 'K').
+    """
+    try:
+        # Load the workbook and sheet
+        wb = openpyxl.load_workbook(file_path)
+        sheet = wb[sheet_name]
+        
+        # Convert start_column letter to column number
+        # start_column_num = openpyxl.utils.column_index_from_string(start_column)
+        start_column_num = start_column
+        
+        # Paste data into the specified range
+        for i, value in enumerate(data, start=start_row):
+            if isinstance(value, tuple) and len(value) > 0:
+                # Loop through the tuple and paste each element into the corresponding column
+                for j, val in enumerate(value):
+                    sheet.cell(row=i, column=start_column_num + j, value=val)
+            else:
+                # Handle empty tuples gracefully
+                for j in range(len(value)):
+                    sheet.cell(row=i, column=start_column_num + j, value="")
+        
+        # Save the workbook
+        wb.save(file_path)
+        wb.close()
+        del wb      # Close the workbook and free up memory
+        gc.collect()
+    except Exception as e:
+        print(f"Error: {e}")
 
-    # Kiểm tra sheet có tồn tại không
-    if sheet_name not in wb.sheetnames:
-        print(f"Sheet '{sheet_name}' không tồn tại trong file.")
-        return
+def f_utils_insert_rows_in_range(file_path, sheet_name, start_col_letter, start_row, last_col_letter, last_row, num_rows):
+    # Mở Excel và workbook từ đường dẫn
+    wb = xw.Book(file_path)
+    ws = wb.sheets[sheet_name]  # Chọn sheet theo tên
 
-    sheet = wb[sheet_name]
-
-    # 1️⃣ Lưu lại danh sách các ô merge trước khi chèn (trích xuất tọa độ)
-    merged_cells = [(mc.min_row, mc.min_col, mc.max_row, mc.max_col) for mc in sheet.merged_cells.ranges]
-
-    # 2️⃣ Chèn n - 1 dòng vào vị trí start_row
-    sheet.insert_rows(start_row, amount=num_rows-1)
-
-    # 3️⃣ Khôi phục lại các ô merge sau khi chèn dòng
-    for min_row, min_col, max_row, max_col in merged_cells:
-        # Nếu ô merge nằm phía dưới start_row, phải dời xuống n - 1 dòng
-        if min_row >= start_row:
-            min_row += num_rows - 1
-            max_row += num_rows - 1
-
-        # Merge lại ô
-        sheet.merge_cells(start_row=min_row, start_column=min_col, end_row=max_row, end_column=max_col)
-
+    range_paste = f"{start_col_letter}{start_row}:{last_col_letter}{last_row + num_rows}"
     
-    source_start_row, source_end_row = start_row - 1, start_row - 1
-    source_start_col, source_end_col = start_col, last_col
-    target_start_row, target_end_row = start_row - 1 + num_rows - 1, start_row - 1 + num_rows - 1
-    target_start_col, target_end_col = start_col, last_col
-    
-    print(source_start_row, source_end_row)
-    print(target_start_row, target_end_row)
-    print(source_start_col, source_end_col)
-    print(target_start_col, target_end_col)
+    # Xác định vùng cần chèn dòng mới
+    range_to_insert = ws.range(range_paste)  # Vùng paste cũng là nơi chèn dòng mới
 
-    # 4️⃣ Sao chép định dạng từ một hàng sang hàng khác (Format Painter)
-    for src_row, tgt_row in zip(range(source_start_row, source_end_row + 1), range(target_start_row, target_end_row + 1)):
-        for src_col, tgt_col in zip(range(source_start_col, source_end_col + 1), range(target_start_col, target_end_col + 1)):
-            source_cell = sheet.cell(row=src_row, column=src_col)
-            target_cell = sheet.cell(row=tgt_row, column=tgt_col)
-            
-            print(src_row, src_col)
-            print(sheet.cell(row=src_row, column=src_col).value)
-            # print(tgt_row, tgt_col)
-            # print(sheet.cell(row=tgt_row, column=tgt_col).value)
+    # Chèn một dòng mới vào vị trí hiện tại của selection
+    range_to_insert.api.Rows.Insert(Shift=-4121)  # -4121 = "ShiftDown"
 
-            # Sao chép định dạng an toàn
-            target_cell.fill = PatternFill(
-                fill_type=source_cell.fill.fill_type,
-                fgColor=source_cell.fill.fgColor,
-                bgColor=source_cell.fill.bgColor
-            )
-            target_cell.font = Font(
-                name=source_cell.font.name,
-                size=source_cell.font.size,
-                bold=source_cell.font.bold,
-                italic=source_cell.font.italic,
-                underline=source_cell.font.underline,
-                color=source_cell.font.color
-            )
-            target_cell.border = Border(
-                left=source_cell.border.left,
-                right=source_cell.border.right,
-                top=source_cell.border.top,
-                bottom=source_cell.border.bottom
-            )
-            target_cell.alignment = Alignment(
-                horizontal=source_cell.alignment.horizontal,
-                vertical=source_cell.alignment.vertical,
-                wrap_text=source_cell.alignment.wrap_text
-            )
-
-    # Lưu file
-    wb.save(file_path)
-
-    print(f"Đã chèn {num_rows} dòng từ hàng {start_row} đến hàng {last_row} trong sheet '{sheet_name}'.")
-
-
+    range_copy = f"{start_col_letter}{start_row - 1}:{last_col_letter}{start_row}"
+    # Sao chép và dán dữ liệu
+    ws.range(range_copy).copy(ws.range(range_paste))
+        
 def f_utils_on_entry_change(entry_widget):
     """
     Callback to handle changes in the Entry widget.

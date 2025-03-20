@@ -2,6 +2,7 @@ from tkinter import messagebox
 from app.utils import *
 from datetime import datetime
 from collections import defaultdict
+import xlwings as xw
 
 class controller_get_information_of_module:
     
@@ -2069,24 +2070,23 @@ class Controller_print_current_slip:
             first_column_tpye_text = f_utils_find_string_in_row_of_excel(path_template_file, sheet_name, "FIRST_COLUMN", row_number=1, case_sensitive=True, return_as_index=False)
             last_column_tpye_text = f_utils_find_string_in_row_of_excel(path_template_file, sheet_name, "LAST_COLUMN", row_number=1, case_sensitive=True, return_as_index=False)
             value_column_tpye_text = f_utils_find_string_in_row_of_excel(path_template_file, sheet_name, "VALUE_COLUMN", row_number=1, case_sensitive=True, return_as_index=False)
+            table_column_tpye_text = f_utils_find_string_in_row_of_excel(path_template_file, sheet_name, "TABLE_COLUMN", row_number=1, case_sensitive=True, return_as_index=False)
+            table_column_tpye_index = f_utils_find_string_in_row_of_excel(path_template_file, sheet_name, "TABLE_COLUMN", row_number=1, case_sensitive=True, return_as_index=True)
+            first_column_tpye_index = f_utils_find_string_in_row_of_excel(path_template_file, sheet_name, "FIRST_COLUMN", row_number=1, case_sensitive=True, return_as_index=True)
+            last_column_tpye_index = f_utils_find_string_in_row_of_excel(path_template_file, sheet_name, "LAST_COLUMN", row_number=1, case_sensitive=True, return_as_index=True)
             first_row = f_utils_find_string_in_column_of_excel(path_template_file, sheet_name, "FIRST_ROW", column_number=1, case_sensitive=True, return_as_index=True)
             last_row = f_utils_find_string_in_column_of_excel(path_template_file, sheet_name, "LAST_ROW", column_number=1, case_sensitive=True, return_as_index=True)
             stt_dong_row = f_utils_find_string_in_column_of_excel(path_template_file, sheet_name, "STT_DONG", column_number=1, case_sensitive=True, return_as_index=True)
             tong_row = f_utils_find_string_in_column_of_excel(path_template_file, sheet_name, "TONG", column_number=1, case_sensitive=True, return_as_index=True)
             
             f_utils_paste_data_to_column_in_excel(new_path, sheet_name, data_information_of_slip, start_row=first_row, start_column=value_column_tpye_text)
+            f_utils_paste_data_to_range_in_excel(new_path, sheet_name, data_information_from_treeview, start_row=first_row, start_column=table_column_tpye_index)
 
             # Count the number of tuples
             amount_of_rows = len(data_information_from_treeview)
-            print(f"Amount of rows: {amount_of_rows}")
-            
-            first_column_tpye_index = f_utils_find_string_in_row_of_excel(path_template_file, sheet_name, "FIRST_COLUMN", row_number=1, case_sensitive=True, return_as_index=True)
-            last_column_tpye_index = f_utils_find_string_in_row_of_excel(path_template_file, sheet_name, "LAST_COLUMN", row_number=1, case_sensitive=True, return_as_index=True)
             
             # Insert rows
-            f_utils_insert_rows_in_range(new_path, sheet_name, start_col=first_column_tpye_index, start_row=tong_row, last_col=last_column_tpye_index, last_row=tong_row, num_rows=amount_of_rows)
-            
-            # f_utils_paste_data_to_column_in_excel(new_path, sheet_name, data_information_from_treeview, start_row=1, start_column=last_column)
+            f_utils_insert_rows_in_range(new_path, sheet_name, start_col_letter=first_column_tpye_text, start_row=tong_row, last_col_letter=last_column_tpye_text, last_row=tong_row, num_rows=amount_of_rows)
             
             return new_path
         except Exception as e:
@@ -2095,7 +2095,7 @@ class Controller_print_current_slip:
             return f"Error: {e}"
         
     def get_data_of_treeview_to_print(my_treeview):
-        column_indices = (0, 1, 2, 3)
+        column_indices = (0, 1, 2, 3, 4, 5, 6, 7, 8)
         data_of_table = utils_controller_get_data_to_print.get_treeview_data(my_treeview, column_indices)
         return data_of_table
     
@@ -2125,6 +2125,8 @@ class Controller_print_current_slip:
         data_info_of_slip = [(value_01,), (value_02,), (value_03,), (value_04,), (value_05,), (value_06,), (value_07,), (value_08,), (value_09,)]
         
         return data_info_of_slip
+    
+    
         
 class Controller_export_all_data:
     def export_all_data(entry_notification):
