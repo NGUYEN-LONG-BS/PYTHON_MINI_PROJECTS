@@ -2094,6 +2094,10 @@ class Controller_print_current_slip:
                                          last_row=stt_dong_row, 
                                          num_rows=amount_of_rows)
             
+            f_utils_clean_the_print_template(new_path, 
+                                         sheet_name,
+                                         last_column_tpye_index)
+            
             return new_path
         except Exception as e:
             print(f"Error: {e}")

@@ -1,6 +1,7 @@
 import os
 import sys
 import gc
+import traceback
 import time
 import inspect
 import tkinter as tk
@@ -655,7 +656,7 @@ def f_utils_paste_data_to_range_in_excel(file_path, sheet_name, data, start_row=
                 return val  # Return the original value if conversion fails
         
         # Convert the data to the desired format
-        new_data = df.applymap(convert_value)
+        new_data = df.map(convert_value)
         
         # Paste data into the specified range starting from start_row and start_column
         for i, row in enumerate(new_data.values, start=start_row):
@@ -688,12 +689,61 @@ def f_utils_insert_rows_in_range(file_path, sheet_name, start_col_letter, start_
         
         # Sao chép và dán dữ liệu
         ws.range(range_copy).copy(ws.range(range_paste))
+        # Lưu và đóng Excel
+        wb.save()  # Lưu workbook với những thay đổi
+        wb.close()  # Đóng workbook
+        # f_utils_close_excel_if_no_workbooks()
     elif num_rows == 1:
         return
     else:
         # print("Error: Number of rows to insert must be greater than 1")
         return
+
+def f_utils_clean_the_print_template(file_path, sheet_name, last_col_index):
+    
+    wb = xw.Book(file_path)
+    ws = wb.sheets[sheet_name]  # Chọn sheet theo tên
+
+    # loại bỏ công thức
+    # Lặp qua tất cả các ô trong sheet và thay thế công thức bằng giá trị của chúng
+    for cell in ws.used_range:
+        if cell.formula != '':  # Kiểm tra nếu ô có công thức
+            cell.value = cell.value  # Loại bỏ công thức, chỉ giữ giá trị
+
+    # Delete the entire column A
+    ws.range('A:A').api.Delete()
+
+    # Delete the first row
+    ws.range('1:1').api.Delete()
+
+    # Delete the entire column A
+    ws.range('L:AAA').api.Delete()
+
+    # Scroll to the first column (equivalent to ActiveWindow.ScrollColumn = 1)
+    ws.api.Application.ActiveWindow.ScrollColumn = 1
+
+    # Save and close the workbook
+    wb.save()
+    wb.close()
+    # f_utils_close_excel_if_no_workbooks()
+
+# def f_utils_close_excel_if_no_workbooks():
+#     # Khởi tạo ứng dụng Excel
+#     app = xw.App(visible=False)  # Không hiển thị Excel
+
+#     # Kiểm tra nếu không có workbook nào đang mở
+#     if not app.books:
+#         # Nếu không có workbook nào, tắt ứng dụng Excel
+#         app.quit()
+#         print("No workbooks open. Excel is closed.")
+#     else:
+#         print("There are open workbooks. Excel is not closed.")
         
+#         # Bạn có thể thêm mã để làm việc với các workbook đã mở ở đây
+#         # In ra đường dẫn của tất cả các workbook đang mở
+#         for book in app.books:
+#             print(f"Open workbook path: {book.fullname}")  # In đường dẫn của workbook
+
 def f_utils_on_entry_change(entry_widget):
     """
     Callback to handle changes in the Entry widget.
@@ -1046,6 +1096,7 @@ def f_utils_get_current_function_name():
     # return caller function name
     func_caller = inspect.currentframe().f_back.f_back.f_code.co_name
     time.sleep(2)
+    traceback.print_exc()  # In ra thông tin chi tiết lỗi
     return func_name, file_name, func_caller
 
 # return caller function name
