@@ -692,7 +692,6 @@ def f_utils_insert_rows_in_range(file_path, sheet_name, start_col_letter, start_
         # Lưu và đóng Excel
         wb.save()  # Lưu workbook với những thay đổi
         wb.close()  # Đóng workbook
-        # f_utils_close_excel_if_no_workbooks()
     elif num_rows == 1:
         return
     else:
@@ -725,24 +724,6 @@ def f_utils_clean_the_print_template(file_path, sheet_name, last_col_index):
     # Save and close the workbook
     wb.save()
     wb.close()
-    # f_utils_close_excel_if_no_workbooks()
-
-# def f_utils_close_excel_if_no_workbooks():
-#     # Khởi tạo ứng dụng Excel
-#     app = xw.App(visible=False)  # Không hiển thị Excel
-
-#     # Kiểm tra nếu không có workbook nào đang mở
-#     if not app.books:
-#         # Nếu không có workbook nào, tắt ứng dụng Excel
-#         app.quit()
-#         print("No workbooks open. Excel is closed.")
-#     else:
-#         print("There are open workbooks. Excel is not closed.")
-        
-#         # Bạn có thể thêm mã để làm việc với các workbook đã mở ở đây
-#         # In ra đường dẫn của tất cả các workbook đang mở
-#         for book in app.books:
-#             print(f"Open workbook path: {book.fullname}")  # In đường dẫn của workbook
 
 def f_utils_on_entry_change(entry_widget):
     """
