@@ -20,6 +20,9 @@ app.permanent_session_lifetime = timedelta(minutes=1)
 
 db = SQLAlchemy(app)
 
+def create_app():   # hàm này để deploy app lên vps
+    return app
+
 class User(db.Model):
     user_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
@@ -97,4 +100,4 @@ if __name__ == '__main__':
             # db.create_all(app = app)
             db.create_all()
             print("Database created")
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
