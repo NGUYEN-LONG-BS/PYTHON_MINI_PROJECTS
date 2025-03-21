@@ -1,0 +1,9 @@
+Option 1: Use pipreqs
+The easiest and most reliable way to generate a requirements.txt file is to use the pipreqs library. 
+It scans your project for imports and creates a requirements.txt file automatically.
+
+step 01: Install pipreqs:
+pip install pipreqs
+
+step 02: Run pipreqs, navigate to your project directory and run:
+pipreqs . --encoding=utf8 --force
