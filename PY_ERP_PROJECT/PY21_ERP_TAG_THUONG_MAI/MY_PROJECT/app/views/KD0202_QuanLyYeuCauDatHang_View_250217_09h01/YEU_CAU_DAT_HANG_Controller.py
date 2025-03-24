@@ -1735,12 +1735,10 @@ class Controller_import_bulk_data_from_Excel_file_to_SQL_KD02_YEU_CAU_DAT_HANG:
             if result == False:
                 return False
             
-            # Tiến hành điều chỉnh lại cột số phiếu
-            print("data_list_to_validate", data_list_to_validate)
+            
             
             # Chuyển đổi dữ liệu thành DataFrame
             df = pd.DataFrame(data_list_to_validate)
-            print("df", df)
 
             # Danh sách các cột có định dạng là số
             columns_to_skip = [2, 15]
@@ -1753,14 +1751,16 @@ class Controller_import_bulk_data_from_Excel_file_to_SQL_KD02_YEU_CAU_DAT_HANG:
                     df[15] = df[15].apply(lambda x: 0 if x is None else x)
             # Thay đổi cột XOA_SUA: tất cả giá trị thành chuỗi rỗng
             df[1] = ""
+            # Tiến hành điều chỉnh lại cột số phiếu
+            df[3] = "TB-YCDH-25" + df[3].apply(lambda x: str(x)[-4:] if isinstance(x, str) else str(x)[-4:])
             # Thay đổi cột ID_NHAN_VIEN: None thành mã nhân viên
             id_nv = utils_controller_get_information_of_database.load_id_nhan_vien()
             df[0] = id_nv
-
             
+            
+
             # Chuyển DataFrame thành list of lists
             data_list_converted = df.values.tolist()
-            print("data_list_converted", data_list_converted)
 
             # Load data to database
             server_name = f_utils_get_DB_HOST()
