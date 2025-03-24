@@ -1420,8 +1420,23 @@ class Controller_validate_data_from_Excel_file_to_import_to_SQL_250221_17h05:
             if flag == True:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
                 return False
+            # tên khách hàng
+            flag, notification_text = utils_controller_validate_is_NULL.start_validate(data, column_index=5)
+            if flag == True:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
+                return False
             # mã hàng
             flag, notification_text = utils_controller_validate_is_NULL.start_validate(data, column_index=12)
+            if flag == True:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
+                return False
+            # tên hàng
+            flag, notification_text = utils_controller_validate_is_NULL.start_validate(data, column_index=13)
+            if flag == True:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
+                return False
+            # đvt
+            flag, notification_text = utils_controller_validate_is_NULL.start_validate(data, column_index=14)
             if flag == True:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
                 return False
@@ -1729,10 +1744,12 @@ class Controller_import_bulk_data_from_Excel_file_to_SQL_KD02_YEU_CAU_DAT_HANG:
             # validate data
             flag = Controller_validate_data_from_Excel_file_to_import_to_SQL_250221_17h05.validate_data_from_Excel(entry_notification, data_list_to_validate)
             if flag == False:
+                wb.close()
                 return False
             
             result = f_utils_ask_yes_no("Xác nhận", "Dữ liệu đã hợp lệ. Hệ thống sẽ tự động điều chỉnh lại số phiếu theo cú pháp quy định. Bạn có muốn tiếp tục lưu không?")
             if result == False:
+                wb.close()
                 return False
             
             
@@ -1740,24 +1757,26 @@ class Controller_import_bulk_data_from_Excel_file_to_SQL_KD02_YEU_CAU_DAT_HANG:
             # Chuyển đổi dữ liệu thành DataFrame
             df = pd.DataFrame(data_list_to_validate)
 
-            # Danh sách các cột có định dạng là số
+            # Thay đổi các cột: None thành chuỗi rỗng, hoặc số 0 hoặc ngày hôm nay
             columns_to_skip = [2, 15]
-            # Thay đổi các cột: None thành chuỗi rỗng
             for col in df.columns:
                 if col not in columns_to_skip:
                     df[col] = df[col].apply(lambda x: "" if x is None else x)
                 else:
                     df[2] = f_utils_get_formatted_today_YYYY_MM_DD()
                     df[15] = df[15].apply(lambda x: 0 if x is None else x)
+            
             # Thay đổi cột XOA_SUA: tất cả giá trị thành chuỗi rỗng
             df[1] = ""
+            
             # Tiến hành điều chỉnh lại cột số phiếu
-            df[3] = "TB-YCDH-25" + df[3].apply(lambda x: str(x)[-4:] if isinstance(x, str) else str(x)[-4:])
+            ma_thanh_vien = utils_controller_get_information_of_database.load_ma_thanh_vien()
+            loai_phieu = controller_get_information_of_module.load_loai_phieu()
+            df[3] = f"{ma_thanh_vien}-{loai_phieu}-{df[3].apply(lambda x: str(x)[-4:] if isinstance(x, str) else str(x)[-4:])}"
+            
             # Thay đổi cột ID_NHAN_VIEN: None thành mã nhân viên
             id_nv = utils_controller_get_information_of_database.load_id_nhan_vien()
             df[0] = id_nv
-            
-            
 
             # Chuyển DataFrame thành list of lists
             data_list_converted = df.values.tolist()
