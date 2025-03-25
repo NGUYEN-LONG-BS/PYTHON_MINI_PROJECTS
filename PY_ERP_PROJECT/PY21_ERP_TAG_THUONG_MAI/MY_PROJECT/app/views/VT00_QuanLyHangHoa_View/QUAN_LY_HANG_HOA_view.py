@@ -51,11 +51,11 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         self.tab_02_button_mark_expired.config(command=self.event_tab_02_button_mark_expired_click)
         
         # Gán sự kiện
-        self.tab_01_treeview_YCDH.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_01_single_click)  # Single click
-        self.tab_01_treeview_YCDH.bind("<Double-1>", self.f_view_treeview_of_tab_01_double_click)  # Double click
+        self.tab_01_treeview_PNK.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_01_single_click)  # Single click
+        self.tab_01_treeview_PNK.bind("<Double-1>", self.f_view_treeview_of_tab_01_double_click)  # Double click
         
-        self.tab_02_treeview_log_of_YCDH.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_02_single_click)  # Single click
-        self.tab_02_treeview_log_of_YCDH.bind("<Double-1>", self.f_view_treeview_of_tab_02_double_click)  # Double click
+        self.tab_02_treeview_log_of_PNK.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_02_single_click)  # Single click
+        self.tab_02_treeview_log_of_PNK.bind("<Double-1>", self.f_view_treeview_of_tab_02_double_click)  # Double click
         
     def f_define_all_elements(self):
         # Find in tab_01: Phiếu nhập kho
@@ -348,7 +348,6 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_frame_treeview = self.tab_01_frame_treeview
         self.table_of_tab_01 = self.tab_01_frame_treeview.treeview_normal
         self.treeview_test_of_tag_01 = self.tab_01_frame_treeview.treeview_normal
-        # self.treeview_test_of_tag_01.bind("<ButtonRelease-1>", self.f_view_table_of_tab_01_click)
         
     def f_view_create_widgets_in_tab_04_frame_treeview(self):
         self.tab_04_frame_treeview = self.tab_04_frame_treeview

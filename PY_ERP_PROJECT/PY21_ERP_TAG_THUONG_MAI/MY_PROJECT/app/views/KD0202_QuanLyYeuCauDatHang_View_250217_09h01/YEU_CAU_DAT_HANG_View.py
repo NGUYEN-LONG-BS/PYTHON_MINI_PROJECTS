@@ -10,12 +10,13 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         title = "KD02 | QUẢN LÝ YÊU CẦU ĐẶT HÀNG"
         name = "QUẢN LÝ YÊU CẦU ĐẶT HÀNG"
         super().__init__(title_of_form=title, name_of_slip=name)
-        # call reuse components
+        # Step-01: create components
         self.f_view_thay_doi_gia_tri_cua_base_form()
         self.f_view_create_all_container_frames_of_window()
-        self.f_set_up_format_of_tree_view()
-        # Set up all global variants
         self.f_define_all_elements()
+        
+        # Step-02: setting and formating
+        self.f_set_up_format_of_tree_view()
         # Add controllers
         self.f_create_controller_auto_update_3_entries_sl_nhu_cau_sl_giu_cho_sl_ycdh()
         # Set up when initializing
@@ -24,8 +25,8 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
     
     def f_view_create_all_container_frames_of_window(self):
         # Settings tab content
-        self.f_view_create_widgets_all_container_frames_in_tab_01()
-        self._f_view_create_all_container_frames_in_tab_02()
+        self.f_view_create_all_container_frames_in_tab_01()
+        self.f_view_create_all_container_frames_in_tab_02()
     
     def f_set_up_format_of_tree_view(self):
         Controller_handel_all_events.f_handle_event_initializing_format_of_treeview_of_tab_01(self.tab_01_treeview_YCDH)
@@ -177,61 +178,61 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
     # Tab_01: create widgets
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
         
-    def f_view_create_widgets_all_container_frames_in_tab_01(self):
+    def f_view_create_all_container_frames_in_tab_01(self):
         parent_frame = self.tab1
 
         # Frame H2
         self.tab_01_frame_H2 = tk.Frame(parent_frame)
         self.tab_01_frame_H2.grid(row=0, column=0, sticky="ew")
 
-        self._f_view_create_widgets_in_tab_01_frame_H2()
+        self.f_view_create_widgets_in_tab_01_frame_H2()
 
         # Frame entries
         self.tab_01_frame_entries = tk.Frame(parent_frame)
         self.tab_01_frame_entries.grid(row=1, column=0, sticky="ew")
-        self._f_view_create_widgets_in_tab_01_frame_entries()
+        self.f_view_create_widgets_in_tab_01_frame_entries()
 
         # Frame button
         self.tab_01_frame_button_of_treeview = tk.Frame(parent_frame)
         self.tab_01_frame_button_of_treeview.grid(row=2, column=0, sticky="ew")
-        self._f_view_create_widgets_in_tab_01_frame_button_of_treeview()
+        self.f_view_create_widgets_in_tab_01_frame_button_of_treeview()
 
         # Frame treeview
         self.tab_01_frame_treeview = cls_Treeview_frame_number_01(parent_frame)
         self.tab_01_frame_treeview.grid(row=3, column=0, sticky="nsew")
-        self._f_view_create_widgets_in_tab_01_frame_treeview()
+        self.tab_01_treeview_YCDH = self.tab_01_frame_treeview.treeview_normal
         
         # Frame button
         self.tab_01_frame_button_02 = tk.Frame(parent_frame)
         self.tab_01_frame_button_02.grid(row=4, column=0, sticky="ew")
-        self._f_view_create_widgets_in_tab_01_frame_button_02()
+        self.f_view_create_widgets_in_tab_01_frame_button_02()
 
         parent_frame.grid_rowconfigure(3, weight=1) # cho phép giãn nở
         parent_frame.grid_columnconfigure(0, weight=1)
 
-    def _f_view_create_widgets_in_tab_01_frame_H2(self):
+    def f_view_create_widgets_in_tab_01_frame_H2(self):
         # Title H2
         cls_my_label_num_03_title_H2(self.tab_01_frame_H2, text="PHIẾU YÊU CẦU ĐẶT HÀNG").pack(anchor="center")
      
-    def _f_view_create_widgets_in_tab_01_frame_entries(self):
+    def f_view_create_widgets_in_tab_01_frame_entries(self):
         self.tab_01_container_frame_entries = tk.Frame(self.tab_01_frame_entries)
         self.tab_01_container_frame_entries.pack(side="top", 
                                                  fill="x"
                                                  )
-        self._f_view_create_widgets_in_tab_01_container_frame_entries()
+        self.f_view_create_widgets_in_tab_01_container_frame_entries()
     
-    def _f_view_create_widgets_in_frame_date_and_number(self):
+    def f_view_create_widgets_in_frame_date_and_number(self):
         # Create frame date and number of slip 
         self.tab_01_frame_date_and_number = cls_Frame_date_and_number_of_slip(self.tab_01_Frame_container_date_and_number)
         self.tab_01_frame_date_and_number.pack(anchor="center")
     
-    def _f_view_create_widgets_in_tab_01_container_frame_entries(self):
+    def f_view_create_widgets_in_tab_01_container_frame_entries(self):
         # Create container for date and number of slip
         self.tab_01_Frame_container_date_and_number = tk.Frame(self.tab_01_container_frame_entries)
         self.tab_01_Frame_container_date_and_number.pack(side="top", 
                                                   fill="x"
                                                   )
-        self._f_view_create_widgets_in_frame_date_and_number()
+        self.f_view_create_widgets_in_frame_date_and_number()
 
         # Create container for client and inventories
         self.tab_01_Frame_clients_and_inventories_information = tk.Frame(self.tab_01_container_frame_entries)
@@ -239,7 +240,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
                                                             fill="x",  
                                                             pady=(5,0)
                                                             )
-        self._f_view_create_widgets_in_frame_clients_and_inventories()
+        self.f_view_create_widgets_in_frame_clients_and_inventories()
 
         # Create frame inventories informations
         self.tab_01_frame_slip_informations = tk.Frame(self.tab_01_container_frame_entries)
@@ -247,9 +248,9 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
                                           fill="x", 
                                           pady=(5,0)
                                           )
-        self._f_view_create_widgets_in_frame_slip_informations()
+        self.f_view_create_widgets_in_frame_slip_informations()
 
-    def _f_view_create_widgets_in_frame_clients_and_inventories(self):
+    def f_view_create_widgets_in_frame_clients_and_inventories(self):
         parent_frame = self.tab_01_Frame_clients_and_inventories_information
 
         # Configure grid layout for parent frame
@@ -261,15 +262,15 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_frame_clients_informations = cls_frame_client_information_view(parent_frame)
         self.tab_01_frame_clients_informations.config(bd=0, relief="flat")
         self.tab_01_frame_clients_informations.grid(row=0, column=0, sticky="nsew")
-        self._f_view_create_widgets_add_row_03_into_frame_clients_informations_tab_01()
+        self.f_view_create_widgets_add_row_03_into_frame_clients_informations_tab_01()
         
         # Create frame inventories informations
         self.tab_01_frame_inventories_informations = cls_frame_inventories_information_view(parent_frame)
         self.tab_01_frame_inventories_informations.config(bd=0, relief="flat")
         self.tab_01_frame_inventories_informations.grid(row=0, column=1, sticky="nsew", padx=(10, 0))
-        self._f_view_create_widgets_add_widget_into_frame_inventories_informations_tab_01()
+        self.f_view_create_widgets_add_widget_into_frame_inventories_informations_tab_01()
             
-    def _f_view_create_widgets_in_frame_slip_informations(self):
+    def f_view_create_widgets_in_frame_slip_informations(self):
         # Input fields
         tk.Label(self.tab_01_frame_slip_informations, text="STT:").pack(side="left")
         self.tab_01_entry_id = tk.Entry(self.tab_01_frame_slip_informations,
@@ -284,7 +285,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_entry_note_for_slip.f_on_not_selecting(color=COLOR_WHITE)
         self.tab_01_entry_note_for_slip.pack(side="left", fill="x", expand=True, pady=10)
         
-    def _f_view_create_widgets_add_widget_into_frame_inventories_informations_tab_01(self):
+    def f_view_create_widgets_add_widget_into_frame_inventories_informations_tab_01(self):
         # create parent_frame
         parent_frame = self.tab_01_frame_inventories_informations.frame_row_2
         
@@ -312,9 +313,9 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         parent_frame.columnconfigure(9, weight=1)  # Allow tab_01_entry_sl_giu_cho to expand
         parent_frame.columnconfigure(11, weight=1)  # Allow tab_01_entry_sl_YCDH to expand
         
-        self._f_view_create_widgets_add_row_03_into_frame_inventories_informations_tab_01()
+        self.f_view_create_widgets_add_row_03_into_frame_inventories_informations_tab_01()
     
-    def _f_view_create_widgets_add_row_03_into_frame_inventories_informations_tab_01(self):
+    def f_view_create_widgets_add_row_03_into_frame_inventories_informations_tab_01(self):
         # create parent_frame
         parent_frame = tk.Frame(self.tab_01_frame_inventories_informations)
         parent_frame.pack(side="bottom", fill="x", expand=True)
@@ -325,12 +326,12 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_entry_ghi_chu_mat_hang.f_on_not_selecting(color=COLOR_WHITE)
         self.tab_01_entry_ghi_chu_mat_hang.pack(side="left", fill="x", expand=True, padx=(0, 10))
         
-    def _f_view_create_widgets_add_row_03_into_frame_clients_informations_tab_01(self):
+    def f_view_create_widgets_add_row_03_into_frame_clients_informations_tab_01(self):
         # create parent_frame
         parent_frame = cls_frame_contracts_management_view(self.tab_01_frame_clients_informations)
         parent_frame.pack(side="bottom", fill="x", expand=True)
 
-    def _f_view_create_widgets_in_tab_01_frame_button_of_treeview(self):
+    def f_view_create_widgets_in_tab_01_frame_button_of_treeview(self):
         # Create a sub-frame to organize buttons in the center
         tab_01_button_container_01 = tk.Frame(self.tab_01_frame_button_of_treeview)
         tab_01_button_container_01.pack(expand=True, pady=10)
@@ -351,10 +352,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_button_clear = tk.Button(tab_01_button_container_01, text="Clear Rows")
         self.tab_01_button_clear.pack(side="left", padx=10)
     
-    def _f_view_create_widgets_in_tab_01_frame_treeview(self):
-        self.tab_01_treeview_YCDH = self.tab_01_frame_treeview.treeview_normal
-    
-    def _f_view_create_widgets_in_tab_01_frame_button_02(self):
+    def f_view_create_widgets_in_tab_01_frame_button_02(self):
         parent_frame = self.tab_01_frame_button_02
         # Create a sub-frame on the right
         tab_01_button_container_02_on_the_right = tk.Frame(parent_frame)
@@ -394,16 +392,13 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
     # Tab_02: create widgets
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     
-    def _f_view_create_widgets_in_tab_02_frame_treeview(self):
-        self.tab_02_treeview_log_of_YCDH = self.tab_02_frame_treeview.treeview_normal
-    
-    def _f_view_create_all_container_frames_in_tab_02(self):
+    def f_view_create_all_container_frames_in_tab_02(self):
         parent_frame = self.tab2
 
         # Frame H2
         self.tab_02_frame_H2 = tk.Frame(parent_frame)
         self.tab_02_frame_H2.grid(row=0, column=0, sticky="ew")
-        self._f_view_create_widgets_in_tab_02_frame_H2()
+        self.f_view_create_widgets_in_tab_02_frame_H2()
 
         # Frame entries
         self.tab_02_frame_filter_entries = tk.Frame(parent_frame)
@@ -413,26 +408,26 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         # Frame button
         self.tab_02_frame_button_01 = tk.Frame(parent_frame)
         self.tab_02_frame_button_01.grid(row=2, column=0, sticky="ew")
-        self._f_view_create_widgets_in_tab_02_frame_button_01()
+        self.f_view_create_widgets_in_tab_02_frame_button_01()
         
         # Frame treeview
         self.tab_02_frame_treeview = cls_Treeview_frame_number_01(parent_frame)
         self.tab_02_frame_treeview.grid(row=3, column=0, sticky="nsew")
-        self._f_view_create_widgets_in_tab_02_frame_treeview()
+        self.tab_02_treeview_log_of_YCDH = self.tab_02_frame_treeview.treeview_normal
         
         # Frame button
         self.tab_02_frame_button_02 = tk.Frame(parent_frame)
         self.tab_02_frame_button_02.grid(row=4, column=0, sticky="ew")
-        self._f_view_create_widgets_in_tab_02_frame_button_02()
+        self.f_view_create_widgets_in_tab_02_frame_button_02()
         
         parent_frame.grid_rowconfigure(3, weight=1) # cho phép giãn nở
         parent_frame.grid_columnconfigure(0, weight=1)
 
-    def _f_view_create_widgets_in_tab_02_frame_H2(self):
+    def f_view_create_widgets_in_tab_02_frame_H2(self):
         # Title H2
         cls_my_label_num_03_title_H2(self.tab_02_frame_H2, text="NHẬT KÝ YÊU CẦU ĐẶT HÀNG").pack(anchor="center")
      
-    def _f_view_create_widgets_in_tab_02_frame_button_01(self):
+    def f_view_create_widgets_in_tab_02_frame_button_01(self):
         # Create a sub-frame to organize buttons in the center
         tab_02_button_container_01 = tk.Frame(self.tab_02_frame_button_01)
         tab_02_button_container_01.pack(expand=True, pady=10)
@@ -487,7 +482,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.tab_02_frame_filter_entries.columnconfigure(2, weight=1)   # Stretch the column to fill the width
         parent_frame_02.columnconfigure(0, weight=1)                    # Stretch parent_frame_02
     
-    def _f_view_create_widgets_in_tab_02_frame_button_02(self):
+    def f_view_create_widgets_in_tab_02_frame_button_02(self):
         # Create a sub-frame to organize buttons in the center
         tab_02_button_container_02 = tk.Frame(self.tab_02_frame_button_02)
         tab_02_button_container_02.pack(expand=True, pady=10)
