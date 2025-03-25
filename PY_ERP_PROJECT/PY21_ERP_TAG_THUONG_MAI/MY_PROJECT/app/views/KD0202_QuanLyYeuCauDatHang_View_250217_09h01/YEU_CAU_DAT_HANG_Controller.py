@@ -1790,7 +1790,7 @@ class Controller_import_bulk_data_from_Excel_file_to_SQL_KD02_YEU_CAU_DAT_HANG:
             data_array = data_list_converted
             
             data_to_import_to_database = [tuple(item) for item in data_array]
-            print("data_to_import_to_database", data_to_import_to_database)
+            # print("data_to_import_to_database", data_to_import_to_database)
             flag = utils_model_import_data_to_SQL_SERVER_250221_16h45.f_insert_data_to_sql(entry_notification,
                                                                                            server_name, 
                                                                                            database_name, 
