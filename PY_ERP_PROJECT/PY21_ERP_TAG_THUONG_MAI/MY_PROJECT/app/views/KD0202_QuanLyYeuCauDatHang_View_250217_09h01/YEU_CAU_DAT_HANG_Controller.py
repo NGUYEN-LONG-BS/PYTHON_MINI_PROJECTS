@@ -1772,7 +1772,8 @@ class Controller_import_bulk_data_from_Excel_file_to_SQL_KD02_YEU_CAU_DAT_HANG:
             # Tiến hành điều chỉnh lại cột số phiếu
             ma_thanh_vien = utils_controller_get_information_of_database.load_ma_thanh_vien()
             loai_phieu = controller_get_information_of_module.load_loai_phieu()
-            df[3] = f"{ma_thanh_vien}-{loai_phieu}-{df[3].apply(lambda x: str(x)[-4:] if isinstance(x, str) else str(x)[-4:])}"
+            hai_so_nam = "25"
+            df[3] = ma_thanh_vien + "-" + loai_phieu + "-" + hai_so_nam + df[3].apply(lambda x: str(x)[-4:] if isinstance(x, str) else str(x)[-4:])
             
             # Thay đổi cột ID_NHAN_VIEN: None thành mã nhân viên
             id_nv = utils_controller_get_information_of_database.load_id_nhan_vien()
@@ -1789,7 +1790,7 @@ class Controller_import_bulk_data_from_Excel_file_to_SQL_KD02_YEU_CAU_DAT_HANG:
             data_array = data_list_converted
             
             data_to_import_to_database = [tuple(item) for item in data_array]
-            # print("data_to_import_to_database", data_to_import_to_database)
+            print("data_to_import_to_database", data_to_import_to_database)
             flag = utils_model_import_data_to_SQL_SERVER_250221_16h45.f_insert_data_to_sql(entry_notification,
                                                                                            server_name, 
                                                                                            database_name, 

@@ -143,13 +143,20 @@ class utils_model_import_data_to_SQL_SERVER_250221_16h45:
                 return False
 
         # Chèn dữ liệu
+        # print("Bắt đàu chèn dữ liệu...")
         try:
             placeholders = ", ".join(["?" for _ in range(num_columns_to_insert)])  # Tạo chuỗi placeholder "?, ?, ?"
             query = f"INSERT INTO {table_name} ({', '.join(columns_to_insert)}) VALUES ({placeholders})"
             
-            for row in data_array:
-                cursor.execute(query, row)
+            # print("Placeholders: ", placeholders)
+            # print("Query: ", query)
             
+            for row in data_array:
+                # print("Execute... ", row)
+                cursor.execute(query, row)
+                # print("Executed")
+            
+            # print("Commit...")
             conn.commit()
             # print("Dữ liệu đã được chèn thành công.")
         except Exception as e:
