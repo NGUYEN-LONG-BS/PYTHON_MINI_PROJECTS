@@ -1717,11 +1717,11 @@ class Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG:
         
 class Controller_import_bulk_data_from_Excel_file_to_SQL_KD02_YEU_CAU_DAT_HANG:
     def f_handle_event_tab_01_button_get_import_file_click(entry_notification):
-        wb = None  # Khởi tạo biến workbook để theo dõi và đóng sau
+        # wb = None  # Khởi tạo biến workbook để theo dõi và đóng sau
         try:
-            file_name, file_path = f_utils_open_file()
-            print("file_name: ", file_name)
-            print("file_path: ", file_path)
+            file_name, file_path = f_utils_get_file_path_and_file_name()
+            # print("file_name: ", file_name)
+            # print("file_path: ", file_path)
             if not file_name:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "No excel file selected!", "red")
                 return False
@@ -1729,7 +1729,7 @@ class Controller_import_bulk_data_from_Excel_file_to_SQL_KD02_YEU_CAU_DAT_HANG:
             # load data from excel file
             # Bắt đầu từ ô A1
             data = utils_model_get_data_from_Excel_250221_16h45.get_data_from_excel(file_path, "template_YCDH", start_row=1, start_col=1)
-            print("data: ", data)
+            # print("data: ", data)
             # wb = load_workbook(file_path, data_only=True)  # Mở workbook để sử dụng và đóng sau
             if not data:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "No data found in the selected file!", "red")

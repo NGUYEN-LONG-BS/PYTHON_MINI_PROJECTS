@@ -248,7 +248,7 @@ def f_utils_tim_component_with_name(root=None, name_to_find=""):
 
     return None  # No matching widget found
 
-def f_utils_open_file():
+def f_utils_get_file_path_and_file_name():
     try:
         # Open file dialog to select a file
         file_path = filedialog.askopenfilename(title="Select a File")

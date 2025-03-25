@@ -988,7 +988,7 @@ class Controller_handel_all_events:
         
     def f_handle_event_tab_01_button_get_import_file_click(entry_notification):
         try:
-            file_name, file_bath = f_utils_open_file()
+            file_name, file_bath = f_utils_get_file_path_and_file_name()
             if not file_name:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "No excel file selected!", "red")
                 return False
