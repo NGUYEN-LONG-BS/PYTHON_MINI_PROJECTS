@@ -1717,7 +1717,6 @@ class Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG:
         
 class Controller_import_bulk_data_from_Excel_file_to_SQL_KD02_YEU_CAU_DAT_HANG:
     def f_handle_event_tab_01_button_get_import_file_click(entry_notification):
-        # wb = None  # Khởi tạo biến workbook để theo dõi và đóng sau
         try:
             file_name, file_path = f_utils_get_file_path_and_file_name()
             # print("file_name: ", file_name)
@@ -1728,12 +1727,9 @@ class Controller_import_bulk_data_from_Excel_file_to_SQL_KD02_YEU_CAU_DAT_HANG:
             
             # load data from excel file
             # Bắt đầu từ ô A1
-            data = utils_model_get_data_from_Excel_250221_16h45.get_data_from_excel_with_xlwings(file_path, "template_YCDH", start_row=1, start_col=1)
-            
-            # print("--------")
+            data = utils_model_get_data_from_Excel_250221_16h45.get_data_from_excel_with_xlwings(file_path, "template_YCDH", start_row=1, start_col=1)            
             # print("data: ", data)
-            # print("--------")
-            # wb = load_workbook(file_path, data_only=True)  # Mở workbook để sử dụng và đóng sau
+
             if not data:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "No data found in the selected file!", "red")
                 # wb.close()  # Đóng workbook nếu không có dữ liệu
@@ -1752,16 +1748,12 @@ class Controller_import_bulk_data_from_Excel_file_to_SQL_KD02_YEU_CAU_DAT_HANG:
             # validate data
             flag = Controller_validate_data_from_Excel_file_to_import_to_SQL_250221_17h05.validate_data_from_Excel(entry_notification, data_list_to_validate)
             if flag == False:
-                # wb.close()
                 return False
             
             result = f_utils_ask_yes_no("Xác nhận", "Dữ liệu đã hợp lệ. Hệ thống sẽ tự động điều chỉnh lại số phiếu theo cú pháp quy định. Bạn có muốn tiếp tục lưu không?")
             if result == False:
-                # wb.close()
                 return False
-            
-            
-            
+        
             # Chuyển đổi dữ liệu thành DataFrame
             df = pd.DataFrame(data_list_to_validate)
 
@@ -1819,10 +1811,6 @@ class Controller_import_bulk_data_from_Excel_file_to_SQL_KD02_YEU_CAU_DAT_HANG:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
             return False
-        # finally:
-            # Đóng file Excel nếu workbook đã được mở
-            # if wb is not None:
-                # wb.close()
                 
 class Controller_delete_slip_in_SQL:
     def delete_slip_in_SQL(entry_notification, my_treeview, button_filter):

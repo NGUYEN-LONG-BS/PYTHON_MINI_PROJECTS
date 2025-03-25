@@ -117,6 +117,8 @@ class utils_model_get_data_from_Excel_250221_16h45:
     def get_data_from_excel_with_openpyxl(file_path, sheet_name, start_row=1, start_col=1):
         # Mở file Excel
         wb = load_workbook(file_path, data_only=True)   # Đảm bảo rằng ta đọc giá trị tính toán
+        # print(wb)
+
         sheet = wb[sheet_name]
         
         # Lấy dữ liệu từ ô bắt đầu được chỉ định
@@ -127,7 +129,11 @@ class utils_model_get_data_from_Excel_250221_16h45:
         
         # Đóng workbook sau khi hoàn thành
         wb.close()
+        # print(wb)
         
+        # Đảm bảo rằng đối tượng app đã được giải phóng
+        del wb
+            
         # Trả về dữ liệu
         return data
     
