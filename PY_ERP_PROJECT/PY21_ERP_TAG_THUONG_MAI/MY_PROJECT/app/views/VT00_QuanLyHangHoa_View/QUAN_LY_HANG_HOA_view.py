@@ -10,15 +10,13 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         name = "QUẢN LÝ DANH MỤC HÀNG HOÁ"
         super().__init__(title_of_form=title, name_of_slip=name)
         
-        # call reuse components
+        # Step-01: create components
         self.f_view_thay_doi_gia_tri_cua_base_form()
         self.f_view_create_all_container_frames_of_window()
-        # set up formats
-        self.f_set_up_format_of_tree_view()
-        
-        # Set up all global variants
         self.f_define_all_elements()
-        # Set up when initializing
+        
+        # Step-02: setting and formating
+        self.f_set_up_format_of_tree_view()
         self.f_set_up_when_initializing()
         self.f_set_command_for_elements()
         

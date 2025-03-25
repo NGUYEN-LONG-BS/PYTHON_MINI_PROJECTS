@@ -10,6 +10,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         title = "KD02 | QUẢN LÝ YÊU CẦU ĐẶT HÀNG"
         name = "QUẢN LÝ YÊU CẦU ĐẶT HÀNG"
         super().__init__(title_of_form=title, name_of_slip=name)
+        
         # Step-01: create components
         self.f_view_thay_doi_gia_tri_cua_base_form()
         self.f_view_create_all_container_frames_of_window()
@@ -17,9 +18,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         
         # Step-02: setting and formating
         self.f_set_up_format_of_tree_view()
-        # Add controllers
         self.f_create_controller_auto_update_3_entries_sl_nhu_cau_sl_giu_cho_sl_ycdh()
-        # Set up when initializing
         self.f_set_up_when_initializing()
         self.f_set_command_for_elements()
     
