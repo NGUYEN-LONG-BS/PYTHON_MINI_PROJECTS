@@ -91,6 +91,7 @@ class utils_model_get_data_from_Excel_250221_16h45:
         data = []
         for row in sheet.iter_rows(min_row=start_row, min_col=start_col, values_only=True):
             data.append(row)
+        wb.close()
         return data
     
 class utils_model_import_data_to_SQL_SERVER_250221_16h45:
