@@ -2,8 +2,6 @@ from tkinter import messagebox
 from app.utils import *
 from datetime import datetime
 from collections import defaultdict
-import xlwings as xw
-from openpyxl import load_workbook
 
 class controller_get_information_of_module:
     

@@ -1,14 +1,12 @@
 import tkinter as tk
 from tkinter import ttk
 from app.views.Components_View import *
-from app.views.Components_View.treeview import cls_Treeview_frame_number_01
 from app.utils import *
-
-from .QUAN_LY_HANG_HOA_controller_tab_01 import Controller_handel_all_events
+from .QUAN_LY_HANG_HOA_controller import Controller_handel_all_events
 
 class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
     def __init__(self):
-        title = "VT00 | QUẢN LÝ DANH MỤC HÀNG HOÁ 1"
+        title = "VT00 | QUẢN LÝ DANH MỤC HÀNG HOÁ"
         name = "QUẢN LÝ DANH MỤC HÀNG HOÁ"
         super().__init__(title_of_form=title, name_of_slip=name)
         
@@ -16,62 +14,84 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         self.f_view_thay_doi_gia_tri_cua_base_form()
         self.f_view_create_all_container_frames_of_window()
         # set up formats
-        self.f_view_set_up_formats_of_tab_01()
-        Controller_handel_all_events.update_entry_id_when_initializing(self.table_of_tab_01, self.tab_01_entry_id)
-        # Set up all global variants
-        self._f_setup_all_global_variants()
-        self._f_setup_all_binding()
+        self.f_set_up_format_of_tree_view()
         
+        # Set up all global variants
+        self.f_define_all_elements()
+        # Set up when initializing
         self.f_set_up_when_initializing()
+        self.f_set_command_for_elements()
         
     def f_set_up_when_initializing(self):
         Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(self.entry_so_phieu)
     
-    def _f_setup_all_binding(self):
-        # Find in tab_01
-        tab_01_frame = self.tab_01_PHIEU_NHAP_KHO
-        self.entry_sl_kha_dung = f_utils_tim_component_with_name(tab_01_frame, "entry_sl_kha_dung")
-        self.entry_sl_kha_dung.bind("<FocusOut>", self.f_view_clear_content_when_sl_kha_dung_change)
+    def f_set_command_for_elements(self):
+        # config command for elements
+        self.tab_01_btn_refresh_number_of_slip.config(command=self.event_tab_01_button_get_number_of_slip_click)
         
-        self.entry_ma_hang_tab_01 = f_utils_tim_component_with_name(tab_01_frame, "entry_ma_hang")
-        self.entry_ten_hang_tab_01 = f_utils_tim_component_with_name(tab_01_frame, "entry_ten_hang")
-        self.entry_dvt = f_utils_tim_component_with_name(tab_01_frame, "entry_dvt")
+        self.tab_01_button_add.config(command=self.event_tab_01_button_add_row_click)
+        self.tab_01_button_update_row_in_treeview.config(command=self.event_tab_01_button_update_row_click)
+        self.tab_01_button_delete.config(command=self.event_tab_01_button_delete_click)
+        self.tab_01_button_clear.config(command=self.event_tab_01_button_clear_click)
         
-        self.entry_so_phieu = f_utils_tim_component_with_name(tab_01_frame, "slips_entry")
+        self.tab_01_button_update_slip.config(command=self.event_tab_01_button_update_slip_click)
+        self.tab_01_button_save.config(command=self.event_tab_01_button_save_click)
+        self.tab_01_button_print.config(command=self.event_tab_01_button_print_click)
         
-        self.btn_refresh_number_of_slip = f_utils_tim_component_with_name(tab_01_frame, "refresh_number_of_slip_button")
-        self.btn_refresh_number_of_slip.config(command=self.f_tab_01_button_get_number_of_slip_click)
+        self.tab_01_btn_template.config(command=self.event_tab_01_button_template_click)
+        self.tab_01_btn_get_import_file.config(command=self.event_tab_01_button_get_import_file_click)
         
-        self.entry_ma_khach_hang_tab_01 = f_utils_tim_component_with_name(tab_01_frame, "entry_ma_khach_hang")
-        self.entry_ten_khach_hang_tab_01 = f_utils_tim_component_with_name(tab_01_frame, "entry_ten_khach_hang")
-        self.entry_mst_tab_01 = f_utils_tim_component_with_name(tab_01_frame, "entry_mst")
-        self.entry_dia_chi_tab_01 = f_utils_tim_component_with_name(tab_01_frame, "entry_dia_chi")
+        self.tab_02_button_filter.config(command=self.event_tab_02_button_filter_click)
+        self.tab_02_button_clear_filter.config(command=self.event_tab_02_button_clear_filter_click)
+        self.tab_02_button_export_excel.config(command=self.event_tab_02_button_export_excel_click)
+        self.tab_02_button_export_all_data.config(command=self.event_tab_02_button_export_all_data_click)
         
-        self.entry_so_hop_dong = f_utils_tim_component_with_name(tab_01_frame, "entry_so_hop_dong")
-        self.entry_thong_tin_hop_dong = f_utils_tim_component_with_name(tab_01_frame, "entry_thong_tin_ngan_cua_hop_dong")
+        self.tab_02_button_edit_slip.config(command=self.event_tab_02_button_edit_slip_click)
+        self.tab_02_button_delete_slip.config(command=self.event_tab_02_button_delete_slip_click)
+        self.tab_02_button_mark_expired.config(command=self.event_tab_02_button_mark_expired_click)
         
-        # Find in tab_04
-        tab_04_frame = self.tab_04_NHAT_KY_NHAP_KHO
+        # Gán sự kiện
+        self.tab_01_treeview_YCDH.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_01_single_click)  # Single click
+        self.tab_01_treeview_YCDH.bind("<Double-1>", self.f_view_treeview_of_tab_01_double_click)  # Double click
+        
+        self.tab_02_treeview_log_of_YCDH.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_02_single_click)  # Single click
+        self.tab_02_treeview_log_of_YCDH.bind("<Double-1>", self.f_view_treeview_of_tab_02_double_click)  # Double click
+        
+    def f_define_all_elements(self):
+        # Find in tab_01: Phiếu nhập kho
+        tab_01_frame = self.tab1
+        self.tab_01_entry_ma_hang = f_utils_tim_component_with_name(tab_01_frame, "entry_ma_hang")
+        self.tab_01_entry_ten_hang = f_utils_tim_component_with_name(tab_01_frame, "entry_ten_hang")
+        self.tab_01_entry_dvt = f_utils_tim_component_with_name(tab_01_frame, "entry_dvt")
+        self.tab_01_entry_ngay_tren_phieu = f_utils_tim_component_with_name(tab_01_frame, "date_entry")
+        self.tab_01_entry_so_phieu = f_utils_tim_component_with_name(tab_01_frame, "slips_entry")
+        self.tab_01_btn_refresh_number_of_slip = f_utils_tim_component_with_name(tab_01_frame, "refresh_number_of_slip_button")
+        self.tab_01_entry_ma_khach_hang = f_utils_tim_component_with_name(tab_01_frame, "entry_ma_khach_hang")
+        self.tab_01_entry_ten_khach_hang = f_utils_tim_component_with_name(tab_01_frame, "entry_ten_khach_hang")
+        self.tab_01_entry_mst = f_utils_tim_component_with_name(tab_01_frame, "entry_mst")
+        self.tab_01_entry_dia_chi = f_utils_tim_component_with_name(tab_01_frame, "entry_dia_chi")
+        self._tab_01_entry_so_hop_dong = f_utils_tim_component_with_name(tab_01_frame, "entry_so_hop_dong")
+        self.tab_01_entry_thong_tin_hop_dong = f_utils_tim_component_with_name(tab_01_frame, "entry_thong_tin_ngan_cua_hop_dong")
+        self.tab_01_label_footer_notification = f_utils_tim_component_label_with_text(self, "Notification")
+        
+        # Find in tab_04: Nhật ký phiếu nhập kho
+        tab_04_frame = self.tab4_NHAT_KY_NHAP_KHO
         self.tab_04_entry_ma_khach_hang = f_utils_tim_component_with_name(tab_04_frame, "entry_ma_khach_hang")
         self.tab_04_entry_ten_khach_hang = f_utils_tim_component_with_name(tab_04_frame, "entry_ten_khach_hang")
-        self.entry_mst_tab_04 = f_utils_tim_component_with_name(tab_04_frame, "entry_mst")
-        self.entry_mst_tab_04.pack_forget()
-        self.entry_dia_chi_tab_04 = f_utils_tim_component_with_name(tab_04_frame, "entry_dia_chi")
-        self.entry_dia_chi_tab_04.pack_forget()
-        self.frame_row_2_of_inventories_info = f_utils_tim_component_with_name(tab_04_frame, "frame_row_2_of_inventories_info")
-        self.frame_row_2_of_inventories_info.pack_forget()
-        
+        self.tab_04_entry_mst = f_utils_tim_component_with_name(tab_04_frame, "entry_mst")
+        self.tab_04_entry_mst.pack_forget()
+        self.tab_04_entry_dia_chi = f_utils_tim_component_with_name(tab_04_frame, "entry_dia_chi")
+        self.tab_04_entry_dia_chi.pack_forget()
+        self._tab_04_frame_row_2_of_inventories_info = f_utils_tim_component_with_name(tab_04_frame, "frame_row_2_of_inventories_info")
+        self._tab_04_frame_row_2_of_inventories_info.pack_forget()
         self.tab_04_entry_ma_hang = f_utils_tim_component_with_name(tab_04_frame, "entry_ma_hang")
         self.tab_04_entry_ten_hang = f_utils_tim_component_with_name(tab_04_frame, "entry_ten_hang")
-        
-        self.ngay_filter_bat_dau = f_utils_tim_component_with_name(tab_04_frame, "start_date_entry")
-        self.ngay_filter_ket_thuc = f_utils_tim_component_with_name(tab_04_frame, "end_date_entry")
+        self.tab_04_ngay_filter_bat_dau = f_utils_tim_component_with_name(tab_04_frame, "start_date_entry")
+        self.tab_04_ngay_filter_ket_thuc = f_utils_tim_component_with_name(tab_04_frame, "end_date_entry")
         
     def f_view_clear_content_when_sl_kha_dung_change(self, event):
         f_utils_on_entry_change(self.entry_sl_kha_dung)
         self.tab_01_entry_sl_thuc_nhap.delete(0, tk.END)
-        self.tab_01_entry_sl_giu_cho.delete(0, tk.END)
-        self.tab_01_entry_sl_YCDH.delete(0, tk.END)
     
     def f_view_thay_doi_gia_tri_cua_base_form(self):
         # Thay đổi thông tin các tab
@@ -98,18 +118,14 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         notebook.tab(2, text="TẠO MỚI MÃ HÀNG")
         
         # Tab: Nhật ký nhập kho
-        self.tab_04_NHAT_KY_NHAP_KHO = ttk.Frame(notebook, name="tab_04")
-        notebook.add(self.tab_04_NHAT_KY_NHAP_KHO, text="NHẬT KÝ NHẬP KHO")
+        self.tab4_NHAT_KY_NHAP_KHO = ttk.Frame(notebook, name="tab_04")
+        notebook.add(self.tab4_NHAT_KY_NHAP_KHO, text="NHẬT KÝ NHẬP KHO")
         # Tab: Nhật ký xuất kho
-        self.self_tab05_frame_NHAT_KY_XUAT_KHO = ttk.Frame(notebook, name="tab_05")
-        notebook.add(self.self_tab05_frame_NHAT_KY_XUAT_KHO, text="NHẬT KÝ XUẤT KHO")
+        self.tab5_frame_NHAT_KY_XUAT_KHO = ttk.Frame(notebook, name="tab_05")
+        notebook.add(self.tab5_frame_NHAT_KY_XUAT_KHO, text="NHẬT KÝ XUẤT KHO")
         # Tab: Báo cáo tồn kho
-        self.tab_06_frame_BAO_CAO_TON_KHO = ttk.Frame(notebook, name="tab_06")
-        notebook.add(self.tab_06_frame_BAO_CAO_TON_KHO, text="BÁO CÁO TỒN KHO")
-        # notebook.tab(3, text="BÁO CÁO TỒN KHO")
-        
-        # # Delete the third tab
-        # notebook.forget(2)
+        self.tab6_frame_BAO_CAO_TON_KHO = ttk.Frame(notebook, name="tab_06")
+        notebook.add(self.tab6_frame_BAO_CAO_TON_KHO, text="BÁO CÁO TỒN KHO")
         
         # Change the title of TieuDeTab_01
         for child in self.tab1.winfo_children():
@@ -136,7 +152,11 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         # Settings tab content
         self.f_view_create_all_container_frames_in_tab_01()
         self.f_view_create_all_container_frames_in_tab_04()
-     
+    
+    def f_set_up_format_of_tree_view(self):
+        Controller_handel_all_events.f_handle_event_initializing_format_of_treeview_of_tab_01(self.tab_01_treeview_PNK)
+        Controller_handel_all_events.f_handle_event_initializing_format_of_treeview_of_tab_04(self.tab_04_treeview_log_of_PNK)
+    
     def _f_setup_all_global_variants(self):    
         # Timer interval (in milliseconds)
         self.last_click_time = 0
@@ -420,7 +440,7 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     
     def f_view_create_all_container_frames_in_tab_04(self):
-        parent_frame = self.tab_04_NHAT_KY_NHAP_KHO
+        parent_frame = self.tab4_NHAT_KY_NHAP_KHO
 
         # Frame H2
         self.tab_04_frame_H2 = tk.Frame(parent_frame)
