@@ -1728,8 +1728,11 @@ class Controller_import_bulk_data_from_Excel_file_to_SQL_KD02_YEU_CAU_DAT_HANG:
             
             # load data from excel file
             # Bắt đầu từ ô A1
-            data = utils_model_get_data_from_Excel_250221_16h45.get_data_from_excel(file_path, "template_YCDH", start_row=1, start_col=1)
+            data = utils_model_get_data_from_Excel_250221_16h45.get_data_from_excel_with_xlwings(file_path, "template_YCDH", start_row=1, start_col=1)
+            
+            # print("--------")
             # print("data: ", data)
+            # print("--------")
             # wb = load_workbook(file_path, data_only=True)  # Mở workbook để sử dụng và đóng sau
             if not data:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "No data found in the selected file!", "red")

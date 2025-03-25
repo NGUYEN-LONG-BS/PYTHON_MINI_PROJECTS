@@ -3,6 +3,7 @@ import json
 import pyodbc
 from datetime import datetime
 from openpyxl import load_workbook
+import xlwings as xw
 
 # Import từ chính thư mục utils
 from . import utils_functions
@@ -82,7 +83,38 @@ class utils_model_get_data_from_SQL:
 
 class utils_model_get_data_from_Excel_250221_16h45:
     # Hàm để mở file Excel và lấy dữ liệu từ sheet, cho phép truyền vào ô bắt đầu
-    def get_data_from_excel(file_path, sheet_name, start_row=1, start_col=1):
+    def get_data_from_excel_with_xlwings(file_path, sheet_name, start_row=1, start_col=1):
+        try:
+            # Tạo ứng dụng Excel mà không hiển thị giao diện
+            app = xw.App(visible=False)
+            
+            # Mở workbook từ file
+            wb = app.books.open(file_path)
+            
+            # Lấy sheet cần làm việc
+            sheet = wb.sheets[sheet_name]
+            
+            # Lấy dữ liệu từ ô bắt đầu được chỉ định
+            # Expand phạm vi để lấy hết bảng dữ liệu
+            data = sheet.range((start_row, start_col)).current_region.value
+            # print("data with xlwings: ", data)
+            
+            # Đóng workbook và thoát ứng dụng Excel
+            wb.close()
+            app.quit()
+            
+            # Đảm bảo rằng đối tượng app đã được giải phóng
+            del wb
+            del app
+            
+            return data
+
+        except Exception as e:
+            print(f"Error: {e}")
+            return f"Error: {e}"
+    
+    # Sử dụng openpyxl để đọc file Excel (không cần cài Excel)
+    def get_data_from_excel_with_openpyxl(file_path, sheet_name, start_row=1, start_col=1):
         # Mở file Excel
         wb = load_workbook(file_path, data_only=True)   # Đảm bảo rằng ta đọc giá trị tính toán
         sheet = wb[sheet_name]
@@ -91,6 +123,7 @@ class utils_model_get_data_from_Excel_250221_16h45:
         data = []
         for row in sheet.iter_rows(min_row=start_row, min_col=start_col, values_only=True):
             data.append(row)
+        # print("data with openpyxl: ", data)
         
         # Đóng workbook sau khi hoàn thành
         wb.close()

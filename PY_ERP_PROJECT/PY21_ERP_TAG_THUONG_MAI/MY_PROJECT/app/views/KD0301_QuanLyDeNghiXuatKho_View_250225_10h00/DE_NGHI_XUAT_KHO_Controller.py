@@ -1198,7 +1198,7 @@ class Controller_handel_all_events:
             
             # load data from excel file
             # Bắt đầu từ ô A1
-            data = utils_model_get_data_from_Excel_250221_16h45.get_data_from_excel(file_bath, "template_KHDH", start_row=1, start_col=1)
+            data = utils_model_get_data_from_Excel_250221_16h45.get_data_from_excel_with_xlwings(file_bath, "template_KHDH", start_row=1, start_col=1)
             if not data:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "No data found in the selected file!", "red")
                 return False
