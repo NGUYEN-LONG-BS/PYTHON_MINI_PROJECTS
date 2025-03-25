@@ -6,7 +6,7 @@ class Controller_handel_all_events:
 
     def f_handle_event_get_the_latest_number_of_slip(entry_so_phieu):
         ma_thanh_vien = "TB"
-        loai_phieu = "YCDH"
+        loai_phieu = "PNK"
         try:
             utils_controller_action_after_event_250216_14h57.f_get_the_latest_number_of_slip(entry_so_phieu, ma_thanh_vien, loai_phieu)
             return "Have gotten the latest number of slip!"

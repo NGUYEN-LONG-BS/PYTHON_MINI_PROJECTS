@@ -1,16 +1,14 @@
 import tkinter as tk
 from tkinter import ttk
-import time
-import json
 from app.views.Components_View import *
 from app.views.Components_View.treeview import cls_Treeview_frame_number_01
 from app.utils import *
 
-from .QUAN_LY_HANG_HOA_controller import Controller_handel_all_events
+from .QUAN_LY_HANG_HOA_controller_tab_01 import Controller_handel_all_events
 
-class cls_test_View(cls_base_form_number_02_ManyTabs):
+class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
     def __init__(self):
-        title = "VT00 | QUẢN LÝ DANH MỤC HÀNG HOÁ"
+        title = "VT00 | QUẢN LÝ DANH MỤC HÀNG HOÁ 1"
         name = "QUẢN LÝ DANH MỤC HÀNG HOÁ"
         super().__init__(title_of_form=title, name_of_slip=name)
         

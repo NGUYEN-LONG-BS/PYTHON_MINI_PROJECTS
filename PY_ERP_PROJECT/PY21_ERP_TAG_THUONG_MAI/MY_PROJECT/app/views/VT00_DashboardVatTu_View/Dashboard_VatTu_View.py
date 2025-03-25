@@ -149,9 +149,9 @@ class cls_Dashboard_Vat_Tu_View(cls_base_form_number_02_ManyTabs):
     def f_card_01_click(self, event):
         print("f_card_01_click")
     def f_card_02_danh_sach_hang_hoa_click(self, event):
-        from app.views.VT00_QuanLyHangHoa_View.QUAN_LY_HANG_HOA_view import cls_test_View
+        from app.views.VT00_QuanLyHangHoa_View.QUAN_LY_HANG_HOA_view import cls_QuanLyHangHoa_View
         self.destroy()
-        new_view = cls_test_View()
+        new_view = cls_QuanLyHangHoa_View()
         # new_view.dashboard = self.parent
         utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
         f_utils_set_center_screen(new_view)
@@ -163,13 +163,13 @@ class cls_Dashboard_Vat_Tu_View(cls_base_form_number_02_ManyTabs):
         print("f_card_04_click")
     
     def f_card_05_yeu_cau_dat_hang_click(self, event):
-        from app.views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
+        # from app.views.KD03_QuanLyKhachHang_View.test_View import cls_test_View
         self.destroy()
-        new_view = cls_test_View()
+        # new_view = cls_test_View()
         # new_view.dashboard = self.parent
-        utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
-        f_utils_set_center_screen(new_view)
-        new_view.focus_force()
+        # utils_controller_set_size_of_windown_250215_10h24.f_utils_set_window_size_of_new_view(new_view, maximize=True)
+        # f_utils_set_center_screen(new_view)
+        # new_view.focus_force()
 
     def f_card_06_click(self, event):
         print("f_card_06_click")
