@@ -75,7 +75,7 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         self.f_view_create_all_container_frames_in_tab_04()
 
     def f_set_up_when_initializing(self):
-        Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(self.tab_01_entry_so_phieu)
+        Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(self.entry_so_phieu)
     
     def f_set_command_for_elements(self):
         # config command for elements
@@ -183,7 +183,7 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         # Frame treeview
         self.tab_01_frame_treeview = cls_Treeview_frame_number_01(parent_frame)
         self.tab_01_frame_treeview.grid(row=3, column=0, sticky="nsew")
-        self.tab_01_treeview_PNK = self.tab_01_frame_treeview.treeview_normal
+        self.table_of_tab_01 = self.tab_01_frame_treeview.treeview_normal
         
         # Frame button
         self.tab_01_frame_button_02 = tk.Frame(parent_frame)
@@ -388,7 +388,7 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         # Frame treeview
         self.tab_04_frame_treeview = cls_Treeview_frame_number_01(parent_frame)
         self.tab_04_frame_treeview.grid(row=3, column=0, sticky="nsew")
-        self.tab_04_treeview_log_of_PNK = self.tab_04_frame_treeview.treeview_normal
+        self.f_view_create_widgets_in_tab_04_frame_treeview()
         
         # Frame button
         self.tab_04_frame_button_02 = tk.Frame(parent_frame)
@@ -400,16 +400,18 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
      
     def f_view_create_widgets_in_tab_04_frame_button_01(self):
         # Create a sub-frame to organize buttons in the center
-        parent_frame = tk.Frame(self.tab_04_frame_button_01)
-        parent_frame.pack(expand=True, pady=10)
+        tab_04_button_container_01 = tk.Frame(self.tab_04_frame_button_01)
+        tab_04_button_container_01.pack(expand=True, pady=10)
         
         # Add button
-        self.tab_04_button_filter = tk.Button(parent_frame, text="Filter")
-        self.tab_04_button_filter.pack(side="left", padx=10)
+        self.tab_04_button_add = tk.Button(tab_04_button_container_01, text="Filter")
+        self.tab_04_button_add.config(command=self.f_tab_04_button_filter_click)
+        self.tab_04_button_add.pack(side="left", padx=10)
         
         # Delete update
-        self.tab_04_button_clear_filter = tk.Button(parent_frame, text="Clear")
-        self.tab_04_button_clear_filter.pack(side="left", padx=10)
+        self.tab_04_button_clear = tk.Button(tab_04_button_container_01, text="Clear")
+        self.tab_04_button_clear.config(command=self.f_tab_04_button_clear_click)
+        self.tab_04_button_clear.pack(side="left", padx=10)
     
     def f_view_create_widgets_in_tab_04_frame_filter_entries(self):
         parent_frame_00 = tk.Frame(self.tab_04_frame_filter_entries)
@@ -448,28 +450,29 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
     
     def f_view_create_widgets_in_tab_04_frame_button_02(self):
         # Create a sub-frame to organize buttons in the center
-        parent_frame = tk.Frame(self.tab_04_frame_button_02)
-        parent_frame.pack(expand=True, pady=10)
+        tab_04_button_container_02 = tk.Frame(self.tab_04_frame_button_02)
+        tab_04_button_container_02.pack(expand=True, pady=10)
         
         # Get Data button
-        self.tab_02_button_export_all_data = tk.Button(parent_frame, text="Export all data")
-        self.tab_02_button_export_all_data.pack(side="left", padx=10)
+        self.tab_04_button_export_excel = tk.Button(tab_04_button_container_02, text="Export Excel")
+        self.tab_04_button_export_excel.config(command=self.f_tab_04_button_export_excel_click)
+        self.tab_04_button_export_excel.pack(side="left", padx=10)
         
         # Get Data button
-        self.tab_02_button_export_excel = tk.Button(parent_frame, text="Export Excel")
-        self.tab_02_button_export_excel.pack(side="left", padx=10)
+        self.tab_04_button_edit = tk.Button(tab_04_button_container_02, text="EDIT")
+        self.tab_04_button_edit.config(command=self.f_tab_04_button_edit_click)
+        self.tab_04_button_edit.pack(side="left", padx=10)
         
-        # Edit Slip button
-        self.tab_02_button_edit_slip = tk.Button(parent_frame, text="Edit slip")
-        self.tab_02_button_edit_slip.pack(side="left", padx=10)
-        
-        # Delete Slip button
-        self.tab_02_button_delete_slip = tk.Button(parent_frame, text="Delete slip")
-        self.tab_02_button_delete_slip.pack(side="left", padx=10)
-        
-        # Mark Expired button
-        self.tab_02_button_mark_expired = tk.Button(parent_frame, text="Mark Expired")
-        self.tab_02_button_mark_expired.pack(side="left", padx=10)
+        # Export Data button
+        self.tab_04_button_DELETE = tk.Button(tab_04_button_container_02, text="DELETE")
+        self.tab_04_button_DELETE.config(command=self.f_tab_04_button_delete_click)
+        self.tab_04_button_DELETE.pack(side="left", padx=10)
+
+    def f_view_create_widgets_in_tab_04_frame_treeview(self):
+        self.tab_04_frame_treeview = self.tab_04_frame_treeview
+        self.treeview_of_tab_04 = self.tab_04_frame_treeview.treeview_normal
+        self.tab_04_treeview = self.tab_04_frame_treeview.treeview_normal
+        self.tab_04_treeview.bind("<ButtonRelease-1>", self.f_view_table_of_tab_04_click)
     
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
