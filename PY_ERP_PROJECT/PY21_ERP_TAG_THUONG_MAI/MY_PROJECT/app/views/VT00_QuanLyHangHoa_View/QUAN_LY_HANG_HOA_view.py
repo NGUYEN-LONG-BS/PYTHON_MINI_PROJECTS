@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from app.views.Components_View import *
 from app.utils import *
-from .QUAN_LY_HANG_HOA_controller_PNK import Controller_handel_all_events
+from .QUAN_LY_HANG_HOA_controller import Controller_handel_all_events
 
 class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
     def __init__(self):
@@ -102,7 +102,7 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_btn_template.config(command=self.event_tab_01_button_template_click)
         self.tab_01_btn_get_import_file.config(command=self.event_tab_01_button_get_import_file_click)
         
-        # Tab 02
+        # Tab 03
         self.tab_03_button_create_new_inventory.config(command=self.event_tab_03_button_create_new_inventory_click)
         
         # Tab 04
@@ -981,3 +981,8 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
     # Adding handler
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     
+    def event_tab_03_button_create_new_inventory_click(self):        
+        Controller_handel_all_events.f_handle_event_create_new_inventory(self.tab_01_label_footer_notification,
+                                                                         self.tab_03_entry_new_id_code
+                                                                         , self.tab_03_entry_new_id_name
+                                                                         , self.tab_03_entry_new_dvt)
