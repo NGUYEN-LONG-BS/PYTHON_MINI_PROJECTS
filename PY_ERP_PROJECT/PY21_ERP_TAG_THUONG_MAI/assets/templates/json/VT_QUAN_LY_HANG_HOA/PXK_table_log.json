@@ -1,6 +1,6 @@
 {
     "table": {
-        "name": "Nhật ký nhập kho",
+        "name": "Nhật ký xuất kho",
         "description": "Tập hợp cấu hình cho bảng.",
         "headings": {"family": "Arial", "size": 12, "weight": "bold"},
         "columns": [
@@ -27,7 +27,7 @@
                 "show": "headings"
             },
             {
-                "name": "Mã NCC",
+                "name": "Mã KH",
                 "width": 100,
                 "min_width": 100,
                 "anchor": "w",
@@ -38,7 +38,7 @@
                 "show": "headings"
             },
             {
-                "name": "Tên NCC",
+                "name": "Tên KH",
                 "width": 400,
                 "min_width": 300,
                 "anchor": "w",
@@ -93,7 +93,7 @@
                 "show": "headings"
             },
             {
-                "name": "SL nhập kho",
+                "name": "SL xuất kho",
                 "width": 120,
                 "min_width": 120,
                 "anchor": "w",

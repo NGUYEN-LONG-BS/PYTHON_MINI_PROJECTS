@@ -1,6 +1,6 @@
 {
     "table": {
-        "name": "Nhật ký nhập kho",
+        "name": "Bảng phiếu xuất kho",
         "description": "Tập hợp cấu hình cho bảng.",
         "headings": {"family": "Arial", "size": 12, "weight": "bold"},
         "columns": [
@@ -12,50 +12,6 @@
                 "stretch": false,
                 "font": {"family": "Arial", "size": 12, "weight": "bold"},
                 "background_color": "#f0f0f0",
-                "foreground_color": "#000000",
-                "show": "headings"
-            },
-            {
-                "name": "Số phiếu",
-                "width": 150,
-                "min_width": 150,
-                "anchor": "w",
-                "stretch": true,
-                "font": {"family": "Verdana", "size": 12, "weight": "normal"},
-                "background_color": "#ffffff",
-                "foreground_color": "#000000",
-                "show": "headings"
-            },
-            {
-                "name": "Mã NCC",
-                "width": 100,
-                "min_width": 100,
-                "anchor": "w",
-                "stretch": true,
-                "font": {"family": "Verdana", "size": 12, "weight": "normal"},
-                "background_color": "#ffffff",
-                "foreground_color": "#000000",
-                "show": "headings"
-            },
-            {
-                "name": "Tên NCC",
-                "width": 400,
-                "min_width": 300,
-                "anchor": "w",
-                "stretch": true,
-                "font": {"family": "Verdana", "size": 12, "weight": "normal"},
-                "background_color": "#ffffff",
-                "foreground_color": "#000000",
-                "show": "headings"
-            },
-            {
-                "name": "Số đề nghị",
-                "width": 120,
-                "min_width": 120,
-                "anchor": "w",
-                "stretch": true,
-                "font": {"family": "Verdana", "size": 12, "weight": "normal"},
-                "background_color": "#ffffff",
                 "foreground_color": "#000000",
                 "show": "headings"
             },
@@ -93,7 +49,18 @@
                 "show": "headings"
             },
             {
-                "name": "SL nhập kho",
+                "name": "SL thực xuất",
+                "width": 120,
+                "min_width": 120,
+                "anchor": "w",
+                "stretch": false,
+                "font": {"family": "Arial", "size": 12, "weight": "normal"},
+                "background_color": "#ffffff",
+                "foreground_color": "#4287f5",
+                "show": "headings"
+            },
+            {
+                "name": "Kho xuất",
                 "width": 120,
                 "min_width": 120,
                 "anchor": "w",
@@ -105,8 +72,8 @@
             },
             {
                 "name": "Ghi chú sản phẩm",
-                "width": 400,
-                "min_width": 300,
+                "width": 300,
+                "min_width": 200,
                 "anchor": "w",
                 "stretch": true,
                 "font": {"family": "Verdana", "size": 12, "weight": "normal"},

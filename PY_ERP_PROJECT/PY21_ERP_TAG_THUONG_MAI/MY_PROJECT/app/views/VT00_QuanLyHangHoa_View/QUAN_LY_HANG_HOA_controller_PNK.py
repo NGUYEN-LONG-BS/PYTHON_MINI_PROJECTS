@@ -23,7 +23,9 @@ class controller_get_information_of_module:
     def load_treeview_config_json_path():
         tab_01_treeview_config_json_path = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'VT_QUAN_LY_HANG_HOA', 'PNK_table_input.json')
         tab_04_treeview_config_json_path = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'VT_QUAN_LY_HANG_HOA', 'PNK_table_log.json')
-        return tab_01_treeview_config_json_path, tab_04_treeview_config_json_path
+        
+        tab_02_treeview_config_json_path = os.path.join(PATH_ASSETS_TEMPLATES_JSON, 'VT_QUAN_LY_HANG_HOA', 'PXK_table_input.json')
+        return tab_01_treeview_config_json_path, tab_02_treeview_config_json_path, tab_04_treeview_config_json_path
 
     def load_proc_update_xoa_sua():
         proc_name = "Proc_TB_KD02_YEU_CAU_DAT_HANG_UPDATE_XOA_SUA_250224_13h09"
@@ -196,14 +198,21 @@ class Controller_handel_all_events:
     
     def f_handle_event_initializing_format_of_treeview_of_tab_04(my_treeview):
         Controller_format_treeview.set_format_of_treeview_of_tab_04(my_treeview)
+        
+    def f_handle_event_initializing_format_of_treeview_of_tab_02(my_treeview):
+        Controller_format_treeview.set_format_of_treeview_of_tab_02(my_treeview)
 
 class Controller_format_treeview:
     def set_format_of_treeview_of_tab_01(my_treeview):
-        tab_01_treeview_config_json_path, tab_02_treeview_config_json_path = controller_get_information_of_module.load_treeview_config_json_path()
+        tab_01_treeview_config_json_path, tab_02_treeview_config_json_path, tab_04_treeview_config_json_path = controller_get_information_of_module.load_treeview_config_json_path()
         utils_controller_TreeviewConfigurator_250217_13h20.apply_treeview_config(my_treeview, tab_01_treeview_config_json_path)
         
     def set_format_of_treeview_of_tab_04(my_treeview):
-        tab_01_treeview_config_json_path, tab_02_treeview_config_json_path = controller_get_information_of_module.load_treeview_config_json_path()
+        tab_01_treeview_config_json_path, tab_02_treeview_config_json_path, tab_04_treeview_config_json_path = controller_get_information_of_module.load_treeview_config_json_path()
+        utils_controller_TreeviewConfigurator_250217_13h20.apply_treeview_config(my_treeview, tab_04_treeview_config_json_path)
+        
+    def set_format_of_treeview_of_tab_02(my_treeview):
+        tab_01_treeview_config_json_path, tab_02_treeview_config_json_path, tab_04_treeview_config_json_path = controller_get_information_of_module.load_treeview_config_json_path()
         utils_controller_TreeviewConfigurator_250217_13h20.apply_treeview_config(my_treeview, tab_02_treeview_config_json_path)
 
 class Controller_update_entry_id:

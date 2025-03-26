@@ -16,7 +16,7 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         self.f_define_all_elements()
         
         # # Step-02: setting and formating
-        # self.f_set_up_format_of_tree_view()
+        self.f_set_up_format_of_tree_view()
         # self.f_set_up_when_initializing()
         # self.f_set_command_for_elements()
 
@@ -71,8 +71,11 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         return notebook
 
     def f_view_create_all_container_frames_of_window(self):
+        # Nhập kho
         self.f_view_create_all_container_frames_in_tab_01()
         self.f_view_create_all_container_frames_in_tab_04()
+        # Xuất kho
+        self.f_view_create_all_container_frames_in_tab_02()
 
     def f_set_up_when_initializing(self):
         Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(self.tab_01_entry_so_phieu)
@@ -117,21 +120,22 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_entry_ngay_tren_phieu = f_utils_tim_component_with_name(tab_01_frame, "date_entry")
         self.tab_01_entry_so_phieu = f_utils_tim_component_with_name(tab_01_frame, "slips_entry")
         self.tab_01_btn_refresh_number_of_slip = f_utils_tim_component_with_name(tab_01_frame, "refresh_number_of_slip_button")
-        self.tab_01_entry_ma_khach_hang = f_utils_tim_component_with_name(tab_01_frame, "entry_ma_khach_hang")
-        self.tab_01_entry_ten_khach_hang = f_utils_tim_component_with_name(tab_01_frame, "entry_ten_khach_hang")
-        self.tab_01_entry_mst = f_utils_tim_component_with_name(tab_01_frame, "entry_mst")
-        self.tab_01_entry_dia_chi = f_utils_tim_component_with_name(tab_01_frame, "entry_dia_chi")
+        self.tab_01_entry_ma_khach_hang = f_utils_tim_component_with_name(tab_01_frame, "entry_ma_nha_cung_cap")
+        self.tab_01_entry_ten_khach_hang = f_utils_tim_component_with_name(tab_01_frame, "entry_ten_nha_cung_cap")
+        self.tab_01_entry_mst = f_utils_tim_component_with_name(tab_01_frame, "entry_mst_nha_cung_cap")
+        self.tab_01_entry_dia_chi = f_utils_tim_component_with_name(tab_01_frame, "entry_dia_chi_nha_cung_cap")
         self._tab_01_entry_so_hop_dong = f_utils_tim_component_with_name(tab_01_frame, "entry_so_hop_dong")
         self.tab_01_entry_thong_tin_hop_dong = f_utils_tim_component_with_name(tab_01_frame, "entry_thong_tin_ngan_cua_hop_dong")
+        
         self.tab_01_label_footer_notification = f_utils_tim_component_label_with_text(self, "Notification")
         
         # Find in tab_04: Nhật ký phiếu nhập kho
         tab_04_frame = self.tab4_NHAT_KY_NHAP_KHO
-        self.tab_04_entry_ma_khach_hang = f_utils_tim_component_with_name(tab_04_frame, "entry_ma_khach_hang")
-        self.tab_04_entry_ten_khach_hang = f_utils_tim_component_with_name(tab_04_frame, "entry_ten_khach_hang")
-        self.tab_04_entry_mst = f_utils_tim_component_with_name(tab_04_frame, "entry_mst")
+        self.tab_04_entry_ma_khach_hang = f_utils_tim_component_with_name(tab_04_frame, "entry_ma_nha_cung_cap")
+        self.tab_04_entry_ten_khach_hang = f_utils_tim_component_with_name(tab_04_frame, "entry_ten_nha_cung_cap")
+        self.tab_04_entry_mst = f_utils_tim_component_with_name(tab_04_frame, "entry_mst_nha_cung_cap")
         self.tab_04_entry_mst.pack_forget()
-        self.tab_04_entry_dia_chi = f_utils_tim_component_with_name(tab_04_frame, "entry_dia_chi")
+        self.tab_04_entry_dia_chi = f_utils_tim_component_with_name(tab_04_frame, "entry_dia_chi_nha_cung_cap")
         self.tab_04_entry_dia_chi.pack_forget()
         self._tab_04_frame_row_2_of_inventories_info = f_utils_tim_component_with_name(tab_04_frame, "frame_row_2_of_inventories_info")
         self._tab_04_frame_row_2_of_inventories_info.pack_forget()
@@ -139,10 +143,29 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         self.tab_04_entry_ten_hang = f_utils_tim_component_with_name(tab_04_frame, "entry_ten_hang")
         self.tab_04_ngay_filter_bat_dau = f_utils_tim_component_with_name(tab_04_frame, "start_date_entry")
         self.tab_04_ngay_filter_ket_thuc = f_utils_tim_component_with_name(tab_04_frame, "end_date_entry")
+        
+        # Find in tab_02: Phiếu xuất kho
+        tab_02_frame = self.tab2
+        self.tab_02_entry_ma_hang = f_utils_tim_component_with_name(tab_02_frame, "entry_ma_hang")
+        self.tab_02_entry_ten_hang = f_utils_tim_component_with_name(tab_02_frame, "entry_ten_hang")
+        self.tab_02_entry_dvt = f_utils_tim_component_with_name(tab_02_frame, "entry_dvt")
+        self.tab_02_entry_ngay_tren_phieu = f_utils_tim_component_with_name(tab_02_frame, "date_entry")
+        self.tab_02_entry_so_phieu = f_utils_tim_component_with_name(tab_02_frame, "slips_entry")
+        self.tab_02_btn_refresh_number_of_slip = f_utils_tim_component_with_name(tab_02_frame, "refresh_number_of_slip_button")
+        self.tab_02_entry_ma_khach_hang = f_utils_tim_component_with_name(tab_02_frame, "entry_ma_khach_hang")
+        self.tab_02_entry_ten_khach_hang = f_utils_tim_component_with_name(tab_02_frame, "entry_ten_khach_hang")
+        self.tab_02_entry_mst = f_utils_tim_component_with_name(tab_02_frame, "entry_mst")
+        self.tab_02_entry_dia_chi = f_utils_tim_component_with_name(tab_02_frame, "entry_dia_chi")
+        self._tab_02_entry_so_hop_dong = f_utils_tim_component_with_name(tab_02_frame, "entry_so_hop_dong")
+        self.tab_02_entry_thong_tin_hop_dong = f_utils_tim_component_with_name(tab_02_frame, "entry_thong_tin_ngan_cua_hop_dong")
+        
     
     def f_set_up_format_of_tree_view(self):
+        # Nhập kho
         Controller_handel_all_events.f_handle_event_initializing_format_of_treeview_of_tab_01(self.tab_01_treeview_PNK)
         Controller_handel_all_events.f_handle_event_initializing_format_of_treeview_of_tab_04(self.tab_04_treeview_log_of_PNK)
+        # Xuất kho
+        Controller_handel_all_events.f_handle_event_initializing_format_of_treeview_of_tab_02(self.tab_02_treeview_PXK)
     
     def _f_setup_all_global_variants(self):    
         # Timer interval (in milliseconds)
@@ -204,15 +227,15 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         self.Frame_container_date_and_number.pack(side="top", 
                                                   fill="x"
                                                   )
-        self.f_view_create_widgets_in_frame_date_and_number()
+        self.f_view_create_widgets_in_frame_date_and_number_in_tab_01()
 
         # Create container for client and inventories
-        self.Frame_clients_and_inventories_information = tk.Frame(parent_frame)
-        self.Frame_clients_and_inventories_information.pack(side="top",
+        self.tab_01_Frame_clients_and_inventories_information = tk.Frame(parent_frame)
+        self.tab_01_Frame_clients_and_inventories_information.pack(side="top",
                                                             fill="x",  
                                                             pady=(5,0)
                                                             )
-        self.f_view_create_widgets_in_frame_clients_and_inventories()
+        self.f_view_create_widgets_in_tab_01_frame_clients_and_inventories()
 
         # Create frame inventories informations
         self.frame_slip_informations = tk.Frame(parent_frame)
@@ -220,15 +243,15 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
                                           fill="x", 
                                           pady=(5,0)
                                           )
-        self.f_view_create_widgets_in_frame_slip_informations()
+        self.f_view_create_widgets_in_frame_slip_informations_in_tab_01()
     
-    def f_view_create_widgets_in_frame_date_and_number(self):
+    def f_view_create_widgets_in_frame_date_and_number_in_tab_01(self):
         # Create frame date and number of slip 
         self.frame_date_and_number = cls_Frame_date_and_number_of_slip(self.Frame_container_date_and_number)
         self.frame_date_and_number.pack(anchor="center")
 
-    def f_view_create_widgets_in_frame_clients_and_inventories(self):
-        parent_frame = self.Frame_clients_and_inventories_information
+    def f_view_create_widgets_in_tab_01_frame_clients_and_inventories(self):
+        parent_frame = self.tab_01_Frame_clients_and_inventories_information
 
         # Configure grid layout for parent frame
         parent_frame.grid_columnconfigure(0, weight=1)
@@ -247,7 +270,7 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         self.frame_inventories_informations_tab_01.grid(row=0, column=1, sticky="nsew", padx=(10, 0))
         self.f_view_create_widgets_add_widget_into_frame_inventories_informations_tab_01()
             
-    def f_view_create_widgets_in_frame_slip_informations(self):
+    def f_view_create_widgets_in_frame_slip_informations_in_tab_01(self):
         # Input fields
         tk.Label(self.frame_slip_informations, text="STT:").pack(side="left")
         self.tab_01_entry_id = tk.Entry(self.frame_slip_informations,
@@ -363,6 +386,211 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
+    # Tab_02: create widgets
+    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
+
+    def f_view_create_all_container_frames_in_tab_02(self):
+        parent_frame = self.tab2
+
+        # Frame H2
+        self.tab_02_frame_H2 = tk.Frame(parent_frame)
+        self.tab_02_frame_H2.grid(row=0, column=0, sticky="ew")
+        cls_my_label_num_03_title_H2(self.tab_02_frame_H2, text="PHIẾU NHẬP KHO").pack(anchor="center")
+
+        # Frame entries
+        self.tab_02_frame_entries = tk.Frame(parent_frame)
+        self.tab_02_frame_entries.grid(row=1, column=0, sticky="ew")
+        self.f_view_create_widgets_in_tab_02_frame_entries()
+
+        # Frame button
+        self.tab_02_frame_button_of_treeview = tk.Frame(parent_frame)
+        self.tab_02_frame_button_of_treeview.grid(row=2, column=0, sticky="ew")
+        self.f_view_create_widgets_in_tab_02_frame_button_of_treeview()
+
+        # Frame treeview
+        self.tab_02_frame_treeview = cls_Treeview_frame_number_01(parent_frame)
+        self.tab_02_frame_treeview.grid(row=3, column=0, sticky="nsew")
+        self.tab_02_treeview_PXK = self.tab_02_frame_treeview.treeview_normal
+        
+        # Frame button
+        self.tab_02_frame_button_02 = tk.Frame(parent_frame)
+        self.tab_02_frame_button_02.grid(row=4, column=0, sticky="ew")
+        self.f_view_create_widgets_in_tab_02_frame_button_02()
+
+        parent_frame.grid_rowconfigure(3, weight=1) # cho phép giãn nở
+        parent_frame.grid_columnconfigure(0, weight=1)
+     
+    def f_view_create_widgets_in_tab_02_frame_entries(self):
+        self.tab_02_container_frame_entries = tk.Frame(self.tab_02_frame_entries)
+        self.tab_02_container_frame_entries.pack(side="top", 
+                                                 fill="x"
+                                                 )
+
+        parent_frame = self.tab_02_container_frame_entries
+        # Create container for date and number of slip
+        self.Frame_container_date_and_number = tk.Frame(parent_frame)
+        self.Frame_container_date_and_number.pack(side="top", 
+                                                  fill="x"
+                                                  )
+        self.f_view_create_widgets_in_frame_date_and_number_in_tab_02()
+
+        # Create container for client and inventories
+        self.tab_02_Frame_clients_and_inventories_information = tk.Frame(parent_frame)
+        self.tab_02_Frame_clients_and_inventories_information.pack(side="top",
+                                                            fill="x",  
+                                                            pady=(5,0)
+                                                            )
+        self.f_view_create_widgets_in_tab_02_frame_clients_and_inventories()
+
+        # Create frame inventories informations
+        self.frame_slip_informations = tk.Frame(parent_frame)
+        self.frame_slip_informations.pack(side="top", 
+                                          fill="x", 
+                                          pady=(5,0)
+                                          )
+        self.f_view_create_widgets_in_frame_slip_informations_in_tab_02()
+    
+    def f_view_create_widgets_in_frame_date_and_number_in_tab_02(self):
+        # Create frame date and number of slip 
+        self.frame_date_and_number = cls_Frame_date_and_number_of_slip(self.Frame_container_date_and_number)
+        self.frame_date_and_number.pack(anchor="center")
+
+    def f_view_create_widgets_in_tab_02_frame_clients_and_inventories(self):
+        parent_frame = self.tab_02_Frame_clients_and_inventories_information
+
+        # Configure grid layout for parent frame
+        parent_frame.grid_columnconfigure(0, weight=1)
+        parent_frame.grid_columnconfigure(1, weight=1)
+        parent_frame.grid_rowconfigure(0, weight=1)
+
+        # Create frame clients informations
+        self.tab_02_frame_suppliers_information = cls_frame_client_information_view(parent_frame)
+        self.tab_02_frame_suppliers_information.config(bd=0, relief="flat")
+        self.tab_02_frame_suppliers_information.grid(row=0, column=0, sticky="nsew")
+        self.f_view_create_widgets_add_row_03_into_frame_clients_informations_tab_02()
+        
+        # Create frame inventories informations
+        self.frame_inventories_informations_tab_02 = cls_frame_inventories_information_view(parent_frame)
+        self.frame_inventories_informations_tab_02.config(bd=0, relief="flat")
+        self.frame_inventories_informations_tab_02.grid(row=0, column=1, sticky="nsew", padx=(10, 0))
+        self.f_view_create_widgets_add_widget_into_frame_inventories_informations_tab_02()
+            
+    def f_view_create_widgets_in_frame_slip_informations_in_tab_02(self):
+        # Input fields
+        tk.Label(self.frame_slip_informations, text="STT:").pack(side="left")
+        self.tab_02_entry_id = tk.Entry(self.frame_slip_informations,
+                                        width=10)
+        self.tab_02_entry_id.pack(side="left")
+        self.tab_02_entry_id.config(state="disabled")  # This makes the entry non-editable
+
+        # Input fields
+        tk.Label(self.frame_slip_informations, text="Thông tin thêm:").pack(side="left")
+        self.tab_02_note_for_slip = cls_my_text_entry_num_01(self.frame_slip_informations)
+        self.tab_02_note_for_slip.f_on_leaving(color=COLOR_WHITE)
+        self.tab_02_note_for_slip.f_on_not_selecting(color=COLOR_WHITE)
+        self.tab_02_note_for_slip.pack(side="left", fill="x", expand=True, pady=10)
+        
+    def f_view_create_widgets_add_widget_into_frame_inventories_informations_tab_02(self):
+        # create parent_frame
+        parent_frame = self.frame_inventories_informations_tab_02.frame_row_2
+        
+        self.tab_02_label_sl_thuc_nhap = tk.Label(parent_frame, text="SL thực nhập:")
+        self.tab_02_label_sl_thuc_nhap.grid(row=0, column=4, padx=(10, 2), pady=5, sticky="w")
+        self.tab_02_entry_sl_thuc_nhap = cls_my_number_entry_num_01(parent_frame, width=10)
+        self.tab_02_entry_sl_thuc_nhap.f_on_leaving(color=COLOR_WHITE)
+        self.tab_02_entry_sl_thuc_nhap.f_on_not_selecting(color=COLOR_WHITE)
+        self.tab_02_entry_sl_thuc_nhap.grid(row=0, column=5, padx=(0, 10), pady=5, sticky="w")
+        
+        # Create a combobox with the options 'Kho A' and 'Kho B'
+        values = ["Kho A", "Kho B"]
+        self.tab_02_kho_nhap = tk.Label(parent_frame, text="Mã kho:")
+        self.tab_02_kho_nhap.grid(row=0, column=6, padx=(10, 2), pady=5, sticky="w")
+        self.tab_02_combobox_ma_kho = cls_my_combobox_num_01(parent_frame, values=values)
+        self.tab_02_combobox_ma_kho.grid(row=0, column=7, padx=(0, 10), pady=5, sticky="w")
+        # Set the default value to the first item in the list
+        self.tab_02_combobox_ma_kho.set(values[0])
+
+        # Configure column weights for proper resizing
+        parent_frame.columnconfigure(5, weight=1)  # Allow tab_02_entry_nhu_cau to expand
+        parent_frame.columnconfigure(7, weight=1)  # Allow tab_02_entry_sl_giu_cho to expand
+        parent_frame.columnconfigure(9, weight=1)  # Allow tab_02_entry_sl_YCDH to expand
+        
+        self.f_view_create_widgets_add_row_03_into_frame_inventories_informations_tab_02()
+    
+    def f_view_create_widgets_add_row_03_into_frame_inventories_informations_tab_02(self):
+        # create parent_frame
+        parent_frame = tk.Frame(self.frame_inventories_informations_tab_02)
+        parent_frame.pack(side="bottom", fill="x", expand=True)
+
+        tk.Label(parent_frame, text="Ghi chú mặt hàng:").pack(side="left")
+        self.tab_02_entry_ghi_chu_mat_hang = cls_my_text_entry_num_01(parent_frame)
+        self.tab_02_entry_ghi_chu_mat_hang.f_on_leaving(color=COLOR_WHITE)
+        self.tab_02_entry_ghi_chu_mat_hang.f_on_not_selecting(color=COLOR_WHITE)
+        self.tab_02_entry_ghi_chu_mat_hang.pack(side="left", fill="x", expand=True, padx=(0, 10))
+        
+    def f_view_create_widgets_add_row_03_into_frame_clients_informations_tab_02(self):
+        # create parent_frame
+        parent_frame = cls_frame_contracts_management_view(self.tab_02_frame_suppliers_information)
+        parent_frame.pack(side="bottom", fill="x", expand=True)
+
+    def f_view_create_widgets_in_tab_02_frame_button_of_treeview(self):
+        # Create a sub-frame to organize buttons in the center
+        tab_02_button_container_01 = tk.Frame(self.tab_02_frame_button_of_treeview)
+        tab_02_button_container_01.pack(expand=True, pady=10)
+        
+        # Add button
+        self.tab_02_button_add = cls_my_button_num_01(tab_02_button_container_01, text="Add Row")
+        self.tab_02_button_add.pack(side="left", padx=10)
+        
+        # Update button
+        self.tab_02_button_update_row_in_treeview = cls_my_button_num_01(tab_02_button_container_01, text="Update Row")
+        self.tab_02_button_update_row_in_treeview.pack(side="left", padx=10)
+        
+        # Delete button
+        self.tab_02_button_delete = cls_my_button_num_01(tab_02_button_container_01, text="Delete Row")
+        self.tab_02_button_delete.pack(side="left", padx=10)
+        
+        # Clear button
+        self.tab_02_button_clear = cls_my_button_num_01(tab_02_button_container_01, text="Clear Rows")
+        self.tab_02_button_clear.pack(side="left", padx=10)
+    
+    def f_view_create_widgets_in_tab_02_frame_button_02(self):
+        parent_frame = self.tab_02_frame_button_02
+        # Create a sub-frame on the right
+        tab_02_button_container_02_on_the_right = tk.Frame(parent_frame)
+        tab_02_button_container_02_on_the_right.pack(side="right", expand=True, pady=10)
+        # Create a sub-frame on the left
+        tab_02_button_container_02_on_the_left = tk.Frame(parent_frame)
+        tab_02_button_container_02_on_the_left.pack(side="left", expand=True, pady=10)
+        
+        # BTN update slip
+        self.tab_02_button_update_slip = cls_my_button_num_01(tab_02_button_container_02_on_the_right, text="Update")
+        self.tab_02_button_update_slip.pack(side="right", padx=10)
+        
+        # BTN save
+        self.tab_02_button_save = cls_my_button_num_01(tab_02_button_container_02_on_the_right, text="Save")
+        self.tab_02_button_save.pack(side="right", padx=10)
+        
+        # BTN print
+        self.tab_02_button_print = cls_my_button_num_01(tab_02_button_container_02_on_the_right, text="Print")
+        self.tab_02_button_print.pack(side="right", padx=10)
+        
+        # temp button
+        self.tab_02_btn_template = cls_my_button_num_01(tab_02_button_container_02_on_the_left, text="Template")
+        self.tab_02_btn_template.pack(side="left", padx=10)
+        
+        # get file button
+        self.tab_02_btn_get_import_file = cls_my_button_num_01(tab_02_button_container_02_on_the_left, text="Get file")
+        self.tab_02_btn_get_import_file.pack(side="left", padx=10)
+    
+    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
+    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
+    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
+    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
+    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
+    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
+    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
+    #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     # Tab_04: create widgets
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     
@@ -422,7 +650,7 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         tk.Label(parent_frame_00, text="Số phiếu").grid(row=0, column= 0, padx=(10, 0), pady=(10, 0), sticky="w")
         self.filter_entry_slip_number = cls_my_text_entry_num_01(parent_frame_00)
         self.filter_entry_slip_number.grid(row=0, column= 1, padx=(2, 10), pady=(10, 0), sticky="ew")
-        tk.Label(parent_frame_00, text="Số hợp đồng").grid(row=1, column= 0, padx=(10, 0), pady=(15, 10), sticky="w")
+        tk.Label(parent_frame_00, text="Số đề nghị").grid(row=1, column= 0, padx=(10, 0), pady=(15, 10), sticky="w")
         self.filter_entry_contract_number = cls_my_text_entry_num_01(parent_frame_00)
         self.filter_entry_contract_number.grid(row=1, column= 1, padx=(2, 10), pady=(15, 10), sticky="ew")
         
@@ -432,7 +660,7 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         self.tab_04_frame_seclect_date.grid(row=0, column=0, sticky="ew")
         
         # Create frame clients informations
-        self.tab_04_frame_clients_informations = cls_frame_client_information_view(parent_frame_02)
+        self.tab_04_frame_clients_informations = cls_frame_suppliers_information_view(parent_frame_02)
         self.tab_04_frame_clients_informations.config(bd=0, relief="flat")
         self.tab_04_frame_clients_informations.grid(row=0, column=0, sticky="ew")
         
