@@ -193,8 +193,11 @@ class Controller_handel_all_events:
     def update_entry_id_when_initializing(my_treeview, entry_id):
         Controller_update_entry_id.update_entry_id_after_adding_new_row(my_treeview, entry_id)
     
-    def f_handle_event_get_the_latest_number_of_slip(tab_01_entry_so_phieu):
-        Cotroller_get_the_latest_number_of_slip.get_the_latest_number_of_slip(tab_01_entry_so_phieu)
+    def f_handle_event_get_the_latest_number_of_slip_PNK(entry_so_phieu_PNK):
+        Cotroller_get_the_latest_number_of_slip.get_the_latest_number_of_slip(entry_so_phieu_PNK)
+        
+    def f_handle_event_get_the_latest_number_of_slip_PXK(entry_so_phieu_PXK):
+        Cotroller_get_the_latest_number_of_slip.get_the_latest_number_of_slip(entry_so_phieu_PXK)
         
     def f_handle_event_initializing_format_of_treeview_of_tab_01(my_treeview):
         Controller_format_treeview.set_format_of_treeview_of_tab_01(my_treeview)

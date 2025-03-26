@@ -17,7 +17,7 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         
         # # Step-02: setting and formating
         self.f_set_up_format_of_tree_view()
-        # self.f_set_up_when_initializing()
+        self.f_set_up_when_initializing()
         # self.f_set_command_for_elements()
 
     def f_view_thay_doi_gia_tri_cua_base_form(self):
@@ -83,7 +83,8 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         self.f_view_create_all_container_frames_in_tab_03()
 
     def f_set_up_when_initializing(self):
-        Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(self.tab_01_entry_so_phieu)
+        Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip_PNK(self.tab_01_entry_so_phieu)
+        Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip_PXK(self.tab_02_entry_so_phieu)
     
     def f_set_command_for_elements(self):
         # config command for elements
