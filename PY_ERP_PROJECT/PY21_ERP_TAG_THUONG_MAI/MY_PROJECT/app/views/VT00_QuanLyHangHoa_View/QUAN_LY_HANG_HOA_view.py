@@ -18,7 +18,7 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         # # Step-02: setting and formating
         self.f_set_up_format_of_tree_view()
         self.f_set_up_when_initializing()
-        # self.f_set_command_for_elements()
+        self.f_set_command_for_elements()
 
     def f_view_thay_doi_gia_tri_cua_base_form(self):
         # Thay đổi thông tin các tab
@@ -87,7 +87,7 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip_PXK(self.tab_02_entry_so_phieu)
     
     def f_set_command_for_elements(self):
-        # config command for elements
+        # Tab 01
         self.tab_01_btn_refresh_number_of_slip.config(command=self.event_tab_01_button_get_number_of_slip_click)
         
         self.tab_01_button_add.config(command=self.event_tab_01_button_add_row_click)
@@ -102,6 +102,10 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_btn_template.config(command=self.event_tab_01_button_template_click)
         self.tab_01_btn_get_import_file.config(command=self.event_tab_01_button_get_import_file_click)
         
+        # Tab 02
+        self.tab_03_button_create_new_inventory.config(command=self.event_tab_03_button_create_new_inventory_click)
+        
+        # Tab 04
         self.tab_04_button_filter.config(command=self.event_tab_04_button_filter_click)
         self.tab_04_button_clear_filter.config(command=self.event_tab_04_button_clear_filter_click)
         self.tab_04_button_export_excel.config(command=self.event_tab_04_button_export_excel_click)
@@ -660,8 +664,8 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         self.tab_03_entry_new_dvt.grid(row=2, column=1, padx=(10, 2), pady=5, sticky="w")
         
         # BTN save
-        self.tab_03_button_save = cls_my_button_num_01(parent_frame, text="Save")
-        self.tab_03_button_save.grid(row=3, column=1, padx=10, pady=5, sticky="ew")    
+        self.tab_03_button_create_new_inventory = cls_my_button_num_01(parent_frame, text="Save")
+        self.tab_03_button_create_new_inventory.grid(row=3, column=1, padx=10, pady=5, sticky="ew")    
     
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
