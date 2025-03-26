@@ -139,13 +139,13 @@ class cls_frame_client_information_view(tk.Frame):
         entry_client_tax_numbers = entry.cls_my_text_entry_num_01(
             self.frame_row_2, 
             width=15,
-            name="entry_mst"
+            name="entry_mst_khach_hang"
         )
         entry_client_tax_numbers.pack(side="left", padx=(10, 2), pady=5)
         self.additional_entries.append(entry_client_tax_numbers)
 
         entry_client_address = entry.cls_my_text_entry_num_01(self.frame_row_2,
-                                                        name="entry_dia_chi")
+                                                        name="entry_dia_chi_khach_hang")
         entry_client_address.pack(side="left", fill="x", expand=True, padx=(0, 10), pady=5)
         self.additional_entries.append(entry_client_address)
 
