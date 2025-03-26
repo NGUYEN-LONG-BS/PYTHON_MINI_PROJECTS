@@ -312,19 +312,19 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         tab_01_button_container_01.pack(expand=True, pady=10)
         
         # Add button
-        self.tab_01_button_add = tk.Button(tab_01_button_container_01, text="Add Row")
+        self.tab_01_button_add = cls_my_button_num_01(tab_01_button_container_01, text="Add Row")
         self.tab_01_button_add.pack(side="left", padx=10)
         
         # Update button
-        self.tab_01_button_update_row_in_treeview = tk.Button(tab_01_button_container_01, text="Update Row")
+        self.tab_01_button_update_row_in_treeview = cls_my_button_num_01(tab_01_button_container_01, text="Update Row")
         self.tab_01_button_update_row_in_treeview.pack(side="left", padx=10)
         
         # Delete button
-        self.tab_01_button_delete = tk.Button(tab_01_button_container_01, text="Delete Row")
+        self.tab_01_button_delete = cls_my_button_num_01(tab_01_button_container_01, text="Delete Row")
         self.tab_01_button_delete.pack(side="left", padx=10)
         
         # Clear button
-        self.tab_01_button_clear = tk.Button(tab_01_button_container_01, text="Clear Rows")
+        self.tab_01_button_clear = cls_my_button_num_01(tab_01_button_container_01, text="Clear Rows")
         self.tab_01_button_clear.pack(side="left", padx=10)
     
     def f_view_create_widgets_in_tab_01_frame_button_02(self):
@@ -337,23 +337,23 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         tab_01_button_container_02_on_the_left.pack(side="left", expand=True, pady=10)
         
         # BTN update slip
-        self.tab_01_button_update_slip = tk.Button(tab_01_button_container_02_on_the_right, text="Update")
+        self.tab_01_button_update_slip = cls_my_button_num_01(tab_01_button_container_02_on_the_right, text="Update")
         self.tab_01_button_update_slip.pack(side="right", padx=10)
         
         # BTN save
-        self.tab_01_button_save = tk.Button(tab_01_button_container_02_on_the_right, text="Save")
+        self.tab_01_button_save = cls_my_button_num_01(tab_01_button_container_02_on_the_right, text="Save")
         self.tab_01_button_save.pack(side="right", padx=10)
         
         # BTN print
-        self.tab_01_button_print = tk.Button(tab_01_button_container_02_on_the_right, text="Print")
+        self.tab_01_button_print = cls_my_button_num_01(tab_01_button_container_02_on_the_right, text="Print")
         self.tab_01_button_print.pack(side="right", padx=10)
         
         # temp button
-        self.tab_01_btn_template = tk.Button(tab_01_button_container_02_on_the_left, text="Template")
+        self.tab_01_btn_template = cls_my_button_num_01(tab_01_button_container_02_on_the_left, text="Template")
         self.tab_01_btn_template.pack(side="left", padx=10)
         
         # get file button
-        self.tab_01_btn_get_import_file = tk.Button(tab_01_button_container_02_on_the_left, text="Get file")
+        self.tab_01_btn_get_import_file = cls_my_button_num_01(tab_01_button_container_02_on_the_left, text="Get file")
         self.tab_01_btn_get_import_file.pack(side="left", padx=10)
     
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
@@ -404,12 +404,12 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         tab_04_button_container_01.pack(expand=True, pady=10)
         
         # Add button
-        self.tab_04_button_add = tk.Button(tab_04_button_container_01, text="Filter")
+        self.tab_04_button_add = cls_my_button_num_01(tab_04_button_container_01, text="Filter")
         self.tab_04_button_add.config(command=self.f_tab_04_button_filter_click)
         self.tab_04_button_add.pack(side="left", padx=10)
         
         # Delete update
-        self.tab_04_button_clear = tk.Button(tab_04_button_container_01, text="Clear")
+        self.tab_04_button_clear = cls_my_button_num_01(tab_04_button_container_01, text="Clear")
         self.tab_04_button_clear.config(command=self.f_tab_04_button_clear_click)
         self.tab_04_button_clear.pack(side="left", padx=10)
     
@@ -454,17 +454,17 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         tab_04_button_container_02.pack(expand=True, pady=10)
         
         # Get Data button
-        self.tab_04_button_export_excel = tk.Button(tab_04_button_container_02, text="Export Excel")
+        self.tab_04_button_export_excel = cls_my_button_num_01(tab_04_button_container_02, text="Export Excel")
         self.tab_04_button_export_excel.config(command=self.f_tab_04_button_export_excel_click)
         self.tab_04_button_export_excel.pack(side="left", padx=10)
         
         # Get Data button
-        self.tab_04_button_edit = tk.Button(tab_04_button_container_02, text="EDIT")
+        self.tab_04_button_edit = cls_my_button_num_01(tab_04_button_container_02, text="EDIT")
         self.tab_04_button_edit.config(command=self.f_tab_04_button_edit_click)
         self.tab_04_button_edit.pack(side="left", padx=10)
         
         # Export Data button
-        self.tab_04_button_DELETE = tk.Button(tab_04_button_container_02, text="DELETE")
+        self.tab_04_button_DELETE = cls_my_button_num_01(tab_04_button_container_02, text="DELETE")
         self.tab_04_button_DELETE.config(command=self.f_tab_04_button_delete_click)
         self.tab_04_button_DELETE.pack(side="left", padx=10)
 

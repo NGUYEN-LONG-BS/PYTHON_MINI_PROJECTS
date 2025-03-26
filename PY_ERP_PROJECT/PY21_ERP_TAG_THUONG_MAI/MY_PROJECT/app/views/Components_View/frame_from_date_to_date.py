@@ -50,31 +50,31 @@ class cls_frame_DateSelector_view(tk.Frame):
 
     def create_buttons(self):
         # Button (This week)
-        clear_button = button.cls_my_button_num_02(self.frames[0], text="Clear", command=lambda: self.clear_entries(*self.clear_all()))
+        clear_button = button.cls_my_button_num_01(self.frames[0], text="Clear", command=lambda: self.clear_entries(*self.clear_all()))
         clear_button.grid(row=0, column=3, padx=2, pady=0)
         
         # Button (This week)
-        this_week_button = button.cls_my_button_num_02(self.frames[1], text="This week", command=lambda: self.clear_entries(*self.this_week()))
+        this_week_button = button.cls_my_button_num_01(self.frames[1], text="This week", command=lambda: self.clear_entries(*self.this_week()))
         this_week_button.grid(row=0, column=0, padx=2, pady=0)
 
         # Button (Last week)
-        last_week_button = button.cls_my_button_num_02(self.frames[1], text="Last week", command=lambda: self.clear_entries(*self.last_week()))
+        last_week_button = button.cls_my_button_num_01(self.frames[1], text="Last week", command=lambda: self.clear_entries(*self.last_week()))
         last_week_button.grid(row=0, column=1, padx=2, pady=0)
 
         # Button (This month)
-        this_month_button = button.cls_my_button_num_02(self.frames[1], text="This month", command=lambda: self.clear_entries(*self.this_month()))
+        this_month_button = button.cls_my_button_num_01(self.frames[1], text="This month", command=lambda: self.clear_entries(*self.this_month()))
         this_month_button.grid(row=0, column=2, padx=2, pady=0)
 
         # Button (Last month)
-        last_month_button = button.cls_my_button_num_02(self.frames[1], text="Last month", command=lambda: self.clear_entries(*self.last_month()))
+        last_month_button = button.cls_my_button_num_01(self.frames[1], text="Last month", command=lambda: self.clear_entries(*self.last_month()))
         last_month_button.grid(row=0, column=3, padx=2, pady=0)
 
         # Button (This year)
-        this_year_button = button.cls_my_button_num_02(self.frames[1], text="This year", command=lambda: self.clear_entries(*self.this_year()))
+        this_year_button = button.cls_my_button_num_01(self.frames[1], text="This year", command=lambda: self.clear_entries(*self.this_year()))
         this_year_button.grid(row=0, column=4, padx=2, pady=0)
 
         # Button (Last year)
-        last_year_button = button.cls_my_button_num_02(self.frames[1], text="Last year", command=lambda: self.clear_entries(*self.last_year()))
+        last_year_button = button.cls_my_button_num_01(self.frames[1], text="Last year", command=lambda: self.clear_entries(*self.last_year()))
         last_year_button.grid(row=0, column=5, padx=2, pady=0)
 
     # Function to clear the entries

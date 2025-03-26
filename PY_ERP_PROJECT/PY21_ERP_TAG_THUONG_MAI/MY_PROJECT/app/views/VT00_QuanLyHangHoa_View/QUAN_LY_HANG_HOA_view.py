@@ -100,14 +100,13 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         
         self.tab_04_button_edit_slip.config(command=self.event_tab_04_button_edit_slip_click)
         self.tab_04_button_delete_slip.config(command=self.event_tab_04_button_delete_slip_click)
-        self.tab_04_button_mark_expired.config(command=self.event_tab_04_button_mark_expired_click)
         
         # Gán sự kiện
         self.tab_01_treeview_PNK.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_01_single_click)  # Single click
         self.tab_01_treeview_PNK.bind("<Double-1>", self.f_view_treeview_of_tab_01_double_click)  # Double click
         
-        self.tab_04_treeview_log_of_PNK.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_02_single_click)  # Single click
-        self.tab_04_treeview_log_of_PNK.bind("<Double-1>", self.f_view_treeview_of_tab_02_double_click)  # Double click
+        self.tab_04_treeview_log_of_PNK.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_04_single_click)  # Single click
+        self.tab_04_treeview_log_of_PNK.bind("<Double-1>", self.f_view_treeview_of_tab_04_double_click)  # Double click
         
     def f_define_all_elements(self):
         # Find in tab_01: Phiếu nhập kho
@@ -312,19 +311,19 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         tab_01_button_container_01.pack(expand=True, pady=10)
         
         # Add button
-        self.tab_01_button_add = tk.Button(tab_01_button_container_01, text="Add Row")
+        self.tab_01_button_add = cls_my_button_num_01(tab_01_button_container_01, text="Add Row")
         self.tab_01_button_add.pack(side="left", padx=10)
         
         # Update button
-        self.tab_01_button_update_row_in_treeview = tk.Button(tab_01_button_container_01, text="Update Row")
+        self.tab_01_button_update_row_in_treeview = cls_my_button_num_01(tab_01_button_container_01, text="Update Row")
         self.tab_01_button_update_row_in_treeview.pack(side="left", padx=10)
         
         # Delete button
-        self.tab_01_button_delete = tk.Button(tab_01_button_container_01, text="Delete Row")
+        self.tab_01_button_delete = cls_my_button_num_01(tab_01_button_container_01, text="Delete Row")
         self.tab_01_button_delete.pack(side="left", padx=10)
         
         # Clear button
-        self.tab_01_button_clear = tk.Button(tab_01_button_container_01, text="Clear Rows")
+        self.tab_01_button_clear = cls_my_button_num_01(tab_01_button_container_01, text="Clear Rows")
         self.tab_01_button_clear.pack(side="left", padx=10)
     
     def f_view_create_widgets_in_tab_01_frame_button_02(self):
@@ -337,23 +336,23 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         tab_01_button_container_02_on_the_left.pack(side="left", expand=True, pady=10)
         
         # BTN update slip
-        self.tab_01_button_update_slip = tk.Button(tab_01_button_container_02_on_the_right, text="Update")
+        self.tab_01_button_update_slip = cls_my_button_num_01(tab_01_button_container_02_on_the_right, text="Update")
         self.tab_01_button_update_slip.pack(side="right", padx=10)
         
         # BTN save
-        self.tab_01_button_save = tk.Button(tab_01_button_container_02_on_the_right, text="Save")
+        self.tab_01_button_save = cls_my_button_num_01(tab_01_button_container_02_on_the_right, text="Save")
         self.tab_01_button_save.pack(side="right", padx=10)
         
         # BTN print
-        self.tab_01_button_print = tk.Button(tab_01_button_container_02_on_the_right, text="Print")
+        self.tab_01_button_print = cls_my_button_num_01(tab_01_button_container_02_on_the_right, text="Print")
         self.tab_01_button_print.pack(side="right", padx=10)
         
         # temp button
-        self.tab_01_btn_template = tk.Button(tab_01_button_container_02_on_the_left, text="Template")
+        self.tab_01_btn_template = cls_my_button_num_01(tab_01_button_container_02_on_the_left, text="Template")
         self.tab_01_btn_template.pack(side="left", padx=10)
         
         # get file button
-        self.tab_01_btn_get_import_file = tk.Button(tab_01_button_container_02_on_the_left, text="Get file")
+        self.tab_01_btn_get_import_file = cls_my_button_num_01(tab_01_button_container_02_on_the_left, text="Get file")
         self.tab_01_btn_get_import_file.pack(side="left", padx=10)
     
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
@@ -404,11 +403,11 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         parent_frame.pack(expand=True, pady=10)
         
         # Add button
-        self.tab_04_button_filter = tk.Button(parent_frame, text="Filter")
+        self.tab_04_button_filter = cls_my_button_num_01(parent_frame, text="Filter")
         self.tab_04_button_filter.pack(side="left", padx=10)
         
         # Delete update
-        self.tab_04_button_clear_filter = tk.Button(parent_frame, text="Clear")
+        self.tab_04_button_clear_filter = cls_my_button_num_01(parent_frame, text="Clear")
         self.tab_04_button_clear_filter.pack(side="left", padx=10)
     
     def f_view_create_widgets_in_tab_04_frame_filter_entries(self):
@@ -452,24 +451,20 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         parent_frame.pack(expand=True, pady=10)
         
         # Get Data button
-        self.tab_02_button_export_all_data = tk.Button(parent_frame, text="Export all data")
-        self.tab_02_button_export_all_data.pack(side="left", padx=10)
+        self.tab_04_button_export_all_data = cls_my_button_num_01(parent_frame, text="Export all data")
+        self.tab_04_button_export_all_data.pack(side="left", padx=10)
         
         # Get Data button
-        self.tab_02_button_export_excel = tk.Button(parent_frame, text="Export Excel")
-        self.tab_02_button_export_excel.pack(side="left", padx=10)
+        self.tab_04_button_export_excel = cls_my_button_num_01(parent_frame, text="Export Excel")
+        self.tab_04_button_export_excel.pack(side="left", padx=10)
         
         # Edit Slip button
-        self.tab_02_button_edit_slip = tk.Button(parent_frame, text="Edit slip")
-        self.tab_02_button_edit_slip.pack(side="left", padx=10)
+        self.tab_04_button_edit_slip = cls_my_button_num_01(parent_frame, text="Edit slip")
+        self.tab_04_button_edit_slip.pack(side="left", padx=10)
         
         # Delete Slip button
-        self.tab_02_button_delete_slip = tk.Button(parent_frame, text="Delete slip")
-        self.tab_02_button_delete_slip.pack(side="left", padx=10)
-        
-        # Mark Expired button
-        self.tab_02_button_mark_expired = tk.Button(parent_frame, text="Mark Expired")
-        self.tab_02_button_mark_expired.pack(side="left", padx=10)
+        self.tab_04_button_delete_slip = cls_my_button_num_01(parent_frame, text="Delete slip")
+        self.tab_04_button_delete_slip.pack(side="left", padx=10)
     
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
@@ -479,129 +474,6 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
-    # All click event
+    # Adding handler
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
-    
-    def f_view_tab_01_button_clear_click(self):
-        if not notification_text and not fg:
-            notification_text = "..."
-            fg = "blue"
-        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
-
-    def f_tab_01_button_print_form_tu_tao_tu_code_click(self):
-        if not notification_text and not fg:
-            notification_text = "..."
-            fg = "blue"
-        
-        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
-        
-    def f_tab_01_button_print_click(self):
-        if not notification_text and not fg:
-            notification_text = "..."
-            fg = "blue"
-        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
-        
-    def f_tab_01_button_get_number_of_slip_click(self):        
-        if not notification_text and not fg:
-            notification_text = "..."
-            fg = "blue"
-        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
-    
-    def f_tab_01_button_import_click(self):
-        if not notification_text and not fg:
-            notification_text = "..."
-            fg = "blue"
-        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
-        
-    def f_tab_01_button_template_click(self):
-        if not notification_text and not fg:
-            notification_text = "..."
-            fg = "blue"
-        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
-        
-    def f_tab_01_button_get_import_file_click(self):
-        if not notification_text and not fg:
-            notification_text = "..."
-            fg = "blue"
-        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
-
-    def f_view_tab_01_button_add_click(self):
-        if not notification_text and not fg:
-            notification_text = "..."
-            fg = "blue"
-        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
-    
-    def f_view_tab_01_button_delete_click(self):
-        if not notification_text and not fg:
-            notification_text = "..."
-            fg = "blue"
-        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
-    
-    def f_view_tab_01_button_update_click(self):
-        if not notification_text and not fg:
-            notification_text = "..."
-            fg = "blue"
-        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
-    
-    def f_tab_01_button_export_click(self):
-        if not notification_text and not fg:
-            notification_text = "..."
-            fg = "blue"
-        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
-        
-    def f_tab_01_button_save_02_click(self):
-        if not notification_text and not fg:
-            notification_text = "..."
-            fg = "blue"
-        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
-    
-    def f_tab_01_button_save_03_click(self):        
-        if not notification_text and not fg:
-            notification_text = "..."
-            fg = "blue"
-        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
-
-    def f_tab_04_button_filter_click(self):
-        if not notification_text and not fg:
-            notification_text = "..."
-            fg = "blue"
-        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
-    
-    def f_tab_04_button_clear_click(self):
-        if not notification_text and not fg:
-            notification_text = "..."
-            fg = "blue"
-        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
-        
-    def f_tab_04_button_export_excel_click(self):
-        if not notification_text and not fg:
-            notification_text = "..."
-            fg = "blue"
-        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
-        
-    def f_tab_04_button_edit_click(self):
-        if not notification_text and not fg:
-            notification_text = "..."
-            fg = "blue"
-        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
-    
-    def f_tab_04_button_delete_click(self):
-        if not notification_text and not fg:
-            notification_text = "..."
-            fg = "blue"
-        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
-        
-    def f_view_table_of_tab_04_click(self, event):
-        if not notification_text and not fg:
-            notification_text = "..."
-            fg = "blue"
-        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
-    
-    def f_tab_04_table_on_click(self, event):
-        if not notification_text and not fg:
-            notification_text = "..."
-            fg = "blue"
-        utils_controller_config_notification_250220_10h05.f_config_notification(self.label_footer, notification_text, fg=fg)
-
-
     
