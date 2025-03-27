@@ -93,9 +93,9 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         tab_02_frame = self.tab2
         self.tab_02_entry_ma_khach_hang = f_utils_tim_component_with_name(tab_02_frame, "entry_ma_khach_hang")
         self.tab_02_entry_ten_khach_hang = f_utils_tim_component_with_name(tab_02_frame, "entry_ten_khach_hang")
-        self.tab_02_entry_mst = f_utils_tim_component_with_name(tab_02_frame, "entry_mst")
+        self.tab_02_entry_mst = f_utils_tim_component_with_name(tab_02_frame, "entry_mst_khach_hang")
         self.tab_02_entry_mst.pack_forget()
-        self.tab_02_entry_dia_chi = f_utils_tim_component_with_name(tab_02_frame, "entry_dia_chi")
+        self.tab_02_entry_dia_chi = f_utils_tim_component_with_name(tab_02_frame, "entry_dia_chi_khach_hang")
         self.tab_02_entry_dia_chi.pack_forget()
         self._tab_02_frame_row_2_of_inventories_info = f_utils_tim_component_with_name(tab_02_frame, "frame_row_2_of_inventories_info")
         self._tab_02_frame_row_2_of_inventories_info.pack_forget()

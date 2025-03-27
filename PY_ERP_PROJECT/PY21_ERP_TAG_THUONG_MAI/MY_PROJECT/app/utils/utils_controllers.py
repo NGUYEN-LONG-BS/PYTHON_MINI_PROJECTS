@@ -36,6 +36,11 @@ import pandas as pd
 import re
 import math
 
+import pyodbc
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
+
 class utils_controller_action_after_event_250216_14h57:
     
     def f_get_the_latest_number_of_slip(entry_so_phieu, ma_thanh_vien, loai_phieu):
@@ -771,5 +776,45 @@ class utils_controller_get_data_to_print:
             data.append(row)
         return data
     
+class utils_controller_SQLServer_Connection_with_SQLAlchemy_ORM:
+    def __init__(self):
+        self.engine = None
+        self.session = None
+        self.Base = declarative_base()
+
+    def get_sqlalchemy_engine(self):
+        # Lấy chuỗi kết nối pyodbc
+        conn = utils_functions.f_utils_create_a_connection_string_to_SQL_Server_FOR_ORM_SQLAlCHEMY()
+
+        # Tạo engine SQLAlchemy từ chuỗi kết nối pyodbc
+        connection_url = f"mssql+pyodbc:///?odbc_connect={conn}"
         
-    
+        # Tạo engine với connection_url
+        self.engine = create_engine(connection_url, echo=True)
+        return self.engine
+
+    def create_session(self):
+        # Tạo session từ engine đã tạo
+        if not self.engine:
+            self.engine = self.get_sqlalchemy_engine()
+
+        Session = sessionmaker(bind=self.engine)
+        self.session = Session()
+        return self.session
+
+    def close_connection(self):
+        # Đóng kết nối
+        if self.session:
+            self.session.close()
+        if self.engine:
+            self.engine.dispose()
+
+    # # Tạo đối tượng kết nối SQL Server
+    # db_connection = utils_controller_SQLServer_Connection_with_SQLAlchemy_ORM()
+
+    # # Tạo engine và session
+    # engine = db_connection.get_sqlalchemy_engine()
+    # session = db_connection.create_session()
+
+    # # Đóng kết nối khi không cần sử dụng nữa
+    # db_connection.close_connection()

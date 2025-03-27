@@ -1097,7 +1097,7 @@ class Controller_save_data_on_GUI_into_database:
                     ,row[8],
                     Expired
                 ))
-            print(data)
+            # print(data)
             return True, data
         except Exception as e:
             print(f"Error: {e}")
