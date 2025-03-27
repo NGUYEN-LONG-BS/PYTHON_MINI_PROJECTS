@@ -41,7 +41,7 @@ class controller_get_information_of_module:
     
     def load_query_filter_data_to_treeview():
         database_name = utils_controller_get_information_of_database.load_database_name()
-        table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+        table_name = utils_controller_get_information_of_database.load_table_name_TB_INVENTORY_CATEGORIES()
         danh_sach_id = utils_controller_get_information_of_database.load_danh_sach_id_duoc_phan_quyen()
         query = f"""
                 SELECT
@@ -219,10 +219,14 @@ class Controller_handel_all_events:
                                             entry_new_id_code
                                             , entry_new_id_name
                                             , entry_new_dvt):
-        controller_create_new_inventory.start_create_new_inventory(entry_notification,
-                                            entry_new_id_code
-                                            , entry_new_id_name
-                                            , entry_new_dvt)
+        # controller_create_new_inventory.start_create_new_inventory(entry_notification,
+        #                                     entry_new_id_code
+        #                                     , entry_new_id_name
+        #                                     , entry_new_dvt)
+        Controller_save_data_on_GUI_into_database.f_save_data_on_GUI_to_database(entry_notification,
+                                                                                    entry_new_id_code
+                                                                                    , entry_new_id_name
+                                                                                    , entry_new_dvt)
 
 class Controller_format_treeview:
     def set_format_of_treeview_of_tab_01(my_treeview):
@@ -314,115 +318,60 @@ class Controller_get_the_latest_number_of_slip:
             data_final = max(data_02)
         return data_final
 
-class controller_create_new_inventory:
-    def start_create_new_inventory(entry_notification,
+class Controller_save_data_on_GUI_into_database:
+    def f_save_data_on_GUI_to_database(entry_notification,
                             entry_new_id_code
                             , entry_new_id_name
                             , entry_new_dvt):
-        try:
-            # call controller to handle event
-            flag = controller_create_new_inventory.validate_data( 
-                entry_notification,
-                entry_new_id_code,
-                entry_new_id_name,
-                entry_new_dvt
-            )
-            if flag == False:
-                return False
-
-            # Create an instance of the connection controller
-            db_connection = utils_controller_SQLServer_Connection_with_SQLAlchemy_ORM()
-            # Call create_session() on the instance
-            session = db_connection.create_session()
-            
-            id_nhan_vien = utils_controller_get_information_of_database.load_id_nhan_vien()
-            xoa_sua = utils_controller_get_information_of_database.load_xoa_sua_mac_dinh()
-            ma_hang = entry_new_id_code.get()
-            ten_hang = entry_new_id_name.get()
-            dvt = entry_new_dvt.get()
-            sl_ton_dau_ky = 0
-            don_gia_ton_dau_ky = 0
-            ma_kho_luu_tru = ''
-            # flag = controller_create_new_inventory.insert_inventory_category_using_session_add(session, id_nhan_vien, xoa_sua, ma_hang, ten_hang, dvt, sl_ton_dau_ky, don_gia_ton_dau_ky, ma_kho_luu_tru)
-            flag = controller_create_new_inventory.insert_inventory_category_using_sql_query(session, id_nhan_vien, xoa_sua, ma_hang, ten_hang, dvt, sl_ton_dau_ky, don_gia_ton_dau_ky, ma_kho_luu_tru)
-            if flag == False:
-                return False
-            
-            if flag == True:
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Data created successfully!", "blue")
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return False
-    
-    def validate_data(entry_notification,
-                entry_new_id_code,
-                entry_new_id_name,
-                entry_new_dvt):
-        try:
-            # Check if the entry is empty
-            if entry_new_id_code.get() == "" or entry_new_id_name.get() == "" or entry_new_dvt.get() == "":
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "All fields are required: mã hàng, tên hàng, đvt", "red")
-                return False
-            
-            # pass the validation
-            return True
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return False
-
-    def insert_inventory_category_using_session_add(session, id_nhan_vien, xoa_sua, ma_hang, ten_hang, dvt, sl_ton_dau_ky, don_gia_ton_dau_ky, ma_kho_luu_tru):
-        try:            
-            # Tạo đối tượng mới từ lớp InventoryCategory
-            new_inventory = utils_model_all_table.InventoryCategory(
-                ID_NHAN_VIEN=id_nhan_vien,
-                XOA_SUA=xoa_sua,
-                MA_HANG=ma_hang,
-                TEN_HANG=ten_hang,
-                DVT=dvt,
-                SL_TON_DAU_KY=sl_ton_dau_ky,
-                DON_GIA_TON_DAU_KY=don_gia_ton_dau_ky,
-                MA_KHO_LUU_TRU=ma_kho_luu_tru
-            )
-            
-            # Thêm đối tượng vào session và commit
-            session.add(new_inventory)
-            session.commit()
-
-            return True
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return False
         
-    def insert_inventory_category_using_sql_query(session, id_nhan_vien, xoa_sua, ma_hang, ten_hang, dvt, sl_ton_dau_ky, don_gia_ton_dau_ky, ma_kho_luu_tru):
-        try:            
-            # Write the SQL query for inserting the inventory data
-            sql_query = text("""
-                INSERT INTO [dbo].[TB_INVENTORY_CATEGORIES_250214_09h05]
-                ([ID_NHAN_VIEN], [XOA_SUA], [MA_HANG], [TEN_HANG], [DVT], [SL_TON_DAU_KY], [DON_GIA_TON_DAU_KY], [MA_KHO_LUU_TRU])
-                VALUES (:id_nhan_vien, :xoa_sua, :ma_hang, :ten_hang, :dvt, :sl_ton_dau_ky, :don_gia_ton_dau_ky, :ma_kho_luu_tru)
-            """)
+        # Step_01: Get data
+        flag, data_array = Controller_save_data_on_GUI_into_database.get_data_from_GUI_view(entry_notification,
+                            entry_new_id_code
+                            , entry_new_id_name
+                            , entry_new_dvt
+                                                                    )
+        if flag == False:
+            return
+        
+        # Step_02: Export data to SQL
+        if utils_model_SQL_server.f_validate_data_format_TB_INVENTORY_CATEGORIES_250214_09h05(data_array):
+            # If data is valid
+            table_name = utils_controllers.utils_controller_get_information_of_database.load_table_name_TB_INVENTORY_CATEGORIES()
+            flag = utils_model_SQL_server.f_goi_ham_Export_to_table(data_array, table_name)
+            if flag == False:
+                utils_controllers.utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Thêm dữ liệu không thành công!", "red")
+                return
+            else:
+                utils_controllers.utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Thêm dữ liệu thành công!", "blue")
+
+        
+    def get_data_from_GUI_view(entry_notification
+                            , entry_new_id_code
+                            , entry_new_id_name
+                            , entry_new_dvt):
+        
+        # Các giá trị mặc định
+        ID_nhan_vien = utils_controller_get_information_of_database.load_id_nhan_vien()
+        Xoa_Sua = utils_controller_get_information_of_database.load_xoa_sua_mac_dinh()
+        
+        # Tạo một list chứa dữ liệu để export
+        try:
+            data = []
             
-            # Execute the query with parameters
-            session.execute(sql_query, {
-                'id_nhan_vien': id_nhan_vien,
-                'xoa_sua': xoa_sua,
-                'ma_hang': ma_hang,
-                'ten_hang': ten_hang,
-                'dvt': dvt,
-                'sl_ton_dau_ky': sl_ton_dau_ky,
-                'don_gia_ton_dau_ky': don_gia_ton_dau_ky,
-                'ma_kho_luu_tru': ma_kho_luu_tru
-            })
-            
-            # Commit the transaction
-            session.commit()
-            
-            return True
+            data.append((
+                ID_nhan_vien
+                ,Xoa_Sua
+                ,entry_new_id_code.get()
+                ,entry_new_id_name.get()
+                ,entry_new_dvt.get()
+                ,0
+                ,0
+                ,''
+            ))
+            # print(data)
+            return True, data
         except Exception as e:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
-            return False
-            
+            data = []
+            return False, data

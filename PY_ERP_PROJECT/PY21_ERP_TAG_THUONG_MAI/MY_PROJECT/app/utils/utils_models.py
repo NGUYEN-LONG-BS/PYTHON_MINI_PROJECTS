@@ -287,6 +287,7 @@ class utils_model_SQL_server:
         
         # Kiểm tra số cột trong dữ liệu khớp với số cột cần chèn
         num_columns_to_insert = len(columns_to_insert)
+        # print("num_columns_to_insert", num_columns_to_insert)
         if not all(len(row) == num_columns_to_insert for row in data_array):
             print("Dữ liệu không khớp số cột cần chèn.")
             return
@@ -310,11 +311,17 @@ class utils_model_SQL_server:
             # print("Kết nối đã được đóng.")
     
     def f_goi_ham_Export_to_table(data_array, table_name):
-        server_name = utils_functions.f_utils_get_DB_HOST()
-        login_name, login_pass = utils_functions.f_utils_get_DB_USER_AND_DB_PASSWORD()
-        database_name = utils_controllers.utils_controller_get_information_of_database.load_database_name()
+        try:
+            server_name = utils_functions.f_utils_get_DB_HOST()
+            login_name, login_pass = utils_functions.f_utils_get_DB_USER_AND_DB_PASSWORD()
+            database_name = utils_controllers.utils_controller_get_information_of_database.load_database_name()
 
-        utils_model_SQL_server.f_02_insert_data_to_sql(server_name, database_name, login_name, login_pass, table_name, data_array)
+            utils_model_SQL_server.f_02_insert_data_to_sql(server_name, database_name, login_name, login_pass, table_name, data_array)
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", utils_functions.f_utils_get_current_function_name())
+            return False
     
     def f_validate_data_format_KD02_YEU_CAU_DAT_HANG(data_array):
         """
@@ -329,63 +336,63 @@ class utils_model_SQL_server:
                 column = 0
                 if not isinstance(row[column], str) or len(row[column]) > 10:
                     raise ValueError(f"Data validation: ID_NHAN_VIEN (Row {idx+1}, Value: {row[column]}) must be a string with a maximum length of 10.")
-                column = 1
+                column = column + 1
                 if not isinstance(row[column], str):
                     raise ValueError(f"Data validation: XOA_SUA (Row {idx+1}, Value: {row[column]}) must be a string.")
-                column = 2
+                column = column + 1
                 try:
                     datetime.strptime(row[column], '%Y-%m-%d')
                 except ValueError:
                     raise ValueError(f"Data validation: NGAY_TREN_PHIEU (Row {idx+1}, Value: {row[column]}) must be a valid date in 'YYYY-MM-DD' format.")
-                column = 3
+                column = column + 1
                 if not isinstance(row[column], str) or len(row[column]) > 50:
                     raise ValueError(f"Data validation: SO_PHIEU (Row {idx+1}, Value: {row[column]}) must be a string with a maximum length of 50.")
-                column = 4
+                column = column + 1
                 if not isinstance(row[column], str) or len(row[column]) > 50:
                     raise ValueError(f"Data validation: MA_DOI_TUONG (Row {idx+1}, Value: {row[column]}) must be a string with a maximum length of 50.")
-                column = 5
+                column = column + 1
                 if not isinstance(row[column], str):
                     raise ValueError(f"Data validation: TEN_DOI_TUONG (Row {idx+1}, Value: {row[column]}) must be a string.")
-                column = 6
+                column = column + 1
                 if not isinstance(row[column], str):
                     raise ValueError(f"Data validation: MST (Row {idx+1}, Value: {row[column]}) must be a string.")
-                column = 7
+                column = column + 1
                 if not isinstance(row[column], str):
                     raise ValueError(f"Data validation: DIA_CHI (Row {idx+1}, Value: {row[column]}) must be a string.")
-                column = 8
+                column = column + 1
                 if not isinstance(row[column], str):
                     raise ValueError(f"Data validation: SO_HOP_DONG (Row {idx+1}, Value: {row[column]}) must be a string.")
-                column = 9
+                column = column + 1
                 if not isinstance(row[column], str):
                     raise ValueError(f"Data validation: THONG_TIN_HOP_DONG (Row {idx+1}, Value: {row[column]}) must be a string.")
-                column = 10
+                column = column + 1
                 if not isinstance(row[column], str):
                     raise ValueError(f"Data validation: GHI_CHU_PHIEU (Row {idx+1}, Value: {row[column]}) must be a string.")
-                column = 11
+                column = column + 1
                 if not isinstance(row[column], int) or row[column] < 1:
                     raise ValueError(f"Data validation: STT_DONG (Row {idx+1}, Value: {row[column]}) must be an integer greater than 0.")
-                column = 12
+                column = column + 1
                 if not isinstance(row[column], str):
                     raise ValueError(f"Data validation: MA_HANG (Row {idx+1}, Value: {row[column]}) must be a string.")
-                column = 13
+                column = column + 1
                 if not isinstance(row[column], str):
                     raise ValueError(f"Data validation: TEN_HANG (Row {idx+1}, Value: {row[column]}) must be a string.")
-                column = 14
+                column = column + 1
                 if not isinstance(row[column], str):
                     raise ValueError(f"Data validation: DVT (Row {idx+1}, Value: {row[column]}) must be a string.")
-                column = 15
+                column = column + 1
                 if not isinstance(row[column], (int, float)) or row[column] < 0:
                     raise ValueError(f"Data validation: SO_LUONG_KHA_DUNG (Row {idx+1}, Value: {row[column]}) must be a positive number.")
-                column = 16
+                column = column + 1
                 if not isinstance(row[column], (int, float)) or row[column] <= 0:
                     raise ValueError(f"Data validation: SO_LUONG_NHU_CAU (Row {idx+1}, Value: {row[column]}) must be a positive number.")
-                column = 17
+                column = column + 1
                 if not isinstance(row[column], (int, float)) or row[column] < 0:
                     raise ValueError(f"Data validation: SO_LUONG_GIU_CHO (Row {idx+1}, Value: {row[column]}) must be a positive number.")
-                column = 18
+                column = column + 1
                 if not isinstance(row[column], (int, float)) or row[column] < 0:
                     raise ValueError(f"Data validation: SO_LUONG_YCDH (Row {idx+1}, Value: {row[column]}) must be a positive number.")
-                column = 19
+                column = column + 1
                 if not isinstance(row[column], str):
                     raise ValueError(f"Data validation: GHI_CHU_SP (Row {idx+1}, Value: {row[column]}) must be a string.")
             
@@ -408,54 +415,54 @@ class utils_model_SQL_server:
                 column = 0
                 if not isinstance(row[column], str) or len(row[column]) > 10:
                     raise ValueError(f"Data validation: ID_NHAN_VIEN (Row {idx+1}, Value: {row[column]}) must be a string with a maximum length of 10.")
-                column = 1
+                column = column + 1
                 if not isinstance(row[column], str):
                     raise ValueError(f"Data validation: XOA_SUA (Row {idx+1}, Value: {row[column]}) must be a string.")
-                column = 2
+                column = column + 1
                 try:
                     datetime.strptime(row[column], '%Y-%m-%d')
                 except ValueError:
                     raise ValueError(f"Data validation: NGAY_TREN_PHIEU (Row {idx+1}, Value: {row[column]}) must be a valid date in 'YYYY-MM-DD' format.")
-                column = 3
+                column = column + 1
                 if not isinstance(row[column], str) or len(row[column]) > 50:
                     raise ValueError(f"Data validation: SO_PHIEU (Row {idx+1}, Value: {row[column]}) must be a string with a maximum length of 50.")
-                column = 4
+                column = column + 1
                 if not isinstance(row[column], str) or len(row[column]) > 50:
                     raise ValueError(f"Data validation: MA_DOI_TUONG (Row {idx+1}, Value: {row[column]}) must be a string with a maximum length of 50.")
-                column = 5
+                column = column + 1
                 if not isinstance(row[column], str):
                     raise ValueError(f"Data validation: TEN_DOI_TUONG (Row {idx+1}, Value: {row[column]}) must be a string.")
-                column = 6
+                column = column + 1
                 if not isinstance(row[column], str):
                     raise ValueError(f"Data validation: MST (Row {idx+1}, Value: {row[column]}) must be a string.")
-                column = 7
+                column = column + 1
                 if not isinstance(row[column], str):
                     raise ValueError(f"Data validation: DIA_CHI (Row {idx+1}, Value: {row[column]}) must be a string.")
-                column = 8
+                column = column + 1
                 if not isinstance(row[column], str):
                     raise ValueError(f"Data validation: SO_HOP_DONG (Row {idx+1}, Value: {row[column]}) must be a string.")
-                column = 9
+                column = column + 1
                 if not isinstance(row[column], str):
                     raise ValueError(f"Data validation: THONG_TIN_HOP_DONG (Row {idx+1}, Value: {row[column]}) must be a string.")
-                column = 10
+                column = column + 1
                 if not isinstance(row[column], str):
                     raise ValueError(f"Data validation: GHI_CHU_PHIEU (Row {idx+1}, Value: {row[column]}) must be a string.")
-                column = 11
+                column = column + 1
                 if not isinstance(row[column], int) or row[column] < 1:
                     raise ValueError(f"Data validation: STT_DONG (Row {idx+1}, Value: {row[column]}) must be an integer greater than 0.")
-                column = 12
+                column = column + 1
                 if not isinstance(row[column], str):
                     raise ValueError(f"Data validation: MA_HANG (Row {idx+1}, Value: {row[column]}) must be a string.")
-                column = 13
+                column = column + 1
                 if not isinstance(row[column], str):
                     raise ValueError(f"Data validation: TEN_HANG (Row {idx+1}, Value: {row[column]}) must be a string.")
-                column = 14
+                column = column + 1
                 if not isinstance(row[column], str):
                     raise ValueError(f"Data validation: DVT (Row {idx+1}, Value: {row[column]}) must be a string.")
-                column = 15
+                column = column + 1
                 if not isinstance(row[column], (int, float)) or row[column] <= 0:
                     raise ValueError(f"Data validation: SO_LUONG_NHU_CAU (Row {idx+1}, Value: {row[column]}) must be a positive number.")
-                column = 16
+                column = column + 1
                 if not isinstance(row[column], str):
                     raise ValueError(f"Data validation: GHI_CHU_SP (Row {idx+1}, Value: {row[column]}) must be a string.")
             
@@ -465,4 +472,54 @@ class utils_model_SQL_server:
 
         return is_valid
     
+    def f_validate_data_format_TB_INVENTORY_CATEGORIES_250214_09h05(data_array):
+        """
+        Validate the format of data before inserting into SQL Server.
+        :param data_array: List of tuples containing the data to validate.
+        :return: True if all data is valid, otherwise False with error messages.
+        """
+        is_valid = True
+        for idx, row in enumerate(data_array):
+            try:
+                # Validate each field
+                column = 0
+                if not isinstance(row[column], str) or len(row[column]) > 10:
+                    raise ValueError(f"Data validation: ID_NHAN_VIEN (Row {idx+1}, Value: {row[column]}) must be a string with a maximum length of 10.")
+
+                column = column + 1
+                if not isinstance(row[column], str):
+                    raise ValueError(f"Data validation: XOA_SUA (Row {idx+1}, Value: {row[column]}) must be a string.")
+
+                column = column + 1
+                if not isinstance(row[column], str) or row[column] is None:
+                    raise ValueError(f"Data validation: MA_HANG (Row {idx+1}, Value: {row[column]}) must be a valid string and not null.")
+                if len(row[column]) > 50:
+                    raise ValueError(f"Data validation: MA_HANG (Row {idx+1}, Value: {row[column]}) must not exceed 50 characters.")
+
+                column = column + 1
+                if not isinstance(row[column], str):
+                    raise ValueError(f"Data validation: TEN_HANG (Row {idx+1}, Value: {row[column]}) must be a string.")
+
+                column = column + 1
+                if not isinstance(row[column], str):
+                    raise ValueError(f"Data validation: DVT (Row {idx+1}, Value: {row[column]}) must be a string.")
+
+                column = column + 1
+                if not isinstance(row[column], (int, float)) or row[column] < 0:
+                    raise ValueError(f"Data validation: SL_TON_DAU_KY (Row {idx+1}, Value: {row[column]}) must be a positive number.")
+
+                column = column + 1
+                if not isinstance(row[column], (int, float)) or row[column] < 0:
+                    raise ValueError(f"Data validation: DON_GIA_TON_DAU_KY (Row {idx+1}, Value: {row[column]}) must be a positive number.")
+
+                column = column + 1
+                if not isinstance(row[column], str):
+                    raise ValueError(f"Data validation: MA_KHO_LUU_TRU (Row {idx+1}, Value: {row[column]}) must be a string.")
+
+            
+            except ValueError as e:
+                is_valid = False
+                print(e)
+
+        return is_valid
     
