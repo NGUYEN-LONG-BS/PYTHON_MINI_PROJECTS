@@ -223,7 +223,7 @@ class Controller_handel_all_events:
         #                                     entry_new_id_code
         #                                     , entry_new_id_name
         #                                     , entry_new_dvt)
-        Controller_save_data_on_GUI_into_database.f_save_data_on_GUI_to_database(entry_notification,
+        Controller_save_data_on_GUI_into_database_THEM_MOI_MA_HANG.f_save_data_on_GUI_to_database(entry_notification,
                                                                                     entry_new_id_code
                                                                                     , entry_new_id_name
                                                                                     , entry_new_dvt)
@@ -318,14 +318,14 @@ class Controller_get_the_latest_number_of_slip:
             data_final = max(data_02)
         return data_final
 
-class Controller_save_data_on_GUI_into_database:
+class Controller_save_data_on_GUI_into_database_THEM_MOI_MA_HANG:
     def f_save_data_on_GUI_to_database(entry_notification,
                             entry_new_id_code
                             , entry_new_id_name
                             , entry_new_dvt):
         
         # Step_01: Get data
-        flag, data_array = Controller_save_data_on_GUI_into_database.get_data_from_GUI_view(entry_notification,
+        flag, data_array = Controller_save_data_on_GUI_into_database_THEM_MOI_MA_HANG.get_data_from_GUI_view(entry_notification,
                             entry_new_id_code
                             , entry_new_id_name
                             , entry_new_dvt
@@ -334,7 +334,13 @@ class Controller_save_data_on_GUI_into_database:
             return
         
         # Step_02: Export data to SQL
-        if utils_model_SQL_server.f_validate_data_format_TB_INVENTORY_CATEGORIES_250214_09h05(data_array):
+        flag, notification_text = utils_model_SQL_server.f_validate_data_format_TB_INVENTORY_CATEGORIES_250214_09h05(data_array)
+        
+        if flag == False:
+            utils_controllers.utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
+            return
+        
+        if flag == True:
             # If data is valid
             table_name = utils_controllers.utils_controller_get_information_of_database.load_table_name_TB_INVENTORY_CATEGORIES()
             flag = utils_model_SQL_server.f_goi_ham_Export_to_table(data_array, table_name)

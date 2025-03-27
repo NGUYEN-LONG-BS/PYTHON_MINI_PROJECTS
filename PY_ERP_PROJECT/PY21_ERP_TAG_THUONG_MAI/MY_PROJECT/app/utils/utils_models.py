@@ -491,18 +491,33 @@ class utils_model_SQL_server:
                     raise ValueError(f"Data validation: XOA_SUA (Row {idx+1}, Value: {row[column]}) must be a string.")
 
                 column = column + 1
-                if not isinstance(row[column], str) or row[column] is None:
-                    raise ValueError(f"Data validation: MA_HANG (Row {idx+1}, Value: {row[column]}) must be a valid string and not null.")
+                # Kiểm tra nếu giá trị không phải là chuỗi hoặc là None
+                if not isinstance(row[column], str):
+                    raise ValueError(f"Data validation: MA_HANG (Row {idx+1}, Value: {row[column]}) must be a valid string.")
+                    
+                if row[column] is None:
+                    raise ValueError(f"Data validation: MA_HANG (Row {idx+1}, Value: {row[column]}) must not be null.")
+                
+                if row[column] == '':
+                    raise ValueError(f"Data validation: MA_HANG (Row {idx+1}, Value: {row[column]}) must not be null.")
+                
+                # Kiểm tra nếu độ dài của chuỗi vượt quá 50 ký tự
                 if len(row[column]) > 50:
                     raise ValueError(f"Data validation: MA_HANG (Row {idx+1}, Value: {row[column]}) must not exceed 50 characters.")
 
                 column = column + 1
                 if not isinstance(row[column], str):
                     raise ValueError(f"Data validation: TEN_HANG (Row {idx+1}, Value: {row[column]}) must be a string.")
+                
+                if row[column] == '':
+                    raise ValueError(f"Data validation: TEN_HANG (Row {idx+1}, Value: {row[column]}) must not be null.")
 
                 column = column + 1
                 if not isinstance(row[column], str):
                     raise ValueError(f"Data validation: DVT (Row {idx+1}, Value: {row[column]}) must be a string.")
+                
+                if row[column] == '':
+                    raise ValueError(f"Data validation: DVT (Row {idx+1}, Value: {row[column]}) must not be null.")
 
                 column = column + 1
                 if not isinstance(row[column], (int, float)) or row[column] < 0:
@@ -517,9 +532,10 @@ class utils_model_SQL_server:
                     raise ValueError(f"Data validation: MA_KHO_LUU_TRU (Row {idx+1}, Value: {row[column]}) must be a string.")
 
             
-            except ValueError as e:
+            except ValueError as notification_text:
                 is_valid = False
-                print(e)
-
-        return is_valid
+                return is_valid, notification_text
+        
+        notification_text = ""
+        return is_valid, notification_text
     
