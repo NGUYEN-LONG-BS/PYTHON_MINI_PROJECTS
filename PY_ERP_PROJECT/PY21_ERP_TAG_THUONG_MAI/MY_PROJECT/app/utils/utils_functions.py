@@ -973,29 +973,6 @@ def f_utils_create_a_connection_string_to_SQL_Server():
     # print(conn)
     return conn
 
-def f_utils_create_a_connection_string_to_SQL_Server_FOR_ORM_SQLAlCHEMY():
-    
-    encryption_key = load_encryption_key(define.PATH_CONFIG_KEY)
-    config = load_config(define.PATH_CONFIG_JSON, encryption_key)
-    
-    # Correct connection string format
-    # conn_str = f'DRIVER={{ODBC Driver 17 for SQL Server}};' \
-    #            f'SERVER={config["DB_HOST"]};' \
-    #            f'DATABASE={config["DB_NAME"]};' \
-    #            f'UID={config["DB_USER"]};' \
-    #            f'PWD={config["DB_PASSWORD"]};' \
-    #            'PORT=1433;'\
-    #             'charset=UTF-8'  # Thêm tham số charset UTF-8 để hỗ trợ mã hóa đúng
-    # # print(conn)
-    
-    conn_str = f'DRIVER={{ODBC Driver 17 for SQL Server}};' \
-               f'SERVER={config["DB_HOST"]};' \
-               f'DATABASE={config["DB_NAME"]};' \
-               f'UID={config["DB_USER"]};' \
-               f'PWD={config["DB_PASSWORD"]};' \
-               'PORT=1433;' \
-               'charset=UTF-8'  # Thêm tham số charset UTF-8 để hỗ trợ mã hóa đúng
-    return conn_str
 
 def f_utils_get_DB_HOST():
     # Get config and encryption-key

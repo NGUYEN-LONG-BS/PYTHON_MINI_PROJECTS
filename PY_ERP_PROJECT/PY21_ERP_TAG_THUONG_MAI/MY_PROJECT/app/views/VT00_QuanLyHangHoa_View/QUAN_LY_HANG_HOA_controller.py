@@ -2,7 +2,6 @@ from tkinter import messagebox
 from app.utils import *
 from datetime import datetime
 from collections import defaultdict
-from sqlalchemy import text
 
 class controller_get_information_of_module:
     def load_loai_phieu():
