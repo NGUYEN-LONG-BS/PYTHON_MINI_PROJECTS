@@ -87,39 +87,39 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip_PXK(self.tab_02_entry_so_phieu)
     
     def f_set_command_for_elements(self):
-        # Tab 01
-        self.tab_01_btn_refresh_number_of_slip.config(command=self.event_tab_01_button_get_number_of_slip_click)
+        # # Tab 01
+        # self.tab_01_btn_refresh_number_of_slip.config(command=self.event_tab_01_button_get_number_of_slip_click)
         
-        self.tab_01_button_add.config(command=self.event_tab_01_button_add_row_click)
-        self.tab_01_button_update_row_in_treeview.config(command=self.event_tab_01_button_update_row_click)
-        self.tab_01_button_delete.config(command=self.event_tab_01_button_delete_click)
-        self.tab_01_button_clear.config(command=self.event_tab_01_button_clear_click)
+        # self.tab_01_button_add.config(command=self.event_tab_01_button_add_row_click)
+        # self.tab_01_button_update_row_in_treeview.config(command=self.event_tab_01_button_update_row_click)
+        # self.tab_01_button_delete.config(command=self.event_tab_01_button_delete_click)
+        # self.tab_01_button_clear.config(command=self.event_tab_01_button_clear_click)
         
-        self.tab_01_button_update_slip.config(command=self.event_tab_01_button_update_slip_click)
-        self.tab_01_button_save.config(command=self.event_tab_01_button_save_click)
-        self.tab_01_button_print.config(command=self.event_tab_01_button_print_click)
+        # self.tab_01_button_update_slip.config(command=self.event_tab_01_button_update_slip_click)
+        # self.tab_01_button_save.config(command=self.event_tab_01_button_save_click)
+        # self.tab_01_button_print.config(command=self.event_tab_01_button_print_click)
         
-        self.tab_01_btn_template.config(command=self.event_tab_01_button_template_click)
-        self.tab_01_btn_get_import_file.config(command=self.event_tab_01_button_get_import_file_click)
+        # self.tab_01_btn_template.config(command=self.event_tab_01_button_template_click)
+        # self.tab_01_btn_get_import_file.config(command=self.event_tab_01_button_get_import_file_click)
         
         # Tab 03
         self.tab_03_button_create_new_inventory.config(command=self.event_tab_03_button_create_new_inventory_click)
         
-        # Tab 04
-        self.tab_04_button_filter.config(command=self.event_tab_04_button_filter_click)
-        self.tab_04_button_clear_filter.config(command=self.event_tab_04_button_clear_filter_click)
-        self.tab_04_button_export_excel.config(command=self.event_tab_04_button_export_excel_click)
-        self.tab_04_button_export_all_data.config(command=self.event_tab_04_button_export_all_data_click)
+        # # Tab 04
+        # self.tab_04_button_filter.config(command=self.event_tab_04_button_filter_click)
+        # self.tab_04_button_clear_filter.config(command=self.event_tab_04_button_clear_filter_click)
+        # self.tab_04_button_export_excel.config(command=self.event_tab_04_button_export_excel_click)
+        # self.tab_04_button_export_all_data.config(command=self.event_tab_04_button_export_all_data_click)
         
-        self.tab_04_button_edit_slip.config(command=self.event_tab_04_button_edit_slip_click)
-        self.tab_04_button_delete_slip.config(command=self.event_tab_04_button_delete_slip_click)
+        # self.tab_04_button_edit_slip.config(command=self.event_tab_04_button_edit_slip_click)
+        # self.tab_04_button_delete_slip.config(command=self.event_tab_04_button_delete_slip_click)
         
         # Gán sự kiện
-        self.tab_01_treeview_PNK.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_01_single_click)  # Single click
-        self.tab_01_treeview_PNK.bind("<Double-1>", self.f_view_treeview_of_tab_01_double_click)  # Double click
+        # self.tab_01_treeview_PNK.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_01_single_click)  # Single click
+        # self.tab_01_treeview_PNK.bind("<Double-1>", self.f_view_treeview_of_tab_01_double_click)  # Double click
         
-        self.tab_04_treeview_log_of_PNK.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_04_single_click)  # Single click
-        self.tab_04_treeview_log_of_PNK.bind("<Double-1>", self.f_view_treeview_of_tab_04_double_click)  # Double click
+        # self.tab_04_treeview_log_of_PNK.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_04_single_click)  # Single click
+        # self.tab_04_treeview_log_of_PNK.bind("<Double-1>", self.f_view_treeview_of_tab_04_double_click)  # Double click
         
     def f_define_all_elements(self):
         # Find in tab_01: Phiếu nhập kho

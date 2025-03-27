@@ -217,12 +217,10 @@ class Controller_handel_all_events:
     def f_handle_event_create_new_inventory(entry_notification,
                                             entry_new_id_code
                                             , entry_new_id_name
-                                            , entry_ma_hang
                                             , entry_new_dvt):
         controller_create_new_inventory.start_create_new_inventory(entry_notification,
                                             entry_new_id_code
                                             , entry_new_id_name
-                                            , entry_ma_hang
                                             , entry_new_dvt)
 
 class Controller_format_treeview:
@@ -355,3 +353,6 @@ class controller_create_new_inventory:
             print("Error at function: ", f_utils_get_current_function_name())
             return False
 
+
+            
+            
