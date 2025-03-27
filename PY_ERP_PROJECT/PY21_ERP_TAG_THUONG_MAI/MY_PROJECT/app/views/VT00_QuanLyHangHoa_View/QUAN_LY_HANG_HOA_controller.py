@@ -225,46 +225,6 @@ class Controller_handel_all_events:
                                             , entry_ma_hang
                                             , entry_new_dvt)
 
-class controller_create_new_inventory:
-    def start_create_new_inventory(entry_notification,
-                            entry_new_id_code
-                            , entry_new_id_name
-                            , entry_new_dvt):
-        try:
-            # call controller to handle event
-            flag = controller_create_new_inventory.validate_data( 
-                entry_notification,
-                entry_new_id_code,
-                entry_new_id_name,
-                entry_new_dvt
-            )
-            if flag == False:
-                return False
-            
-            if flag == True:
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Data created successfully!", "blue")
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return False
-    
-    def validate_data(entry_notification,
-                entry_new_id_code,
-                entry_new_id_name,
-                entry_new_dvt):
-        try:
-            # Check if the entry is empty
-            if entry_new_id_code.get() == "" or entry_new_id_name.get() == "" or entry_new_dvt.get() == "":
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "All fields are required: mã hàng, tên hàng, đvt", "red")
-                return False
-            
-            # pass the validation
-            return True
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return False
-
 class Controller_format_treeview:
     def set_format_of_treeview_of_tab_01(my_treeview):
         tab_01_treeview_config_json_path, tab_02_treeview_config_json_path, tab_04_treeview_config_json_path, tab_05_treeview_config_json_path, tab_06_treeview_config_json_path = controller_get_information_of_module.load_treeview_config_json_path()
@@ -354,4 +314,44 @@ class Controller_get_the_latest_number_of_slip:
         else:
             data_final = max(data_02)
         return data_final
+
+class controller_create_new_inventory:
+    def start_create_new_inventory(entry_notification,
+                            entry_new_id_code
+                            , entry_new_id_name
+                            , entry_new_dvt):
+        try:
+            # call controller to handle event
+            flag = controller_create_new_inventory.validate_data( 
+                entry_notification,
+                entry_new_id_code,
+                entry_new_id_name,
+                entry_new_dvt
+            )
+            if flag == False:
+                return False
+            
+            if flag == True:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Data created successfully!", "blue")
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+    
+    def validate_data(entry_notification,
+                entry_new_id_code,
+                entry_new_id_name,
+                entry_new_dvt):
+        try:
+            # Check if the entry is empty
+            if entry_new_id_code.get() == "" or entry_new_id_name.get() == "" or entry_new_dvt.get() == "":
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "All fields are required: mã hàng, tên hàng, đvt", "red")
+                return False
+            
+            # pass the validation
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
 
