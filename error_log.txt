@@ -13,29 +13,4 @@ Traceback (most recent call last):
     from app.utils import *
   File "c:\Users\ADMIN\Desktop\ICONS\GITHUB\PYTHON_MINI_PROJECTS\PY_ERP_PROJECT\PY21_ERP_TAG_THUONG_MAI\MY_PROJECT\app\utils\__init__.py", line 5, in <module>
     from .utils_model_all_table import *
-  File "c:\Users\ADMIN\Desktop\ICONS\GITHUB\PYTHON_MINI_PROJECTS\PY_ERP_PROJECT\PY21_ERP_TAG_THUONG_MAI\MY_PROJECT\app\utils\utils_model_all_table.py", line 8, in <module>
-    class InventoryCategory(Base):
-  File "c:\Users\ADMIN\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\orm\decl_api.py", line 198, in __init__
-    _as_declarative(reg, cls, dict_)
-  File "c:\Users\ADMIN\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\orm\decl_base.py", line 244, in _as_declarative
-    return _MapperConfig.setup_mapping(registry, cls, dict_, None, {})
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "c:\Users\ADMIN\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\orm\decl_base.py", line 325, in setup_mapping
-    return _ClassScanMapperConfig(
-           ^^^^^^^^^^^^^^^^^^^^^^^
-  File "c:\Users\ADMIN\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\orm\decl_base.py", line 580, in __init__
-    self._early_mapping(mapper_kw)
-  File "c:\Users\ADMIN\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\orm\decl_base.py", line 366, in _early_mapping
-    self.map(mapper_kw)
-  File "c:\Users\ADMIN\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\orm\decl_base.py", line 1990, in map
-    mapper_cls(self.cls, self.local_table, **self.mapper_args),
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "<string>", line 2, in __init__
-  File "c:\Users\ADMIN\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\util\deprecations.py", line 281, in warned
-    return fn(*args, **kwargs)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^
-  File "c:\Users\ADMIN\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\orm\mapper.py", line 866, in __init__
-    self._configure_pks()
-  File "c:\Users\ADMIN\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\orm\mapper.py", line 1652, in _configure_pks
-    raise sa_exc.ArgumentError(
-sqlalchemy.exc.ArgumentError: Mapper Mapper[InventoryCategory(TB_INVENTORY_CATEGORIES_250214_09h05)] could not assemble any primary key columns for mapped table 'TB_INVENTORY_CATEGORIES_250214_09h05'
+ModuleNotFoundError: No module named 'app.utils.utils_model_all_table'

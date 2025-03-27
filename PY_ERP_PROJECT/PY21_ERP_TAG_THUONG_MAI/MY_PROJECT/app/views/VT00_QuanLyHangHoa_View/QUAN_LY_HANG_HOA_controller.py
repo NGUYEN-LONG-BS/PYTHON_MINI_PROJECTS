@@ -38,37 +38,19 @@ class controller_get_information_of_module:
         proc_name = "Proc_TB_KD02_YEU_CAU_DAT_HANG_UPDATE_EXPIRED_250226_13h15"
         return proc_name
     
-    def load_query_filter_data_to_treeview():
+    def load_query_filter_data_to_treeview_tab_06():
         database_name = utils_controller_get_information_of_database.load_database_name()
-        table_name = utils_controller_get_information_of_database.load_table_name_TB_INVENTORY_CATEGORIES()
-        danh_sach_id = utils_controller_get_information_of_database.load_danh_sach_id_duoc_phan_quyen()
+        table_name = "VIEW_INVENTORY_REPORT_QUANTITY_250214_09h40"
         query = f"""
                 SELECT
-                ROW_NUMBER() OVER(ORDER BY [SO_PHIEU] DESC, [NGAY_TREN_PHIEU] DESC) as RowNumber
-                ,FORMAT([NGAY_TREN_PHIEU], 'dd-MM-yyyy') as NGAY_TREN_PHIEU
-                ,[SO_PHIEU]
-                ,[MA_DOI_TUONG]
-                ,[TEN_DOI_TUONG]
-                ,[SO_HOP_DONG]
-                ,[GHI_CHU_PHIEU]
-                ,[STT_DONG]
+                ROW_NUMBER() OVER(ORDER BY [MA_HANG]) as RowNumber
                 ,[MA_HANG]
                 ,[TEN_HANG]
                 ,[DVT]
-                ,[SO_LUONG_KHA_DUNG]
-                ,[SO_LUONG_NHU_CAU]
-                ,[SO_LUONG_GIU_CHO]
-                ,[SO_LUONG_YEU_CAU_DAT_HANG]
-                ,[GHI_CHU_SP]	
+                ,[TONG_SL_TON]
             FROM [{database_name}].[dbo].[{table_name}]
             WHERE 
-                [ID_NHAN_VIEN] IN ({danh_sach_id}) AND
                 [XOA_SUA] = '' AND
-                [EXPIRED] = ? AND
-                (? IS NULL OR SO_PHIEU LIKE '%' + ? + '%') AND
-                (? IS NULL OR SO_HOP_DONG LIKE '%' + ? + '%') AND
-                (? IS NULL OR ? IS NULL OR NGAY_TREN_PHIEU BETWEEN ? AND ?) AND
-                (? IS NULL OR MA_DOI_TUONG LIKE '%' + ? + '%') AND
                 (? IS NULL OR MA_HANG LIKE '%' + ? + '%')
             """
         return query
@@ -226,6 +208,9 @@ class Controller_handel_all_events:
                                                                                     entry_new_id_code
                                                                                     , entry_new_id_name
                                                                                     , entry_new_dvt)
+    
+    def f_handle_event_tab_06_button_filter_log_click(entry_notification, entry_ma_hang, my_treeview):
+        Controller_filter_with_conditions_on_tab_06.filter_log_with_conditions(entry_notification, entry_ma_hang, my_treeview)
 
 class Controller_format_treeview:
     def set_format_of_treeview_of_tab_01(my_treeview):
@@ -380,3 +365,21 @@ class Controller_save_data_on_GUI_into_database_THEM_MOI_MA_HANG:
             print("Error at function: ", f_utils_get_current_function_name())
             data = []
             return False, data
+        
+class Controller_filter_with_conditions_on_tab_06:  
+    def filter_log_with_conditions(entry_notification, entry_ma_hang, my_treeview):
+        try:
+            ma_hang = entry_ma_hang.get()
+
+            if ma_hang == 'search here':
+                ma_hang = ''
+                    
+            query = controller_get_information_of_module.load_query_filter_data_to_treeview_tab_06()
+            
+            utils_controller_get_data_from_SQL_to_treeview_with_quey_and_params_list.load_data_with_quey_and_params(my_treeview, query, (ma_hang, ma_hang))
+            
+            # Notification
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Data loaded!", "blue")
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())

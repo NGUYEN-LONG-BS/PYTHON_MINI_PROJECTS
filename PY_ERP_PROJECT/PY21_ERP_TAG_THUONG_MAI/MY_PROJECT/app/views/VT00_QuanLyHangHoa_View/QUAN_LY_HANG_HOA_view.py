@@ -85,6 +85,7 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
     def f_set_up_when_initializing(self):
         Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip_PNK(self.tab_01_entry_so_phieu)
         Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip_PXK(self.tab_02_entry_so_phieu)
+        self.event_tab_06_button_filter_click()
     
     def f_set_command_for_elements(self):
         # # Tab 01
@@ -105,21 +106,8 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         # Tab 03
         self.tab_03_button_create_new_inventory.config(command=self.event_tab_03_button_create_new_inventory_click)
         
-        # # Tab 04
-        # self.tab_04_button_filter.config(command=self.event_tab_04_button_filter_click)
-        # self.tab_04_button_clear_filter.config(command=self.event_tab_04_button_clear_filter_click)
-        # self.tab_04_button_export_excel.config(command=self.event_tab_04_button_export_excel_click)
-        # self.tab_04_button_export_all_data.config(command=self.event_tab_04_button_export_all_data_click)
-        
-        # self.tab_04_button_edit_slip.config(command=self.event_tab_04_button_edit_slip_click)
-        # self.tab_04_button_delete_slip.config(command=self.event_tab_04_button_delete_slip_click)
-        
-        # Gán sự kiện
-        # self.tab_01_treeview_PNK.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_01_single_click)  # Single click
-        # self.tab_01_treeview_PNK.bind("<Double-1>", self.f_view_treeview_of_tab_01_double_click)  # Double click
-        
-        # self.tab_04_treeview_log_of_PNK.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_04_single_click)  # Single click
-        # self.tab_04_treeview_log_of_PNK.bind("<Double-1>", self.f_view_treeview_of_tab_04_double_click)  # Double click
+        # Tab 06
+        self.tab_06_button_filter.config(command=self.event_tab_06_button_filter_click)
         
     def f_define_all_elements(self):
         # Find in tab_01: Phiếu nhập kho
@@ -986,3 +974,11 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
                                                                          self.tab_03_entry_new_id_code
                                                                          , self.tab_03_entry_new_id_name
                                                                          , self.tab_03_entry_new_dvt)
+        
+    def event_tab_06_button_filter_click(self):
+        Controller_handel_all_events.f_handle_event_tab_06_button_filter_log_click(
+            self.tab_01_label_footer_notification,
+            self.tab_06_entry_ma_hang,
+            self.tab_06_treeview_report)
+        
+        
