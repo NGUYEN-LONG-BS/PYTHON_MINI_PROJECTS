@@ -1032,8 +1032,6 @@ def f_utils_fetch_data_from_database_and_no_params(query):
         return []
 
 def f_utils_fetch_data_from_database_with_quey_and_params(query, params_list=[]):
-    print(query)
-    print(params_list)
     try:
         conn = f_utils_create_a_connection_string_to_SQL_Server()
         cursor = conn.cursor()

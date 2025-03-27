@@ -47,6 +47,9 @@ class controller_get_information_of_module:
                 ,[MA_HANG]
                 ,[TEN_HANG]
                 ,[DVT]
+                ,[SL_DAU_KY]
+                ,[TONG_SL_NHAP]
+                ,[TONG_SL_XUAT]
                 ,[TONG_SL_TON]
             FROM [{database_name}].[dbo].[{table_name}]
             WHERE 

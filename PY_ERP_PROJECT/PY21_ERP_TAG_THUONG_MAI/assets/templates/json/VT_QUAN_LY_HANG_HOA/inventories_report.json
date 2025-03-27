@@ -49,6 +49,39 @@
                 "show": "headings"
             },
             {
+                "name": "SL tồn đầu kỳ",
+                "width": 120,
+                "min_width": 120,
+                "anchor": "w",
+                "stretch": false,
+                "font": {"family": "Arial", "size": 12, "weight": "normal"},
+                "background_color": "#ffffff",
+                "foreground_color": "#4287f5",
+                "show": "headings"
+            },
+            {
+                "name": "Tổng SL nhập",
+                "width": 120,
+                "min_width": 120,
+                "anchor": "w",
+                "stretch": false,
+                "font": {"family": "Arial", "size": 12, "weight": "normal"},
+                "background_color": "#ffffff",
+                "foreground_color": "#4287f5",
+                "show": "headings"
+            },
+            {
+                "name": "Tổng SL xuất",
+                "width": 120,
+                "min_width": 120,
+                "anchor": "w",
+                "stretch": false,
+                "font": {"family": "Arial", "size": 12, "weight": "normal"},
+                "background_color": "#ffffff",
+                "foreground_color": "#4287f5",
+                "show": "headings"
+            },
+            {
                 "name": "SL tồn kho",
                 "width": 120,
                 "min_width": 120,
