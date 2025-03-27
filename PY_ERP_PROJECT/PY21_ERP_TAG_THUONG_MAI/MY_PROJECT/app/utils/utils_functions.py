@@ -1014,7 +1014,7 @@ def f_utils_format_number(value):
     else:
         return value  # Trả về nguyên giá trị nếu không phải số
 
-def f_utils_fetch_data_from_database(query):
+def f_utils_fetch_data_from_database_and_no_params(query):
     try:
         conn = f_utils_create_a_connection_string_to_SQL_Server()
         cursor = conn.cursor()

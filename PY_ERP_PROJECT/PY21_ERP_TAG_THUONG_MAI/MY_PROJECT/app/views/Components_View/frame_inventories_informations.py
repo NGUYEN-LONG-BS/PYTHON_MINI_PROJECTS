@@ -14,14 +14,14 @@ class cls_frame_inventories_information_model:
                 [TEN_HANG] AS [Tên hàng],
                 [DVT] AS [đvt],
                 CASE 
-                    WHEN [Final_Stock] = FLOOR([Final_Stock]) 
-                    THEN FORMAT([Final_Stock], 'N0')  -- Nếu là số nguyên
-                    ELSE FORMAT([Final_Stock], 'N2')  -- Nếu có phần thập phân, hiển thị 2 chữ số
+                    WHEN [TONG_SL_TON] = FLOOR([TONG_SL_TON]) 
+                    THEN FORMAT([TONG_SL_TON], 'N0')  -- Nếu là số nguyên
+                    ELSE FORMAT([TONG_SL_TON], 'N2')  -- Nếu có phần thập phân, hiển thị 2 chữ số
                 END AS [SL tồn],
                 CASE 
-                    WHEN [Final_Stock] = FLOOR([Final_Stock]) 
-                    THEN FORMAT([Final_Stock], 'N0')  -- Nếu là số nguyên
-                    ELSE FORMAT([Final_Stock], 'N2')  -- Nếu có phần thập phân, hiển thị 2 chữ số
+                    WHEN [TONG_SL_TON] = FLOOR([TONG_SL_TON]) 
+                    THEN FORMAT([TONG_SL_TON], 'N0')  -- Nếu là số nguyên
+                    ELSE FORMAT([TONG_SL_TON], 'N2')  -- Nếu có phần thập phân, hiển thị 2 chữ số
                 END AS [SL khả dụng]
             FROM [{database_name}].[dbo].[VIEW_INVENTORY_REPORT_QUANTITY_250214_09h40]
             ORDER BY [MA_HANG]

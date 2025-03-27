@@ -50,7 +50,6 @@ class controller_get_information_of_module:
                 ,[TONG_SL_TON]
             FROM [{database_name}].[dbo].[{table_name}]
             WHERE 
-                [XOA_SUA] = '' AND
                 (? IS NULL OR MA_HANG LIKE '%' + ? + '%')
             """
         return query

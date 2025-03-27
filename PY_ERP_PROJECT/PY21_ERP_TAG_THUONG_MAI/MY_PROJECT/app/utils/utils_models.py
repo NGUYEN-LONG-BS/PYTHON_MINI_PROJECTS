@@ -71,7 +71,7 @@ class utils_model_get_data_from_SQL:
     
     def fetch_data(query):
         try:
-            data = utils_functions.f_utils_fetch_data_from_database(query)
+            data = utils_functions.f_utils_fetch_data_from_database_and_no_params(query)
             if data:
                 return data
             else:
@@ -223,7 +223,7 @@ class utils_model_SQL_server:
 
     def fetch_data(query):
         try:
-            data = utils_functions.f_utils_fetch_data_from_database(query)
+            data = utils_functions.f_utils_fetch_data_from_database_and_no_params(query)
             # print(data)
             return data
         except Exception as e:
