@@ -939,7 +939,16 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         # Create frame inventories informations
         self.tab_06_frame_inventories_information = cls_frame_inventories_information_view(parent_frame_00)
         self.tab_06_frame_inventories_information.config(bd=0, relief="flat")
-        self.tab_06_frame_inventories_information.grid(row=1, column=0, pady=(10, 0), sticky="ew")
+        self.tab_06_frame_inventories_information.grid(row=0, column=0, pady=(10, 0), sticky="ew")
+        
+        parent_frame_01 = tk.Frame(self.tab_06_frame_filter_entries)
+        parent_frame_01.grid(row=0, column=1, sticky="nsew")
+        
+        self.tab_06_label_ma_kho = tk.Label(parent_frame_01, text="Mã kho")
+        self.tab_06_label_ma_kho.grid(row=0, column=0, padx=(10, 2), pady=(10, 0), sticky="w")
+        values_ma_kho = ["Tất cả", "Kho A", "Kho B", "Kho C"]
+        self.tab_06_combobox_ma_kho = cls_my_combobox_num_01(parent_frame_01, values=values_ma_kho)
+        self.tab_06_combobox_ma_kho.grid(row=0, column=1, padx=(0, 10), pady=(10, 0), sticky="w")
     
         # Allow stretching
         self.tab_06_frame_filter_entries.columnconfigure(0, weight=1)   # Stretch the column to fill the width
