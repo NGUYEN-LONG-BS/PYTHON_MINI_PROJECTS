@@ -281,6 +281,28 @@ class Controller_handel_all_events:
         entry_sl_thuc_nhap,
         tab_01_entry_ghi_chu_mat_hang)
         
+    def f_handle_event_treeview_of_tab_01_double_click(entry_notification, my_treeview):
+        ma_hang = Controller_click_on_treeview.treeview_of_tab_01_double_click(my_treeview)
+        utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, ma_hang, "blue")
+        
+    def f_handle_event_treeview_of_tab_01_single_click(entry_notification, 
+            my_treeview,
+            entry_id,
+            entry_ma_hang,
+            entry_ten_hang,
+            entry_dvt,
+            entry_sl_thuc_nhap,
+            entry_ghi_chu_mat_hang):
+        
+        Controller_click_on_treeview.treeview_of_tab_01_single_click(
+        my_treeview,
+        entry_id,
+        entry_ma_hang,
+        entry_ten_hang,
+        entry_dvt,
+        entry_sl_thuc_nhap,
+        entry_ghi_chu_mat_hang)
+        
 class Controller_format_treeview:
     def set_format_of_treeview_of_tab_01(my_treeview):
         tab_01_treeview_config_json_path, tab_02_treeview_config_json_path, tab_04_treeview_config_json_path, tab_05_treeview_config_json_path, tab_06_treeview_config_json_path = controller_get_information_of_module.load_treeview_config_json_path()
@@ -844,3 +866,94 @@ class Controller_update_selected_row:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
             return False
+
+class Controller_click_on_treeview:
+    def treeview_of_tab_01_double_click(my_treeview):
+        result_value = utils_controller_TreeviewHandler_click_250217_22h34.treeview_double_click(my_treeview, column_return=1)
+        if result_value:
+            return result_value
+        
+    def treeview_of_tab_02_double_click(my_treeview):
+        result_value = utils_controller_TreeviewHandler_click_250217_22h34.treeview_double_click(my_treeview, column_return=2)
+        if result_value:
+            return result_value
+
+    def treeview_of_tab_02_single_click(my_treeview):
+        result_value = utils_controller_TreeviewHandler_click_250217_22h34.treeview_double_click(my_treeview, column_return=2)
+        if result_value:
+            return result_value
+    
+    def treeview_of_tab_01_single_click(my_treeview,
+        entry_id,
+        entry_ma_hang,
+        entry_ten_hang,
+        entry_dvt,
+        entry_sl_kha_dung,
+        entry_sl_nhu_cau,
+        entry_sl_giu_cho,
+        entry_sl_YCDH,
+        entry_ghi_chu_mat_hang):
+        
+        result_tuple = utils_controller_TreeviewHandler_click_250217_22h34.treeview_single_click(my_treeview)
+        if not result_tuple:
+            return
+        id_value, ma_hang, ten_hang, dvt, sl_kha_dung, sl_nhu_cau, sl_giu_cho, sl_dat_hang, ghi_chu_mat_hang = result_tuple
+        
+        # Clear and update the Entry widgets if values are returned
+        if id_value is not None:
+            entry_id.config(state="normal")  # Enable the Entry widget to update the value
+            entry_id.delete(0, tk.END)
+            entry_id.insert(0, id_value)
+            entry_id.config(state="disabled")  # Disable the Entry widget again
+
+        if ma_hang is not None:
+            entry_ma_hang.delete(0, tk.END)
+            entry_ma_hang.insert(0, ma_hang)
+            
+        if ten_hang is not None:
+            entry_ten_hang.delete(0, tk.END)
+            entry_ten_hang.insert(0, ten_hang)
+            
+        if dvt is not None:
+            entry_dvt.delete(0, tk.END)
+            entry_dvt.insert(0, dvt)
+        
+        if sl_kha_dung is not None:
+            entry_sl_kha_dung.delete(0, tk.END)
+            if float(sl_kha_dung).is_integer():  # Nếu là số nguyên
+                formatted_sl_kha_dung = f"{int(float(sl_kha_dung)):,}"
+            else:  # Nếu là số thập phân
+                formatted_sl_kha_dung = f"{float(sl_kha_dung):,.2f}"
+            entry_sl_kha_dung.insert(0, formatted_sl_kha_dung)
+            
+        if sl_nhu_cau is not None:
+            entry_sl_nhu_cau.delete(0, tk.END)
+            if float(sl_nhu_cau).is_integer():  # Nếu là số nguyên
+                formatted_sl_nhu_cau = f"{int(float(sl_nhu_cau)):,}"
+            else:  # Nếu là số thập phân
+                formatted_sl_nhu_cau = f"{float(sl_nhu_cau):,.2f}"
+            entry_sl_nhu_cau.insert(0, formatted_sl_nhu_cau)
+        
+        if sl_giu_cho is not None:
+            entry_sl_giu_cho.config(state="normal")
+            entry_sl_giu_cho.delete(0, tk.END)
+            if float(sl_giu_cho).is_integer():  # Nếu là số nguyên
+                formatted_sl_giu_cho = f"{int(float(sl_giu_cho)):,}"
+            else:  # Nếu là số thập phân
+                formatted_sl_giu_cho = f"{float(sl_giu_cho):,.2f}"
+            entry_sl_giu_cho.insert(0, formatted_sl_giu_cho)
+            entry_sl_giu_cho.config(state="disabled")
+            
+        if sl_dat_hang is not None:
+            entry_sl_YCDH.config(state="normal")
+            entry_sl_YCDH.delete(0, tk.END)
+            if float(sl_dat_hang).is_integer():  # Nếu là số nguyên
+                formatted_sl_dat_hang = f"{int(float(sl_dat_hang)):,}"
+            else:  # Nếu là số thập phân
+                formatted_sl_dat_hang = f"{float(sl_dat_hang):,.2f}"
+            entry_sl_YCDH.insert(0, formatted_sl_dat_hang)
+            entry_sl_YCDH.config(state="disabled")
+            
+        if ghi_chu_mat_hang is not None:
+            entry_ghi_chu_mat_hang.delete(0, tk.END)
+            entry_ghi_chu_mat_hang.insert(0, ghi_chu_mat_hang)
