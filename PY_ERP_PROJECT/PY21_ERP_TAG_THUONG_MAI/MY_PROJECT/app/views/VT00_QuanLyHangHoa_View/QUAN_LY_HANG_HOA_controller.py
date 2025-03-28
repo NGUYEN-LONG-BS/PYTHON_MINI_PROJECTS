@@ -244,8 +244,43 @@ class Controller_handel_all_events:
             entry_sl_thuc_nhap, 
             entry_ghi_chu_mat_hang)
         
+    def f_handle_event_tab_02_button_add_row_click(entry_notification,
+            my_treeview, 
+            entry_id,
+            entry_ma_hang, 
+            entry_ten_hang, 
+            entry_dvt, 
+            entry_sl_thuc_nhap, 
+            entry_ghi_chu_mat_hang):
         
-
+        Controller_add_row_to_treeview.add_row(entry_notification,
+            my_treeview, 
+            entry_id,
+            entry_ma_hang, 
+            entry_ten_hang, 
+            entry_dvt, 
+            entry_sl_thuc_nhap, 
+            entry_ghi_chu_mat_hang)
+    
+    def f_handle_event_update_selected_row_click(*args):
+        (
+        entry_notification,
+        my_treeview,
+        entry_ma_hang_tab_01,
+        entry_ten_hang_tab_01,
+        entry_dvt,
+        entry_sl_thuc_nhap,
+        tab_01_entry_ghi_chu_mat_hang
+        )= args
+            
+        Controller_update_selected_row.update_selected_row(entry_notification,
+        my_treeview,
+        entry_ma_hang_tab_01,
+        entry_ten_hang_tab_01,
+        entry_dvt,
+        entry_sl_thuc_nhap,
+        tab_01_entry_ghi_chu_mat_hang)
+        
 class Controller_format_treeview:
     def set_format_of_treeview_of_tab_01(my_treeview):
         tab_01_treeview_config_json_path, tab_02_treeview_config_json_path, tab_04_treeview_config_json_path, tab_05_treeview_config_json_path, tab_06_treeview_config_json_path = controller_get_information_of_module.load_treeview_config_json_path()
@@ -659,7 +694,6 @@ class Controller_action_after_event_PNK:
     def f_check_input_of_treeview(entry_notification, id_value, ma_hang, ten_hang):    
         try:
             # Kiểm tra các trường bắt buộc
-            print(f"id_value: {id_value}, ma_hang: {ma_hang}, ten_hang: {ten_hang}")
             if not id_value or not ma_hang or not ten_hang:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "All fields are required: mã hàng, tên hàng", "red")
                 return False
@@ -670,6 +704,142 @@ class Controller_action_after_event_PNK:
                 return False
             
             return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+        
+    def update_selected_row(entry_notification,
+                my_treeview,
+                entry_ma_hang_tab_01,
+                entry_ten_hang_tab_01,
+                entry_dvt,
+                entry_sl_thuc_nhap,
+                tab_01_entry_ghi_chu_mat_hang):
+        try:
+            flag = Controller_action_after_event_PNK.validate_data_before_updating_row_in_tree_view(entry_notification,
+                my_treeview,
+                entry_ma_hang_tab_01,
+                entry_ten_hang_tab_01,
+                entry_sl_thuc_nhap)
+            if flag == False:
+                return False
+            
+            flag = Controller_action_after_event_PNK.begin_updating_row_in_tree_view(
+                entry_notification,
+                my_treeview,
+                entry_ma_hang_tab_01,
+                entry_ten_hang_tab_01,
+                entry_dvt,
+                entry_sl_thuc_nhap,
+                tab_01_entry_ghi_chu_mat_hang)
+            if flag == False:
+                return False
+            
+            flag = Controller_action_after_event_PNK.Kiem_tra_lai_data_trong_treeview(entry_notification, my_treeview)
+            if flag == False:
+                return False
+            else:
+                return True
+        
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+        
+    def validate_data_before_updating_row_in_tree_view(entry_notification,
+                my_treeview,
+                entry_ma_hang_tab_01,
+                entry_ten_hang_tab_01,
+                entry_sl_thuc_nhap):
+        # Function to update the selected row
+        try:
+            selected_item = my_treeview.selection()
+            new_ma_hang = entry_ma_hang_tab_01.get()
+            new_ten_hang = entry_ten_hang_tab_01.get()
+            new_thuc_nhap = float(entry_sl_thuc_nhap.get().replace(',', '') or 0)
+            
+            selected_item = my_treeview.selection()  # Get the selected item
+            if not selected_item:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Chưa chọn dòng cần cập nhật.", "red")
+                return False
+
+            # Kiểm tra các giá trị bắt buộc không được rỗng
+            if not new_ma_hang.strip():
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Mã hàng không được để trống.", "red")
+                return False
+
+            if not new_ten_hang.strip():
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Tên hàng không được để trống.", "red")
+                return False
+                
+            if not str(new_thuc_nhap).strip():
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số lượng nhu cầu không được để trống.", "red")
+                return False
+        
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+        
+    def begin_updating_row_in_tree_view(entry_notification,
+                my_treeview,
+                entry_ma_hang_tab_01,
+                entry_ten_hang_tab_01,
+                entry_dvt,
+                entry_sl_thuc_nhap,
+                tab_01_entry_ghi_chu_mat_hang):
+        # Function to update the selected row
+        try:
+            
+            selected_item = my_treeview.selection()
+            value_col_00 = my_treeview.item(selected_item, "values")[0] if my_treeview.item(selected_item, "values") else None
+            value_col_01 = entry_ma_hang_tab_01.get()
+            value_col_02 = entry_ten_hang_tab_01.get()
+            value_col_03 = entry_dvt.get()
+            value_col_04 = float(entry_sl_thuc_nhap.get().replace(',', '') or 0)
+            value_col_05 = tab_01_entry_ghi_chu_mat_hang.get()
+            
+            value_to_update = (value_col_00, value_col_01, value_col_02, value_col_03, value_col_04, value_col_05)
+            
+            selected_item = my_treeview.selection()  # Get the selected item
+            
+            try:
+                my_treeview.item(selected_item, values=value_to_update)  # Update the selected item
+            except Exception as e:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Cập nhật dòng bị lỗi!", "red")
+                return False
+            
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+    
+class Controller_update_selected_row:
+    def update_selected_row(entry_notification,
+            my_treeview,
+            entry_ma_hang_tab_01,
+            entry_ten_hang_tab_01,
+            entry_dvt,
+            entry_sl_thuc_nhap,
+            tab_01_entry_ghi_chu_mat_hang):
+        try:
+            flag = Controller_action_after_event_PNK.update_selected_row(
+            entry_notification,
+            my_treeview,
+            entry_ma_hang_tab_01,
+            entry_ten_hang_tab_01,
+            entry_dvt,
+            entry_sl_thuc_nhap,
+            tab_01_entry_ghi_chu_mat_hang)
+            if flag == False:
+                return False
+                
+            if flag == True:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Row updated successfully!", "blue")
+                return True
+    
         except Exception as e:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
