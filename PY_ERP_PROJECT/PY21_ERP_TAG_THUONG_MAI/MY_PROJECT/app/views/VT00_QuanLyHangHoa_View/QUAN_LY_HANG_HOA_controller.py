@@ -178,10 +178,10 @@ class Controller_handel_all_events:
         Controller_update_entry_id.update_entry_id_after_adding_new_row(my_treeview, entry_id)
     
     def f_handle_event_get_the_latest_number_of_slip_PNK(entry_so_phieu_PNK):
-        Cotroller_get_the_latest_number_of_slip.get_the_latest_number_of_slip(entry_so_phieu_PNK)
+        Controller_get_the_latest_number_of_slip.get_the_latest_number_of_slip(entry_so_phieu_PNK)
         
     def f_handle_event_get_the_latest_number_of_slip_PXK(entry_so_phieu_PXK):
-        Cotroller_get_the_latest_number_of_slip.get_the_latest_number_of_slip(entry_so_phieu_PXK)
+        Controller_get_the_latest_number_of_slip.get_the_latest_number_of_slip(entry_so_phieu_PXK)
         
     def f_handle_event_initializing_format_of_treeview_of_tab_01(my_treeview):
         Controller_format_treeview.set_format_of_treeview_of_tab_01(my_treeview)
@@ -213,6 +213,38 @@ class Controller_handel_all_events:
     
     def f_handle_event_tab_06_button_filter_log_click(entry_notification, entry_ma_hang, my_treeview):
         Controller_filter_with_conditions_on_tab_06.filter_log_with_conditions(entry_notification, entry_ma_hang, my_treeview)
+        
+    def f_handle_event_tab_06_button_clear_filter(entry_notification, 
+            my_treeview,
+            entry_ma_hang,
+            entry_ten_hang,
+            combobox_ma_kho):
+        Controller_clear_all_filter_condition.clear_filter_condition(entry_notification,
+            my_treeview,
+            entry_ma_hang,
+            entry_ten_hang,
+            combobox_ma_kho
+            )
+    
+    def f_handle_event_tab_01_button_add_row_click(entry_notification,
+            my_treeview, 
+            entry_id,
+            entry_ma_hang, 
+            entry_ten_hang, 
+            entry_dvt, 
+            entry_sl_thuc_nhap, 
+            entry_ghi_chu_mat_hang):
+        
+        Controller_add_row_to_treeview.add_row(entry_notification,
+            my_treeview, 
+            entry_id,
+            entry_ma_hang, 
+            entry_ten_hang, 
+            entry_dvt, 
+            entry_sl_thuc_nhap, 
+            entry_ghi_chu_mat_hang)
+        
+        
 
 class Controller_format_treeview:
     def set_format_of_treeview_of_tab_01(my_treeview):
@@ -247,19 +279,10 @@ class Controller_update_entry_id:
         except Exception as e:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
-            return False
+            return False        
 
-class Cotroller_get_the_latest_number_of_slip:
-    def get_the_latest_number_of_slip(tab_01_entry_so_phieu):
-        try:
-            Controller_action_after_event.f_get_the_latest_number_of_slip(tab_01_entry_so_phieu)
-            return "Have gotten the latest number of slip!"
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return f"Error: {e}"
+class Controller_get_the_latest_number_of_slip:
 
-class Controller_action_after_event:
     def f_get_the_latest_number_of_slip(entry_so_phieu):
         ma_thanh_vien = utils_controller_get_information_of_database.load_ma_thanh_vien()
         loai_phieu = controller_get_information_of_module.load_loai_phieu()
@@ -272,9 +295,16 @@ class Controller_action_after_event:
         entry_so_phieu.delete(0, tk.END)
         entry_so_phieu.insert(0, connection_number_of_slip)
         entry_so_phieu.config(state="readonly")
-        
 
-class Controller_get_the_latest_number_of_slip:
+
+    def get_the_latest_number_of_slip(tab_01_entry_so_phieu):
+        try:
+            Controller_get_the_latest_number_of_slip.f_get_the_latest_number_of_slip(tab_01_entry_so_phieu)
+            return "Have gotten the latest number of slip!"
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return f"Error: {e}"
     
     def handle_button_get_number_of_slip_click():
         # Lấy danh sách số phiếu từ SQL
@@ -284,7 +314,6 @@ class Controller_get_the_latest_number_of_slip:
         return data_02
     
     def get_list_number_of_slip():
-        
         # Tạo câu query SQL với danh sách số phiếu
         query = controller_get_information_of_module.load_query_get_list_number_of_slip()
         # print("query", query)
@@ -385,3 +414,263 @@ class Controller_filter_with_conditions_on_tab_06:
         except Exception as e:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
+
+class Controller_clear_all_filter_condition:
+    def clear_filter_condition(
+            entry_notification,
+            my_treeview,
+            entry_ma_hang,
+            entry_ten_hang,
+            combobox_ma_kho):
+        
+        try:
+            # clear all entries
+            entry_ma_hang.delete(0, tk.END)
+            entry_ten_hang.delete(0, tk.END)
+            kho_list = combobox_ma_kho['values']
+            combobox_ma_kho.set(kho_list[0])
+            
+            # Create value to filter and fetch data
+            ma_hang = None
+            combo_ma_kho = ""
+            
+            query = controller_get_information_of_module.load_query_filter_data_to_treeview_tab_06()
+            
+            utils_controller_get_data_from_SQL_to_treeview_with_quey_and_params_list.load_data_with_quey_and_params(my_treeview, query, (ma_hang, ma_hang))
+            
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Clear all filter!", "blue")
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            
+class Controller_add_row_to_treeview:
+    def add_row(*args):
+        try:
+            # Get the arguments
+            (
+                entry_notification,
+                my_treeview, 
+                entry_id,
+                entry_ma_hang, 
+                entry_ten_hang, 
+                entry_dvt, 
+                entry_sl_thuc_nhap, 
+                entry_ghi_chu_mat_hang
+            )= args
+            flag = Controller_action_after_event_PNK.f_add_new_row_and_renew_the_tree_view(
+                entry_notification,
+                my_treeview, 
+                entry_id,
+                entry_ma_hang, 
+                entry_ten_hang, 
+                entry_dvt, 
+                entry_sl_thuc_nhap, 
+                entry_ghi_chu_mat_hang
+            )
+
+        # Notification
+            if flag == True:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Adding row successfully!", "blue")
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+
+
+
+
+class Controller_action_after_event_PNK:
+    def f_add_new_row_and_renew_the_tree_view(entry_notification,
+                my_treeview, 
+                entry_id,
+                entry_ma_hang, 
+                entry_ten_hang, 
+                entry_dvt, 
+                entry_sl_thuc_nhap, 
+                entry_ghi_chu_mat_hang):
+        try:
+            # Step 2: add new row
+            flag = Controller_action_after_event_PNK.f_add_new_row(
+                entry_notification,
+                my_treeview, 
+                entry_id,
+                entry_ma_hang, 
+                entry_ten_hang, 
+                entry_dvt, 
+                entry_sl_thuc_nhap, 
+                entry_ghi_chu_mat_hang
+                )
+            if flag == False:
+                return False
+            # Step 3: renew the treeview
+            flag = Controller_action_after_event_PNK.Kiem_tra_lai_data_trong_treeview(
+                entry_notification,
+                my_treeview)
+            if flag == False:
+                return False
+            
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+            
+    def f_add_new_row(entry_notification,
+                my_treeview, 
+                entry_id,
+                entry_ma_hang, 
+                entry_ten_hang, 
+                entry_dvt, 
+                entry_sl_thuc_nhap, 
+                entry_ghi_chu_mat_hang):
+        try:
+            # Get values from elements
+            id_value = entry_id.get()
+            ma_hang_value = entry_ma_hang.get()
+            ten_hang_value = entry_ten_hang.get()
+            dvt_value = entry_dvt.get()
+            sl_thuc_nhap_value = float(entry_sl_thuc_nhap.get().replace(',', '') or 0)
+            ghi_chu_mat_hang_value = entry_ghi_chu_mat_hang.get()
+            
+            # Start controller
+            flag = Controller_action_after_event_PNK.f_add_row_into_treeview(
+                entry_notification,
+                id_value, 
+                ma_hang_value, 
+                ten_hang_value, 
+                dvt_value, 
+                sl_thuc_nhap_value, 
+                ghi_chu_mat_hang_value, 
+                my_treeview
+                )
+            if flag == False:
+                return False
+            
+            flag = Controller_update_entry_id.update_entry_id_after_adding_new_row(my_treeview, entry_id)
+            if flag == False:
+                return False
+            
+            flag = Controller_action_after_event_PNK.clear_input_fields(entry_ghi_chu_mat_hang)
+            if flag == False:
+                return False
+            
+            return True
+        except Exception as e:
+            # Correct entry ID because adding fail
+            Controller_update_entry_id.update_entry_id_after_adding_new_row(my_treeview, entry_id)
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+        
+    def Kiem_tra_lai_data_trong_treeview(entry_notification, my_treeview):
+        try:
+            # step: Lấy data trong treeview
+            rows = []
+            for item in my_treeview.get_children():
+                row_data = my_treeview.item(item, "values")
+                rows.append(row_data)
+
+            # Nếu không có dữ liệu thì thoát
+            if not rows:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Vui lòng chọn dòng để update!", "red")
+                return False
+
+            # step: 
+            # Gom lại các cột có trùng mã hàng - cột số 2
+            # Cột số 4 giữ lại một dòng duy nhất
+            # Cộng tổng các giá trị của các dòng có trùng mã hàng - cột số 5, 6, 7
+            # Cột nào có ghi chú thì giữ lại một dòng duy nhất: cột số 8
+            
+            # Gom nhóm theo mã hàng (cột số 2)
+            grouped_data = defaultdict(lambda: [None, "", "", "", 0, set()])  # Dùng set() để lưu nhiều ghi chú
+
+            for row in rows:
+                ma_hang = row[1]  # Cột số 2 - Mã hàng
+                if ma_hang not in grouped_data:
+                    grouped_data[ma_hang][0] = len(grouped_data) + 1  # STT mới
+                    grouped_data[ma_hang][1] = ma_hang  # Mã hàng
+                    grouped_data[ma_hang][2] = row[2]  # Tên hàng
+                    grouped_data[ma_hang][3] = row[3]  # Đơn vị tính (Đvt)
+                    grouped_data[ma_hang][4] = float(row[4]) if row[4] else 0  # SL thực nhập
+
+                # Cộng tổng SL thực nhập
+                grouped_data[ma_hang][4] += float(row[4]) if row[4] else 0
+
+                # Lưu lại ghi chú (nếu có)
+                if row[5].strip():
+                    grouped_data[ma_hang][5].add(row[5].strip())  # Dùng set để tránh trùng lặp ghi chú
+
+            # Tính toán SL giữ chỗ và SL YCDH
+            for ma_hang, values in grouped_data.items():
+                # Gộp tất cả ghi chú thành một chuỗi, cách nhau bởi "; "
+                values[5] = "; ".join(values[5])
+
+            # Xóa dữ liệu cũ trong Treeview
+            for item in my_treeview.get_children():
+                my_treeview.delete(item)
+
+            # Cập nhật dữ liệu mới vào Treeview
+            for i, (key, values) in enumerate(grouped_data.items(), start=1):
+                values[0] = i  # Cập nhật lại số thứ tự
+                my_treeview.insert("", "end", values=values)
+
+            return True
+        
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+        
+    def f_add_row_into_treeview(entry_notification, 
+                                id_value, 
+                                ma_hang, 
+                                ten_hang, 
+                                dvt, 
+                                sl_thuc_nhap, 
+                                ghi_chu_mat_hang, 
+                                my_treeview):
+        try:
+            # Validate input using the helper function
+            flag = Controller_action_after_event_PNK.f_check_input_of_treeview(entry_notification, 
+                                                                           id_value, 
+                                                                           ma_hang, 
+                                                                           ten_hang)
+            if flag == False:
+                return False
+            
+            # Add row to the treeview
+            my_treeview.insert("", "end", values=(id_value, ma_hang, ten_hang, dvt, sl_thuc_nhap, ghi_chu_mat_hang))
+            return True
+        
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+    
+    def clear_input_fields(entry_ghi_chu_mat_hang):
+        try:
+            entry_ghi_chu_mat_hang.delete(0, tk.END)
+            
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+        
+    def f_check_input_of_treeview(entry_notification, id_value, ma_hang, ten_hang):    
+        try:
+            # Kiểm tra các trường bắt buộc
+            print(f"id_value: {id_value}, ma_hang: {ma_hang}, ten_hang: {ten_hang}")
+            if not id_value or not ma_hang or not ten_hang:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "All fields are required: mã hàng, tên hàng", "red")
+                return False
+            
+            # Kiểm tra id_value có phải số nguyên hay không
+            if not id_value.isdigit():
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"ID value '{id_value}' must be an integer!", "red")
+                return False
+            
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False

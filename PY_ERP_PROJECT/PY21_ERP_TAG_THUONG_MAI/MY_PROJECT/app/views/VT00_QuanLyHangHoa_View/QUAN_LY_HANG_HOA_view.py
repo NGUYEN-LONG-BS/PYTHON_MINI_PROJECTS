@@ -83,31 +83,25 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         self.f_view_create_all_container_frames_in_tab_03()
 
     def f_set_up_when_initializing(self):
+        # Update entry id
+        Controller_handel_all_events.update_entry_id_when_initializing(self.tab_01_treeview_PNK, self.tab_01_entry_id)
+        Controller_handel_all_events.update_entry_id_when_initializing(self.tab_02_treeview_PXK, self.tab_02_entry_id)
+        # Update entry slip number
         Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip_PNK(self.tab_01_entry_so_phieu)
         Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip_PXK(self.tab_02_entry_so_phieu)
+        # Load data to all treeviews
         self.event_tab_06_button_filter_click()
     
     def f_set_command_for_elements(self):
-        # # Tab 01
-        # self.tab_01_btn_refresh_number_of_slip.config(command=self.event_tab_01_button_get_number_of_slip_click)
-        
-        # self.tab_01_button_add.config(command=self.event_tab_01_button_add_row_click)
-        # self.tab_01_button_update_row_in_treeview.config(command=self.event_tab_01_button_update_row_click)
-        # self.tab_01_button_delete.config(command=self.event_tab_01_button_delete_click)
-        # self.tab_01_button_clear.config(command=self.event_tab_01_button_clear_click)
-        
-        # self.tab_01_button_update_slip.config(command=self.event_tab_01_button_update_slip_click)
-        # self.tab_01_button_save.config(command=self.event_tab_01_button_save_click)
-        # self.tab_01_button_print.config(command=self.event_tab_01_button_print_click)
-        
-        # self.tab_01_btn_template.config(command=self.event_tab_01_button_template_click)
-        # self.tab_01_btn_get_import_file.config(command=self.event_tab_01_button_get_import_file_click)
+        # Tab 01
+        self.tab_01_button_add.config(command=self.event_tab_01_button_add_row_click)
         
         # Tab 03
         self.tab_03_button_create_new_inventory.config(command=self.event_tab_03_button_create_new_inventory_click)
         
         # Tab 06
         self.tab_06_button_filter.config(command=self.event_tab_06_button_filter_click)
+        self.tab_06_button_clear_filter.config(command=self.event_tab_06_button_clear_filter_click)
         
     def f_define_all_elements(self):
         # Find in tab_01: Phiếu nhập kho
@@ -321,7 +315,7 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         
         # Create a combobox with the options 'Kho A' and 'Kho B'
         values = ["Kho A", "Kho B"]
-        self.tab_01_kho_nhap = tk.Label(parent_frame, text="Mã kho:")
+        self.tab_01_kho_nhap = tk.Label(parent_frame, text="Kho nhập:")
         self.tab_01_kho_nhap.grid(row=0, column=6, padx=(10, 2), pady=5, sticky="w")
         self.tab_01_combobox_ma_kho = cls_my_combobox_num_01(parent_frame, values=values)
         self.tab_01_combobox_ma_kho.grid(row=0, column=7, padx=(0, 10), pady=5, sticky="w")
@@ -348,7 +342,7 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         
     def f_view_create_widgets_add_row_03_into_frame_clients_informations_tab_01(self):
         # create parent_frame
-        parent_frame = cls_frame_contracts_management_view(self.tab_01_frame_suppliers_information)
+        parent_frame = cls_frame_request_management_view(self.tab_01_frame_suppliers_information)
         parent_frame.pack(side="bottom", fill="x", expand=True)
 
     def f_view_create_widgets_in_tab_01_frame_button_of_treeview(self):
@@ -517,7 +511,7 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         # create parent_frame
         parent_frame = self.frame_inventories_informations_tab_02.frame_row_2
         
-        self.tab_02_label_sl_thuc_nhap = tk.Label(parent_frame, text="SL thực nhập:")
+        self.tab_02_label_sl_thuc_nhap = tk.Label(parent_frame, text="SL thực xuất:")
         self.tab_02_label_sl_thuc_nhap.grid(row=0, column=4, padx=(10, 2), pady=5, sticky="w")
         self.tab_02_entry_sl_thuc_nhap = cls_my_number_entry_num_01(parent_frame, width=10)
         self.tab_02_entry_sl_thuc_nhap.f_on_leaving(color=COLOR_WHITE)
@@ -526,7 +520,7 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         
         # Create a combobox with the options 'Kho A' and 'Kho B'
         values = ["Kho A", "Kho B"]
-        self.tab_02_kho_nhap = tk.Label(parent_frame, text="Mã kho:")
+        self.tab_02_kho_nhap = tk.Label(parent_frame, text="Kho xuất:")
         self.tab_02_kho_nhap.grid(row=0, column=6, padx=(10, 2), pady=5, sticky="w")
         self.tab_02_combobox_ma_kho = cls_my_combobox_num_01(parent_frame, values=values)
         self.tab_02_combobox_ma_kho.grid(row=0, column=7, padx=(0, 10), pady=5, sticky="w")
@@ -553,7 +547,7 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         
     def f_view_create_widgets_add_row_03_into_frame_clients_informations_tab_02(self):
         # create parent_frame
-        parent_frame = cls_frame_contracts_management_view(self.tab_02_frame_suppliers_information)
+        parent_frame = cls_frame_request_management_view(self.tab_02_frame_suppliers_information)
         parent_frame.pack(side="bottom", fill="x", expand=True)
 
     def f_view_create_widgets_in_tab_02_frame_button_of_treeview(self):
@@ -944,7 +938,7 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         parent_frame_01 = tk.Frame(self.tab_06_frame_filter_entries)
         parent_frame_01.grid(row=0, column=1, sticky="nsew")
         
-        self.tab_06_label_ma_kho = tk.Label(parent_frame_01, text="Mã kho")
+        self.tab_06_label_ma_kho = tk.Label(parent_frame_01, text="Kho tồn")
         self.tab_06_label_ma_kho.grid(row=0, column=0, padx=(10, 2), pady=(10, 0), sticky="w")
         values_ma_kho = ["Tất cả", "Kho A", "Kho B", "Kho C"]
         self.tab_06_combobox_ma_kho = cls_my_combobox_num_01(parent_frame_01, values=values_ma_kho)
@@ -990,4 +984,23 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
             self.tab_06_entry_ma_hang,
             self.tab_06_treeview_report)
         
-        
+    
+    def event_tab_06_button_clear_filter_click(self):
+        Controller_handel_all_events.f_handle_event_tab_06_button_clear_filter(
+            self.tab_01_label_footer_notification, 
+            self.tab_06_treeview_report,
+            self.tab_06_entry_ma_hang,
+            self.tab_06_entry_ten_hang,
+            self.tab_06_combobox_ma_kho)
+    
+    def event_tab_01_button_add_row_click(self):
+        Controller_handel_all_events.f_handle_event_tab_01_button_add_row_click(
+            self.tab_01_label_footer_notification,
+            self.tab_01_treeview_PNK, 
+            self.tab_01_entry_id, 
+            self.tab_01_entry_ma_hang, 
+            self.tab_01_entry_ten_hang, 
+            self.tab_01_entry_dvt, 
+            self.tab_01_entry_sl_thuc_nhap, 
+            self.tab_01_entry_ghi_chu_mat_hang)
+    

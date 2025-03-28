@@ -60,17 +60,6 @@
                 "show": "headings"
             },
             {
-                "name": "Kho nhập",
-                "width": 120,
-                "min_width": 120,
-                "anchor": "w",
-                "stretch": false,
-                "font": {"family": "Arial", "size": 12, "weight": "normal"},
-                "background_color": "#ffffff",
-                "foreground_color": "#4287f5",
-                "show": "headings"
-            },
-            {
                 "name": "Ghi chú sản phẩm",
                 "width": 300,
                 "min_width": 200,

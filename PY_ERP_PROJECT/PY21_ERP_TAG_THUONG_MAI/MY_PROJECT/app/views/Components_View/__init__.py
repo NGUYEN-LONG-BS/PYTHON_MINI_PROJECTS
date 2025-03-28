@@ -2,6 +2,7 @@
 from .frame_clients_informations import *
 from .frame_suppliers_information import *
 from .frame_contracts_management import *
+from .frame_request_management import *
 from .frame_inventories_informations import *
 from .frame_from_date_to_date import *
 
