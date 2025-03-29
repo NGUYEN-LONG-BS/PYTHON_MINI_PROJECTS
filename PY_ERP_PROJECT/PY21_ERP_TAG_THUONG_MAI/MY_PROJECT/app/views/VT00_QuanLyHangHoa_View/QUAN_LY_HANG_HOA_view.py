@@ -116,6 +116,11 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
     def f_define_all_elements(self):
         # Find in tab_01: Phiếu nhập kho
         tab_01_frame = self.tab1
+        
+        self.tab_01_entry_sl_kha_dung = f_utils_tim_component_with_name(tab_01_frame, "entry_sl_kha_dung")
+        self.tab_01_entry_sl_kha_dung.grid_forget()
+        self.tab_01_label_sl_kha_dung = f_utils_tim_component_with_name(tab_01_frame, "label_sl_kha_dung")
+        self.tab_01_label_sl_kha_dung.grid_forget()
         self.tab_01_entry_ma_hang = f_utils_tim_component_with_name(tab_01_frame, "entry_ma_hang")
         self.tab_01_entry_ten_hang = f_utils_tim_component_with_name(tab_01_frame, "entry_ten_hang")
         self.tab_01_entry_dvt = f_utils_tim_component_with_name(tab_01_frame, "entry_dvt")
@@ -148,6 +153,11 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         
         # Find in tab_02: Phiếu xuất kho
         tab_02_frame = self.tab2
+        
+        self.tab_02_entry_sl_kha_dung = f_utils_tim_component_with_name(tab_02_frame, "entry_sl_kha_dung")
+        self.tab_02_entry_sl_kha_dung.grid_forget()
+        self.tab_02_label_sl_kha_dung = f_utils_tim_component_with_name(tab_02_frame, "label_sl_kha_dung")
+        self.tab_02_label_sl_kha_dung.grid_forget()
         self.tab_02_entry_ma_hang = f_utils_tim_component_with_name(tab_02_frame, "entry_ma_hang")
         self.tab_02_entry_ten_hang = f_utils_tim_component_with_name(tab_02_frame, "entry_ten_hang")
         self.tab_02_entry_dvt = f_utils_tim_component_with_name(tab_02_frame, "entry_dvt")
