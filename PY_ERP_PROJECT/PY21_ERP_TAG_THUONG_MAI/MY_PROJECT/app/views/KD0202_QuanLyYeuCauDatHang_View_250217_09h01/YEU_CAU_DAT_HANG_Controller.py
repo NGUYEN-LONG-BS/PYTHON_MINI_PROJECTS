@@ -1185,7 +1185,17 @@ class Controller_save_data_on_GUI_into_database:
             return
         else:
             return
-        
+
+class Cotroller_get_the_latest_number_of_slip:
+    def get_the_latest_number_of_slip(tab_01_entry_so_phieu):
+        try:
+            Controller_action_after_event.f_get_the_latest_number_of_slip(tab_01_entry_so_phieu)
+            return "Have gotten the latest number of slip!"
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return f"Error: {e}"
+
 class Controller_get_the_latest_number_of_slip:
     
     def handle_button_get_number_of_slip_click():
@@ -2474,16 +2484,6 @@ class Controller_add_row_to_treeview:
         except Exception as e:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
-                  
-class Cotroller_get_the_latest_number_of_slip:
-    def get_the_latest_number_of_slip(tab_01_entry_so_phieu):
-        try:
-            Controller_action_after_event.f_get_the_latest_number_of_slip(tab_01_entry_so_phieu)
-            return "Have gotten the latest number of slip!"
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return f"Error: {e}"
         
 class Controller_update_selected_row:
     def update_selected_row(*args):
