@@ -293,7 +293,7 @@ class Controller_handel_all_events:
             , my_treeview)
     
     def f_handle_event_get_the_latest_number_of_slip(tab_01_entry_so_phieu):
-        Controller_get_the_latest_number_of_slip.get_the_latest_number_of_slip(tab_01_entry_so_phieu)
+        Controller_get_the_latest_number_of_slip.start_process_get_the_latest_number_of_slip(tab_01_entry_so_phieu)
         
     def f_handle_event_tab_01_button_add_row_click(*args):
         (
@@ -1174,27 +1174,28 @@ class Controller_save_data_on_GUI_into_database:
             return
 
 class Controller_get_the_latest_number_of_slip:
-    def get_the_latest_number_of_slip(tab_01_entry_so_phieu):
+    def start_process_get_the_latest_number_of_slip(entry_so_phieu):
         try:
-            Controller_get_the_latest_number_of_slip.f_get_the_latest_number_of_slip(tab_01_entry_so_phieu)
+            # Step: load information
+            ma_thanh_vien = utils_controller_get_information_of_database.load_ma_thanh_vien()
+            loai_phieu = controller_get_information_of_module.load_loai_phieu()
+            
+            # Get the latest number of slip
+            so_phieu = Controller_get_the_latest_number_of_slip.handle_button_get_number_of_slip_click()
+            
+            # Create the connection string
+            connection_number_of_slip = f"{ma_thanh_vien}-{loai_phieu}-{so_phieu + 1}"
+            
+            # Config the entry_so_phieu
+            entry_so_phieu.config(state="normal")
+            entry_so_phieu.delete(0, tk.END)
+            entry_so_phieu.insert(0, connection_number_of_slip)
+            entry_so_phieu.config(state="readonly")
             return "Have gotten the latest number of slip!"
         except Exception as e:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
             return f"Error: {e}"
-    
-    def f_get_the_latest_number_of_slip(entry_so_phieu):
-        ma_thanh_vien = utils_controller_get_information_of_database.load_ma_thanh_vien()
-        loai_phieu = controller_get_information_of_module.load_loai_phieu()
-        # Get the latest number of slip
-        so_phieu = Controller_get_the_latest_number_of_slip.handle_button_get_number_of_slip_click()
-        # Create the connection string
-        connection_number_of_slip = f"{ma_thanh_vien}-{loai_phieu}-{so_phieu + 1}"
-        # Config the entry_so_phieu
-        entry_so_phieu.config(state="normal")
-        entry_so_phieu.delete(0, tk.END)
-        entry_so_phieu.insert(0, connection_number_of_slip)
-        entry_so_phieu.config(state="readonly")
     
     def handle_button_get_number_of_slip_click():
         # Lấy danh sách số phiếu từ SQL
@@ -1204,14 +1205,10 @@ class Controller_get_the_latest_number_of_slip:
         return data_02
     
     def get_list_number_of_slip():
-        
         # Tạo câu query SQL với danh sách số phiếu
         query = controller_get_information_of_module.load_query_get_list_number_of_slip()
-        # print("query", query)
-        
         # lấy danh sách số phiếu từ SQL
         danh_sach_so_phieu = utils_model_get_data_from_SQL.get_data_with_query(query)
-        
         return danh_sach_so_phieu
         
     def extract_numbers_from_data_SQL_num_01(data):
