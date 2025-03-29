@@ -585,7 +585,7 @@ class Controller_action_after_event_PNK:
             ma_hang_value = entry_ma_hang.get()
             ten_hang_value = entry_ten_hang.get()
             dvt_value = entry_dvt.get()
-            sl_thuc_nhap_value = float(entry_sl_thuc_nhap.get().replace(',', '') or 0)
+            sl_thuc_nhap_value = entry_sl_thuc_nhap.get()
             ghi_chu_mat_hang_value = entry_ghi_chu_mat_hang.get()
             
             # Start controller
@@ -632,10 +632,10 @@ class Controller_action_after_event_PNK:
                 return False
 
             # step: 
-            # Gom lại các cột có trùng mã hàng - cột số 2
-            # Cột số 4 giữ lại một dòng duy nhất
-            # Cộng tổng các giá trị của các dòng có trùng mã hàng - cột số 5, 6, 7
-            # Cột nào có ghi chú thì giữ lại một dòng duy nhất: cột số 8
+            # Gom lại các cột có trùng mã hàng
+            # Cột số lượng tồn (nếu có): giữ lại một dòng duy nhất
+            # Cộng tổng các giá trị của các dòng có trùng mã hàng
+            # Cột nào có ghi chú thì giữ lại một dòng duy nhất
             
             # Gom nhóm theo mã hàng (cột số 2)
             grouped_data = defaultdict(lambda: [None, "", "", "", 0, set()])  # Dùng set() để lưu nhiều ghi chú
@@ -647,7 +647,7 @@ class Controller_action_after_event_PNK:
                     grouped_data[ma_hang][1] = ma_hang  # Mã hàng
                     grouped_data[ma_hang][2] = row[2]  # Tên hàng
                     grouped_data[ma_hang][3] = row[3]  # Đơn vị tính (Đvt)
-                    grouped_data[ma_hang][4] = float(row[4]) if row[4] else 0  # SL thực nhập
+                    # grouped_data[ma_hang][4] = float(row[4]) if row[4] else 0  # SL thực nhập
 
                 # Cộng tổng SL thực nhập
                 grouped_data[ma_hang][4] += float(row[4]) if row[4] else 0
@@ -690,7 +690,8 @@ class Controller_action_after_event_PNK:
             flag = Controller_action_after_event_PNK.f_check_input_of_treeview(entry_notification, 
                                                                            id_value, 
                                                                            ma_hang, 
-                                                                           ten_hang)
+                                                                           ten_hang,
+                                                                           sl_thuc_nhap)
             if flag == False:
                 return False
             
@@ -713,7 +714,7 @@ class Controller_action_after_event_PNK:
             print("Error at function: ", f_utils_get_current_function_name())
             return False
         
-    def f_check_input_of_treeview(entry_notification, id_value, ma_hang, ten_hang):    
+    def f_check_input_of_treeview(entry_notification, id_value, ma_hang, ten_hang, sl_thuc_nhap):    
         try:
             # Kiểm tra các trường bắt buộc
             if not id_value or not ma_hang or not ten_hang:
@@ -723,6 +724,23 @@ class Controller_action_after_event_PNK:
             # Kiểm tra id_value có phải số nguyên hay không
             if not id_value.isdigit():
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"ID value '{id_value}' must be an integer!", "red")
+                return False
+            
+            # Kiểm tra sl_thuc_nhap có phải số hay không
+            try:
+                sl_thuc_nhap_value = float(sl_thuc_nhap.replace(',', '') or 0)
+            except ValueError:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Số lượng thực nhập '{sl_thuc_nhap}' phải là số.", "red")
+                return False
+            
+            # Kiểm tra sl_thuc_nhap khác 0
+            if sl_thuc_nhap_value == 0:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số lượng thực nhập không được bằng 0.", "red")
+                return False
+            
+            # Kiểm tra số lượng giữ chỗ hoặc yêu cầu đặt hàng hợp lệ
+            if sl_thuc_nhap_value < 0:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số lượng thực nhập không được âm.", "red")
                 return False
             
             return True
@@ -794,9 +812,9 @@ class Controller_action_after_event_PNK:
             if not new_ten_hang.strip():
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Tên hàng không được để trống.", "red")
                 return False
-                
+            
             if not str(new_thuc_nhap).strip():
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số lượng nhu cầu không được để trống.", "red")
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số lượng thực nhập không được để trống.", "red")
                 return False
         
         except Exception as e:
@@ -888,16 +906,13 @@ class Controller_click_on_treeview:
         entry_ma_hang,
         entry_ten_hang,
         entry_dvt,
-        entry_sl_kha_dung,
-        entry_sl_nhu_cau,
-        entry_sl_giu_cho,
-        entry_sl_YCDH,
+        entry_sl_thuc_nhap,
         entry_ghi_chu_mat_hang):
         
         result_tuple = utils_controller_TreeviewHandler_click_250217_22h34.treeview_single_click(my_treeview)
         if not result_tuple:
             return
-        id_value, ma_hang, ten_hang, dvt, sl_kha_dung, sl_nhu_cau, sl_giu_cho, sl_dat_hang, ghi_chu_mat_hang = result_tuple
+        id_value, ma_hang, ten_hang, dvt, sl_thuc_nhap, ghi_chu_mat_hang = result_tuple
         
         # Clear and update the Entry widgets if values are returned
         if id_value is not None:
@@ -918,41 +933,13 @@ class Controller_click_on_treeview:
             entry_dvt.delete(0, tk.END)
             entry_dvt.insert(0, dvt)
         
-        if sl_kha_dung is not None:
-            entry_sl_kha_dung.delete(0, tk.END)
-            if float(sl_kha_dung).is_integer():  # Nếu là số nguyên
-                formatted_sl_kha_dung = f"{int(float(sl_kha_dung)):,}"
+        if sl_thuc_nhap is not None:
+            entry_sl_thuc_nhap.delete(0, tk.END)
+            if float(sl_thuc_nhap).is_integer():  # Nếu là số nguyên
+                formatted_value = f"{int(float(sl_thuc_nhap)):,}"
             else:  # Nếu là số thập phân
-                formatted_sl_kha_dung = f"{float(sl_kha_dung):,.2f}"
-            entry_sl_kha_dung.insert(0, formatted_sl_kha_dung)
-            
-        if sl_nhu_cau is not None:
-            entry_sl_nhu_cau.delete(0, tk.END)
-            if float(sl_nhu_cau).is_integer():  # Nếu là số nguyên
-                formatted_sl_nhu_cau = f"{int(float(sl_nhu_cau)):,}"
-            else:  # Nếu là số thập phân
-                formatted_sl_nhu_cau = f"{float(sl_nhu_cau):,.2f}"
-            entry_sl_nhu_cau.insert(0, formatted_sl_nhu_cau)
-        
-        if sl_giu_cho is not None:
-            entry_sl_giu_cho.config(state="normal")
-            entry_sl_giu_cho.delete(0, tk.END)
-            if float(sl_giu_cho).is_integer():  # Nếu là số nguyên
-                formatted_sl_giu_cho = f"{int(float(sl_giu_cho)):,}"
-            else:  # Nếu là số thập phân
-                formatted_sl_giu_cho = f"{float(sl_giu_cho):,.2f}"
-            entry_sl_giu_cho.insert(0, formatted_sl_giu_cho)
-            entry_sl_giu_cho.config(state="disabled")
-            
-        if sl_dat_hang is not None:
-            entry_sl_YCDH.config(state="normal")
-            entry_sl_YCDH.delete(0, tk.END)
-            if float(sl_dat_hang).is_integer():  # Nếu là số nguyên
-                formatted_sl_dat_hang = f"{int(float(sl_dat_hang)):,}"
-            else:  # Nếu là số thập phân
-                formatted_sl_dat_hang = f"{float(sl_dat_hang):,.2f}"
-            entry_sl_YCDH.insert(0, formatted_sl_dat_hang)
-            entry_sl_YCDH.config(state="disabled")
+                formatted_value = f"{float(sl_thuc_nhap):,.2f}"
+            entry_sl_thuc_nhap.insert(0, formatted_value)
             
         if ghi_chu_mat_hang is not None:
             entry_ghi_chu_mat_hang.delete(0, tk.END)

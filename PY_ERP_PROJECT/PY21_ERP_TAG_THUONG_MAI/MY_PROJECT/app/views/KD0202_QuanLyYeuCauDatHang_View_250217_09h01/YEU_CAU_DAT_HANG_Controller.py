@@ -871,10 +871,10 @@ class Controller_action_after_event:
                 return False
 
             # step: 
-            # Gom lại các cột có trùng mã hàng - cột số 2
-            # Cột số 4 giữ lại một dòng duy nhất
-            # Cộng tổng các giá trị của các dòng có trùng mã hàng - cột số 5, 6, 7
-            # Cột nào có ghi chú thì giữ lại một dòng duy nhất: cột số 8
+            # Gom lại các cột có trùng mã hàng
+            # Cột số lượng tồn (nếu có): giữ lại một dòng duy nhất
+            # Cộng tổng các giá trị của các dòng có trùng mã hàng
+            # Cột nào có ghi chú thì giữ lại một dòng duy nhất
             
             # Gom nhóm theo mã hàng (cột số 2)
             grouped_data = defaultdict(lambda: [None, "", "", "", 0, 0, 0, 0, set()])  # Dùng set() để lưu nhiều ghi chú
