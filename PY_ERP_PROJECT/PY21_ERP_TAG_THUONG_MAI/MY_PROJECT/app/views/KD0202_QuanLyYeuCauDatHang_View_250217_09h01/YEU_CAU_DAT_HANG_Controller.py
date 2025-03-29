@@ -293,7 +293,7 @@ class Controller_handel_all_events:
             , my_treeview)
     
     def f_handle_event_get_the_latest_number_of_slip(tab_01_entry_so_phieu):
-        Cotroller_get_the_latest_number_of_slip.get_the_latest_number_of_slip(tab_01_entry_so_phieu)
+        Controller_get_the_latest_number_of_slip.get_the_latest_number_of_slip(tab_01_entry_so_phieu)
         
     def f_handle_event_tab_01_button_add_row_click(*args):
         (
@@ -1186,7 +1186,7 @@ class Controller_save_data_on_GUI_into_database:
         else:
             return
 
-class Cotroller_get_the_latest_number_of_slip:
+class Controller_get_the_latest_number_of_slip:
     def get_the_latest_number_of_slip(tab_01_entry_so_phieu):
         try:
             Controller_action_after_event.f_get_the_latest_number_of_slip(tab_01_entry_so_phieu)
@@ -1195,8 +1195,6 @@ class Cotroller_get_the_latest_number_of_slip:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
             return f"Error: {e}"
-
-class Controller_get_the_latest_number_of_slip:
     
     def handle_button_get_number_of_slip_click():
         # Lấy danh sách số phiếu từ SQL
