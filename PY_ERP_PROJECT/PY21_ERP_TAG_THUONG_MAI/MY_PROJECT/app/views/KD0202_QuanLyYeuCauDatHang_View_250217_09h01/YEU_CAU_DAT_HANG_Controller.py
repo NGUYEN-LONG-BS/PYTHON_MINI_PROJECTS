@@ -889,7 +889,7 @@ class Controller_action_after_event:
                     grouped_data[ma_hang][4] = float(row[4]) if row[4] else 0  # SL khả dụng
 
                 # Cộng tổng SL nhu cầu
-                grouped_data[ma_hang][5] += float(row[5]) if row[5] else 0
+                grouped_data[ma_hang][5] += float(row[5].replace(',', '')) if row[5] else 0
 
                 # Lưu lại ghi chú (nếu có)
                 if row[8].strip():
