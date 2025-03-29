@@ -912,6 +912,51 @@ class Controller_action_after_event:
             # Cập nhật dữ liệu mới vào Treeview
             for i, (key, values) in enumerate(grouped_data.items(), start=1):
                 values[0] = i  # Cập nhật lại số thứ tự
+                
+                # Định dạng số lượng SL Khả dụng
+                #=============================================================================================
+                if values[4].is_integer():  # Kiểm tra xem có phải là số nguyên không
+                    formatted_quantity = f"{int(values[4]):,}"  # Định dạng số nguyên với dấu phân cách nghìn
+                else:
+                    formatted_quantity = f"{values[4]:,.2f}"  # Định dạng số thập phân với 2 chữ số sau dấu phẩy
+
+                # Cập nhật lại giá trị số lượng đã được định dạng vào Treeview
+                values[4] = formatted_quantity
+                #=============================================================================================
+                
+                # Định dạng số lượng SL nhu cau
+                #=============================================================================================
+                if values[5].is_integer():  # Kiểm tra xem có phải là số nguyên không
+                    formatted_quantity = f"{int(values[5]):,}"  # Định dạng số nguyên với dấu phân cách nghìn
+                else:
+                    formatted_quantity = f"{values[5]:,.2f}"  # Định dạng số thập phân với 2 chữ số sau dấu phẩy
+
+                # Cập nhật lại giá trị số lượng đã được định dạng vào Treeview
+                values[5] = formatted_quantity
+                #=============================================================================================
+                
+                # Định dạng số lượng SL giu cho
+                #=============================================================================================
+                if values[6].is_integer():  # Kiểm tra xem có phải là số nguyên không
+                    formatted_quantity = f"{int(values[6]):,}"  # Định dạng số nguyên với dấu phân cách nghìn
+                else:
+                    formatted_quantity = f"{values[6]:,.2f}"  # Định dạng số thập phân với 2 chữ số sau dấu phẩy
+
+                # Cập nhật lại giá trị số lượng đã được định dạng vào Treeview
+                values[6] = formatted_quantity
+                #=============================================================================================
+                
+                # Định dạng số lượng SL YCDH
+                #=============================================================================================
+                if values[7].is_integer():  # Kiểm tra xem có phải là số nguyên không
+                    formatted_quantity = f"{int(values[7]):,}"  # Định dạng số nguyên với dấu phân cách nghìn
+                else:
+                    formatted_quantity = f"{values[7]:,.2f}"  # Định dạng số thập phân với 2 chữ số sau dấu phẩy
+
+                # Cập nhật lại giá trị số lượng đã được định dạng vào Treeview
+                values[7] = formatted_quantity
+                #=============================================================================================
+                
                 my_treeview.insert("", "end", values=values)
 
             return True
@@ -1892,42 +1937,90 @@ class Controller_click_on_treeview:
         if dvt is not None:
             entry_dvt.delete(0, tk.END)
             entry_dvt.insert(0, dvt)
-        
+            
         if sl_kha_dung is not None:
-            entry_sl_kha_dung.delete(0, tk.END)
-            if float(sl_kha_dung).is_integer():  # Nếu là số nguyên
-                formatted_sl_kha_dung = f"{int(float(sl_kha_dung)):,}"
-            else:  # Nếu là số thập phân
-                formatted_sl_kha_dung = f"{float(sl_kha_dung):,.2f}"
-            entry_sl_kha_dung.insert(0, formatted_sl_kha_dung)
+            # Loại bỏ dấu phân cách nghìn nếu có
+            sl_clean = sl_kha_dung.replace(',', '')  # Xóa dấu phân cách nghìn
+            
+            # Thực hiện chuyển đổi thành float
+            try:
+                float_value = float(sl_clean)
+                
+                entry_sl_kha_dung.delete(0, tk.END)
+                
+                if float_value.is_integer():  # Nếu là số nguyên
+                    formatted_value = f"{int(float_value):,}"
+                else:  # Nếu là số thập phân
+                    formatted_value = f"{float_value:,.2f}"
+                    
+                entry_sl_kha_dung.insert(0, formatted_value)
+            except ValueError:
+                # Nếu không thể chuyển thành float, có thể hiển thị thông báo lỗi hoặc xử lý trường hợp này
+                print("Error: Không thể chuyển đổi giá trị thành số.")
             
         if sl_nhu_cau is not None:
-            entry_sl_nhu_cau.delete(0, tk.END)
-            if float(sl_nhu_cau).is_integer():  # Nếu là số nguyên
-                formatted_sl_nhu_cau = f"{int(float(sl_nhu_cau)):,}"
-            else:  # Nếu là số thập phân
-                formatted_sl_nhu_cau = f"{float(sl_nhu_cau):,.2f}"
-            entry_sl_nhu_cau.insert(0, formatted_sl_nhu_cau)
-        
-        if sl_giu_cho is not None:
-            entry_sl_giu_cho.config(state="normal")
-            entry_sl_giu_cho.delete(0, tk.END)
-            if float(sl_giu_cho).is_integer():  # Nếu là số nguyên
-                formatted_sl_giu_cho = f"{int(float(sl_giu_cho)):,}"
-            else:  # Nếu là số thập phân
-                formatted_sl_giu_cho = f"{float(sl_giu_cho):,.2f}"
-            entry_sl_giu_cho.insert(0, formatted_sl_giu_cho)
-            entry_sl_giu_cho.config(state="disabled")
+            # Loại bỏ dấu phân cách nghìn nếu có
+            sl_clean = sl_nhu_cau.replace(',', '')  # Xóa dấu phân cách nghìn
             
+            # Thực hiện chuyển đổi thành float
+            try:
+                float_value = float(sl_clean)
+                
+                entry_sl_nhu_cau.delete(0, tk.END)
+                
+                if float_value.is_integer():  # Nếu là số nguyên
+                    formatted_value = f"{int(float_value):,}"
+                else:  # Nếu là số thập phân
+                    formatted_value = f"{float_value:,.2f}"
+                    
+                entry_sl_nhu_cau.insert(0, formatted_value)
+            except ValueError:
+                # Nếu không thể chuyển thành float, có thể hiển thị thông báo lỗi hoặc xử lý trường hợp này
+                print("Error: Không thể chuyển đổi giá trị thành số.")
+            
+        if sl_giu_cho is not None:
+            # Loại bỏ dấu phân cách nghìn nếu có
+            sl_clean = sl_giu_cho.replace(',', '')  # Xóa dấu phân cách nghìn
+            
+            # Thực hiện chuyển đổi thành float
+            try:
+                float_value = float(sl_clean)
+                
+                entry_sl_giu_cho.config(state="normal")
+                entry_sl_giu_cho.delete(0, tk.END)
+                
+                if float_value.is_integer():  # Nếu là số nguyên
+                    formatted_value = f"{int(float_value):,}"
+                else:  # Nếu là số thập phân
+                    formatted_value = f"{float_value:,.2f}"
+                    
+                entry_sl_giu_cho.insert(0, formatted_value)
+                entry_sl_giu_cho.config(state="disabled")
+            except ValueError:
+                # Nếu không thể chuyển thành float, có thể hiển thị thông báo lỗi hoặc xử lý trường hợp này
+                print("Error: Không thể chuyển đổi giá trị thành số.")
+        
         if sl_dat_hang is not None:
-            entry_sl_YCDH.config(state="normal")
-            entry_sl_YCDH.delete(0, tk.END)
-            if float(sl_dat_hang).is_integer():  # Nếu là số nguyên
-                formatted_sl_dat_hang = f"{int(float(sl_dat_hang)):,}"
-            else:  # Nếu là số thập phân
-                formatted_sl_dat_hang = f"{float(sl_dat_hang):,.2f}"
-            entry_sl_YCDH.insert(0, formatted_sl_dat_hang)
-            entry_sl_YCDH.config(state="disabled")
+            # Loại bỏ dấu phân cách nghìn nếu có
+            sl_clean = sl_dat_hang.replace(',', '')  # Xóa dấu phân cách nghìn
+            
+            # Thực hiện chuyển đổi thành float
+            try:
+                float_value = float(sl_clean)
+                
+                entry_sl_YCDH.config(state="normal")
+                entry_sl_YCDH.delete(0, tk.END)
+                
+                if float_value.is_integer():  # Nếu là số nguyên
+                    formatted_value = f"{int(float_value):,}"
+                else:  # Nếu là số thập phân
+                    formatted_value = f"{float_value:,.2f}"
+                    
+                entry_sl_YCDH.insert(0, formatted_value)
+                entry_sl_YCDH.config(state="disabled")
+            except ValueError:
+                # Nếu không thể chuyển thành float, có thể hiển thị thông báo lỗi hoặc xử lý trường hợp này
+                print("Error: Không thể chuyển đổi giá trị thành số.")
             
         if ghi_chu_mat_hang is not None:
             entry_ghi_chu_mat_hang.delete(0, tk.END)

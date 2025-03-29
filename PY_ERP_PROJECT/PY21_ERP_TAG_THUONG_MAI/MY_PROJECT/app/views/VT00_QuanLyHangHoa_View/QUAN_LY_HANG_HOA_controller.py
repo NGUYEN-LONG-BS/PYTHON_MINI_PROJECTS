@@ -993,11 +993,11 @@ class Controller_click_on_treeview:
         
         if sl_thuc_nhap is not None:
             # Loại bỏ dấu phân cách nghìn nếu có
-            sl_thuc_nhap_clean = sl_thuc_nhap.replace(',', '')  # Xóa dấu phân cách nghìn
+            sl_clean = sl_thuc_nhap.replace(',', '')  # Xóa dấu phân cách nghìn
             
             # Thực hiện chuyển đổi thành float
             try:
-                float_value = float(sl_thuc_nhap_clean)
+                float_value = float(sl_clean)
                 
                 entry_sl_thuc_nhap.delete(0, tk.END)
                 
