@@ -521,12 +521,12 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         # create parent_frame
         parent_frame = self.frame_inventories_informations_tab_02.frame_row_2
         
-        self.tab_02_label_sl_thuc_nhap = tk.Label(parent_frame, text="SL thực xuất:")
-        self.tab_02_label_sl_thuc_nhap.grid(row=0, column=4, padx=(10, 2), pady=5, sticky="w")
-        self.tab_02_entry_sl_thuc_nhap = cls_my_number_entry_num_01(parent_frame, width=10)
-        self.tab_02_entry_sl_thuc_nhap.f_on_leaving(color=COLOR_WHITE)
-        self.tab_02_entry_sl_thuc_nhap.f_on_not_selecting(color=COLOR_WHITE)
-        self.tab_02_entry_sl_thuc_nhap.grid(row=0, column=5, padx=(0, 10), pady=5, sticky="w")
+        self.tab_02_label_sl_thuc_xuat = tk.Label(parent_frame, text="SL thực xuất:")
+        self.tab_02_label_sl_thuc_xuat.grid(row=0, column=4, padx=(10, 2), pady=5, sticky="w")
+        self.tab_02_entry_sl_thuc_xuat = cls_my_number_entry_num_01(parent_frame, width=10)
+        self.tab_02_entry_sl_thuc_xuat.f_on_leaving(color=COLOR_WHITE)
+        self.tab_02_entry_sl_thuc_xuat.f_on_not_selecting(color=COLOR_WHITE)
+        self.tab_02_entry_sl_thuc_xuat.grid(row=0, column=5, padx=(0, 10), pady=5, sticky="w")
         
         # Create a combobox with the options 'Kho A' and 'Kho B'
         values = ["Kho A", "Kho B"]
@@ -655,9 +655,24 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         self.tab_03_entry_new_dvt = cls_my_text_entry_num_01(parent_frame)
         self.tab_03_entry_new_dvt.grid(row=2, column=1, padx=(10, 2), pady=5, sticky="w")
         
+        self.tab_03_label_ma_phan_loai_01 = tk.Label(parent_frame, text="Mã phân loại 01")
+        self.tab_03_label_ma_phan_loai_01.grid(row=3, column=0, padx=(10, 2), pady=5, sticky="w")
+        self.tab_03_entry_ma_phan_loai_01 = cls_my_text_entry_num_01(parent_frame)
+        self.tab_03_entry_ma_phan_loai_01.grid(row=3, column=1, padx=(10, 2), pady=5, sticky="w")
+        
+        self.tab_03_label_ma_phan_loai_02 = tk.Label(parent_frame, text="Mã phân loại 02")
+        self.tab_03_label_ma_phan_loai_02.grid(row=4, column=0, padx=(10, 2), pady=5, sticky="w")
+        self.tab_03_entry_ma_phan_loai_02 = cls_my_text_entry_num_01(parent_frame)
+        self.tab_03_entry_ma_phan_loai_02.grid(row=4, column=1, padx=(10, 2), pady=5, sticky="w")
+        
+        self.tab_03_label_ma_phan_loai_03 = tk.Label(parent_frame, text="Mã phân loại 03")
+        self.tab_03_label_ma_phan_loai_03.grid(row=5, column=0, padx=(10, 2), pady=5, sticky="w")
+        self.tab_03_entry_ma_phan_loai_03 = cls_my_text_entry_num_01(parent_frame)
+        self.tab_03_entry_ma_phan_loai_03.grid(row=5, column=1, padx=(10, 2), pady=5, sticky="w")
+        
         # BTN save
         self.tab_03_button_create_new_inventory = cls_my_button_num_01(parent_frame, text="Save")
-        self.tab_03_button_create_new_inventory.grid(row=3, column=1, padx=10, pady=5, sticky="ew")    
+        self.tab_03_button_create_new_inventory.grid(row=6, column=1, padx=10, pady=5, sticky="ew")    
     
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
@@ -1022,7 +1037,7 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
             self.tab_02_entry_ma_hang, 
             self.tab_02_entry_ten_hang, 
             self.tab_02_entry_dvt, 
-            self.tab_02_entry_sl_thuc_nhap, 
+            self.tab_02_entry_sl_thuc_xuat, 
             self.tab_02_entry_ghi_chu_mat_hang)
     
     def event_tab_01_button_update_row_click(self):
