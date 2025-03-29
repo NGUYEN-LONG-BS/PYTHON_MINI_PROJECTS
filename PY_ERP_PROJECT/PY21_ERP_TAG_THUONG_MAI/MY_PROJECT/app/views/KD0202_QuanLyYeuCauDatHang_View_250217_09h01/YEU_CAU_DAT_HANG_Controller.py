@@ -758,19 +758,6 @@ class Controller_action_after_event:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
             return False
-    
-    def f_get_the_latest_number_of_slip(entry_so_phieu):
-        ma_thanh_vien = utils_controller_get_information_of_database.load_ma_thanh_vien()
-        loai_phieu = controller_get_information_of_module.load_loai_phieu()
-        # Get the latest number of slip
-        so_phieu = Controller_get_the_latest_number_of_slip.handle_button_get_number_of_slip_click()
-        # Create the connection string
-        connection_number_of_slip = f"{ma_thanh_vien}-{loai_phieu}-{so_phieu + 1}"
-        # Config the entry_so_phieu
-        entry_so_phieu.config(state="normal")
-        entry_so_phieu.delete(0, tk.END)
-        entry_so_phieu.insert(0, connection_number_of_slip)
-        entry_so_phieu.config(state="readonly")
         
     def f_check_input_of_treeview(entry_notification, id_value, ma_hang, ten_hang, sl_giu_cho, sl_yeu_cau_dat_hang):    
         try:
@@ -1189,12 +1176,25 @@ class Controller_save_data_on_GUI_into_database:
 class Controller_get_the_latest_number_of_slip:
     def get_the_latest_number_of_slip(tab_01_entry_so_phieu):
         try:
-            Controller_action_after_event.f_get_the_latest_number_of_slip(tab_01_entry_so_phieu)
+            Controller_get_the_latest_number_of_slip.f_get_the_latest_number_of_slip(tab_01_entry_so_phieu)
             return "Have gotten the latest number of slip!"
         except Exception as e:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
             return f"Error: {e}"
+    
+    def f_get_the_latest_number_of_slip(entry_so_phieu):
+        ma_thanh_vien = utils_controller_get_information_of_database.load_ma_thanh_vien()
+        loai_phieu = controller_get_information_of_module.load_loai_phieu()
+        # Get the latest number of slip
+        so_phieu = Controller_get_the_latest_number_of_slip.handle_button_get_number_of_slip_click()
+        # Create the connection string
+        connection_number_of_slip = f"{ma_thanh_vien}-{loai_phieu}-{so_phieu + 1}"
+        # Config the entry_so_phieu
+        entry_so_phieu.config(state="normal")
+        entry_so_phieu.delete(0, tk.END)
+        entry_so_phieu.insert(0, connection_number_of_slip)
+        entry_so_phieu.config(state="readonly")
     
     def handle_button_get_number_of_slip_click():
         # Lấy danh sách số phiếu từ SQL
