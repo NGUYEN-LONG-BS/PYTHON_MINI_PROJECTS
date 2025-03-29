@@ -981,11 +981,6 @@ class Controller_click_on_treeview:
         result_value = utils_controller_TreeviewHandler_click_250217_22h34.treeview_double_click(my_treeview, column_return=2)
         if result_value:
             return result_value
-
-    def treeview_of_tab_02_single_click(my_treeview):
-        result_value = utils_controller_TreeviewHandler_click_250217_22h34.treeview_double_click(my_treeview, column_return=2)
-        if result_value:
-            return result_value
     
     def treeview_of_tab_01_single_click(my_treeview,
         entry_id,
@@ -1035,6 +1030,62 @@ class Controller_click_on_treeview:
                     formatted_value = f"{float_value:,.2f}"
                     
                 entry_sl_thuc_nhap.insert(0, formatted_value)
+            except ValueError:
+                # Nếu không thể chuyển thành float, có thể hiển thị thông báo lỗi hoặc xử lý trường hợp này
+                print("Error: Không thể chuyển đổi giá trị thành số.")
+            
+        if ghi_chu_mat_hang is not None:
+            entry_ghi_chu_mat_hang.delete(0, tk.END)
+            entry_ghi_chu_mat_hang.insert(0, ghi_chu_mat_hang)
+            
+    def treeview_of_tab_02_single_click(my_treeview,
+        entry_id,
+        entry_ma_hang,
+        entry_ten_hang,
+        entry_dvt,
+        entry_sl_thuc_xuat,
+        entry_ghi_chu_mat_hang):
+        
+        result_tuple = utils_controller_TreeviewHandler_click_250217_22h34.treeview_single_click(my_treeview)
+        if not result_tuple:
+            return
+        id_value, ma_hang, ten_hang, dvt, sl_thuc_xuat, ghi_chu_mat_hang = result_tuple
+        
+        # Clear and update the Entry widgets if values are returned
+        if id_value is not None:
+            entry_id.config(state="normal")  # Enable the Entry widget to update the value
+            entry_id.delete(0, tk.END)
+            entry_id.insert(0, id_value)
+            entry_id.config(state="disabled")  # Disable the Entry widget again
+
+        if ma_hang is not None:
+            entry_ma_hang.delete(0, tk.END)
+            entry_ma_hang.insert(0, ma_hang)
+            
+        if ten_hang is not None:
+            entry_ten_hang.delete(0, tk.END)
+            entry_ten_hang.insert(0, ten_hang)
+            
+        if dvt is not None:
+            entry_dvt.delete(0, tk.END)
+            entry_dvt.insert(0, dvt)
+        
+        if sl_thuc_xuat is not None:
+            # Loại bỏ dấu phân cách nghìn nếu có
+            sl_clean = sl_thuc_xuat.replace(',', '')  # Xóa dấu phân cách nghìn
+            
+            # Thực hiện chuyển đổi thành float
+            try:
+                float_value = float(sl_clean)
+                
+                entry_sl_thuc_xuat.delete(0, tk.END)
+                
+                if float_value.is_integer():  # Nếu là số nguyên
+                    formatted_value = f"{int(float_value):,}"
+                else:  # Nếu là số thập phân
+                    formatted_value = f"{float_value:,.2f}"
+                    
+                entry_sl_thuc_xuat.insert(0, formatted_value)
             except ValueError:
                 # Nếu không thể chuyển thành float, có thể hiển thị thông báo lỗi hoặc xử lý trường hợp này
                 print("Error: Không thể chuyển đổi giá trị thành số.")
