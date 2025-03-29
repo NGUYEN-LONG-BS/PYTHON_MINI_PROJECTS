@@ -99,6 +99,8 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_button_delete.config(command=self.event_tab_01_button_delete_click)
         self.tab_01_button_clear.config(command=self.event_tab_01_button_clear_click)
         
+        self.tab_01_button_save.config(command=self.event_tab_01_button_save_click)
+        
         # Tab 02
         self.tab_02_button_add.config(command=self.event_tab_02_button_add_row_click)
         self.tab_02_button_update_row_in_treeview.config(command=self.event_tab_02_button_update_row_click)
@@ -323,10 +325,10 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
 
         # Input fields
         tk.Label(self.frame_slip_informations, text="Thông tin thêm:").pack(side="left")
-        self.tab_01_note_for_slip = cls_my_text_entry_num_01(self.frame_slip_informations)
-        self.tab_01_note_for_slip.f_on_leaving(color=COLOR_WHITE)
-        self.tab_01_note_for_slip.f_on_not_selecting(color=COLOR_WHITE)
-        self.tab_01_note_for_slip.pack(side="left", fill="x", expand=True, pady=10)
+        self.tab_01_entry_note_for_slip = cls_my_text_entry_num_01(self.frame_slip_informations)
+        self.tab_01_entry_note_for_slip.f_on_leaving(color=COLOR_WHITE)
+        self.tab_01_entry_note_for_slip.f_on_not_selecting(color=COLOR_WHITE)
+        self.tab_01_entry_note_for_slip.pack(side="left", fill="x", expand=True, pady=10)
         
     def f_view_create_widgets_add_widget_into_frame_inventories_informations_tab_01(self):
         # create parent_frame
@@ -1127,3 +1129,16 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         Controller_handel_all_events.f_handle_tab_02_button_clear_click(
             self.tab_01_label_footer_notification, 
             self.tab_02_treeview_PXK)
+        
+    def event_tab_01_button_save_click(self):
+        Controller_handel_all_events.f_handle_event_tab_01_btn_save_click(
+            self.tab_01_label_footer_notification,
+            self.tab_01_entry_so_phieu, 
+            self.tab_01_entry_ma_khach_hang, 
+            self.tab_01_entry_ten_khach_hang,
+            self.tab_01_entry_mst,
+            self.tab_01_entry_dia_chi,
+            self._tab_01_entry_so_hop_dong,
+            self.tab_01_entry_thong_tin_hop_dong,
+            self.tab_01_entry_note_for_slip,
+            self.tab_01_treeview_PNK)
