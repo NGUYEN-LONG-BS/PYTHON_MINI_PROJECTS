@@ -96,6 +96,8 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         # Tab 01
         self.tab_01_button_add.config(command=self.event_tab_01_button_add_row_click)
         self.tab_01_button_update_row_in_treeview.config(command=self.event_tab_01_button_update_row_click)
+        self.tab_01_button_delete.config(command=self.event_tab_01_button_delete_click)
+        self.tab_01_button_clear.config(command=self.event_tab_01_button_clear_click)
         
         # Tab 02
         self.tab_02_button_add.config(command=self.event_tab_02_button_add_row_click)
@@ -1048,3 +1050,13 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
             self.tab_01_entry_dvt,
             self.tab_01_entry_sl_thuc_nhap,
             self.tab_01_entry_ghi_chu_mat_hang)
+    
+    def event_tab_01_button_delete_click(self):
+        Controller_handel_all_events.f_handle_event_tab_01_btn_delete_click(
+            self.tab_01_label_footer_notification,
+            self.tab_01_treeview_PNK)
+    
+    def event_tab_01_button_clear_click(self):
+        Controller_handel_all_events.f_handle_tab_01_button_clear_click(
+            self.tab_01_label_footer_notification, 
+            self.tab_01_treeview_PNK)

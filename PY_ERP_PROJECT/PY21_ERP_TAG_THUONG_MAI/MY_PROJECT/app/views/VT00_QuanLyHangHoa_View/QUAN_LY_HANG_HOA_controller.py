@@ -303,6 +303,12 @@ class Controller_handel_all_events:
         entry_sl_thuc_nhap,
         entry_ghi_chu_mat_hang)
         
+    def f_handle_event_tab_01_btn_delete_click(entry_notification, my_treeview):
+        Controller_delete_row_in_treeview.delete_row(entry_notification, my_treeview)
+    
+    def f_handle_tab_01_button_clear_click(entry_notification, my_treeview):
+        Controller_clear_all_rows_in_treeview.clear_all_rows(entry_notification, my_treeview)
+        
 class Controller_format_treeview:
     def set_format_of_treeview_of_tab_01(my_treeview):
         tab_01_treeview_config_json_path, tab_02_treeview_config_json_path, tab_04_treeview_config_json_path, tab_05_treeview_config_json_path, tab_06_treeview_config_json_path = controller_get_information_of_module.load_treeview_config_json_path()
@@ -514,7 +520,7 @@ class Controller_add_row_to_treeview:
                 entry_sl_thuc_nhap, 
                 entry_ghi_chu_mat_hang
             )= args
-            flag = Controller_action_after_event_PNK.f_add_new_row_and_renew_the_tree_view(
+            flag = Controller_action_after_event.f_add_new_row_and_renew_the_tree_view(
                 entry_notification,
                 my_treeview, 
                 entry_id,
@@ -535,7 +541,7 @@ class Controller_add_row_to_treeview:
 
 
 
-class Controller_action_after_event_PNK:
+class Controller_action_after_event:
     def f_add_new_row_and_renew_the_tree_view(entry_notification,
                 my_treeview, 
                 entry_id,
@@ -546,7 +552,7 @@ class Controller_action_after_event_PNK:
                 entry_ghi_chu_mat_hang):
         try:
             # Step 2: add new row
-            flag = Controller_action_after_event_PNK.f_add_new_row(
+            flag = Controller_action_after_event.f_add_new_row(
                 entry_notification,
                 my_treeview, 
                 entry_id,
@@ -559,7 +565,7 @@ class Controller_action_after_event_PNK:
             if flag == False:
                 return False
             # Step 3: renew the treeview
-            flag = Controller_action_after_event_PNK.Kiem_tra_lai_data_trong_treeview(
+            flag = Controller_action_after_event.Kiem_tra_lai_data_trong_treeview(
                 entry_notification,
                 my_treeview)
             if flag == False:
@@ -589,7 +595,7 @@ class Controller_action_after_event_PNK:
             ghi_chu_mat_hang_value = entry_ghi_chu_mat_hang.get()
             
             # Start controller
-            flag = Controller_action_after_event_PNK.f_add_row_into_treeview(
+            flag = Controller_action_after_event.f_add_row_into_treeview(
                 entry_notification,
                 id_value, 
                 ma_hang_value, 
@@ -606,7 +612,7 @@ class Controller_action_after_event_PNK:
             if flag == False:
                 return False
             
-            flag = Controller_action_after_event_PNK.clear_input_fields(entry_ghi_chu_mat_hang)
+            flag = Controller_action_after_event.clear_input_fields(entry_ghi_chu_mat_hang)
             if flag == False:
                 return False
             
@@ -687,7 +693,7 @@ class Controller_action_after_event_PNK:
                                 my_treeview):
         try:
             # Validate input using the helper function
-            flag = Controller_action_after_event_PNK.f_check_input_of_treeview(entry_notification, 
+            flag = Controller_action_after_event.f_check_input_of_treeview(entry_notification, 
                                                                            id_value, 
                                                                            ma_hang, 
                                                                            ten_hang,
@@ -757,7 +763,7 @@ class Controller_action_after_event_PNK:
                 entry_sl_thuc_nhap,
                 tab_01_entry_ghi_chu_mat_hang):
         try:
-            flag = Controller_action_after_event_PNK.validate_data_before_updating_row_in_tree_view(entry_notification,
+            flag = Controller_action_after_event.validate_data_before_updating_row_in_tree_view(entry_notification,
                 my_treeview,
                 entry_ma_hang_tab_01,
                 entry_ten_hang_tab_01,
@@ -765,7 +771,7 @@ class Controller_action_after_event_PNK:
             if flag == False:
                 return False
             
-            flag = Controller_action_after_event_PNK.begin_updating_row_in_tree_view(
+            flag = Controller_action_after_event.begin_updating_row_in_tree_view(
                 entry_notification,
                 my_treeview,
                 entry_ma_hang_tab_01,
@@ -776,7 +782,7 @@ class Controller_action_after_event_PNK:
             if flag == False:
                 return False
             
-            flag = Controller_action_after_event_PNK.Kiem_tra_lai_data_trong_treeview(entry_notification, my_treeview)
+            flag = Controller_action_after_event.Kiem_tra_lai_data_trong_treeview(entry_notification, my_treeview)
             if flag == False:
                 return False
             else:
@@ -855,6 +861,49 @@ class Controller_action_after_event_PNK:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
             return False
+        
+    def f_delete_one_row_in_treeview(my_treeview):
+        try:
+            selected_item = my_treeview.selection()  # Get selected item
+            if selected_item:  # Check if an item is selected
+                my_treeview.delete(selected_item)  # Delete the selected item
+            else:  # If no item is selected
+                children = my_treeview.get_children()
+                if children:  # Check if there are rows in the Treeview
+                    last_item = children[-1]  # Get the last item
+                    my_treeview.delete(last_item)  # Delete the last item
+            
+            flag = Controller_action_after_event.f_controller_02_renumber_rows(my_treeview)
+            if flag == False:
+                return False
+            
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+        
+    def f_controller_02_renumber_rows(my_treeview):
+        try:
+            for index, item in enumerate(my_treeview.get_children(), start=1):
+                values = my_treeview.item(item, "values")  # Get the current values of the row
+                new_values = (index,) + values[1:]  # Update the first column with the new number
+                my_treeview.item(item, values=new_values)  # Set the updated values
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+        
+    def clear_all_contents_in_treeview(treeview):
+        try:
+            for item in treeview.get_children():
+                treeview.delete(item)
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
     
 class Controller_update_selected_row:
     def update_selected_row(entry_notification,
@@ -865,7 +914,7 @@ class Controller_update_selected_row:
             entry_sl_thuc_nhap,
             tab_01_entry_ghi_chu_mat_hang):
         try:
-            flag = Controller_action_after_event_PNK.update_selected_row(
+            flag = Controller_action_after_event.update_selected_row(
             entry_notification,
             my_treeview,
             entry_ma_hang_tab_01,
@@ -944,3 +993,31 @@ class Controller_click_on_treeview:
         if ghi_chu_mat_hang is not None:
             entry_ghi_chu_mat_hang.delete(0, tk.END)
             entry_ghi_chu_mat_hang.insert(0, ghi_chu_mat_hang)
+
+class Controller_delete_row_in_treeview:
+    def delete_row(entry_notification, my_treeview):
+        try:
+            flag = Controller_action_after_event.f_delete_one_row_in_treeview(my_treeview)
+            if flag == False:
+                return False
+            
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Row deleted successfully!", "blue")
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+
+class Controller_clear_all_rows_in_treeview:
+    def clear_all_rows(entry_notification, my_treeview):
+        try:
+            flag = Controller_action_after_event.clear_all_contents_in_treeview(my_treeview)
+            if flag == False:
+                return False
+            else:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Clear all rows successfully!", "blue")
+                return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
