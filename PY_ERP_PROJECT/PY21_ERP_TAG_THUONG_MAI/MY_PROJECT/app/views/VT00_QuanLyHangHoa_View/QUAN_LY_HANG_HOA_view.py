@@ -101,6 +101,9 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         
         # Tab 02
         self.tab_02_button_add.config(command=self.event_tab_02_button_add_row_click)
+        self.tab_02_button_update_row_in_treeview.config(command=self.event_tab_02_button_update_row_click)
+        self.tab_02_button_delete.config(command=self.event_tab_02_button_delete_click)
+        self.tab_02_button_clear.config(command=self.event_tab_02_button_clear_click)
         
         # Tab 03
         self.tab_03_button_create_new_inventory.config(command=self.event_tab_03_button_create_new_inventory_click)
@@ -112,6 +115,9 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         # Gán sự kiện
         self.tab_01_treeview_PNK.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_01_single_click)  # Single click
         self.tab_01_treeview_PNK.bind("<Double-1>", self.f_view_treeview_of_tab_01_double_click)  # Double click
+        
+        self.tab_02_treeview_PXK.bind("<ButtonRelease-1>", self.f_view_treeview_of_tab_02_single_click)  # Single click
+        self.tab_02_treeview_PXK.bind("<Double-1>", self.f_view_treeview_of_tab_02_double_click)  # Double click
         
     def f_define_all_elements(self):
         # Find in tab_01: Phiếu nhập kho
@@ -1060,10 +1066,25 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_entry_sl_thuc_nhap,
         self.tab_01_entry_ghi_chu_mat_hang)
         
+    def event_tab_02_button_update_row_click(self):
+        Controller_handel_all_events.f_handle_event_update_selected_row_click(
+        self.tab_01_label_footer_notification,
+        self.tab_02_treeview_PXK,
+        self.tab_02_entry_ma_hang,
+        self.tab_02_entry_ten_hang,
+        self.tab_02_entry_dvt,
+        self.tab_02_entry_sl_thuc_xuat,
+        self.tab_02_entry_ghi_chu_mat_hang)
+        
     def f_view_treeview_of_tab_01_double_click(self, event):
         Controller_handel_all_events.f_handle_event_treeview_of_tab_01_double_click(
             self.tab_01_label_footer_notification,
             self.tab_01_treeview_PNK)
+    
+    def f_view_treeview_of_tab_02_double_click(self, event):
+        Controller_handel_all_events.f_handle_event_treeview_of_tab_02_double_click(
+            self.tab_01_label_footer_notification,
+            self.tab_02_treeview_PXK)
 
     def f_view_treeview_of_tab_01_single_click(self, event):
         Controller_handel_all_events.f_handle_event_treeview_of_tab_01_single_click(
@@ -1076,12 +1097,33 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
             self.tab_01_entry_sl_thuc_nhap,
             self.tab_01_entry_ghi_chu_mat_hang)
     
+    def f_view_treeview_of_tab_02_single_click(self, event):
+        Controller_handel_all_events.f_handle_event_treeview_of_tab_02_single_click(
+            self.tab_01_label_footer_notification,
+            self.tab_02_treeview_PXK,
+            self.tab_02_entry_id,
+            self.tab_02_entry_ma_hang,
+            self.tab_02_entry_ten_hang,
+            self.tab_02_entry_dvt,
+            self.tab_02_entry_sl_thuc_xuat,
+            self.tab_02_entry_ghi_chu_mat_hang)
+    
     def event_tab_01_button_delete_click(self):
         Controller_handel_all_events.f_handle_event_tab_01_btn_delete_click(
             self.tab_01_label_footer_notification,
             self.tab_01_treeview_PNK)
+        
+    def event_tab_02_button_delete_click(self):
+        Controller_handel_all_events.f_handle_event_tab_02_btn_delete_click(
+            self.tab_01_label_footer_notification,
+            self.tab_02_treeview_PXK)
     
     def event_tab_01_button_clear_click(self):
         Controller_handel_all_events.f_handle_tab_01_button_clear_click(
             self.tab_01_label_footer_notification, 
             self.tab_01_treeview_PNK)
+    
+    def event_tab_02_button_clear_click(self):
+        Controller_handel_all_events.f_handle_tab_02_button_clear_click(
+            self.tab_01_label_footer_notification, 
+            self.tab_02_treeview_PXK)

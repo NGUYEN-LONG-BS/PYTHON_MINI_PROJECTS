@@ -285,6 +285,10 @@ class Controller_handel_all_events:
         ma_hang = Controller_click_on_treeview.treeview_of_tab_01_double_click(my_treeview)
         utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, ma_hang, "blue")
         
+    def f_handle_event_treeview_of_tab_02_double_click(entry_notification, my_treeview):
+        ma_hang = Controller_click_on_treeview.treeview_of_tab_01_double_click(my_treeview)
+        utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, ma_hang, "blue")
+        
     def f_handle_event_treeview_of_tab_01_single_click(entry_notification, 
             my_treeview,
             entry_id,
@@ -302,11 +306,35 @@ class Controller_handel_all_events:
         entry_dvt,
         entry_sl_thuc_nhap,
         entry_ghi_chu_mat_hang)
+    
+    def f_handle_event_treeview_of_tab_02_single_click(entry_notification, 
+            my_treeview,
+            entry_id,
+            entry_ma_hang,
+            entry_ten_hang,
+            entry_dvt,
+            entry_sl_thuc_nhap,
+            entry_ghi_chu_mat_hang):
+        
+        Controller_click_on_treeview.treeview_of_tab_02_single_click(
+        my_treeview,
+        entry_id,
+        entry_ma_hang,
+        entry_ten_hang,
+        entry_dvt,
+        entry_sl_thuc_nhap,
+        entry_ghi_chu_mat_hang)
         
     def f_handle_event_tab_01_btn_delete_click(entry_notification, my_treeview):
         Controller_delete_row_in_treeview.delete_row(entry_notification, my_treeview)
     
+    def f_handle_event_tab_02_btn_delete_click(entry_notification, my_treeview):
+        Controller_delete_row_in_treeview.delete_row(entry_notification, my_treeview)
+    
     def f_handle_tab_01_button_clear_click(entry_notification, my_treeview):
+        Controller_clear_all_rows_in_treeview.clear_all_rows(entry_notification, my_treeview)
+        
+    def f_handle_tab_02_button_clear_click(entry_notification, my_treeview):
         Controller_clear_all_rows_in_treeview.clear_all_rows(entry_notification, my_treeview)
         
 class Controller_format_treeview:
@@ -745,17 +773,17 @@ class Controller_action_after_event:
             try:
                 sl_thuc_nhap_value = float(sl_thuc_nhap.replace(',', '') or 0)
             except ValueError:
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Số lượng thực nhập '{sl_thuc_nhap}' phải là số.", "red")
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Số lượng nhập/xuất '{sl_thuc_nhap}' phải là số.", "red")
                 return False
             
             # Kiểm tra sl_thuc_nhap khác 0
             if sl_thuc_nhap_value == 0:
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số lượng thực nhập không được bằng 0.", "red")
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số lượng nhập/xuất không được bằng 0.", "red")
                 return False
             
             # Kiểm tra số lượng giữ chỗ hoặc yêu cầu đặt hàng hợp lệ
             if sl_thuc_nhap_value < 0:
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số lượng thực nhập không được âm.", "red")
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số lượng nhập/xuất không được âm.", "red")
                 return False
             
             return True
