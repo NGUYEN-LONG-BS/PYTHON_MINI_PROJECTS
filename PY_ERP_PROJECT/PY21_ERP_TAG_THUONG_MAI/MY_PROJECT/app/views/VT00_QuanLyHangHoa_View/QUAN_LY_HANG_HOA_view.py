@@ -124,7 +124,10 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
     def f_define_all_elements(self):
         # Find in tab_01: Phiếu nhập kho
         tab_01_frame = self.tab1
-        
+        self.tab_01_entry_sl_kha_dung = f_utils_tim_component_with_name(tab_01_frame, "label_sl_ton_kho")
+        self.tab_01_entry_sl_kha_dung.grid_forget()
+        self.tab_01_entry_sl_kha_dung = f_utils_tim_component_with_name(tab_01_frame, "entry_sl_ton_kho")
+        self.tab_01_entry_sl_kha_dung.grid_forget()
         self.tab_01_entry_sl_kha_dung = f_utils_tim_component_with_name(tab_01_frame, "entry_sl_kha_dung")
         self.tab_01_entry_sl_kha_dung.grid_forget()
         self.tab_01_label_sl_kha_dung = f_utils_tim_component_with_name(tab_01_frame, "label_sl_kha_dung")
@@ -174,7 +177,10 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         self.tab_02_entry_ten_hang = f_utils_tim_component_with_name(tab_02_frame, "entry_ten_hang")
         self.tab_02_entry_dvt = f_utils_tim_component_with_name(tab_02_frame, "entry_dvt")
         self.tab_02_label_don_gia_ton_kho = f_utils_tim_component_with_name(tab_02_frame, "label_don_gia_ton_kho")
+        self.tab_02_label_don_gia_ton_kho.config(text="ĐG xuất:")
+        self.tab_02_label_don_gia_ton_kho.grid(row=0, column=8)
         self.tab_02_entry_don_gia_ton_kho = f_utils_tim_component_with_name(tab_02_frame, "entry_don_gia_ton_kho")
+        self.tab_02_entry_don_gia_ton_kho.grid(row=0, column=9)
         self.tab_02_entry_ngay_tren_phieu = f_utils_tim_component_with_name(tab_02_frame, "date_entry")
         self.tab_02_entry_so_phieu = f_utils_tim_component_with_name(tab_02_frame, "slips_entry")
         self.tab_02_btn_refresh_number_of_slip = f_utils_tim_component_with_name(tab_02_frame, "refresh_number_of_slip_button")
@@ -347,19 +353,27 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_entry_sl_thuc_nhap.f_on_not_selecting(color=COLOR_WHITE)
         self.tab_01_entry_sl_thuc_nhap.grid(row=0, column=5, padx=(0, 10), pady=5, sticky="w")
         
+        self.tab_01_label_don_gia_nhap_kho = tk.Label(parent_frame, text="ĐG nhập:")
+        self.tab_01_label_don_gia_nhap_kho.grid(row=0, column=6, padx=(10, 2), pady=5, sticky="w")
+        self.tab_01_entry_don_gia_nhap_kho = cls_my_number_entry_num_01(parent_frame, width=10)
+        self.tab_01_entry_don_gia_nhap_kho.f_on_leaving(color=COLOR_WHITE)
+        self.tab_01_entry_don_gia_nhap_kho.f_on_not_selecting(color=COLOR_WHITE)
+        self.tab_01_entry_don_gia_nhap_kho.grid(row=0, column=7, padx=(0, 10), pady=5, sticky="w")
+        
         # Create a combobox with the options 'Kho A' and 'Kho B'
         values = ["Kho A", "Kho B"]
         self.tab_01_kho_nhap = tk.Label(parent_frame, text="Kho nhập:")
-        self.tab_01_kho_nhap.grid(row=0, column=6, padx=(10, 2), pady=5, sticky="w")
+        self.tab_01_kho_nhap.grid(row=0, column=8, padx=(10, 2), pady=5, sticky="w")
         self.tab_01_combobox_ma_kho = cls_my_combobox_num_01(parent_frame, values=values)
-        self.tab_01_combobox_ma_kho.grid(row=0, column=7, padx=(0, 10), pady=5, sticky="w")
+        self.tab_01_combobox_ma_kho.grid(row=0, column=9, padx=(0, 10), pady=5, sticky="w")
         # Set the default value to the first item in the list
         self.tab_01_combobox_ma_kho.set(values[0])
-
+        
         # Configure column weights for proper resizing
-        parent_frame.columnconfigure(5, weight=1)  # Allow tab_01_entry_nhu_cau to expand
-        parent_frame.columnconfigure(7, weight=1)  # Allow tab_01_entry_sl_giu_cho to expand
-        parent_frame.columnconfigure(9, weight=1)  # Allow tab_01_entry_sl_YCDH to expand
+        # Allow these colunms to expand
+        parent_frame.columnconfigure(5, weight=1)  
+        parent_frame.columnconfigure(7, weight=1)
+        parent_frame.columnconfigure(9, weight=1)
         
         self.f_view_create_widgets_add_row_03_into_frame_inventories_informations_tab_01()
     
@@ -555,9 +569,9 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         # Create a combobox with the options 'Kho A' and 'Kho B'
         values = ["Kho A", "Kho B"]
         self.tab_02_kho_nhap = tk.Label(parent_frame, text="Kho xuất:")
-        self.tab_02_kho_nhap.grid(row=0, column=8, padx=(10, 2), pady=5, sticky="w")
+        self.tab_02_kho_nhap.grid(row=0, column=10, padx=(12, 2), pady=5, sticky="w")
         self.tab_02_combobox_ma_kho = cls_my_combobox_num_01(parent_frame, values=values)
-        self.tab_02_combobox_ma_kho.grid(row=0, column=9, padx=(0, 10), pady=5, sticky="w")
+        self.tab_02_combobox_ma_kho.grid(row=0, column=11, padx=(0, 10), pady=5, sticky="w")
         # Set the default value to the first item in the list
         self.tab_02_combobox_ma_kho.set(values[0])
 
@@ -565,6 +579,7 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         # Allow these colunms to expand
         parent_frame.columnconfigure(7, weight=1)
         parent_frame.columnconfigure(9, weight=1)
+        parent_frame.columnconfigure(11, weight=1)
         
         self.f_view_create_widgets_add_row_03_into_frame_inventories_informations_tab_02()
     
