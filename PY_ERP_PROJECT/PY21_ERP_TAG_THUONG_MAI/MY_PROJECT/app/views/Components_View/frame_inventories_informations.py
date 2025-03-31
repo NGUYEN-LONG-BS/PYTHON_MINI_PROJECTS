@@ -8,41 +8,70 @@ class cls_frame_inventories_information_model:
 
     def get_data(query=''):
         database_name = utils_controller_get_information_of_database.load_database_name()
-        query = f""" 
+        # query = f""" 
+        #     SELECT 
+        #         [MA_HANG] AS [Mã hàng],
+        #         [TEN_HANG] AS [Tên hàng],
+        #         [DVT] AS [đvt],
+        #         CASE 
+        #             WHEN [TONG_SL_TON] = FLOOR([TONG_SL_TON]) 
+        #             THEN FORMAT([TONG_SL_TON], 'N0')  -- Nếu là số nguyên
+        #             ELSE FORMAT([TONG_SL_TON], 'N2')  -- Nếu có phần thập phân, hiển thị 2 chữ số
+        #         END AS [SL tồn],
+        #         CASE 
+        #             WHEN [TONG_SL_TON] = FLOOR([TONG_SL_TON]) 
+        #             THEN FORMAT([TONG_SL_TON], 'N0')  -- Nếu là số nguyên
+        #             ELSE FORMAT([TONG_SL_TON], 'N2')  -- Nếu có phần thập phân, hiển thị 2 chữ số
+        #         END AS [SL khả dụng]
+        #     FROM [{database_name}].[dbo].[VIEW_INVENTORY_REPORT_QUANTITY_250214_09h40]
+        #     ORDER BY [MA_HANG]
+        #     """
+            
+        query = f"""
             SELECT 
-                [MA_HANG] AS [Mã hàng],
-                [TEN_HANG] AS [Tên hàng],
-                [DVT] AS [đvt],
+                inv_table.MA_HANG AS [Mã hàng],
+                inv_table.TEN_HANG AS [Tên hàng],
+                inv_table.DVT AS [ĐVT],
                 CASE 
-                    WHEN [TONG_SL_TON] = FLOOR([TONG_SL_TON]) 
-                    THEN FORMAT([TONG_SL_TON], 'N0')  -- Nếu là số nguyên
-                    ELSE FORMAT([TONG_SL_TON], 'N2')  -- Nếu có phần thập phân, hiển thị 2 chữ số
+                    WHEN inv_table.TONG_SL_TON = FLOOR(inv_table.TONG_SL_TON) 
+                    THEN FORMAT(inv_table.TONG_SL_TON, 'N0')  -- Nếu là số nguyên
+                    ELSE FORMAT(inv_table.TONG_SL_TON, 'N2')  -- Nếu có phần thập phân, hiển thị 2 chữ số
                 END AS [SL tồn],
                 CASE 
-                    WHEN [TONG_SL_TON] = FLOOR([TONG_SL_TON]) 
-                    THEN FORMAT([TONG_SL_TON], 'N0')  -- Nếu là số nguyên
-                    ELSE FORMAT([TONG_SL_TON], 'N2')  -- Nếu có phần thập phân, hiển thị 2 chữ số
-                END AS [SL khả dụng]
-            FROM [{database_name}].[dbo].[VIEW_INVENTORY_REPORT_QUANTITY_250214_09h40]
-            ORDER BY [MA_HANG]
+                    WHEN inv_table.TONG_SL_TON = FLOOR(inv_table.TONG_SL_TON) 
+                    THEN FORMAT(inv_table.TONG_SL_TON, 'N0')  -- Nếu là số nguyên
+                    ELSE FORMAT(inv_table.TONG_SL_TON, 'N2')  -- Nếu có phần thập phân, hiển thị 2 chữ số
+                END AS [SL khả dụng],
+                
+                -- Thêm cột đơn giá tồn kho từ bảng 2
+                COALESCE(report_table.DON_GIA_TON_KHO, 0) AS [Đơn giá tồn kho]
+                
+            FROM 
+                [{database_name}].[dbo].[VIEW_INVENTORY_REPORT_QUANTITY_250214_09h40] inv_table
+            LEFT JOIN 
+                [TBD_2024].[dbo].[VIEW_INVENTORY_STANDARD_REPORT_BY_WAREHOUSE_CODE] report_table
+                ON inv_table.MA_HANG = report_table.MA_HANG
+            ORDER BY 
+                inv_table.MA_HANG;
             """
+            
         data = utils_model_SQL_server.fetch_data(query)
         return data
     
     def get_column_width():
-        width_of_columns = (100, 300, 80, 120, 120)
+        width_of_columns = (100, 300, 80, 120, 120, 120)
         return width_of_columns
 
     def get_width_of_dropdown():
-        width_of_dropdown = 820
+        width_of_dropdown = 940
         return width_of_dropdown
     
     def get_height_of_dropdown():
-        height_of_dropdown = 300
+        height_of_dropdown = 200
         return height_of_dropdown
     
     def get_header(query=''):
-        header = ["Mã hàng", "Tên hàng", "Đvt", "SL tồn", "SL khả dụng"]
+        header = ["Mã hàng", "Tên hàng", "Đvt", "SL tồn", "SL khả dụng", "Đơn giá tồn kho"]
         return header
 
     def filter_data(query):
@@ -62,23 +91,18 @@ class cls_frame_inventories_information_controller:
 
     def get_data(self):
         return cls_frame_inventories_information_model.get_data('')
-        # return self.model.get_data()
     
     def get_width_of_dropdown(self):
         return cls_frame_inventories_information_model.get_width_of_dropdown()
-        # return self.model.width_of_dropdown
     
     def get_height_of_dropdown(self):
         return cls_frame_inventories_information_model.get_height_of_dropdown()
-        # return self.model.height_of_dropdown
     
     def get_column_width(self):
         return cls_frame_inventories_information_model.get_column_width()
-        # return self.model.get_column_width()
     
     def get_header(self):
         return cls_frame_inventories_information_model.get_header('')
-        # return self.model.get_header()
 
     def filter_data(self, query):
         filtered_data = self.model.filter_data(query)
