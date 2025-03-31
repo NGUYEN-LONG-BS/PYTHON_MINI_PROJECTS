@@ -40,7 +40,7 @@ class controller_get_information_of_module:
     
     def load_query_filter_data_to_treeview_tab_06():
         database_name = utils_controller_get_information_of_database.load_database_name()
-        table_name = "VIEW_INVENTORY_REPORT_QUANTITY_250214_09h40"
+        table_name = "VIEW_INVENTORY_REPORT_QUANTITY"
         query = f"""
                 SELECT
                 ROW_NUMBER() OVER(ORDER BY [MA_HANG]) as RowNumber

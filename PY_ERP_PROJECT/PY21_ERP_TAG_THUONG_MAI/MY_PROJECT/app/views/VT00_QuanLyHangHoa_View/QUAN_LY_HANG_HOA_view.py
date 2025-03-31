@@ -139,6 +139,14 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_label_don_gia_ton_kho.grid_forget()
         self.tab_01_entry_don_gia_ton_kho = f_utils_tim_component_with_name(tab_01_frame, "entry_don_gia_ton_kho")
         self.tab_01_entry_don_gia_ton_kho.grid_forget()
+
+        # self.tab_01_treeview_inventories_dropdown = f_utils_tim_component_with_name(tab_01_frame, "treeview_toplevel_inventories_dropdown")
+        
+        # if self.tab_01_treeview_inventories_dropdown:
+        #     print(self.tab_01_treeview_inventories_dropdown)
+        # else:
+        #     print("Error: không tìm thấy treeview")
+
         self.tab_01_entry_ngay_tren_phieu = f_utils_tim_component_with_name(tab_01_frame, "date_entry")
         self.tab_01_entry_so_phieu = f_utils_tim_component_with_name(tab_01_frame, "slips_entry")
         self.tab_01_btn_refresh_number_of_slip = f_utils_tim_component_with_name(tab_01_frame, "refresh_number_of_slip_button")
@@ -322,7 +330,8 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         self.f_view_create_widgets_add_row_03_into_frame_clients_informations_tab_01()
         
         # Create frame inventories informations
-        self.frame_inventories_informations_tab_01 = cls_frame_inventories_information_view(parent_frame)
+        columns_to_display = [0, 1, 3]
+        self.frame_inventories_informations_tab_01 = cls_frame_inventories_information_view(parent_frame, columns_to_display=columns_to_display)
         self.frame_inventories_informations_tab_01.config(bd=0, relief="flat")
         self.frame_inventories_informations_tab_01.grid(row=0, column=1, sticky="nsew", padx=(10, 0))
         self.f_view_create_widgets_add_widget_into_frame_inventories_informations_tab_01()

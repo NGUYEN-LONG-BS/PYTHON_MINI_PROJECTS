@@ -110,23 +110,23 @@ class cls_frame_inventories_information_controller:
         
 # View: cls_frame_inventories_information_view
 class cls_frame_inventories_information_view(tk.Frame):
-    def __init__(self, master, columns_to_display=None, **kwargs):
+    def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
         # first setup 
         self._f_setup_geometry()
         # second setup 
         self._f_add_controller_01()
         # third setup 
-        self._f_create_widgets_all_container_frames(columns_to_display)
+        self._f_create_widgets_all_container_frames()
         
     def _f_setup_geometry(self):
         self.config(bd=2, relief="groove")
     
-    def _f_create_widgets_all_container_frames(self, columns_to_display=None):
+    def _f_create_widgets_all_container_frames(self):
         # row 1
         self.frame_row_1 = tk.Frame(self)
         self.frame_row_1.pack(side="top", fill="x", pady=0)
-        self._f_create_widgets_of_frame_row_1(columns_to_display)
+        self._f_create_widgets_of_frame_row_1()
         # row 2
         self.frame_row_2 = tk.Frame(self, name="frame_row_2_of_inventories_info")
         self.frame_row_2.pack(side="top", fill="x", pady=0)
@@ -135,7 +135,7 @@ class cls_frame_inventories_information_view(tk.Frame):
     def _f_add_controller_01(self):
         self.controller = cls_frame_inventories_information_controller()  # Create an instance of the controller
 
-    def _f_create_widgets_of_frame_row_1(self, columns_to_display):
+    def _f_create_widgets_of_frame_row_1(self):
         # Create label and TreeviewCombobox
         label_ma_hang = ttk.Label(self.frame_row_1, text="Mã hàng:")
         label_ma_hang.pack(side="left", padx=(10,2), pady=5)
@@ -146,11 +146,6 @@ class cls_frame_inventories_information_view(tk.Frame):
         column_width = self.controller.get_column_width()
         dropdown_width=self.controller.get_width_of_dropdown()
         dropdown_height=self.controller.get_height_of_dropdown()
-        
-        # Adjust columns based on columns_to_display
-        if columns_to_display:
-            columns = [columns[i] for i in columns_to_display]
-            column_width = [column_width[i] for i in columns_to_display]
         
         # Main cls_TreeviewCombobox_inventories
         self.treeview_combobox = cls_TreeviewCombobox_inventories(
