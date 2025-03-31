@@ -233,6 +233,7 @@ class Controller_handel_all_events:
             entry_ten_hang, 
             entry_dvt, 
             entry_sl_thuc_nhap, 
+            entry_don_gia,
             entry_ghi_chu_mat_hang):
         
         Controller_add_row_to_treeview.add_row(entry_notification,
@@ -241,7 +242,8 @@ class Controller_handel_all_events:
             entry_ma_hang, 
             entry_ten_hang, 
             entry_dvt, 
-            entry_sl_thuc_nhap, 
+            entry_sl_thuc_nhap,
+            entry_don_gia,
             entry_ghi_chu_mat_hang)
         
     def f_handle_event_tab_02_button_add_row_click(entry_notification,
@@ -562,19 +564,16 @@ class Controller_clear_all_filter_condition:
             print("Error at function: ", f_utils_get_current_function_name())
             
 class Controller_add_row_to_treeview:
-    def add_row(*args):
-        try:
-            # Get the arguments
-            (
-                entry_notification,
+    def add_row(entry_notification,
                 my_treeview, 
                 entry_id,
                 entry_ma_hang, 
                 entry_ten_hang, 
                 entry_dvt, 
-                entry_sl_thuc_nhap, 
-                entry_ghi_chu_mat_hang
-            )= args
+                entry_sl_thuc_nhap,
+                entry_don_gia,
+                entry_ghi_chu_mat_hang):
+        try:
             flag = Controller_action_after_event.f_add_new_row_and_renew_the_tree_view(
                 entry_notification,
                 my_treeview, 
@@ -583,6 +582,7 @@ class Controller_add_row_to_treeview:
                 entry_ten_hang, 
                 entry_dvt, 
                 entry_sl_thuc_nhap, 
+                entry_don_gia,
                 entry_ghi_chu_mat_hang
             )
 
@@ -603,7 +603,8 @@ class Controller_action_after_event:
                 entry_ma_hang, 
                 entry_ten_hang, 
                 entry_dvt, 
-                entry_sl_thuc_nhap, 
+                entry_sl_thuc_nhap,
+                entry_don_gia,
                 entry_ghi_chu_mat_hang):
         try:
             # Step 2: add new row
@@ -614,7 +615,8 @@ class Controller_action_after_event:
                 entry_ma_hang, 
                 entry_ten_hang, 
                 entry_dvt, 
-                entry_sl_thuc_nhap, 
+                entry_sl_thuc_nhap,
+                entry_don_gia,
                 entry_ghi_chu_mat_hang
                 )
             if flag == False:
@@ -639,6 +641,7 @@ class Controller_action_after_event:
                 entry_ten_hang, 
                 entry_dvt, 
                 entry_sl_thuc_nhap, 
+                entry_don_gia,
                 entry_ghi_chu_mat_hang):
         try:
             # Get values from elements
@@ -647,6 +650,8 @@ class Controller_action_after_event:
             ten_hang_value = entry_ten_hang.get()
             dvt_value = entry_dvt.get()
             sl_thuc_nhap_value = entry_sl_thuc_nhap.get()
+            don_gia_value = entry_don_gia.get()
+            gia_tri_value = sl_thuc_nhap_value * don_gia_value
             ghi_chu_mat_hang_value = entry_ghi_chu_mat_hang.get()
             
             # Start controller
@@ -656,7 +661,9 @@ class Controller_action_after_event:
                 ma_hang_value, 
                 ten_hang_value, 
                 dvt_value, 
-                sl_thuc_nhap_value, 
+                sl_thuc_nhap_value,
+                don_gia_value,
+                gia_tri_value,
                 ghi_chu_mat_hang_value, 
                 my_treeview
                 )
@@ -753,6 +760,8 @@ class Controller_action_after_event:
                                 ten_hang, 
                                 dvt, 
                                 sl_thuc_nhap, 
+                                don_gia_value,
+                                gia_tri_value,
                                 ghi_chu_mat_hang, 
                                 my_treeview):
         try:
@@ -761,12 +770,20 @@ class Controller_action_after_event:
                                                                            id_value, 
                                                                            ma_hang, 
                                                                            ten_hang,
-                                                                           sl_thuc_nhap)
+                                                                           sl_thuc_nhap,
+                                                                           don_gia_value)
             if flag == False:
                 return False
             
             # Add row to the treeview
-            my_treeview.insert("", "end", values=(id_value, ma_hang, ten_hang, dvt, sl_thuc_nhap, ghi_chu_mat_hang))
+            my_treeview.insert("", "end", values=(id_value, 
+                                                  ma_hang, 
+                                                  ten_hang, 
+                                                  dvt, 
+                                                  sl_thuc_nhap, 
+                                                  don_gia_value, 
+                                                  gia_tri_value, 
+                                                  ghi_chu_mat_hang))
             return True
         
         except Exception as e:
@@ -784,7 +801,7 @@ class Controller_action_after_event:
             print("Error at function: ", f_utils_get_current_function_name())
             return False
         
-    def f_check_input_of_treeview(entry_notification, id_value, ma_hang, ten_hang, sl_thuc_nhap):    
+    def f_check_input_of_treeview(entry_notification, id_value, ma_hang, ten_hang, sl_thuc_nhap, don_gia_value):    
         try:
             # Kiểm tra các trường bắt buộc
             if not id_value or not ma_hang or not ten_hang:
@@ -796,7 +813,8 @@ class Controller_action_after_event:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"ID value '{id_value}' must be an integer!", "red")
                 return False
             
-            # Kiểm tra sl_thuc_nhap có phải số hay không
+            # sl_thuc_nhap
+            # Kiểm tra có phải số hay không
             try:
                 sl_thuc_nhap_value = float(sl_thuc_nhap.replace(',', '') or 0)
             except ValueError:
@@ -808,9 +826,27 @@ class Controller_action_after_event:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số lượng nhập/xuất không được bằng 0.", "red")
                 return False
             
-            # Kiểm tra số lượng giữ chỗ hoặc yêu cầu đặt hàng hợp lệ
+            # Kiểm tra số lượng không âm
             if sl_thuc_nhap_value < 0:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số lượng nhập/xuất không được âm.", "red")
+                return False
+            
+            # don_gia_value
+            # Kiểm tra có phải số hay không
+            try:
+                don_gia_value = float(sl_thuc_nhap.replace(',', '') or 0)
+            except ValueError:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Đơn giá '{don_gia_value}' phải là số.", "red")
+                return False
+            
+            # Kiểm tra khác 0
+            if don_gia_value == 0:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Đơn giá không được bằng 0.", "red")
+                return False
+            
+            # Kiểm tra số lượng không âm
+            if don_gia_value < 0:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Đơn giá không được âm.", "red")
                 return False
             
             return True
