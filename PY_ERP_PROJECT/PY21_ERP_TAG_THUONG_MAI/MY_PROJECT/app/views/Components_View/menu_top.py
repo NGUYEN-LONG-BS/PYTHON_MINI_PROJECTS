@@ -145,6 +145,8 @@ class cls_menu_top:
         else:
             menu_VatTu = tk.Menu(top_menu, tearoff=0)
             top_menu.add_cascade(label="Vật Tư", menu=menu_VatTu)
+            menu_VatTu.add_command(label="BP vật tư", command=self.f_Vat_Tu_Home_main_click)
+            menu_VatTu.add_separator()
             
             # menu_KinhDoanh level 1
             menu_VatTu_QuanLyDonDatHang = tk.Menu(menu_VatTu, tearoff=0)
@@ -319,9 +321,13 @@ class cls_menu_top:
     def f_AI_Chatbot_click(self):
         self.f_open_AI_chatbot()
         
-    # Define the action fuctions for Kinhd doanh home menu
+    # Define the action fuctions for Kinh doanh home menu
     def f_Kinh_Doanh_Home_main_click(self):
         self.f_open_Kinh_Doanh_DashBoard()
+        
+    # Define the action fuctions for Vat tu home menu
+    def f_Vat_Tu_Home_main_click(self):
+        self.f_open_Vat_Tu_DashBoard()
         
     def f_Admin_Home_main_click(self):
         self.f_open_Admin_DashBoard()
@@ -608,6 +614,10 @@ class cls_menu_top:
     def f_open_Kinh_Doanh_DashBoard(self):
         self.parent.destroy()
         f_utils_open_dashboard_kinh_doanh()
+        
+    def f_open_Vat_Tu_DashBoard(self):
+        self.parent.destroy()
+        f_utils_open_dashboard_vat_tu()
     
     def f_open_Admin_DashBoard(self):
         self.parent.destroy()

@@ -166,11 +166,20 @@ class cls_frame_inventories_information_view(tk.Frame):
         entry_sl_kha_dung = entry.cls_my_number_entry_num_01(parent_frame, width=10, name="entry_sl_kha_dung")
         entry_sl_kha_dung.grid(row=0, column=5, padx=(0, 10), pady=5, sticky="w")
         self.additional_entries.append(entry_sl_kha_dung)
+        
+        label_don_gia_ton_kho = ttk.Label(parent_frame, text="ĐG tồn:", name="label_don_gia_ton_kho")
+        label_don_gia_ton_kho.grid(row=0, column=6, padx=(10, 2), pady=5, sticky="w")
+        
+        entry_don_gia_ton_kho = entry.cls_my_number_entry_num_01(parent_frame, width=10, name="entry_don_gia_ton_kho")
+        entry_don_gia_ton_kho.grid(row=0, column=7, padx=(0, 10), pady=5, sticky="w")
+        self.additional_entries.append(entry_sl_kha_dung)
 
         # Configure column weights for proper resizing
-        parent_frame.columnconfigure(1, weight=1)  # Allow entry_dvt to expand
-        parent_frame.columnconfigure(3, weight=1)  # Allow entry_sl_kha_dung to expand
-        parent_frame.columnconfigure(5, weight=1)  # Allow entry_sl_kha_dung to expand
+        # Allow these colunms to expand
+        parent_frame.columnconfigure(1, weight=1)  
+        parent_frame.columnconfigure(3, weight=1)  
+        parent_frame.columnconfigure(5, weight=1)  
+        parent_frame.columnconfigure(7, weight=1)  
 
         # Link additional Entry widgets to the cls_TreeviewCombobox_inventories
         self.treeview_combobox.set_additional_entries(self.additional_entries)

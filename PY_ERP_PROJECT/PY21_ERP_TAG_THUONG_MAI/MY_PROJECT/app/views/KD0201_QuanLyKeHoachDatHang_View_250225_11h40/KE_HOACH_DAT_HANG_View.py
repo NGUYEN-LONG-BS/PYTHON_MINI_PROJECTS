@@ -79,6 +79,10 @@ class cls_KE_HOACH_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_entry_sl_ton_kho.grid_forget()
         self.tab_01_label_sl_ton_kho = f_utils_tim_component_with_name(tab_01_frame, "label_sl_ton_kho")
         self.tab_01_label_sl_ton_kho.grid_forget()
+        self.tab_01_label_don_gia_ton_kho = f_utils_tim_component_with_name(tab_01_frame, "label_don_gia_ton_kho")
+        self.tab_01_label_don_gia_ton_kho.grid_forget()
+        self.tab_01_entry_don_gia_ton_kho = f_utils_tim_component_with_name(tab_01_frame, "entry_don_gia_ton_kho")
+        self.tab_01_entry_don_gia_ton_kho.grid_forget()
         self.tab_01_entry_ma_hang = f_utils_tim_component_with_name(tab_01_frame, "entry_ma_hang")
         self.tab_01_entry_ten_hang = f_utils_tim_component_with_name(tab_01_frame, "entry_ten_hang")
         self.tab_01_entry_dvt = f_utils_tim_component_with_name(tab_01_frame, "entry_dvt")
@@ -97,9 +101,9 @@ class cls_KE_HOACH_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         tab_02_frame = self.tab2
         self.tab_02_entry_ma_khach_hang = f_utils_tim_component_with_name(tab_02_frame, "entry_ma_khach_hang")
         self.tab_02_entry_ten_khach_hang = f_utils_tim_component_with_name(tab_02_frame, "entry_ten_khach_hang")
-        self.tab_02_entry_mst = f_utils_tim_component_with_name(tab_02_frame, "entry_mst")
+        self.tab_02_entry_mst = f_utils_tim_component_with_name(tab_02_frame, "entry_mst_khach_hang")
         self.tab_02_entry_mst.pack_forget()
-        self.tab_02_entry_dia_chi = f_utils_tim_component_with_name(tab_02_frame, "entry_dia_chi")
+        self.tab_02_entry_dia_chi = f_utils_tim_component_with_name(tab_02_frame, "entry_dia_chi_khach_hang")
         self.tab_02_entry_dia_chi.pack_forget()
         self._tab_02_frame_row_2_of_inventories_info = f_utils_tim_component_with_name(tab_02_frame, "frame_row_2_of_inventories_info")
         self._tab_02_frame_row_2_of_inventories_info.pack_forget()
@@ -280,10 +284,11 @@ class cls_KE_HOACH_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_entry_nhu_cau.f_on_not_selecting(color=COLOR_WHITE)
         self.tab_01_entry_nhu_cau.grid(row=0, column=3, padx=(0, 10), pady=5, sticky="w")
         
-        self._f_view_create_widgets_add_row_03_into_frame_inventories_informations_tab_01()
-    
-    def _f_view_create_widgets_add_row_03_into_frame_inventories_informations_tab_01(self):
-        # create parent_frame
+        self._tab_01_label_don_gia_ban = tk.Label(parent_frame, text="ĐG bán:")
+        self._tab_01_label_don_gia_ban.grid(row=0, column=4, padx=(10, 2), pady=5, sticky="w")
+        self.tab_01_entry_don_gia_ban = cls_my_number_entry_num_01(parent_frame, width=10)
+        self.tab_01_entry_don_gia_ban.grid(row=0, column=5, padx=(0, 10), pady=5, sticky="w")
+        
         parent_frame = tk.Frame(self.tab_01_frame_inventories_informations)
         parent_frame.pack(side="bottom", fill="x", expand=True)
 

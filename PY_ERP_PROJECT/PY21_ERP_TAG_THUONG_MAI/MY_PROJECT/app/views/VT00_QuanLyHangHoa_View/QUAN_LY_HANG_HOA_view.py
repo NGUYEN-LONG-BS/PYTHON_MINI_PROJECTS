@@ -132,6 +132,10 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_entry_ma_hang = f_utils_tim_component_with_name(tab_01_frame, "entry_ma_hang")
         self.tab_01_entry_ten_hang = f_utils_tim_component_with_name(tab_01_frame, "entry_ten_hang")
         self.tab_01_entry_dvt = f_utils_tim_component_with_name(tab_01_frame, "entry_dvt")
+        self.tab_01_label_don_gia_ton_kho = f_utils_tim_component_with_name(tab_01_frame, "label_don_gia_ton_kho")
+        self.tab_01_label_don_gia_ton_kho.grid_forget()
+        self.tab_01_entry_don_gia_ton_kho = f_utils_tim_component_with_name(tab_01_frame, "entry_don_gia_ton_kho")
+        self.tab_01_entry_don_gia_ton_kho.grid_forget()
         self.tab_01_entry_ngay_tren_phieu = f_utils_tim_component_with_name(tab_01_frame, "date_entry")
         self.tab_01_entry_so_phieu = f_utils_tim_component_with_name(tab_01_frame, "slips_entry")
         self.tab_01_btn_refresh_number_of_slip = f_utils_tim_component_with_name(tab_01_frame, "refresh_number_of_slip_button")
@@ -152,8 +156,8 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         self.tab_04_entry_mst.pack_forget()
         self.tab_04_entry_dia_chi = f_utils_tim_component_with_name(tab_04_frame, "entry_dia_chi_nha_cung_cap")
         self.tab_04_entry_dia_chi.pack_forget()
-        self._tab_04_frame_row_2_of_inventories_info = f_utils_tim_component_with_name(tab_04_frame, "frame_row_2_of_inventories_info")
-        self._tab_04_frame_row_2_of_inventories_info.pack_forget()
+        self.tab_04_frame_row_2_of_inventories_info = f_utils_tim_component_with_name(tab_04_frame, "frame_row_2_of_inventories_info")
+        self.tab_04_frame_row_2_of_inventories_info.pack_forget()
         self.tab_04_entry_ma_hang = f_utils_tim_component_with_name(tab_04_frame, "entry_ma_hang")
         self.tab_04_entry_ten_hang = f_utils_tim_component_with_name(tab_04_frame, "entry_ten_hang")
         self.tab_04_ngay_filter_bat_dau = f_utils_tim_component_with_name(tab_04_frame, "start_date_entry")
@@ -169,6 +173,8 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         self.tab_02_entry_ma_hang = f_utils_tim_component_with_name(tab_02_frame, "entry_ma_hang")
         self.tab_02_entry_ten_hang = f_utils_tim_component_with_name(tab_02_frame, "entry_ten_hang")
         self.tab_02_entry_dvt = f_utils_tim_component_with_name(tab_02_frame, "entry_dvt")
+        self.tab_02_label_don_gia_ton_kho = f_utils_tim_component_with_name(tab_02_frame, "label_don_gia_ton_kho")
+        self.tab_02_entry_don_gia_ton_kho = f_utils_tim_component_with_name(tab_02_frame, "entry_don_gia_ton_kho")
         self.tab_02_entry_ngay_tren_phieu = f_utils_tim_component_with_name(tab_02_frame, "date_entry")
         self.tab_02_entry_so_phieu = f_utils_tim_component_with_name(tab_02_frame, "slips_entry")
         self.tab_02_btn_refresh_number_of_slip = f_utils_tim_component_with_name(tab_02_frame, "refresh_number_of_slip_button")
@@ -540,25 +546,25 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         parent_frame = self.frame_inventories_informations_tab_02.frame_row_2
         
         self.tab_02_label_sl_thuc_xuat = tk.Label(parent_frame, text="SL thực xuất:")
-        self.tab_02_label_sl_thuc_xuat.grid(row=0, column=4, padx=(10, 2), pady=5, sticky="w")
+        self.tab_02_label_sl_thuc_xuat.grid(row=0, column=6, padx=(10, 2), pady=5, sticky="w")
         self.tab_02_entry_sl_thuc_xuat = cls_my_number_entry_num_01(parent_frame, width=10)
         self.tab_02_entry_sl_thuc_xuat.f_on_leaving(color=COLOR_WHITE)
         self.tab_02_entry_sl_thuc_xuat.f_on_not_selecting(color=COLOR_WHITE)
-        self.tab_02_entry_sl_thuc_xuat.grid(row=0, column=5, padx=(0, 10), pady=5, sticky="w")
+        self.tab_02_entry_sl_thuc_xuat.grid(row=0, column=7, padx=(0, 10), pady=5, sticky="w")
         
         # Create a combobox with the options 'Kho A' and 'Kho B'
         values = ["Kho A", "Kho B"]
         self.tab_02_kho_nhap = tk.Label(parent_frame, text="Kho xuất:")
-        self.tab_02_kho_nhap.grid(row=0, column=6, padx=(10, 2), pady=5, sticky="w")
+        self.tab_02_kho_nhap.grid(row=0, column=8, padx=(10, 2), pady=5, sticky="w")
         self.tab_02_combobox_ma_kho = cls_my_combobox_num_01(parent_frame, values=values)
-        self.tab_02_combobox_ma_kho.grid(row=0, column=7, padx=(0, 10), pady=5, sticky="w")
+        self.tab_02_combobox_ma_kho.grid(row=0, column=9, padx=(0, 10), pady=5, sticky="w")
         # Set the default value to the first item in the list
         self.tab_02_combobox_ma_kho.set(values[0])
 
         # Configure column weights for proper resizing
-        parent_frame.columnconfigure(5, weight=1)  # Allow tab_02_entry_nhu_cau to expand
-        parent_frame.columnconfigure(7, weight=1)  # Allow tab_02_entry_sl_giu_cho to expand
-        parent_frame.columnconfigure(9, weight=1)  # Allow tab_02_entry_sl_YCDH to expand
+        # Allow these colunms to expand
+        parent_frame.columnconfigure(7, weight=1)
+        parent_frame.columnconfigure(9, weight=1)
         
         self.f_view_create_widgets_add_row_03_into_frame_inventories_informations_tab_02()
     

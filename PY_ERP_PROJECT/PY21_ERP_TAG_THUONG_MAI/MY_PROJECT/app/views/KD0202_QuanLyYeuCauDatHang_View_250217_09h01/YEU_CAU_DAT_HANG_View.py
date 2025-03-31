@@ -78,6 +78,10 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_entry_ma_hang = f_utils_tim_component_with_name(tab_01_frame, "entry_ma_hang")
         self.tab_01_entry_ten_hang = f_utils_tim_component_with_name(tab_01_frame, "entry_ten_hang")
         self.tab_01_entry_dvt = f_utils_tim_component_with_name(tab_01_frame, "entry_dvt")
+        self.tab_01_label_don_gia_ton_kho = f_utils_tim_component_with_name(tab_01_frame, "label_don_gia_ton_kho")
+        self.tab_01_label_don_gia_ton_kho.grid_forget()
+        self.tab_01_entry_don_gia_ton_kho = f_utils_tim_component_with_name(tab_01_frame, "entry_don_gia_ton_kho")
+        self.tab_01_entry_don_gia_ton_kho.grid_forget()
         self.tab_01_entry_ngay_tren_phieu = f_utils_tim_component_with_name(tab_01_frame, "date_entry")
         self.tab_01_entry_so_phieu = f_utils_tim_component_with_name(tab_01_frame, "slips_entry")
         self.tab_01_btn_refresh_number_of_slip = f_utils_tim_component_with_name(tab_01_frame, "refresh_number_of_slip_button")
@@ -289,28 +293,28 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
         parent_frame = self.tab_01_frame_inventories_informations.frame_row_2
         
         self._tab_01_label_nhu_cau = tk.Label(parent_frame, text="nhu cầu:")
-        self._tab_01_label_nhu_cau.grid(row=0, column=6, padx=(10, 2), pady=5, sticky="w")
+        self._tab_01_label_nhu_cau.grid(row=0, column=8, padx=(10, 2), pady=5, sticky="w")
         self.tab_01_entry_nhu_cau = cls_my_number_entry_num_01(parent_frame, width=10)
         self.tab_01_entry_nhu_cau.f_on_leaving(color=COLOR_WHITE)
         self.tab_01_entry_nhu_cau.f_on_not_selecting(color=COLOR_WHITE)
-        self.tab_01_entry_nhu_cau.grid(row=0, column=7, padx=(0, 10), pady=5, sticky="w")
+        self.tab_01_entry_nhu_cau.grid(row=0, column=9, padx=(0, 10), pady=5, sticky="w")
         
         self.tab_01_label_sl_giu_cho = tk.Label(parent_frame, text="SL giữ chỗ:")
-        self.tab_01_label_sl_giu_cho.grid(row=0, column=8, padx=(10, 2), pady=5, sticky="w")
+        self.tab_01_label_sl_giu_cho.grid(row=0, column=10, padx=(10, 2), pady=5, sticky="w")
         self.tab_01_entry_sl_giu_cho = cls_my_number_entry_num_01(parent_frame, width=10)
         self.tab_01_entry_sl_giu_cho.config(state="readonly")
-        self.tab_01_entry_sl_giu_cho.grid(row=0, column=9, padx=(0, 10), pady=5, sticky="w")
+        self.tab_01_entry_sl_giu_cho.grid(row=0, column=11, padx=(0, 10), pady=5, sticky="w")
         
         self.tab_01_label_sl_YCDH = tk.Label(parent_frame, text="SL YCĐH:")
-        self.tab_01_label_sl_YCDH.grid(row=0, column=10, padx=(10, 2), pady=5, sticky="w")
+        self.tab_01_label_sl_YCDH.grid(row=0, column=12, padx=(10, 2), pady=5, sticky="w")
         self.tab_01_entry_sl_YCDH = cls_my_number_entry_num_01(parent_frame, width=10)
         self.tab_01_entry_sl_YCDH.config(state="readonly")
-        self.tab_01_entry_sl_YCDH.grid(row=0, column=11, padx=(0, 10), pady=5, sticky="w")
+        self.tab_01_entry_sl_YCDH.grid(row=0, column=13, padx=(0, 10), pady=5, sticky="w")
 
         # Configure column weights for proper resizing
-        parent_frame.columnconfigure(7, weight=1)  # Allow tab_01_entry_nhu_cau to expand
-        parent_frame.columnconfigure(9, weight=1)  # Allow tab_01_entry_sl_giu_cho to expand
-        parent_frame.columnconfigure(11, weight=1)  # Allow tab_01_entry_sl_YCDH to expand
+        parent_frame.columnconfigure(9, weight=1)  # Allow tab_01_entry_nhu_cau to expand
+        parent_frame.columnconfigure(11, weight=1)  # Allow tab_01_entry_sl_giu_cho to expand
+        parent_frame.columnconfigure(13, weight=1)  # Allow tab_01_entry_sl_YCDH to expand
         
         self.f_view_create_widgets_add_row_03_into_frame_inventories_informations_tab_01()
     
