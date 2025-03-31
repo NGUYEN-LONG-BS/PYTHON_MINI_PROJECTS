@@ -151,6 +151,8 @@ class cls_frame_inventories_information_view(tk.Frame):
         if columns_to_display:
             columns = [columns[i] for i in columns_to_display]
             column_width = [column_width[i] for i in columns_to_display]
+            # Filter the data to match the columns_to_display
+            data = [[row[i] for i in columns_to_display] for row in data]
         
         # Main cls_TreeviewCombobox_inventories
         self.treeview_combobox = cls_TreeviewCombobox_inventories(
@@ -298,20 +300,43 @@ class cls_TreeviewCombobox_inventories(entry.cls_my_text_entry_num_01):
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
 
+    # def refresh_data(self, query=""):
+    #     if not hasattr(self, 'tree') or not self.tree:
+    #         return  # Tránh lỗi nếu self.tree không tồn tại
+        
+    #     # Clear existing data
+    #     for item in self.tree.get_children():
+    #         self.tree.delete(item)
+        
+    #     # Insert filtered rows
+    #     for row in self.data:
+    #         # print(row)
+    #         if (query in str(row[0]).lower() or 
+    #             query in str(row[1]).lower()):  # Filter by the first or second column
+    #             self.tree.insert("", "end", values=(row[0], row[1], row[2], row[3], row[4], row[5]))
+                
     def refresh_data(self, query=""):
         if not hasattr(self, 'tree') or not self.tree:
             return  # Tránh lỗi nếu self.tree không tồn tại
-        
+
         # Clear existing data
         for item in self.tree.get_children():
             self.tree.delete(item)
-        
-        # Insert filtered rows
+
+        # Insert filtered rows based on selected columns
         for row in self.data:
-            # print(row)
-            if (query in str(row[0]).lower() or 
-                query in str(row[1]).lower()):  # Filter by the first or second column
-                self.tree.insert("", "end", values=(row[0], row[1], row[2], row[3], row[4], row[5]))
+            # Ensure that each row has enough columns
+            row_values = []
+            for i in range(len(self.columns)):
+                if i < len(row):
+                    row_values.append(row[i])
+                else:
+                    row_values.append("")  # Add a default empty value if there are fewer columns in the row
+            
+            # Filter the data based on the query
+            if (query in str(row_values[0]).lower() or 
+                query in str(row_values[1]).lower()):  # Filter by the first or second column
+                self.tree.insert("", "end", values=row_values)
             
 
     def on_tree_select(self, event):
