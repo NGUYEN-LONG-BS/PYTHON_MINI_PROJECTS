@@ -330,7 +330,7 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         self.f_view_create_widgets_add_row_03_into_frame_clients_informations_tab_01()
         
         # Create frame inventories informations
-        columns_to_display = [0, 1, 2, 3, 4, 5]
+        columns_to_display = [0, 1, 2]
         self.frame_inventories_informations_tab_01 = cls_frame_inventories_information_view(parent_frame, columns_to_display=columns_to_display)
         self.frame_inventories_informations_tab_01.config(bd=0, relief="flat")
         self.frame_inventories_informations_tab_01.grid(row=0, column=1, sticky="nsew", padx=(10, 0))
