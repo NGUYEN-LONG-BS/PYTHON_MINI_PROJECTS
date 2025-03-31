@@ -651,7 +651,8 @@ class Controller_action_after_event:
             dvt_value = entry_dvt.get()
             sl_thuc_nhap_value = entry_sl_thuc_nhap.get()
             don_gia_value = entry_don_gia.get()
-            gia_tri_value = sl_thuc_nhap_value * don_gia_value
+            gia_tri_value = float(sl_thuc_nhap_value.replace(',', '') or 0) * float(don_gia_value.replace(',', '') or 0)
+            print(gia_tri_value)
             ghi_chu_mat_hang_value = entry_ghi_chu_mat_hang.get()
             
             # Start controller
@@ -834,7 +835,7 @@ class Controller_action_after_event:
             # don_gia_value
             # Kiểm tra có phải số hay không
             try:
-                don_gia_value = float(sl_thuc_nhap.replace(',', '') or 0)
+                don_gia_value = float(don_gia_value.replace(',', '') or 0)
             except ValueError:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Đơn giá '{don_gia_value}' phải là số.", "red")
                 return False
