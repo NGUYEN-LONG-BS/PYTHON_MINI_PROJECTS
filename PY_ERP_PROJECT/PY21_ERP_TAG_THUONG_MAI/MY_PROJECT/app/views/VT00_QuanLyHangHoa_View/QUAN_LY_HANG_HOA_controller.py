@@ -652,7 +652,6 @@ class Controller_action_after_event:
             sl_thuc_nhap_value = entry_sl_thuc_nhap.get()
             don_gia_value = entry_don_gia.get()
             gia_tri_value = float(sl_thuc_nhap_value.replace(',', '') or 0) * float(don_gia_value.replace(',', '') or 0)
-            print(gia_tri_value)
             ghi_chu_mat_hang_value = entry_ghi_chu_mat_hang.get()
             
             # Start controller
