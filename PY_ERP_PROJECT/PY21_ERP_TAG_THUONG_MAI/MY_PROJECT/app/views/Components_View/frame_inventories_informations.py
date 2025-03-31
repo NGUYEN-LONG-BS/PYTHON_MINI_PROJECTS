@@ -63,7 +63,7 @@ class cls_frame_inventories_information_model:
         return width_of_columns
 
     def get_width_of_dropdown():
-        width_of_dropdown = 940
+        width_of_dropdown = 800
         return width_of_dropdown
     
     def get_height_of_dropdown():
