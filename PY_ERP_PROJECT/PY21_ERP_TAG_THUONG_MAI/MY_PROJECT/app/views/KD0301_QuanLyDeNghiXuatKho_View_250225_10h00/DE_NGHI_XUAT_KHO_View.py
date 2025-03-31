@@ -280,7 +280,8 @@ class cls_DE_NGHI_XUAT_KHO_View(cls_base_form_number_02_ManyTabs):
         self._f_view_create_widgets_add_row_03_into_frame_clients_informations_tab_01()
         
         # Create frame inventories informations
-        self.tab_01_frame_inventories_informations = cls_frame_inventories_information_view(parent_frame)
+        columns_to_display = [0, 1, 2]
+        self.tab_01_frame_inventories_informations = cls_frame_inventories_information_view(parent_frame, columns_to_display=columns_to_display)
         self.tab_01_frame_inventories_informations.config(bd=0, relief="flat")
         self.tab_01_frame_inventories_informations.grid(row=0, column=1, sticky="nsew", padx=(10, 0))
         self._f_view_create_widgets_add_widget_into_frame_inventories_informations_tab_01()
