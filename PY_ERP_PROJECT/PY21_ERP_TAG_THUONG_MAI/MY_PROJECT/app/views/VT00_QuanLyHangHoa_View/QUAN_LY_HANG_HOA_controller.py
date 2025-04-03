@@ -403,7 +403,6 @@ class Controller_update_entry_id:
             return False        
 
 class Controller_get_the_latest_number_of_slip:
-
     def f_get_the_latest_number_of_slip(entry_so_phieu):
         ma_thanh_vien = utils_controller_get_information_of_database.load_ma_thanh_vien()
         loai_phieu = controller_get_information_of_module.load_loai_phieu()
@@ -671,7 +670,7 @@ class Controller_add_row_to_treeview:
             if flag == False:
                 return False
             
-            flag = Controller_action_after_event.clear_input_fields(entry_ghi_chu_mat_hang)
+            flag = Controller_add_row_to_treeview.clear_input_fields(entry_ghi_chu_mat_hang)
             if flag == False:
                 return False
             
@@ -789,7 +788,7 @@ class Controller_add_row_to_treeview:
                                 my_treeview):
         try:
             # Validate input using the helper function
-            flag = Controller_action_after_event.f_check_input_of_treeview(entry_notification, 
+            flag = Controller_add_row_to_treeview.f_check_input_of_treeview(entry_notification, 
                                                                            id_value, 
                                                                            ma_hang, 
                                                                            ten_hang,
@@ -821,10 +820,7 @@ class Controller_add_row_to_treeview:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
             return False
-    
 
-class Controller_action_after_event:
-    
     def clear_input_fields(entry_ghi_chu_mat_hang):
         try:
             entry_ghi_chu_mat_hang.delete(0, tk.END)
@@ -834,7 +830,7 @@ class Controller_action_after_event:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
             return False
-        
+
     def f_check_input_of_treeview(entry_notification, id_value, ma_hang, ten_hang, sl_thuc_nhap, don_gia_value):    
         try:
             # Kiểm tra các trường bắt buộc
@@ -889,6 +885,38 @@ class Controller_action_after_event:
             print("Error at function: ", f_utils_get_current_function_name())
             return False
         
+
+class Controller_update_selected_row:
+    def start_process_update_selected_row(entry_notification,
+            my_treeview,
+            entry_ma_hang_tab_01,
+            entry_ten_hang_tab_01,
+            entry_dvt,
+            entry_sl_thuc_nhap,
+            entry_don_gia,
+            tab_01_entry_ghi_chu_mat_hang):
+        try:
+            flag = Controller_update_selected_row.update_selected_row(
+            entry_notification,
+            my_treeview,
+            entry_ma_hang_tab_01,
+            entry_ten_hang_tab_01,
+            entry_dvt,
+            entry_sl_thuc_nhap,
+            entry_don_gia,
+            tab_01_entry_ghi_chu_mat_hang)
+            if flag == False:
+                return False
+                
+            if flag == True:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Row updated successfully!", "blue")
+                return True
+    
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+
     def update_selected_row(entry_notification,
                 my_treeview,
                 entry_ma_hang_tab_01,
@@ -898,7 +926,7 @@ class Controller_action_after_event:
                 entry_don_gia,
                 tab_01_entry_ghi_chu_mat_hang):
         try:
-            flag = Controller_action_after_event.validate_data_before_updating_row_in_tree_view(entry_notification,
+            flag = Controller_update_selected_row.validate_data_before_updating_row_in_tree_view(entry_notification,
                 my_treeview,
                 entry_ma_hang_tab_01,
                 entry_ten_hang_tab_01,
@@ -907,7 +935,7 @@ class Controller_action_after_event:
             if flag == False:
                 return False
             
-            flag = Controller_action_after_event.begin_updating_row_in_tree_view(
+            flag = Controller_update_selected_row.begin_updating_row_in_tree_view(
                 entry_notification,
                 my_treeview,
                 entry_ma_hang_tab_01,
@@ -1007,79 +1035,6 @@ class Controller_action_after_event:
             print("Error at function: ", f_utils_get_current_function_name())
             return False
         
-    def f_delete_one_row_in_treeview(my_treeview):
-        try:
-            selected_item = my_treeview.selection()  # Get selected item
-            if selected_item:  # Check if an item is selected
-                my_treeview.delete(selected_item)  # Delete the selected item
-            else:  # If no item is selected
-                children = my_treeview.get_children()
-                if children:  # Check if there are rows in the Treeview
-                    last_item = children[-1]  # Get the last item
-                    my_treeview.delete(last_item)  # Delete the last item
-            
-            flag = Controller_action_after_event.f_controller_02_renumber_rows(my_treeview)
-            if flag == False:
-                return False
-            
-            return True
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return False
-        
-    def f_controller_02_renumber_rows(my_treeview):
-        try:
-            for index, item in enumerate(my_treeview.get_children(), start=1):
-                values = my_treeview.item(item, "values")  # Get the current values of the row
-                new_values = (index,) + values[1:]  # Update the first column with the new number
-                my_treeview.item(item, values=new_values)  # Set the updated values
-            return True
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return False
-        
-    def clear_all_contents_in_treeview(treeview):
-        try:
-            for item in treeview.get_children():
-                treeview.delete(item)
-            return True
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return False
-    
-class Controller_update_selected_row:
-    def start_process_update_selected_row(entry_notification,
-            my_treeview,
-            entry_ma_hang_tab_01,
-            entry_ten_hang_tab_01,
-            entry_dvt,
-            entry_sl_thuc_nhap,
-            entry_don_gia,
-            tab_01_entry_ghi_chu_mat_hang):
-        try:
-            flag = Controller_action_after_event.update_selected_row(
-            entry_notification,
-            my_treeview,
-            entry_ma_hang_tab_01,
-            entry_ten_hang_tab_01,
-            entry_dvt,
-            entry_sl_thuc_nhap,
-            entry_don_gia,
-            tab_01_entry_ghi_chu_mat_hang)
-            if flag == False:
-                return False
-                
-            if flag == True:
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Row updated successfully!", "blue")
-                return True
-    
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return False
 
 class Controller_click_on_treeview:
     def treeview_of_tab_01_double_click(my_treeview):
@@ -1229,7 +1184,7 @@ class Controller_click_on_treeview:
 class Controller_delete_row_in_treeview:
     def delete_row(entry_notification, my_treeview):
         try:
-            flag = Controller_action_after_event.f_delete_one_row_in_treeview(my_treeview)
+            flag = Controller_delete_row_in_treeview.f_delete_one_row_in_treeview(my_treeview)
             if flag == False:
                 return False
             
@@ -1239,11 +1194,44 @@ class Controller_delete_row_in_treeview:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
             return False
+    
+    def f_delete_one_row_in_treeview(my_treeview):
+        try:
+            selected_item = my_treeview.selection()  # Get selected item
+            if selected_item:  # Check if an item is selected
+                my_treeview.delete(selected_item)  # Delete the selected item
+            else:  # If no item is selected
+                children = my_treeview.get_children()
+                if children:  # Check if there are rows in the Treeview
+                    last_item = children[-1]  # Get the last item
+                    my_treeview.delete(last_item)  # Delete the last item
+            
+            flag = Controller_delete_row_in_treeview.f_controller_02_renumber_rows(my_treeview)
+            if flag == False:
+                return False
+            
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+        
+    def f_controller_02_renumber_rows(my_treeview):
+        try:
+            for index, item in enumerate(my_treeview.get_children(), start=1):
+                values = my_treeview.item(item, "values")  # Get the current values of the row
+                new_values = (index,) + values[1:]  # Update the first column with the new number
+                my_treeview.item(item, values=new_values)  # Set the updated values
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
 
 class Controller_clear_all_rows_in_treeview:
     def clear_all_rows(entry_notification, my_treeview):
         try:
-            flag = Controller_action_after_event.clear_all_contents_in_treeview(my_treeview)
+            flag = Controller_clear_all_rows_in_treeview.clear_all_contents_in_treeview(my_treeview)
             if flag == False:
                 return False
             else:
@@ -1254,6 +1242,16 @@ class Controller_clear_all_rows_in_treeview:
             print("Error at function: ", f_utils_get_current_function_name())
             return False
 
+    def clear_all_contents_in_treeview(treeview):
+        try:
+            for item in treeview.get_children():
+                treeview.delete(item)
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+    
 class Controller_save_slip:
     def save_slip(*args):
         try:
@@ -1401,7 +1399,7 @@ class Controller_validate_data_on_GUI:
                 return False
             
             # Check exist client id
-            if Controller_action_after_event.f_Check_exist_ma_khach_hang(entry_ma_khach_hang) == False:
+            if Controller_validate_data_on_GUI.f_Check_exist_ma_khach_hang(entry_ma_khach_hang) == False:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Mã khách hàng chưa tồn tại!", "red")
                 # print("Error at function: ", f_utils_get_current_function_name())
                 return False
@@ -1412,6 +1410,24 @@ class Controller_validate_data_on_GUI:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
             return False
+    
+    def f_Check_exist_ma_khach_hang(entry_ma_khach_hang):
+        database_name = utils_controller_get_information_of_database.load_database_name()
+        table_name = utils_controller_get_information_of_database.load_table_name_TB_AD00_DANH_SACH_KHACH_HANG()
+        column_name = controller_get_information_of_module.load_column_name_ma_khach_hang()
+        value_to_check = entry_ma_khach_hang.get().strip()
+
+        try:
+            flag, notification_text = utils_controller_check_exist.check_exist_values(value_to_check, database_name, table_name, column_name)
+            if flag == False:
+                return False
+            return True
+        
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+    
 
 class Controller_save_data_on_GUI_into_database:
 
