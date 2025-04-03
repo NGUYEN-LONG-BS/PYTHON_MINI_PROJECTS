@@ -704,51 +704,7 @@ class Controller_action_after_event:
             print("Error at function: ", f_utils_get_current_function_name())
             return False
         
-    def f_add_new_row_and_renew_the_tree_view(*args):
-        try:
-            # Step 1: get the arguments
-            (
-                entry_notification,
-                my_treeview, 
-                entry_id,
-                entry_ma_hang, 
-                entry_ten_hang, 
-                entry_dvt, 
-                entry_sl_kha_dung, 
-                entry_sl_nhu_cau, 
-                entry_sl_giu_cho, 
-                entry_sl_yeu_cau_dat_hang, 
-                entry_ghi_chu_mat_hang
-            )= args
-            # Step 2: add new row
-            flag = Controller_action_after_event.f_add_new_row(
-                entry_notification,
-                my_treeview, 
-                entry_id,
-                entry_ma_hang, 
-                entry_ten_hang, 
-                entry_dvt, 
-                entry_sl_kha_dung, 
-                entry_sl_nhu_cau, 
-                entry_sl_giu_cho, 
-                entry_sl_yeu_cau_dat_hang, 
-                entry_ghi_chu_mat_hang
-                )
-            if flag == False:
-                return False
-            # Step 3: renew the treeview
-            flag = Controller_action_after_event.Kiem_tra_lai_data_trong_treeview(
-                entry_notification,
-                my_treeview)
-            if flag == False:
-                return False
-            
-            return True
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return False
-    
+
     def clear_all_contents_in_treeview(treeview):
         try:
             for item in treeview.get_children():
@@ -2459,7 +2415,7 @@ class Controller_add_row_to_treeview:
                 entry_sl_yeu_cau_dat_hang, 
                 entry_ghi_chu_mat_hang
             )= args
-            flag = Controller_action_after_event.f_add_new_row_and_renew_the_tree_view(
+            flag = Controller_add_row_to_treeview.f_add_new_row_and_renew_the_tree_view(
                 entry_notification,
                 my_treeview, 
                 entry_id,
@@ -2479,6 +2435,52 @@ class Controller_add_row_to_treeview:
         except Exception as e:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
+        
+    def f_add_new_row_and_renew_the_tree_view(*args):
+        try:
+            # Step 1: get the arguments
+            (
+                entry_notification,
+                my_treeview, 
+                entry_id,
+                entry_ma_hang, 
+                entry_ten_hang, 
+                entry_dvt, 
+                entry_sl_kha_dung, 
+                entry_sl_nhu_cau, 
+                entry_sl_giu_cho, 
+                entry_sl_yeu_cau_dat_hang, 
+                entry_ghi_chu_mat_hang
+            )= args
+            # Step 2: add new row
+            flag = Controller_action_after_event.f_add_new_row(
+                entry_notification,
+                my_treeview, 
+                entry_id,
+                entry_ma_hang, 
+                entry_ten_hang, 
+                entry_dvt, 
+                entry_sl_kha_dung, 
+                entry_sl_nhu_cau, 
+                entry_sl_giu_cho, 
+                entry_sl_yeu_cau_dat_hang, 
+                entry_ghi_chu_mat_hang
+                )
+            if flag == False:
+                return False
+            # Step 3: renew the treeview
+            flag = Controller_action_after_event.Kiem_tra_lai_data_trong_treeview(
+                entry_notification,
+                my_treeview)
+            if flag == False:
+                return False
+            
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+    
         
 class Controller_update_selected_row:
     def update_selected_row(*args):

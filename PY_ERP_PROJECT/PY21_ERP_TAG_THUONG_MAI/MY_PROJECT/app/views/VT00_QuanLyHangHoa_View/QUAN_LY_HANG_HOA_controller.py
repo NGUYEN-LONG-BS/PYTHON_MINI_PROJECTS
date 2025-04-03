@@ -236,7 +236,7 @@ class Controller_handel_all_events:
             entry_don_gia,
             entry_ghi_chu_mat_hang):
         
-        Controller_add_row_to_treeview.add_row(entry_notification,
+        Controller_add_row_to_treeview.start_process_add_row(entry_notification,
             my_treeview, 
             entry_id,
             entry_ma_hang, 
@@ -564,7 +564,7 @@ class Controller_clear_all_filter_condition:
             print("Error at function: ", f_utils_get_current_function_name())
             
 class Controller_add_row_to_treeview:
-    def add_row(entry_notification,
+    def start_process_add_row(entry_notification,
                 my_treeview, 
                 entry_id,
                 entry_ma_hang, 
@@ -574,7 +574,7 @@ class Controller_add_row_to_treeview:
                 entry_don_gia,
                 entry_ghi_chu_mat_hang):
         try:
-            flag = Controller_action_after_event.f_add_new_row_and_renew_the_tree_view(
+            flag = Controller_add_row_to_treeview.f_add_new_row_and_renew_the_tree_view(
                 entry_notification,
                 my_treeview, 
                 entry_id,
@@ -593,10 +593,6 @@ class Controller_add_row_to_treeview:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
 
-
-
-
-class Controller_action_after_event:
     def f_add_new_row_and_renew_the_tree_view(entry_notification,
                 my_treeview, 
                 entry_id,
@@ -608,7 +604,7 @@ class Controller_action_after_event:
                 entry_ghi_chu_mat_hang):
         try:
             # Step 2: add new row
-            flag = Controller_action_after_event.f_add_new_row(
+            flag = Controller_add_row_to_treeview.f_add_new_row(
                 entry_notification,
                 my_treeview, 
                 entry_id,
@@ -622,7 +618,7 @@ class Controller_action_after_event:
             if flag == False:
                 return False
             # Step 3: renew the treeview
-            flag = Controller_action_after_event.Kiem_tra_lai_data_trong_treeview(
+            flag = Controller_add_row_to_treeview.Kiem_tra_lai_data_trong_treeview(
                 entry_notification,
                 my_treeview)
             if flag == False:
@@ -633,7 +629,7 @@ class Controller_action_after_event:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
             return False
-            
+
     def f_add_new_row(entry_notification,
                 my_treeview, 
                 entry_id,
@@ -655,7 +651,7 @@ class Controller_action_after_event:
             ghi_chu_mat_hang_value = entry_ghi_chu_mat_hang.get()
             
             # Start controller
-            flag = Controller_action_after_event.f_add_row_into_treeview(
+            flag = Controller_add_row_to_treeview.f_add_row_into_treeview(
                 entry_notification,
                 id_value, 
                 ma_hang_value, 
@@ -706,7 +702,7 @@ class Controller_action_after_event:
             # Cột nào có ghi chú thì giữ lại một dòng duy nhất
             
             # Gom nhóm theo mã hàng (cột số 2)
-            grouped_data = defaultdict(lambda: [None, "", "", "", 0, set()])  # Dùng set() để lưu nhiều ghi chú
+            grouped_data = defaultdict(lambda: [None, "", "", "", 0, 0, 0, set()])  # Dùng set() để lưu nhiều ghi chú
 
             for row in rows:
                 ma_hang = row[1]  # Cột số 2 - Mã hàng
@@ -715,18 +711,25 @@ class Controller_action_after_event:
                     grouped_data[ma_hang][1] = ma_hang  # Mã hàng
                     grouped_data[ma_hang][2] = row[2]  # Tên hàng
                     grouped_data[ma_hang][3] = row[3]  # Đơn vị tính (Đvt)
+                    grouped_data[ma_hang][5] = float(row[5].replace(',', '')) if row[5] else 0  # đơn giá
                 
                 # Cộng tổng SL thực nhập
                 grouped_data[ma_hang][4] += float(row[4].replace(',', '')) if row[4] else 0
 
                 # Lưu lại ghi chú (nếu có)
-                if row[5].strip():
-                    grouped_data[ma_hang][5].add(row[5].strip())  # Dùng set để tránh trùng lặp ghi chú
+                if row[7].strip():
+                    grouped_data[ma_hang][7].add(row[7].strip())  # Dùng set để tránh trùng lặp ghi chú
 
-            # Tính toán SL giữ chỗ và SL YCDH
+            # Tính toán giá trị cuối cùng và gộp ghi chú
             for ma_hang, values in grouped_data.items():
-                # Gộp tất cả ghi chú thành một chuỗi, cách nhau bởi "; "
-                values[5] = "; ".join(values[5])
+                # Tính giá trị cuối cùng
+                sl_hang = values[4]
+                don_gia = values[5]
+                gia_tri = sl_hang * don_gia
+                values[6] = gia_tri
+                
+                # Gộp tất cả ghi chú thành một chuỗi, cách nhau bởi "; "    
+                values[7] = "; ".join(values[7])
 
             # Xóa dữ liệu cũ trong Treeview
             for item in my_treeview.get_children():
@@ -734,7 +737,8 @@ class Controller_action_after_event:
 
             # Cập nhật dữ liệu mới vào Treeview
             for i, (key, values) in enumerate(grouped_data.items(), start=1):
-                values[0] = i  # Cập nhật lại số thứ tự
+                # Cập nhật lại số thứ tự
+                values[0] = i  
                 
                 # Định dạng số lượng SL thực nhập
                 if values[4].is_integer():  # Kiểm tra xem có phải là số nguyên không
@@ -744,6 +748,24 @@ class Controller_action_after_event:
 
                 # Cập nhật lại giá trị số lượng đã được định dạng vào Treeview
                 values[4] = formatted_quantity
+                
+                # Định dạng đơn giá
+                if values[5].is_integer():  # Kiểm tra xem có phải là số nguyên không
+                    formatted_quantity = f"{int(values[5]):,}"  # Định dạng số nguyên với dấu phân cách nghìn
+                else:
+                    formatted_quantity = f"{values[5]:,.2f}"  # Định dạng số thập phân với 2 chữ số sau dấu phẩy
+
+                # Cập nhật lại giá trị số lượng đã được định dạng vào Treeview
+                values[5] = formatted_quantity
+                
+                # Định dạng giá trị
+                if values[6].is_integer():  # Kiểm tra xem có phải là số nguyên không
+                    formatted_quantity = f"{int(values[6]):,}"  # Định dạng số nguyên với dấu phân cách nghìn
+                else:
+                    formatted_quantity = f"{values[6]:,.2f}"  # Định dạng số thập phân với 2 chữ số sau dấu phẩy
+
+                # Cập nhật lại giá trị số lượng đã được định dạng vào Treeview
+                values[6] = formatted_quantity
                 
                 my_treeview.insert("", "end", values=values)
 
@@ -776,6 +798,14 @@ class Controller_action_after_event:
                 return False
             
             # Add row to the treeview
+            # print("id_value:", id_value)
+            # print("ma_hang:", ma_hang)
+            # print("ten_hang:", ten_hang)
+            # print("dvt:", dvt)
+            # print("sl_thuc_nhap:", sl_thuc_nhap)
+            # print("don_gia_value:", don_gia_value)
+            # print("gia_tri_value:", gia_tri_value)
+            # print("ghi_chu_mat_hang:", ghi_chu_mat_hang)
             my_treeview.insert("", "end", values=(id_value, 
                                                   ma_hang, 
                                                   ten_hang, 
@@ -790,6 +820,9 @@ class Controller_action_after_event:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
             return False
+    
+
+class Controller_action_after_event:
     
     def clear_input_fields(entry_ghi_chu_mat_hang):
         try:
@@ -882,7 +915,7 @@ class Controller_action_after_event:
             if flag == False:
                 return False
             
-            flag = Controller_action_after_event.Kiem_tra_lai_data_trong_treeview(entry_notification, my_treeview)
+            flag = Controller_add_row_to_treeview.Kiem_tra_lai_data_trong_treeview(entry_notification, my_treeview)
             if flag == False:
                 return False
             else:
