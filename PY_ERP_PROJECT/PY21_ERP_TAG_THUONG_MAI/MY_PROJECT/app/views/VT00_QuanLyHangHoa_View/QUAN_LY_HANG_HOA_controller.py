@@ -298,6 +298,7 @@ class Controller_handel_all_events:
             entry_ten_hang,
             entry_dvt,
             entry_sl_thuc_nhap,
+            entry_don_gia,
             entry_ghi_chu_mat_hang):
         
         Controller_click_on_treeview.treeview_of_tab_01_single_click(
@@ -307,6 +308,7 @@ class Controller_handel_all_events:
         entry_ten_hang,
         entry_dvt,
         entry_sl_thuc_nhap,
+        entry_don_gia,
         entry_ghi_chu_mat_hang)
     
     def f_handle_event_treeview_of_tab_02_single_click(entry_notification, 
@@ -1084,12 +1086,14 @@ class Controller_click_on_treeview:
         entry_ten_hang,
         entry_dvt,
         entry_sl_thuc_nhap,
+        entry_don_gia,
         entry_ghi_chu_mat_hang):
         
         result_tuple = utils_controller_TreeviewHandler_click_250217_22h34.treeview_single_click(my_treeview)
+        # print("result_tuple:", result_tuple)
         if not result_tuple:
             return
-        id_value, ma_hang, ten_hang, dvt, sl_thuc_nhap, ghi_chu_mat_hang = result_tuple
+        id_value, ma_hang, ten_hang, dvt, sl_thuc_nhap, don_gia, gia_tri, ghi_chu_mat_hang = result_tuple
         
         # Clear and update the Entry widgets if values are returned
         if id_value is not None:
@@ -1126,6 +1130,26 @@ class Controller_click_on_treeview:
                     formatted_value = f"{float_value:,.2f}"
                     
                 entry_sl_thuc_nhap.insert(0, formatted_value)
+            except ValueError:
+                # Nếu không thể chuyển thành float, có thể hiển thị thông báo lỗi hoặc xử lý trường hợp này
+                print("Error: Không thể chuyển đổi giá trị thành số.")
+                
+        if don_gia is not None:
+            # Loại bỏ dấu phân cách nghìn nếu có
+            sl_clean = don_gia.replace(',', '')  # Xóa dấu phân cách nghìn
+            
+            # Thực hiện chuyển đổi thành float
+            try:
+                float_value = float(sl_clean)
+                
+                entry_don_gia.delete(0, tk.END)
+                
+                if float_value.is_integer():  # Nếu là số nguyên
+                    formatted_value = f"{int(float_value):,}"
+                else:  # Nếu là số thập phân
+                    formatted_value = f"{float_value:,.2f}"
+                    
+                entry_don_gia.insert(0, formatted_value)
             except ValueError:
                 # Nếu không thể chuyển thành float, có thể hiển thị thông báo lỗi hoặc xử lý trường hợp này
                 print("Error: Không thể chuyển đổi giá trị thành số.")
