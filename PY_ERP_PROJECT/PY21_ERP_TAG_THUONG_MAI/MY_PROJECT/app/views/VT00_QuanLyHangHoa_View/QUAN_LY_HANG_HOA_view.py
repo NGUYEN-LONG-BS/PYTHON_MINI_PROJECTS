@@ -1099,6 +1099,7 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_entry_ten_hang,
         self.tab_01_entry_dvt,
         self.tab_01_entry_sl_thuc_nhap,
+        self.tab_01_entry_don_gia_nhap_kho,
         self.tab_01_entry_ghi_chu_mat_hang)
         
     def event_tab_02_button_update_row_click(self):

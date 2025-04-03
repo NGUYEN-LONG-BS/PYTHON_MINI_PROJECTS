@@ -264,24 +264,23 @@ class Controller_handel_all_events:
             entry_sl_thuc_nhap, 
             entry_ghi_chu_mat_hang)
     
-    def f_handle_event_update_selected_row_click(*args):
-        (
-        entry_notification,
-        my_treeview,
-        entry_ma_hang_tab_01,
-        entry_ten_hang_tab_01,
-        entry_dvt,
-        entry_sl_thuc_nhap,
-        tab_01_entry_ghi_chu_mat_hang
-        )= args
+    def f_handle_event_update_selected_row_click(entry_notification,
+            my_treeview,
+            entry_ma_hang_tab_01,
+            entry_ten_hang_tab_01,
+            entry_dvt,
+            entry_sl_thuc_nhap,
+            entry_don_gia,
+            tab_01_entry_ghi_chu_mat_hang):
             
-        Controller_update_selected_row.update_selected_row(entry_notification,
-        my_treeview,
-        entry_ma_hang_tab_01,
-        entry_ten_hang_tab_01,
-        entry_dvt,
-        entry_sl_thuc_nhap,
-        tab_01_entry_ghi_chu_mat_hang)
+        Controller_update_selected_row.start_process_update_selected_row(entry_notification,
+            my_treeview,
+            entry_ma_hang_tab_01,
+            entry_ten_hang_tab_01,
+            entry_dvt,
+            entry_sl_thuc_nhap,
+            entry_don_gia,
+            tab_01_entry_ghi_chu_mat_hang)
         
     def f_handle_event_treeview_of_tab_01_double_click(entry_notification, my_treeview):
         ma_hang = Controller_click_on_treeview.treeview_of_tab_01_double_click(my_treeview)
@@ -896,13 +895,15 @@ class Controller_action_after_event:
                 entry_ten_hang_tab_01,
                 entry_dvt,
                 entry_sl_thuc_nhap,
+                entry_don_gia,
                 tab_01_entry_ghi_chu_mat_hang):
         try:
             flag = Controller_action_after_event.validate_data_before_updating_row_in_tree_view(entry_notification,
                 my_treeview,
                 entry_ma_hang_tab_01,
                 entry_ten_hang_tab_01,
-                entry_sl_thuc_nhap)
+                entry_sl_thuc_nhap,
+                entry_don_gia)
             if flag == False:
                 return False
             
@@ -913,6 +914,7 @@ class Controller_action_after_event:
                 entry_ten_hang_tab_01,
                 entry_dvt,
                 entry_sl_thuc_nhap,
+                entry_don_gia,
                 tab_01_entry_ghi_chu_mat_hang)
             if flag == False:
                 return False
@@ -932,13 +934,15 @@ class Controller_action_after_event:
                 my_treeview,
                 entry_ma_hang_tab_01,
                 entry_ten_hang_tab_01,
-                entry_sl_thuc_nhap):
+                entry_sl_thuc_nhap,
+                entry_don_gia):
         # Function to update the selected row
         try:
             selected_item = my_treeview.selection()
             new_ma_hang = entry_ma_hang_tab_01.get()
             new_ten_hang = entry_ten_hang_tab_01.get()
             new_thuc_nhap = float(entry_sl_thuc_nhap.get().replace(',', '') or 0)
+            new_don_gia = float(entry_don_gia.get().replace(',', '') or 0)
             
             selected_item = my_treeview.selection()  # Get the selected item
             if not selected_item:
@@ -957,6 +961,10 @@ class Controller_action_after_event:
             if not str(new_thuc_nhap).strip():
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số lượng thực nhập không được để trống.", "red")
                 return False
+            
+            if not str(new_don_gia).strip():
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Đơn giá không được để trống.", "red")
+                return False
         
         except Exception as e:
             print(f"Error: {e}")
@@ -969,19 +977,21 @@ class Controller_action_after_event:
                 entry_ten_hang_tab_01,
                 entry_dvt,
                 entry_sl_thuc_nhap,
+                entry_don_gia,
                 tab_01_entry_ghi_chu_mat_hang):
         # Function to update the selected row
         try:
-            
             selected_item = my_treeview.selection()
             value_col_00 = my_treeview.item(selected_item, "values")[0] if my_treeview.item(selected_item, "values") else None
             value_col_01 = entry_ma_hang_tab_01.get()
             value_col_02 = entry_ten_hang_tab_01.get()
             value_col_03 = entry_dvt.get()
             value_col_04 = float(entry_sl_thuc_nhap.get().replace(',', '') or 0)
-            value_col_05 = tab_01_entry_ghi_chu_mat_hang.get()
+            value_col_05 = float(entry_don_gia.get().replace(',', '') or 0)
+            value_col_06 = value_col_04 * value_col_05
+            value_col_07 = tab_01_entry_ghi_chu_mat_hang.get()
             
-            value_to_update = (value_col_00, value_col_01, value_col_02, value_col_03, value_col_04, value_col_05)
+            value_to_update = (value_col_00, value_col_01, value_col_02, value_col_03, value_col_04, value_col_05, value_col_06, value_col_07)
             
             selected_item = my_treeview.selection()  # Get the selected item
             
@@ -1041,12 +1051,13 @@ class Controller_action_after_event:
             return False
     
 class Controller_update_selected_row:
-    def update_selected_row(entry_notification,
+    def start_process_update_selected_row(entry_notification,
             my_treeview,
             entry_ma_hang_tab_01,
             entry_ten_hang_tab_01,
             entry_dvt,
             entry_sl_thuc_nhap,
+            entry_don_gia,
             tab_01_entry_ghi_chu_mat_hang):
         try:
             flag = Controller_action_after_event.update_selected_row(
@@ -1056,6 +1067,7 @@ class Controller_update_selected_row:
             entry_ten_hang_tab_01,
             entry_dvt,
             entry_sl_thuc_nhap,
+            entry_don_gia,
             tab_01_entry_ghi_chu_mat_hang)
             if flag == False:
                 return False
