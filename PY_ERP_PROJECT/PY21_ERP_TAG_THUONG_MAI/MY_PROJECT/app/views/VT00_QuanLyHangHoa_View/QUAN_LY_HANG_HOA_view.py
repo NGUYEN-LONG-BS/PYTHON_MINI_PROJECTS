@@ -1168,4 +1168,5 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
             self.tab_01_entry_so_de_nghi,
             self.tab_01_entry_ngay_de_nghi,
             self.tab_01_entry_note_for_slip,
+            self.tab_01_combobox_ma_kho,
             self.tab_01_treeview_PNK)

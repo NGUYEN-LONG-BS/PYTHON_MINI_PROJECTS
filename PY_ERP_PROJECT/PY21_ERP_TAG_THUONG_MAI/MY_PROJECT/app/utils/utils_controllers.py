@@ -393,6 +393,11 @@ class utils_controller_get_information_of_database:
         table_name = "VIEW_QUYET_TOAN_YEU_CAU_DAT_HANG"
         return table_name
     
+    def load_table_name_TB_INVENTORY_STOCK_RECEIVED_ISSSUED_RETURNED_250214_09h05():
+        table_name = "TB_INVENTORY_STOCK_RECEIVED_ISSSUED_RETURNED_250214_09h05"
+        return table_name
+    
+    
 class utils_controller_get_data_from_SQL_to_treeview_with_quey_and_params_list:
     def load_data_to_treeview(my_treeview, data):
         # Lấy số lượng cột từ my_treeview

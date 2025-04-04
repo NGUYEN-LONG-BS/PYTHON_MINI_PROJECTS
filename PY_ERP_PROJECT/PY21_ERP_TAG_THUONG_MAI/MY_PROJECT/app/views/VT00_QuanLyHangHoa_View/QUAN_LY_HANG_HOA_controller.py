@@ -349,6 +349,7 @@ class Controller_handel_all_events:
             entry_so_de_nghi,
             entry_ngay_de_nghi,
             entry_ghi_chu_cua_phieu,
+            combobox_ma_kho,
             tree):
         
         Controller_save_slip.save_slip(entry_notification,
@@ -360,6 +361,7 @@ class Controller_handel_all_events:
             entry_so_de_nghi,
             entry_ngay_de_nghi,
             entry_ghi_chu_cua_phieu,
+            combobox_ma_kho,
             tree)
         
     def f_handle_event_get_the_latest_number_of_slip(tab_01_entry_so_phieu):
@@ -1260,6 +1262,7 @@ class Controller_save_slip:
                 entry_so_de_nghi,
                 entry_ngay_de_nghi,
                 entry_ghi_chu_cua_phieu,
+                combobox_ma_kho,
                 tree):
         try:            
             # call controller to handle event
@@ -1273,6 +1276,7 @@ class Controller_save_slip:
                 entry_so_de_nghi,
                 entry_ngay_de_nghi,
                 entry_ghi_chu_cua_phieu,
+                combobox_ma_kho,
                 tree)
             if flag == False:
                 return False
@@ -1294,6 +1298,7 @@ class Controller_event_tab_01_btn_save_click:
                 entry_so_de_nghi,
                 entry_ngay_de_nghi,
                 entry_ghi_chu_cua_phieu,
+                combobox_ma_kho,
                 tree):
         try:
             flag = Controller_validate_data_on_GUI.validate_number_of_slip( 
@@ -1322,6 +1327,7 @@ class Controller_event_tab_01_btn_save_click:
                 entry_so_de_nghi,
                 entry_ngay_de_nghi,
                 entry_ghi_chu_cua_phieu,
+                combobox_ma_kho,
                 tree
                 )
             return True
@@ -1426,15 +1432,15 @@ class Controller_save_data_on_GUI_into_database:
             entry_so_de_nghi,
             entry_ngay_de_nghi,
             entry_ghi_chu_cua_phieu,
+            combobox_ma_kho,
             tree):
         
         # Các giá trị mặc định
         ID_nhan_vien = utils_controller_get_information_of_database.load_id_nhan_vien()
         Xoa_Sua = utils_controller_get_information_of_database.load_xoa_sua_mac_dinh()
-        Expired = utils_controller_get_information_of_database.load_expired_mac_dinh()
         
         value_ma_khach_hang = "" if entry_ma_kh.get() == "search here" else entry_ma_kh.get()
-        value_so_hop_dong = "" if entry_so_de_nghi.get() == "search here" else entry_so_de_nghi.get()
+        value_so_de_nghi = "" if entry_so_de_nghi.get() == "search here" else entry_so_de_nghi.get()
         # Tạo một list chứa dữ liệu để export
         try:
             data = []
@@ -1443,25 +1449,23 @@ class Controller_save_data_on_GUI_into_database:
                 data.append((
                     ID_nhan_vien
                     ,Xoa_Sua
-                    ,f_utils_get_formatted_today_YYYY_MM_DD()
                     ,entry_so_phieu.get()
+                    ,"IMPORT"       # EXPORT
                     ,value_ma_khach_hang
-                    ,entry_ten_kh.get()
-                    ,entry_mst.get()
-                    ,entry_dia_chi.get()
-                    ,value_so_hop_dong
-                    ,entry_ngay_de_nghi.get()
+                    ,f_utils_get_formatted_today_YYYY_MM_DD()
+                    ,value_so_de_nghi
                     ,entry_ghi_chu_cua_phieu.get()
+                    
                     ,int(row[0])
                     ,row[1]
                     ,row[2]
                     ,row[3]
-                    ,float(row[4])
-                    ,float(row[5])
-                    ,float(row[6])
-                    ,float(row[7])
-                    ,row[8],
-                    Expired
+                    ,float(row[4].replace(",", ""))
+                    ,float(row[5].replace(",", ""))
+                    ,float(row[6].replace(",", ""))
+                    ,row[7]
+                    ,"KHO A"
+                    ,""
                 ))
             # print(data)
             return True, data
@@ -1479,6 +1483,7 @@ class Controller_save_data_on_GUI_into_database:
             entry_so_de_nghi,
             entry_ngay_de_nghi,
             entry_ghi_chu_cua_phieu,
+            combobox_ma_kho,
             tree):
         
         # Step_01: Get data
@@ -1490,15 +1495,16 @@ class Controller_save_data_on_GUI_into_database:
                                                                     entry_so_de_nghi,
                                                                     entry_ngay_de_nghi,
                                                                     entry_ghi_chu_cua_phieu,
+                                                                    combobox_ma_kho,
                                                                     tree
                                                                     )
         if flag == False:
             return
         
         # Step_02: Export data to SQL
-        if utils_model_SQL_server.f_validate_data_format_KD02_YEU_CAU_DAT_HANG(data_array):
+        if utils_model_SQL_server.f_validate_data_format_TB_INVENTORY_STOCK_RECEIVED_ISSSUED_RETURNED_250214_09h05(data_array):
             # If data is valid
-            table_name = utils_controllers.utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+            table_name = utils_controllers.utils_controller_get_information_of_database.load_table_name_TB_INVENTORY_STOCK_RECEIVED_ISSSUED_RETURNED_250214_09h05()
             utils_model_SQL_server.f_goi_ham_Export_to_table(data_array, table_name)
             return
         else:

@@ -609,10 +609,10 @@ class Controller_save_data_on_GUI_into_database:
                     ,row[1]
                     ,row[2]
                     ,row[3]
-                    ,float(row[4])
-                    ,float(row[5])
-                    ,float(row[6])
-                    ,float(row[7])
+                    ,float(row[4].replace(",", ""))
+                    ,float(row[5].replace(",", ""))
+                    ,float(row[6].replace(",", ""))
+                    ,float(row[7].replace(",", ""))
                     ,row[8],
                     Expired
                 ))
