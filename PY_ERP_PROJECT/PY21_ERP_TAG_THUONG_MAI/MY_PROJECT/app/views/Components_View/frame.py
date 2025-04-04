@@ -133,7 +133,7 @@ class cls_Frame_date_and_number_of_slip(tk.Frame):
 
     def create_widgets(self):
         # Get today's date in dd/mm/yyyy format
-        today = f_utils_get_formatted_today_YYYY_MM_DD("%d/%m/%Y")
+        today = f_utils_get_formatted_today_YYYY_MM_DD("%d-%m-%Y")
 
         # Date Label and Entry
         tk.Label(self, text="Ngày:", bg=BG_COLOR_0_0).pack(side="left", padx=(0, 2))

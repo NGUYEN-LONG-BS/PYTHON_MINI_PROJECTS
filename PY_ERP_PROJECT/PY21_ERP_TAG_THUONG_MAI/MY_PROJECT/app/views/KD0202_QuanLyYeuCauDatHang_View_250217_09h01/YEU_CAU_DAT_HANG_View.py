@@ -524,6 +524,7 @@ class cls_YEU_CAU_DAT_HANG_View(cls_base_form_number_02_ManyTabs):
     
     def event_tab_01_button_get_number_of_slip_click(self):        
         Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(self.tab_01_entry_so_phieu)
+        Controller_handel_all_events.f_handle_event_get_today_is_date_of_slip(self.tab_01_entry_ngay_tren_phieu)
     
     def event_tab_01_button_add_row_click(self):
         Controller_handel_all_events.f_handle_event_tab_01_button_add_row_click(

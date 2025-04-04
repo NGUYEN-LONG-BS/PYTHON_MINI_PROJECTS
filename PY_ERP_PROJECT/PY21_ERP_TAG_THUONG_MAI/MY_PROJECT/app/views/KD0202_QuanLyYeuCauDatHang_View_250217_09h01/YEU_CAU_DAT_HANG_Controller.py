@@ -292,8 +292,11 @@ class Controller_handel_all_events:
             , entry_note_for_slip
             , my_treeview)
     
-    def f_handle_event_get_the_latest_number_of_slip(tab_01_entry_so_phieu):
-        Controller_get_the_latest_number_of_slip.start_process_get_the_latest_number_of_slip(tab_01_entry_so_phieu)
+    def f_handle_event_get_the_latest_number_of_slip(entry_so_phieu):
+        Controller_get_the_latest_number_of_slip.start_process_get_the_latest_number_of_slip(entry_so_phieu)
+    
+    def f_handle_event_get_today_is_date_of_slip(entry_ngay_tren_phieu):
+        Controller_get_today.start_process_get_today(entry_ngay_tren_phieu)
         
     def f_handle_event_tab_01_button_add_row_click(*args):
         (
@@ -675,6 +678,15 @@ class Controller_save_data_on_GUI_into_database:
         else:
             return
 
+class Controller_get_today:
+    def start_process_get_today(entry_ngay_tren_phieu):
+        # Get today's date in dd/mm/yyyy format
+        today = f_utils_get_formatted_today_YYYY_MM_DD("%d-%m-%Y")
+        entry_ngay_tren_phieu.config(state="normal")
+        entry_ngay_tren_phieu.delete(0, tk.END)
+        entry_ngay_tren_phieu.insert(0, today)
+        entry_ngay_tren_phieu.config(state="readonly")
+
 class Controller_get_the_latest_number_of_slip:
     def start_process_get_the_latest_number_of_slip(entry_so_phieu):
         try:
@@ -786,10 +798,7 @@ class Controller_event_tab_01_btn_update_slip_click:
         return 
 
 class Controller_event_tab_01_btn_save_click:
-    def f_handle_event_tab_01_btn_save_click(*args):
-        try:
-            # Step get data and validate data
-            (   entry_notification,
+    def f_handle_event_tab_01_btn_save_click(entry_notification,
                 entry_so_phieu, 
                 entry_ma_kh, 
                 entry_ten_kh,
@@ -798,9 +807,8 @@ class Controller_event_tab_01_btn_save_click:
                 entry_so_hop_dong,
                 entry_thong_tin_hop_dong,
                 entry_ghi_chu_cua_phieu,
-                tree
-            ) = args
-            
+                tree):
+        try:
             flag = Controller_validate_data_on_GUI.validate_number_of_slip( 
                 entry_notification,
                 entry_so_phieu
@@ -1967,10 +1975,7 @@ class Controller_update_slip:
             return False
         
 class Controller_save_slip:
-    def save_slip(*args):
-        try:
-            (
-                entry_notification,
+    def save_slip(entry_notification,
                 entry_so_phieu, 
                 entry_ma_kh, 
                 entry_ten_kh,
@@ -1979,8 +1984,8 @@ class Controller_save_slip:
                 entry_so_hop_dong,
                 entry_thong_tin_hop_dong,
                 entry_ghi_chu_cua_phieu,
-                tree
-            ) = args
+                tree):
+        try:
             
             # call controller to handle event
             flag = Controller_event_tab_01_btn_save_click.f_handle_event_tab_01_btn_save_click(
