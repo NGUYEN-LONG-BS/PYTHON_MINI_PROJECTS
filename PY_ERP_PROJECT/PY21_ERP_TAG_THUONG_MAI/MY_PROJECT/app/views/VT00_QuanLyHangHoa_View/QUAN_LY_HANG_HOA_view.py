@@ -139,14 +139,6 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_label_don_gia_ton_kho.grid_forget()
         self.tab_01_entry_don_gia_ton_kho = f_utils_tim_component_with_name(tab_01_frame, "entry_don_gia_ton_kho")
         self.tab_01_entry_don_gia_ton_kho.grid_forget()
-
-        # self.tab_01_treeview_inventories_dropdown = f_utils_tim_component_with_name(tab_01_frame, "treeview_toplevel_inventories_dropdown")
-        
-        # if self.tab_01_treeview_inventories_dropdown:
-        #     print(self.tab_01_treeview_inventories_dropdown)
-        # else:
-        #     print("Error: không tìm thấy treeview")
-
         self.tab_01_entry_ngay_tren_phieu = f_utils_tim_component_with_name(tab_01_frame, "date_entry")
         self.tab_01_entry_so_phieu = f_utils_tim_component_with_name(tab_01_frame, "slips_entry")
         self.tab_01_btn_refresh_number_of_slip = f_utils_tim_component_with_name(tab_01_frame, "refresh_number_of_slip_button")
@@ -154,8 +146,8 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_entry_ten_khach_hang = f_utils_tim_component_with_name(tab_01_frame, "entry_ten_nha_cung_cap")
         self.tab_01_entry_mst = f_utils_tim_component_with_name(tab_01_frame, "entry_mst_nha_cung_cap")
         self.tab_01_entry_dia_chi = f_utils_tim_component_with_name(tab_01_frame, "entry_dia_chi_nha_cung_cap")
-        self._tab_01_entry_so_hop_dong = f_utils_tim_component_with_name(tab_01_frame, "entry_so_hop_dong")
-        self.tab_01_entry_thong_tin_hop_dong = f_utils_tim_component_with_name(tab_01_frame, "entry_thong_tin_ngan_cua_hop_dong")
+        self.tab_01_entry_so_de_nghi = f_utils_tim_component_with_name(tab_01_frame, "entry_so_de_nghi")
+        self.tab_01_entry_ngay_de_nghi = f_utils_tim_component_with_name(tab_01_frame, "entry_ngay_de_nghi")
         
         self.tab_01_label_footer_notification = f_utils_tim_component_label_with_text(self, "Notification")
         
@@ -1173,7 +1165,7 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
             self.tab_01_entry_ten_khach_hang,
             self.tab_01_entry_mst,
             self.tab_01_entry_dia_chi,
-            self._tab_01_entry_so_hop_dong,
-            self.tab_01_entry_thong_tin_hop_dong,
+            self.tab_01_entry_so_de_nghi,
+            self.tab_01_entry_ngay_de_nghi,
             self.tab_01_entry_note_for_slip,
             self.tab_01_treeview_PNK)

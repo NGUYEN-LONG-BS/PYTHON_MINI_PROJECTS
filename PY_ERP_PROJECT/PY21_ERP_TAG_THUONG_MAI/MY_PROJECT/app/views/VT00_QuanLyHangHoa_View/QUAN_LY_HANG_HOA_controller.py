@@ -346,8 +346,8 @@ class Controller_handel_all_events:
             entry_ten_kh,
             entry_mst,
             entry_dia_chi,
-            entry_so_hop_dong,
-            entry_thong_tin_hop_dong,
+            entry_so_de_nghi,
+            entry_ngay_de_nghi,
             entry_ghi_chu_cua_phieu,
             tree):
         
@@ -357,8 +357,8 @@ class Controller_handel_all_events:
             entry_ten_kh,
             entry_mst,
             entry_dia_chi,
-            entry_so_hop_dong,
-            entry_thong_tin_hop_dong,
+            entry_so_de_nghi,
+            entry_ngay_de_nghi,
             entry_ghi_chu_cua_phieu,
             tree)
         
@@ -1257,8 +1257,8 @@ class Controller_save_slip:
                 entry_ten_kh,
                 entry_mst,
                 entry_dia_chi,
-                entry_so_hop_dong,
-                entry_thong_tin_hop_dong,
+                entry_so_de_nghi,
+                entry_ngay_de_nghi,
                 entry_ghi_chu_cua_phieu,
                 tree):
         try:            
@@ -1270,8 +1270,8 @@ class Controller_save_slip:
                 entry_ten_kh,
                 entry_mst,
                 entry_dia_chi,
-                entry_so_hop_dong,
-                entry_thong_tin_hop_dong,
+                entry_so_de_nghi,
+                entry_ngay_de_nghi,
                 entry_ghi_chu_cua_phieu,
                 tree)
             if flag == False:
@@ -1291,8 +1291,8 @@ class Controller_event_tab_01_btn_save_click:
                 entry_ten_kh,
                 entry_mst,
                 entry_dia_chi,
-                entry_so_hop_dong,
-                entry_thong_tin_hop_dong,
+                entry_so_de_nghi,
+                entry_ngay_de_nghi,
                 entry_ghi_chu_cua_phieu,
                 tree):
         try:
@@ -1319,8 +1319,8 @@ class Controller_event_tab_01_btn_save_click:
                 entry_ten_kh,
                 entry_mst,
                 entry_dia_chi,
-                entry_so_hop_dong,
-                entry_thong_tin_hop_dong,
+                entry_so_de_nghi,
+                entry_ngay_de_nghi,
                 entry_ghi_chu_cua_phieu,
                 tree
                 )
@@ -1423,8 +1423,8 @@ class Controller_save_data_on_GUI_into_database:
             entry_ten_kh,
             entry_mst,
             entry_dia_chi,
-            entry_so_hop_dong,
-            entry_thong_tin_hop_dong,
+            entry_so_de_nghi,
+            entry_ngay_de_nghi,
             entry_ghi_chu_cua_phieu,
             tree):
         
@@ -1434,7 +1434,7 @@ class Controller_save_data_on_GUI_into_database:
         Expired = utils_controller_get_information_of_database.load_expired_mac_dinh()
         
         value_ma_khach_hang = "" if entry_ma_kh.get() == "search here" else entry_ma_kh.get()
-        value_so_hop_dong = "" if entry_so_hop_dong.get() == "search here" else entry_so_hop_dong.get()
+        value_so_hop_dong = "" if entry_so_de_nghi.get() == "search here" else entry_so_de_nghi.get()
         # Tạo một list chứa dữ liệu để export
         try:
             data = []
@@ -1450,7 +1450,7 @@ class Controller_save_data_on_GUI_into_database:
                     ,entry_mst.get()
                     ,entry_dia_chi.get()
                     ,value_so_hop_dong
-                    ,entry_thong_tin_hop_dong.get()
+                    ,entry_ngay_de_nghi.get()
                     ,entry_ghi_chu_cua_phieu.get()
                     ,int(row[0])
                     ,row[1]
@@ -1476,8 +1476,8 @@ class Controller_save_data_on_GUI_into_database:
             entry_ten_kh,
             entry_mst,
             entry_dia_chi,
-            entry_so_hop_dong,
-            entry_thong_tin_hop_dong,
+            entry_so_de_nghi,
+            entry_ngay_de_nghi,
             entry_ghi_chu_cua_phieu,
             tree):
         
@@ -1487,8 +1487,8 @@ class Controller_save_data_on_GUI_into_database:
                                                                     entry_ten_kh,
                                                                     entry_mst,
                                                                     entry_dia_chi,
-                                                                    entry_so_hop_dong,
-                                                                    entry_thong_tin_hop_dong,
+                                                                    entry_so_de_nghi,
+                                                                    entry_ngay_de_nghi,
                                                                     entry_ghi_chu_cua_phieu,
                                                                     tree
                                                                     )
