@@ -2346,7 +2346,6 @@ class Controller_add_row_to_treeview:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
             return False
-    
         
 class Controller_update_selected_row:
     def update_selected_row(*args):
