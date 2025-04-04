@@ -453,171 +453,7 @@ class Controller_handel_all_events:
             tree)
     
 class Controller_action_after_event:
-    
-    def validate_data_before_updating_row_in_tree_view(*args):
-        # Function to update the selected row
-        try:
-            # Lấy các giá trị theo thứ tự truyền vào
-            (
-                entry_notification,
-                my_treeview,
-                entry_ma_hang_tab_01,
-                entry_ten_hang_tab_01,
-                tab_01_entry_nhu_cau
-                )= args
-            
-            selected_item = my_treeview.selection()
-            new_ma_hang = entry_ma_hang_tab_01.get()
-            new_ten_hang = entry_ten_hang_tab_01.get()
-            new_nhu_cau = float(tab_01_entry_nhu_cau.get().replace(',', '') or 0)
-            
-            selected_item = my_treeview.selection()  # Get the selected item
-            if not selected_item:
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Chưa chọn dòng cần cập nhật.", "red")
-                return False
 
-            # Kiểm tra các giá trị bắt buộc không được rỗng
-            if not new_ma_hang.strip():
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Mã hàng không được để trống.", "red")
-                return False
-
-            if not new_ten_hang.strip():
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Tên hàng không được để trống.", "red")
-                return False
-                
-            if not str(new_nhu_cau).strip():
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số lượng nhu cầu không được để trống.", "red")
-                return False
-        
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return False
-
-    def begin_updating_row_in_tree_view(*args):
-        # Function to update the selected row
-        try:
-            (
-                entry_notification,
-                my_treeview,
-                entry_ma_hang_tab_01,
-                entry_ten_hang_tab_01,
-                entry_dvt,
-                entry_sl_kha_dung,
-                tab_01_entry_nhu_cau,
-                tab_01_entry_sl_giu_cho,
-                tab_01_entry_sl_YCDH,
-                tab_01_entry_ghi_chu_mat_hang
-                )= args
-            
-            selected_item = my_treeview.selection()
-            value_col_00 = my_treeview.item(selected_item, "values")[0] if my_treeview.item(selected_item, "values") else None
-            value_col_01 = entry_ma_hang_tab_01.get()
-            value_col_02 = entry_ten_hang_tab_01.get()
-            value_col_03 = entry_dvt.get()
-            value_col_04 = float(entry_sl_kha_dung.get().replace(',', '') or 0)
-            value_col_05 = float(tab_01_entry_nhu_cau.get().replace(',', '') or 0)
-            value_col_06 = float(tab_01_entry_sl_giu_cho.get().replace(',', '') or 0)
-            value_col_07 = float(tab_01_entry_sl_YCDH.get().replace(',', '') or 0)
-            value_col_08 = tab_01_entry_ghi_chu_mat_hang.get()
-            
-            value_to_update = (value_col_00, value_col_01, value_col_02, value_col_03, value_col_04, value_col_05, value_col_06, value_col_07, value_col_08)
-            
-            selected_item = my_treeview.selection()  # Get the selected item
-            
-            try:
-                my_treeview.item(selected_item, values=value_to_update)  # Update the selected item
-            except Exception as e:
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Cập nhật dòng bị lỗi!", "red")
-                return False
-            
-            return True
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return False
-
-    def update_selected_row(*args):
-        try:
-            (
-                entry_notification,
-                my_treeview,
-                entry_ma_hang_tab_01,
-                entry_ten_hang_tab_01,
-                entry_dvt,
-                entry_sl_kha_dung,
-                tab_01_entry_nhu_cau,
-                tab_01_entry_sl_giu_cho,
-                tab_01_entry_sl_YCDH,
-                tab_01_entry_ghi_chu_mat_hang
-                )= args
-            
-            flag = Controller_action_after_event.validate_data_before_updating_row_in_tree_view(entry_notification,
-                my_treeview,
-                entry_ma_hang_tab_01,
-                entry_ten_hang_tab_01,
-                tab_01_entry_nhu_cau)
-            if flag == False:
-                return False
-            
-            flag = Controller_action_after_event.begin_updating_row_in_tree_view(
-                entry_notification,
-                my_treeview,
-                entry_ma_hang_tab_01,
-                entry_ten_hang_tab_01,
-                entry_dvt,
-                entry_sl_kha_dung,
-                tab_01_entry_nhu_cau,
-                tab_01_entry_sl_giu_cho,
-                tab_01_entry_sl_YCDH,
-                tab_01_entry_ghi_chu_mat_hang)
-            if flag == False:
-                return False
-            
-            flag = Controller_action_after_event.Kiem_tra_lai_data_trong_treeview(entry_notification, my_treeview)
-            if flag == False:
-                return False
-            else:
-                return True
-        
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return False
-    
-    def f_delete_one_row_in_treeview(my_treeview):
-        try:
-            selected_item = my_treeview.selection()  # Get selected item
-            if selected_item:  # Check if an item is selected
-                my_treeview.delete(selected_item)  # Delete the selected item
-            else:  # If no item is selected
-                children = my_treeview.get_children()
-                if children:  # Check if there are rows in the Treeview
-                    last_item = children[-1]  # Get the last item
-                    my_treeview.delete(last_item)  # Delete the last item
-            
-            flag = Controller_action_after_event.f_controller_02_renumber_rows(my_treeview)
-            if flag == False:
-                return False
-            
-            return True
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return False
-    
-    def f_controller_02_renumber_rows(my_treeview):
-        try:
-            for index, item in enumerate(my_treeview.get_children(), start=1):
-                values = my_treeview.item(item, "values")  # Get the current values of the row
-                new_values = (index,) + values[1:]  # Update the first column with the new number
-                my_treeview.item(item, values=new_values)  # Set the updated values
-            return True
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return False
-    
     def f_Check_exist_ma_khach_hang(entry_ma_khach_hang):
         database_name = utils_controller_get_information_of_database.load_database_name()
         table_name = utils_controller_get_information_of_database.load_table_name_TB_AD00_DANH_SACH_KHACH_HANG()
@@ -800,115 +636,7 @@ class Controller_action_after_event:
             print("Error at function: ", f_utils_get_current_function_name())
             return False
 
-    def Kiem_tra_lai_data_trong_treeview(entry_notification, my_treeview):
-        try:
-            # step: Lấy data trong treeview
-            rows = []
-            for item in my_treeview.get_children():
-                row_data = my_treeview.item(item, "values")
-                rows.append(row_data)
-
-            # Nếu không có dữ liệu thì thoát
-            if not rows:
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Vui lòng chọn dòng để update!", "red")
-                return False
-
-            # step: 
-            # Gom lại các cột có trùng mã hàng
-            # Cột số lượng tồn (nếu có): giữ lại một dòng duy nhất
-            # Cộng tổng các giá trị của các dòng có trùng mã hàng
-            # Cột nào có ghi chú thì giữ lại một dòng duy nhất
-            
-            # Gom nhóm theo mã hàng (cột số 2)
-            grouped_data = defaultdict(lambda: [None, "", "", "", 0, 0, 0, 0, set()])  # Dùng set() để lưu nhiều ghi chú
-
-            for row in rows:
-                ma_hang = row[1]  # Cột số 2 - Mã hàng
-                if ma_hang not in grouped_data:
-                    grouped_data[ma_hang][0] = len(grouped_data) + 1  # STT mới
-                    grouped_data[ma_hang][1] = ma_hang  # Mã hàng
-                    grouped_data[ma_hang][2] = row[2]  # Tên hàng
-                    grouped_data[ma_hang][3] = row[3]  # Đơn vị tính (Đvt)
-                    grouped_data[ma_hang][4] = float(row[4]) if row[4] else 0  # SL khả dụng
-
-                # Cộng tổng SL nhu cầu
-                grouped_data[ma_hang][5] += float(row[5].replace(',', '')) if row[5] else 0
-
-                # Lưu lại ghi chú (nếu có)
-                if row[8].strip():
-                    grouped_data[ma_hang][8].add(row[8].strip())  # Dùng set để tránh trùng lặp ghi chú
-
-            # Tính toán SL giữ chỗ và SL YCDH
-            for ma_hang, values in grouped_data.items():
-                sl_kha_dung = values[4]
-                sl_nhu_cau = values[5]
-                values[6] = min(sl_kha_dung, sl_nhu_cau)  # SL giữ chỗ
-                values[7] = max(sl_nhu_cau - sl_kha_dung, 0)  # SL YCDH
-
-                # Gộp tất cả ghi chú thành một chuỗi, cách nhau bởi "; "
-                values[8] = "; ".join(values[8])
-
-            # Xóa dữ liệu cũ trong Treeview
-            for item in my_treeview.get_children():
-                my_treeview.delete(item)
-
-            # Cập nhật dữ liệu mới vào Treeview
-            for i, (key, values) in enumerate(grouped_data.items(), start=1):
-                values[0] = i  # Cập nhật lại số thứ tự
-                
-                # Định dạng số lượng SL Khả dụng
-                #=============================================================================================
-                if values[4].is_integer():  # Kiểm tra xem có phải là số nguyên không
-                    formatted_quantity = f"{int(values[4]):,}"  # Định dạng số nguyên với dấu phân cách nghìn
-                else:
-                    formatted_quantity = f"{values[4]:,.2f}"  # Định dạng số thập phân với 2 chữ số sau dấu phẩy
-
-                # Cập nhật lại giá trị số lượng đã được định dạng vào Treeview
-                values[4] = formatted_quantity
-                #=============================================================================================
-                
-                # Định dạng số lượng SL nhu cau
-                #=============================================================================================
-                if values[5].is_integer():  # Kiểm tra xem có phải là số nguyên không
-                    formatted_quantity = f"{int(values[5]):,}"  # Định dạng số nguyên với dấu phân cách nghìn
-                else:
-                    formatted_quantity = f"{values[5]:,.2f}"  # Định dạng số thập phân với 2 chữ số sau dấu phẩy
-
-                # Cập nhật lại giá trị số lượng đã được định dạng vào Treeview
-                values[5] = formatted_quantity
-                #=============================================================================================
-                
-                # Định dạng số lượng SL giu cho
-                #=============================================================================================
-                if values[6].is_integer():  # Kiểm tra xem có phải là số nguyên không
-                    formatted_quantity = f"{int(values[6]):,}"  # Định dạng số nguyên với dấu phân cách nghìn
-                else:
-                    formatted_quantity = f"{values[6]:,.2f}"  # Định dạng số thập phân với 2 chữ số sau dấu phẩy
-
-                # Cập nhật lại giá trị số lượng đã được định dạng vào Treeview
-                values[6] = formatted_quantity
-                #=============================================================================================
-                
-                # Định dạng số lượng SL YCDH
-                #=============================================================================================
-                if values[7].is_integer():  # Kiểm tra xem có phải là số nguyên không
-                    formatted_quantity = f"{int(values[7]):,}"  # Định dạng số nguyên với dấu phân cách nghìn
-                else:
-                    formatted_quantity = f"{values[7]:,.2f}"  # Định dạng số thập phân với 2 chữ số sau dấu phẩy
-
-                # Cập nhật lại giá trị số lượng đã được định dạng vào Treeview
-                values[7] = formatted_quantity
-                #=============================================================================================
-                
-                my_treeview.insert("", "end", values=values)
-
-            return True
-        
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return False
-        
+    
 class Controller_auto_update_sl_giu_cho_va_sl_ycdh():
     def __init__(self, *args):
         # Get arguments
@@ -2229,8 +1957,6 @@ class Controller_print_current_slip:
         
         return data_info_of_slip
     
-    
-        
 class Controller_export_all_data:
     def export_all_data(entry_notification):
         try:
@@ -2297,11 +2023,44 @@ class Controller_create_template_file:
 class Controller_delete_row_in_treeview:
     def delete_row(entry_notification, my_treeview):
         try:
-            flag = Controller_action_after_event.f_delete_one_row_in_treeview(my_treeview)
+            flag = Controller_delete_row_in_treeview.f_delete_one_row_in_treeview(my_treeview)
             if flag == False:
                 return False
             
             utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Row deleted successfully!", "blue")
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+        
+    def f_delete_one_row_in_treeview(my_treeview):
+        try:
+            selected_item = my_treeview.selection()  # Get selected item
+            if selected_item:  # Check if an item is selected
+                my_treeview.delete(selected_item)  # Delete the selected item
+            else:  # If no item is selected
+                children = my_treeview.get_children()
+                if children:  # Check if there are rows in the Treeview
+                    last_item = children[-1]  # Get the last item
+                    my_treeview.delete(last_item)  # Delete the last item
+            
+            flag = Controller_delete_row_in_treeview.f_controller_02_renumber_rows(my_treeview)
+            if flag == False:
+                return False
+            
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+    
+    def f_controller_02_renumber_rows(my_treeview):
+        try:
+            for index, item in enumerate(my_treeview.get_children(), start=1):
+                values = my_treeview.item(item, "values")  # Get the current values of the row
+                new_values = (index,) + values[1:]  # Update the first column with the new number
+                my_treeview.item(item, values=new_values)  # Set the updated values
             return True
         except Exception as e:
             print(f"Error: {e}")
@@ -2469,7 +2228,7 @@ class Controller_add_row_to_treeview:
             if flag == False:
                 return False
             # Step 3: renew the treeview
-            flag = Controller_action_after_event.Kiem_tra_lai_data_trong_treeview(
+            flag = Controller_add_row_to_treeview.Kiem_tra_lai_data_trong_treeview(
                 entry_notification,
                 my_treeview)
             if flag == False:
@@ -2480,6 +2239,116 @@ class Controller_add_row_to_treeview:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
             return False
+        
+    def Kiem_tra_lai_data_trong_treeview(entry_notification, my_treeview):
+        try:
+            # step: Lấy data trong treeview
+            rows = []
+            for item in my_treeview.get_children():
+                row_data = my_treeview.item(item, "values")
+                rows.append(row_data)
+
+            # Nếu không có dữ liệu thì thoát
+            if not rows:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Vui lòng chọn dòng để update!", "red")
+                return False
+
+            # step: 
+            # Gom lại các cột có trùng mã hàng
+            # Cột số lượng tồn (nếu có): giữ lại một dòng duy nhất
+            # Cộng tổng các giá trị của các dòng có trùng mã hàng
+            # Cột nào có ghi chú thì giữ lại một dòng duy nhất
+            
+            # Gom nhóm theo mã hàng (cột số 2)
+            grouped_data = defaultdict(lambda: [None, "", "", "", 0, 0, 0, 0, set()])  # Dùng set() để lưu nhiều ghi chú
+
+            for row in rows:
+                ma_hang = row[1]  # Cột số 2 - Mã hàng
+                if ma_hang not in grouped_data:
+                    grouped_data[ma_hang][0] = len(grouped_data) + 1  # STT mới
+                    grouped_data[ma_hang][1] = ma_hang  # Mã hàng
+                    grouped_data[ma_hang][2] = row[2]  # Tên hàng
+                    grouped_data[ma_hang][3] = row[3]  # Đơn vị tính (Đvt)
+                    grouped_data[ma_hang][4] = float(row[4]) if row[4] else 0  # SL khả dụng
+
+                # Cộng tổng SL nhu cầu
+                grouped_data[ma_hang][5] += float(row[5].replace(',', '')) if row[5] else 0
+
+                # Lưu lại ghi chú (nếu có)
+                if row[8].strip():
+                    grouped_data[ma_hang][8].add(row[8].strip())  # Dùng set để tránh trùng lặp ghi chú
+
+            # Tính toán SL giữ chỗ và SL YCDH
+            for ma_hang, values in grouped_data.items():
+                sl_kha_dung = values[4]
+                sl_nhu_cau = values[5]
+                values[6] = min(sl_kha_dung, sl_nhu_cau)  # SL giữ chỗ
+                values[7] = max(sl_nhu_cau - sl_kha_dung, 0)  # SL YCDH
+
+                # Gộp tất cả ghi chú thành một chuỗi, cách nhau bởi "; "
+                values[8] = "; ".join(values[8])
+
+            # Xóa dữ liệu cũ trong Treeview
+            for item in my_treeview.get_children():
+                my_treeview.delete(item)
+
+            # Cập nhật dữ liệu mới vào Treeview
+            for i, (key, values) in enumerate(grouped_data.items(), start=1):
+                values[0] = i  # Cập nhật lại số thứ tự
+                
+                # Định dạng số lượng SL Khả dụng
+                #=============================================================================================
+                if values[4].is_integer():  # Kiểm tra xem có phải là số nguyên không
+                    formatted_quantity = f"{int(values[4]):,}"  # Định dạng số nguyên với dấu phân cách nghìn
+                else:
+                    formatted_quantity = f"{values[4]:,.2f}"  # Định dạng số thập phân với 2 chữ số sau dấu phẩy
+
+                # Cập nhật lại giá trị số lượng đã được định dạng vào Treeview
+                values[4] = formatted_quantity
+                #=============================================================================================
+                
+                # Định dạng số lượng SL nhu cau
+                #=============================================================================================
+                if values[5].is_integer():  # Kiểm tra xem có phải là số nguyên không
+                    formatted_quantity = f"{int(values[5]):,}"  # Định dạng số nguyên với dấu phân cách nghìn
+                else:
+                    formatted_quantity = f"{values[5]:,.2f}"  # Định dạng số thập phân với 2 chữ số sau dấu phẩy
+
+                # Cập nhật lại giá trị số lượng đã được định dạng vào Treeview
+                values[5] = formatted_quantity
+                #=============================================================================================
+                
+                # Định dạng số lượng SL giu cho
+                #=============================================================================================
+                if values[6].is_integer():  # Kiểm tra xem có phải là số nguyên không
+                    formatted_quantity = f"{int(values[6]):,}"  # Định dạng số nguyên với dấu phân cách nghìn
+                else:
+                    formatted_quantity = f"{values[6]:,.2f}"  # Định dạng số thập phân với 2 chữ số sau dấu phẩy
+
+                # Cập nhật lại giá trị số lượng đã được định dạng vào Treeview
+                values[6] = formatted_quantity
+                #=============================================================================================
+                
+                # Định dạng số lượng SL YCDH
+                #=============================================================================================
+                if values[7].is_integer():  # Kiểm tra xem có phải là số nguyên không
+                    formatted_quantity = f"{int(values[7]):,}"  # Định dạng số nguyên với dấu phân cách nghìn
+                else:
+                    formatted_quantity = f"{values[7]:,.2f}"  # Định dạng số thập phân với 2 chữ số sau dấu phẩy
+
+                # Cập nhật lại giá trị số lượng đã được định dạng vào Treeview
+                values[7] = formatted_quantity
+                #=============================================================================================
+                
+                my_treeview.insert("", "end", values=values)
+
+            return True
+        
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+        
     
         
 class Controller_update_selected_row:
@@ -2498,7 +2367,7 @@ class Controller_update_selected_row:
             tab_01_entry_ghi_chu_mat_hang
             )= args
             
-            flag = Controller_action_after_event.update_selected_row(
+            flag = Controller_update_selected_row.start_process_update_selected_row(
             entry_notification,
             my_treeview,
             entry_ma_hang_tab_01,
@@ -2516,6 +2385,133 @@ class Controller_update_selected_row:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Row updated successfully!", "blue")
                 return True
     
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+        
+    def start_process_update_selected_row(entry_notification,
+                my_treeview,
+                entry_ma_hang_tab_01,
+                entry_ten_hang_tab_01,
+                entry_dvt,
+                entry_sl_kha_dung,
+                tab_01_entry_nhu_cau,
+                tab_01_entry_sl_giu_cho,
+                tab_01_entry_sl_YCDH,
+                tab_01_entry_ghi_chu_mat_hang):
+        try:
+            flag = Controller_update_selected_row.validate_data_before_updating_row_in_tree_view(entry_notification,
+                my_treeview,
+                entry_ma_hang_tab_01,
+                entry_ten_hang_tab_01,
+                tab_01_entry_nhu_cau)
+            if flag == False:
+                return False
+            
+            flag = Controller_update_selected_row.begin_updating_row_in_tree_view(
+                entry_notification,
+                my_treeview,
+                entry_ma_hang_tab_01,
+                entry_ten_hang_tab_01,
+                entry_dvt,
+                entry_sl_kha_dung,
+                tab_01_entry_nhu_cau,
+                tab_01_entry_sl_giu_cho,
+                tab_01_entry_sl_YCDH,
+                tab_01_entry_ghi_chu_mat_hang)
+            if flag == False:
+                return False
+            
+            flag = Controller_add_row_to_treeview.Kiem_tra_lai_data_trong_treeview(entry_notification, my_treeview)
+            if flag == False:
+                return False
+            else:
+                return True
+        
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+    
+    def validate_data_before_updating_row_in_tree_view(*args):
+        # Function to update the selected row
+        try:
+            # Lấy các giá trị theo thứ tự truyền vào
+            (
+                entry_notification,
+                my_treeview,
+                entry_ma_hang_tab_01,
+                entry_ten_hang_tab_01,
+                tab_01_entry_nhu_cau
+                )= args
+            
+            selected_item = my_treeview.selection()
+            new_ma_hang = entry_ma_hang_tab_01.get()
+            new_ten_hang = entry_ten_hang_tab_01.get()
+            new_nhu_cau = float(tab_01_entry_nhu_cau.get().replace(',', '') or 0)
+            
+            selected_item = my_treeview.selection()  # Get the selected item
+            if not selected_item:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Chưa chọn dòng cần cập nhật.", "red")
+                return False
+
+            # Kiểm tra các giá trị bắt buộc không được rỗng
+            if not new_ma_hang.strip():
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Mã hàng không được để trống.", "red")
+                return False
+
+            if not new_ten_hang.strip():
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Tên hàng không được để trống.", "red")
+                return False
+                
+            if not str(new_nhu_cau).strip():
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số lượng nhu cầu không được để trống.", "red")
+                return False
+        
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+    
+    def begin_updating_row_in_tree_view(*args):
+        # Function to update the selected row
+        try:
+            (
+                entry_notification,
+                my_treeview,
+                entry_ma_hang_tab_01,
+                entry_ten_hang_tab_01,
+                entry_dvt,
+                entry_sl_kha_dung,
+                tab_01_entry_nhu_cau,
+                tab_01_entry_sl_giu_cho,
+                tab_01_entry_sl_YCDH,
+                tab_01_entry_ghi_chu_mat_hang
+                )= args
+            
+            selected_item = my_treeview.selection()
+            value_col_00 = my_treeview.item(selected_item, "values")[0] if my_treeview.item(selected_item, "values") else None
+            value_col_01 = entry_ma_hang_tab_01.get()
+            value_col_02 = entry_ten_hang_tab_01.get()
+            value_col_03 = entry_dvt.get()
+            value_col_04 = float(entry_sl_kha_dung.get().replace(',', '') or 0)
+            value_col_05 = float(tab_01_entry_nhu_cau.get().replace(',', '') or 0)
+            value_col_06 = float(tab_01_entry_sl_giu_cho.get().replace(',', '') or 0)
+            value_col_07 = float(tab_01_entry_sl_YCDH.get().replace(',', '') or 0)
+            value_col_08 = tab_01_entry_ghi_chu_mat_hang.get()
+            
+            value_to_update = (value_col_00, value_col_01, value_col_02, value_col_03, value_col_04, value_col_05, value_col_06, value_col_07, value_col_08)
+            
+            selected_item = my_treeview.selection()  # Get the selected item
+            
+            try:
+                my_treeview.item(selected_item, values=value_to_update)  # Update the selected item
+            except Exception as e:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Cập nhật dòng bị lỗi!", "red")
+                return False
+            
+            return True
         except Exception as e:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
