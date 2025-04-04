@@ -340,9 +340,7 @@ class Controller_handel_all_events:
     def f_handle_tab_02_button_clear_click(entry_notification, my_treeview):
         Controller_clear_all_rows_in_treeview.clear_all_rows(entry_notification, my_treeview)
         
-    def f_handle_event_tab_01_btn_save_click(*args):
-        (
-            entry_notification,
+    def f_handle_event_tab_01_btn_save_click(entry_notification,
             entry_so_phieu, 
             entry_ma_kh, 
             entry_ten_kh,
@@ -351,8 +349,8 @@ class Controller_handel_all_events:
             entry_so_hop_dong,
             entry_thong_tin_hop_dong,
             entry_ghi_chu_cua_phieu,
-            tree
-        ) = args
+            tree):
+        
         Controller_save_slip.save_slip(entry_notification,
             entry_so_phieu, 
             entry_ma_kh, 
@@ -1253,10 +1251,7 @@ class Controller_clear_all_rows_in_treeview:
             return False
     
 class Controller_save_slip:
-    def save_slip(*args):
-        try:
-            (
-                entry_notification,
+    def save_slip(entry_notification,
                 entry_so_phieu, 
                 entry_ma_kh, 
                 entry_ten_kh,
@@ -1265,9 +1260,8 @@ class Controller_save_slip:
                 entry_so_hop_dong,
                 entry_thong_tin_hop_dong,
                 entry_ghi_chu_cua_phieu,
-                tree
-            ) = args
-            
+                tree):
+        try:            
             # call controller to handle event
             flag = Controller_event_tab_01_btn_save_click.f_handle_event_tab_01_btn_save_click(
                 entry_notification,
@@ -1291,10 +1285,7 @@ class Controller_save_slip:
             return False
         
 class Controller_event_tab_01_btn_save_click:
-    def f_handle_event_tab_01_btn_save_click(*args):
-        try:
-            # Step get data and validate data
-            (   entry_notification,
+    def f_handle_event_tab_01_btn_save_click(entry_notification,
                 entry_so_phieu, 
                 entry_ma_kh, 
                 entry_ten_kh,
@@ -1303,9 +1294,8 @@ class Controller_event_tab_01_btn_save_click:
                 entry_so_hop_dong,
                 entry_thong_tin_hop_dong,
                 entry_ghi_chu_cua_phieu,
-                tree
-            ) = args
-            
+                tree):
+        try:
             flag = Controller_validate_data_on_GUI.validate_number_of_slip( 
                 entry_notification,
                 entry_so_phieu
@@ -1428,9 +1418,7 @@ class Controller_validate_data_on_GUI:
 
 class Controller_save_data_on_GUI_into_database:
 
-    def get_data_from_GUI_view(*args):
-        (
-            entry_so_phieu, 
+    def get_data_from_GUI_view(entry_so_phieu, 
             entry_ma_kh, 
             entry_ten_kh,
             entry_mst,
@@ -1438,8 +1426,7 @@ class Controller_save_data_on_GUI_into_database:
             entry_so_hop_dong,
             entry_thong_tin_hop_dong,
             entry_ghi_chu_cua_phieu,
-            tree
-        ) = args
+            tree):
         
         # Các giá trị mặc định
         ID_nhan_vien = utils_controller_get_information_of_database.load_id_nhan_vien()
@@ -1484,9 +1471,7 @@ class Controller_save_data_on_GUI_into_database:
             data = []
             return False, data
     
-    def f_save_data_on_GUI_to_database(*args):
-        (
-            entry_so_phieu, 
+    def f_save_data_on_GUI_to_database(entry_so_phieu, 
             entry_ma_kh, 
             entry_ten_kh,
             entry_mst,
@@ -1494,8 +1479,7 @@ class Controller_save_data_on_GUI_into_database:
             entry_so_hop_dong,
             entry_thong_tin_hop_dong,
             entry_ghi_chu_cua_phieu,
-            tree
-        ) = args
+            tree):
         
         # Step_01: Get data
         flag, data_array = Controller_save_data_on_GUI_into_database.get_data_from_GUI_view(entry_so_phieu, 

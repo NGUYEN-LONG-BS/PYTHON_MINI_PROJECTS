@@ -189,8 +189,7 @@ class Controller_handel_all_events:
     """Công dụng chuyển tiếp các event từ view sang controller
         Nếu thay đổi controller, không phải sửa view
     """
-    def handle_event_tab_02_button_edit_click(*args):
-        (entry_notification, 
+    def handle_event_tab_02_button_edit_click(entry_notification, 
         active_tab, 
         entry_ngay_tren_phieu,
         entry_so_phieu,
@@ -202,7 +201,7 @@ class Controller_handel_all_events:
         entry_thong_tin_hop_dong,
         entry_note_for_slip,
         my_treeview_to_get_data,
-        my_treeview_to_load_data) = args
+        my_treeview_to_load_data):
         
         Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG.start_editing(
             entry_notification, 
@@ -237,30 +236,27 @@ class Controller_handel_all_events:
     def f_handle_event_tab_01_button_get_import_file_click(entry_notification):
         Controller_import_bulk_data_from_Excel_file_to_SQL_KD02_YEU_CAU_DAT_HANG.f_handle_event_tab_01_button_get_import_file_click(entry_notification)
     
-    def f_handle_event_update_selected_row_click(*args):
-        (
-        entry_notification,
+    def f_handle_event_update_selected_row_click(entry_notification,
         my_treeview,
-        entry_ma_hang_tab_01,
-        entry_ten_hang_tab_01,
+        entry_ma_hang,
+        entry_ten_hang,
         entry_dvt,
         entry_sl_kha_dung,
-        tab_01_entry_nhu_cau,
-        tab_01_entry_sl_giu_cho,
-        tab_01_entry_sl_YCDH,
-        tab_01_entry_ghi_chu_mat_hang
-        )= args
+        entry_nhu_cau,
+        entry_sl_giu_cho,
+        entry_sl_YCDH,
+        entry_ghi_chu_mat_hang):
             
         Controller_update_selected_row.update_selected_row(entry_notification,
         my_treeview,
-        entry_ma_hang_tab_01,
-        entry_ten_hang_tab_01,
+        entry_ma_hang,
+        entry_ten_hang,
         entry_dvt,
         entry_sl_kha_dung,
-        tab_01_entry_nhu_cau,
-        tab_01_entry_sl_giu_cho,
-        tab_01_entry_sl_YCDH,
-        tab_01_entry_ghi_chu_mat_hang)
+        entry_nhu_cau,
+        entry_sl_giu_cho,
+        entry_sl_YCDH,
+        entry_ghi_chu_mat_hang)
     
     def f_handle_event_tab_01_btn_delete_click(entry_notification, my_treeview):
         Controller_delete_row_in_treeview.delete_row(entry_notification, my_treeview)
@@ -298,9 +294,7 @@ class Controller_handel_all_events:
     def f_handle_event_get_today_is_date_of_slip(entry_ngay_tren_phieu):
         Controller_get_today.start_process_get_today(entry_ngay_tren_phieu)
         
-    def f_handle_event_tab_01_button_add_row_click(*args):
-        (
-            entry_notification,
+    def f_handle_event_tab_01_button_add_row_click(entry_notification,
             my_treeview, 
             entry_id,
             entry_ma_hang, 
@@ -310,8 +304,8 @@ class Controller_handel_all_events:
             entry_sl_nhu_cau, 
             entry_sl_giu_cho, 
             entry_sl_yeu_cau_dat_hang, 
-            entry_ghi_chu_mat_hang
-        )= args
+            entry_ghi_chu_mat_hang):
+
         Controller_add_row_to_treeview.add_row(entry_notification,
             my_treeview, 
             entry_id,
@@ -324,16 +318,14 @@ class Controller_handel_all_events:
             entry_sl_yeu_cau_dat_hang, 
             entry_ghi_chu_mat_hang)
         
-    def f_handle_event_tab_02_button_filter_slip(entry_notification, my_treeview, *args):
-        (
-            entry_so_phieu, 
+    def f_handle_event_tab_02_button_filter_slip(entry_notification, my_treeview, entry_so_phieu, 
             entry_so_hop_dong,
             entry_ngay_bat_dau,
             entry_ngay_ket_thuc,
             entry_ma_doi_tuong,
             entry_ma_hang,
-            combo_trang_thai
-        )= args
+            combo_trang_thai):
+
         Controller_filter_with_conditions_on_tab_02.filter_log_with_conditions(entry_notification, my_treeview,
             entry_so_phieu, 
             entry_so_hop_dong,
@@ -407,9 +399,7 @@ class Controller_handel_all_events:
         so_phieu = Controller_click_on_treeview.treeview_of_tab_02_single_click(my_treeview)
         utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, so_phieu, "blue")
         
-    def f_handle_event_tab_01_btn_save_click(*args):
-        (
-            entry_notification,
+    def f_handle_event_tab_01_btn_save_click(entry_notification,
             entry_so_phieu, 
             entry_ma_kh, 
             entry_ten_kh,
@@ -418,8 +408,8 @@ class Controller_handel_all_events:
             entry_so_hop_dong,
             entry_thong_tin_hop_dong,
             entry_ghi_chu_cua_phieu,
-            tree
-        ) = args
+            tree):
+
         Controller_save_slip.save_slip(entry_notification,
             entry_so_phieu, 
             entry_ma_kh, 
@@ -431,9 +421,7 @@ class Controller_handel_all_events:
             entry_ghi_chu_cua_phieu,
             tree)
         
-    def handle_event_tab_01_btn_update_slip_click(*args):
-        (
-            entry_notification,
+    def handle_event_tab_01_btn_update_slip_click(entry_notification,
             entry_so_phieu, 
             entry_ma_kh, 
             entry_ten_kh,
@@ -442,8 +430,8 @@ class Controller_handel_all_events:
             entry_so_hop_dong,
             entry_thong_tin_hop_dong,
             entry_ghi_chu_cua_phieu,
-            tree
-        ) = args
+            tree):
+
         Controller_update_slip.update_slip(entry_notification,
             entry_so_phieu, 
             entry_ma_kh, 
@@ -454,9 +442,6 @@ class Controller_handel_all_events:
             entry_thong_tin_hop_dong,
             entry_ghi_chu_cua_phieu,
             tree)
-    
-
-    
     
 class Controller_auto_update_sl_giu_cho_va_sl_ycdh():
     def __init__(self, *args):
@@ -586,9 +571,7 @@ class Controller_edit_row_in_SQL:
 
 class Controller_save_data_on_GUI_into_database:
 
-    def get_data_from_GUI_view(*args):
-        (
-            entry_so_phieu, 
+    def get_data_from_GUI_view(entry_so_phieu, 
             entry_ma_kh, 
             entry_ten_kh,
             entry_mst,
@@ -596,8 +579,7 @@ class Controller_save_data_on_GUI_into_database:
             entry_so_hop_dong,
             entry_thong_tin_hop_dong,
             entry_ghi_chu_cua_phieu,
-            tree
-        ) = args
+            tree):
         
         # Các giá trị mặc định
         ID_nhan_vien = utils_controller_get_information_of_database.load_id_nhan_vien()
@@ -642,9 +624,7 @@ class Controller_save_data_on_GUI_into_database:
             data = []
             return False, data
     
-    def f_save_data_on_GUI_to_database(*args):
-        (
-            entry_so_phieu, 
+    def f_save_data_on_GUI_to_database(entry_so_phieu, 
             entry_ma_kh, 
             entry_ten_kh,
             entry_mst,
@@ -652,8 +632,7 @@ class Controller_save_data_on_GUI_into_database:
             entry_so_hop_dong,
             entry_thong_tin_hop_dong,
             entry_ghi_chu_cua_phieu,
-            tree
-        ) = args
+            tree):
         
         # Step_01: Get data
         flag, data_array = Controller_save_data_on_GUI_into_database.get_data_from_GUI_view(entry_so_phieu, 
@@ -736,10 +715,7 @@ class Controller_get_the_latest_number_of_slip:
         return data_final
 
 class Controller_event_tab_01_btn_update_slip_click:
-    def f_handle_event_tab_01_btn_update_slip_click(*args):
-        # Step get data and validate data
-        (   
-            entry_notification,
+    def f_handle_event_tab_01_btn_update_slip_click(entry_notification,
             entry_so_phieu,
             entry_ma_kh,
             entry_ten_kh,
@@ -748,8 +724,8 @@ class Controller_event_tab_01_btn_update_slip_click:
             entry_so_hop_dong,
             entry_thong_tin_hop_dong,
             entry_ghi_chu_cua_phieu,
-            my_treeview
-            ) = args
+            my_treeview):
+
         # Get the selected items
         so_phieu = entry_so_phieu.get().strip()
         if not so_phieu:
@@ -1070,8 +1046,7 @@ class Controller_validate_data_from_Excel_file_to_import_to_SQL_250221_17h05:
             return False
 
 class Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG:
-    def start_editing(*args):
-        (entry_notification, 
+    def start_editing(entry_notification, 
         active_tab, 
         entry_ngay_tren_phieu,
         entry_so_phieu,
@@ -1083,8 +1058,7 @@ class Controller_inherit_to_edit_slip_YEU_CAU_DAT_HANG:
         entry_thong_tin_hop_dong,
         entry_note_for_slip,
         my_treeview_to_get_data,
-        my_treeview_to_load_data) = args
-        
+        my_treeview_to_load_data):
 
         # Get the selected items
         selected_items = my_treeview_to_get_data.selection()
@@ -1624,19 +1598,14 @@ class Controller_clear_all_filter_condition:
             print("Error at function: ", f_utils_get_current_function_name())
             
 class Controller_filter_with_conditions_on_tab_02:  
-    def filter_log_with_conditions(entry_notification, my_treeview, *args):
-        try:
-            # Get the arguments
-            (
-                entry_so_phieu, 
+    def filter_log_with_conditions(entry_notification, my_treeview, entry_so_phieu, 
                 entry_so_hop_dong,
                 entry_ngay_bat_dau,
                 entry_ngay_ket_thuc,
                 entry_ma_doi_tuong,
                 entry_ma_hang,
-                combo_trang_thai
-            )= args
-            
+                combo_trang_thai):
+        try:
             so_phieu = entry_so_phieu.get()
             so_hop_dong = entry_so_hop_dong.get()
             ngay_bat_dau = entry_ngay_bat_dau.get()
@@ -1937,10 +1906,7 @@ class Controller_clear_all_rows_in_treeview:
             return False
         
 class Controller_update_slip:
-    def update_slip(*args):
-        try:
-            (
-                entry_notification,
+    def update_slip(entry_notification,
                 entry_so_phieu, 
                 entry_ma_kh, 
                 entry_ten_kh,
@@ -1949,9 +1915,8 @@ class Controller_update_slip:
                 entry_so_hop_dong,
                 entry_thong_tin_hop_dong,
                 entry_ghi_chu_cua_phieu,
-                tree
-            ) = args
-            
+                tree):
+        try:            
             # call controller to handle event
             flag = Controller_event_tab_01_btn_update_slip_click.f_handle_event_tab_01_btn_update_slip_click(
                 entry_notification,
@@ -2010,11 +1975,7 @@ class Controller_save_slip:
             return False
         
 class Controller_add_row_to_treeview:
-    def add_row(*args):
-        try:
-            # Get the arguments
-            (
-                entry_notification,
+    def add_row(entry_notification,
                 my_treeview, 
                 entry_id,
                 entry_ma_hang, 
@@ -2024,8 +1985,8 @@ class Controller_add_row_to_treeview:
                 entry_sl_nhu_cau, 
                 entry_sl_giu_cho, 
                 entry_sl_yeu_cau_dat_hang, 
-                entry_ghi_chu_mat_hang
-            )= args
+                entry_ghi_chu_mat_hang):
+        try:
             flag = Controller_add_row_to_treeview.f_add_new_row_and_renew_the_tree_view(
                 entry_notification,
                 my_treeview, 
@@ -2047,11 +2008,7 @@ class Controller_add_row_to_treeview:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
         
-    def f_add_new_row_and_renew_the_tree_view(*args):
-        try:
-            # Step 1: get the arguments
-            (
-                entry_notification,
+    def f_add_new_row_and_renew_the_tree_view(entry_notification,
                 my_treeview, 
                 entry_id,
                 entry_ma_hang, 
@@ -2061,8 +2018,8 @@ class Controller_add_row_to_treeview:
                 entry_sl_nhu_cau, 
                 entry_sl_giu_cho, 
                 entry_sl_yeu_cau_dat_hang, 
-                entry_ghi_chu_mat_hang
-            )= args
+                entry_ghi_chu_mat_hang):
+        try:
             # Step 2: add new row
             flag = Controller_add_row_to_treeview.f_add_new_row(
                 entry_notification,
@@ -2201,11 +2158,7 @@ class Controller_add_row_to_treeview:
             print("Error at function: ", f_utils_get_current_function_name())
             return False
         
-    def f_add_new_row(*args):
-        try:
-            # Get the arguments
-            (
-                entry_notification,
+    def f_add_new_row(entry_notification,
                 my_treeview, 
                 entry_id,
                 entry_ma_hang, 
@@ -2215,9 +2168,8 @@ class Controller_add_row_to_treeview:
                 entry_sl_nhu_cau, 
                 entry_sl_giu_cho, 
                 entry_sl_yeu_cau_dat_hang, 
-                entry_ghi_chu_mat_hang
-            )= args
-            
+                entry_ghi_chu_mat_hang):
+        try:
             # Get values from elements
             id_value = entry_id.get()
             ma_hang_value = entry_ma_hang.get()
@@ -2353,32 +2305,28 @@ class Controller_add_row_to_treeview:
             return False
         
 class Controller_update_selected_row:
-    def update_selected_row(*args):
-        try:
-            (
-            entry_notification,
+    def update_selected_row(entry_notification,
             my_treeview,
-            entry_ma_hang_tab_01,
-            entry_ten_hang_tab_01,
+            entry_ma_hang,
+            entry_ten_hang,
             entry_dvt,
             entry_sl_kha_dung,
-            tab_01_entry_nhu_cau,
-            tab_01_entry_sl_giu_cho,
-            tab_01_entry_sl_YCDH,
-            tab_01_entry_ghi_chu_mat_hang
-            )= args
-            
+            entry_nhu_cau,
+            entry_sl_giu_cho,
+            entry_sl_YCDH,
+            entry_ghi_chu_mat_hang):
+        try:
             flag = Controller_update_selected_row.start_process_update_selected_row(
             entry_notification,
             my_treeview,
-            entry_ma_hang_tab_01,
-            entry_ten_hang_tab_01,
+            entry_ma_hang,
+            entry_ten_hang,
             entry_dvt,
             entry_sl_kha_dung,
-            tab_01_entry_nhu_cau,
-            tab_01_entry_sl_giu_cho,
-            tab_01_entry_sl_YCDH,
-            tab_01_entry_ghi_chu_mat_hang)
+            entry_nhu_cau,
+            entry_sl_giu_cho,
+            entry_sl_YCDH,
+            entry_ghi_chu_mat_hang)
             if flag == False:
                 return False
                 
@@ -2393,34 +2341,34 @@ class Controller_update_selected_row:
         
     def start_process_update_selected_row(entry_notification,
                 my_treeview,
-                entry_ma_hang_tab_01,
-                entry_ten_hang_tab_01,
+                entry_ma_hang,
+                entry_ten_hang,
                 entry_dvt,
                 entry_sl_kha_dung,
-                tab_01_entry_nhu_cau,
-                tab_01_entry_sl_giu_cho,
-                tab_01_entry_sl_YCDH,
-                tab_01_entry_ghi_chu_mat_hang):
+                entry_nhu_cau,
+                entry_sl_giu_cho,
+                entry_sl_YCDH,
+                entry_ghi_chu_mat_hang):
         try:
             flag = Controller_update_selected_row.validate_data_before_updating_row_in_tree_view(entry_notification,
                 my_treeview,
-                entry_ma_hang_tab_01,
-                entry_ten_hang_tab_01,
-                tab_01_entry_nhu_cau)
+                entry_ma_hang,
+                entry_ten_hang,
+                entry_nhu_cau)
             if flag == False:
                 return False
             
             flag = Controller_update_selected_row.begin_updating_row_in_tree_view(
                 entry_notification,
                 my_treeview,
-                entry_ma_hang_tab_01,
-                entry_ten_hang_tab_01,
+                entry_ma_hang,
+                entry_ten_hang,
                 entry_dvt,
                 entry_sl_kha_dung,
-                tab_01_entry_nhu_cau,
-                tab_01_entry_sl_giu_cho,
-                tab_01_entry_sl_YCDH,
-                tab_01_entry_ghi_chu_mat_hang)
+                entry_nhu_cau,
+                entry_sl_giu_cho,
+                entry_sl_YCDH,
+                entry_ghi_chu_mat_hang)
             if flag == False:
                 return False
             
@@ -2435,22 +2383,16 @@ class Controller_update_selected_row:
             print("Error at function: ", f_utils_get_current_function_name())
             return False
     
-    def validate_data_before_updating_row_in_tree_view(*args):
-        # Function to update the selected row
-        try:
-            # Lấy các giá trị theo thứ tự truyền vào
-            (
-                entry_notification,
+    def validate_data_before_updating_row_in_tree_view(entry_notification,
                 my_treeview,
-                entry_ma_hang_tab_01,
-                entry_ten_hang_tab_01,
-                tab_01_entry_nhu_cau
-                )= args
-            
+                entry_ma_hang,
+                entry_ten_hang,
+                entry_nhu_cau):
+        try:
             selected_item = my_treeview.selection()
-            new_ma_hang = entry_ma_hang_tab_01.get()
-            new_ten_hang = entry_ten_hang_tab_01.get()
-            new_nhu_cau = float(tab_01_entry_nhu_cau.get().replace(',', '') or 0)
+            new_ma_hang = entry_ma_hang.get()
+            new_ten_hang = entry_ten_hang.get()
+            new_nhu_cau = float(entry_nhu_cau.get().replace(',', '') or 0)
             
             selected_item = my_treeview.selection()  # Get the selected item
             if not selected_item:
@@ -2475,32 +2417,29 @@ class Controller_update_selected_row:
             print("Error at function: ", f_utils_get_current_function_name())
             return False
     
-    def begin_updating_row_in_tree_view(*args):
-        # Function to update the selected row
-        try:
-            (
-                entry_notification,
+    def begin_updating_row_in_tree_view(entry_notification,
                 my_treeview,
-                entry_ma_hang_tab_01,
-                entry_ten_hang_tab_01,
+                entry_ma_hang,
+                entry_ten_hang,
                 entry_dvt,
                 entry_sl_kha_dung,
-                tab_01_entry_nhu_cau,
-                tab_01_entry_sl_giu_cho,
-                tab_01_entry_sl_YCDH,
-                tab_01_entry_ghi_chu_mat_hang
-                )= args
+                entry_nhu_cau,
+                entry_sl_giu_cho,
+                entry_sl_YCDH,
+                entry_ghi_chu_mat_hang):
+        # Function to update the selected row
+        try:
             
             selected_item = my_treeview.selection()
             value_col_00 = my_treeview.item(selected_item, "values")[0] if my_treeview.item(selected_item, "values") else None
-            value_col_01 = entry_ma_hang_tab_01.get()
-            value_col_02 = entry_ten_hang_tab_01.get()
+            value_col_01 = entry_ma_hang.get()
+            value_col_02 = entry_ten_hang.get()
             value_col_03 = entry_dvt.get()
             value_col_04 = float(entry_sl_kha_dung.get().replace(',', '') or 0)
-            value_col_05 = float(tab_01_entry_nhu_cau.get().replace(',', '') or 0)
-            value_col_06 = float(tab_01_entry_sl_giu_cho.get().replace(',', '') or 0)
-            value_col_07 = float(tab_01_entry_sl_YCDH.get().replace(',', '') or 0)
-            value_col_08 = tab_01_entry_ghi_chu_mat_hang.get()
+            value_col_05 = float(entry_nhu_cau.get().replace(',', '') or 0)
+            value_col_06 = float(entry_sl_giu_cho.get().replace(',', '') or 0)
+            value_col_07 = float(entry_sl_YCDH.get().replace(',', '') or 0)
+            value_col_08 = entry_ghi_chu_mat_hang.get()
             
             value_to_update = (value_col_00, value_col_01, value_col_02, value_col_03, value_col_04, value_col_05, value_col_06, value_col_07, value_col_08)
             
