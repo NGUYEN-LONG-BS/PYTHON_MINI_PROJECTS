@@ -4,8 +4,12 @@ from datetime import datetime
 from collections import defaultdict
 
 class controller_get_information_of_module:
-    def load_loai_phieu():
+    def load_loai_phieu_PNK():
         loai_phieu = "PNK"
+        return loai_phieu
+    
+    def load_loai_phieu_PXK():
+        loai_phieu = "PXK"
         return loai_phieu
     
     def load_column_name_so_phieu():
@@ -152,16 +156,21 @@ class controller_get_information_of_module:
             
             return query, header
     
-    def load_query_get_list_number_of_slip():
+    def load_query_get_list_number_of_slip(ma_phan_loai = "PNK"):
         column_name = controller_get_information_of_module.load_column_name_so_phieu()
         database_name = utils_controller_get_information_of_database.load_database_name()
         table_name = utils_controller_get_information_of_database.load_table_name_TB_INVENTORY_STOCK_RECEIVED_ISSSUED_RETURNED_250214_09h05()
         # Tạo câu query SQL với danh sách số phiếu
+        if ma_phan_loai == "PNK":
+            value_phan_loai = "IMPORT"
+        elif ma_phan_loai == "PXK":
+            value_phan_loai = "EXPORT"
         query = f"""
         SELECT DISTINCT
             {column_name}
         FROM {database_name}.[dbo].{table_name}
         WHERE [XOA_SUA] = ''
+            AND [PHAN_LOAI_NHAP_XUAT_HOAN] = '{value_phan_loai}'
         """
         return query
     
@@ -178,10 +187,10 @@ class Controller_handel_all_events:
         Controller_update_entry_id.update_entry_id_after_adding_new_row(my_treeview, entry_id)
     
     def f_handle_event_get_the_latest_number_of_slip_PNK(entry_so_phieu_PNK):
-        Controller_get_the_latest_number_of_slip.start_process_get_the_latest_number_of_slip(entry_so_phieu_PNK)
+        Controller_get_the_latest_number_of_slip.start_process_get_the_latest_number_of_slip(entry_so_phieu_PNK, ma_phan_loai = "PNK")
         
     def f_handle_event_get_the_latest_number_of_slip_PXK(entry_so_phieu_PXK):
-        Controller_get_the_latest_number_of_slip.start_process_get_the_latest_number_of_slip(entry_so_phieu_PXK)
+        Controller_get_the_latest_number_of_slip.start_process_get_the_latest_number_of_slip(entry_so_phieu_PXK, ma_phan_loai = "PXK")
         
     def f_handle_event_initializing_format_of_treeview_of_tab_01(my_treeview):
         Controller_format_treeview.set_format_of_treeview_of_tab_01(my_treeview)
@@ -415,11 +424,23 @@ class Controller_get_today:
         entry_ngay_tren_phieu.config(state="readonly")
 
 class Controller_get_the_latest_number_of_slip:
-    def f_get_the_latest_number_of_slip(entry_so_phieu):
+    def start_process_get_the_latest_number_of_slip(tab_01_entry_so_phieu, ma_phan_loai):
+        try:
+            Controller_get_the_latest_number_of_slip.f_get_the_latest_number_of_slip(tab_01_entry_so_phieu, ma_phan_loai)
+            return "Have gotten the latest number of slip!"
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return f"Error: {e}"
+    
+    def f_get_the_latest_number_of_slip(entry_so_phieu, ma_phan_loai):
         ma_thanh_vien = utils_controller_get_information_of_database.load_ma_thanh_vien()
-        loai_phieu = controller_get_information_of_module.load_loai_phieu()
+        if ma_phan_loai == "PNK":
+            loai_phieu = controller_get_information_of_module.load_loai_phieu_PNK()
+        elif ma_phan_loai == "PXK":
+            loai_phieu = controller_get_information_of_module.load_loai_phieu_PXK()
         # Get the latest number of slip
-        so_phieu = Controller_get_the_latest_number_of_slip.handle_button_get_number_of_slip_click()
+        so_phieu = Controller_get_the_latest_number_of_slip.handle_button_get_number_of_slip_click(ma_phan_loai)
         # Create the connection string
         connection_number_of_slip = f"{ma_thanh_vien}-{loai_phieu}-{so_phieu + 1}"
         # Config the entry_so_phieu
@@ -428,25 +449,18 @@ class Controller_get_the_latest_number_of_slip:
         entry_so_phieu.insert(0, connection_number_of_slip)
         entry_so_phieu.config(state="readonly")
 
-    def start_process_get_the_latest_number_of_slip(tab_01_entry_so_phieu):
-        try:
-            Controller_get_the_latest_number_of_slip.f_get_the_latest_number_of_slip(tab_01_entry_so_phieu)
-            return "Have gotten the latest number of slip!"
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return f"Error: {e}"
     
-    def handle_button_get_number_of_slip_click():
+    
+    def handle_button_get_number_of_slip_click(ma_phan_loai):
         # Lấy danh sách số phiếu từ SQL
-        data_01 = Controller_get_the_latest_number_of_slip.get_list_number_of_slip()
+        data_01 = Controller_get_the_latest_number_of_slip.get_list_number_of_slip(ma_phan_loai)
         # Lấy số phiếu cuối cùng
         data_02 = Controller_get_the_latest_number_of_slip.extract_numbers_from_data_SQL_num_01(data_01)
         return data_02
     
-    def get_list_number_of_slip():
+    def get_list_number_of_slip(ma_phan_loai):
         # Tạo câu query SQL với danh sách số phiếu
-        query = controller_get_information_of_module.load_query_get_list_number_of_slip()
+        query = controller_get_information_of_module.load_query_get_list_number_of_slip(ma_phan_loai)
         # print("query", query)
         
         # lấy danh sách số phiếu từ SQL
