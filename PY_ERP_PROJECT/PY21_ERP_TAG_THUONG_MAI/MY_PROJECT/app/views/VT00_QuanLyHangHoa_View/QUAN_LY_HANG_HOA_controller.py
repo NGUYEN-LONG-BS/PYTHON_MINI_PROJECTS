@@ -59,7 +59,7 @@ class controller_get_information_of_module:
     
     def load_query_select_all_data():
         database_name = utils_controller_get_information_of_database.load_database_name()
-        table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+        table_name = utils_controller_get_information_of_database.load_table_name_TB_INVENTORY_STOCK_RECEIVED_ISSSUED_RETURNED_250214_09h05()
         danh_sach_id = utils_controller_get_information_of_database.load_danh_sach_id_duoc_phan_quyen()
         query = f"""
             SELECT *
@@ -99,7 +99,7 @@ class controller_get_information_of_module:
     def load_query_select_data_filtered_to_Excel(danh_sach_so_phieu):
         # Tạo câu query SQL với danh sách số phiếu
             database_name = utils_controller_get_information_of_database.load_database_name()
-            table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+            table_name = utils_controller_get_information_of_database.load_table_name_TB_INVENTORY_STOCK_RECEIVED_ISSSUED_RETURNED_250214_09h05()
             danh_sach_id = utils_controller_get_information_of_database.load_danh_sach_id_duoc_phan_quyen()
             query = f"""
             SELECT 
@@ -155,7 +155,7 @@ class controller_get_information_of_module:
     def load_query_get_list_number_of_slip():
         column_name = controller_get_information_of_module.load_column_name_so_phieu()
         database_name = utils_controller_get_information_of_database.load_database_name()
-        table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+        table_name = utils_controller_get_information_of_database.load_table_name_TB_INVENTORY_STOCK_RECEIVED_ISSSUED_RETURNED_250214_09h05()
         # Tạo câu query SQL với danh sách số phiếu
         query = f"""
         SELECT DISTINCT
@@ -416,7 +416,6 @@ class Controller_get_the_latest_number_of_slip:
         entry_so_phieu.insert(0, connection_number_of_slip)
         entry_so_phieu.config(state="readonly")
 
-
     def start_process_get_the_latest_number_of_slip(tab_01_entry_so_phieu):
         try:
             Controller_get_the_latest_number_of_slip.f_get_the_latest_number_of_slip(tab_01_entry_so_phieu)
@@ -460,7 +459,7 @@ class Controller_save_data_on_GUI_into_database_THEM_MOI_MA_HANG:
                             , entry_new_dvt):
         
         # Step_01: Get data
-        flag, data_array = Controller_save_data_on_GUI_into_database_THEM_MOI_MA_HANG.get_data_from_GUI_view(entry_notification,
+        flag, data_array = Controller_save_data_on_GUI_into_database_THEM_MOI_MA_HANG.get_data_from_GUI_tab_03(entry_notification,
                             entry_new_id_code
                             , entry_new_id_name
                             , entry_new_dvt
@@ -486,7 +485,7 @@ class Controller_save_data_on_GUI_into_database_THEM_MOI_MA_HANG:
                 utils_controllers.utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Thêm dữ liệu thành công!", "blue")
 
         
-    def get_data_from_GUI_view(entry_notification
+    def get_data_from_GUI_tab_03(entry_notification
                             , entry_new_id_code
                             , entry_new_id_name
                             , entry_new_dvt):
@@ -1424,7 +1423,7 @@ class Controller_validate_data_on_GUI:
 
 class Controller_save_data_on_GUI_into_database:
 
-    def get_data_from_GUI_view(entry_so_phieu, 
+    def get_data_from_GUI_tab_01(entry_so_phieu, 
             entry_ma_kh, 
             entry_ten_kh,
             entry_mst,
@@ -1441,6 +1440,20 @@ class Controller_save_data_on_GUI_into_database:
         
         value_ma_khach_hang = "" if entry_ma_kh.get() == "search here" else entry_ma_kh.get()
         value_so_de_nghi = "" if entry_so_de_nghi.get() == "search here" else entry_so_de_nghi.get()
+        
+        value_so_phieu = entry_so_phieu.get()
+        value_MA_KHO = combobox_ma_kho.get()
+        if "PNK" in value_so_phieu:
+            value_phan_loai_import_export = "IMPORT"
+            value_ma_kho_nhan = value_MA_KHO
+            value_ma_kho_xuat = ""
+        elif "PXK" in value_so_phieu:
+            value_phan_loai_import_export = "EXPORT"
+            value_ma_kho_nhan = ""
+            value_ma_kho_xuat = value_MA_KHO
+        else:
+            return False, []
+        
         # Tạo một list chứa dữ liệu để export
         try:
             data = []
@@ -1449,13 +1462,12 @@ class Controller_save_data_on_GUI_into_database:
                 data.append((
                     ID_nhan_vien
                     ,Xoa_Sua
-                    ,entry_so_phieu.get()
-                    ,"IMPORT"       # EXPORT
+                    ,value_so_phieu
+                    ,value_phan_loai_import_export
                     ,value_ma_khach_hang
                     ,f_utils_get_formatted_today_YYYY_MM_DD()
                     ,value_so_de_nghi
                     ,entry_ghi_chu_cua_phieu.get()
-                    
                     ,int(row[0])
                     ,row[1]
                     ,row[2]
@@ -1464,8 +1476,8 @@ class Controller_save_data_on_GUI_into_database:
                     ,float(row[5].replace(",", ""))
                     ,float(row[6].replace(",", ""))
                     ,row[7]
-                    ,"KHO A"
-                    ,""
+                    ,value_ma_kho_nhan
+                    ,value_ma_kho_xuat
                 ))
             # print(data)
             return True, data
@@ -1487,7 +1499,7 @@ class Controller_save_data_on_GUI_into_database:
             tree):
         
         # Step_01: Get data
-        flag, data_array = Controller_save_data_on_GUI_into_database.get_data_from_GUI_view(entry_so_phieu, 
+        flag, data_array = Controller_save_data_on_GUI_into_database.get_data_from_GUI_tab_01(entry_so_phieu, 
                                                                     entry_ma_kh, 
                                                                     entry_ten_kh,
                                                                     entry_mst,
@@ -1513,7 +1525,7 @@ class Controller_save_data_on_GUI_into_database:
 class Controller_check_duplicate_and_auto_update_slip_number:
     def f_Check_duplicate_and_update_slip_number(entry_so_phieu):
         database_name = utils_controller_get_information_of_database.load_database_name()
-        table_name = utils_controller_get_information_of_database.load_table_name_TB_KD02_YEU_CAU_DAT_HANG()
+        table_name = utils_controller_get_information_of_database.load_table_name_TB_INVENTORY_STOCK_RECEIVED_ISSSUED_RETURNED_250214_09h05()
         column_name = controller_get_information_of_module.load_column_name_so_phieu()
         try:
             kiem_tra_trung_so_phieu = f_utils_check_duplicate(entry_so_phieu, database_name, table_name, column_name)
