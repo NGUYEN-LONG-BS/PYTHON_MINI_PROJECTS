@@ -892,7 +892,7 @@ class Controller_validate_data_on_GUI:
         try:
             # Check if the client id is empty
             if entry_ma_khach_hang.get() == "" or entry_ma_khach_hang.get() == "search here":
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Mã khách hàng không được để trống!", "red")
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Mã đối tượng không được để trống!", "red")
                 # print("Error at function: ", f_utils_get_current_function_name())
                 return False
             
@@ -903,7 +903,7 @@ class Controller_validate_data_on_GUI:
             
             # Check exist client id
             if Controller_validate_data_on_GUI.f_Check_exist_ma_khach_hang(entry_ma_khach_hang) == False:
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Mã khách hàng chưa tồn tại!", "red")
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Mã đối tượng chưa tồn tại!", "red")
                 # print("Error at function: ", f_utils_get_current_function_name())
                 return False
             
@@ -953,7 +953,7 @@ class Controller_validate_data_from_Excel_file_to_import_to_SQL_250221_17h05:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
                 return False
 
-            # Kiểm tra mã khách hàng đã tồn tại chưa
+            # Kiểm tra mã đối tượng đã tồn tại chưa
             table_name = utils_controller_get_information_of_database.load_table_name_TB_AD00_DANH_SACH_KHACH_HANG()
             column_name = controller_get_information_of_module.load_column_name_ma_khach_hang()
             flag, notification_text = utils_controller_validate_id_is_exist_in_database.start_validate(data, column_index=4, database_name=database_name, table_name=table_name, column_name=column_name)
@@ -969,7 +969,7 @@ class Controller_validate_data_from_Excel_file_to_import_to_SQL_250221_17h05:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
                 return False
             
-            # Kiểm tra: một số phiếu tương ứng với một mã khách hàng
+            # Kiểm tra: một số phiếu tương ứng với một mã đối tượng
             flag, notification_text = utils_controller_validate_logic_in_columns_num_02_one_slip_one_id.start_validate(data, column_indices=[3, 4])
             if flag == False:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
@@ -987,18 +987,18 @@ class Controller_validate_data_from_Excel_file_to_import_to_SQL_250221_17h05:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
                 return False
             
-            # Kiểm tra có ô nào không có dữ liệu: Số phiếu, mã khách hàng, mã hàng, nhu cầu, sl giữ chỗ, sl YCĐH
+            # Kiểm tra có ô nào không có dữ liệu: Số phiếu, mã đối tượng, mã hàng, nhu cầu, sl giữ chỗ, sl YCĐH
             # số phiếu
             flag, notification_text = utils_controller_validate_is_NULL.start_validate(data, column_index=3)
             if flag == True:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
                 return False
-            # mã khách hàng
+            # mã đối tượng
             flag, notification_text = utils_controller_validate_is_NULL.start_validate(data, column_index=4)
             if flag == True:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
                 return False
-            # tên khách hàng
+            # tên đối tượng
             flag, notification_text = utils_controller_validate_is_NULL.start_validate(data, column_index=5)
             if flag == True:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")

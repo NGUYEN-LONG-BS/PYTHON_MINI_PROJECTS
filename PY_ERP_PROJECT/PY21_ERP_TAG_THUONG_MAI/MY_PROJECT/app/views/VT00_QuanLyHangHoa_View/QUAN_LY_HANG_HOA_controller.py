@@ -1389,19 +1389,16 @@ class Controller_validate_data_on_GUI:
         try:
             # Check if the client id is empty
             if entry_ma_khach_hang.get() == "" or entry_ma_khach_hang.get() == "search here":
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Mã khách hàng không được để trống!", "red")
-                # print("Error at function: ", f_utils_get_current_function_name())
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Mã đối tượng không được để trống!", "red")
                 return False
             
             if len(my_treeview.get_children()) == 0:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Bảng không có dữ liệu", "red")
-                # print("Error at function: ", f_utils_get_current_function_name())
                 return False
             
             # Check exist client id
             if Controller_validate_data_on_GUI.f_Check_exist_ma_khach_hang(entry_ma_khach_hang) == False:
-                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Mã khách hàng chưa tồn tại!", "red")
-                # print("Error at function: ", f_utils_get_current_function_name())
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Mã đối tượng chưa tồn tại!", "red")
                 return False
             
             # pass the validation
@@ -1413,7 +1410,7 @@ class Controller_validate_data_on_GUI:
     
     def f_Check_exist_ma_khach_hang(entry_ma_khach_hang):
         database_name = utils_controller_get_information_of_database.load_database_name()
-        table_name = utils_controller_get_information_of_database.load_table_name_TB_AD00_DANH_SACH_KHACH_HANG()
+        table_name = utils_controller_get_information_of_database.load_table_name_TB_AD00_DANH_SACH_NHA_CUNG_CAP()
         column_name = controller_get_information_of_module.load_column_name_ma_khach_hang()
         value_to_check = entry_ma_khach_hang.get().strip()
 

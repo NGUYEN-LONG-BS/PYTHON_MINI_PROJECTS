@@ -8,13 +8,14 @@ class cls_frame_client_information_model:
         
     def get_data(query=''):
         database_name = entry.utils_controller_get_information_of_database.load_database_name()
+        database_table = entry.utils_controller_get_information_of_database.load_table_name_TB_AD00_DANH_SACH_KHACH_HANG()
         query = f""" 
             SELECT 
                 [MA_DOI_TUONG] AS [Mã KH],
                 [TEN_DOI_TUONG] AS [Tên KH],
                 [MA_SO_THUE] AS [MST],
                 [DIA_CHI] AS [Địa chỉ]
-            FROM [{database_name}].[dbo].[TB_AD00_DANH_SACH_KHACH_HANG]
+            FROM [{database_name}].[dbo].[{database_table}]
             WHERE [XOA_SUA] = ''
             ORDER BY [MA_DOI_TUONG]
             """
@@ -107,8 +108,7 @@ class cls_frame_client_information_view(tk.Frame):
         label.pack(side="left", padx=10, pady=5)
 
         # Load data from the model
-        # data=self.controller.get_data(),
-        data=self.controller.get_data()         # bỏ dấu phẩy đi
+        data=self.controller.get_data()
         columns = self.controller.get_header()
         column_width = self.controller.get_column_width()
         dropdown_width = self.controller.get_width_of_dropdown()

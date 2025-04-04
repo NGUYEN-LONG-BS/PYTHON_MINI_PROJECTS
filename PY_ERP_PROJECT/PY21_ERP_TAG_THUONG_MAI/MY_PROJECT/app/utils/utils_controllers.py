@@ -380,6 +380,10 @@ class utils_controller_get_information_of_database:
     def load_table_name_TB_AD00_DANH_SACH_KHACH_HANG():
         table_name = "TB_AD00_DANH_SACH_KHACH_HANG"
         return table_name
+    
+    def load_table_name_TB_AD00_DANH_SACH_NHA_CUNG_CAP():
+        table_name = "TB_AD00_DANH_SACH_NHA_CUNG_CAP"
+        return table_name
 
     def load_table_name_TB_INVENTORY_CATEGORIES():
         table_name = "TB_INVENTORY_CATEGORIES_250214_09h05"

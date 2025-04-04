@@ -5,38 +5,47 @@ from app.utils import *
 
 # Model: cls_frame_suppliers_information_model
 class cls_frame_suppliers_information_model:
-    def __init__(self):
-        # Sample data to simulate the model
-        self.header = ["Mã KH", "Tên KH", "MST", "Địa chỉ"]
-        self.data = [
-            ("NCC01", "CÔNG TY CỔ PHẦN TUẤN ÂN LONG AN", "1100782190", "Khu công nghiệp Hải Sơn, Ấp Bình Tiền 2 , Xã Đức Hòa Hạ, Huyện Đức Hoà, Tỉnh Long An, Việt Nam"),
-            ("NCC02", "CÔNG TY TNHH THIẾT BỊ ĐIỆN MINH TRÍ", "1101916048", "Khu công nghiệp Hải Sơn, ấp Bình Tiền 2, Xã Đức Hòa Hạ, Huyện Đức Hoà, Tỉnh Long An, Việt Nam"),
-            ("NCC03", "Công ty TNHH Một Thành Viên", "0264151515", "04 đường Lê Lợi, TP. Hồ Chí Minh, Việt Nam"),
-            ("NCC04", "Công ty TNHH TTL", "0264136516", "28 đường Trường Chinh, Bình Định, Việt Nam"),
-            ("NCC05", "Công ty CP Khổng lồ", "02641361121", "297 đường Phan Bội Châu, Quy Nhơn, Bình Định, Việt Nam"),
-            ("NCC06", "Công ty TNHH Nhà Kính Đẹp", "02641368626", "04 đường Nguyễn Trãi, Cần Thơ, Việt Nam"),
-            ("NCC07", "Công ty TNHH Trí Hiếu", "02641368125", "26 đường Nguyễn Duy Hưng, Đà Nẵng, Việt Nam"),
-            ("NCC08", "Công ty TNHH Một Thành Viên Ngại Nùng Chi", "0264151515", "04 đường Lê Lợi, TP. Hồ Chí Minh, Việt Nam"),
-            ("NCC09", "Công ty TNHH Nhận Thức Việt", "0264136516", "28 đường Trường Chinh, Bình Định, Việt Nam"),
-            ("NCC10", "Công ty CP Chat GPT", "02641361121", "297 đường Phan Bội Châu, Quy Nhơn, Bình Định, Việt Nam"),
-            ("NCC11", "Công ty TNHH Con Trí Tuệ", "02641368626", "04 đường Nguyễn Trãi, Cần Thơ, Việt Nam"),
-            ("NCC12", "Công ty TNHH Cửa Hàng Vũ Phong", "02641368125", "26 đường Nguyễn Duy Hưng, Đà Nẵng, Việt Nam"),
-            ("NCC13", "Công ty TNHH Một Thành Viên Nhất Nhất", "0264151515", "04 đường Lê Lợi, TP. Hồ Chí Minh, Việt Nam"),
-            ("NCC14", "Công ty TNHH Cổ Phần TTL", "0264136516", "28 đường Trường Chinh, Bình Định, Việt Nam"),
-            ("NCC15", "Công ty CP TNHH Khổng lồ", "02641361121", "297 đường Phan Bội Châu, Quy Nhơn, Bình Định, Việt Nam"),
-        ]
         
-
-    def get_data(self):
-        return self.data
+    def get_data(query=''):
+        database_name = entry.utils_controller_get_information_of_database.load_database_name()
+        database_table = entry.utils_controller_get_information_of_database.load_table_name_TB_AD00_DANH_SACH_NHA_CUNG_CAP()
+        query = f""" 
+            SELECT 
+                [MA_DOI_TUONG] AS [Mã KH],
+                [TEN_DOI_TUONG] AS [Tên KH],
+                [MA_SO_THUE] AS [MST],
+                [DIA_CHI] AS [Địa chỉ]
+            FROM [{database_name}].[dbo].[{database_table}]
+            WHERE [XOA_SUA] = ''
+            ORDER BY [MA_DOI_TUONG]
+            """
+        data = utils_model_SQL_server.fetch_data(query)
+        # print(data)
+        return data
     
-    def get_header(self):
-        return self.header
+    def get_column_width():
+        width_of_columns = (80, 400, 100, 200)
+        return width_of_columns
 
-    def filter_data(self, query):
+    def get_width_of_dropdown():
+        width_of_dropdown = 850
+        return width_of_dropdown
+    
+    def get_height_of_dropdown():
+        height_of_dropdown = 300
+        return height_of_dropdown
+    
+    def get_header(query=''):
+        header = ["Mã KH", "Tên KH", "MST", "Địa chỉ"]
+        return header
+
+    def filter_data(query):
         filtered_data = []
-        for row in self.data:
-            if query in row[0].lower() or query in row[1].lower() or query in row[2].lower():
+        data = cls_frame_suppliers_information_model.get_data()
+        for row in data:
+            if (query in row[0].lower() or 
+                query in row[1].lower() or 
+                query in row[2].lower()):
                 filtered_data.append(row)
         return filtered_data
 
@@ -44,18 +53,27 @@ class cls_frame_suppliers_information_model:
 class cls_frame_suppliers_information_controller:
     def __init__(self):
         self.model = cls_frame_suppliers_information_model()  # Create an instance of the model
-        # self.view = cls_frame_suppliers_information_view
-        # self.view.controller = self
 
     def get_data(self):
         return self.model.get_data()
+    
+    def get_width_of_dropdown(self):
+        return cls_frame_suppliers_information_model.get_width_of_dropdown()
+        # return self.model.width_of_dropdown
+    
+    def get_height_of_dropdown(self):
+        return cls_frame_suppliers_information_model.get_height_of_dropdown()
+        # return self.model.height_of_dropdown
+    
+    def get_column_width(self):
+        return cls_frame_suppliers_information_model.get_column_width()
     
     def get_header(self):
         return self.model.get_header()
 
     def filter_data(self, query):
         filtered_data = self.model.filter_data(query)
-        self.view.update_combobox_data(filtered_data)
+        cls_frame_suppliers_information_view.update_combobox_data(filtered_data)
         
 # View: cls_frame_suppliers_information_view
 class cls_frame_suppliers_information_view(tk.Frame):
@@ -89,13 +107,21 @@ class cls_frame_suppliers_information_view(tk.Frame):
         label = ttk.Label(self.frame_row_1, text="Nhà cung cấp:")
         label.pack(side="left", padx=10, pady=5)
 
-        # Main cls_TreeviewCombobox_suppliers
+        # Load data from the model
+        data=self.controller.get_data()
+        columns = self.controller.get_header()
+        column_width = self.controller.get_column_width()
+        dropdown_width = self.controller.get_width_of_dropdown()
+        dropdown_height = self.controller.get_height_of_dropdown()
+        
+        # Main cls_TreeviewCombobox_clients
         self.treeview_combobox = cls_TreeviewCombobox_suppliers(
             self.frame_row_1,
-            columns=self.controller.get_header(),
-            data=self.controller.get_data(),
-            dropdown_width=1200,
-            dropdown_height=300,
+            columns=columns,
+            data=data,
+            dropdown_width=dropdown_width,
+            dropdown_height=dropdown_height,
+            column_width=column_width,
             width=15,
             name="entry_ma_nha_cung_cap"
         )
@@ -130,14 +156,14 @@ class cls_frame_suppliers_information_view(tk.Frame):
         self.treeview_combobox.data = data
         self.treeview_combobox.refresh_data()
 
-
 class cls_TreeviewCombobox_suppliers(entry.cls_my_text_entry_num_01):
-    def __init__(self, master, columns, data, dropdown_width=800, dropdown_height=600, **kwargs):
+    def __init__(self, master, columns, data, dropdown_width=800, dropdown_height=600, column_width=(100, 300, 80, 120), **kwargs):
         super().__init__(master, **kwargs)
         self.columns = columns
         self.data = data
         self.dropdown_width = dropdown_width
         self.dropdown_height = dropdown_height
+        self.column_width = column_width
         self.dropdown = None
         
         # Placeholder setup
@@ -153,14 +179,6 @@ class cls_TreeviewCombobox_suppliers(entry.cls_my_text_entry_num_01):
         # Bind events to show and interact with dropdown
         self.bind("<Button-1>", self.f_handle_event_left_click)
         self.bind("<KeyRelease>", self.filter_data)
-        self.master.bind("<Button-1>", self.on_click_outside)  # Bind click event to master frame to hide dropdown
-        
-        parent_widget = self.master.nametowidget(self.master.winfo_parent())
-        parent_widget.bind("<Button-1>", self.on_click_outside)
-
-    def on_click_outside(self, event):
-        print("on_click_outside")
-        self.hide_dropdown()
     
     def f_handle_event_left_click(self, event):
         self.f_on_click_clear_placeholder(event)
@@ -175,9 +193,12 @@ class cls_TreeviewCombobox_suppliers(entry.cls_my_text_entry_num_01):
 
             # Create a Treeview in the dropdown
             self.tree = ttk.Treeview(self.dropdown, columns=self.columns, show="headings")
-            for col in self.columns:
+            
+            column_widths = self.column_width
+            
+            for idx, col in enumerate(self.columns):
                 self.tree.heading(col, text=col)
-                self.tree.column(col, width=120, anchor="w")
+                self.tree.column(col, width=column_widths[idx], anchor="w")  # Set width based on the column index
             self.tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
             # Add a scrollbar
@@ -194,7 +215,6 @@ class cls_TreeviewCombobox_suppliers(entry.cls_my_text_entry_num_01):
             
             # Bind Treeview selection
             self.tree.bind("<<TreeviewSelect>>", self.on_tree_select)
-            # self.tree.bind("leave", self.hide_dropdown)
             self.tree.bind("<Leave>", self.hide_dropdown)
 
         else:
@@ -202,6 +222,8 @@ class cls_TreeviewCombobox_suppliers(entry.cls_my_text_entry_num_01):
 
     def hide_dropdown(self, event=None):
         if self.dropdown:
+            if hasattr(self, 'tree') and self.tree:
+                self.tree.destroy()
             self.dropdown.destroy()
             self.dropdown = None
 
@@ -219,14 +241,21 @@ class cls_TreeviewCombobox_suppliers(entry.cls_my_text_entry_num_01):
             print("Error at function: ", f_utils_get_current_function_name())
 
     def refresh_data(self, query=""):
+        if not hasattr(self, 'tree') or not self.tree:
+            return  # Tránh lỗi nếu self.tree không tồn tại
+        
         # Clear existing data
         for item in self.tree.get_children():
             self.tree.delete(item)
 
         # Insert filtered rows
         for row in self.data:
-            if query in row[0].lower() or query in row[1].lower() or query in row[2].lower():  # Filter by the first or second column or third column
-                self.tree.insert("", "end", values=row)
+            # print(row)
+            if (query in str(row[0]).lower() or 
+                query in str(row[1]).lower() or 
+                query in str(row[2]).lower()):  # Filter by the first or second column or third column
+                self.tree.insert("", "end", values=(row[0], row[1], row[2], row[3]))
+            
 
     def on_tree_select(self, event):
         selected_item = self.tree.focus()
@@ -238,8 +267,9 @@ class cls_TreeviewCombobox_suppliers(entry.cls_my_text_entry_num_01):
 
             # Populate additional Entry widgets with other column values
             for i, entry in enumerate(self.additional_entries):
-                entry.delete(0, tk.END)
-                entry.insert(0, values[i + 1])
+                if i + 1 < len(values):  # Ensure there are enough values to access
+                    entry.delete(0, tk.END)
+                    entry.insert(0, values[i + 1])
 
             self.hide_dropdown()
 
