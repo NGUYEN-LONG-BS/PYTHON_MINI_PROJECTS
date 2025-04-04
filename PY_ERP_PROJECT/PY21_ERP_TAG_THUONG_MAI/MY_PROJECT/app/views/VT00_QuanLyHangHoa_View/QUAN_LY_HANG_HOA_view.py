@@ -94,6 +94,8 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
     
     def f_set_command_for_elements(self):
         # Tab 01
+        self.tab_01_btn_refresh_number_of_slip.config(command=self.event_tab_01_button_get_number_of_slip_click)
+        
         self.tab_01_button_add.config(command=self.event_tab_01_button_add_row_click)
         self.tab_01_button_update_row_in_treeview.config(command=self.event_tab_01_button_update_row_click)
         self.tab_01_button_delete.config(command=self.event_tab_01_button_delete_click)
@@ -1037,6 +1039,9 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
     # Adding handler
     #==========================================================================================================================================================================================================================================================================================================================================================================================================================================
+    def event_tab_01_button_get_number_of_slip_click(self):        
+        Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(self.tab_01_entry_so_phieu)
+        Controller_handel_all_events.f_handle_event_get_today_is_date_of_slip(self.tab_01_entry_ngay_tren_phieu)
     
     def event_tab_03_button_create_new_inventory_click(self):        
         Controller_handel_all_events.f_handle_event_create_new_inventory(self.tab_01_label_footer_notification,

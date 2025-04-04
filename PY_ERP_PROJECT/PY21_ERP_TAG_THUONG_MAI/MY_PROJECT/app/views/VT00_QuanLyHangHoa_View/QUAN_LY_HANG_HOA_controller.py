@@ -367,6 +367,9 @@ class Controller_handel_all_events:
     def f_handle_event_get_the_latest_number_of_slip(tab_01_entry_so_phieu):
         Controller_get_the_latest_number_of_slip.start_process_get_the_latest_number_of_slip(tab_01_entry_so_phieu)
         
+    def f_handle_event_get_today_is_date_of_slip(entry_ngay_tren_phieu):
+        Controller_get_today.start_process_get_today(entry_ngay_tren_phieu)
+        
 class Controller_format_treeview:
     def set_format_of_treeview_of_tab_01(my_treeview):
         tab_01_treeview_config_json_path, tab_02_treeview_config_json_path, tab_04_treeview_config_json_path, tab_05_treeview_config_json_path, tab_06_treeview_config_json_path = controller_get_information_of_module.load_treeview_config_json_path()
@@ -401,6 +404,15 @@ class Controller_update_entry_id:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
             return False        
+
+class Controller_get_today:
+    def start_process_get_today(entry_ngay_tren_phieu):
+        # Get today's date in dd/mm/yyyy format
+        today = f_utils_get_formatted_today_YYYY_MM_DD("%d-%m-%Y")
+        entry_ngay_tren_phieu.config(state="normal")
+        entry_ngay_tren_phieu.delete(0, tk.END)
+        entry_ngay_tren_phieu.insert(0, today)
+        entry_ngay_tren_phieu.config(state="readonly")
 
 class Controller_get_the_latest_number_of_slip:
     def f_get_the_latest_number_of_slip(entry_so_phieu):
