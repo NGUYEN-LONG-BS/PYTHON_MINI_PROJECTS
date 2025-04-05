@@ -194,8 +194,8 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         self.tab_02_entry_ten_khach_hang = f_utils_tim_component_with_name(tab_02_frame, "entry_ten_khach_hang")
         self.tab_02_entry_mst = f_utils_tim_component_with_name(tab_02_frame, "entry_mst_khach_hang")
         self.tab_02_entry_dia_chi = f_utils_tim_component_with_name(tab_02_frame, "entry_dia_chi_khach_hang")
-        self._tab_02_entry_so_hop_dong = f_utils_tim_component_with_name(tab_02_frame, "entry_so_hop_dong")
-        self.tab_02_entry_thong_tin_hop_dong = f_utils_tim_component_with_name(tab_02_frame, "entry_thong_tin_ngan_cua_hop_dong")
+        self.tab_02_entry_so_de_nghi = f_utils_tim_component_with_name(tab_02_frame, "entry_so_de_nghi")
+        self.tab_02_entry_ngay_de_nghi = f_utils_tim_component_with_name(tab_02_frame, "entry_ngay_de_nghi")
         
         # Find in tab_05: Nhật ký phiếu xuất kho
         tab_05_frame = self.tab5_NHAT_KY_XUAT_KHO
@@ -1188,8 +1188,8 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
             self.tab_02_entry_ten_khach_hang,
             self.tab_02_entry_mst,
             self.tab_02_entry_dia_chi,
-            self._tab_02_entry_so_hop_dong,
-            self.tab_02_entry_thong_tin_hop_dong,
+            self.tab_02_entry_so_de_nghi,
+            self.tab_02_entry_ngay_de_nghi,
             self.tab_02_entry_note_for_slip,
             self.tab_02_combobox_ma_kho,
             self.tab_02_treeview_PXK)
