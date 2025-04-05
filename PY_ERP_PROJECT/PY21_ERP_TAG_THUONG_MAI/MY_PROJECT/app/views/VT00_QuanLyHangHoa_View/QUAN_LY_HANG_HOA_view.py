@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from app.views.Components_View import *
 from app.utils import *
-from .QUAN_LY_HANG_HOA_controller import Controller_handel_all_events
+from .controller_handle_events import Controller_handel_all_events
 
 class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
     def __init__(self):
@@ -1146,6 +1146,7 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
             self.tab_02_entry_ten_hang,
             self.tab_02_entry_dvt,
             self.tab_02_entry_sl_thuc_xuat,
+            self.tab_02_entry_don_gia_ton_kho,
             self.tab_02_entry_ghi_chu_mat_hang)
     
     def event_tab_01_button_delete_click(self):
