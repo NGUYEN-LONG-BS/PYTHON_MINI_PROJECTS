@@ -300,18 +300,31 @@ class Controller_handel_all_events:
         
     def f_handle_event_tab_05_button_filter_log_click(entry_notification, entry_ma_hang, my_treeview):
         controller_tab_05.Controller_filter_with_conditions_on_tab_05.filter_log_with_conditions(entry_notification, entry_ma_hang, my_treeview)
-        
-    def f_handle_event_tab_06_button_clear_filter(entry_notification, 
+    
+    def f_handle_event_tab_04_button_clear_filter(entry_notification, 
             my_treeview,
             entry_ma_hang,
             entry_ten_hang,
             combobox_ma_kho):
-        controller_tab_01_PNK.Controller_clear_all_filter_condition.clear_filter_condition(entry_notification,
+        controller_tab_04.Controller_clear_all_filter_condition.clear_filter_condition(entry_notification,
             my_treeview,
             entry_ma_hang,
             entry_ten_hang,
             combobox_ma_kho
             )
+    
+    def f_handle_event_tab_06_button_clear_filter(entry_notification, 
+            my_treeview,
+            entry_ma_hang,
+            entry_ten_hang,
+            combobox_ma_kho):
+        controller_tab_06.Controller_clear_all_filter_condition.clear_filter_condition(entry_notification,
+            my_treeview,
+            entry_ma_hang,
+            entry_ten_hang,
+            combobox_ma_kho
+            )
+        
     
     def f_handle_event_tab_01_button_add_row_click(entry_notification,
             my_treeview, 

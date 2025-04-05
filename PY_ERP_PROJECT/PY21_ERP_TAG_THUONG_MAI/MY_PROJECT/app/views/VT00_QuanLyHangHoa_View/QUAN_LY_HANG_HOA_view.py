@@ -118,6 +118,10 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         # Tab 03
         self.tab_03_button_create_new_inventory.config(command=self.event_tab_03_button_save_click)
         
+        # Tab 04
+        self.tab_04_button_filter.config(command=self.event_tab_04_button_filter_click)
+        self.tab_04_button_clear_filter.config(command=self.event_tab_04_button_clear_filter_click)
+        
         # Tab 06
         self.tab_06_button_filter.config(command=self.event_tab_06_button_filter_click)
         self.tab_06_button_clear_filter.config(command=self.event_tab_06_button_clear_filter_click)
@@ -808,7 +812,15 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         self.tab_04_frame_inventories_information = cls_frame_inventories_information_view(parent_frame_02)
         self.tab_04_frame_inventories_information.config(bd=0, relief="flat")
         self.tab_04_frame_inventories_information.grid(row=1, column=0, pady=(10, 0), sticky="ew")
-    
+
+        frame_combobox_ma_kho = tk.Frame(parent_frame_02)
+        frame_combobox_ma_kho.grid(row=2, column=0, padx=(10, 2), pady=(10, 0), sticky="w")
+        self.tab_04_label_ma_kho = tk.Label(frame_combobox_ma_kho, text="Kho tồn")
+        self.tab_04_label_ma_kho.grid(row=2, column=0, padx=(10, 2), pady=(10, 0), sticky="w")
+        values_ma_kho = ["Tất cả", "Kho A", "Kho B", "Kho C"]
+        self.tab_04_combobox_ma_kho = cls_my_combobox_num_01(frame_combobox_ma_kho, values=values_ma_kho)
+        self.tab_04_combobox_ma_kho.grid(row=2, column=1, padx=(0, 10), pady=(10, 0), sticky="w")
+        
         # Allow stretching
         self.tab_04_frame_filter_entries.columnconfigure(2, weight=1)   # Stretch the column to fill the width
         parent_frame_02.columnconfigure(0, weight=1)                    # Stretch parent_frame_02
@@ -1070,7 +1082,14 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
             self.tab_01_label_footer_notification,
             self.tab_06_entry_ma_hang,
             self.tab_06_treeview_report)
-        
+    
+    def event_tab_04_button_clear_filter_click(self):
+        Controller_handel_all_events.f_handle_event_tab_04_button_clear_filter(
+            self.tab_01_label_footer_notification, 
+            self.tab_04_treeview_log_of_PNK,
+            self.tab_04_entry_ma_hang,
+            self.tab_04_entry_ten_hang,
+            self.tab_04_combobox_ma_kho)
     
     def event_tab_06_button_clear_filter_click(self):
         Controller_handel_all_events.f_handle_event_tab_06_button_clear_filter(
