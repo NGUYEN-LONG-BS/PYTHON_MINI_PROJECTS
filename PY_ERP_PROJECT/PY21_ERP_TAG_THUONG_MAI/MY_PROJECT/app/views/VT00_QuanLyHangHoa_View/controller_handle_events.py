@@ -296,7 +296,7 @@ class Controller_handel_all_events:
         utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, ma_hang, "blue")
         
     def f_handle_event_treeview_of_tab_02_double_click(entry_notification, my_treeview):
-        ma_hang = controller_PNK.Controller_click_on_treeview.treeview_double_click(my_treeview)
+        ma_hang = controller_PXK.Controller_click_on_treeview.treeview_double_click(my_treeview)
         utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, ma_hang, "blue")
         
     def f_handle_event_treeview_of_tab_01_single_click(entry_notification, 
@@ -329,7 +329,7 @@ class Controller_handel_all_events:
             entry_don_gia,
             entry_ghi_chu_mat_hang):
         
-        controller_PNK.Controller_click_on_treeview.treeview_single_click(
+        controller_PXK.Controller_click_on_treeview.treeview_single_click(
         my_treeview,
         entry_id,
         entry_ma_hang,
