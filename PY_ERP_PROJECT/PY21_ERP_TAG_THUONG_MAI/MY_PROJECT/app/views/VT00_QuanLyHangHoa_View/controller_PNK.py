@@ -811,7 +811,7 @@ class Controller_clear_all_rows_in_treeview:
             return False
     
 class Controller_save_slip:
-    def save_slip(entry_notification,
+    def start_process_save_slip(entry_notification,
                 entry_so_phieu, 
                 entry_ma_kh, 
                 entry_ten_kh,
@@ -824,7 +824,7 @@ class Controller_save_slip:
                 tree):
         try:            
             # call controller to handle event
-            flag = Controller_event_tab_01_btn_save_click.f_handle_event_tab_01_btn_save_click(
+            flag = Controller_event_btn_save_click.f_handle_event_tab_01_btn_save_click(
                 entry_notification,
                 entry_so_phieu, 
                 entry_ma_kh, 
@@ -846,7 +846,7 @@ class Controller_save_slip:
             print("Error at function: ", f_utils_get_current_function_name())
             return False
         
-class Controller_event_tab_01_btn_save_click:
+class Controller_event_btn_save_click:
     def f_handle_event_tab_01_btn_save_click(entry_notification,
                 entry_so_phieu, 
                 entry_ma_kh, 

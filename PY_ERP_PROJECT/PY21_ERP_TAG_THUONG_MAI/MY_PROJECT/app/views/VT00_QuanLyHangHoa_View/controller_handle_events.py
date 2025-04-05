@@ -402,7 +402,7 @@ class Controller_handel_all_events:
             combobox_ma_kho,
             tree):
         
-        controller_PNK.Controller_save_slip.save_slip(entry_notification,
+        controller_PNK.Controller_save_slip.start_process_save_slip(entry_notification,
             entry_so_phieu, 
             entry_ma_kh, 
             entry_ten_kh,
@@ -413,7 +413,31 @@ class Controller_handel_all_events:
             entry_ghi_chu_cua_phieu,
             combobox_ma_kho,
             tree)
+    
+    def f_handle_event_tab_02_btn_save_click(entry_notification,
+            entry_so_phieu, 
+            entry_ma_kh, 
+            entry_ten_kh,
+            entry_mst,
+            entry_dia_chi,
+            entry_so_de_nghi,
+            entry_ngay_de_nghi,
+            entry_ghi_chu_cua_phieu,
+            combobox_ma_kho,
+            tree):
         
+        controller_PXK.Controller_save_slip.start_process_save_slip(entry_notification,
+            entry_so_phieu, 
+            entry_ma_kh, 
+            entry_ten_kh,
+            entry_mst,
+            entry_dia_chi,
+            entry_so_de_nghi,
+            entry_ngay_de_nghi,
+            entry_ghi_chu_cua_phieu,
+            combobox_ma_kho,
+            tree)
+    
     def f_handle_event_get_the_latest_number_of_slip(entry_so_phieu):
         controller_PNK.Controller_get_the_latest_number_of_slip.start_process_get_the_latest_number_of_slip(entry_so_phieu)
         

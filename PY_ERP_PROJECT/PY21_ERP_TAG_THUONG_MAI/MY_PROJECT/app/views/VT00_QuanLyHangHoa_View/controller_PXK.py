@@ -552,3 +552,360 @@ class Controller_update_selected_row:
             print("Error at function: ", f_utils_get_current_function_name())
             return False
      
+class Controller_save_slip:
+    def start_process_save_slip(entry_notification,
+                entry_so_phieu, 
+                entry_ma_kh, 
+                entry_ten_kh,
+                entry_mst,
+                entry_dia_chi,
+                entry_so_de_nghi,
+                entry_ngay_de_nghi,
+                entry_ghi_chu_cua_phieu,
+                combobox_ma_kho,
+                tree):
+        try:            
+            # call controller to handle event
+            flag = Controller_event_btn_save_click.f_handle_event_tab_01_btn_save_click(
+                entry_notification,
+                entry_so_phieu, 
+                entry_ma_kh, 
+                entry_ten_kh,
+                entry_mst,
+                entry_dia_chi,
+                entry_so_de_nghi,
+                entry_ngay_de_nghi,
+                entry_ghi_chu_cua_phieu,
+                combobox_ma_kho,
+                tree)
+            if flag == False:
+                return False
+            
+            if flag == True:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Data saved successfully!", "blue")
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+
+class Controller_event_btn_save_click:
+    def f_handle_event_tab_01_btn_save_click(entry_notification,
+                entry_so_phieu, 
+                entry_ma_kh, 
+                entry_ten_kh,
+                entry_mst,
+                entry_dia_chi,
+                entry_so_de_nghi,
+                entry_ngay_de_nghi,
+                entry_ghi_chu_cua_phieu,
+                combobox_ma_kho,
+                tree):
+        try:
+            flag = Controller_validate_data_on_GUI.validate_number_of_slip( 
+                entry_notification,
+                entry_so_phieu
+            )
+            if flag == False:
+                return False
+            
+            flag = Controller_validate_data_on_GUI.validate_data_when_saving(
+                entry_notification,
+                entry_ma_kh,
+                tree,
+                column_index=1
+            )
+            if flag == False:
+                return False
+            
+            # Controller_action_after_event.f_save_data_to_sql(
+            Controller_save_data_on_GUI_into_database.f_save_data_on_GUI_to_database(
+                entry_so_phieu, 
+                entry_ma_kh, 
+                entry_ten_kh,
+                entry_mst,
+                entry_dia_chi,
+                entry_so_de_nghi,
+                entry_ngay_de_nghi,
+                entry_ghi_chu_cua_phieu,
+                combobox_ma_kho,
+                tree
+                )
+            return True
+            
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+
+class Controller_validate_data_on_GUI:
+    def validate_data_when_saving(entry_notification, entry_ma_khach_hang, my_treeview, column_index):
+        
+        flag = Controller_validate_data_on_GUI.validate_data_orther_information(entry_notification, entry_ma_khach_hang, my_treeview)
+        if flag == False:
+            return False
+        
+        flag = Controller_validate_data_on_GUI.validate_danh_sach_ma_hang(entry_notification, my_treeview, column_index)
+        if flag == False:
+            return False
+        
+        return True
+    
+    def validate_number_of_slip(entry_notification, entry_so_phieu):
+        try:
+            # Check duplicate slip number
+            if Controller_check_duplicate_and_auto_update_slip_number.f_Check_duplicate_and_update_slip_number(entry_so_phieu) == True:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số phiếu bị trùng, vui lòng thử lại!", "red")
+                return False
+            
+            # pass the validation
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+        
+    def validate_danh_sach_ma_hang(entry_notification, my_treeview, column_index):
+        database_name = utils_controller_get_information_of_database.load_database_name()
+        table_name = utils_controller_get_information_of_database.load_table_name_TB_INVENTORY_CATEGORIES()
+        column_name = controller_handle_events.controller_get_information_of_module.load_column_name_ma_hang()
+        value_to_check = utils_controller_check_exist.get_unique_column_values(my_treeview, column_index)
+        
+        try:
+            flag, notification_text = utils_controller_check_exist.check_exist_values(value_to_check, database_name, table_name, column_name)
+            if flag == False:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Mã hàng chưa tồn tại!", "red")
+                return False
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+        
+    def validate_data_orther_information(entry_notification, entry_ma_khach_hang, my_treeview):
+        try:
+            # Check if the client id is empty
+            if entry_ma_khach_hang.get() == "" or entry_ma_khach_hang.get() == "search here":
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Mã đối tượng không được để trống!", "red")
+                return False
+            
+            if len(my_treeview.get_children()) == 0:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Bảng không có dữ liệu", "red")
+                return False
+            
+            # Check exist client id
+            if Controller_validate_data_on_GUI.f_Check_exist_ma_khach_hang(entry_ma_khach_hang) == False:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Mã đối tượng chưa tồn tại!", "red")
+                return False
+            
+            # pass the validation
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+    
+    def f_Check_exist_ma_khach_hang(entry_ma_khach_hang):
+        database_name = utils_controller_get_information_of_database.load_database_name()
+        table_name = utils_controller_get_information_of_database.load_table_name_TB_AD00_DANH_SACH_NHA_CUNG_CAP()
+        column_name = controller_handle_events.controller_get_information_of_module.load_column_name_ma_khach_hang()
+        value_to_check = entry_ma_khach_hang.get().strip()
+
+        try:
+            flag, notification_text = utils_controller_check_exist.check_exist_values(value_to_check, database_name, table_name, column_name)
+            if flag == False:
+                return False
+            return True
+        
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+    
+class Controller_check_duplicate_and_auto_update_slip_number:
+    def f_Check_duplicate_and_update_slip_number(entry_so_phieu):
+        database_name = utils_controller_get_information_of_database.load_database_name()
+        table_name = utils_controller_get_information_of_database.load_table_name_TB_INVENTORY_STOCK_RECEIVED_ISSSUED_RETURNED_250214_09h05()
+        column_name = controller_handle_events.controller_get_information_of_module.load_column_name_so_phieu()
+        try:
+            kiem_tra_trung_so_phieu = f_utils_check_duplicate(entry_so_phieu, database_name, table_name, column_name)
+            if kiem_tra_trung_so_phieu == False:    # có trùng phiếu
+                result = f_utils_ask_yes_no("Thông báo", "Số phiếu đã tồn tại, bạn có muốn tự động lấy số phiếu mới không?")
+                # Kiểm tra kết quả
+                if result:
+                    # Nếu người dùng chọn Yes
+                    controller_handle_events.Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(entry_so_phieu)
+                    return True
+                else:
+                    # Nếu người dùng chọn No
+                    return False
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+
+class Controller_save_data_on_GUI_into_database_THEM_MOI_MA_HANG:
+    def f_save_data_on_GUI_to_database(entry_notification,
+                            entry_new_id_code
+                            , entry_new_id_name
+                            , entry_new_dvt):
+        
+        # Step_01: Get data
+        flag, data_array = Controller_save_data_on_GUI_into_database_THEM_MOI_MA_HANG.get_data_from_GUI_tab_03(entry_notification,
+                            entry_new_id_code
+                            , entry_new_id_name
+                            , entry_new_dvt
+                                                                    )
+        if flag == False:
+            return
+        
+        # Step_02: Export data to SQL
+        flag, notification_text = utils_model_SQL_server.f_validate_data_format_TB_INVENTORY_CATEGORIES_250214_09h05(data_array)
+        
+        if flag == False:
+            utils_controllers.utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
+            return
+        
+        if flag == True:
+            # If data is valid
+            table_name = utils_controllers.utils_controller_get_information_of_database.load_table_name_TB_INVENTORY_CATEGORIES()
+            flag = utils_model_SQL_server.f_goi_ham_Export_to_table(data_array, table_name)
+            if flag == False:
+                utils_controllers.utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Thêm dữ liệu không thành công!", "red")
+                return
+            else:
+                utils_controllers.utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Thêm dữ liệu thành công!", "blue")
+
+        
+    def get_data_from_GUI_tab_03(entry_notification
+                            , entry_new_id_code
+                            , entry_new_id_name
+                            , entry_new_dvt):
+        
+        # Các giá trị mặc định
+        ID_nhan_vien = utils_controller_get_information_of_database.load_id_nhan_vien()
+        Xoa_Sua = utils_controller_get_information_of_database.load_xoa_sua_mac_dinh()
+        
+        # Tạo một list chứa dữ liệu để export
+        try:
+            data = []
+            
+            data.append((
+                ID_nhan_vien
+                ,Xoa_Sua
+                ,entry_new_id_code.get()
+                ,entry_new_id_name.get()
+                ,entry_new_dvt.get()
+                ,0
+                ,0
+                ,''
+            ))
+            # print(data)
+            return True, data
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            data = []
+            return False, data
+        
+class Controller_save_data_on_GUI_into_database:
+
+    def get_data_from_GUI_tab_01(entry_so_phieu, 
+            entry_ma_kh, 
+            entry_ten_kh,
+            entry_mst,
+            entry_dia_chi,
+            entry_so_de_nghi,
+            entry_ngay_de_nghi,
+            entry_ghi_chu_cua_phieu,
+            combobox_ma_kho,
+            tree):
+        
+        # Các giá trị mặc định
+        ID_nhan_vien = utils_controller_get_information_of_database.load_id_nhan_vien()
+        Xoa_Sua = utils_controller_get_information_of_database.load_xoa_sua_mac_dinh()
+        
+        value_ma_khach_hang = "" if entry_ma_kh.get() == "search here" else entry_ma_kh.get()
+        value_so_de_nghi = "" if entry_so_de_nghi.get() == "search here" else entry_so_de_nghi.get()
+        
+        value_so_phieu = entry_so_phieu.get()
+        value_MA_KHO = combobox_ma_kho.get()
+        if "PNK" in value_so_phieu:
+            value_phan_loai_import_export = "IMPORT"
+            value_ma_kho_nhan = value_MA_KHO
+            value_ma_kho_xuat = ""
+        elif "PXK" in value_so_phieu:
+            value_phan_loai_import_export = "EXPORT"
+            value_ma_kho_nhan = ""
+            value_ma_kho_xuat = value_MA_KHO
+        else:
+            return False, []
+        
+        # Tạo một list chứa dữ liệu để export
+        try:
+            data = []
+            for child in tree.get_children():
+                row = tree.item(child, "values")
+                data.append((
+                    ID_nhan_vien
+                    ,Xoa_Sua
+                    ,value_so_phieu
+                    ,value_phan_loai_import_export
+                    ,value_ma_khach_hang
+                    ,f_utils_get_formatted_today_YYYY_MM_DD()
+                    ,value_so_de_nghi
+                    ,entry_ghi_chu_cua_phieu.get()
+                    ,int(row[0])
+                    ,row[1]
+                    ,row[2]
+                    ,row[3]
+                    ,float(row[4].replace(",", ""))
+                    ,float(row[5].replace(",", ""))
+                    ,float(row[6].replace(",", ""))
+                    ,row[7]
+                    ,value_ma_kho_nhan
+                    ,value_ma_kho_xuat
+                ))
+            # print(data)
+            return True, data
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            data = []
+            return False, data
+    
+    def f_save_data_on_GUI_to_database(entry_so_phieu, 
+            entry_ma_kh, 
+            entry_ten_kh,
+            entry_mst,
+            entry_dia_chi,
+            entry_so_de_nghi,
+            entry_ngay_de_nghi,
+            entry_ghi_chu_cua_phieu,
+            combobox_ma_kho,
+            tree):
+        
+        # Step_01: Get data
+        flag, data_array = Controller_save_data_on_GUI_into_database.get_data_from_GUI_tab_01(entry_so_phieu, 
+                                                                    entry_ma_kh, 
+                                                                    entry_ten_kh,
+                                                                    entry_mst,
+                                                                    entry_dia_chi,
+                                                                    entry_so_de_nghi,
+                                                                    entry_ngay_de_nghi,
+                                                                    entry_ghi_chu_cua_phieu,
+                                                                    combobox_ma_kho,
+                                                                    tree
+                                                                    )
+        if flag == False:
+            return
+        
+        # Step_02: Export data to SQL
+        if utils_model_SQL_server.f_validate_data_format_TB_INVENTORY_STOCK_RECEIVED_ISSSUED_RETURNED_250214_09h05(data_array):
+            # If data is valid
+            table_name = utils_controllers.utils_controller_get_information_of_database.load_table_name_TB_INVENTORY_STOCK_RECEIVED_ISSSUED_RETURNED_250214_09h05()
+            utils_model_SQL_server.f_goi_ham_Export_to_table(data_array, table_name)
+            return
+        else:
+            return
+
+        

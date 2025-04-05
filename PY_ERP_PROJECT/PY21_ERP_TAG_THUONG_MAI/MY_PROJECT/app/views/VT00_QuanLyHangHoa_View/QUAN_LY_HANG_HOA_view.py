@@ -111,6 +111,8 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         self.tab_02_button_delete.config(command=self.event_tab_02_button_delete_click)
         self.tab_02_button_clear.config(command=self.event_tab_02_button_clear_click)
         
+        self.tab_02_button_save.config(command=self.event_tab_02_button_save_click)
+        
         # Tab 03
         self.tab_03_button_create_new_inventory.config(command=self.event_tab_03_button_create_new_inventory_click)
         
@@ -1172,6 +1174,20 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         
     def event_tab_01_button_save_click(self):
         Controller_handel_all_events.f_handle_event_tab_01_btn_save_click(
+            self.tab_01_label_footer_notification,
+            self.tab_01_entry_so_phieu, 
+            self.tab_01_entry_ma_khach_hang, 
+            self.tab_01_entry_ten_khach_hang,
+            self.tab_01_entry_mst,
+            self.tab_01_entry_dia_chi,
+            self.tab_01_entry_so_de_nghi,
+            self.tab_01_entry_ngay_de_nghi,
+            self.tab_01_entry_note_for_slip,
+            self.tab_01_combobox_ma_kho,
+            self.tab_01_treeview_PNK)
+        
+    def event_tab_02_button_save_click(self):
+        Controller_handel_all_events.f_handle_event_tab_02_btn_save_click(
             self.tab_01_label_footer_notification,
             self.tab_01_entry_so_phieu, 
             self.tab_01_entry_ma_khach_hang, 
