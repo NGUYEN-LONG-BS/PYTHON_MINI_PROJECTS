@@ -1095,7 +1095,7 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
             self.tab_02_entry_ghi_chu_mat_hang)
     
     def event_tab_01_button_update_row_click(self):
-        Controller_handel_all_events.f_handle_event_update_selected_row_click(
+        Controller_handel_all_events.f_handle_event_tab_01_update_selected_row_click(
         self.tab_01_label_footer_notification,
         self.tab_01_treeview_PNK,
         self.tab_01_entry_ma_hang,
@@ -1106,7 +1106,7 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         self.tab_01_entry_ghi_chu_mat_hang)
         
     def event_tab_02_button_update_row_click(self):
-        Controller_handel_all_events.f_handle_event_update_selected_row_click(
+        Controller_handel_all_events.f_handle_event_tab_02_update_selected_row_click(
         self.tab_01_label_footer_notification,
         self.tab_02_treeview_PXK,
         self.tab_02_entry_ma_hang,

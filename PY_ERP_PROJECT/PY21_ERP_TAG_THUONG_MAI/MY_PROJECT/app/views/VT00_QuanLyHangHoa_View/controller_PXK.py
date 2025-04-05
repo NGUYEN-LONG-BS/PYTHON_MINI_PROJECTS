@@ -402,3 +402,153 @@ class Controller_click_on_treeview:
         if ghi_chu_mat_hang is not None:
             entry_ghi_chu_mat_hang.delete(0, tk.END)
             entry_ghi_chu_mat_hang.insert(0, ghi_chu_mat_hang)
+
+class Controller_update_selected_row:
+    def start_process_update_selected_row(entry_notification,
+            my_treeview,
+            entry_ma_hang,
+            entry_ten_hang,
+            entry_dvt,
+            entry_sl_thuc_nhap,
+            entry_don_gia,
+            entry_ghi_chu_mat_hang):
+        try:
+            flag = Controller_update_selected_row.update_selected_row(
+            entry_notification,
+            my_treeview,
+            entry_ma_hang,
+            entry_ten_hang,
+            entry_dvt,
+            entry_sl_thuc_nhap,
+            entry_don_gia,
+            entry_ghi_chu_mat_hang)
+            if flag == False:
+                return False
+                
+            if flag == True:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Row updated successfully!", "blue")
+                return True
+    
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+
+    def update_selected_row(entry_notification,
+                my_treeview,
+                entry_ma_hang,
+                entry_ten_hang,
+                entry_dvt,
+                entry_sl_thuc_nhap,
+                entry_don_gia,
+                entry_ghi_chu_mat_hang):
+        try:
+            flag = Controller_update_selected_row.validate_data_before_updating_row_in_tree_view(entry_notification,
+                my_treeview,
+                entry_ma_hang,
+                entry_ten_hang,
+                entry_sl_thuc_nhap,
+                entry_don_gia)
+            if flag == False:
+                return False
+            
+            flag = Controller_update_selected_row.begin_updating_row_in_tree_view(
+                entry_notification,
+                my_treeview,
+                entry_ma_hang,
+                entry_ten_hang,
+                entry_dvt,
+                entry_sl_thuc_nhap,
+                entry_don_gia,
+                entry_ghi_chu_mat_hang)
+            if flag == False:
+                return False
+            
+            flag = Controller_add_row_to_treeview.Kiem_tra_lai_data_trong_treeview(entry_notification, my_treeview)
+            if flag == False:
+                return False
+            else:
+                return True
+        
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+        
+    def validate_data_before_updating_row_in_tree_view(entry_notification,
+                my_treeview,
+                entry_ma_hang,
+                entry_ten_hang,
+                entry_sl_thuc_nhap,
+                entry_don_gia):
+        # Function to update the selected row
+        try:
+            selected_item = my_treeview.selection()
+            new_ma_hang = entry_ma_hang.get()
+            new_ten_hang = entry_ten_hang.get()
+            new_thuc_nhap = float(entry_sl_thuc_nhap.get().replace(',', '') or 0)
+            new_don_gia = float(entry_don_gia.get().replace(',', '') or 0)
+            
+            selected_item = my_treeview.selection()  # Get the selected item
+            if not selected_item:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Chưa chọn dòng cần cập nhật.", "red")
+                return False
+
+            # Kiểm tra các giá trị bắt buộc không được rỗng
+            if not new_ma_hang.strip():
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Mã hàng không được để trống.", "red")
+                return False
+
+            if not new_ten_hang.strip():
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Tên hàng không được để trống.", "red")
+                return False
+            
+            if not str(new_thuc_nhap).strip():
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Số lượng thực nhập không được để trống.", "red")
+                return False
+            
+            if not str(new_don_gia).strip():
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Đơn giá không được để trống.", "red")
+                return False
+        
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+        
+    def begin_updating_row_in_tree_view(entry_notification,
+                my_treeview,
+                entry_ma_hang,
+                entry_ten_hang,
+                entry_dvt,
+                entry_sl_thuc_nhap,
+                entry_don_gia,
+                entry_ghi_chu_mat_hang):
+        # Function to update the selected row
+        try:
+            selected_item = my_treeview.selection()
+            value_col_00 = my_treeview.item(selected_item, "values")[0] if my_treeview.item(selected_item, "values") else None
+            value_col_01 = entry_ma_hang.get()
+            value_col_02 = entry_ten_hang.get()
+            value_col_03 = entry_dvt.get()
+            value_col_04 = float(entry_sl_thuc_nhap.get().replace(',', '') or 0)
+            value_col_05 = float(entry_don_gia.get().replace(',', '') or 0)
+            value_col_06 = value_col_04 * value_col_05
+            value_col_07 = entry_ghi_chu_mat_hang.get()
+            
+            value_to_update = (value_col_00, value_col_01, value_col_02, value_col_03, value_col_04, value_col_05, value_col_06, value_col_07)
+            
+            selected_item = my_treeview.selection()  # Get the selected item
+            
+            try:
+                my_treeview.item(selected_item, values=value_to_update)  # Update the selected item
+            except Exception as e:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Cập nhật dòng bị lỗi!", "red")
+                return False
+            
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+     

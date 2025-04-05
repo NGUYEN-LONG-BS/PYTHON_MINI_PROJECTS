@@ -184,6 +184,27 @@ class controller_get_information_of_module:
         sheet_name = "KD0201_YEU_CAU_DAT_HANG"
         return sheet_name
 
+class Controller_format_treeview:
+    def set_format_of_treeview_of_tab_01(my_treeview):
+        tab_01_treeview_config_json_path, tab_02_treeview_config_json_path, tab_04_treeview_config_json_path, tab_05_treeview_config_json_path, tab_06_treeview_config_json_path = controller_get_information_of_module.load_treeview_config_json_path()
+        utils_controller_TreeviewConfigurator_250217_13h20.apply_treeview_config(my_treeview, tab_01_treeview_config_json_path)
+        
+    def set_format_of_treeview_of_tab_04(my_treeview):
+        tab_01_treeview_config_json_path, tab_02_treeview_config_json_path, tab_04_treeview_config_json_path, tab_05_treeview_config_json_path, tab_06_treeview_config_json_path = controller_get_information_of_module.load_treeview_config_json_path()
+        utils_controller_TreeviewConfigurator_250217_13h20.apply_treeview_config(my_treeview, tab_04_treeview_config_json_path)
+        
+    def set_format_of_treeview_of_tab_02(my_treeview):
+        tab_01_treeview_config_json_path, tab_02_treeview_config_json_path, tab_04_treeview_config_json_path, tab_05_treeview_config_json_path, tab_06_treeview_config_json_path = controller_get_information_of_module.load_treeview_config_json_path()
+        utils_controller_TreeviewConfigurator_250217_13h20.apply_treeview_config(my_treeview, tab_02_treeview_config_json_path)
+    
+    def set_format_of_treeview_of_tab_05(my_treeview):
+        tab_01_treeview_config_json_path, tab_02_treeview_config_json_path, tab_04_treeview_config_json_path, tab_05_treeview_config_json_path, tab_06_treeview_config_json_path = controller_get_information_of_module.load_treeview_config_json_path()
+        utils_controller_TreeviewConfigurator_250217_13h20.apply_treeview_config(my_treeview, tab_05_treeview_config_json_path)
+        
+    def set_format_of_treeview_of_tab_06(my_treeview):
+        tab_01_treeview_config_json_path, tab_02_treeview_config_json_path, tab_04_treeview_config_json_path, tab_05_treeview_config_json_path, tab_06_treeview_config_json_path = controller_get_information_of_module.load_treeview_config_json_path()
+        utils_controller_TreeviewConfigurator_250217_13h20.apply_treeview_config(my_treeview, tab_06_treeview_config_json_path)
+
 class Controller_handel_all_events:
     def update_entry_id_when_initializing(my_treeview, entry_id):
         controller_PNK.Controller_update_entry_id.update_entry_id_after_adding_new_row(my_treeview, entry_id)
@@ -195,19 +216,19 @@ class Controller_handel_all_events:
         controller_PNK.Controller_get_the_latest_number_of_slip.start_process_get_the_latest_number_of_slip(entry_so_phieu_PXK, ma_phan_loai = "PXK")
         
     def f_handle_event_initializing_format_of_treeview_of_tab_01(my_treeview):
-        controller_PNK.Controller_format_treeview.set_format_of_treeview_of_tab_01(my_treeview)
+        Controller_format_treeview.set_format_of_treeview_of_tab_01(my_treeview)
     
     def f_handle_event_initializing_format_of_treeview_of_tab_04(my_treeview):
-        controller_PNK.Controller_format_treeview.set_format_of_treeview_of_tab_04(my_treeview)
+        Controller_format_treeview.set_format_of_treeview_of_tab_04(my_treeview)
         
     def f_handle_event_initializing_format_of_treeview_of_tab_02(my_treeview):
-        controller_PNK.Controller_format_treeview.set_format_of_treeview_of_tab_02(my_treeview)
+        Controller_format_treeview.set_format_of_treeview_of_tab_02(my_treeview)
     
     def f_handle_event_initializing_format_of_treeview_of_tab_05(my_treeview):
-        controller_PNK.Controller_format_treeview.set_format_of_treeview_of_tab_05(my_treeview)
+        Controller_format_treeview.set_format_of_treeview_of_tab_05(my_treeview)
     
     def f_handle_event_initializing_format_of_treeview_of_tab_06(my_treeview):
-        controller_PNK.Controller_format_treeview.set_format_of_treeview_of_tab_06(my_treeview)
+        Controller_format_treeview.set_format_of_treeview_of_tab_06(my_treeview)
         
     def f_handle_event_create_new_inventory(entry_notification,
                                             entry_new_id_code
@@ -273,23 +294,41 @@ class Controller_handel_all_events:
             entry_don_gia,
             entry_ghi_chu_mat_hang)
     
-    def f_handle_event_update_selected_row_click(entry_notification,
+    def f_handle_event_tab_01_update_selected_row_click(entry_notification,
             my_treeview,
-            entry_ma_hang_tab_01,
-            entry_ten_hang_tab_01,
+            entry_ma_hang,
+            entry_ten_hang,
             entry_dvt,
             entry_sl_thuc_nhap,
             entry_don_gia,
-            tab_01_entry_ghi_chu_mat_hang):
+            entry_ghi_chu_mat_hang):
             
         controller_PNK.Controller_update_selected_row.start_process_update_selected_row(entry_notification,
             my_treeview,
-            entry_ma_hang_tab_01,
-            entry_ten_hang_tab_01,
+            entry_ma_hang,
+            entry_ten_hang,
             entry_dvt,
             entry_sl_thuc_nhap,
             entry_don_gia,
-            tab_01_entry_ghi_chu_mat_hang)
+            entry_ghi_chu_mat_hang)
+        
+    def f_handle_event_tab_02_update_selected_row_click(entry_notification,
+            my_treeview,
+            entry_ma_hang,
+            entry_ten_hang,
+            entry_dvt,
+            entry_sl_thuc_nhap,
+            entry_don_gia,
+            entry_ghi_chu_mat_hang):
+            
+        controller_PXK.Controller_update_selected_row.start_process_update_selected_row(entry_notification,
+            my_treeview,
+            entry_ma_hang,
+            entry_ten_hang,
+            entry_dvt,
+            entry_sl_thuc_nhap,
+            entry_don_gia,
+            entry_ghi_chu_mat_hang)
         
     def f_handle_event_treeview_of_tab_01_double_click(entry_notification, my_treeview):
         ma_hang = controller_PNK.Controller_click_on_treeview.treeview_double_click(my_treeview)

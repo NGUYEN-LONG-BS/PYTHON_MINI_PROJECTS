@@ -4,27 +4,6 @@ from datetime import datetime
 from collections import defaultdict
 from . import controller_handle_events
 
-class Controller_format_treeview:
-    def set_format_of_treeview_of_tab_01(my_treeview):
-        tab_01_treeview_config_json_path, tab_02_treeview_config_json_path, tab_04_treeview_config_json_path, tab_05_treeview_config_json_path, tab_06_treeview_config_json_path = controller_handle_events.controller_get_information_of_module.load_treeview_config_json_path()
-        utils_controller_TreeviewConfigurator_250217_13h20.apply_treeview_config(my_treeview, tab_01_treeview_config_json_path)
-        
-    def set_format_of_treeview_of_tab_04(my_treeview):
-        tab_01_treeview_config_json_path, tab_02_treeview_config_json_path, tab_04_treeview_config_json_path, tab_05_treeview_config_json_path, tab_06_treeview_config_json_path = controller_handle_events.controller_get_information_of_module.load_treeview_config_json_path()
-        utils_controller_TreeviewConfigurator_250217_13h20.apply_treeview_config(my_treeview, tab_04_treeview_config_json_path)
-        
-    def set_format_of_treeview_of_tab_02(my_treeview):
-        tab_01_treeview_config_json_path, tab_02_treeview_config_json_path, tab_04_treeview_config_json_path, tab_05_treeview_config_json_path, tab_06_treeview_config_json_path = controller_handle_events.controller_get_information_of_module.load_treeview_config_json_path()
-        utils_controller_TreeviewConfigurator_250217_13h20.apply_treeview_config(my_treeview, tab_02_treeview_config_json_path)
-    
-    def set_format_of_treeview_of_tab_05(my_treeview):
-        tab_01_treeview_config_json_path, tab_02_treeview_config_json_path, tab_04_treeview_config_json_path, tab_05_treeview_config_json_path, tab_06_treeview_config_json_path = controller_handle_events.controller_get_information_of_module.load_treeview_config_json_path()
-        utils_controller_TreeviewConfigurator_250217_13h20.apply_treeview_config(my_treeview, tab_05_treeview_config_json_path)
-        
-    def set_format_of_treeview_of_tab_06(my_treeview):
-        tab_01_treeview_config_json_path, tab_02_treeview_config_json_path, tab_04_treeview_config_json_path, tab_05_treeview_config_json_path, tab_06_treeview_config_json_path = controller_handle_events.controller_get_information_of_module.load_treeview_config_json_path()
-        utils_controller_TreeviewConfigurator_250217_13h20.apply_treeview_config(my_treeview, tab_06_treeview_config_json_path)
-
 class Controller_update_entry_id:
     def update_entry_id_after_adding_new_row(tree, entry_id):
         try:
