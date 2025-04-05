@@ -215,7 +215,10 @@ class Controller_handel_all_events:
         
     def f_handle_event_get_the_latest_number_of_slip_PXK(entry_so_phieu_PXK):
         controller_tab_01_PNK.Controller_get_the_latest_number_of_slip.start_process_get_the_latest_number_of_slip(entry_so_phieu_PXK, ma_phan_loai = "PXK")
-        
+    
+    def f_handle_event_get_today_is_date_of_slip(entry_ngay_tren_phieu):
+        controller_tab_01_PNK.Controller_get_today.start_process_get_today(entry_ngay_tren_phieu)
+    
     def f_handle_event_initializing_format_of_treeview_of_tab_01(my_treeview):
         Controller_format_treeview.set_format_of_treeview_of_tab_01(my_treeview)
     
@@ -438,10 +441,5 @@ class Controller_handel_all_events:
             entry_ghi_chu_cua_phieu,
             combobox_ma_kho,
             tree)
-    
-    def f_handle_event_get_the_latest_number_of_slip(entry_so_phieu):
-        controller_tab_01_PNK.Controller_get_the_latest_number_of_slip.start_process_get_the_latest_number_of_slip(entry_so_phieu)
         
-    def f_handle_event_get_today_is_date_of_slip(entry_ngay_tren_phieu):
-        controller_tab_01_PNK.Controller_get_today.start_process_get_today(entry_ngay_tren_phieu)
    

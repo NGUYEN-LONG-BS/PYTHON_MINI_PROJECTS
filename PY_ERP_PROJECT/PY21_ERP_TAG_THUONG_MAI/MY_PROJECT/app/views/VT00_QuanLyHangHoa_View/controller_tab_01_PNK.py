@@ -1028,7 +1028,7 @@ class Controller_check_duplicate_and_auto_update_slip_number:
                 # Kiểm tra kết quả
                 if result:
                     # Nếu người dùng chọn Yes
-                    controller_handle_events.Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(entry_so_phieu)
+                    controller_handle_events.Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip_PNK(entry_so_phieu)
                     return True
                 else:
                     # Nếu người dùng chọn No
