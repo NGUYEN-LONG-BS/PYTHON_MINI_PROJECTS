@@ -5,6 +5,9 @@ from collections import defaultdict
 from . import controller_tab_01_PNK
 from . import controller_tab_02_PXK
 from . import controller_tab_03_new_id
+from . import controller_tab_04
+from . import controller_tab_05
+from . import controller_tab_06
 
 class controller_get_information_of_module:
     def load_loai_phieu_PNK():
@@ -61,6 +64,52 @@ class controller_get_information_of_module:
             FROM [{database_name}].[dbo].[{table_name}]
             WHERE 
                 (? IS NULL OR MA_HANG LIKE '%' + ? + '%')
+            """
+        return query
+    
+    def load_query_filter_data_to_treeview_tab_04():
+        database_name = utils_controller_get_information_of_database.load_database_name()
+        table_name = "TB_INVENTORY_STOCK_RECEIVED_ISSSUED_RETURNED_250214_09h05"
+        query = f"""
+                SELECT
+                ROW_NUMBER() OVER(ORDER BY [SO_PHIEU]) as RowNumber
+                ,[SO_PHIEU]
+                ,[MA_DOI_TUONG]
+                ,[MA_DOI_TUONG]
+                ,[SO_PHIEU_DE_NGHI]
+                ,[MA_HANG]
+                ,[TEN_HANG]
+                ,[DVT]
+                ,[SO_LUONG]
+                ,[GHI_CHU_SP]
+            FROM [{database_name}].[dbo].[{table_name}]
+            WHERE 
+                [PHAN_LOAI_NHAP_XUAT_HOAN] = 'IMPORT'
+                AND
+                (? IS NULL OR [SO_PHIEU] LIKE '%' + ? + '%')
+            """
+        return query
+    
+    def load_query_filter_data_to_treeview_tab_05():
+        database_name = utils_controller_get_information_of_database.load_database_name()
+        table_name = "TB_INVENTORY_STOCK_RECEIVED_ISSSUED_RETURNED_250214_09h05"
+        query = f"""
+                SELECT
+                ROW_NUMBER() OVER(ORDER BY [SO_PHIEU]) as RowNumber
+                ,[SO_PHIEU]
+                ,[MA_DOI_TUONG]
+                ,[MA_DOI_TUONG]
+                ,[SO_PHIEU_DE_NGHI]
+                ,[MA_HANG]
+                ,[TEN_HANG]
+                ,[DVT]
+                ,[SO_LUONG]
+                ,[GHI_CHU_SP]
+            FROM [{database_name}].[dbo].[{table_name}]
+            WHERE 
+                [PHAN_LOAI_NHAP_XUAT_HOAN] = 'EXPORT'
+                AND
+                (? IS NULL OR [SO_PHIEU] LIKE '%' + ? + '%')
             """
         return query
     
@@ -244,7 +293,13 @@ class Controller_handel_all_events:
                                                                                     , entry_new_dvt)
     
     def f_handle_event_tab_06_button_filter_log_click(entry_notification, entry_ma_hang, my_treeview):
-        controller_tab_01_PNK.Controller_filter_with_conditions_on_tab_06.filter_log_with_conditions(entry_notification, entry_ma_hang, my_treeview)
+        controller_tab_06.Controller_filter_with_conditions_on_tab_06.filter_log_with_conditions(entry_notification, entry_ma_hang, my_treeview)
+        
+    def f_handle_event_tab_04_button_filter_log_click(entry_notification, entry_ma_hang, my_treeview):
+        controller_tab_04.Controller_filter_with_conditions_on_tab_04.filter_log_with_conditions(entry_notification, entry_ma_hang, my_treeview)
+        
+    def f_handle_event_tab_05_button_filter_log_click(entry_notification, entry_ma_hang, my_treeview):
+        controller_tab_05.Controller_filter_with_conditions_on_tab_05.filter_log_with_conditions(entry_notification, entry_ma_hang, my_treeview)
         
     def f_handle_event_tab_06_button_clear_filter(entry_notification, 
             my_treeview,

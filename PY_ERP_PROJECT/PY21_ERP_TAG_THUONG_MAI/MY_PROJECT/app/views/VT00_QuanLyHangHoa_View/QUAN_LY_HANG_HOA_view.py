@@ -90,6 +90,8 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip_PNK(self.tab_01_entry_so_phieu)
         Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip_PXK(self.tab_02_entry_so_phieu)
         # Load data to all treeviews
+        self.event_tab_04_button_filter_click()
+        self.event_tab_05_button_filter_click()
         self.event_tab_06_button_filter_click()
     
     def f_set_command_for_elements(self):
@@ -1050,7 +1052,19 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
     def event_tab_02_button_get_number_of_slip_click(self):        
         Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip_PXK(self.tab_02_entry_so_phieu)
         Controller_handel_all_events.f_handle_event_get_today_is_date_of_slip(self.tab_02_entry_ngay_tren_phieu)
+    
+    def event_tab_04_button_filter_click(self):
+        Controller_handel_all_events.f_handle_event_tab_04_button_filter_log_click(
+            self.tab_01_label_footer_notification,
+            self.tab_04_entry_ma_hang,
+            self.tab_04_treeview_log_of_PNK)
         
+    def event_tab_05_button_filter_click(self):
+        Controller_handel_all_events.f_handle_event_tab_05_button_filter_log_click(
+            self.tab_01_label_footer_notification,
+            self.tab_05_entry_ma_hang,
+            self.tab_05_treeview_log_of_PXK)
+    
     def event_tab_06_button_filter_click(self):
         Controller_handel_all_events.f_handle_event_tab_06_button_filter_log_click(
             self.tab_01_label_footer_notification,
