@@ -414,8 +414,8 @@ class Controller_handel_all_events:
             combobox_ma_kho,
             tree)
         
-    def f_handle_event_get_the_latest_number_of_slip(tab_01_entry_so_phieu):
-        controller_PNK.Controller_get_the_latest_number_of_slip.start_process_get_the_latest_number_of_slip(tab_01_entry_so_phieu)
+    def f_handle_event_get_the_latest_number_of_slip(entry_so_phieu):
+        controller_PNK.Controller_get_the_latest_number_of_slip.start_process_get_the_latest_number_of_slip(entry_so_phieu)
         
     def f_handle_event_get_today_is_date_of_slip(entry_ngay_tren_phieu):
         controller_PNK.Controller_get_today.start_process_get_today(entry_ngay_tren_phieu)
