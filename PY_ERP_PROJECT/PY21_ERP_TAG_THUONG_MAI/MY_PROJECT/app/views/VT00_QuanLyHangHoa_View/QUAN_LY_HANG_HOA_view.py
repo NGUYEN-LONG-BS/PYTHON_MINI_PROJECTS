@@ -1113,6 +1113,7 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         self.tab_02_entry_ten_hang,
         self.tab_02_entry_dvt,
         self.tab_02_entry_sl_thuc_xuat,
+        self.tab_02_entry_don_gia_ton_kho,
         self.tab_02_entry_ghi_chu_mat_hang)
         
     def f_view_treeview_of_tab_01_double_click(self, event):
