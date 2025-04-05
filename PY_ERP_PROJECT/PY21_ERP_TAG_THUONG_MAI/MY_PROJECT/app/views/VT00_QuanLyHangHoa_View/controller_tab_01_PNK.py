@@ -1,10 +1,133 @@
-from tkinter import messagebox
 from app.utils import *
 from datetime import datetime
 from collections import defaultdict
 from . import controller_handle_events
-from . import controller_PNK
 
+class Controller_update_entry_id:
+    def update_entry_id_after_adding_new_row(tree, entry_id):
+        try:
+            row_count = 1 + len(tree.get_children())    
+            entry_id.config(state="normal")  # Enable the Entry widget to update the value
+            entry_id.delete(0, tk.END)  # Clear the existing value
+            entry_id.insert(0, row_count)  # Insert the new value (ID)
+            entry_id.config(state="disabled")  # Disable the Entry widget again
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False        
+
+class Controller_get_today:
+    def start_process_get_today(entry_ngay_tren_phieu):
+        # Get today's date in dd/mm/yyyy format
+        today = f_utils_get_formatted_today_YYYY_MM_DD("%d-%m-%Y")
+        entry_ngay_tren_phieu.config(state="normal")
+        entry_ngay_tren_phieu.delete(0, tk.END)
+        entry_ngay_tren_phieu.insert(0, today)
+        entry_ngay_tren_phieu.config(state="readonly")
+
+class Controller_get_the_latest_number_of_slip:
+    def start_process_get_the_latest_number_of_slip(entry_so_phieu, ma_phan_loai):
+        try:
+            Controller_get_the_latest_number_of_slip.f_get_the_latest_number_of_slip(entry_so_phieu, ma_phan_loai)
+            return "Have gotten the latest number of slip!"
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return f"Error: {e}"
+    
+    def f_get_the_latest_number_of_slip(entry_so_phieu, ma_phan_loai):
+        ma_thanh_vien = utils_controller_get_information_of_database.load_ma_thanh_vien()
+        if ma_phan_loai == "PNK":
+            loai_phieu = controller_handle_events.controller_get_information_of_module.load_loai_phieu_PNK()
+        elif ma_phan_loai == "PXK":
+            loai_phieu = controller_handle_events.controller_get_information_of_module.load_loai_phieu_PXK()
+        # Get the latest number of slip
+        so_phieu = Controller_get_the_latest_number_of_slip.handle_button_get_number_of_slip_click(ma_phan_loai)
+        # Create the connection string
+        connection_number_of_slip = f"{ma_thanh_vien}-{loai_phieu}-{so_phieu + 1}"
+        # Config the entry_so_phieu
+        entry_so_phieu.config(state="normal")
+        entry_so_phieu.delete(0, tk.END)
+        entry_so_phieu.insert(0, connection_number_of_slip)
+        entry_so_phieu.config(state="readonly")
+
+    
+    
+    def handle_button_get_number_of_slip_click(ma_phan_loai):
+        # Lấy danh sách số phiếu từ SQL
+        data_01 = Controller_get_the_latest_number_of_slip.get_list_number_of_slip(ma_phan_loai)
+        # Lấy số phiếu cuối cùng
+        data_02 = Controller_get_the_latest_number_of_slip.extract_numbers_from_data_SQL_num_01(data_01)
+        return data_02
+    
+    def get_list_number_of_slip(ma_phan_loai):
+        # Tạo câu query SQL với danh sách số phiếu
+        query = controller_handle_events.controller_get_information_of_module.load_query_get_list_number_of_slip(ma_phan_loai)
+        # print("query", query)
+        
+        # lấy danh sách số phiếu từ SQL
+        danh_sach_so_phieu = utils_model_get_data_from_SQL.get_data_with_query(query)
+        
+        return danh_sach_so_phieu
+        
+    def extract_numbers_from_data_SQL_num_01(data):
+        data_01 = data
+        data_02 = tuple(int(item[0].split('-')[-1]) for item in data_01)
+        if not data_02:
+            current_year = str(datetime.now().year)[-2:]  # Lấy 2 số cuối của năm hiện tại
+            data_final = int(f'{current_year}0000')
+        else:
+            data_final = max(data_02)
+        return data_final
+
+
+class Controller_filter_with_conditions_on_tab_06:  
+    def filter_log_with_conditions(entry_notification, entry_ma_hang, my_treeview):
+        try:
+            ma_hang = entry_ma_hang.get()
+
+            if ma_hang == 'search here':
+                ma_hang = ''
+                    
+            query = controller_handle_events.controller_get_information_of_module.load_query_filter_data_to_treeview_tab_06()
+            
+            utils_controller_get_data_from_SQL_to_treeview_with_quey_and_params_list.load_data_with_quey_and_params(my_treeview, query, (ma_hang, ma_hang))
+            
+            # Notification
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Data loaded!", "blue")
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+
+class Controller_clear_all_filter_condition:
+    def clear_filter_condition(
+            entry_notification,
+            my_treeview,
+            entry_ma_hang,
+            entry_ten_hang,
+            combobox_ma_kho):
+        
+        try:
+            # clear all entries
+            entry_ma_hang.delete(0, tk.END)
+            entry_ten_hang.delete(0, tk.END)
+            kho_list = combobox_ma_kho['values']
+            combobox_ma_kho.set(kho_list[0])
+            
+            # Create value to filter and fetch data
+            ma_hang = None
+            combo_ma_kho = ""
+            
+            query = controller_handle_events.controller_get_information_of_module.load_query_filter_data_to_treeview_tab_06()
+            
+            utils_controller_get_data_from_SQL_to_treeview_with_quey_and_params_list.load_data_with_quey_and_params(my_treeview, query, (ma_hang, ma_hang))
+            
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Clear all filter!", "blue")
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            
 class Controller_add_row_to_treeview:
     def start_process_add_row(entry_notification,
                 my_treeview, 
@@ -108,7 +231,7 @@ class Controller_add_row_to_treeview:
             if flag == False:
                 return False
             
-            flag = controller_PNK.Controller_update_entry_id.update_entry_id_after_adding_new_row(my_treeview, entry_id)
+            flag = Controller_update_entry_id.update_entry_id_after_adding_new_row(my_treeview, entry_id)
             if flag == False:
                 return False
             
@@ -119,7 +242,7 @@ class Controller_add_row_to_treeview:
             return True
         except Exception as e:
             # Correct entry ID because adding fail
-            controller_PNK.Controller_update_entry_id.update_entry_id_after_adding_new_row(my_treeview, entry_id)
+            Controller_update_entry_id.update_entry_id_after_adding_new_row(my_treeview, entry_id)
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
             return False
@@ -319,90 +442,6 @@ class Controller_add_row_to_treeview:
             print("Error at function: ", f_utils_get_current_function_name())
             return False
         
-class Controller_click_on_treeview:
-    def treeview_double_click(my_treeview):
-        result_value = utils_controller_TreeviewHandler_click_250217_22h34.treeview_double_click(my_treeview, column_return=1)
-        if result_value:
-            return result_value
-    
-    def treeview_single_click(my_treeview,
-        entry_id,
-        entry_ma_hang,
-        entry_ten_hang,
-        entry_dvt,
-        entry_sl_thuc_nhap,
-        entry_don_gia,
-        entry_ghi_chu_mat_hang):
-        
-        result_tuple = utils_controller_TreeviewHandler_click_250217_22h34.treeview_single_click(my_treeview)
-        # print("result_tuple:", result_tuple)
-        if not result_tuple:
-            return
-        id_value, ma_hang, ten_hang, dvt, sl_thuc_nhap, don_gia, gia_tri, ghi_chu_mat_hang = result_tuple
-        
-        # Clear and update the Entry widgets if values are returned
-        if id_value is not None:
-            entry_id.config(state="normal")  # Enable the Entry widget to update the value
-            entry_id.delete(0, tk.END)
-            entry_id.insert(0, id_value)
-            entry_id.config(state="disabled")  # Disable the Entry widget again
-
-        if ma_hang is not None:
-            entry_ma_hang.delete(0, tk.END)
-            entry_ma_hang.insert(0, ma_hang)
-            
-        if ten_hang is not None:
-            entry_ten_hang.delete(0, tk.END)
-            entry_ten_hang.insert(0, ten_hang)
-            
-        if dvt is not None:
-            entry_dvt.delete(0, tk.END)
-            entry_dvt.insert(0, dvt)
-        
-        if sl_thuc_nhap is not None:
-            # Loại bỏ dấu phân cách nghìn nếu có
-            sl_clean = sl_thuc_nhap.replace(',', '')  # Xóa dấu phân cách nghìn
-            
-            # Thực hiện chuyển đổi thành float
-            try:
-                float_value = float(sl_clean)
-                
-                entry_sl_thuc_nhap.delete(0, tk.END)
-                
-                if float_value.is_integer():  # Nếu là số nguyên
-                    formatted_value = f"{int(float_value):,}"
-                else:  # Nếu là số thập phân
-                    formatted_value = f"{float_value:,.2f}"
-                    
-                entry_sl_thuc_nhap.insert(0, formatted_value)
-            except ValueError:
-                # Nếu không thể chuyển thành float, có thể hiển thị thông báo lỗi hoặc xử lý trường hợp này
-                print("Error: Không thể chuyển đổi giá trị thành số.")
-                
-        if don_gia is not None:
-            # Loại bỏ dấu phân cách nghìn nếu có
-            sl_clean = don_gia.replace(',', '')  # Xóa dấu phân cách nghìn
-            
-            # Thực hiện chuyển đổi thành float
-            try:
-                float_value = float(sl_clean)
-                
-                entry_don_gia.delete(0, tk.END)
-                
-                if float_value.is_integer():  # Nếu là số nguyên
-                    formatted_value = f"{int(float_value):,}"
-                else:  # Nếu là số thập phân
-                    formatted_value = f"{float_value:,.2f}"
-                    
-                entry_don_gia.insert(0, formatted_value)
-            except ValueError:
-                # Nếu không thể chuyển thành float, có thể hiển thị thông báo lỗi hoặc xử lý trường hợp này
-                print("Error: Không thể chuyển đổi giá trị thành số.")
-            
-        if ghi_chu_mat_hang is not None:
-            entry_ghi_chu_mat_hang.delete(0, tk.END)
-            entry_ghi_chu_mat_hang.insert(0, ghi_chu_mat_hang)
-
 class Controller_update_selected_row:
     def start_process_update_selected_row(entry_notification,
             my_treeview,
@@ -551,7 +590,162 @@ class Controller_update_selected_row:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
             return False
-     
+
+class Controller_click_on_treeview:
+    def treeview_double_click(my_treeview):
+        result_value = utils_controller_TreeviewHandler_click_250217_22h34.treeview_double_click(my_treeview, column_return=1)
+        if result_value:
+            return result_value
+    
+    def treeview_single_click(my_treeview,
+        entry_id,
+        entry_ma_hang,
+        entry_ten_hang,
+        entry_dvt,
+        entry_sl_thuc_nhap,
+        entry_don_gia,
+        entry_ghi_chu_mat_hang):
+        
+        result_tuple = utils_controller_TreeviewHandler_click_250217_22h34.treeview_single_click(my_treeview)
+        # print("result_tuple:", result_tuple)
+        if not result_tuple:
+            return
+        id_value, ma_hang, ten_hang, dvt, sl_thuc_nhap, don_gia, gia_tri, ghi_chu_mat_hang = result_tuple
+        
+        # Clear and update the Entry widgets if values are returned
+        if id_value is not None:
+            entry_id.config(state="normal")  # Enable the Entry widget to update the value
+            entry_id.delete(0, tk.END)
+            entry_id.insert(0, id_value)
+            entry_id.config(state="disabled")  # Disable the Entry widget again
+
+        if ma_hang is not None:
+            entry_ma_hang.delete(0, tk.END)
+            entry_ma_hang.insert(0, ma_hang)
+            
+        if ten_hang is not None:
+            entry_ten_hang.delete(0, tk.END)
+            entry_ten_hang.insert(0, ten_hang)
+            
+        if dvt is not None:
+            entry_dvt.delete(0, tk.END)
+            entry_dvt.insert(0, dvt)
+        
+        if sl_thuc_nhap is not None:
+            # Loại bỏ dấu phân cách nghìn nếu có
+            sl_clean = sl_thuc_nhap.replace(',', '')  # Xóa dấu phân cách nghìn
+            
+            # Thực hiện chuyển đổi thành float
+            try:
+                float_value = float(sl_clean)
+                
+                entry_sl_thuc_nhap.delete(0, tk.END)
+                
+                if float_value.is_integer():  # Nếu là số nguyên
+                    formatted_value = f"{int(float_value):,}"
+                else:  # Nếu là số thập phân
+                    formatted_value = f"{float_value:,.2f}"
+                    
+                entry_sl_thuc_nhap.insert(0, formatted_value)
+            except ValueError:
+                # Nếu không thể chuyển thành float, có thể hiển thị thông báo lỗi hoặc xử lý trường hợp này
+                print("Error: Không thể chuyển đổi giá trị thành số.")
+                
+        if don_gia is not None:
+            # Loại bỏ dấu phân cách nghìn nếu có
+            sl_clean = don_gia.replace(',', '')  # Xóa dấu phân cách nghìn
+            
+            # Thực hiện chuyển đổi thành float
+            try:
+                float_value = float(sl_clean)
+                
+                entry_don_gia.delete(0, tk.END)
+                
+                if float_value.is_integer():  # Nếu là số nguyên
+                    formatted_value = f"{int(float_value):,}"
+                else:  # Nếu là số thập phân
+                    formatted_value = f"{float_value:,.2f}"
+                    
+                entry_don_gia.insert(0, formatted_value)
+            except ValueError:
+                # Nếu không thể chuyển thành float, có thể hiển thị thông báo lỗi hoặc xử lý trường hợp này
+                print("Error: Không thể chuyển đổi giá trị thành số.")
+            
+        if ghi_chu_mat_hang is not None:
+            entry_ghi_chu_mat_hang.delete(0, tk.END)
+            entry_ghi_chu_mat_hang.insert(0, ghi_chu_mat_hang)
+
+class Controller_delete_row_in_treeview:
+    def delete_row(entry_notification, my_treeview):
+        try:
+            flag = Controller_delete_row_in_treeview.f_delete_one_row_in_treeview(my_treeview)
+            if flag == False:
+                return False
+            
+            utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Row deleted successfully!", "blue")
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+    
+    def f_delete_one_row_in_treeview(my_treeview):
+        try:
+            selected_item = my_treeview.selection()  # Get selected item
+            if selected_item:  # Check if an item is selected
+                my_treeview.delete(selected_item)  # Delete the selected item
+            else:  # If no item is selected
+                children = my_treeview.get_children()
+                if children:  # Check if there are rows in the Treeview
+                    last_item = children[-1]  # Get the last item
+                    my_treeview.delete(last_item)  # Delete the last item
+            
+            flag = Controller_delete_row_in_treeview.f_controller_02_renumber_rows(my_treeview)
+            if flag == False:
+                return False
+            
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+        
+    def f_controller_02_renumber_rows(my_treeview):
+        try:
+            for index, item in enumerate(my_treeview.get_children(), start=1):
+                values = my_treeview.item(item, "values")  # Get the current values of the row
+                new_values = (index,) + values[1:]  # Update the first column with the new number
+                my_treeview.item(item, values=new_values)  # Set the updated values
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+
+class Controller_clear_all_rows_in_treeview:
+    def clear_all_rows(entry_notification, my_treeview):
+        try:
+            flag = Controller_clear_all_rows_in_treeview.clear_all_contents_in_treeview(my_treeview)
+            if flag == False:
+                return False
+            else:
+                utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Clear all rows successfully!", "blue")
+                return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+
+    def clear_all_contents_in_treeview(treeview):
+        try:
+            for item in treeview.get_children():
+                treeview.delete(item)
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False
+    
 class Controller_save_slip:
     def start_process_save_slip(entry_notification,
                 entry_so_phieu, 
@@ -587,7 +781,7 @@ class Controller_save_slip:
             print(f"Error: {e}")
             print("Error at function: ", f_utils_get_current_function_name())
             return False
-
+        
 class Controller_event_btn_save_click:
     def f_handle_event_tab_01_btn_save_click(entry_notification,
                 entry_so_phieu, 
@@ -693,7 +887,7 @@ class Controller_validate_data_on_GUI:
                 return False
             
             # Check exist client id
-            if Controller_validate_data_on_GUI.f_Check_exist_ma_khach_hang(entry_ma_khach_hang) == False:
+            if Controller_validate_data_on_GUI.f_Check_exist_ma_doi_tuong(entry_ma_khach_hang) == False:
                 utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, "Mã đối tượng chưa tồn tại!", "red")
                 return False
             
@@ -704,7 +898,7 @@ class Controller_validate_data_on_GUI:
             print("Error at function: ", f_utils_get_current_function_name())
             return False
     
-    def f_Check_exist_ma_khach_hang(entry_ma_khach_hang):
+    def f_Check_exist_ma_doi_tuong(entry_ma_khach_hang):
         database_name = utils_controller_get_information_of_database.load_database_name()
         table_name = utils_controller_get_information_of_database.load_table_name_TB_AD00_DANH_SACH_NHA_CUNG_CAP()
         column_name = controller_handle_events.controller_get_information_of_module.load_column_name_ma_khach_hang()
@@ -721,92 +915,6 @@ class Controller_validate_data_on_GUI:
             print("Error at function: ", f_utils_get_current_function_name())
             return False
     
-class Controller_check_duplicate_and_auto_update_slip_number:
-    def f_Check_duplicate_and_update_slip_number(entry_so_phieu):
-        database_name = utils_controller_get_information_of_database.load_database_name()
-        table_name = utils_controller_get_information_of_database.load_table_name_TB_INVENTORY_STOCK_RECEIVED_ISSSUED_RETURNED_250214_09h05()
-        column_name = controller_handle_events.controller_get_information_of_module.load_column_name_so_phieu()
-        try:
-            kiem_tra_trung_so_phieu = f_utils_check_duplicate(entry_so_phieu, database_name, table_name, column_name)
-            if kiem_tra_trung_so_phieu == False:    # có trùng phiếu
-                result = f_utils_ask_yes_no("Thông báo", "Số phiếu đã tồn tại, bạn có muốn tự động lấy số phiếu mới không?")
-                # Kiểm tra kết quả
-                if result:
-                    # Nếu người dùng chọn Yes
-                    controller_handle_events.Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(entry_so_phieu)
-                    return True
-                else:
-                    # Nếu người dùng chọn No
-                    return False
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            return False
-
-class Controller_save_data_on_GUI_into_database_THEM_MOI_MA_HANG:
-    def f_save_data_on_GUI_to_database(entry_notification,
-                            entry_new_id_code
-                            , entry_new_id_name
-                            , entry_new_dvt):
-        
-        # Step_01: Get data
-        flag, data_array = Controller_save_data_on_GUI_into_database_THEM_MOI_MA_HANG.get_data_from_GUI_tab_03(entry_notification,
-                            entry_new_id_code
-                            , entry_new_id_name
-                            , entry_new_dvt
-                                                                    )
-        if flag == False:
-            return
-        
-        # Step_02: Export data to SQL
-        flag, notification_text = utils_model_SQL_server.f_validate_data_format_TB_INVENTORY_CATEGORIES_250214_09h05(data_array)
-        
-        if flag == False:
-            utils_controllers.utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, notification_text, "red")
-            return
-        
-        if flag == True:
-            # If data is valid
-            table_name = utils_controllers.utils_controller_get_information_of_database.load_table_name_TB_INVENTORY_CATEGORIES()
-            flag = utils_model_SQL_server.f_goi_ham_Export_to_table(data_array, table_name)
-            if flag == False:
-                utils_controllers.utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Thêm dữ liệu không thành công!", "red")
-                return
-            else:
-                utils_controllers.utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, f"Thêm dữ liệu thành công!", "blue")
-
-        
-    def get_data_from_GUI_tab_03(entry_notification
-                            , entry_new_id_code
-                            , entry_new_id_name
-                            , entry_new_dvt):
-        
-        # Các giá trị mặc định
-        ID_nhan_vien = utils_controller_get_information_of_database.load_id_nhan_vien()
-        Xoa_Sua = utils_controller_get_information_of_database.load_xoa_sua_mac_dinh()
-        
-        # Tạo một list chứa dữ liệu để export
-        try:
-            data = []
-            
-            data.append((
-                ID_nhan_vien
-                ,Xoa_Sua
-                ,entry_new_id_code.get()
-                ,entry_new_id_name.get()
-                ,entry_new_dvt.get()
-                ,0
-                ,0
-                ,''
-            ))
-            # print(data)
-            return True, data
-        except Exception as e:
-            print(f"Error: {e}")
-            print("Error at function: ", f_utils_get_current_function_name())
-            data = []
-            return False, data
-        
 class Controller_save_data_on_GUI_into_database:
 
     def get_data_from_GUI_tab_01(entry_so_phieu, 
@@ -908,4 +1016,24 @@ class Controller_save_data_on_GUI_into_database:
         else:
             return
 
-        
+class Controller_check_duplicate_and_auto_update_slip_number:
+    def f_Check_duplicate_and_update_slip_number(entry_so_phieu):
+        database_name = utils_controller_get_information_of_database.load_database_name()
+        table_name = utils_controller_get_information_of_database.load_table_name_TB_INVENTORY_STOCK_RECEIVED_ISSSUED_RETURNED_250214_09h05()
+        column_name = controller_handle_events.controller_get_information_of_module.load_column_name_so_phieu()
+        try:
+            kiem_tra_trung_so_phieu = f_utils_check_duplicate(entry_so_phieu, database_name, table_name, column_name)
+            if kiem_tra_trung_so_phieu == False:    # có trùng phiếu
+                result = f_utils_ask_yes_no("Thông báo", "Số phiếu đã tồn tại, bạn có muốn tự động lấy số phiếu mới không?")
+                # Kiểm tra kết quả
+                if result:
+                    # Nếu người dùng chọn Yes
+                    controller_handle_events.Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(entry_so_phieu)
+                    return True
+                else:
+                    # Nếu người dùng chọn No
+                    return False
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Error at function: ", f_utils_get_current_function_name())
+            return False

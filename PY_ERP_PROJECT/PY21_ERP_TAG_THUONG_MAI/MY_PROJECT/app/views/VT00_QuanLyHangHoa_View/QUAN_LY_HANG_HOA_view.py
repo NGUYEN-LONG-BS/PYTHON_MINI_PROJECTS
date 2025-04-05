@@ -114,7 +114,7 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
         self.tab_02_button_save.config(command=self.event_tab_02_button_save_click)
         
         # Tab 03
-        self.tab_03_button_create_new_inventory.config(command=self.event_tab_03_button_create_new_inventory_click)
+        self.tab_03_button_create_new_inventory.config(command=self.event_tab_03_button_save_click)
         
         # Tab 06
         self.tab_06_button_filter.config(command=self.event_tab_06_button_filter_click)
@@ -1050,12 +1050,6 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
     def event_tab_02_button_get_number_of_slip_click(self):        
         Controller_handel_all_events.f_handle_event_get_the_latest_number_of_slip(self.tab_02_entry_so_phieu)
         Controller_handel_all_events.f_handle_event_get_today_is_date_of_slip(self.tab_02_entry_ngay_tren_phieu)
-    
-    def event_tab_03_button_create_new_inventory_click(self):        
-        Controller_handel_all_events.f_handle_event_create_new_inventory(self.tab_01_label_footer_notification,
-                                                                         self.tab_03_entry_new_id_code
-                                                                         , self.tab_03_entry_new_id_name
-                                                                         , self.tab_03_entry_new_dvt)
         
     def event_tab_06_button_filter_click(self):
         Controller_handel_all_events.f_handle_event_tab_06_button_filter_log_click(
@@ -1199,3 +1193,9 @@ class cls_QuanLyHangHoa_View(cls_base_form_number_02_ManyTabs):
             self.tab_02_entry_note_for_slip,
             self.tab_02_combobox_ma_kho,
             self.tab_02_treeview_PXK)
+
+    def event_tab_03_button_save_click(self):        
+        Controller_handel_all_events.f_handle_event_create_new_inventory(self.tab_01_label_footer_notification,
+                                                                         self.tab_03_entry_new_id_code
+                                                                         , self.tab_03_entry_new_id_name
+                                                                         , self.tab_03_entry_new_dvt)

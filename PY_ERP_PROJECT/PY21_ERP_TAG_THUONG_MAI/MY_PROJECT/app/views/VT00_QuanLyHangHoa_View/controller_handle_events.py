@@ -2,8 +2,9 @@ from tkinter import messagebox
 from app.utils import *
 from datetime import datetime
 from collections import defaultdict
-from . import controller_PNK
-from . import controller_PXK
+from . import controller_tab_01_PNK
+from . import controller_tab_02_PXK
+from . import controller_tab_03_new_id
 
 class controller_get_information_of_module:
     def load_loai_phieu_PNK():
@@ -207,13 +208,13 @@ class Controller_format_treeview:
 
 class Controller_handel_all_events:
     def update_entry_id_when_initializing(my_treeview, entry_id):
-        controller_PNK.Controller_update_entry_id.update_entry_id_after_adding_new_row(my_treeview, entry_id)
+        controller_tab_01_PNK.Controller_update_entry_id.update_entry_id_after_adding_new_row(my_treeview, entry_id)
     
     def f_handle_event_get_the_latest_number_of_slip_PNK(entry_so_phieu_PNK):
-        controller_PNK.Controller_get_the_latest_number_of_slip.start_process_get_the_latest_number_of_slip(entry_so_phieu_PNK, ma_phan_loai = "PNK")
+        controller_tab_01_PNK.Controller_get_the_latest_number_of_slip.start_process_get_the_latest_number_of_slip(entry_so_phieu_PNK, ma_phan_loai = "PNK")
         
     def f_handle_event_get_the_latest_number_of_slip_PXK(entry_so_phieu_PXK):
-        controller_PNK.Controller_get_the_latest_number_of_slip.start_process_get_the_latest_number_of_slip(entry_so_phieu_PXK, ma_phan_loai = "PXK")
+        controller_tab_01_PNK.Controller_get_the_latest_number_of_slip.start_process_get_the_latest_number_of_slip(entry_so_phieu_PXK, ma_phan_loai = "PXK")
         
     def f_handle_event_initializing_format_of_treeview_of_tab_01(my_treeview):
         Controller_format_treeview.set_format_of_treeview_of_tab_01(my_treeview)
@@ -234,20 +235,20 @@ class Controller_handel_all_events:
                                             entry_new_id_code
                                             , entry_new_id_name
                                             , entry_new_dvt):
-        controller_PNK.Controller_save_data_on_GUI_into_database_THEM_MOI_MA_HANG.f_save_data_on_GUI_to_database(entry_notification,
+        controller_tab_03_new_id.Controller_save_data_on_GUI_into_database_THEM_MOI_MA_HANG.f_save_data_on_GUI_to_database(entry_notification,
                                                                                     entry_new_id_code
                                                                                     , entry_new_id_name
                                                                                     , entry_new_dvt)
     
     def f_handle_event_tab_06_button_filter_log_click(entry_notification, entry_ma_hang, my_treeview):
-        controller_PNK.Controller_filter_with_conditions_on_tab_06.filter_log_with_conditions(entry_notification, entry_ma_hang, my_treeview)
+        controller_tab_01_PNK.Controller_filter_with_conditions_on_tab_06.filter_log_with_conditions(entry_notification, entry_ma_hang, my_treeview)
         
     def f_handle_event_tab_06_button_clear_filter(entry_notification, 
             my_treeview,
             entry_ma_hang,
             entry_ten_hang,
             combobox_ma_kho):
-        controller_PNK.Controller_clear_all_filter_condition.clear_filter_condition(entry_notification,
+        controller_tab_01_PNK.Controller_clear_all_filter_condition.clear_filter_condition(entry_notification,
             my_treeview,
             entry_ma_hang,
             entry_ten_hang,
@@ -264,7 +265,7 @@ class Controller_handel_all_events:
             entry_don_gia,
             entry_ghi_chu_mat_hang):
         
-        controller_PNK.Controller_add_row_to_treeview.start_process_add_row(entry_notification,
+        controller_tab_01_PNK.Controller_add_row_to_treeview.start_process_add_row(entry_notification,
             my_treeview, 
             entry_id,
             entry_ma_hang, 
@@ -284,7 +285,7 @@ class Controller_handel_all_events:
             entry_don_gia,
             entry_ghi_chu_mat_hang):
         
-        controller_PXK.Controller_add_row_to_treeview.start_process_add_row(entry_notification,
+        controller_tab_02_PXK.Controller_add_row_to_treeview.start_process_add_row(entry_notification,
             my_treeview, 
             entry_id,
             entry_ma_hang, 
@@ -303,7 +304,7 @@ class Controller_handel_all_events:
             entry_don_gia,
             entry_ghi_chu_mat_hang):
             
-        controller_PNK.Controller_update_selected_row.start_process_update_selected_row(entry_notification,
+        controller_tab_01_PNK.Controller_update_selected_row.start_process_update_selected_row(entry_notification,
             my_treeview,
             entry_ma_hang,
             entry_ten_hang,
@@ -321,7 +322,7 @@ class Controller_handel_all_events:
             entry_don_gia,
             entry_ghi_chu_mat_hang):
             
-        controller_PXK.Controller_update_selected_row.start_process_update_selected_row(entry_notification,
+        controller_tab_02_PXK.Controller_update_selected_row.start_process_update_selected_row(entry_notification,
             my_treeview,
             entry_ma_hang,
             entry_ten_hang,
@@ -331,11 +332,11 @@ class Controller_handel_all_events:
             entry_ghi_chu_mat_hang)
         
     def f_handle_event_treeview_of_tab_01_double_click(entry_notification, my_treeview):
-        ma_hang = controller_PNK.Controller_click_on_treeview.treeview_double_click(my_treeview)
+        ma_hang = controller_tab_01_PNK.Controller_click_on_treeview.treeview_double_click(my_treeview)
         utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, ma_hang, "blue")
         
     def f_handle_event_treeview_of_tab_02_double_click(entry_notification, my_treeview):
-        ma_hang = controller_PXK.Controller_click_on_treeview.treeview_double_click(my_treeview)
+        ma_hang = controller_tab_02_PXK.Controller_click_on_treeview.treeview_double_click(my_treeview)
         utils_controller_config_notification_250220_10h05.f_config_notification(entry_notification, ma_hang, "blue")
         
     def f_handle_event_treeview_of_tab_01_single_click(entry_notification, 
@@ -348,7 +349,7 @@ class Controller_handel_all_events:
             entry_don_gia,
             entry_ghi_chu_mat_hang):
         
-        controller_PNK.Controller_click_on_treeview.treeview_single_click(
+        controller_tab_01_PNK.Controller_click_on_treeview.treeview_single_click(
         my_treeview,
         entry_id,
         entry_ma_hang,
@@ -368,7 +369,7 @@ class Controller_handel_all_events:
             entry_don_gia,
             entry_ghi_chu_mat_hang):
         
-        controller_PXK.Controller_click_on_treeview.treeview_single_click(
+        controller_tab_02_PXK.Controller_click_on_treeview.treeview_single_click(
         my_treeview,
         entry_id,
         entry_ma_hang,
@@ -379,16 +380,16 @@ class Controller_handel_all_events:
         entry_ghi_chu_mat_hang)
         
     def f_handle_event_tab_01_btn_delete_click(entry_notification, my_treeview):
-        controller_PNK.Controller_delete_row_in_treeview.delete_row(entry_notification, my_treeview)
+        controller_tab_01_PNK.Controller_delete_row_in_treeview.delete_row(entry_notification, my_treeview)
     
     def f_handle_event_tab_02_btn_delete_click(entry_notification, my_treeview):
-        controller_PNK.Controller_delete_row_in_treeview.delete_row(entry_notification, my_treeview)
+        controller_tab_01_PNK.Controller_delete_row_in_treeview.delete_row(entry_notification, my_treeview)
     
     def f_handle_tab_01_button_clear_click(entry_notification, my_treeview):
-        controller_PNK.Controller_clear_all_rows_in_treeview.clear_all_rows(entry_notification, my_treeview)
+        controller_tab_01_PNK.Controller_clear_all_rows_in_treeview.clear_all_rows(entry_notification, my_treeview)
         
     def f_handle_tab_02_button_clear_click(entry_notification, my_treeview):
-        controller_PNK.Controller_clear_all_rows_in_treeview.clear_all_rows(entry_notification, my_treeview)
+        controller_tab_01_PNK.Controller_clear_all_rows_in_treeview.clear_all_rows(entry_notification, my_treeview)
         
     def f_handle_event_tab_01_btn_save_click(entry_notification,
             entry_so_phieu, 
@@ -402,7 +403,7 @@ class Controller_handel_all_events:
             combobox_ma_kho,
             tree):
         
-        controller_PNK.Controller_save_slip.start_process_save_slip(entry_notification,
+        controller_tab_01_PNK.Controller_save_slip.start_process_save_slip(entry_notification,
             entry_so_phieu, 
             entry_ma_kh, 
             entry_ten_kh,
@@ -426,7 +427,7 @@ class Controller_handel_all_events:
             combobox_ma_kho,
             tree):
         
-        controller_PXK.Controller_save_slip.start_process_save_slip(entry_notification,
+        controller_tab_02_PXK.Controller_save_slip.start_process_save_slip(entry_notification,
             entry_so_phieu, 
             entry_ma_kh, 
             entry_ten_kh,
@@ -439,8 +440,8 @@ class Controller_handel_all_events:
             tree)
     
     def f_handle_event_get_the_latest_number_of_slip(entry_so_phieu):
-        controller_PNK.Controller_get_the_latest_number_of_slip.start_process_get_the_latest_number_of_slip(entry_so_phieu)
+        controller_tab_01_PNK.Controller_get_the_latest_number_of_slip.start_process_get_the_latest_number_of_slip(entry_so_phieu)
         
     def f_handle_event_get_today_is_date_of_slip(entry_ngay_tren_phieu):
-        controller_PNK.Controller_get_today.start_process_get_today(entry_ngay_tren_phieu)
+        controller_tab_01_PNK.Controller_get_today.start_process_get_today(entry_ngay_tren_phieu)
    
