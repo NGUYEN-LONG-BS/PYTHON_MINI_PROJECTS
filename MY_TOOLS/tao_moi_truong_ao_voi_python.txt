@@ -1,0 +1,9 @@
+1. Mở Terminal (CMD hoặc PowerShell):
+2. Đi tới thư mục chứa dự án của bạn:
+cd C:\Users\ADMIN\Desktop\ICONS\GITHUB\PYTHON_MINI_PROJECTS\MY_TOOLS\TOOLS_XU_LY_FILE_SVG
+3. Tạo môi trường ảo:
+python -m venv venv
+4. Kích hoạt môi trường ảo
+.\venv\Scripts\activate.bat
+5. mở visual Code
+code .
