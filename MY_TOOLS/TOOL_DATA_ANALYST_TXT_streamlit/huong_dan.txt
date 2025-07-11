@@ -1,0 +1,9 @@
+Cài đặt môi trường ảo
+python -m venv myenv
+
+Khởi chạy môi trường ảo
+source myenv/bin/activate  # macOS/Linux
+myenv\Scripts\activate     # Windows
+
+chạy file
+streamlit run app.py
