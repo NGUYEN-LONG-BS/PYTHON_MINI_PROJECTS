@@ -1,0 +1,1 @@
+pyinstaller --onefile --noconsole --icon=my_ico.ico web_scraper_gui_250714_11h11.py
